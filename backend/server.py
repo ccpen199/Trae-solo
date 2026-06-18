@@ -215,6 +215,108 @@ def init_database() -> None:
                 on_time_rate REAL DEFAULT 0,
                 satisfaction_rate REAL DEFAULT 0
             );
+
+            CREATE TABLE IF NOT EXISTS visitor_access (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                visitor_name TEXT NOT NULL,
+                visitor_phone TEXT NOT NULL,
+                host_name TEXT NOT NULL,
+                host_room TEXT NOT NULL,
+                device_id TEXT NOT NULL,
+                qr_token TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending',
+                valid_from TEXT NOT NULL,
+                valid_until TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                approved_at TEXT,
+                opened_at TEXT,
+                FOREIGN KEY (device_id) REFERENCES access_devices(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS device_inspections (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                device_id TEXT NOT NULL,
+                inspection_type TEXT NOT NULL,
+                inspector TEXT NOT NULL,
+                findings TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'normal',
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (device_id) REFERENCES access_devices(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS alarm_dispatches (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                alarm_id INTEGER NOT NULL,
+                handler TEXT NOT NULL,
+                action TEXT NOT NULL,
+                result TEXT,
+                status TEXT NOT NULL DEFAULT 'processing',
+                assigned_at TEXT NOT NULL,
+                resolved_at TEXT,
+                FOREIGN KEY (alarm_id) REFERENCES device_alarms(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS ota_progress (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ota_id INTEGER NOT NULL,
+                stage TEXT NOT NULL,
+                detail TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (ota_id) REFERENCES firmware_ota(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS repair_photos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repair_id TEXT NOT NULL,
+                photo_url TEXT NOT NULL,
+                photo_type TEXT NOT NULL,
+                uploaded_by TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (repair_id) REFERENCES repair_orders(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS repair_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repair_id TEXT NOT NULL,
+                action TEXT NOT NULL,
+                operator TEXT NOT NULL,
+                detail TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (repair_id) REFERENCES repair_orders(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS repair_feedback (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repair_id TEXT NOT NULL,
+                satisfaction INTEGER NOT NULL,
+                timeliness INTEGER NOT NULL,
+                attitude INTEGER NOT NULL,
+                quality INTEGER NOT NULL,
+                comment TEXT,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (repair_id) REFERENCES repair_orders(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS fee_payment_records (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                fee_id INTEGER NOT NULL,
+                payment_method TEXT NOT NULL,
+                transaction_id TEXT NOT NULL,
+                amount REAL NOT NULL,
+                payer TEXT NOT NULL,
+                paid_at TEXT NOT NULL,
+                FOREIGN KEY (fee_id) REFERENCES property_fees(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS complaint_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                complaint_id TEXT NOT NULL,
+                action TEXT NOT NULL,
+                operator TEXT NOT NULL,
+                detail TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (complaint_id) REFERENCES complaint_tickets(id)
+            );
             """
         )
         _seed_initial_data(conn)
@@ -447,6 +549,157 @@ def _seed_initial_data(conn: sqlite3.Connection) -> None:
         conn.executemany(
             "INSERT INTO response_stats (date, total_tickets, avg_response_time, on_time_rate, satisfaction_rate) VALUES (?, ?, ?, ?, ?)",
             stats,
+        )
+
+    visitor_count = conn.execute("SELECT COUNT(*) AS count FROM visitor_access").fetchone()["count"]
+    if visitor_count == 0:
+        visitors = [
+            ("快递员王师傅", "13900139001", "张三", "1号楼1单元101", "DEV-001", "QR-20260618-001", "approved",
+             _hours_ago(2), _hours_ago(1), _hours_ago(3), _hours_ago(2.5), _hours_ago(1.5)),
+            ("家政李阿姨", "13900139002", "李四", "1号楼1单元102", "DEV-003", "QR-20260618-002", "completed",
+             _hours_ago(5), _hours_ago(4), _hours_ago(6), _hours_ago(5.5), _hours_ago(4.5)),
+            ("访客刘先生", "13900139003", "王五", "2号楼1单元301", "DEV-001", "QR-20260618-003", "pending",
+             _minutes_ago(30), _hours_ago(2), _minutes_ago(45), None, None),
+            ("外卖员小张", "13900139004", "赵六", "2号楼2单元502", "DEV-001", "QR-20260618-004", "expired",
+             _hours_ago(24), _hours_ago(23), _hours_ago(25), _hours_ago(23.5), None),
+            ("维修供应商周工", "13900139005", "陈七", "3号楼1单元801", "DEV-005", "QR-20260618-005", "approved",
+             _hours_ago(1), _hours_ago(0.5), _hours_ago(1.5), _hours_ago(1.2), None),
+        ]
+        conn.executemany(
+            "INSERT INTO visitor_access (visitor_name, visitor_phone, host_name, host_room, device_id, qr_token, status, valid_from, valid_until, created_at, approved_at, opened_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            visitors,
+        )
+
+    inspection_count = conn.execute("SELECT COUNT(*) AS count FROM device_inspections").fetchone()["count"]
+    if inspection_count == 0:
+        inspections = [
+            ("DEV-001", "daily", "保安队长-刘队", "设备运行正常，读卡灵敏，网络稳定", "normal", _days_ago(0)),
+            ("DEV-002", "daily", "保安队长-刘队", "设备正常，人脸识别镜头有灰尘已擦拭", "normal", _days_ago(0)),
+            ("DEV-003", "weekly", "运维-陈工", "读卡器磨损较严重，建议2周后更换", "warning", _days_ago(3)),
+            ("DEV-004", "fault", "运维-王工", "离线缓存积压原因：网络不稳定导致上传失败，已修复网络", "resolved", _hours_ago(3)),
+            ("DEV-005", "fault", "运维-李工", "设备离线：电源适配器损坏，已更换适配器，等待设备重启", "processing", _hours_ago(2)),
+            ("DEV-001", "monthly", "运维总监-赵总", "月度全面检查：固件版本、硬件磨损、网络稳定性均达标", "normal", _days_ago(15)),
+        ]
+        conn.executemany(
+            "INSERT INTO device_inspections (device_id, inspection_type, inspector, findings, status, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+            inspections,
+        )
+
+    dispatch_count = conn.execute("SELECT COUNT(*) AS count FROM alarm_dispatches").fetchone()["count"]
+    if dispatch_count == 0:
+        dispatches = [
+            (1, "运维-李工", "现场排查", "检测到电源故障，正在更换电源适配器", "processing", _hours_ago(2.5), None),
+            (1, "保安-小王", "现场确认", "已到现场确认设备确实离线，已通知运维", "completed", _hours_ago(3), _hours_ago(2.8)),
+            (2, "运维-王工", "清理缓存", "手动触发缓存上传，已上传12条记录，剩余3条", "completed", _hours_ago(1), _hours_ago(0.5)),
+            (2, "客服-小李", "通知物业", "已短信通知物业经理缓存情况", "completed", _hours_ago(1.2), _hours_ago(1.1)),
+            (3, "运维-陈工", "准备升级", "已下载固件包，等待低峰期升级", "pending", _hours_ago(5), None),
+        ]
+        conn.executemany(
+            "INSERT INTO alarm_dispatches (alarm_id, handler, action, result, status, assigned_at, resolved_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            dispatches,
+        )
+
+    ota_progress_count = conn.execute("SELECT COUNT(*) AS count FROM ota_progress").fetchone()["count"]
+    if ota_progress_count == 0:
+        ota_progress = [
+            (1, "download", "下载固件包 v2.3.1，大小 12.8MB", _hours_ago(0.5)),
+            (1, "verify", "校验固件 MD5 完整性通过", _hours_ago(0.45)),
+            (1, "backup", "备份当前固件配置", _hours_ago(0.4)),
+            (1, "flash", "正在刷写固件分区，进度 65%", _hours_ago(0.35)),
+            (2, "download", "下载固件包 v2.3.1，大小 12.8MB", _days_ago(1)),
+            (2, "verify", "校验固件 MD5 完整性通过", _days_ago(1) + "a"),
+            (2, "flash", "刷写固件分区完成", _days_ago(0.95)),
+            (2, "reboot", "设备重启成功", _days_ago(0.9)),
+            (2, "verify_version", "确认升级成功，当前版本 v2.3.1", _days_ago(0.85)),
+        ]
+        conn.executemany(
+            "INSERT INTO ota_progress (ota_id, stage, detail, created_at) VALUES (?, ?, ?, ?)",
+            ota_progress,
+        )
+
+    repair_photo_count = conn.execute("SELECT COUNT(*) AS count FROM repair_photos").fetchone()["count"]
+    if repair_photo_count == 0:
+        repair_photos = [
+            ("REP-2026-002", "https://placeholder-img/repair-1a.jpg", "report", "李四", _days_ago(1)),
+            ("REP-2026-002", "https://placeholder-img/repair-1b.jpg", "report", "李四", _days_ago(1)),
+            ("REP-2026-002", "https://placeholder-img/repair-1c.jpg", "process", "王维修", _hours_ago(3)),
+            ("REP-2026-002", "https://placeholder-img/repair-1d.jpg", "done", "王维修", _hours_ago(2)),
+            ("REP-2026-003", "https://placeholder-img/repair-2a.jpg", "report", "王五", _days_ago(2)),
+            ("REP-2026-003", "https://placeholder-img/repair-2b.jpg", "process", "李维修", _days_ago(1.5)),
+            ("REP-2026-003", "https://placeholder-img/repair-2c.jpg", "done", "李维修", _days_ago(1)),
+            ("REP-2026-001", "https://placeholder-img/repair-3a.jpg", "report", "张三", _hours_ago(5)),
+        ]
+        conn.executemany(
+            "INSERT INTO repair_photos (repair_id, photo_url, photo_type, uploaded_by, created_at) VALUES (?, ?, ?, ?, ?)",
+            repair_photos,
+        )
+
+    repair_log_count = conn.execute("SELECT COUNT(*) AS count FROM repair_logs").fetchone()["count"]
+    if repair_log_count == 0:
+        repair_logs = [
+            ("REP-2026-003", "create", "王五", "提交报修：1号楼12层公共区域水管漏水", _days_ago(2)),
+            ("REP-2026-003", "auto_assign", "系统", "根据类型自动派单给李维修（水电组）", _days_ago(2)),
+            ("REP-2026-003", "accept", "李维修", "接单，携带工具前往现场", _days_ago(1.9)),
+            ("REP-2026-003", "arrive", "李维修", "到达现场，开始排查漏水点", _days_ago(1.8)),
+            ("REP-2026-003", "diagnose", "李维修", "诊断结果：12层主水管接口处密封老化导致渗水", _days_ago(1.7)),
+            ("REP-2026-003", "repair", "李维修", "更换密封垫圈，修复漏水点", _days_ago(1.5)),
+            ("REP-2026-003", "test", "李维修", "通水测试30分钟，无渗漏，现场清理完毕", _days_ago(1.2)),
+            ("REP-2026-003", "complete", "李维修", "工单完成，等待业主确认", _days_ago(1)),
+            ("REP-2026-003", "feedback", "王五", "业主已评价并确认完成", _days_ago(0.8)),
+            ("REP-2026-002", "create", "李四", "提交报修：小区北门路灯不亮", _days_ago(1)),
+            ("REP-2026-002", "auto_assign", "系统", "根据类型自动派单给王维修（公共设施组）", _days_ago(0.98)),
+            ("REP-2026-002", "accept", "王维修", "接单，准备更换LED镇流器", _hours_ago(5)),
+            ("REP-2026-002", "arrive", "王维修", "到达北门现场，开始检修", _hours_ago(3)),
+            ("REP-2026-002", "repair", "王维修", "更换镇流器和光源，重新接线", _hours_ago(2.5)),
+            ("REP-2026-001", "create", "张三", "提交报修：3号楼西梯按钮失灵", _hours_ago(5)),
+        ]
+        conn.executemany(
+            "INSERT INTO repair_logs (repair_id, action, operator, detail, created_at) VALUES (?, ?, ?, ?, ?)",
+            repair_logs,
+        )
+
+    repair_feedback_count = conn.execute("SELECT COUNT(*) AS count FROM repair_feedback").fetchone()["count"]
+    if repair_feedback_count == 0:
+        feedbacks = [
+            ("REP-2026-003", 5, 5, 5, 5, "维修师傅非常专业，漏水问题彻底解决了，态度也很好，还顺便帮我检查了其他管道。", _days_ago(0.8)),
+            ("REP-2026-002", 4, 4, 5, 4, "修得还不错，就是响应时间稍微慢了一点，整体满意。", _hours_ago(1)),
+        ]
+        conn.executemany(
+            "INSERT INTO repair_feedback (repair_id, satisfaction, timeliness, attitude, quality, comment, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            feedbacks,
+        )
+
+    fee_payment_count = conn.execute("SELECT COUNT(*) AS count FROM fee_payment_records").fetchone()["count"]
+    if fee_payment_count == 0:
+        fee_payments = [
+            (1, "wechat", "WX20260613100123456789", 258.50, "张三", _days_ago(5)),
+            (2, "alipay", "ALI20260615094512345678", 262.00, "李四", _days_ago(3)),
+            (4, "bank_transfer", "BANK2026061700001234", 295.00, "赵六", _days_ago(1)),
+        ]
+        conn.executemany(
+            "INSERT INTO fee_payment_records (fee_id, payment_method, transaction_id, amount, payer, paid_at) VALUES (?, ?, ?, ?, ?, ?)",
+            fee_payments,
+        )
+
+    complaint_log_count = conn.execute("SELECT COUNT(*) AS count FROM complaint_logs").fetchone()["count"]
+    if complaint_log_count == 0:
+        complaint_logs = [
+            ("CP-2026-002", "create", "李四", "提交诉求：单元门口垃圾堆放两天未清理", _days_ago(2)),
+            ("CP-2026-002", "assign", "系统", "自动派单给保洁组张主管", _days_ago(2)),
+            ("CP-2026-002", "response", "张主管", "已响应，安排保洁人员前往清理", _days_ago(1) + "+22h"),
+            ("CP-2026-002", "process", "保洁-王姐", "现场清理完毕，已消毒", _days_ago(1) + "+20h"),
+            ("CP-2026-002", "close", "张主管", "问题已解决，工单关闭", _days_ago(1)),
+            ("CP-2026-001", "create", "张三", "提交诉求：周末仍有装修施工，噪音扰民", _days_ago(1)),
+            ("CP-2026-001", "assign", "系统", "自动派单给保安部刘队", _days_ago(1) + "+1h"),
+            ("CP-2026-001", "response", "刘队", "已响应，派保安前往3号楼查看", _hours_ago(22)),
+            ("CP-2026-001", "process", "保安-小王", "已找到装修施工人员，告知周末施工规定并劝止", _hours_ago(20)),
+            ("CP-2026-005", "create", "陈七", "提交诉求：小区绿化树木长期未修剪", _days_ago(3)),
+            ("CP-2026-005", "assign", "系统", "自动派单给绿化组", _days_ago(3)),
+            ("CP-2026-005", "close", "绿化组", "已完成修剪，工单关闭", _days_ago(2)),
+        ]
+        conn.executemany(
+            "INSERT INTO complaint_logs (complaint_id, action, operator, detail, created_at) VALUES (?, ?, ?, ?, ?)",
+            complaint_logs,
         )
 
 
@@ -764,6 +1017,159 @@ def get_response_stats() -> dict[str, object]:
         }
 
 
+def get_visitor_access(status: str | None = None) -> dict[str, object]:
+    with open_db() as conn:
+        query = "SELECT va.*, ad.name as device_name FROM visitor_access va LEFT JOIN access_devices ad ON va.device_id = ad.id"
+        params = []
+        if status:
+            query += " WHERE va.status = ?"
+            params.append(status)
+        query += " ORDER BY va.created_at DESC"
+        rows = conn.execute(query, params).fetchall()
+        return {
+            "ok": True,
+            "visitors": [dict(row) for row in rows],
+        }
+
+
+def get_device_detail(device_id: str) -> dict[str, object]:
+    with open_db() as conn:
+        device = conn.execute("SELECT * FROM access_devices WHERE id = ?", (device_id,)).fetchone()
+        if not device:
+            return {"ok": False, "error": "设备不存在"}
+        inspections = conn.execute(
+            "SELECT * FROM device_inspections WHERE device_id = ? ORDER BY created_at DESC",
+            (device_id,),
+        ).fetchall()
+        alarms = conn.execute(
+            "SELECT da.*, ad.name as device_name FROM device_alarms da LEFT JOIN access_devices ad ON da.device_id = ad.id WHERE da.device_id = ? ORDER BY da.created_at DESC",
+            (device_id,),
+        ).fetchall()
+        alarm_ids = [a["id"] for a in alarms]
+        dispatches = []
+        if alarm_ids:
+            placeholders = ",".join(["?"] * len(alarm_ids))
+            dispatches = conn.execute(
+                f"SELECT * FROM alarm_dispatches WHERE alarm_id IN ({placeholders}) ORDER BY assigned_at DESC",
+                alarm_ids,
+            ).fetchall()
+        ota_records = conn.execute(
+            "SELECT * FROM firmware_ota WHERE device_id = ? ORDER BY created_at DESC",
+            (device_id,),
+        ).fetchall()
+        ota_ids = [o["id"] for o in ota_records]
+        ota_progress = []
+        if ota_ids:
+            placeholders = ",".join(["?"] * len(ota_ids))
+            ota_progress = conn.execute(
+                f"SELECT * FROM ota_progress WHERE ota_id IN ({placeholders}) ORDER BY created_at ASC",
+                ota_ids,
+            ).fetchall()
+        return {
+            "ok": True,
+            "device": dict(device),
+            "inspections": [dict(row) for row in inspections],
+            "alarms": [dict(row) for row in alarms],
+            "dispatches": [dict(row) for row in dispatches],
+            "ota_records": [dict(row) for row in ota_records],
+            "ota_progress": [dict(row) for row in ota_progress],
+        }
+
+
+def get_repair_detail(repair_id: str) -> dict[str, object]:
+    with open_db() as conn:
+        order = conn.execute("SELECT * FROM repair_orders WHERE id = ?", (repair_id,)).fetchone()
+        if not order:
+            return {"ok": False, "error": "工单不存在"}
+        photos = conn.execute(
+            "SELECT * FROM repair_photos WHERE repair_id = ? ORDER BY created_at ASC",
+            (repair_id,),
+        ).fetchall()
+        logs = conn.execute(
+            "SELECT * FROM repair_logs WHERE repair_id = ? ORDER BY created_at ASC",
+            (repair_id,),
+        ).fetchall()
+        feedback = conn.execute(
+            "SELECT * FROM repair_feedback WHERE repair_id = ? ORDER BY created_at DESC LIMIT 1",
+            (repair_id,),
+        ).fetchone()
+        return {
+            "ok": True,
+            "order": dict(order),
+            "photos": [dict(row) for row in photos],
+            "logs": [dict(row) for row in logs],
+            "feedback": dict(feedback) if feedback else None,
+        }
+
+
+def get_dashboard_detail() -> dict[str, object]:
+    with open_db() as conn:
+        recent_alarms = conn.execute(
+            """SELECT da.*, ad.name as device_name
+            FROM device_alarms da LEFT JOIN access_devices ad ON da.device_id = ad.id
+            ORDER BY da.created_at DESC LIMIT 5"""
+        ).fetchall()
+        recent_repairs = conn.execute(
+            "SELECT * FROM repair_orders ORDER BY created_at DESC LIMIT 5"
+        ).fetchall()
+        recent_fees = conn.execute(
+            "SELECT pf.*, i.invoice_code, i.invoice_number FROM property_fees pf LEFT JOIN invoices i ON pf.invoice_no = i.id ORDER BY pf.created_at DESC LIMIT 5"
+        ).fetchall()
+        recent_complaints = conn.execute(
+            "SELECT * FROM complaint_tickets ORDER BY created_at DESC LIMIT 5"
+        ).fetchall()
+        complaint_logs = conn.execute(
+            """SELECT cl.*, ct.title as complaint_title FROM complaint_logs cl
+            LEFT JOIN complaint_tickets ct ON cl.complaint_id = ct.id
+            ORDER BY cl.created_at DESC LIMIT 10"""
+        ).fetchall()
+        return {
+            "ok": True,
+            "recent_alarms": [dict(row) for row in recent_alarms],
+            "recent_repairs": [dict(row) for row in recent_repairs],
+            "recent_fees": [dict(row) for row in recent_fees],
+            "recent_complaints": [dict(row) for row in recent_complaints],
+            "complaint_logs": [dict(row) for row in complaint_logs],
+        }
+
+
+def get_fee_detail(fee_id: int) -> dict[str, object]:
+    with open_db() as conn:
+        fee = conn.execute("SELECT * FROM property_fees WHERE id = ?", (fee_id,)).fetchone()
+        if not fee:
+            return {"ok": False, "error": "费用记录不存在"}
+        payments = conn.execute(
+            "SELECT * FROM fee_payment_records WHERE fee_id = ? ORDER BY paid_at DESC",
+            (fee_id,),
+        ).fetchall()
+        invoice = conn.execute(
+            "SELECT * FROM invoices WHERE fee_id = ? ORDER BY created_at DESC LIMIT 1",
+            (fee_id,),
+        ).fetchone()
+        return {
+            "ok": True,
+            "fee": dict(fee),
+            "payments": [dict(row) for row in payments],
+            "invoice": dict(invoice) if invoice else None,
+        }
+
+
+def get_complaint_detail(complaint_id: str) -> dict[str, object]:
+    with open_db() as conn:
+        ticket = conn.execute("SELECT * FROM complaint_tickets WHERE id = ?", (complaint_id,)).fetchone()
+        if not ticket:
+            return {"ok": False, "error": "诉求工单不存在"}
+        logs = conn.execute(
+            "SELECT * FROM complaint_logs WHERE complaint_id = ? ORDER BY created_at ASC",
+            (complaint_id,),
+        ).fetchall()
+        return {
+            "ok": True,
+            "ticket": dict(ticket),
+            "logs": [dict(row) for row in logs],
+        }
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = f"{APP_NAME}/1.0"
 
@@ -783,10 +1189,12 @@ class Handler(BaseHTTPRequestHandler):
             "/api/records": lambda: {"ok": True, "service": APP_NAME, "records": records(), "updatedAt": utc_now()},
             "/api/business": lambda: {"ok": True, "service": APP_NAME, "records": records(), "updatedAt": utc_now()},
             "/api/dashboard": lambda: get_dashboard_stats(),
+            "/api/dashboard/detail": lambda: get_dashboard_detail(),
             "/api/access/devices": lambda: get_access_devices(query.get("status", [None])[0]),
             "/api/access/records": lambda: get_access_records(int(query.get("limit", [50])[0])),
             "/api/access/alarms": lambda: get_device_alarms(),
             "/api/access/ota": lambda: get_firmware_ota(),
+            "/api/access/visitors": lambda: get_visitor_access(query.get("status", [None])[0]),
             "/api/repair": lambda: get_repair_orders(query.get("status", [None])[0]),
             "/api/neighborhood": lambda: get_neighborhood_posts(query.get("status", [None])[0]),
             "/api/property/fees": lambda: get_property_fees(),
@@ -810,6 +1218,41 @@ class Handler(BaseHTTPRequestHandler):
                     500,
                 )
             return
+
+        path_parts = path.strip("/").split("/")
+        if len(path_parts) >= 4:
+            if path_parts[0] == "api" and path_parts[1] == "access" and path_parts[2] == "devices":
+                try:
+                    result = get_device_detail(path_parts[3])
+                    self.respond_json(result, 200)
+                    return
+                except Exception as exc:
+                    self.respond_json({"ok": False, "error": str(exc)}, 500)
+                    return
+            if path_parts[0] == "api" and path_parts[1] == "repair" and path_parts[2] == "detail":
+                try:
+                    result = get_repair_detail(path_parts[3])
+                    self.respond_json(result, 200)
+                    return
+                except Exception as exc:
+                    self.respond_json({"ok": False, "error": str(exc)}, 500)
+                    return
+            if path_parts[0] == "api" and path_parts[1] == "property" and path_parts[2] == "fees":
+                try:
+                    result = get_fee_detail(int(path_parts[3]))
+                    self.respond_json(result, 200)
+                    return
+                except Exception as exc:
+                    self.respond_json({"ok": False, "error": str(exc)}, 500)
+                    return
+            if path_parts[0] == "api" and path_parts[1] == "admin" and path_parts[2] == "complaints":
+                try:
+                    result = get_complaint_detail(path_parts[3])
+                    self.respond_json(result, 200)
+                    return
+                except Exception as exc:
+                    self.respond_json({"ok": False, "error": str(exc)}, 500)
+                    return
 
         self.respond_json(
             {

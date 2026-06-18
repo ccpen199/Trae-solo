@@ -410,7 +410,7 @@ function renderAccess() {
 
       <div class="access-methods">
         ${methods.map(m => `
-          <div class="method-card ${state.accessTab === m.key ? 'active' : ''}" onclick="setAccessTab('${m.key}')">
+          <div class="method-card ${state.accessTab === m.key ? 'active' : ''}" onclick="setAccessTab('${m.key}')${m.key === 'qr_code' ? '; showQrVisitorFlow();' : ''}">
             <div class="method-icon">${m.icon}</div>
             <div class="method-name">${m.name}</div>
             <div class="method-desc">${m.desc}</div>
@@ -622,7 +622,7 @@ function renderDevices() {
               <div class="progress-fill" style="width: ${Math.min(d.offline_cache, 100)}%; background: ${d.offline_cache > 100 ? 'var(--warn)' : 'var(--accent)'}"></div>
             </div>
             <div class="device-actions">
-              <button class="btn btn-outline btn-sm">查看详情</button>
+              <button class="btn btn-outline btn-sm" onclick="showDeviceDetail('${d.id}')">查看详情</button>
               <button class="btn btn-primary btn-sm">远程重启</button>
             </div>
           </div>
@@ -715,6 +715,917 @@ function filterDevices(status) {
   });
 }
 
+function showModal(title, contentHtml, actionsHtml = "") {
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay";
+  overlay.innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">${title}</h3>
+        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">${contentHtml}</div>
+      ${actionsHtml ? `<div class="modal-actions">${actionsHtml}</div>` : ""}
+    </div>
+  `;
+  overlay.addEventListener("click", e => {
+    if (e.target === overlay) overlay.remove();
+  });
+  document.body.appendChild(overlay);
+  return overlay;
+}
+
+function getActionLabel(action) {
+  const map = {
+    "create": "工单创建",
+    "auto_assign": "自动派单",
+    "accept": "维修接单",
+    "arrive": "到达现场",
+    "diagnose": "故障诊断",
+    "repair": "维修作业",
+    "test": "测试验收",
+    "complete": "工单完成",
+    "feedback": "业主评价",
+    "assign": "工单派单",
+    "response": "响应诉求",
+    "process": "现场处理",
+    "close": "工单关闭",
+    "submit": "提交申请"
+  };
+  return map[action] || action;
+}
+
+function getActionIcon(action) {
+  const map = {
+    "create": "📝",
+    "auto_assign": "🤖",
+    "accept": "👷",
+    "arrive": "📍",
+    "diagnose": "🔍",
+    "repair": "🔧",
+    "test": "✅",
+    "complete": "🏁",
+    "feedback": "⭐",
+    "assign": "📤",
+    "response": "📢",
+    "process": "🛠️",
+    "close": "🔒",
+    "submit": "📨"
+  };
+  return map[action] || "•";
+}
+
+function renderTimeline(logs) {
+  if (!logs || logs.length === 0) {
+    return `<div class="empty" style="padding: 24px;"><p>暂无流转记录</p></div>`;
+  }
+  return `
+    <div class="timeline">
+      ${logs.map((log, idx) => `
+        <div class="timeline-item ${idx === logs.length - 1 ? 'last' : ''}">
+          <div class="timeline-dot">${getActionIcon(log.action)}</div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <span class="timeline-title">${getActionLabel(log.action)}</span>
+              <span class="timeline-operator">${log.operator}</span>
+              <span class="timeline-time">${formatDate(log.created_at)}</span>
+            </div>
+            <div class="timeline-detail">${log.detail}</div>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderStars(count, size = 16) {
+  let html = "";
+  for (let i = 1; i <= 5; i++) {
+    html += `<span class="star ${i <= count ? 'on' : ''}" style="font-size: ${size}px;">★</span>`;
+  }
+  return html;
+}
+
+function showDashboardDetail() {
+  showLoading();
+  Promise.all([
+    api("/api/dashboard"),
+    api("/api/dashboard/detail")
+  ]).then(([base, detail]) => {
+    if (!base.ok || !detail.ok) {
+      showError(base.error || detail.error || "加载失败");
+      return;
+    }
+    const levelLabels = { critical: "严重", warning: "警告", info: "提示" };
+    contentNode.innerHTML = `
+      <div class="page-header">
+        <h1>工作台首页</h1>
+        <p>社区数字治理概览，可追溯各项业务处置状态</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-title">门禁设备</span>
+            <div class="stat-icon accent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card-value">${base.devices.total}</div>
+          <div class="stat-card-sub">
+            <span class="badge badge-online">在线 ${base.devices.online}</span>
+            <span class="badge badge-warning" style="margin-left: 8px;">告警 ${base.devices.warning}</span>
+            <span class="badge badge-offline" style="margin-left: 8px;">离线 ${base.devices.offline}</span>
+          </div>
+        </div>
+
+        <div class="stat-card" onclick="window.location.hash='#/access/devices'" style="cursor: pointer;">
+          <div class="stat-card-header">
+            <span class="stat-card-title">设备告警</span>
+            <div class="stat-icon danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card-value">${base.alarms.total}</div>
+          <div class="stat-card-sub">
+            <span class="badge badge-pending">待处理 ${base.alarms.pending}</span>
+            <span class="badge badge-critical" style="margin-left: 8px;">严重 ${base.alarms.critical}</span>
+          </div>
+        </div>
+
+        <div class="stat-card" onclick="window.location.hash='#/repair'" style="cursor: pointer;">
+          <div class="stat-card-header">
+            <span class="stat-card-title">报修工单</span>
+            <div class="stat-icon warn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card-value">${base.repairs.total}</div>
+          <div class="stat-card-sub">
+            <span class="badge badge-pending">待处理 ${base.repairs.pending}</span>
+            <span class="badge badge-processing" style="margin-left: 8px;">处理中 ${base.repairs.processing}</span>
+          </div>
+        </div>
+
+        <div class="stat-card" onclick="window.location.hash='#/property'" style="cursor: pointer;">
+          <div class="stat-card-header">
+            <span class="stat-card-title">物业费收取</span>
+            <div class="stat-icon success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card-value">¥${base.fees.paid_amount.toFixed(0)}</div>
+          <div class="stat-card-sub">
+            <span class="badge badge-unpaid">未缴 ${base.fees.unpaid}</span>
+            <span class="badge badge-overdue" style="margin-left: 8px;">逾期 ${base.fees.overdue}</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-title">邻里圈待审</span>
+            <div class="stat-icon info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card-value">${base.posts.pending}</div>
+          <div class="stat-card-sub">
+            <span class="badge badge-pending">待审核</span>
+          </div>
+        </div>
+
+        <div class="stat-card" onclick="window.location.hash='#/admin/complaints'" style="cursor: pointer;">
+          <div class="stat-card-header">
+            <span class="stat-card-title">业主诉求</span>
+            <div class="stat-icon accent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card-value">${base.complaints.total}</div>
+          <div class="stat-card-sub">
+            <span class="badge badge-submitted">待响应 ${base.complaints.submitted}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-6">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">🚨 告警处置状态</h3>
+              <a href="#/access/devices" class="btn btn-outline btn-sm">设备纳管</a>
+            </div>
+            <div class="panel-body" style="padding: 0;">
+              ${detail.recent_alarms.length === 0 ? '<div class="empty" style="padding: 24px;"><p>暂无告警</p></div>' : `
+              <div class="recent-list">
+                ${detail.recent_alarms.map(a => `
+                  <div class="list-item clickable" onclick="showDeviceDetail('${a.device_id}')">
+                    <div class="alarm-icon" style="flex-shrink: 0; margin-right: 12px;">
+                      ${a.level === 'critical' 
+                        ? '<svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" style="width: 28px; height: 28px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>'
+                        : a.level === 'warning'
+                        ? '<svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" style="width: 28px; height: 28px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>'
+                        : '<svg viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" style="width: 28px; height: 28px;"><circle cx="12" cy="12" r="10"/></svg>'
+                      }
+                    </div>
+                    <div class="list-item-content">
+                      <div class="list-item-title">
+                        ${a.device_name || a.device_id} · ${a.message}
+                        <span class="badge badge-${a.level === 'critical' ? 'critical' : a.level === 'warning' ? 'warning' : 'info'}" style="margin-left: 8px;">${levelLabels[a.level] || a.level}</span>
+                      </div>
+                      <div class="list-item-desc">
+                        ${a.type} · <span class="badge ${getStatusClass(a.status)}" style="font-size: 11px;">${getStatusLabel(a.status)}</span>
+                      </div>
+                      <div class="list-item-meta"><span>${formatTimeAgo(a.created_at)}</span></div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>`}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">🔧 报修工单处置</h3>
+              <a href="#/repair" class="btn btn-outline btn-sm">全部工单</a>
+            </div>
+            <div class="panel-body" style="padding: 0;">
+              ${detail.recent_repairs.length === 0 ? '<div class="empty" style="padding: 24px;"><p>暂无工单</p></div>' : `
+              <div class="recent-list">
+                ${detail.recent_repairs.map(r => `
+                  <div class="list-item clickable" onclick="showRepairDetail('${r.id}')">
+                    <div class="list-item-content">
+                      <div class="list-item-title">
+                        <strong>${r.title}</strong>
+                        <span class="badge ${r.priority === 'high' ? 'badge-danger' : r.priority === 'medium' ? 'badge-warn' : 'badge-info'}" style="margin-left: 8px;">${getPriorityLabel(r.priority)}</span>
+                      </div>
+                      <div class="list-item-desc">${r.location} · ${r.reporter} · ${r.phone}</div>
+                      <div class="list-item-meta">
+                        <span class="badge ${getStatusClass(r.status)}" style="font-size: 11px;">${getStatusLabel(r.status)}</span>
+                        <span>${formatTimeAgo(r.created_at)}</span>
+                        ${r.assignee ? `<span>处理人：${r.assignee}</span>` : ''}
+                      </div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>`}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top: 24px;">
+        <div class="col-6">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">💰 物业费缴纳状态</h3>
+              <a href="#/property" class="btn btn-outline btn-sm">收费管理</a>
+            </div>
+            <div class="panel-body" style="padding: 0;">
+              ${detail.recent_fees.length === 0 ? '<div class="empty" style="padding: 24px;"><p>暂无缴费记录</p></div>' : `
+              <table class="table" style="border: none;">
+                <thead>
+                  <tr>
+                    <th>业主</th>
+                    <th>房间</th>
+                    <th>账期</th>
+                    <th>金额</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${detail.recent_fees.map(f => `
+                    <tr>
+                      <td><strong>${f.owner}</strong></td>
+                      <td>${f.room}</td>
+                      <td>${f.period}</td>
+                      <td style="font-weight: 600;">¥${f.amount.toFixed(2)}</td>
+                      <td><span class="badge ${getStatusClass(f.status)}">${getStatusLabel(f.status)}</span></td>
+                      <td>
+                        ${f.status === 'paid' 
+                          ? `<button class="btn btn-outline btn-sm" onclick="showFeeDetail(${f.id})">票据</button>`
+                          : `<button class="btn btn-outline btn-sm" onclick="showFeeDetail(${f.id})">催缴</button>`
+                        }
+                      </td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>`}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">📢 诉求处置流转</h3>
+              <a href="#/admin/complaints" class="btn btn-outline btn-sm">诉求管理</a>
+            </div>
+            <div class="panel-body" style="padding: 0;">
+              ${detail.complaint_logs.length === 0 ? '<div class="empty" style="padding: 24px;"><p>暂无流转记录</p></div>' : `
+              <div class="recent-list" style="max-height: 360px; overflow-y: auto;">
+                ${detail.complaint_logs.slice(0, 8).map(c => `
+                  <div class="list-item clickable" onclick="showComplaintDetail('${c.complaint_id}')">
+                    <div class="timeline-dot" style="flex-shrink: 0; margin-right: 12px; background: var(--accent); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                      ${getActionIcon(c.action)}
+                    </div>
+                    <div class="list-item-content">
+                      <div class="list-item-title">
+                        ${getActionLabel(c.action)} · <strong style="color: var(--accent);">${c.complaint_title || c.complaint_id}</strong>
+                      </div>
+                      <div class="list-item-desc">${c.detail}</div>
+                      <div class="list-item-meta">
+                        <span>操作人：${c.operator}</span>
+                        <span>${formatTimeAgo(c.created_at)}</span>
+                      </div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>`}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 24px;">
+        <div class="panel-header">
+          <h3 class="panel-title">🚪 最近通行记录</h3>
+          <a href="#/access" class="btn btn-outline btn-sm">查看全部</a>
+        </div>
+        <div class="panel-body" style="padding: 0;">
+          <div class="recent-list">
+            ${base.recent_access.map(record => `
+              <div class="list-item">
+                <div class="list-item-content">
+                  <div class="list-item-title">
+                    ${record.user_name} · ${getMethodLabel(record.method)}
+                    <span class="badge ${record.status === 'success' ? 'badge-approved' : 'badge-rejected'}" style="margin-left: 8px;">
+                      ${record.status === 'success' ? '成功' : '失败'}
+                    </span>
+                  </div>
+                  <div class="list-item-desc">${record.device_name || record.device_id}</div>
+                  <div class="list-item-meta">
+                    <span>${formatTimeAgo(record.created_at)}</span>
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function showDeviceDetail(deviceId) {
+  const loading = showModal("设备详情", `<div class="loading"><div class="spinner"></div><p>加载中...</p></div>`);
+  api(`/api/access/devices/${deviceId}`).then(data => {
+    loading.remove();
+    if (!data.ok) {
+      showModal("加载失败", `<p>${data.error}</p>`);
+      return;
+    }
+    const d = data.device;
+    const inspectionLabels = { daily: "日检", weekly: "周检", monthly: "月检", fault: "故障复查" };
+    const stageLabels = { download: "下载固件", verify: "校验完整性", backup: "备份配置", flash: "刷写固件", reboot: "设备重启", verify_version: "版本验证" };
+    const content = `
+      <div style="display: grid; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div>
+            <h3 style="margin: 0 0 4px; font-size: 18px;">${d.name}</h3>
+            <p style="margin: 0; color: var(--text-muted);">${d.id} · ${d.location} · ${d.type === 'gate' ? '大门' : '单元门'}</p>
+          </div>
+          <span class="badge ${getStatusClass(d.status)}" style="font-size: 13px;">${getStatusLabel(d.status)}</span>
+        </div>
+
+        <div class="stats-summary" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="summary-card"><div class="summary-label">固件版本</div><div class="summary-value">${d.firmware_version}</div></div>
+          <div class="summary-card"><div class="summary-label">最后心跳</div><div class="summary-value" style="font-size: 14px;">${formatTimeAgo(d.last_heartbeat)}</div></div>
+          <div class="summary-card"><div class="summary-label">离线缓存</div><div class="summary-value">${d.offline_cache}<span class="summary-unit">条</span></div></div>
+          <div class="summary-card"><div class="summary-label">创建时间</div><div class="summary-value" style="font-size: 14px;">${formatDate(d.created_at).slice(0, 10)}</div></div>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span class="feature-tag ${d.has_bluetooth ? 'on' : 'off'}">蓝牙 ${d.has_bluetooth ? '✓' : '✗'}</span>
+          <span class="feature-tag ${d.has_nfc ? 'on' : 'off'}">NFC ${d.has_nfc ? '✓' : '✗'}</span>
+          <span class="feature-tag ${d.has_qr ? 'on' : 'off'}">二维码 ${d.has_qr ? '✓' : '✗'}</span>
+          <span class="feature-tag ${d.has_face ? 'on' : 'off'}">人脸识别 ${d.has_face ? '✓' : '✗'}</span>
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">🔍 设备复查记录</h4>
+          ${data.inspections.length === 0 ? '<div class="empty" style="padding: 16px;"><p>暂无复查记录</p></div>' : `
+          <table class="table" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <thead>
+              <tr>
+                <th>类型</th>
+                <th>检查人</th>
+                <th>发现与处理</th>
+                <th>状态</th>
+                <th>时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.inspections.map(i => `
+                <tr>
+                  <td><span class="badge badge-info">${inspectionLabels[i.inspection_type] || i.inspection_type}</span></td>
+                  <td>${i.inspector}</td>
+                  <td style="max-width: 300px;">${i.findings}</td>
+                  <td><span class="badge ${i.status === 'normal' ? 'badge-approved' : i.status === 'warning' ? 'badge-warn' : i.status === 'processing' ? 'badge-processing' : 'badge-completed'}">${i.status === 'normal' ? '正常' : i.status === 'warning' ? '注意' : i.status === 'processing' ? '处理中' : '已解决'}</span></td>
+                  <td>${formatTimeAgo(i.created_at)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>`}
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">⚠️ 告警与处置责任人</h4>
+          ${data.alarms.length === 0 ? '<div class="empty" style="padding: 16px;"><p>暂无告警记录</p></div>' : `
+          ${data.alarms.map(a => `
+            <div class="alarm-item ${a.level}" style="margin-bottom: 12px;">
+              <div class="alarm-content" style="flex: 1;">
+                <div class="alarm-title">${a.message} <span class="badge badge-${a.level === 'critical' ? 'critical' : a.level === 'warning' ? 'warning' : 'info'}">${a.level === 'critical' ? '严重' : a.level === 'warning' ? '警告' : '提示'}</span></div>
+                <div class="alarm-meta"><span>${formatTimeAgo(a.created_at)}</span><span class="badge ${getStatusClass(a.status)}">${getStatusLabel(a.status)}</span></div>
+              </div>
+            </div>
+            ${data.dispatches.filter(dp => dp.alarm_id === a.id).length > 0 ? `
+            <div style="margin: 0 0 16px 44px; padding: 12px 16px; background: var(--bg-secondary); border-radius: 8px;">
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">处置过程：</div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                ${data.dispatches.filter(dp => dp.alarm_id === a.id).map(dp => `
+                  <div style="display: flex; align-items: start; gap: 8px; font-size: 13px;">
+                    <span style="color: var(--accent); font-weight: 600;">•</span>
+                    <div>
+                      <strong>${dp.handler}</strong> · ${dp.action}
+                      <span class="badge ${getStatusClass(dp.status)}" style="font-size: 11px; margin: 0 6px;">${getStatusLabel(dp.status)}</span>
+                      <div style="color: var(--text-muted); margin-top: 2px;">${dp.result || dp.action} · ${formatTimeAgo(dp.assigned_at)}</div>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>` : ''}
+          `).join("")}`}
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">📡 固件OTA升级过程</h4>
+          ${data.ota_records.length === 0 ? '<div class="empty" style="padding: 16px;"><p>暂无升级记录</p></div>' : `
+          ${data.ota_records.map(o => `
+            <div style="padding: 12px 16px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <strong>${o.current_version} → ${o.version}</strong>
+                <span class="badge ${getStatusClass(o.status)}">${getStatusLabel(o.status)}</span>
+              </div>
+              <div class="progress-bar" style="margin: 8px 0;">
+                <div class="progress-fill" style="width: ${o.progress}%;"></div>
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">进度：${o.progress}% · 开始于 ${formatDate(o.created_at)}</div>
+              ${data.ota_progress.filter(op => op.ota_id === o.id).length > 0 ? `
+              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);">
+                ${data.ota_progress.filter(op => op.ota_id === o.id).map(op => `
+                  <div style="display: flex; gap: 8px; font-size: 12px; align-items: center;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="width: 14px; height: 14px; flex-shrink: 0;"><polyline points="20,6 9,17 4,12"/></svg>
+                    <div>
+                      <strong>${stageLabels[op.stage] || op.stage}</strong>：${op.detail}
+                      <span style="color: var(--text-muted);"> · ${formatTimeAgo(op.created_at)}</span>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>` : ''}
+            </div>
+          `).join("")}`}
+        </div>
+      </div>
+    `;
+    showModal(`${d.name} - 设备详情`, content);
+  });
+}
+
+function showRepairDetail(orderId) {
+  const loading = showModal("工单详情", `<div class="loading"><div class="spinner"></div><p>加载中...</p></div>`);
+  api(`/api/repair/detail/${orderId}`).then(data => {
+    loading.remove();
+    if (!data.ok) {
+      showModal("加载失败", `<p>${data.error}</p>`);
+      return;
+    }
+    const o = data.order;
+    const typeLabels = { equipment: "设备故障", plumbing: "水电维修", public_facility: "公共设施", access_control: "门禁系统" };
+    const photoLabels = { report: "📷 报修拍照", process: "🔧 维修过程", done: "✅ 维修完成" };
+    const content = `
+      <div style="display: grid; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div>
+            <h3 style="margin: 0 0 4px; font-size: 18px;">${o.title}</h3>
+            <p style="margin: 0; color: var(--text-muted);">工单号：<code>${o.id}</code></p>
+          </div>
+          <span class="badge ${getStatusClass(o.status)}" style="font-size: 13px;">${getStatusLabel(o.status)}</span>
+        </div>
+
+        <div class="stats-summary" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="summary-card"><div class="summary-label">报修人</div><div class="summary-value" style="font-size: 14px;">${o.reporter}</div></div>
+          <div class="summary-card"><div class="summary-label">联系电话</div><div class="summary-value" style="font-size: 14px;">${o.phone}</div></div>
+          <div class="summary-card"><div class="summary-label">位置</div><div class="summary-value" style="font-size: 14px;">${o.location}</div></div>
+          <div class="summary-card"><div class="summary-label">处理人</div><div class="summary-value" style="font-size: 14px;">${o.assignee || '-'}</div></div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <span class="badge badge-info">${typeLabels[o.type] || o.type}</span>
+          <span class="badge ${o.priority === 'high' ? 'badge-danger' : o.priority === 'medium' ? 'badge-warn' : 'badge-info'}">优先级：${getPriorityLabel(o.priority)}</span>
+          <span class="badge badge-pending">创建：${formatTimeAgo(o.created_at)}</span>
+          ${o.updated_at !== o.created_at ? `<span class="badge badge-processing">更新：${formatTimeAgo(o.updated_at)}</span>` : ''}
+        </div>
+
+        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">📝 问题描述</div>
+          <div style="line-height: 1.7; color: var(--text-primary);">${o.description}</div>
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">📸 照片凭证</h4>
+          ${data.photos.length === 0 ? '<div class="empty" style="padding: 16px;"><p>暂无照片</p></div>' : `
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;">
+            ${data.photos.map(p => `
+              <div style="position: relative;">
+                <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--bg-secondary), var(--border)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 48px;">
+                  ${photoLabels[p.photo_type] ? photoLabels[p.photo_type].split(' ')[0] : '🖼️'}
+                </div>
+                <div style="margin-top: 6px; font-size: 12px;">
+                  <div style="color: var(--text-secondary);">${photoLabels[p.photo_type] || p.photo_type}</div>
+                  <div style="color: var(--text-muted);">${p.uploaded_by} · ${formatTimeAgo(p.created_at)}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>`}
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">🔄 工单流转</h4>
+          ${renderTimeline(data.logs)}
+        </div>
+
+        ${data.feedback ? `
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">⭐ 业主评价</h4>
+          <div style="padding: 16px; background: linear-gradient(135deg, #fefce8, #fef9c3); border: 1px solid #fde047; border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <div><span style="font-size: 12px; color: var(--text-muted);">响应及时</span><br/>${renderStars(data.feedback.timeliness, 18)}</div>
+                <div><span style="font-size: 12px; color: var(--text-muted);">服务态度</span><br/>${renderStars(data.feedback.attitude, 18)}</div>
+                <div><span style="font-size: 12px; color: var(--text-muted);">维修质量</span><br/>${renderStars(data.feedback.quality, 18)}</div>
+                <div><span style="font-size: 12px; color: var(--text-muted);">综合满意</span><br/>${renderStars(data.feedback.satisfaction, 18)}</div>
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted);">${formatTimeAgo(data.feedback.created_at)}</div>
+            </div>
+            ${data.feedback.comment ? `<div style="line-height: 1.7; color: var(--text-secondary); font-size: 14px;">"${data.feedback.comment}"</div>` : ''}
+          </div>
+        </div>` : ''}
+      </div>
+    `;
+    const actions = `
+      ${o.status === 'pending' ? '<button class="btn btn-primary">自动派单</button>' : ''}
+      ${o.status === 'processing' ? '<button class="btn btn-success">标记完成</button>' : ''}
+      <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+    `;
+    showModal(`${o.title} - 工单详情`, content, actions);
+  });
+}
+
+function showFeeDetail(feeId) {
+  const loading = showModal("缴费详情", `<div class="loading"><div class="spinner"></div><p>加载中...</p></div>`);
+  api(`/api/property/fees/${feeId}`).then(data => {
+    loading.remove();
+    if (!data.ok) {
+      showModal("加载失败", `<p>${data.error}</p>`);
+      return;
+    }
+    const f = data.fee;
+    const methodLabels = { wechat: "微信支付", alipay: "支付宝", bank_transfer: "银行转账" };
+    const content = `
+      <div style="display: grid; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div>
+            <h3 style="margin: 0 0 4px; font-size: 18px;">${f.owner} - 物业费</h3>
+            <p style="margin: 0; color: var(--text-muted);">${f.room} · ${f.period} 账期</p>
+          </div>
+          <span class="badge ${getStatusClass(f.status)}" style="font-size: 13px;">${getStatusLabel(f.status)}</span>
+        </div>
+
+        <div class="stats-summary" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="summary-card"><div class="summary-label">应收金额</div><div class="summary-value">¥${f.amount.toFixed(2)}</div></div>
+          <div class="summary-card"><div class="summary-label">状态</div><div class="summary-value" style="font-size: 14px;">${getStatusLabel(f.status)}</div></div>
+          <div class="summary-card"><div class="summary-label">票据号</div><div class="summary-value" style="font-size: 14px;">${f.invoice_no || '-'}</div></div>
+        </div>
+
+        ${data.invoice ? `
+        <div style="padding: 16px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #86efac; border-radius: 8px;">
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--success);">📄 电子票据信息</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; font-size: 13px;">
+            <div><span style="color: var(--text-muted);">发票代码：</span><strong>${data.invoice.invoice_code}</strong></div>
+            <div><span style="color: var(--text-muted);">发票号码：</span><strong>${data.invoice.invoice_number}</strong></div>
+            <div><span style="color: var(--text-muted);">开票金额：</span><strong style="color: var(--accent);">¥${data.invoice.amount.toFixed(2)}</strong></div>
+            <div><span style="color: var(--text-muted);">开票时间：</span>${formatDate(data.invoice.created_at)}</div>
+          </div>
+        </div>` : ''}
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">💰 支付记录</h4>
+          ${data.payments.length === 0 ? `
+          <div style="padding: 24px; background: #fef2f2; border: 1px dashed #fecaca; border-radius: 8px; text-align: center; color: var(--danger);">
+            ⚠️ 尚未支付，请尽快缴纳 ${f.period} 账期物业费
+          </div>` : `
+          <table class="table" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <thead>
+              <tr>
+                <th>支付方式</th>
+                <th>交易流水号</th>
+                <th>支付金额</th>
+                <th>支付人</th>
+                <th>支付时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.payments.map(p => `
+                <tr>
+                  <td><span class="badge badge-info">${methodLabels[p.payment_method] || p.payment_method}</span></td>
+                  <td><code style="font-size: 12px;">${p.transaction_id}</code></td>
+                  <td style="font-weight: 600; color: var(--success);">¥${p.amount.toFixed(2)}</td>
+                  <td>${p.payer}</td>
+                  <td>${formatDate(p.paid_at)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>`}
+        </div>
+      </div>
+    `;
+    const actions = `
+      ${f.status === 'unpaid' ? '<button class="btn btn-primary">发送催缴通知</button>' : ''}
+      ${data.invoice ? '<button class="btn btn-outline">下载电子发票</button>' : ''}
+      <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+    `;
+    showModal(`${f.owner} 缴费详情`, content, actions);
+  });
+}
+
+function showComplaintDetail(ticketId) {
+  const loading = showModal("诉求详情", `<div class="loading"><div class="spinner"></div><p>加载中...</p></div>`);
+  api(`/api/admin/complaints/${ticketId}`).then(data => {
+    loading.remove();
+    if (!data.ok) {
+      showModal("加载失败", `<p>${data.error}</p>`);
+      return;
+    }
+    const t = data.ticket;
+    const typeLabels = { noise: "噪音扰民", sanitation: "环境卫生", parking: "停车管理", security: "安全问题", greening: "绿化维护" };
+    const content = `
+      <div style="display: grid; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div>
+            <h3 style="margin: 0 0 4px; font-size: 18px;">${t.title}</h3>
+            <p style="margin: 0; color: var(--text-muted);">工单号：<code>${t.id}</code></p>
+          </div>
+          <span class="badge ${getStatusClass(t.status)}" style="font-size: 13px;">${getStatusLabel(t.status)}</span>
+        </div>
+
+        <div class="stats-summary" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="summary-card"><div class="summary-label">诉求人</div><div class="summary-value" style="font-size: 14px;">${t.owner}</div></div>
+          <div class="summary-card"><div class="summary-label">联系电话</div><div class="summary-value" style="font-size: 14px;">${t.phone}</div></div>
+          <div class="summary-card"><div class="summary-label">响应时间</div><div class="summary-value" style="font-size: 14px;">${t.response_time ? t.response_time + ' 分钟' : '-'}</div></div>
+          <div class="summary-card"><div class="summary-label">提交时间</div><div class="summary-value" style="font-size: 14px;">${formatTimeAgo(t.created_at).slice(0, 6)}</div></div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <span class="badge badge-info">${typeLabels[t.type] || t.type}</span>
+          ${t.responded_at ? `<span class="badge badge-processing">响应：${formatTimeAgo(t.responded_at)}</span>` : ''}
+          ${t.closed_at ? `<span class="badge badge-completed">关闭：${formatTimeAgo(t.closed_at)}</span>` : ''}
+        </div>
+
+        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">📝 诉求详情</div>
+          <div style="line-height: 1.7; color: var(--text-primary);">${t.description}</div>
+        </div>
+
+        <div>
+          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">🔄 处置流转</h4>
+          ${renderTimeline(data.logs)}
+        </div>
+      </div>
+    `;
+    const actions = `
+      ${t.status === 'submitted' ? '<button class="btn btn-primary">受理诉求</button>' : ''}
+      ${t.status === 'processing' ? '<button class="btn btn-success">关闭工单</button>' : ''}
+      <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+    `;
+    showModal(`${t.title} - 诉求详情`, content, actions);
+  });
+}
+
+function showQrVisitorFlow() {
+  const content = `
+    <div style="display: grid; gap: 24px;">
+      <div style="text-align: center; padding: 16px;">
+        <div id="qrStep1" style="display: block;">
+          <h3 style="margin: 0 0 12px; font-size: 18px;">📱 访客扫码申请</h3>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">请访客填写信息，生成临时通行二维码</p>
+          <div style="max-width: 400px; margin: 0 auto; text-align: left; display: grid; gap: 16px;">
+            <div>
+              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">访客姓名</label>
+              <input id="visitorName" type="text" class="form-input" placeholder="请输入访客姓名" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px;"/>
+            </div>
+            <div>
+              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">访客电话</label>
+              <input id="visitorPhone" type="text" class="form-input" placeholder="请输入访客电话" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px;"/>
+            </div>
+            <div>
+              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">拜访业主</label>
+              <select id="hostSelect" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white;">
+                <option value="张三|1号楼1单元101|DEV-001">张三 - 1号楼1单元101</option>
+                <option value="李四|1号楼1单元102|DEV-003">李四 - 1号楼1单元102</option>
+                <option value="王五|2号楼1单元301|DEV-001">王五 - 2号楼1单元301</option>
+                <option value="赵六|2号楼2单元502|DEV-001">赵六 - 2号楼2单元502</option>
+                <option value="陈七|3号楼1单元801|DEV-005">陈七 - 3号楼1单元801</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">有效时长</label>
+              <select id="validHours" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white;">
+                <option value="2">2小时</option>
+                <option value="4">4小时</option>
+                <option value="8">8小时</option>
+                <option value="24">24小时</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="submitVisitorQr()">📨 提交申请并生成二维码</button>
+          </div>
+        </div>
+
+        <div id="qrStep2" style="display: none;">
+          <div style="padding: 8px 16px; background: #dcfce7; color: #166534; border-radius: 8px; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="20,6 9,17 4,12"/></svg>
+            申请已提交，等待业主授权确认...
+          </div>
+          <div style="max-width: 480px; margin: 0 auto;">
+            <div style="padding: 20px; background: var(--bg-secondary); border-radius: 12px; text-align: left;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <strong>访客信息</strong>
+                <span id="qrToken" style="font-family: monospace; color: var(--accent);">QR-20260618-xxx</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 13px; margin-bottom: 16px;">
+                <div><span style="color: var(--text-muted);">访客：</span><strong id="dVisitorName">-</strong></div>
+                <div><span style="color: var(--text-muted);">电话：</span><strong id="dVisitorPhone">-</strong></div>
+                <div><span style="color: var(--text-muted);">业主：</span><strong id="dHostName">-</strong></div>
+                <div><span style="color: var(--text-muted);">房间：</span><strong id="dHostRoom">-</strong></div>
+                <div><span style="color: var(--text-muted);">设备：</span><strong id="dDeviceName">-</strong></div>
+                <div><span style="color: var(--text-muted);">有效期：</span><strong id="dValid">-</strong></div>
+              </div>
+              <div style="padding: 16px; background: white; border-radius: 8px; margin-bottom: 16px;">
+                <div style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 8px;">授权状态：待确认</div>
+                <div style="width: 100%; height: 12px; background: var(--border); border-radius: 6px; overflow: hidden;">
+                  <div id="progressBar" style="width: 30%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: width 0.5s;"></div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-success" style="flex: 1;" onclick="approveQr()">✅ 模拟业主授权</button>
+                <button class="btn btn-danger" style="flex: 1;" onclick="rejectQr()">❌ 拒绝申请</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="qrStep3" style="display: none;">
+          <div style="padding: 8px 16px; background: #fefce8; color: #854d0e; border-radius: 8px; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px;">
+            ⏱️ 业主已授权，请访客到门禁设备扫码开门
+          </div>
+          <div style="max-width: 400px; margin: 0 auto;">
+            <div style="aspect-ratio: 1; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+              <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #111 25%, transparent 25%), linear-gradient(-45deg, #111 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #111 75%), linear-gradient(-45deg, transparent 75%, #111 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+                  <div style="font-size: 12px; color: var(--text-muted);">扫码可通行</div>
+                  <div style="font-weight: 700; font-size: 16px; color: var(--accent);" id="qrToken3">QR-xxx</div>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: center; margin-bottom: 16px;">
+              <div style="font-size: 13px; color: var(--text-muted);">二维码有效期至</div>
+              <div id="qrExpire" style="font-weight: 600;">-</div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="scanAndOpen()">📸 模拟访客扫码开门</button>
+          </div>
+        </div>
+
+        <div id="qrStep4" style="display: none;">
+          <div style="text-align: center; padding: 24px;">
+            <div style="width: 80px; height: 80px; background: var(--success); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 16px;">✓</div>
+            <h3 style="margin: 0 0 8px; color: var(--success);">开门成功！</h3>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">访客已成功通过二维码验证通行</p>
+            <div style="max-width: 400px; margin: 0 auto; text-align: left; padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">通行结果</div>
+              <div style="display: grid; gap: 8px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行凭证：</span><strong id="resToken">-</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行设备：</span><strong id="resDevice">-</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行人：</span><strong id="resVisitor">-</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">被访业主：</span><strong id="resHost">-</strong></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">验证结果：</span><span class="badge badge-approved">验证通过</span></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行时间：</span><strong id="resTime">-</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  const actions = `
+    <button class="btn btn-outline" onclick="restartQrFlow()">🔄 重新申请</button>
+    <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">完成</button>
+  `;
+  showModal("二维码扫码开门 - 访客闭环", content, actions);
+}
+
+let qrData = {};
+
+function submitVisitorQr() {
+  const name = document.getElementById("visitorName").value.trim();
+  const phone = document.getElementById("visitorPhone").value.trim();
+  const host = document.getElementById("hostSelect").value;
+  const hours = parseInt(document.getElementById("validHours").value);
+  if (!name || !phone) {
+    alert("请填写访客姓名和电话");
+    return;
+  }
+  const [hostName, hostRoom, deviceId] = host.split("|");
+  const token = "QR-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + "-" + Math.floor(Math.random() * 900 + 100);
+  qrData = { name, phone, hostName, hostRoom, deviceId, deviceName: deviceId.replace("DEV-", ""), token, hours };
+  document.getElementById("qrStep1").style.display = "none";
+  document.getElementById("qrStep2").style.display = "block";
+  document.getElementById("dVisitorName").textContent = name;
+  document.getElementById("dVisitorPhone").textContent = phone;
+  document.getElementById("dHostName").textContent = hostName;
+  document.getElementById("dHostRoom").textContent = hostRoom;
+  document.getElementById("dDeviceName").textContent = deviceId;
+  document.getElementById("dValid").textContent = hours + " 小时";
+  document.getElementById("qrToken").textContent = token;
+  setTimeout(() => { const bar = document.getElementById("progressBar"); if (bar) bar.style.width = "60%"; }, 500);
+}
+
+function approveQr() {
+  const bar = document.getElementById("progressBar");
+  if (bar) bar.style.width = "100%";
+  setTimeout(() => {
+    document.getElementById("qrStep2").style.display = "none";
+    document.getElementById("qrStep3").style.display = "block";
+    document.getElementById("qrToken3").textContent = qrData.token;
+    const expire = new Date(Date.now() + qrData.hours * 3600 * 1000);
+    document.getElementById("qrExpire").textContent = expire.toLocaleString("zh-CN");
+  }, 600);
+}
+
+function rejectQr() {
+  qrData.status = "rejected";
+  alert("业主已拒绝此访客申请");
+  document.getElementById("qrStep2").style.display = "none";
+  document.getElementById("qrStep1").style.display = "block";
+}
+
+function scanAndOpen() {
+  document.getElementById("qrStep3").style.display = "none";
+  document.getElementById("qrStep4").style.display = "block";
+  document.getElementById("resToken").textContent = qrData.token;
+  document.getElementById("resDevice").textContent = qrData.deviceId;
+  document.getElementById("resVisitor").textContent = qrData.name;
+  document.getElementById("resHost").textContent = qrData.hostName + " (" + qrData.hostRoom + ")";
+  document.getElementById("resTime").textContent = new Date().toLocaleString("zh-CN");
+}
+
+function restartQrFlow() {
+  document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
+  showQrVisitorFlow();
+}
+
 function renderRepair() {
   showLoading();
   api("/api/repair").then(data => {
@@ -793,8 +1704,8 @@ function renderRepair() {
                   <td><span class="badge ${getStatusClass(o.status)}">${getStatusLabel(o.status)}</span></td>
                   <td>${formatDate(o.created_at)}</td>
                   <td>
-                    <button class="btn btn-outline btn-sm">查看</button>
-                    ${o.status === 'pending' ? '<button class="btn btn-primary btn-sm" style="margin-left: 4px;">接单</button>' : ''}
+                    <button class="btn btn-outline btn-sm" onclick="showRepairDetail('${o.id}')">查看</button>
+                    ${o.status === 'pending' ? `<button class="btn btn-primary btn-sm" style="margin-left: 4px;" onclick="event.stopPropagation(); alert('已模拟接单：${o.id}')">接单</button>` : ''}
                   </td>
                 </tr>
               `).join("")}
@@ -996,7 +1907,7 @@ function renderProperty() {
                       <td>${f.paid_at ? formatDate(f.paid_at) : '-'}</td>
                       <td>
                         ${f.status === 'paid' 
-                          ? '<button class="btn btn-outline btn-sm">查看票据</button>'
+                          ? `<button class="btn btn-outline btn-sm" onclick="showFeeDetail(${f.id})">查看票据</button>`
                           : '<button class="btn btn-primary btn-sm">催缴</button>'
                         }
                       </td>
@@ -1448,8 +2359,8 @@ function renderComplaints() {
                   <td><span class="badge ${getStatusClass(t.status)}">${getStatusLabel(t.status)}</span></td>
                   <td>${formatDate(t.created_at)}</td>
                   <td>
-                    <button class="btn btn-outline btn-sm">查看</button>
-                    ${t.status === 'submitted' ? '<button class="btn btn-primary btn-sm" style="margin-left: 4px;">受理</button>' : ''}
+                    <button class="btn btn-outline btn-sm" onclick="showComplaintDetail('${t.id}')">查看</button>
+                    ${t.status === 'submitted' ? `<button class="btn btn-primary btn-sm" style="margin-left: 4px;" onclick="event.stopPropagation(); alert('已受理诉求：${t.id}')">受理</button>` : ''}
                   </td>
                 </tr>
               `).join("")}
@@ -1612,7 +2523,7 @@ function router() {
   }
 
   const renderMap = {
-    "dashboard": renderDashboard,
+    "dashboard": showDashboardDetail,
     "access": renderAccess,
     "devices": renderDevices,
     "repair": renderRepair,
