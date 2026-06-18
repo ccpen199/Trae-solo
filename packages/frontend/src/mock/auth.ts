@@ -1,9 +1,34 @@
 import type { User } from '@neighborhood/shared';
 
+export interface AccessCard {
+  cardNumber: string;
+  cardType: 'physical' | 'virtual' | 'nfc' | 'ble';
+  buildingName: string;
+  status: 'active' | 'inactive';
+  lastUsedAt?: Date;
+}
+
+export interface HouseholdInfo {
+  buildingId: string;
+  buildingName: string;
+  roomNo: string;
+  householdType: 'owner' | 'tenant' | 'family';
+  moveInDate: Date;
+}
+
+export interface AdminPermission {
+  key: string;
+  label: string;
+  path: string;
+}
+
 export interface MockUser extends User {
   password: string;
   communityName: string;
   subdomain: string;
+  household?: HouseholdInfo;
+  accessCards?: AccessCard[];
+  permissions?: AdminPermission[];
 }
 
 export const mockUsers: MockUser[] = [
@@ -24,6 +49,15 @@ export const mockUsers: MockUser[] = [
     lastLoginAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
+    permissions: [
+      { key: 'dashboard', label: '全局数据概览', path: '/admin' },
+      { key: 'community-health', label: '社区健康度仪表盘', path: '/admin/community-health' },
+      { key: 'trace-logs', label: '虚假信息溯源日志', path: '/admin/trace-logs' },
+      { key: 'risk-control', label: '红包资金池风控模型', path: '/admin/risk-control' },
+      { key: 'transactions', label: '担保交易管理', path: '/admin/transactions' },
+      { key: 'partners', label: '合伙人分润结算', path: '/admin/partners' },
+      { key: 'property-integration', label: '物业SAML API网关对接', path: '/admin/property-integration' },
+    ],
   },
   {
     id: 'ops-001',
@@ -41,6 +75,12 @@ export const mockUsers: MockUser[] = [
     lastLoginAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
+    permissions: [
+      { key: 'dashboard', label: '本社区数据概览', path: '/admin' },
+      { key: 'community-health', label: '朝阳家园健康度', path: '/admin/community-health' },
+      { key: 'trace-logs', label: '话题溯源日志', path: '/admin/trace-logs' },
+      { key: 'risk-control', label: '红包池风控查看', path: '/admin/risk-control' },
+    ],
   },
   {
     id: 'property-001',
@@ -55,6 +95,7 @@ export const mockUsers: MockUser[] = [
     password: 'property123',
     communityName: '朝阳家园物业',
     subdomain: 'chaoyang',
+    samlIdentityId: 'saml-chaoyang-property-admin-001',
     lastLoginAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -72,6 +113,7 @@ export const mockUsers: MockUser[] = [
     password: 'staff123',
     communityName: '朝阳家园物业',
     subdomain: 'chaoyang',
+    samlIdentityId: 'saml-chaoyang-property-staff-001',
     lastLoginAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -80,7 +122,7 @@ export const mockUsers: MockUser[] = [
     id: 'resident-001',
     tenantId: 'tenant-chaoyang',
     phone: '13900001001',
-    nickname: '朝阳业主',
+    nickname: '朝阳业主陈明',
     avatar: '',
     realName: '陈明',
     idCardType: 'id_card',
@@ -94,12 +136,35 @@ export const mockUsers: MockUser[] = [
     lastLoginAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
+    household: {
+      buildingId: 'bld-cy-003',
+      buildingName: '朝阳家园3号楼',
+      roomNo: '1单元2202室',
+      householdType: 'owner',
+      moveInDate: new Date('2022-06-18'),
+    },
+    accessCards: [
+      {
+        cardNumber: 'CY-ACC-0030101220201',
+        cardType: 'virtual',
+        buildingName: '3号楼单元门',
+        status: 'active',
+        lastUsedAt: new Date('2026-06-17T08:12:34'),
+      },
+      {
+        cardNumber: 'CY-ACC-GATE-0088',
+        cardType: 'nfc',
+        buildingName: '园区主入口',
+        status: 'active',
+        lastUsedAt: new Date('2026-06-17T19:45:21'),
+      },
+    ],
   },
   {
     id: 'resident-002',
     tenantId: 'tenant-haidian',
     phone: '13900002002',
-    nickname: '海淀住户',
+    nickname: '海淀住户李华',
     avatar: '',
     realName: '李华',
     idCardType: 'id_card',
@@ -108,11 +173,27 @@ export const mockUsers: MockUser[] = [
     status: 'active',
     verificationStatus: 'verified',
     password: 'resident123',
-    communityName: '海定花园',
+    communityName: '海淀花园',
     subdomain: 'haidian',
     lastLoginAt: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
+    household: {
+      buildingId: 'bld-hd-007',
+      buildingName: '海淀花园7号楼',
+      roomNo: '2单元1503室',
+      householdType: 'tenant',
+      moveInDate: new Date('2024-03-01'),
+    },
+    accessCards: [
+      {
+        cardNumber: 'HD-ACC-00702150301',
+        cardType: 'virtual',
+        buildingName: '7号楼单元门',
+        status: 'active',
+        lastUsedAt: new Date('2026-06-16T07:30:10'),
+      },
+    ],
   },
 ];
 
@@ -125,6 +206,10 @@ export interface TestAccount {
   roleLabel: string;
   icon: string;
   color: string;
+  identityTags: string[];
+  permissionHints: string[];
+  subdomain: string;
+  communityName: string;
 }
 
 export const testAccounts: TestAccount[] = [
@@ -137,26 +222,54 @@ export const testAccounts: TestAccount[] = [
     roleLabel: '平台管理员',
     icon: 'shield',
     color: 'purple',
+    identityTags: ['平台级', '全局权限', 'SAML运维'],
+    permissionHints: [
+      '社区健康度仪表盘',
+      '虚假信息溯源日志',
+      '红包资金池风控模型',
+      '担保交易 & 分润结算',
+      '物业API网关对接',
+    ],
+    subdomain: 'platform',
+    communityName: '邻里数字基座',
   },
   {
     label: '社区运营',
-    description: '社区运营管理，话题/活动/数据看板',
+    description: '朝阳家园社区运营管理',
     phone: '13800000001',
     password: 'ops123',
     role: 'tenant_admin',
     roleLabel: '社区管理员',
     icon: 'settings',
     color: 'blue',
+    identityTags: ['朝阳家园', '子域 chaoyang', '社区运营'],
+    permissionHints: [
+      '本社区健康度',
+      '话题溯源日志',
+      '半径优选运营配置',
+      '小金库任务活动',
+    ],
+    subdomain: 'chaoyang',
+    communityName: '朝阳家园',
   },
   {
     label: '物业主管',
-    description: '物业管理员，门禁/缴费/报修/投诉',
+    description: '朝阳家园物业管理员，SAML单点登录',
     phone: '13800000002',
     password: 'property123',
     role: 'property_admin',
     roleLabel: '物业管理员',
     icon: 'building',
     color: 'green',
+    identityTags: ['朝阳家园物业', 'SAML IdP', '王主管'],
+    permissionHints: [
+      '门禁权限管理',
+      '物业费账单',
+      '报修工单派单',
+      '投诉处理响应',
+    ],
+    subdomain: 'chaoyang',
+    communityName: '朝阳家园物业',
   },
   {
     label: '物业员工',
@@ -167,16 +280,31 @@ export const testAccounts: TestAccount[] = [
     roleLabel: '物业员工',
     icon: 'wrench',
     color: 'orange',
+    identityTags: ['张师傅', '工程维修', 'SAML账号'],
+    permissionHints: ['报修工单处理', '巡检记录', '门禁开闸记录'],
+    subdomain: 'chaoyang',
+    communityName: '朝阳家园物业',
   },
   {
     label: '朝阳业主',
-    description: '实名住户，门禁绑定，完整使用权限',
+    description: '实名住户+门禁绑定+产权业主',
     phone: '13900001001',
     password: 'resident123',
     role: 'resident',
-    roleLabel: '实名住户',
+    roleLabel: '实名住户(房主)',
     icon: 'user',
     color: 'indigo',
+    identityTags: ['陈明', '3号楼1单元2202', '房主', '身份证110101****1234'],
+    permissionHints: [
+      '邻里话题发帖',
+      '半径优选下单',
+      '二手担保交易',
+      '小金库任务 & 红包',
+      '合伙人分润',
+      '物业服务报修',
+    ],
+    subdomain: 'chaoyang',
+    communityName: '朝阳家园',
   },
   {
     label: '海淀住户',
@@ -184,9 +312,18 @@ export const testAccounts: TestAccount[] = [
     phone: '13900002002',
     password: 'resident123',
     role: 'resident',
-    roleLabel: '实名住户',
+    roleLabel: '实名住户(租户)',
     icon: 'user',
     color: 'teal',
+    identityTags: ['李华', '7号楼2单元1503', '租户', '身份证110108****5678'],
+    permissionHints: [
+      '海淀花园话题',
+      '跨社区半径优选推荐',
+      '小金库签到',
+      '二手交易担保',
+    ],
+    subdomain: 'haidian',
+    communityName: '海淀花园',
   },
 ];
 
