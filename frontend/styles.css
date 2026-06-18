@@ -2230,3 +2230,391 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 16px;
   }
 }
+
+/* ============ 访客二维码流程步骤指示器 ============ */
+.qr-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px 4px 16px;
+  position: relative;
+}
+
+.qr-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.qr-step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  transition: all 0.3s ease;
+  border: 2px solid var(--border);
+}
+
+.qr-step-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.qr-step.active .qr-step-num {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+}
+
+.qr-step.active .qr-step-label {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.qr-step.done .qr-step-num {
+  background: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+.qr-step.done .qr-step-label {
+  color: var(--success);
+}
+
+.qr-step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin-top: 18px;
+  min-width: 20px;
+  max-width: 60px;
+}
+
+/* ============ 表单卡片样式 ============ */
+.form-card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.btn-block {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+}
+
+/* ============ 信息卡片样式 ============ */
+.info-card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+
+.info-card.info-success {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border-color: #bbf7d0;
+}
+
+.info-card.info-warn {
+  background: linear-gradient(135deg, #fefce8, #fef9c3);
+  border-color: #fde047;
+}
+
+.info-card-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.info-card-content {
+  text-align: left;
+}
+
+.info-card-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.info-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.info-success .info-card-title {
+  color: #166534;
+}
+
+.info-success .info-card-desc {
+  color: #166534;
+}
+
+.info-warn .info-card-title {
+  color: #854d0e;
+}
+
+.info-warn .info-card-desc {
+  color: #854d0e;
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+}
+
+.action-row .btn {
+  flex: 1;
+}
+
+/* ============ 二维码样式 ============ */
+.qr-code-wrap {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.qr-code {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qr-pattern {
+  width: 100%;
+  height: 100%;
+  background:
+    conic-gradient(from 0deg at 25% 25%, #111 0 25%, transparent 25% 100%),
+    conic-gradient(from 180deg at 75% 75%, #111 0 25%, transparent 25% 100%),
+    conic-gradient(from 90deg at 75% 25%, #111 0 25%, transparent 25% 100%),
+    conic-gradient(from 270deg at 25% 75%, #111 0 25%, transparent 25% 100%),
+    repeating-linear-gradient(0deg, #111 0 8px, transparent 8px 16px),
+    repeating-linear-gradient(90deg, #111 0 8px, transparent 8px 16px);
+  background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%, 16px 16px, 16px 16px;
+  background-position: 0 0, 100% 100%, 100% 0, 0 100%, 0 0, 0 0;
+  opacity: 0.9;
+  -webkit-mask: radial-gradient(circle at center, transparent 25%, black 26%);
+  mask: radial-gradient(circle at center, transparent 25%, black 26%);
+}
+
+.qr-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.qr-center-text {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.qr-center-token {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  font-family: monospace;
+}
+
+/* ============ 结果卡片样式 ============ */
+.result-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.result-card.result-success {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+}
+
+.result-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--success);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+
+.result-title {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: var(--success);
+}
+
+.result-desc {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ============ Toast 提示 ============ */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  max-width: 80%;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-success {
+  background: rgba(34, 197, 94, 0.92);
+}
+
+.toast-error {
+  background: rgba(239, 68, 68, 0.92);
+}
+
+.toast-info {
+  background: rgba(59, 130, 246, 0.92);
+}
+
+/* ============ 徽章样式补充 ============ */
+.badge-approved {
+  background: #dcfce7;
+  color: #166534;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ============ 报修照片卡片 ============ */
+.photo-card {
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+}
+
+.photo-img {
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.photo-info {
+  padding: 8px 10px;
+}
+
+.photo-type {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.photo-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============ 评价卡片 ============ */
+.feedback-card {
+  padding: 16px;
+  background: linear-gradient(135deg, #fefce8, #fef9c3);
+  border: 1px solid #fde047;
+  border-radius: 12px;
+}
+
+.rating-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rating-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.star {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+  color: #fbbf24;
+}

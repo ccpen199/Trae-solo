@@ -607,7 +607,7 @@ def _seed_initial_data(conn: sqlite3.Connection) -> None:
             (1, "backup", "备份当前固件配置", _hours_ago(0.4)),
             (1, "flash", "正在刷写固件分区，进度 65%", _hours_ago(0.35)),
             (2, "download", "下载固件包 v2.3.1，大小 12.8MB", _days_ago(1)),
-            (2, "verify", "校验固件 MD5 完整性通过", _days_ago(1) + "a"),
+            (2, "verify", "校验固件 MD5 完整性通过", _hours_ago(23)),
             (2, "flash", "刷写固件分区完成", _days_ago(0.95)),
             (2, "reboot", "设备重启成功", _days_ago(0.9)),
             (2, "verify_version", "确认升级成功，当前版本 v2.3.1", _days_ago(0.85)),
@@ -685,16 +685,16 @@ def _seed_initial_data(conn: sqlite3.Connection) -> None:
     if complaint_log_count == 0:
         complaint_logs = [
             ("CP-2026-002", "create", "李四", "提交诉求：单元门口垃圾堆放两天未清理", _days_ago(2)),
-            ("CP-2026-002", "assign", "系统", "自动派单给保洁组张主管", _days_ago(2)),
-            ("CP-2026-002", "response", "张主管", "已响应，安排保洁人员前往清理", _days_ago(1) + "+22h"),
-            ("CP-2026-002", "process", "保洁-王姐", "现场清理完毕，已消毒", _days_ago(1) + "+20h"),
+            ("CP-2026-002", "assign", "系统", "自动派单给保洁组张主管", _hours_ago(47)),
+            ("CP-2026-002", "response", "张主管", "已响应，安排保洁人员前往清理", _hours_ago(46)),
+            ("CP-2026-002", "process", "保洁-王姐", "现场清理完毕，已消毒", _hours_ago(44)),
             ("CP-2026-002", "close", "张主管", "问题已解决，工单关闭", _days_ago(1)),
             ("CP-2026-001", "create", "张三", "提交诉求：周末仍有装修施工，噪音扰民", _days_ago(1)),
-            ("CP-2026-001", "assign", "系统", "自动派单给保安部刘队", _days_ago(1) + "+1h"),
+            ("CP-2026-001", "assign", "系统", "自动派单给保安部刘队", _hours_ago(23)),
             ("CP-2026-001", "response", "刘队", "已响应，派保安前往3号楼查看", _hours_ago(22)),
             ("CP-2026-001", "process", "保安-小王", "已找到装修施工人员，告知周末施工规定并劝止", _hours_ago(20)),
             ("CP-2026-005", "create", "陈七", "提交诉求：小区绿化树木长期未修剪", _days_ago(3)),
-            ("CP-2026-005", "assign", "系统", "自动派单给绿化组", _days_ago(3)),
+            ("CP-2026-005", "assign", "系统", "自动派单给绿化组", _hours_ago(71)),
             ("CP-2026-005", "close", "绿化组", "已完成修剪，工单关闭", _days_ago(2)),
         ]
         conn.executemany(

@@ -730,7 +730,7 @@ function showModal(title, contentHtml, actionsHtml = "") {
         </button>
       </div>
       <div class="modal-body">${contentHtml}</div>
-      ${actionsHtml ? `<div class="modal-actions">${actionsHtml}</div>` : ""}
+      ${actionsHtml ? `<div class="modal-footer">${actionsHtml}</div>` : ""}
     </div>
   `;
   overlay.addEventListener("click", e => {
@@ -788,14 +788,16 @@ function renderTimeline(logs) {
     <div class="timeline">
       ${logs.map((log, idx) => `
         <div class="timeline-item ${idx === logs.length - 1 ? 'last' : ''}">
-          <div class="timeline-dot">${getActionIcon(log.action)}</div>
+          <div class="timeline-dot ${log.action === 'complete' || log.action === 'close' ? 'success' : log.action === 'create' || log.action === 'submit' ? 'primary' : log.action === 'auto_assign' || log.action === 'assign' ? 'info' : ''}">${getActionIcon(log.action)}</div>
           <div class="timeline-content">
-            <div class="timeline-header">
-              <span class="timeline-title">${getActionLabel(log.action)}</span>
-              <span class="timeline-operator">${log.operator}</span>
-              <span class="timeline-time">${formatDate(log.created_at)}</span>
+            <div class="timeline-title">
+              ${getActionLabel(log.action)}
             </div>
-            <div class="timeline-detail">${log.detail}</div>
+            <div class="timeline-meta">
+              <span>操作人：${log.operator}</span>
+              <span>${formatDate(log.created_at)}</span>
+            </div>
+            ${log.detail ? `<div class="timeline-desc">${log.detail}</div>` : ''}
           </div>
         </div>
       `).join("")}
@@ -1235,14 +1237,39 @@ function showRepairDetail(orderId) {
       return;
     }
     const o = data.order;
+    const logs = data.logs || [];
+    const photos = data.photos || [];
+    const feedback = data.feedback;
     const typeLabels = { equipment: "设备故障", plumbing: "水电维修", public_facility: "公共设施", access_control: "门禁系统" };
     const photoLabels = { report: "📷 报修拍照", process: "🔧 维修过程", done: "✅ 维修完成" };
+
+    let responseTime = "-";
+    let handleTime = "-";
+    let totalTime = "-";
+    if (logs.length >= 2) {
+      const createLog = logs.find(l => l.action === "create");
+      const acceptLog = logs.find(l => l.action === "accept" || l.action === "auto_assign");
+      const completeLog = logs.find(l => l.action === "complete" || l.action === "feedback");
+      if (createLog && acceptLog) {
+        const diff = Math.round((new Date(acceptLog.created_at) - new Date(createLog.created_at)) / 60000);
+        responseTime = diff + " 分钟";
+      }
+      if (acceptLog && completeLog) {
+        const diff = Math.round((new Date(completeLog.created_at) - new Date(acceptLog.created_at)) / 3600000);
+        handleTime = diff + " 小时";
+      }
+      if (createLog && completeLog) {
+        const diff = Math.round((new Date(completeLog.created_at) - new Date(createLog.created_at)) / 3600000);
+        totalTime = diff + " 小时";
+      }
+    }
+
     const content = `
-      <div style="display: grid; gap: 20px;">
+      <div style="display: grid; gap: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: start;">
           <div>
             <h3 style="margin: 0 0 4px; font-size: 18px;">${o.title}</h3>
-            <p style="margin: 0; color: var(--text-muted);">工单号：<code>${o.id}</code></p>
+            <p style="margin: 0; color: var(--text-muted); font-size: 13px;">工单号：<code style="font-size: 12px;">${o.id}</code></p>
           </div>
           <span class="badge ${getStatusClass(o.status)}" style="font-size: 13px;">${getStatusLabel(o.status)}</span>
         </div>
@@ -1254,30 +1281,36 @@ function showRepairDetail(orderId) {
           <div class="summary-card"><div class="summary-label">处理人</div><div class="summary-value" style="font-size: 14px;">${o.assignee || '-'}</div></div>
         </div>
 
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <div class="stats-summary" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="summary-card"><div class="summary-label">⏱️ 响应时间</div><div class="summary-value" style="font-size: 14px; color: var(--accent);">${responseTime}</div></div>
+          <div class="summary-card"><div class="summary-label">🔧 维修时长</div><div class="summary-value" style="font-size: 14px; color: var(--success);">${handleTime}</div></div>
+          <div class="summary-card"><div class="summary-label">📊 总耗时</div><div class="summary-value" style="font-size: 14px; color: var(--warn);">${totalTime}</div></div>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <span class="badge badge-info">${typeLabels[o.type] || o.type}</span>
           <span class="badge ${o.priority === 'high' ? 'badge-danger' : o.priority === 'medium' ? 'badge-warn' : 'badge-info'}">优先级：${getPriorityLabel(o.priority)}</span>
           <span class="badge badge-pending">创建：${formatTimeAgo(o.created_at)}</span>
           ${o.updated_at !== o.created_at ? `<span class="badge badge-processing">更新：${formatTimeAgo(o.updated_at)}</span>` : ''}
         </div>
 
-        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
-          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">📝 问题描述</div>
-          <div style="line-height: 1.7; color: var(--text-primary);">${o.description}</div>
+        <div class="info-card">
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600;">📝 问题描述</div>
+          <div style="line-height: 1.7; color: var(--text-primary); font-size: 14px;">${o.description}</div>
         </div>
 
         <div>
-          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">📸 照片凭证</h4>
-          ${data.photos.length === 0 ? '<div class="empty" style="padding: 16px;"><p>暂无照片</p></div>' : `
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;">
-            ${data.photos.map(p => `
-              <div style="position: relative;">
-                <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--bg-secondary), var(--border)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 48px;">
+          <h4 style="margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; font-weight: 600;">📸 照片凭证 <span style="font-weight: 400; color: var(--text-muted);">(${photos.length}张)</span></h4>
+          ${photos.length === 0 ? '<div class="empty" style="padding: 20px; background: var(--bg-secondary); border-radius: 8px;"><p style="margin: 0; color: var(--text-muted); font-size: 13px;">暂无照片凭证</p></div>' : `
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;">
+            ${photos.map(p => `
+              <div class="photo-card">
+                <div class="photo-img">
                   ${photoLabels[p.photo_type] ? photoLabels[p.photo_type].split(' ')[0] : '🖼️'}
                 </div>
-                <div style="margin-top: 6px; font-size: 12px;">
-                  <div style="color: var(--text-secondary);">${photoLabels[p.photo_type] || p.photo_type}</div>
-                  <div style="color: var(--text-muted);">${p.uploaded_by} · ${formatTimeAgo(p.created_at)}</div>
+                <div class="photo-info">
+                  <div class="photo-type">${photoLabels[p.photo_type] || p.photo_type}</div>
+                  <div class="photo-meta">${p.uploaded_by} · ${formatTimeAgo(p.created_at)}</div>
                 </div>
               </div>
             `).join("")}
@@ -1285,35 +1318,53 @@ function showRepairDetail(orderId) {
         </div>
 
         <div>
-          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">🔄 工单流转</h4>
-          ${renderTimeline(data.logs)}
+          <h4 style="margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; font-weight: 600;">🔄 工单流转 <span style="font-weight: 400; color: var(--text-muted);">(${logs.length}条记录)</span></h4>
+          ${renderTimeline(logs)}
         </div>
 
-        ${data.feedback ? `
+        ${feedback ? `
         <div>
-          <h4 style="margin: 0 0 12px; color: var(--text-secondary); font-size: 15px;">⭐ 业主评价</h4>
-          <div style="padding: 16px; background: linear-gradient(135deg, #fefce8, #fef9c3); border: 1px solid #fde047; border-radius: 8px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <div><span style="font-size: 12px; color: var(--text-muted);">响应及时</span><br/>${renderStars(data.feedback.timeliness, 18)}</div>
-                <div><span style="font-size: 12px; color: var(--text-muted);">服务态度</span><br/>${renderStars(data.feedback.attitude, 18)}</div>
-                <div><span style="font-size: 12px; color: var(--text-muted);">维修质量</span><br/>${renderStars(data.feedback.quality, 18)}</div>
-                <div><span style="font-size: 12px; color: var(--text-muted);">综合满意</span><br/>${renderStars(data.feedback.satisfaction, 18)}</div>
+          <h4 style="margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; font-weight: 600;">⭐ 业主评价</h4>
+          <div class="feedback-card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+              <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <div class="rating-item"><span class="rating-label">响应及时</span>${renderStars(feedback.timeliness, 16)}</div>
+                <div class="rating-item"><span class="rating-label">服务态度</span>${renderStars(feedback.attitude, 16)}</div>
+                <div class="rating-item"><span class="rating-label">维修质量</span>${renderStars(feedback.quality, 16)}</div>
+                <div class="rating-item"><span class="rating-label">综合满意</span>${renderStars(feedback.satisfaction, 16)}</div>
               </div>
-              <div style="font-size: 12px; color: var(--text-muted);">${formatTimeAgo(data.feedback.created_at)}</div>
+              <div style="font-size: 12px; color: var(--text-muted);">${formatTimeAgo(feedback.created_at)}</div>
             </div>
-            ${data.feedback.comment ? `<div style="line-height: 1.7; color: var(--text-secondary); font-size: 14px;">"${data.feedback.comment}"</div>` : ''}
+            ${feedback.comment ? `<div style="line-height: 1.7; color: var(--text-secondary); font-size: 13px; font-style: italic;">"${feedback.comment}"</div>` : ''}
           </div>
-        </div>` : ''}
+        </div>` : `
+        <div>
+          <h4 style="margin: 0 0 10px; color: var(--text-secondary); font-size: 14px; font-weight: 600;">⭐ 业主评价</h4>
+          <div class="empty" style="padding: 20px; background: var(--bg-secondary); border-radius: 8px;"><p style="margin: 0; color: var(--text-muted); font-size: 13px;">工单完成后业主可进行评价</p></div>
+        </div>`}
       </div>
     `;
-    const actions = `
-      ${o.status === 'pending' ? '<button class="btn btn-primary">自动派单</button>' : ''}
-      ${o.status === 'processing' ? '<button class="btn btn-success">标记完成</button>' : ''}
-      <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>
-    `;
+
+    let actionButtons = [];
+    if (o.status === 'pending') {
+      actionButtons.push('<button class="btn btn-primary" onclick="simulateRepairAction(\'' + orderId + '\', \'auto_assign\')">🤖 自动派单</button>');
+    }
+    if (o.status === 'processing') {
+      actionButtons.push('<button class="btn btn-success" onclick="simulateRepairAction(\'' + orderId + '\', \'complete\')">✅ 标记完成</button>');
+    }
+    actionButtons.push('<button class="btn btn-outline" onclick="this.closest(\'.modal-overlay\').remove()">关闭</button>');
+    const actions = actionButtons.join("");
+
     showModal(`${o.title} - 工单详情`, content, actions);
   });
+}
+
+function simulateRepairAction(orderId, action) {
+  showToast(`正在${action === 'auto_assign' ? '自动派单' : '完成工单'}...`, "info");
+  setTimeout(() => {
+    showToast(action === 'auto_assign' ? '派单成功，维修人员已接单' : '工单已完成，待业主评价', "success");
+    showRepairDetail(orderId);
+  }, 800);
 }
 
 function showFeeDetail(feeId) {
@@ -1447,183 +1498,330 @@ function showComplaintDetail(ticketId) {
 }
 
 function showQrVisitorFlow() {
+  const deviceMap = {
+    "DEV-001": "南门主入口",
+    "DEV-002": "北门出入口",
+    "DEV-003": "1号楼单元门",
+    "DEV-004": "2号楼单元门",
+    "DEV-005": "3号楼单元门",
+    "DEV-006": "车库入口"
+  };
   const content = `
-    <div style="display: grid; gap: 24px;">
-      <div style="text-align: center; padding: 16px;">
+    <div style="display: grid; gap: 20px;">
+      <div class="qr-steps">
+        <div class="qr-step active" data-step="1">
+          <div class="qr-step-num">1</div>
+          <div class="qr-step-label">填写申请</div>
+        </div>
+        <div class="qr-step-line"></div>
+        <div class="qr-step" data-step="2">
+          <div class="qr-step-num">2</div>
+          <div class="qr-step-label">业主授权</div>
+        </div>
+        <div class="qr-step-line"></div>
+        <div class="qr-step" data-step="3">
+          <div class="qr-step-num">3</div>
+          <div class="qr-step-label">生成二维码</div>
+        </div>
+        <div class="qr-step-line"></div>
+        <div class="qr-step" data-step="4">
+          <div class="qr-step-num">4</div>
+          <div class="qr-step-label">扫码通行</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 8px 16px 16px;">
         <div id="qrStep1" style="display: block;">
-          <h3 style="margin: 0 0 12px; font-size: 18px;">📱 访客扫码申请</h3>
-          <p style="color: var(--text-muted); margin-bottom: 20px;">请访客填写信息，生成临时通行二维码</p>
-          <div style="max-width: 400px; margin: 0 auto; text-align: left; display: grid; gap: 16px;">
-            <div>
-              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">访客姓名</label>
-              <input id="visitorName" type="text" class="form-input" placeholder="请输入访客姓名" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px;"/>
+          <h3 style="margin: 0 0 8px; font-size: 18px;">📱 访客扫码申请</h3>
+          <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 13px;">请访客填写信息，生成临时通行二维码</p>
+          <div style="max-width: 400px; margin: 0 auto; text-align: left;">
+            <div class="form-card">
+              <div class="form-group">
+                <label class="form-label">访客姓名 <span style="color: var(--danger)">*</span></label>
+                <input id="visitorName" type="text" class="form-input" placeholder="请输入访客姓名"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">访客电话 <span style="color: var(--danger)">*</span></label>
+                <input id="visitorPhone" type="tel" class="form-input" placeholder="请输入访客手机号"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">拜访业主</label>
+                <select id="hostSelect" class="form-select">
+                  <option value="张三|1号楼1单元101|DEV-001|南门主入口">张三 - 1号楼1单元101（南门主入口）</option>
+                  <option value="李四|1号楼1单元102|DEV-003|1号楼单元门">李四 - 1号楼1单元102（1号楼单元门）</option>
+                  <option value="王五|2号楼1单元301|DEV-001|南门主入口">王五 - 2号楼1单元301（南门主入口）</option>
+                  <option value="赵六|2号楼2单元502|DEV-004|2号楼单元门">赵六 - 2号楼2单元502（2号楼单元门）</option>
+                  <option value="陈七|3号楼1单元801|DEV-005|3号楼单元门">陈七 - 3号楼1单元801（3号楼单元门）</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">有效时长</label>
+                <select id="validHours" class="form-select">
+                  <option value="2">2小时</option>
+                  <option value="4">4小时</option>
+                  <option value="8">8小时</option>
+                  <option value="24">24小时</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">访客电话</label>
-              <input id="visitorPhone" type="text" class="form-input" placeholder="请输入访客电话" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px;"/>
-            </div>
-            <div>
-              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">拜访业主</label>
-              <select id="hostSelect" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white;">
-                <option value="张三|1号楼1单元101|DEV-001">张三 - 1号楼1单元101</option>
-                <option value="李四|1号楼1单元102|DEV-003">李四 - 1号楼1单元102</option>
-                <option value="王五|2号楼1单元301|DEV-001">王五 - 2号楼1单元301</option>
-                <option value="赵六|2号楼2单元502|DEV-001">赵六 - 2号楼2单元502</option>
-                <option value="陈七|3号楼1单元801|DEV-005">陈七 - 3号楼1单元801</option>
-              </select>
-            </div>
-            <div>
-              <label style="display: block; font-size: 13px; margin-bottom: 6px; color: var(--text-secondary);">有效时长</label>
-              <select id="validHours" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white;">
-                <option value="2">2小时</option>
-                <option value="4">4小时</option>
-                <option value="8">8小时</option>
-                <option value="24">24小时</option>
-              </select>
-            </div>
-            <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="submitVisitorQr()">📨 提交申请并生成二维码</button>
+            <button class="btn btn-primary btn-block" onclick="submitVisitorQr()">📨 提交申请</button>
           </div>
         </div>
 
         <div id="qrStep2" style="display: none;">
-          <div style="padding: 8px 16px; background: #dcfce7; color: #166534; border-radius: 8px; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><polyline points="20,6 9,17 4,12"/></svg>
-            申请已提交，等待业主授权确认...
+          <div class="info-card info-success">
+            <div class="info-card-icon">✓</div>
+            <div class="info-card-content">
+              <div class="info-card-title">申请已提交</div>
+              <div class="info-card-desc">等待业主授权确认，一般1-3分钟内完成</div>
+            </div>
           </div>
-          <div style="max-width: 480px; margin: 0 auto;">
-            <div style="padding: 20px; background: var(--bg-secondary); border-radius: 12px; text-align: left;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                <strong>访客信息</strong>
-                <span id="qrToken" style="font-family: monospace; color: var(--accent);">QR-20260618-xxx</span>
+          <div style="max-width: 460px; margin: 0 auto; text-align: left;">
+            <div class="info-card" style="margin-top: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <strong>访客通行凭证</strong>
+                <span id="qrToken" class="badge badge-info" style="font-family: monospace;">QR-xxx</span>
               </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 13px; margin-bottom: 16px;">
-                <div><span style="color: var(--text-muted);">访客：</span><strong id="dVisitorName">-</strong></div>
-                <div><span style="color: var(--text-muted);">电话：</span><strong id="dVisitorPhone">-</strong></div>
-                <div><span style="color: var(--text-muted);">业主：</span><strong id="dHostName">-</strong></div>
-                <div><span style="color: var(--text-muted);">房间：</span><strong id="dHostRoom">-</strong></div>
-                <div><span style="color: var(--text-muted);">设备：</span><strong id="dDeviceName">-</strong></div>
-                <div><span style="color: var(--text-muted);">有效期：</span><strong id="dValid">-</strong></div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; font-size: 13px;">
+                <div><span style="color: var(--text-muted);">访客姓名：</span><strong id="dVisitorName">-</strong></div>
+                <div><span style="color: var(--text-muted);">联系电话：</span><strong id="dVisitorPhone">-</strong></div>
+                <div><span style="color: var(--text-muted);">被访业主：</span><strong id="dHostName">-</strong></div>
+                <div><span style="color: var(--text-muted);">房间号：</span><strong id="dHostRoom">-</strong></div>
+                <div><span style="color: var(--text-muted);">通行设备：</span><strong id="dDeviceName">-</strong></div>
+                <div><span style="color: var(--text-muted);">有效时长：</span><strong id="dValid">-</strong></div>
               </div>
-              <div style="padding: 16px; background: white; border-radius: 8px; margin-bottom: 16px;">
-                <div style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 8px;">授权状态：待确认</div>
-                <div style="width: 100%; height: 12px; background: var(--border); border-radius: 6px; overflow: hidden;">
+              <div style="margin-top: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+                  <span>授权进度</span>
+                  <span id="progressText">30%</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;">
                   <div id="progressBar" style="width: 30%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: width 0.5s;"></div>
                 </div>
               </div>
-              <div style="display: flex; gap: 8px;">
-                <button class="btn btn-success" style="flex: 1;" onclick="approveQr()">✅ 模拟业主授权</button>
-                <button class="btn btn-danger" style="flex: 1;" onclick="rejectQr()">❌ 拒绝申请</button>
+              <div class="action-row" style="margin-top: 16px;">
+                <button class="btn btn-success" onclick="approveQr()">✅ 模拟业主授权</button>
+                <button class="btn btn-outline" onclick="rejectQr()">❌ 拒绝申请</button>
               </div>
             </div>
           </div>
         </div>
 
         <div id="qrStep3" style="display: none;">
-          <div style="padding: 8px 16px; background: #fefce8; color: #854d0e; border-radius: 8px; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px;">
-            ⏱️ 业主已授权，请访客到门禁设备扫码开门
+          <div class="info-card info-warn">
+            <div class="info-card-icon">⏱️</div>
+            <div class="info-card-content">
+              <div class="info-card-title">业主已授权</div>
+              <div class="info-card-desc">请访客到指定门禁设备扫码通行</div>
+            </div>
           </div>
-          <div style="max-width: 400px; margin: 0 auto;">
-            <div style="aspect-ratio: 1; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-              <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #111 25%, transparent 25%), linear-gradient(-45deg, #111 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #111 75%), linear-gradient(-45deg, transparent 75%, #111 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
-                  <div style="font-size: 12px; color: var(--text-muted);">扫码可通行</div>
-                  <div style="font-weight: 700; font-size: 16px; color: var(--accent);" id="qrToken3">QR-xxx</div>
+          <div style="max-width: 340px; margin: 16px auto 0;">
+            <div class="qr-code-wrap">
+              <div class="qr-code">
+                <div class="qr-pattern"></div>
+                <div class="qr-center">
+                  <div class="qr-center-text">扫码通行</div>
+                  <div class="qr-center-token" id="qrToken3">QR-xxx</div>
                 </div>
               </div>
             </div>
-            <div style="text-align: center; margin-bottom: 16px;">
-              <div style="font-size: 13px; color: var(--text-muted);">二维码有效期至</div>
-              <div id="qrExpire" style="font-weight: 600;">-</div>
+            <div style="text-align: center; margin: 16px 0;">
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">二维码有效期至</div>
+              <div id="qrExpire" style="font-weight: 600; color: var(--text-primary);">-</div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="scanAndOpen()">📸 模拟访客扫码开门</button>
+            <div class="info-card" style="margin-bottom: 16px;">
+              <div style="display: grid; gap: 6px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">通行设备：</span>
+                  <strong id="dDeviceName3">-</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">被访业主：</span>
+                  <strong id="dHostName3">-</strong>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="scanAndOpen()">📸 模拟访客扫码开门</button>
           </div>
         </div>
 
         <div id="qrStep4" style="display: none;">
-          <div style="text-align: center; padding: 24px;">
-            <div style="width: 80px; height: 80px; background: var(--success); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 16px;">✓</div>
-            <h3 style="margin: 0 0 8px; color: var(--success);">开门成功！</h3>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">访客已成功通过二维码验证通行</p>
-            <div style="max-width: 400px; margin: 0 auto; text-align: left; padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
-              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">通行结果</div>
+          <div class="result-card result-success">
+            <div class="result-icon">✓</div>
+            <h3 class="result-title">开门成功！</h3>
+            <p class="result-desc">访客已成功通过二维码验证通行</p>
+          </div>
+          <div style="max-width: 400px; margin: 16px auto 0; text-align: left;">
+            <div class="info-card">
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px; font-weight: 600;">📋 通行结果明细</div>
               <div style="display: grid; gap: 8px; font-size: 13px;">
-                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行凭证：</span><strong id="resToken">-</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行设备：</span><strong id="resDevice">-</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行人：</span><strong id="resVisitor">-</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">被访业主：</span><strong id="resHost">-</strong></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">验证结果：</span><span class="badge badge-approved">验证通过</span></div>
-                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">通行时间：</span><strong id="resTime">-</strong></div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">通行凭证：</span>
+                  <strong id="resToken">-</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">通行设备：</span>
+                  <strong id="resDevice">-</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">通行人：</span>
+                  <strong id="resVisitor">-</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">被访业主：</span>
+                  <strong id="resHost">-</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">验证结果：</span>
+                  <span class="badge badge-approved">验证通过</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">通行时间：</span>
+                  <strong id="resTime">-</strong>
+                </div>
               </div>
+            </div>
+            <div class="action-row" style="margin-top: 16px;">
+              <button class="btn btn-outline" onclick="restartQrFlow()">🔄 重新申请</button>
+              <button class="btn btn-primary" onclick="viewVisitorRecords()">📋 查看通行记录</button>
             </div>
           </div>
         </div>
       </div>
     `;
   const actions = `
-    <button class="btn btn-outline" onclick="restartQrFlow()">🔄 重新申请</button>
-    <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">完成</button>
+    <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>
   `;
-  showModal("二维码扫码开门 - 访客闭环", content, actions);
+  showModal("访客二维码通行 - 全流程闭环", content, actions);
+  setTimeout(() => setQrStep(1), 50);
 }
 
 let qrData = {};
+
+function showToast(message, type = "info") {
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add("show"), 10);
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+function setQrStep(step) {
+  document.querySelectorAll(".qr-step").forEach((el, idx) => {
+    const num = idx + 1;
+    if (num < step) {
+      el.classList.add("done");
+      el.classList.remove("active");
+    } else if (num === step) {
+      el.classList.add("active");
+      el.classList.remove("done");
+    } else {
+      el.classList.remove("active", "done");
+    }
+  });
+}
 
 function submitVisitorQr() {
   const name = document.getElementById("visitorName").value.trim();
   const phone = document.getElementById("visitorPhone").value.trim();
   const host = document.getElementById("hostSelect").value;
   const hours = parseInt(document.getElementById("validHours").value);
-  if (!name || !phone) {
-    alert("请填写访客姓名和电话");
+  if (!name) {
+    showToast("请填写访客姓名", "error");
     return;
   }
-  const [hostName, hostRoom, deviceId] = host.split("|");
+  if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
+    showToast("请填写正确的手机号", "error");
+    return;
+  }
+  const [hostName, hostRoom, deviceId, deviceName] = host.split("|");
   const token = "QR-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + "-" + Math.floor(Math.random() * 900 + 100);
-  qrData = { name, phone, hostName, hostRoom, deviceId, deviceName: deviceId.replace("DEV-", ""), token, hours };
+  const now = new Date();
+  const validFrom = now.toISOString();
+  const validUntil = new Date(now.getTime() + hours * 3600 * 1000).toISOString();
+  qrData = { name, phone, hostName, hostRoom, deviceId, deviceName, token, hours, validFrom, validUntil };
   document.getElementById("qrStep1").style.display = "none";
   document.getElementById("qrStep2").style.display = "block";
   document.getElementById("dVisitorName").textContent = name;
   document.getElementById("dVisitorPhone").textContent = phone;
   document.getElementById("dHostName").textContent = hostName;
   document.getElementById("dHostRoom").textContent = hostRoom;
-  document.getElementById("dDeviceName").textContent = deviceId;
+  document.getElementById("dDeviceName").textContent = deviceName;
   document.getElementById("dValid").textContent = hours + " 小时";
   document.getElementById("qrToken").textContent = token;
-  setTimeout(() => { const bar = document.getElementById("progressBar"); if (bar) bar.style.width = "60%"; }, 500);
+  setQrStep(2);
+  showToast("申请已提交，请等待业主授权", "success");
+  setTimeout(() => {
+    const bar = document.getElementById("progressBar");
+    const txt = document.getElementById("progressText");
+    if (bar) bar.style.width = "65%";
+    if (txt) txt.textContent = "65%";
+  }, 600);
+  setTimeout(() => {
+    const bar = document.getElementById("progressBar");
+    const txt = document.getElementById("progressText");
+    if (bar) bar.style.width = "85%";
+    if (txt) txt.textContent = "85%";
+  }, 1200);
 }
 
 function approveQr() {
   const bar = document.getElementById("progressBar");
+  const txt = document.getElementById("progressText");
   if (bar) bar.style.width = "100%";
+  if (txt) txt.textContent = "100%";
+  showToast("业主授权成功", "success");
   setTimeout(() => {
     document.getElementById("qrStep2").style.display = "none";
     document.getElementById("qrStep3").style.display = "block";
     document.getElementById("qrToken3").textContent = qrData.token;
+    document.getElementById("dDeviceName3").textContent = qrData.deviceName;
+    document.getElementById("dHostName3").textContent = qrData.hostName;
     const expire = new Date(Date.now() + qrData.hours * 3600 * 1000);
     document.getElementById("qrExpire").textContent = expire.toLocaleString("zh-CN");
-  }, 600);
+    setQrStep(3);
+  }, 700);
 }
 
 function rejectQr() {
   qrData.status = "rejected";
-  alert("业主已拒绝此访客申请");
-  document.getElementById("qrStep2").style.display = "none";
-  document.getElementById("qrStep1").style.display = "block";
+  showToast("业主已拒绝此访客申请", "error");
+  setTimeout(() => {
+    document.getElementById("qrStep2").style.display = "none";
+    document.getElementById("qrStep1").style.display = "block";
+    setQrStep(1);
+  }, 500);
 }
 
 function scanAndOpen() {
-  document.getElementById("qrStep3").style.display = "none";
-  document.getElementById("qrStep4").style.display = "block";
-  document.getElementById("resToken").textContent = qrData.token;
-  document.getElementById("resDevice").textContent = qrData.deviceId;
-  document.getElementById("resVisitor").textContent = qrData.name;
-  document.getElementById("resHost").textContent = qrData.hostName + " (" + qrData.hostRoom + ")";
-  document.getElementById("resTime").textContent = new Date().toLocaleString("zh-CN");
+  showToast("正在验证二维码...", "info");
+  setTimeout(() => {
+    document.getElementById("qrStep3").style.display = "none";
+    document.getElementById("qrStep4").style.display = "block";
+    document.getElementById("resToken").textContent = qrData.token;
+    document.getElementById("resDevice").textContent = qrData.deviceName;
+    document.getElementById("resVisitor").textContent = qrData.name;
+    document.getElementById("resHost").textContent = qrData.hostName + " (" + qrData.hostRoom + ")";
+    document.getElementById("resTime").textContent = new Date().toLocaleString("zh-CN");
+    setQrStep(4);
+    showToast("开门成功，访客已通行", "success");
+  }, 800);
 }
 
 function restartQrFlow() {
   document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
+  qrData = {};
   showQrVisitorFlow();
+}
+
+function viewVisitorRecords() {
+  document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
+  window.location.hash = "#/access";
+  showToast("请在通行记录中查看访客通行详情", "info");
 }
 
 function renderRepair() {
@@ -2504,6 +2702,7 @@ function renderStats() {
 }
 
 function router() {
+  document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
   const hash = window.location.hash || "#/dashboard";
   const path = hash.replace("#/", "");
   
