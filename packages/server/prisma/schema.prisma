@@ -1,0 +1,231 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  phone       String   @unique
+  password    String
+  nickname    String?
+  avatar      String?
+  vin         String?
+  plateNumber String?
+  realName    String?
+  idCard      String?
+  balance     Decimal  @default(0)
+  vipLevel    Int      @default(0)
+  tags        Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orders         ChargingOrder[]
+  profile        UserProfile?
+  posts          CommunityPost[]
+  comments       Comment[]
+  v2gStrategies  V2GStrategy[]
+  faults         ChargingFault[]
+  routePlans     RoutePlan[]
+}
+
+model Operator {
+  id              String   @id @default(cuid())
+  name            String
+  contact         String?
+  phone           String?
+  apiKey          String?
+  apiSecret       String?
+  protocolType    String
+  settlementRatio Decimal  @default(0.85)
+  status          String   @default("active")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  stations        ChargingStation[]
+  settlements     SettlementRecord[]
+}
+
+model ChargingStation {
+  id             String   @id @default(cuid())
+  name           String
+  address        String
+  longitude      Decimal
+  latitude       Decimal
+  operatorId     String
+  type           String
+  totalPiles     Int      @default(0)
+  availablePiles Int      @default(0)
+  pricePerKwh    Decimal  @default(0)
+  serviceFee     Decimal  @default(0)
+  openTime       String?
+  tags           Json?
+  status         String   @default("active")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  operator Operator       @relation(fields: [operatorId], references: [id])
+  piles    ChargingPile[]
+  orders   ChargingOrder[]
+}
+
+model ChargingPile {
+  id            String   @id @default(cuid())
+  stationId     String
+  pileNo        String
+  type          String
+  power         Decimal  @default(0)
+  status        String   @default("offline")
+  connectorType String?
+  protocol      String
+  lastHeartbeat DateTime?
+  currentPower  Decimal  @default(0)
+  currentSoc    Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  station ChargingStation @relation(fields: [stationId], references: [id])
+  orders  ChargingOrder[]
+  faults  ChargingFault[]
+
+  @@unique([stationId, pileNo])
+}
+
+model ChargingOrder {
+  id             String   @id @default(cuid())
+  userId         String
+  pileId         String
+  stationId      String
+  startTime      DateTime?
+  endTime        DateTime?
+  startSoc       Int      @default(0)
+  endSoc         Int      @default(0)
+  chargedKwh     Decimal  @default(0)
+  totalAmount    Decimal  @default(0)
+  serviceFee     Decimal  @default(0)
+  electricFee    Decimal  @default(0)
+  status         String   @default("pending")
+  paymentMethod  String?
+  vin            String?
+  plateNumber    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User              @relation(fields: [userId], references: [id])
+  pile         ChargingPile      @relation(fields: [pileId], references: [id])
+  station      ChargingStation   @relation(fields: [stationId], references: [id])
+  settlements  SettlementRecord[]
+  faults       ChargingFault[]
+}
+
+model SettlementRecord {
+  id             String   @id @default(cuid())
+  operatorId     String
+  orderId        String
+  amount         Decimal  @default(0)
+  serviceFee     Decimal  @default(0)
+  platformFee    Decimal  @default(0)
+  settlementDate DateTime?
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+
+  operator Operator      @relation(fields: [operatorId], references: [id])
+  order    ChargingOrder @relation(fields: [orderId], references: [id])
+}
+
+model UserProfile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  totalCharges     Int      @default(0)
+  totalKwh         Decimal  @default(0)
+  totalAmount      Decimal  @default(0)
+  avgChargingTime  Int      @default(0)
+  favoriteStations Json?
+  chargingHabits   Json?
+  tags             Json?
+  v2gEnabled       Boolean  @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model CommunityPost {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  content   String
+  images    Json?
+  likes     Int      @default(0)
+  comments  Int      @default(0)
+  status    String   @default("published")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id])
+  comment  Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  content   String
+  likes     Int      @default(0)
+  status    String   @default("published")
+  createdAt DateTime @default(now())
+
+  post CommunityPost @relation(fields: [postId], references: [id])
+  user User          @relation(fields: [userId], references: [id])
+}
+
+model V2GStrategy {
+  id                 String   @id @default(cuid())
+  userId             String
+  name               String
+  type               String
+  chargeStartTime    String?
+  chargeEndTime      String?
+  dischargeStartTime String?
+  dischargeEndTime   String?
+  targetSoc          Int      @default(80)
+  minSoc             Int      @default(20)
+  maxPower           Decimal  @default(0)
+  enabled            Boolean  @default(true)
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model ChargingFault {
+  id         String   @id @default(cuid())
+  orderId    String?
+  pileId     String?
+  userId     String?
+  faultCode  String
+  faultDesc  String?
+  status     String   @default("reported")
+  reportTime DateTime @default(now())
+  handleTime DateTime?
+  handler    String?
+  remark     String?
+
+  order ChargingOrder? @relation(fields: [orderId], references: [id])
+  pile  ChargingPile?  @relation(fields: [pileId], references: [id])
+  user  User?          @relation(fields: [userId], references: [id])
+}
+
+model RoutePlan {
+  id             String   @id @default(cuid())
+  userId         String
+  origin         String
+  destination    String
+  waypoints      Json?
+  totalDistance  Decimal  @default(0)
+  estimatedTime  Int      @default(0)
+  chargingStops  Json?
+  totalCost      Decimal  @default(0)
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}

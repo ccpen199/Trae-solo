@@ -1,0 +1,126 @@
+.home-page {
+  padding-bottom: 20px;
+}
+
+.nav-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+}
+
+.search-section {
+  padding: 0 16px 16px;
+}
+
+.map-placeholder {
+  margin: 0 16px 20px;
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-content {
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-icon {
+  font-size: 40px;
+}
+
+.stations-section {
+  padding: 0 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.section-more {
+  font-size: 13px;
+  color: #1677ff;
+}
+
+.station-card {
+  margin-bottom: 12px;
+}
+
+.station-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.station-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.station-distance,
+.station-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.station-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-tag {
+  font-weight: 500;
+}
+
+.available-count {
+  font-size: 13px;
+  color: #666;
+}
+
+.available-count strong {
+  color: #00b578;
+}
+
+.quick-actions {
+  padding: 20px 16px 0;
+}
+
+.quick-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.quick-icon {
+  width: 48px;
+  height: 48px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}

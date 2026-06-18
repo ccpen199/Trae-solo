@@ -1,0 +1,19 @@
+.station-card-skeleton {
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.skeleton-header {
+  margin-bottom: 12px;
+}
+
+.skeleton-meta {
+  margin-bottom: 12px;
+}
+
+.skeleton-footer {
+  display: flex;
+  justify-content: space-between;
+}

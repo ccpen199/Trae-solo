@@ -1,0 +1,163 @@
+.route-page {
+  padding-bottom: 20px;
+}
+
+.route-search-card {
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.search-input-group {
+  margin-bottom: 16px;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.search-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.search-dot.start {
+  background: #00b578;
+}
+
+.search-dot.end {
+  background: #ff3141;
+}
+
+.search-divider {
+  padding-left: 6px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.divider-line {
+  width: 2px;
+  height: 100%;
+  background: #e5e5e5;
+  margin-left: 4px;
+}
+
+.plan-btn {
+  margin-top: 8px;
+}
+
+.map-placeholder {
+  margin: 0 16px 20px;
+  height: 180px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.map-icon {
+  font-size: 48px;
+}
+
+.routes-section {
+  padding: 0 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.route-card {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.route-card.recommended {
+  border: 2px solid #1677ff;
+}
+
+.recommend-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.route-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.route-distance {
+  font-size: 14px;
+  color: #666;
+}
+
+.route-time {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.route-stops {
+  margin-bottom: 12px;
+}
+
+.stops-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stop-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stop-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.stop-distance {
+  font-size: 12px;
+  color: #999;
+}
+
+.stop-extra {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.stop-charge-time {
+  color: #00b578;
+}

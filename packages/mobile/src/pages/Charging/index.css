@@ -1,0 +1,133 @@
+.charging-page {
+  padding-bottom: 100px;
+}
+
+.charging-status-card {
+  background: linear-gradient(135deg, #00b578 0%, #009d6d 100%);
+  padding: 30px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.charging-indicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.charging-ring {
+  width: 150px;
+  height: 150px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.charging-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.charging-icon {
+  font-size: 32px;
+}
+
+.charging-percent {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.charging-status-text {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.station-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.station-info p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.info-section {
+  padding: 16px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.info-item {
+  text-align: center;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.info-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+.info-value span {
+  font-size: 14px;
+  font-weight: normal;
+  color: #666;
+  margin-left: 4px;
+}
+
+.battery-section .battery-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00b578, #00d68f);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.estimated-time {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: #fff;
+}

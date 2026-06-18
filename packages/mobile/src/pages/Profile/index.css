@@ -1,0 +1,75 @@
+.profile-page {
+  padding-bottom: 20px;
+}
+
+.user-header-card {
+  background: linear-gradient(135deg, #ff7a45 0%, #fa541c 100%);
+  padding: 24px 20px;
+  color: #fff;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 32px;
+}
+
+.user-detail {
+  flex: 1;
+}
+
+.user-nickname {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-tag {
+  font-size: 11px;
+}
+
+.user-phone {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.user-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.stat-label {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.menu-section {
+  padding: 16px;
+}
+
+.logout-section {
+  padding-top: 20px;
+}
