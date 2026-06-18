@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Upload, FileText, CheckSquare, Square } from 'lucide-react'
+import { Upload, FileText, CheckSquare, Square, Phone, MapPin } from 'lucide-react'
 
 const REQUIRED_MATERIALS = [
   { id: 'labor_proof', label: '解除劳动关系证明' },
   { id: 'id_card', label: '身份证正反面' },
   { id: 'hukou', label: '户口本' },
+  { id: 'photo', label: '一寸免冠照片' },
 ]
 
 const UNEMPLOYMENT_REASONS = [
@@ -18,6 +19,12 @@ interface StepFillInfoProps {
   onChangeReason: (v: string) => void
   unemploymentDate: string
   onChangeUnemploymentDate: (v: string) => void
+  phone: string
+  onChangePhone: (v: string) => void
+  domicile: string
+  onChangeDomicile: (v: string) => void
+  residence: string
+  onChangeResidence: (v: string) => void
   uploadedMaterials: string[]
   onToggleMaterial: (id: string) => void
   commitmentChecked: boolean
@@ -30,6 +37,12 @@ export default function StepFillInfo({
   onChangeReason,
   unemploymentDate,
   onChangeUnemploymentDate,
+  phone,
+  onChangePhone,
+  domicile,
+  onChangeDomicile,
+  residence,
+  onChangeResidence,
   uploadedMaterials,
   onToggleMaterial,
   commitmentChecked,
@@ -74,6 +87,49 @@ export default function StepFillInfo({
           type="date"
           value={unemploymentDate}
           onChange={(e) => onChangeUnemploymentDate(e.target.value)}
+          className="w-full px-3 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
+          style={{ borderColor: '#E5E6EB' }}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label className="flex items-center gap-1.5 text-sm font-medium" style={{ color: '#4E5969' }}>
+          <Phone size={14} /> 联系电话
+        </label>
+        <input
+          type="tel"
+          value={phone}
+          onChange={(e) => onChangePhone(e.target.value)}
+          placeholder="请输入联系电话"
+          maxLength={11}
+          className="w-full px-3 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
+          style={{ borderColor: '#E5E6EB' }}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label className="flex items-center gap-1.5 text-sm font-medium" style={{ color: '#4E5969' }}>
+          <MapPin size={14} /> 户籍地
+        </label>
+        <input
+          type="text"
+          value={domicile}
+          onChange={(e) => onChangeDomicile(e.target.value)}
+          placeholder="请输入户籍地址"
+          className="w-full px-3 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
+          style={{ borderColor: '#E5E6EB' }}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label className="flex items-center gap-1.5 text-sm font-medium" style={{ color: '#4E5969' }}>
+          <MapPin size={14} /> 常住地
+        </label>
+        <input
+          type="text"
+          value={residence}
+          onChange={(e) => onChangeResidence(e.target.value)}
+          placeholder="请输入常住地址"
           className="w-full px-3 py-2.5 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
           style={{ borderColor: '#E5E6EB' }}
         />

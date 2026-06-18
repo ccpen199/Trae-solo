@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CheckSquare, Square, FileText } from 'lucide-react'
+import { CheckSquare, Square, FileText, Info } from 'lucide-react'
 
 const COMMITMENT_TEXT = `根据《中华人民共和国社会保险法》及有关规定，本人郑重承诺：
 
@@ -22,6 +22,9 @@ interface StepConfirmProps {
   bankName: string
   reason: string
   unemploymentDate: string
+  phone: string
+  domicile: string
+  residence: string
   deficientMaterials: string[]
   onSubmit: () => void
 }
@@ -30,6 +33,7 @@ const MATERIAL_LABELS: Record<string, string> = {
   labor_proof: '解除劳动关系证明',
   id_card: '身份证正反面',
   hukou: '户口本',
+  photo: '一寸免冠照片',
 }
 
 export default function StepConfirmSubmit({
@@ -38,6 +42,9 @@ export default function StepConfirmSubmit({
   bankName,
   reason,
   unemploymentDate,
+  phone,
+  domicile,
+  residence,
   deficientMaterials,
   onSubmit,
 }: StepConfirmProps) {
@@ -54,6 +61,10 @@ export default function StepConfirmSubmit({
           <div className="flex justify-between text-sm">
             <span style={{ color: '#86909C' }}>身份证号</span>
             <span style={{ color: '#1D2129' }}>{idNumber}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span style={{ color: '#86909C' }}>联系电话</span>
+            <span style={{ color: '#1D2129' }}>{phone || '未填写'}</span>
           </div>
         </div>
       </div>
@@ -88,6 +99,14 @@ export default function StepConfirmSubmit({
           <div className="flex justify-between text-sm">
             <span style={{ color: '#86909C' }}>失业日期</span>
             <span style={{ color: '#1D2129' }}>{unemploymentDate}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span style={{ color: '#86909C' }}>户籍地</span>
+            <span style={{ color: '#1D2129' }}>{domicile || '未填写'}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span style={{ color: '#86909C' }}>常住地</span>
+            <span style={{ color: '#1D2129' }}>{residence || '未填写'}</span>
           </div>
         </div>
       </div>
@@ -127,6 +146,19 @@ export default function StepConfirmSubmit({
           </span>
           <span className="text-sm" style={{ color: '#4E5969' }}>我已阅读并同意上述承诺</span>
         </label>
+      </div>
+
+      <div
+        className="rounded-xl p-4 flex items-start gap-3"
+        style={{ backgroundColor: '#E8F0FF' }}
+      >
+        <Info size={18} style={{ color: '#165DFF' }} className="flex-shrink-0 mt-0.5" />
+        <div>
+          <p className="text-sm font-medium" style={{ color: '#165DFF' }}>温馨提示</p>
+          <p className="text-xs mt-1" style={{ color: '#4E5969' }}>
+            提交申请后，您可在"我的申领"中查看办理进度，审核结果将以短信方式通知您。
+          </p>
+        </div>
       </div>
 
       <button

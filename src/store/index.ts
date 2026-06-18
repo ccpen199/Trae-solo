@@ -5,6 +5,13 @@ interface User {
   name: string
   role: string
   avatar?: string
+  identityType?: string
+  insuredLocation?: string
+  insuredYears?: number
+  insuredMonths?: number
+  todoCount?: number
+  processingCount?: number
+  monthlyBenefit?: number
 }
 
 interface Notification {

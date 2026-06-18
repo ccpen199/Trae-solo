@@ -1,58 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calculator, Info } from 'lucide-react'
-
-export interface PensionResultData {
-  monthlyTotal: number
-  yearlyTotal: number
-  basePension: number
-  personalPension: number
-  avgIndex: number
-  paymentMonths: number
-  retireAge: number
-  paymentYears: number
-  localAvgSalary: number
-  avgPaymentBase: number
-  personalAccountBalance: number
-}
-
-const PAYMENT_MONTHS_MAP: Record<number, number> = {
-  60: 139,
-  55: 170,
-  50: 195,
-  45: 216,
-}
+import type { PensionResultData } from './pension/types'
+import { PAYMENT_MONTHS_MAP, identityLabels } from './pension/types'
 
 interface PensionResultProps {
   result: PensionResultData | null
-}
-
-export function calculatePension(
-  avgPaymentBase: number,
-  localAvgSalary: number,
-  paymentYears: number,
-  personalAccountBalance: number,
-  retireAge: number
-): PensionResultData {
-  const avgIndex = avgPaymentBase / localAvgSalary
-  const basePension = (localAvgSalary + localAvgSalary * avgIndex) / 2 * paymentYears * 0.01
-  const paymentMonths = PAYMENT_MONTHS_MAP[retireAge] ?? 139
-  const personalPension = personalAccountBalance / paymentMonths
-  const monthlyTotal = basePension + personalPension
-  const yearlyTotal = monthlyTotal * 12
-
-  return {
-    monthlyTotal: Math.round(monthlyTotal * 100) / 100,
-    yearlyTotal: Math.round(yearlyTotal * 100) / 100,
-    basePension: Math.round(basePension * 100) / 100,
-    personalPension: Math.round(personalPension * 100) / 100,
-    avgIndex: Math.round(avgIndex * 1000) / 1000,
-    paymentMonths,
-    retireAge,
-    paymentYears,
-    localAvgSalary,
-    avgPaymentBase,
-    personalAccountBalance,
-  }
 }
 
 function formatMoney(value: number) {
@@ -89,6 +41,9 @@ export default function PensionResult({ result }: PensionResultProps) {
             className="space-y-5"
           >
             <div className="text-center py-4">
+              <div className="text-xs mb-2" style={{ color: '#86909C' }}>
+                身份类型：{identityLabels[result.identity]}
+              </div>
               <p className="text-sm" style={{ color: '#86909C' }}>月养老金总额</p>
               <p className="text-5xl font-bold mt-1" style={{ color: '#165DFF' }}>
                 ¥{formatMoney(result.monthlyTotal)}
@@ -111,14 +66,14 @@ export default function PensionResult({ result }: PensionResultProps) {
                     = (社平工资 + 社平工资 × 平均缴费指数) / 2 × 缴费年限 × 1%
                   </p>
                   <p className="text-xs mt-0.5" style={{ color: '#86909C' }}>
-                    = ({result.localAvgSalary} + {result.localAvgSalary} × {result.avgIndex}) / 2 × {result.paymentYears} × 1%
+                    = ({result.localAvgSalary || 0} + {result.localAvgSalary || 0} × {result.avgIndex}) / 2 × {result.paymentYears} × 1%
                   </p>
                 </div>
 
                 <div className="bg-white rounded-lg p-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm" style={{ color: '#4E5969' }}>个人账户养老金</span>
-                    <span className="font-semibold" style={{ color: '#165DFF' }}>¥{formatMoney(result.personalPension)}</span>
+                    <span className="font-semibold" style={{ color: '#36CFC9' }}>¥{formatMoney(result.personalPension)}</span>
                   </div>
                   <p className="text-xs mt-1" style={{ color: '#86909C' }}>
                     = 个人账户余额 / 计发月数
@@ -127,6 +82,27 @@ export default function PensionResult({ result }: PensionResultProps) {
                     = {result.personalAccountBalance.toLocaleString()} / {result.paymentMonths}
                   </p>
                 </div>
+
+                {result.transitionalPension && result.transitionalPension > 0 && (
+                  <div className="bg-white rounded-lg p-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm" style={{ color: '#4E5969' }}>过渡性养老金</span>
+                      <span className="font-semibold" style={{ color: '#722ED1' }}>¥{formatMoney(result.transitionalPension)}</span>
+                    </div>
+                    <p className="text-xs mt-1" style={{ color: '#86909C' }}>
+                      根据视同缴费年限核定
+                    </p>
+                  </div>
+                )}
+
+                {result.localSubsidy !== undefined && result.localSubsidy > 0 && (
+                  <div className="bg-white rounded-lg p-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm" style={{ color: '#4E5969' }}>政府补贴(年)</span>
+                      <span className="font-semibold" style={{ color: '#F7BA1E' }}>¥{formatMoney(result.localSubsidy)}</span>
+                    </div>
+                  </div>
+                )}
 
                 <div className="rounded-lg p-3 border-2" style={{ borderColor: '#165DFF', backgroundColor: '#E8F0FF' }}>
                   <div className="flex justify-between items-center">
@@ -144,6 +120,10 @@ export default function PensionResult({ result }: PensionResultProps) {
                 <div className="flex justify-between text-xs" style={{ color: '#4E5969' }}>
                   <span>计发月数（{result.retireAge}岁退休）</span>
                   <span>{result.paymentMonths}月</span>
+                </div>
+                <div className="flex justify-between text-xs" style={{ color: '#4E5969' }}>
+                  <span>累计缴费年限</span>
+                  <span>{result.paymentYears}年</span>
                 </div>
               </div>
 
