@@ -1,0 +1,1613 @@
+{
+  "meta": {
+    "title": "may-89137",
+    "url": "http://127.0.0.1:49137/",
+    "timestamp": "2026-06-18T20:31:59.423Z",
+    "viewport": {
+      "width": 1504,
+      "height": 1000
+    },
+    "document": {
+      "scrollWidth": 1504,
+      "scrollHeight": 1000
+    }
+  },
+  "text": {
+    "bodyPreview": "local full-stack service may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常 业务记录 刷新 服务状态前后端已按本地端口启动，SQLite 数据库可读写。2026/6/18 23:25:25业务数据这里提供可验证的业务接口数据，避免页面空白。2026/6/18 23:25:25运行范围服务仅监听 127.0.0.1，日志写入项目目录。2026/6/18 23:25:25",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "may-89137",
+        "visible": false,
+        "childCount": 5,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "may-89137",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0",
+        "visible": true,
+        "childCount": 3,
+        "children": [
+          {
+            "tag": "main",
+            "id": "",
+            "className": "shell",
+            "selectorHint": "main.shell",
+            "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0",
+            "visible": true,
+            "childCount": 3,
+            "children": [
+              {
+                "tag": "section",
+                "id": "",
+                "className": "status-panel",
+                "selectorHint": "section.status-panel",
+                "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "div",
+                    "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。",
+                    "visible": true,
+                    "childCount": 3,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "LOCAL FULL-STACK SERVICE",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h1",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h1",
+                        "text": "may-89137",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "p",
+                        "id": "summary",
+                        "className": "summary",
+                        "selectorHint": "p#summary.summary",
+                        "text": "may-89137 后端、前端与 SQLite 已连通。",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "badge",
+                    "className": "badge badge-ok",
+                    "selectorHint": "div#badge.badge.badge-ok",
+                    "text": "运行中",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "",
+                "className": "grid",
+                "selectorHint": "section.grid",
+                "text": "前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "article",
+                    "id": "",
+                    "className": "metric",
+                    "selectorHint": "article.metric",
+                    "text": "前端地址 127.0.0.1:49137",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "span",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "span",
+                        "text": "前端地址",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "strong",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "strong",
+                        "text": "127.0.0.1:49137",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "article",
+                    "id": "",
+                    "className": "metric",
+                    "selectorHint": "article.metric",
+                    "text": "后端地址 127.0.0.1:59137",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "span",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "span",
+                        "text": "后端地址",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "strong",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "strong",
+                        "text": "127.0.0.1:59137",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "article",
+                    "id": "",
+                    "className": "metric",
+                    "selectorHint": "article.metric",
+                    "text": "数据库 SQLite 正常",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "span",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "span",
+                        "text": "数据库",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "strong",
+                        "id": "database",
+                        "className": "",
+                        "selectorHint": "strong#database",
+                        "text": "SQLite 正常",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "",
+                "className": "records",
+                "selectorHint": "section.records",
+                "text": "业务记录 刷新 服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:25 业务数据 这里提供可验证的业务接口数据，避",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "header",
+                    "text": "业务记录 刷新",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "业务记录",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "button",
+                        "id": "refresh",
+                        "className": "",
+                        "selectorHint": "button#refresh",
+                        "text": "刷新",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "records",
+                    "className": "record-list",
+                    "selectorHint": "div#records.record-list",
+                    "text": "服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:25 业务数据 这里提供可验证的业务接口数据，避免页面空白。 2",
+                    "visible": true,
+                    "childCount": 3,
+                    "children": [
+                      {
+                        "tag": "article",
+                        "id": "",
+                        "className": "record",
+                        "selectorHint": "article.record",
+                        "text": "服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:25",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      },
+                      {
+                        "tag": "article",
+                        "id": "",
+                        "className": "record",
+                        "selectorHint": "article.record",
+                        "text": "业务数据 这里提供可验证的业务接口数据，避免页面空白。 2026/6/18 23:25:25",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      },
+                      {
+                        "tag": "article",
+                        "id": "",
+                        "className": "record",
+                        "selectorHint": "article.record",
+                        "text": "运行范围 服务仅监听 127.0.0.1，日志写入项目目录。 2026/6/18 23:25:25",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常 业务记录 刷新 服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 1000
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "may-89137",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 5,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "may-89137",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f766e'/%3E%3Cpath d='M18 34h28v8H18zm0-14h28v8H18z' fill='white'/%3E%3C/svg%3E",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "./styles.css",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常 业务记录 刷新 服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 1000
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "main",
+      "id": "",
+      "className": "shell",
+      "selectorHint": "main.shell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常 业务记录 刷新 服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 212,
+        "y": 0,
+        "width": 1080,
+        "height": 845
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "section",
+      "id": "",
+      "className": "status-panel",
+      "selectorHint": "section.status-panel",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 212,
+        "y": 32,
+        "width": 1080,
+        "height": 179
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "LOCAL FULL-STACK SERVICE may-89137 may-89137 后端、前端与 SQLite 已连通。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 241,
+        "y": 61,
+        "width": 321,
+        "height": 121
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "LOCAL FULL-STACK SERVICE",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 241,
+        "y": 61,
+        "width": 321,
+        "height": 15
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "h1",
+      "id": "",
+      "className": "",
+      "selectorHint": "h1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "may-89137",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 241,
+        "y": 86,
+        "width": 321,
+        "height": 56
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "p",
+      "id": "summary",
+      "className": "summary",
+      "selectorHint": "p#summary.summary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "may-89137 后端、前端与 SQLite 已连通。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 241,
+        "y": 156,
+        "width": 321,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "div",
+      "id": "badge",
+      "className": "badge badge-ok",
+      "selectorHint": "div#badge.badge.badge-ok",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运行中",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1175,
+        "y": 104,
+        "width": 88,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "section",
+      "id": "",
+      "className": "grid",
+      "selectorHint": "section.grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "业务数据",
+      "title": "",
+      "placeholder": "",
+      "text": "前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 212,
+        "y": 227,
+        "width": 1080,
+        "height": 96
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "article",
+      "id": "",
+      "className": "metric",
+      "selectorHint": "article.metric",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "前端地址 127.0.0.1:49137",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 212,
+        "y": 227,
+        "width": 351,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "前端地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 231,
+        "y": 246,
+        "width": 313,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "127.0.0.1:49137",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 231,
+        "y": 274,
+        "width": 313,
+        "height": 21
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "article",
+      "id": "",
+      "className": "metric",
+      "selectorHint": "article.metric",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后端地址 127.0.0.1:59137",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 577,
+        "y": 227,
+        "width": 351,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后端地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 596,
+        "y": 246,
+        "width": 313,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "127.0.0.1:59137",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 596,
+        "y": 274,
+        "width": 313,
+        "height": 21
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "article",
+      "id": "",
+      "className": "metric",
+      "selectorHint": "article.metric",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据库 SQLite 正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 941,
+        "y": 227,
+        "width": 351,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据库",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 960,
+        "y": 246,
+        "width": 313,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "strong",
+      "id": "database",
+      "className": "",
+      "selectorHint": "strong#database",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "SQLite 正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 960,
+        "y": 274,
+        "width": 313,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "section",
+      "id": "",
+      "className": "records",
+      "selectorHint": "section.records",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "业务记录 刷新 服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:25 业务数据 这里提供可验证的业务接口数据，避免页面空白。 2026/6/18 23:25:25 运行范围 服务仅监听 127.0.0.1，日志写入项目目录。 2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 212,
+        "y": 339,
+        "width": 1080,
+        "height": 474
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "header",
+      "id": "",
+      "className": "",
+      "selectorHint": "header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "业务记录 刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 235,
+        "y": 362,
+        "width": 1034,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "业务记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 235,
+        "y": 367,
+        "width": 88,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "button",
+      "id": "refresh",
+      "className": "",
+      "selectorHint": "button#refresh",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1209,
+        "y": 362,
+        "width": 60,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "div",
+      "id": "records",
+      "className": "record-list",
+      "selectorHint": "div#records.record-list",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:25 业务数据 这里提供可验证的业务接口数据，避免页面空白。 2026/6/18 23:25:25 运行范围 服务仅监听 127.0.0.1，日志写入项目目录。 2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 235,
+        "y": 418,
+        "width": 1034,
+        "height": 372
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "article",
+      "id": "",
+      "className": "record",
+      "selectorHint": "article.record",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "服务状态 前后端已按本地端口启动，SQLite 数据库可读写。 2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 235,
+        "y": 418,
+        "width": 1034,
+        "height": 116
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "服务状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 435,
+        "width": 1000,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "前后端已按本地端口启动，SQLite 数据库可读写。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 468,
+        "width": 1000,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "time",
+      "id": "",
+      "className": "",
+      "selectorHint": "time",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 502,
+        "width": 1000,
+        "height": 15
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "article",
+      "id": "",
+      "className": "record",
+      "selectorHint": "article.record",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "业务数据 这里提供可验证的业务接口数据，避免页面空白。 2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 235,
+        "y": 546,
+        "width": 1034,
+        "height": 116
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "业务数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 563,
+        "width": 1000,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "这里提供可验证的业务接口数据，避免页面空白。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 596,
+        "width": 1000,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "time",
+      "id": "",
+      "className": "",
+      "selectorHint": "time",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 630,
+        "width": 1000,
+        "height": 15
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "article",
+      "id": "",
+      "className": "record",
+      "selectorHint": "article.record",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运行范围 服务仅监听 127.0.0.1，日志写入项目目录。 2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 235,
+        "y": 674,
+        "width": 1034,
+        "height": 116
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运行范围",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 691,
+        "width": 1000,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "服务仅监听 127.0.0.1，日志写入项目目录。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 724,
+        "width": 1000,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "time",
+      "id": "",
+      "className": "",
+      "selectorHint": "time",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026/6/18 23:25:25",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 758,
+        "width": 1000,
+        "height": 15
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "button",
+      "id": "refresh",
+      "className": "",
+      "selectorHint": "button#refresh",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1209,
+        "y": 362,
+        "width": 60,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}

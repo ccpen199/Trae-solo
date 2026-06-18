@@ -1,0 +1,175 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-18T20:32:05.271Z",
+  "order": "may-89137",
+  "roundIndex": 0,
+  "captureId": "may-89137",
+  "url": "http://127.0.0.1:49137/",
+  "initialUrl": "http://127.0.0.1:49137/",
+  "finalUrl": "http://127.0.0.1:49137/",
+  "status": 200,
+  "title": "may-89137",
+  "initialTitle": "may-89137",
+  "navigationError": "",
+  "screenshotPath": "browser-check/may-89137-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "service repair smoke check",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49137/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49137/",
+        "title": "may-89137",
+        "headings": [
+          "may-89137",
+          "业务记录",
+          "服务状态",
+          "业务数据",
+          "运行范围"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "local full-stack service may-89137 may-89137 后端、前端与 SQLite 已连通。 运行中 前端地址 127.0.0.1:49137 后端地址 127.0.0.1:59137 数据库 SQLite 正常 业务记录 刷新 服务状态前后端已按本地端口启动，SQLite 数据库可读写。2026/6/18 23:25:25业务数据这里提供可验证的业务接口数据，避免页面空白。2026/6/18 23:25:25运行范围服务仅监听 127.0.0.1，日志写入项目目录。2026/6/18 23:25:25",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89137-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49137/",
+          "title": "may-89137",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.png",
+          "elementCount": 42,
+          "interactiveCount": 1,
+          "interactiveLabels": [
+            "刷新"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89137-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49137/",
+        "title": "may-89137",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.png",
+        "elementCount": 42,
+        "interactiveCount": 1,
+        "interactiveLabels": [
+          "刷新"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49137/",
+    "representativeScreenshotLabel": "may-89137"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89137-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49137/",
+        "title": "may-89137",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89137/browser-check/may-89137-structure-01-首屏.png",
+        "elementCount": 42,
+        "interactiveCount": 1,
+        "interactiveLabels": [
+          "刷新"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "LOCAL FULL-STACK SERVICE\n\nmay-89137\n\nmay-89137 后端、前端与 SQLite 已连通。\n\n运行中\n前端地址\n127.0.0.1:49137\n后端地址\n127.0.0.1:59137\n数据库\nSQLite 正常\n业务记录\n刷新\n服务状态\n\n前后端已按本地端口启动，SQLite 数据库可读写。\n\n2026/6/18 23:25:25\n业务数据\n\n这里提供可验证的业务接口数据，避免页面空白。\n\n2026/6/18 23:25:25\n运行范围\n\n服务仅监听 127.0.0.1，日志写入项目目录。\n\n2026/6/18 23:25:25",
+  "bodyTextPreview": "LOCAL FULL-STACK SERVICE\n\nmay-89137\n\nmay-89137 后端、前端与 SQLite 已连通。\n\n运行中\n前端地址\n127.0.0.1:49137\n后端地址\n127.0.0.1:59137\n数据库\nSQLite 正常\n业务记录\n刷新\n服务状态\n\n前后端已按本地端口启动，SQLite 数据库可读写。\n\n2026/6/18 23:25:25\n业务数据\n\n这里提供可验证的业务接口数据，避免页面空白。\n\n2026/6/18 23:25:25\n运行范围\n\n服务仅监听 127.0.0.1，日志写入项目目录。\n\n2026/6/18 23:25:25",
+  "apiBase": "http://127.0.0.1:59137",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59137/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59137/api/records"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59137/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\": true, \"service\": \"may-89137\", \"host\": \"127.0.0.1\", \"port\": 59137, \"time\": \"2026-06-18T20:31:59.672433+00:00\", \"database\": {\"ok\": true, \"path\": \"/Users/chen/Documents/trae_projects/local_projects/may-89137/backend/data/app.sqlite3\", \"error\": null}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59137/api/records",
+      "path": "/api/records",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\": true, \"service\": \"may-89137\", \"records\": [{\"id\": 1, \"title\": \"服务状态\", \"detail\": \"前后端已按本地端口启动，SQLite 数据库可读写。\", \"created_at\": \"2026-06-18T20:25:25.285323+00:00\"}, {\"id\": 2, \"title\": \"业务数据\", \"detail\": \"这里提供可验证的业务接口数据，避免页面空白。\", \"created_at\": \"2026-06-18T20:25:25.285459+00:00\"}, {\"id\": 3, \"title\": \"运行范围\", \"detail\": \"服务仅监听 127.0.0.1，日志写入项目目录。\", \"created_at\": \"2026-06-18T20:25:25.285460+00:00\"}], \"updatedAt\": \"2026-06-18T20:31:59.688819+00:00\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [],
+  "responseErrors": []
+}
