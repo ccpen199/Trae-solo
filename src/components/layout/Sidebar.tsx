@@ -20,6 +20,8 @@ import {
   FileCheck,
   FileText,
   ClipboardList,
+  PlusCircle,
+  Star,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { UserRole } from '@/constants/enums';
@@ -125,6 +127,67 @@ const adminNav: NavSection[] = [
   },
 ];
 
+const baseNav: NavSection[] = [
+  {
+    title: '概览',
+    items: [{ label: '基地工作台', icon: LayoutDashboard, path: '/' }],
+  },
+  {
+    title: '岗位管理',
+    items: [
+      { label: '发布的岗位', icon: FileText, path: '/bases' },
+      { label: '发布新岗位', icon: PlusCircle, path: '/bases' },
+    ],
+  },
+  {
+    title: '团队接待',
+    items: [
+      { label: '接待团队', icon: Users, path: '/bases' },
+      { label: '满意度评价', icon: Star, path: '/bases' },
+    ],
+  },
+  {
+    title: '基地信息',
+    items: [
+      { label: '基地资料', icon: Building2, path: '/settings' },
+      { label: '数据统计', icon: BarChart3, path: '/settings' },
+    ],
+  },
+  {
+    title: '资讯',
+    items: [{ label: '资讯引擎', icon: Newspaper, path: '/news' }],
+  },
+];
+
+const donorNav: NavSection[] = [
+  {
+    title: '概览',
+    items: [{ label: '捐赠方工作台', icon: LayoutDashboard, path: '/' }],
+  },
+  {
+    title: '资助项目',
+    items: [
+      { label: '我的项目', icon: Award, path: '/scholarship/projects' },
+      { label: '发布新项目', icon: PlusCircle, path: '/scholarship/projects' },
+    ],
+  },
+  {
+    title: '受助管理',
+    items: [
+      { label: '受助学生', icon: Users, path: '/scholarship/projects' },
+      { label: '受助故事', icon: Heart, path: '/scholarship/stories' },
+    ],
+  },
+  {
+    title: '资讯',
+    items: [{ label: '资讯引擎', icon: Newspaper, path: '/news' }],
+  },
+  {
+    title: '账户设置',
+    items: [{ label: '机构资料', icon: Settings, path: '/settings' }],
+  },
+];
+
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
@@ -136,7 +199,13 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
   const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
 
   const isAdmin = user?.role === 'school_admin' || user?.role === 'department_admin';
-  const navSections = isAdmin ? adminNav : studentNav;
+  const isBase = user?.role === 'base';
+  const isDonor = user?.role === 'donor';
+
+  let navSections = studentNav;
+  if (isAdmin) navSections = adminNav;
+  else if (isBase) navSections = baseNav;
+  else if (isDonor) navSections = donorNav;
 
   const toggleSection = (title: string) => {
     setCollapsedSections((prev) => ({ ...prev, [title]: !prev[title] }));

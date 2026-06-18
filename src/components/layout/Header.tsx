@@ -9,8 +9,14 @@ import {
   User,
   Settings,
   LogOut,
+  Shield,
+  GraduationCap,
+  Building2,
+  Heart,
+  Crown,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
+import { UserRole } from '@/constants/enums';
 import { cn } from '@/lib/utils';
 
 const breadcrumbMap: Record<string, string> = {
@@ -198,16 +204,44 @@ export default function Header({ onMenuToggle }: HeaderProps) {
               setShowUserMenu(!showUserMenu);
               setShowNotifications(false);
             }}
-            className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-surface-100"
+            className="flex items-center gap-2.5 rounded-xl px-2.5 py-1.5 hover:bg-surface-50 transition-colors border border-surface-200"
           >
-            <img
-              src={user?.avatar || ''}
-              alt={user?.name || ''}
-              className="h-7 w-7 rounded-full object-cover"
-            />
-            <span className="hidden text-sm font-medium text-surface-700 md:inline">
-              {user?.name}
-            </span>
+            <div className="relative">
+              <img
+                src={user?.avatar || ''}
+                alt={user?.name || ''}
+                className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+              />
+              <div className={cn(
+                'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[8px] ring-2 ring-white',
+                user?.role === 'school_admin' && 'bg-danger-500 text-white',
+                user?.role === 'department_admin' && 'bg-accent-500 text-white',
+                user?.role === 'student' && 'bg-primary-500 text-white',
+                user?.role === 'base' && 'bg-success-500 text-white',
+                user?.role === 'donor' && 'bg-purple-500 text-white',
+              )}>
+                {user?.role === 'school_admin' && <Crown className="w-2.5 h-2.5" />}
+                {user?.role === 'department_admin' && <Shield className="w-2.5 h-2.5" />}
+                {user?.role === 'student' && <GraduationCap className="w-2.5 h-2.5" />}
+                {user?.role === 'base' && <Building2 className="w-2.5 h-2.5" />}
+                {user?.role === 'donor' && <Heart className="w-2.5 h-2.5" />}
+              </div>
+            </div>
+            <div className="hidden md:block text-left">
+              <span className="text-sm font-semibold text-surface-800 leading-tight block">
+                {user?.name}
+              </span>
+              <span className={cn(
+                'text-[10px] font-medium leading-tight inline-block mt-0.5',
+                user?.role === 'school_admin' && 'text-danger-600',
+                user?.role === 'department_admin' && 'text-accent-600',
+                user?.role === 'student' && 'text-primary-600',
+                user?.role === 'base' && 'text-success-600',
+                user?.role === 'donor' && 'text-purple-600',
+              )}>
+                {UserRole[user?.role as keyof typeof UserRole]?.label || '访客'}
+              </span>
+            </div>
           </button>
 
           <AnimatePresence>

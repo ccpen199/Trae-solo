@@ -9,7 +9,10 @@ export const TeamStatus = {
 
 export const ActivityStatus = {
   draft: { label: '草稿', color: 'bg-surface-200 text-surface-600' },
-  open: { label: '开放报名', color: 'bg-primary-100 text-primary-700' },
+  pending: { label: '待审核', color: 'bg-amber-100 text-amber-700' },
+  approved: { label: '已通过', color: 'bg-success-50 text-success-600' },
+  rejected: { label: '已驳回', color: 'bg-danger-50 text-danger-500' },
+  open: { label: '报名中', color: 'bg-primary-100 text-primary-700' },
   closed: { label: '已截止', color: 'bg-surface-200 text-surface-600' },
   ongoing: { label: '进行中', color: 'bg-accent-100 text-accent-600' },
   completed: { label: '已完成', color: 'bg-success-100 text-success-600' },
