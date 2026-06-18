@@ -6,29 +6,32 @@ const router = Router()
 
 router.get('/', (req: Request, res: Response): void => {
   const { field, location, search, page, pageSize } = req.query
-  let sql = 'SELECT * FROM talents WHERE 1=1'
-  const params: any[] = []
+  const whereSql: string[] = []
+  const whereParams: any[] = []
 
   if (field) {
-    sql += ' AND field = ?'
-    params.push(field)
+    whereSql.push('field = ?')
+    whereParams.push(field)
   }
   if (location) {
-    sql += ' AND location = ?'
-    params.push(location)
+    whereSql.push('location = ?')
+    whereParams.push(location)
   }
   if (search) {
-    sql += ' AND (name LIKE ? OR current_company LIKE ? OR email LIKE ?)'
-    params.push(`%${search}%`, `%${search}%`, `%${search}%`)
+    whereSql.push('(name LIKE ? OR current_company LIKE ? OR email LIKE ?)')
+    whereParams.push(`%${search}%`, `%${search}%`, `%${search}%`)
   }
 
-  sql += ' ORDER BY created_at DESC'
+  const whereClause = whereSql.length ? 'WHERE ' + whereSql.join(' AND ') : ''
 
+  const total = (db.prepare(`SELECT COUNT(*) as c FROM talents ${whereClause}`).get(...whereParams) as any).c
+
+  let sql = `SELECT * FROM talents ${whereClause} ORDER BY created_at DESC`
   const pageNum = parseInt(page as string) || 1
   const size = parseInt(pageSize as string) || 12
   const offset = (pageNum - 1) * size
   sql += ' LIMIT ? OFFSET ?'
-  params.push(size, offset)
+  const params = [...whereParams, size, offset]
 
   const talents = db.prepare(sql).all(...params) as any[]
 
@@ -42,7 +45,7 @@ router.get('/', (req: Request, res: Response): void => {
     }
   })
 
-  res.json({ success: true, data: result })
+  res.json({ success: true, data: result, meta: { total, page: pageNum, pageSize: size, hasMore: offset + result.length < total } })
 })
 
 router.get('/:id', (req: Request, res: Response): void => {

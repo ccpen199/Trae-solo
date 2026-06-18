@@ -25,3 +25,16 @@ export async function fetchApi<T>(url: string, options?: RequestInit): Promise<T
   const data = json.data !== undefined ? json.data : json
   return transformKeys(data) as T
 }
+
+export async function fetchPaginated<T>(url: string, options?: RequestInit): Promise<{ data: T; meta: { total: number; page: number; pageSize: number; hasMore: boolean } }> {
+  const res = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+  })
+  if (!res.ok) throw new Error(`API Error: ${res.status}`)
+  const json = await res.json()
+  return {
+    data: transformKeys(json.data) as T,
+    meta: transformKeys(json.meta || {}) as any,
+  }
+}

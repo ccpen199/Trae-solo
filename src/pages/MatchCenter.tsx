@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { GitMerge, MapPin, Sparkles, Users, Target, Globe, Award, TrendingUp } from 'lucide-react'
 import { fetchApi } from '@/utils/api'
 import { FieldBadge, ScoreBar, LoadingSpinner, StatCard } from '@/components/Shared'
@@ -7,6 +7,8 @@ import type { Job, MatchResult } from '@/types'
 
 export default function MatchCenter() {
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const urlJobId = params.get('jobId') || ''
   const [jobs, setJobs] = useState<Job[]>([])
   const [selectedJobId, setSelectedJobId] = useState('')
   const [matches, setMatches] = useState<MatchResult[]>([])
@@ -18,10 +20,11 @@ export default function MatchCenter() {
       const activeJobs = Array.isArray(data) ? data.filter(j => j.status === '招聘中') : []
       setJobs(activeJobs)
       if (activeJobs.length > 0) {
-        setSelectedJobId(activeJobs[0].id)
+        const preferred = urlJobId && activeJobs.some(j => j.id === urlJobId) ? urlJobId : activeJobs[0].id
+        setSelectedJobId(preferred)
       }
     }).finally(() => setLoading(false))
-  }, [])
+  }, [urlJobId])
 
   useEffect(() => {
     if (!selectedJobId) { setMatches([]); return }

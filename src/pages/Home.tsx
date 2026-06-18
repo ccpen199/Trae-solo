@@ -26,10 +26,22 @@ export default function Home() {
   const [overview, setOverview] = useState<AnalyticsOverview | null>(null)
   const [hotJobs, setHotJobs] = useState<Job[]>([])
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchApi<AnalyticsOverview>('/api/analytics/overview').then(setOverview)
-    fetchApi<Job[]>('/api/jobs?status=招聘中').then(data => setHotJobs(Array.isArray(data) ? data.slice(0, 4) : []))
+    let cancelled = false
+    setLoading(true)
+    Promise.all([
+      fetchApi<AnalyticsOverview>('/api/analytics/overview'),
+      fetchApi<Job[]>('/api/jobs?status=招聘中'),
+    ]).then(([ov, jobs]) => {
+      if (cancelled) return
+      setOverview(ov)
+      setHotJobs(Array.isArray(jobs) ? jobs.slice(0, 4) : [])
+    }).finally(() => {
+      if (!cancelled) setLoading(false)
+    })
+    return () => { cancelled = true }
   }, [])
 
   const fieldCount = (name: string) =>
@@ -75,30 +87,51 @@ export default function Home() {
 
       <section className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <StatCard label="活跃岗位" value={overview?.activeJobs ?? 0} suffix="+" icon={TrendingUp} color="amber" />
-          <StatCard label="注册人才" value={overview?.totalTalents ?? 0} suffix="+" icon={Users} color="ice" />
-          <StatCard label="匹配成功" value={overview?.totalMatches ?? 0} suffix="+" icon={CheckCircle} color="green" />
+          {loading ? (
+            <>
+              <div className="card-glass p-5 h-[108px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[108px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[108px] animate-pulse bg-steel-800/40" />
+            </>
+          ) : (
+            <>
+              <StatCard label="活跃岗位" value={overview?.activeJobs ?? 0} suffix="+" icon={TrendingUp} color="amber" />
+              <StatCard label="注册人才" value={overview?.totalTalents ?? 0} suffix="+" icon={Users} color="ice" />
+              <StatCard label="匹配成功" value={overview?.totalMatches ?? 0} suffix="+" icon={CheckCircle} color="green" />
+            </>
+          )}
         </div>
       </section>
 
       <section className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
         <h2 className="section-title">热门岗位</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {hotJobs.map(job => (
-            <div key={job.id} className="card-glass card-hover p-5">
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-steel-100 font-semibold">{job.title}</h3>
-                <FieldBadge field={job.field} />
+          {loading ? (
+            <>
+              <div className="card-glass p-5 h-[140px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[140px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[140px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[140px] animate-pulse bg-steel-800/40" />
+            </>
+          ) : hotJobs.length === 0 ? (
+            <div className="col-span-2 text-center py-10 text-steel-500">暂无热门岗位</div>
+          ) : (
+            hotJobs.map(job => (
+              <div key={job.id} className="card-glass card-hover p-5">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="text-steel-100 font-semibold">{job.title}</h3>
+                  <FieldBadge field={job.field} />
+                </div>
+                <div className="text-amber-400 font-mono text-lg mb-2">
+                  {(job.salaryMin / 1000).toFixed(0)}K-{(job.salaryMax / 1000).toFixed(0)}K
+                </div>
+                <div className="flex items-center gap-4 text-sm text-steel-400">
+                  <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5" />{job.company}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{job.location}</span>
+                </div>
               </div>
-              <div className="text-amber-400 font-mono text-lg mb-2">
-                {(job.salaryMin / 1000).toFixed(0)}K-{(job.salaryMax / 1000).toFixed(0)}K
-              </div>
-              <div className="flex items-center gap-4 text-sm text-steel-400">
-                <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5" />{job.company}</span>
-                <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />{job.location}</span>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
 

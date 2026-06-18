@@ -1,28 +1,41 @@
 import { useEffect, useState, useRef } from 'react'
 
-export function CountUp({ end, duration = 1500, suffix = '' }: { end: number; duration?: number; suffix?: string }) {
+export function CountUp({ end, duration = 1200, suffix = '' }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0)
-  const prevEnd = useRef(0)
+  const mountedEnd = useRef(0)
+  const rafId = useRef<number | null>(null)
 
   useEffect(() => {
-    if (end === 0) {
+    if (end <= 0) {
       setCount(0)
-      prevEnd.current = 0
+      mountedEnd.current = 0
       return
     }
-    const startVal = prevEnd.current
+    if (end === mountedEnd.current) return
+    if (rafId.current) cancelAnimationFrame(rafId.current)
+
+    const startVal = mountedEnd.current || 0
     const startTime = performance.now()
+    const targetEnd = end
     const animate = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(startVal + (end - startVal) * eased))
-      if (progress < 1) requestAnimationFrame(animate)
+      const next = Math.floor(startVal + (targetEnd - startVal) * eased)
+      setCount(next)
+      if (progress < 1) {
+        rafId.current = requestAnimationFrame(animate)
+      } else {
+        mountedEnd.current = targetEnd
+        rafId.current = null
+      }
     }
-    requestAnimationFrame(animate)
-    prevEnd.current = end
+    rafId.current = requestAnimationFrame(animate)
+    return () => {
+      if (rafId.current) cancelAnimationFrame(rafId.current)
+    }
   }, [end, duration])
 
-  return <span className="font-mono">{count.toLocaleString()}{suffix}</span>
+  return <span className="font-mono tabular-nums">{count.toLocaleString()}{suffix}</span>
 }
 
 export function StatCard({ label, value, suffix, icon: Icon, color = 'amber' }: {

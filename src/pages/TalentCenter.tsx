@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Search, MapPin, Filter } from 'lucide-react'
-import { fetchApi } from '@/utils/api'
+import { Search, MapPin, Filter, CheckCircle, Info } from 'lucide-react'
+import { fetchPaginated } from '@/utils/api'
 import { FieldBadge, LoadingSpinner } from '@/components/Shared'
 import type { Talent, Field } from '@/types'
 
@@ -24,6 +24,8 @@ export default function TalentCenter() {
   const [search, setSearch] = useState(params.get('search') || '')
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
+  const [total, setTotal] = useState(0)
+  const [filterStable, setFilterStable] = useState(true)
 
   const loadTalents = useCallback(async (p: number, append = false) => {
     setLoading(true)
@@ -34,10 +36,11 @@ export default function TalentCenter() {
       if (search) q.set('search', search)
       q.set('page', String(p))
       q.set('pageSize', '12')
-      const data = await fetchApi<Talent[]>(`/api/talents?${q.toString()}`)
+      const { data, meta } = await fetchPaginated<Talent[]>(`/api/talents?${q.toString()}`)
       const list = Array.isArray(data) ? data : []
       setTalents(prev => append ? [...prev, ...list] : list)
-      setHasMore(list.length >= 12)
+      setHasMore(meta.hasMore ?? list.length >= 12)
+      setTotal(meta.total ?? 0)
     } catch {
       setHasMore(false)
     } finally {
@@ -47,7 +50,10 @@ export default function TalentCenter() {
 
   useEffect(() => {
     setPage(1)
+    setFilterStable(false)
+    const t = setTimeout(() => setFilterStable(true), 300)
     loadTalents(1)
+    return () => clearTimeout(t)
   }, [loadTalents])
 
   const loadMore = () => {
@@ -55,6 +61,12 @@ export default function TalentCenter() {
     setPage(next)
     loadTalents(next, true)
   }
+
+  const filterInfo = [
+    field !== '全部' ? `领域：${field}` : null,
+    location !== '全部' ? `地区：${location}` : null,
+    search ? `搜索："${search}"` : null,
+  ].filter(Boolean).join(' · ')
 
   return (
     <div className="space-y-6 pb-12">
@@ -76,6 +88,24 @@ export default function TalentCenter() {
           />
         </div>
       </div>
+
+      {total > 0 && filterStable && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+          <div className="flex items-center gap-1.5 text-steel-300">
+            <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+            <span>共找到 <span className="font-mono text-ice-400 font-semibold">{total}</span> 位人才</span>
+          </div>
+          {filterInfo && (
+            <div className="flex items-center gap-1.5 text-steel-400">
+              <Info className="w-3.5 h-3.5" />
+              <span>{filterInfo}</span>
+            </div>
+          )}
+          <div className="text-steel-500">
+            已加载 <span className="font-mono text-steel-300">{talents.length}</span> / {total}
+          </div>
+        </div>
+      )}
 
       {loading && talents.length === 0 ? (
         <LoadingSpinner />
@@ -114,8 +144,15 @@ export default function TalentCenter() {
       {hasMore && (
         <div className="text-center pt-4">
           <button className="btn-secondary" onClick={loadMore} disabled={loading}>
-            {loading ? '加载中...' : '加载更多'}
+            {loading ? '加载中...' : `加载更多（剩余 ${total - talents.length} 人）`}
           </button>
+        </div>
+      )}
+
+      {!hasMore && talents.length > 0 && (
+        <div className="text-center pt-6 text-sm text-steel-500 flex items-center justify-center gap-1.5">
+          <CheckCircle className="w-4 h-4 text-green-400/70" />
+          <span>已加载全部 {total} 位人才</span>
         </div>
       )}
     </div>
