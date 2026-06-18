@@ -56,42 +56,61 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useUserStore } from '@/store/user'
 
 defineProps<{ collapse: boolean }>()
 const route = useRoute()
+const userStore = useUserStore()
+
+const routeKeyMap: Record<string, string> = {
+  '/': 'dashboard',
+  '/citizens': 'citizens',
+  '/services': 'services',
+  '/knowledge': 'knowledge',
+  '/feedback': 'feedback',
+  '/offline': 'offline',
+  '/system': 'system'
+}
+
+const allMenus = [
+  { path: '/', meta: { title: '数据大屏', icon: 'DataAnalysis' }, children: [{ path: 'dashboard', meta: { title: '运营数据大屏', icon: 'DataAnalysis' } }] },
+  { path: '/citizens', meta: { title: '市民画像', icon: 'User' }, children: [
+    { path: 'list', meta: { title: '画像管理', icon: 'Avatar' } },
+    { path: 'tags', meta: { title: '标签体系', icon: 'PriceTag' } },
+    { path: 'behavior', meta: { title: '行为分析', icon: 'Histogram' } }
+  ]},
+  { path: '/services', meta: { title: '服务管理', icon: 'Service' }, children: [
+    { path: 'list', meta: { title: '办事服务', icon: 'Files' } },
+    { path: 'orchestration', meta: { title: '一件事编排', icon: 'Connection' } },
+    { path: 'departments', meta: { title: '委办局接入', icon: 'OfficeBuilding' } }
+  ]},
+  { path: '/knowledge', meta: { title: '知识图谱', icon: 'Reading' }, children: [
+    { path: 'policies', meta: { title: '政策管理', icon: 'Document' } },
+    { path: 'qa', meta: { title: '问答库', icon: 'ChatDotRound' } },
+    { path: 'graph', meta: { title: '图谱可视化', icon: 'Share' } }
+  ]},
+  { path: '/feedback', meta: { title: '反馈闭环', icon: 'ChatLineSquare' }, children: [
+    { path: 'workorders', meta: { title: '督办工单', icon: 'Tickets' } },
+    { path: 'clusters', meta: { title: '聚类分析', icon: 'TrendCharts' } },
+    { path: 'analytics', meta: { title: '满意度分析', icon: 'PieChart' } }
+  ]},
+  { path: '/offline', meta: { title: '离线管理', icon: 'Download' }, children: [
+    { path: 'packages', meta: { title: '离线包管理', icon: 'Box' } },
+    { path: 'certs', meta: { title: '离线证明监控', icon: 'Stamp' } }
+  ]},
+  { path: '/system', meta: { title: '系统管理', icon: 'Setting' }, children: [
+    { path: 'logs', meta: { title: '日志审计', icon: 'DocumentCopy' } },
+    { path: 'health', meta: { title: '健康监控', icon: 'Monitor' } }
+  ]}
+]
 
 const menuRoutes = computed(() => {
-  return [
-    { path: '/', meta: { title: '数据大屏', icon: 'DataAnalysis' }, children: [{ path: 'dashboard', meta: { title: '运营数据大屏', icon: 'DataAnalysis' } }] },
-    { path: '/citizens', meta: { title: '市民画像', icon: 'User' }, children: [
-      { path: 'list', meta: { title: '画像管理', icon: 'Avatar' } },
-      { path: 'tags', meta: { title: '标签体系', icon: 'PriceTag' } },
-      { path: 'behavior', meta: { title: '行为分析', icon: 'Histogram' } }
-    ]},
-    { path: '/services', meta: { title: '服务管理', icon: 'Service' }, children: [
-      { path: 'list', meta: { title: '办事服务', icon: 'Files' } },
-      { path: 'orchestration', meta: { title: '一件事编排', icon: 'Connection' } },
-      { path: 'departments', meta: { title: '委办局接入', icon: 'OfficeBuilding' } }
-    ]},
-    { path: '/knowledge', meta: { title: '知识图谱', icon: 'Reading' }, children: [
-      { path: 'policies', meta: { title: '政策管理', icon: 'Document' } },
-      { path: 'qa', meta: { title: '问答库', icon: 'ChatDotRound' } },
-      { path: 'graph', meta: { title: '图谱可视化', icon: 'Share' } }
-    ]},
-    { path: '/feedback', meta: { title: '反馈闭环', icon: 'ChatLineSquare' }, children: [
-      { path: 'workorders', meta: { title: '督办工单', icon: 'Tickets' } },
-      { path: 'clusters', meta: { title: '聚类分析', icon: 'TrendCharts' } },
-      { path: 'analytics', meta: { title: '满意度分析', icon: 'PieChart' } }
-    ]},
-    { path: '/offline', meta: { title: '离线管理', icon: 'Download' }, children: [
-      { path: 'packages', meta: { title: '离线包管理', icon: 'Box' } },
-      { path: 'certs', meta: { title: '离线证明监控', icon: 'Stamp' } }
-    ]},
-    { path: '/system', meta: { title: '系统管理', icon: 'Setting' }, children: [
-      { path: 'logs', meta: { title: '日志审计', icon: 'DocumentCopy' } },
-      { path: 'health', meta: { title: '健康监控', icon: 'Monitor' } }
-    ]}
-  ]
+  const allowed = userStore.userInfo?.allowedRoutes || []
+  if (userStore.userInfo?.role === 'admin') return allMenus
+  return allMenus.filter(m => {
+    const key = routeKeyMap[m.path]
+    return key && allowed.includes(key)
+  })
 })
 
 const activeMenu = computed(() => route.path)

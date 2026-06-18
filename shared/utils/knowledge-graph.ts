@@ -11,6 +11,25 @@ export function buildKnowledgeGraph(policies: Policy[]): Map<string, KnowledgeNo
   const graph = new Map<string, KnowledgeNode>();
 
   for (const policy of policies) {
+    const policyData = policy as Policy & {
+      departmentName?: string;
+      departmentCode?: string;
+      relatedPolicyIds?: string[];
+      relatedServiceIds?: string[];
+      tags?: string[];
+    };
+    const graphNodes = Array.isArray(policy.graphNodes) ? policy.graphNodes : [];
+    const relatedPolicyIds = Array.isArray(policy.relatedPolicies)
+      ? policy.relatedPolicies
+      : Array.isArray(policyData.relatedPolicyIds)
+        ? policyData.relatedPolicyIds
+        : [];
+    const relatedServiceIds = Array.isArray(policy.relatedServices)
+      ? policy.relatedServices
+      : Array.isArray(policyData.relatedServiceIds)
+        ? policyData.relatedServiceIds
+        : [];
+
     const policyNode: KnowledgeNode = {
       id: `policy-${policy.id}`,
       type: 'policy',
@@ -19,13 +38,13 @@ export function buildKnowledgeGraph(policies: Policy[]): Map<string, KnowledgeNo
       relations: [],
       metadata: {
         category: policy.category,
-        department: policy.issuingDepartment,
+        department: policy.issuingDepartment || policyData.departmentName || policyData.departmentCode,
         effectiveDate: policy.effectiveDate
       }
     };
 
-    if (policy.graphNodes && policy.graphNodes.length > 0) {
-      for (const node of policy.graphNodes) {
+    if (graphNodes.length > 0) {
+      for (const node of graphNodes) {
         policyNode.relations.push({
           targetId: node.id,
           targetType: node.type,
@@ -44,7 +63,7 @@ export function buildKnowledgeGraph(policies: Policy[]): Map<string, KnowledgeNo
       }
     }
 
-    for (const relatedPolicyId of policy.relatedPolicies) {
+    for (const relatedPolicyId of relatedPolicyIds) {
       policyNode.relations.push({
         targetId: `policy-${relatedPolicyId}`,
         targetType: 'policy',
@@ -53,7 +72,7 @@ export function buildKnowledgeGraph(policies: Policy[]): Map<string, KnowledgeNo
       });
     }
 
-    for (const relatedServiceId of policy.relatedServices) {
+    for (const relatedServiceId of relatedServiceIds) {
       policyNode.relations.push({
         targetId: `service-${relatedServiceId}`,
         targetType: 'service',

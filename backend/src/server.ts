@@ -23,6 +23,7 @@ import { ScheduledTasks } from './services/scheduledTasks';
 
 const app = express();
 const PORT = config.port || 3000;
+const HOST = process.env.HOST || '127.0.0.1';
 
 app.set('trust proxy', 1);
 
@@ -71,6 +72,8 @@ app.use(requestLogger);
 
 app.get('/health', HealthCheckService.check);
 app.get('/health/detailed', HealthCheckService.detailed);
+app.get('/api/health', HealthCheckService.check);
+app.get('/api/health/detailed', HealthCheckService.detailed);
 
 app.use(config.apiPrefix, routes);
 
@@ -102,15 +105,15 @@ async function bootstrap() {
     ScheduledTasks.initialize();
     logger.info('[Bootstrap] 定时任务调度初始化完成');
 
-    const server = app.listen(PORT, () => {
+    const server = app.listen(PORT, HOST, () => {
       logger.info(`
 ╔══════════════════════════════════════════════════════════════╗
 ║           郑州市掌上办事中枢 - 后端服务启动成功              ║
 ╠══════════════════════════════════════════════════════════════╣
-║  服务地址:    http://localhost:${PORT}                         ║
+║  服务地址:    http://${HOST}:${PORT}                         ║
 ║  API前缀:     ${config.apiPrefix}                              ║
-║  健康检查:    http://localhost:${PORT}/health                  ║
-║  API文档:     http://localhost:${PORT}${config.apiPrefix}/docs ║
+║  健康检查:    http://${HOST}:${PORT}/api/health                  ║
+║  API文档:     http://${HOST}:${PORT}${config.apiPrefix}/docs ║
 ║  启动时间:    ${new Date().toLocaleString('zh-CN')}                      ║
 ╚══════════════════════════════════════════════════════════════╝
       `);

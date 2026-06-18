@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
 import logger, { auditLogger } from '../utils/logger';
 import config from '../config';
-import { getAdapter } from './DepartmentAdapterManager';
+import { getAdapter } from '../adapters/DepartmentAdapterManager';
 import {
   ServiceOrchestration,
   OrchestrationContext,

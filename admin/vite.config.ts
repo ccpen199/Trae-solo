@@ -36,12 +36,13 @@ export default defineConfig(({ mode }) => {
       }
     },
     server: {
-      host: '0.0.0.0',
-      port: 5173,
-      open: true,
+      host: env.HOST || '127.0.0.1',
+      port: Number(env.FRONTEND_PORT || 49127),
+      strictPort: true,
+      open: false,
       proxy: {
         '/api': {
-          target: env.VITE_API_BASE || 'http://localhost:3000',
+          target: env.VITE_API_BASE_URL || 'http://127.0.0.1:59127',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '/api/v1')
         }

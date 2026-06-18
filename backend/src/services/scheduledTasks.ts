@@ -3,7 +3,6 @@ import logger, { auditLogger } from '../utils/logger';
 import FeedbackAnalyticsEngine from '../engines/FeedbackAnalyticsEngine';
 import { DepartmentAdapterManager } from '../adapters/DepartmentAdapterManager';
 
-@cron.Schedule
 export class ScheduledTasks {
   private static initialized = false;
   private static tasks: Map<string, cron.ScheduledTask> = new Map();

@@ -39,13 +39,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'tags',
         name: 'CitizenTags',
-        component: () => import('@/views/citizens/tags.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '标签体系', icon: 'PriceTag' }
       },
       {
         path: 'behavior',
         name: 'BehaviorAnalytics',
-        component: () => import('@/views/citizens/behavior.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '行为分析', icon: 'Histogram' }
       }
     ]
@@ -59,19 +59,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'list',
         name: 'ServiceList',
-        component: () => import('@/views/services/list.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '办事服务', icon: 'Files' }
       },
       {
         path: 'orchestration',
         name: 'ServiceOrchestration',
-        component: () => import('@/views/services/orchestration.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '一件事编排', icon: 'Connection' }
       },
       {
         path: 'departments',
         name: 'Departments',
-        component: () => import('@/views/services/departments.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '委办局接入', icon: 'OfficeBuilding' }
       }
     ]
@@ -85,19 +85,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'policies',
         name: 'Policies',
-        component: () => import('@/views/knowledge/policies.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '政策管理', icon: 'Document' }
       },
       {
         path: 'qa',
         name: 'KnowledgeQA',
-        component: () => import('@/views/knowledge/qa.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '问答库', icon: 'ChatDotRound' }
       },
       {
         path: 'graph',
         name: 'KnowledgeGraph',
-        component: () => import('@/views/knowledge/graph.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '图谱可视化', icon: 'Share' }
       }
     ]
@@ -111,19 +111,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'workorders',
         name: 'WorkOrders',
-        component: () => import('@/views/feedback/workorders.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '督办工单', icon: 'Tickets' }
       },
       {
         path: 'clusters',
         name: 'FeedbackClusters',
-        component: () => import('@/views/feedback/clusters.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '聚类分析', icon: 'TrendCharts' }
       },
       {
         path: 'analytics',
         name: 'FeedbackAnalytics',
-        component: () => import('@/views/feedback/analytics.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '满意度分析', icon: 'PieChart' }
       }
     ]
@@ -137,13 +137,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'packages',
         name: 'OfflinePackages',
-        component: () => import('@/views/offline/packages.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '离线包管理', icon: 'Box' }
       },
       {
         path: 'certs',
         name: 'OfflineCerts',
-        component: () => import('@/views/offline/certs.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '离线证明监控', icon: 'Stamp' }
       }
     ]
@@ -157,13 +157,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'logs',
         name: 'SystemLogs',
-        component: () => import('@/views/system/logs.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '日志审计', icon: 'DocumentCopy' }
       },
       {
         path: 'health',
         name: 'HealthMonitor',
-        component: () => import('@/views/system/health.vue'),
+        component: () => import('@/views/placeholder/index.vue'),
         meta: { title: '健康监控', icon: 'Monitor' }
       }
     ]
@@ -171,7 +171,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('@/views/error/404.vue'),
+    component: () => import('@/views/placeholder/index.vue'),
     meta: { hidden: true }
   }
 ]

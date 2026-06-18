@@ -39,7 +39,7 @@
           <el-avatar :size="32" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
           <div class="user-detail">
             <span class="user-name">{{ userStore.userInfo?.realName || '管理员' }}</span>
-            <span class="user-role">{{ userStore.userInfo?.role === 'admin' ? '超级管理员' : '运营人员' }}</span>
+            <span class="user-role">{{ userStore.userInfo?.roleName || '超级管理员' }} · {{ userStore.userInfo?.department?.split(' · ')[1] || '平台管理处' }}</span>
           </div>
           <el-icon><ArrowDown /></el-icon>
         </div>
