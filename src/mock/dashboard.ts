@@ -1,0 +1,40 @@
+import type { DashboardStats } from '@/types';
+
+export const mockDashboardStats: DashboardStats = {
+  totalStudents: 12856,
+  totalActivities: 342,
+  participationRate: 78.5,
+  totalServiceHours: 186420,
+  averageCreditsPerStudent: 6.8,
+  departmentRank: [
+    { department: '计算机科学与技术学院', participationRate: 92.3, serviceHours: 28560, teams: 18 },
+    { department: '医学院', participationRate: 89.1, serviceHours: 25430, teams: 15 },
+    { department: '文学院', participationRate: 85.6, serviceHours: 21340, teams: 14 },
+    { department: '环境学院', participationRate: 83.2, serviceHours: 19870, teams: 12 },
+    { department: '教育学院', participationRate: 81.7, serviceHours: 18560, teams: 11 },
+    { department: '农学院', participationRate: 79.4, serviceHours: 17230, teams: 10 },
+    { department: '工学院', participationRate: 76.8, serviceHours: 16540, teams: 9 },
+    { department: '商学院', participationRate: 72.1, serviceHours: 14280, teams: 8 },
+  ],
+  baseSatisfaction: [
+    { baseName: '华为合肥研究所', score: 4.9, reviews: 48 },
+    { baseName: '宏村镇人民政府', score: 4.8, reviews: 36 },
+    { baseName: '井冈山革命博物馆', score: 4.7, reviews: 28 },
+    { baseName: '金寨县人民医院', score: 4.6, reviews: 32 },
+    { baseName: '巢湖生态保护示范区', score: 4.5, reviews: 24 },
+  ],
+  monthlyTrend: [
+    { month: '2026-01', activities: 12, participants: 560, hours: 3200 },
+    { month: '2026-02', activities: 8, participants: 380, hours: 2100 },
+    { month: '2026-03', activities: 18, participants: 820, hours: 4500 },
+    { month: '2026-04', activities: 22, participants: 1050, hours: 5800 },
+    { month: '2026-05', activities: 28, participants: 1340, hours: 7200 },
+    { month: '2026-06', activities: 45, participants: 2180, hours: 12400 },
+    { month: '2026-07', activities: 68, participants: 3560, hours: 28600 },
+    { month: '2026-08', activities: 72, participants: 3280, hours: 26800 },
+    { month: '2026-09', activities: 35, participants: 1680, hours: 9800 },
+    { month: '2026-10', activities: 20, participants: 920, hours: 5200 },
+    { month: '2026-11', activities: 15, participants: 680, hours: 3800 },
+    { month: '2026-12', activities: 10, participants: 450, hours: 2400 },
+  ],
+};
