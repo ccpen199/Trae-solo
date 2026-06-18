@@ -1,65 +1,59 @@
-/**
- * This is a user authentication API route demo.
- * Handle user registration, login, token management, etc.
- */
-import { Router, type Request, type Response } from 'express'
+import { Router } from 'express';
+import { z } from 'zod';
+import { db, queryOne } from '../db.js';
+import { success, error } from '../utils/response.js';
+import { generateToken, comparePassword } from '../utils/jwt.js';
+import type { User, LoginRequest, LoginResponse } from '../../shared/types.js';
 
-const router = Router()
+const router = Router();
 
-/**
- * User Login
- * POST /api/auth/register
- */
-router.post('/register', async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({
-    success: true,
-    data: {
-      id: 'user-demo',
-      name: req.body?.name || '李晓芳',
-      role: 'dealer',
-      message: '注册成功，已创建演示直销经理账号',
-    },
-  })
-})
+const loginSchema = z.object({
+  username: z.string().min(1, '用户名不能为空'),
+  password: z.string().min(1, '密码不能为空'),
+});
 
-/**
- * User Login
- * POST /api/auth/login
- */
-router.post('/login', async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({
-    success: true,
-    token: 'demo-token-may-89128',
-    data: {
-      id: 'manager-demo',
-      name: '李晓芳',
-      role: 'manager',
-      username: req.body?.username || req.body?.account || 'admin',
-    },
-  })
-})
+router.post('/login', (req, res) => {
+  try {
+    const validated = loginSchema.parse(req.body);
+    
+    const user = queryOne<User & { password_hash: string }>(
+      'SELECT * FROM users WHERE username = ?',
+      [validated.username]
+    );
 
-/**
- * User Logout
- * POST /api/auth/logout
- */
-router.post('/logout', async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({
-    success: true,
-    message: '已退出登录',
-  })
-})
+    if (!user) {
+      res.status(401).json(error('用户名或密码错误', 401));
+      return;
+    }
 
-router.get('/me', async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({
-    success: true,
-    data: {
-      id: 'manager-demo',
-      name: '李晓芳',
-      role: 'manager',
-      permissions: ['dashboard:view', 'dealers:manage', 'compliance:review'],
-    },
-  })
-})
+    if (user.status !== 'active') {
+      res.status(403).json(error('账户已被禁用，请联系管理员', 403));
+      return;
+    }
 
-export default router
+    if (!comparePassword(validated.password, user.password_hash)) {
+      res.status(401).json(error('用户名或密码错误', 401));
+      return;
+    }
+
+    const token = generateToken(user);
+    const { password_hash, ...userWithoutPassword } = user;
+
+    res.json(success<LoginResponse>({
+      token,
+      user: userWithoutPassword as User,
+    }, '登录成功'));
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      res.status(400).json(error(err.errors[0].message, 400));
+      return;
+    }
+    res.status(500).json(error('登录失败', 500));
+  }
+});
+
+router.post('/refresh', (req, res) => {
+  res.json(success({ refreshed: true }, 'Token 刷新成功'));
+});
+
+export default router;
