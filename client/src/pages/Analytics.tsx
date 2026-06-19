@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/Tabs"
 import { Select, SelectItem } from "../components/ui/Select"
 import { Badge } from "../components/ui/Badge"
 import { Progress } from "../components/ui/Progress"
+import { Button } from "../components/ui/Button"
 import { mockDailyStats } from "../data/mockData"
 import { formatCurrency, formatNumber } from "../lib/utils"
 import {
@@ -21,6 +22,7 @@ import {
   LineChart as LineChartIcon,
   Award,
   TrendingDown,
+  FileText,
 } from "lucide-react"
 import {
   LineChart,
@@ -48,6 +50,8 @@ export function Analytics() {
   const tasks = useAppStore((state) => state.tasks)
   const annotators = useAppStore((state) => state.annotators)
   const [timeRange, setTimeRange] = useState("30d")
+  const [projectFilter, setProjectFilter] = useState("all")
+  const [taskTypeFilter, setTaskTypeFilter] = useState("all")
 
   const efficiencyData = tasks.map((task) => ({
     name: task.title.substring(0, 8) + "...",
@@ -465,7 +469,75 @@ export function Analytics() {
         </TabsContent>
 
         <TabsContent value="quality">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="mb-6 flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">统计口径：</span>
+              <Select value={projectFilter} onValueChange={setProjectFilter} className="w-40">
+                <SelectItem value="all">全部项目</SelectItem>
+                {tasks.slice(0, 5).map(t => (
+                  <SelectItem key={t.id} value={t.id}>{t.title.substring(0, 12)}...</SelectItem>
+                ))}
+              </Select>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">任务类型：</span>
+              <Select value={taskTypeFilter} onValueChange={setTaskTypeFilter} className="w-36">
+                <SelectItem value="all">全部类型</SelectItem>
+                <SelectItem value="image_segmentation">图像分割</SelectItem>
+                <SelectItem value="audio_transcription">语音标注</SelectItem>
+                <SelectItem value="video_action">视频标注</SelectItem>
+                <SelectItem value="medical_ct">医疗影像</SelectItem>
+              </Select>
+            </div>
+            <Badge variant="outline" className="ml-auto">
+              数据更新于 {new Date().toLocaleTimeString()}
+            </Badge>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-muted-foreground">总标注量</span>
+                  <Badge variant="secondary">可复查</Badge>
+                </div>
+                <p className="text-2xl font-bold">12,847</p>
+                <p className="text-xs text-muted-foreground mt-1">其中已复核 3,256 条</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-muted-foreground">平均一致性</span>
+                  <Badge className="bg-green-500">Jaccard</Badge>
+                </div>
+                <p className="text-2xl font-bold text-green-600">88.7%</p>
+                <p className="text-xs text-muted-foreground mt-1">阈值 85%，达标率 92.3%</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-muted-foreground">对抗样本</span>
+                  <Badge className="bg-amber-500">检测中</Badge>
+                </div>
+                <p className="text-2xl font-bold text-amber-600">156</p>
+                <p className="text-xs text-muted-foreground mt-1">已注入 642，检出率 95.2%</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-muted-foreground">异常标注员</span>
+                  <Badge className="bg-red-500">预警</Badge>
+                </div>
+                <p className="text-2xl font-bold text-red-600">3</p>
+                <p className="text-xs text-muted-foreground mt-1">一致性低于 60%，已标记</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             <Card>
               <CardHeader>
                 <CardTitle>准确率趋势</CardTitle>
@@ -495,6 +567,7 @@ export function Analytics() {
                         stroke="hsl(var(--chart-3))"
                         strokeWidth={2}
                         dot={false}
+                        name="准确率"
                       />
                     </LineChart>
                   </ResponsiveContainer>
@@ -508,10 +581,16 @@ export function Analytics() {
                 <CardDescription>Jaccard 相似度分布</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <QualityBar label="优秀 (≥0.9)" value={35} color="bg-green-500" />
-                <QualityBar label="良好 (0.8-0.9)" value={40} color="bg-blue-500" />
-                <QualityBar label="合格 (0.7-0.8)" value={18} color="bg-yellow-500" />
-                <QualityBar label="不合格 (<0.7)" value={7} color="bg-red-500" />
+                <QualityBar label="优秀 (≥0.9)" value={35} color="bg-green-500" count={4496} />
+                <QualityBar label="良好 (0.8-0.9)" value={40} color="bg-blue-500" count={5139} />
+                <QualityBar label="合格 (0.7-0.8)" value={18} color="bg-yellow-500" count={2312} />
+                <QualityBar label="不合格 (<0.7)" value={7} color="bg-red-500" count={900} />
+                <div className="pt-2 border-t">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">总计</span>
+                    <span className="font-medium">12,847 条</span>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -526,28 +605,211 @@ export function Analytics() {
                   label="平均准确率"
                   value="92.3%"
                   trend="+1.5%"
+                  positive
                 />
                 <MetricItem
                   icon={<Users className="w-4 h-4" />}
                   label="标注一致性"
                   value="88.7%"
                   trend="+2.1%"
+                  positive
                 />
                 <MetricItem
                   icon={<Zap className="w-4 h-4" />}
                   label="对抗样本检出率"
                   value="95.2%"
                   trend="+0.8%"
+                  positive
                 />
                 <MetricItem
                   icon={<Clock className="w-4 h-4" />}
                   label="平均审核时长"
                   value="4.2min"
                   trend="-12%"
+                  positive
                 />
               </CardContent>
             </Card>
           </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>按任务类型的一致性分析</CardTitle>
+                <CardDescription>各类型标注质量对比</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ReBarChart data={consistencyByTypeData()}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis dataKey="type" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
+                      <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "hsl(var(--popover))",
+                          border: "1px solid hsl(var(--border))",
+                          borderRadius: "8px",
+                        }}
+                        formatter={(value: any) => [`${value}%`, "一致性"]}
+                      />
+                      <Bar dataKey="consistency" name="一致性" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
+                        {consistencyByTypeData().map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={entry.consistency >= 85 ? "hsl(var(--chart-3))" : "hsl(var(--chart-5))"}
+                          />
+                        ))}
+                      </Bar>
+                      <Bar dataKey="accuracy" name="准确率" fill="hsl(var(--chart-4))" radius={[4, 4, 0, 0]} />
+                    </ReBarChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>对抗样本检测结果</CardTitle>
+                <CardDescription>异常检测与处理记录</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Activity className="w-4 h-4 text-red-600" />
+                    <span className="text-sm font-medium text-red-700 dark:text-red-400">异常检测预警</span>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">疑似作弊标注员</span>
+                      <span className="font-medium text-red-600">3 人</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">一致性突降样本</span>
+                      <span className="font-medium text-red-600">128 条</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">延迟过高标注</span>
+                      <span className="font-medium text-amber-600">45 条</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Target className="w-4 h-4 text-amber-600" />
+                    <span className="text-sm font-medium text-amber-700 dark:text-amber-400">对抗样本注入</span>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">已注入金标样本</span>
+                      <span className="font-medium">642 条</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">正确识别数</span>
+                      <span className="font-medium text-green-600">611 条</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">整体检出率</span>
+                      <span className="font-medium">95.2%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-900">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-4 h-4 text-blue-600" />
+                    <span className="text-sm font-medium text-blue-700 dark:text-blue-400">复检记录</span>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">人工抽检量</span>
+                      <span className="font-medium">1,287 条</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">抽检合格率</span>
+                      <span className="font-medium text-green-600">94.6%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">争议仲裁数</span>
+                      <span className="font-medium">23 件</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>标注一致性异常明细</CardTitle>
+              <CardDescription>低于一致性阈值的标注员列表，支持复查</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b text-xs text-muted-foreground">
+                      <th className="text-left py-3 font-medium">标注员</th>
+                      <th className="text-left py-3 font-medium">等级</th>
+                      <th className="text-left py-3 font-medium">任务类型</th>
+                      <th className="text-right py-3 font-medium">标注量</th>
+                      <th className="text-right py-3 font-medium">一致性</th>
+                      <th className="text-right py-3 font-medium">准确率</th>
+                      <th className="text-center py-3 font-medium">状态</th>
+                      <th className="text-center py-3 font-medium">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {annotators.slice(0, 5).map((a, idx) => {
+                      const consistency = 75 - idx * 5
+                      const isWarning = consistency < 80
+                      const isDanger = consistency < 70
+                      return (
+                        <tr key={a.id} className="border-b hover:bg-accent/30">
+                          <td className="py-3">
+                            <div className="flex items-center gap-3">
+                              <img src={a.avatar} alt="" className="w-8 h-8 rounded-full" />
+                              <span className="text-sm font-medium">{a.name}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 text-sm">Lv.{a.level}</td>
+                          <td className="py-3">
+                            <Badge variant="outline" className="text-xs">
+                              {idx % 2 === 0 ? "图像分割" : "医疗影像"}
+                            </Badge>
+                          </td>
+                          <td className="py-3 text-sm text-right">{(Math.random() * 500 + 100).toFixed(0)}</td>
+                          <td className="py-3 text-right">
+                            <span className={`text-sm font-semibold ${
+                              isDanger ? "text-red-600" : isWarning ? "text-amber-600" : "text-green-600"
+                            }`}>
+                              {consistency}%
+                            </span>
+                          </td>
+                          <td className="py-3 text-right">
+                            <span className="text-sm font-semibold">{a.accuracy}%</span>
+                          </td>
+                          <td className="py-3 text-center">
+                            {isDanger ? (
+                              <Badge className="bg-red-500">需复核</Badge>
+                            ) : isWarning ? (
+                              <Badge className="bg-amber-500">观察中</Badge>
+                            ) : (
+                              <Badge className="bg-green-500">正常</Badge>
+                            )}
+                          </td>
+                          <td className="py-3 text-center">
+                            <Button variant="ghost" size="sm">查看详情</Button>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>
@@ -598,12 +860,14 @@ function TypeDistributionItem({ label, value, color }: { label: string; value: n
   )
 }
 
-function QualityBar({ label, value, color }: { label: string; value: number; color: string }) {
+function QualityBar({ label, value, color, count }: { label: string; value: number; color: string; count?: number }) {
   return (
     <div>
       <div className="flex justify-between text-xs mb-1">
         <span>{label}</span>
-        <span className="text-muted-foreground">{value}%</span>
+        <span className="text-muted-foreground">
+          {value}%{count !== undefined && ` · ${count.toLocaleString()}条`}
+        </span>
       </div>
       <div className="h-2 bg-muted rounded-full overflow-hidden">
         <div className={`h-full ${color} rounded-full transition-all`} style={{ width: `${value}%` }} />
@@ -612,7 +876,7 @@ function QualityBar({ label, value, color }: { label: string; value: number; col
   )
 }
 
-function MetricItem({ icon, label, value, trend }: { icon: React.ReactNode; label: string; value: string; trend: string }) {
+function MetricItem({ icon, label, value, trend, positive }: { icon: React.ReactNode; label: string; value: string; trend: string; positive?: boolean }) {
   return (
     <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
       <div className="flex items-center gap-3">
@@ -621,7 +885,7 @@ function MetricItem({ icon, label, value, trend }: { icon: React.ReactNode; labe
       </div>
       <div className="text-right">
         <p className="font-semibold text-sm">{value}</p>
-        <p className="text-xs text-green-600 dark:text-green-400">{trend}</p>
+        <p className={`text-xs ${positive ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>{trend}</p>
       </div>
     </div>
   )
@@ -646,4 +910,13 @@ function generateScatterData() {
     speed: Math.random() * 40 + 60,
     accuracy: Math.random() * 20 + 80,
   }))
+}
+
+function consistencyByTypeData() {
+  return [
+    { type: "图像分割", consistency: 92, accuracy: 94 },
+    { type: "语音标注", consistency: 87, accuracy: 90 },
+    { type: "视频标注", consistency: 84, accuracy: 88 },
+    { type: "医疗影像", consistency: 79, accuracy: 82 },
+  ]
 }

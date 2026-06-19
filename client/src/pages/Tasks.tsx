@@ -24,6 +24,12 @@ import {
   Target,
   ChevronRight,
   X,
+  BarChart3,
+  Zap,
+  CheckCircle,
+  TrendingUp,
+  AlertTriangle,
+  Lock,
 } from "lucide-react"
 import { TaskDetail } from "./TaskDetail"
 import { CreateTaskDialog } from "../components/tasks/CreateTaskDialog"
@@ -64,23 +70,69 @@ const statusColors: Record<TaskStatus, string> = {
 
 interface TasksProps {
   onStartAnnotation?: (task: Task) => void
+  onNavigate?: (tab: string) => void
 }
 
-export function Tasks({ onStartAnnotation }: TasksProps) {
+export function Tasks({ onStartAnnotation, onNavigate }: TasksProps) {
   const tasks = useAppStore((state) => state.tasks)
   const currentRole = useAppStore((state) => state.currentRole)
+  const currentUser = useAppStore((state) => state.currentUser)
   const [searchQuery, setSearchQuery] = useState("")
   const [typeFilter, setTypeFilter] = useState<string>("all")
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [showCreateDialog, setShowCreateDialog] = useState(false)
 
+  const userSkills = currentUser?.skills || []
+
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       task.description.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesType = typeFilter === "all" || task.type === typeFilter
     const matchesStatus = statusFilter === "all" || task.status === statusFilter
+
+    if (currentRole === "publisher") {
+      const isMyTask = task.publisherId === currentUser?.id || task.publisherName === currentUser?.name
+      return matchesSearch && matchesType && matchesStatus && isMyTask
+    }
+
+    if (currentRole === "annotator") {
+      if (task.status !== "published" && task.status !== "in_progress") return false
+      if (task.requiredSkillLevel > (currentUser?.level || 1)) return false
+      
+      if (task.type === "medical_ct") {
+        const hasMedicalSkill = userSkills.some(s => 
+          s.category === "medical_ct" && s.certified && s.level >= 3
+        )
+        if (!hasMedicalSkill) return false
+      }
+      
+      if (task.requiredSkillLevel >= 3) {
+        const hasRequiredSkill = userSkills.some(s => 
+          s.category === task.type && s.certified && s.level >= task.requiredSkillLevel
+        )
+        if (!hasRequiredSkill) return false
+      }
+      
+      if ((currentUser?.accuracy || 0) < 70 && task.annotationPerUnit >= 3) {
+        return false
+      }
+      
+      return matchesSearch && matchesType && matchesStatus
+    }
+
+    if (currentRole === "reviewer") {
+      return matchesSearch && matchesType && matchesStatus && 
+        (task.status === "reviewing" || task.status === "completed")
+    }
+
     return matchesSearch && matchesType && matchesStatus
+  })
+
+  const lockedTasks = tasks.filter((task) => {
+    if (currentRole !== "annotator") return false
+    if (task.status !== "published" && task.status !== "in_progress") return false
+    return !filteredTasks.includes(task)
   })
 
   if (selectedTask) {
@@ -107,17 +159,77 @@ export function Tasks({ onStartAnnotation }: TasksProps) {
           </h2>
           <p className="text-muted-foreground mt-1">
             {currentRole === "publisher"
-              ? "管理您的标注项目，创建新任务"
-              : "浏览可用任务，选择适合您的项目"}
+              ? `管理您的 ${filteredTasks.length} 个标注项目，创建新任务`
+              : currentRole === "annotator"
+              ? `为您找到 ${filteredTasks.length} 个匹配任务，${lockedTasks.length} 个暂不可领取`
+              : `待审核任务列表，共 ${filteredTasks.length} 项`}
           </p>
         </div>
         {currentRole === "publisher" && (
-          <Button onClick={() => setShowCreateDialog(true)}>
-            <Plus className="w-4 h-4" />
-            创建项目
-          </Button>
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={() => setShowCreateDialog(true)}>
+              <BarChart3 className="w-4 h-4 mr-2" />
+              产能分析
+            </Button>
+            <Button onClick={() => setShowCreateDialog(true)}>
+              <Plus className="w-4 h-4 mr-2" />
+              创建项目
+            </Button>
+          </div>
+        )}
+        {currentRole === "annotator" && (
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={() => onNavigate?.("skills")}>
+              <Zap className="w-4 h-4 mr-2" />
+              技能认证
+            </Button>
+          </div>
         )}
       </div>
+
+      {currentRole === "annotator" && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                  <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">我的等级</p>
+                  <p className="font-bold">Lv.{currentUser?.level || 1}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">已认证技能</p>
+                  <p className="font-bold">{userSkills.filter(s => s.certified).length} 项</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">历史准确率</p>
+                  <p className="font-bold">{currentUser?.accuracy || 0}%</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       <Card>
         <CardContent className="p-4">
@@ -238,6 +350,83 @@ export function Tasks({ onStartAnnotation }: TasksProps) {
             >
               清除筛选
             </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {currentRole === "annotator" && lockedTasks.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Lock className="w-5 h-5 text-amber-500" />
+              <CardTitle>暂不可领取</CardTitle>
+            </div>
+            <CardDescription>
+              提升等级或获取相关技能认证后可解锁以下任务
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {lockedTasks.slice(0, 6).map((task) => {
+                const reasons: string[] = []
+                if (task.requiredSkillLevel > (currentUser?.level || 1)) {
+                  reasons.push(`需要 Lv.${task.requiredSkillLevel}`)
+                }
+                if (task.type === "medical_ct") {
+                  reasons.push("需要医疗影像认证")
+                }
+                if (task.requiredSkillLevel >= 3) {
+                  reasons.push(`需要 ${taskTypeLabels[task.type]} Lv.${task.requiredSkillLevel} 认证`)
+                }
+                if ((currentUser?.accuracy || 0) < 70 && task.annotationPerUnit >= 3) {
+                  reasons.push("准确率需 ≥70%")
+                }
+                
+                return (
+                  <div 
+                    key={task.id} 
+                    className="p-4 rounded-xl border border-dashed bg-muted/30 opacity-75"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <Lock className="w-4 h-4 text-amber-500" />
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                          {taskTypeLabels[task.type]}
+                        </span>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">
+                        {taskStatusLabels[task.status]}
+                      </Badge>
+                    </div>
+                    <h4 className="font-medium text-sm mb-2">{task.title}</h4>
+                    <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
+                      {task.description}
+                    </p>
+                    <div className="space-y-1">
+                      {reasons.map((reason, i) => (
+                        <div key={i} className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
+                          <AlertTriangle className="w-3 h-3" />
+                          {reason}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t">
+                      <span className="font-bold text-primary">{formatCurrency(task.unitPrice)}/条</span>
+                      <span className="text-xs text-muted-foreground">
+                        Lv.{task.requiredSkillLevel}+ · {task.annotationPerUnit}人标注
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            {lockedTasks.length > 6 && (
+              <div className="text-center mt-4">
+                <Button variant="outline" size="sm">
+                  查看全部 {lockedTasks.length} 个锁定任务
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}

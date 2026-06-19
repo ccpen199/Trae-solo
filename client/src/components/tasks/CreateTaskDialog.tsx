@@ -12,23 +12,30 @@ import { Input } from "../ui/Input"
 import { Textarea } from "../ui/Textarea"
 import { Label } from "../ui/Label"
 import { Select, SelectItem } from "../ui/Select"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/Tabs"
-import { Image, Mic, Video, Activity, FileText } from "lucide-react"
+import { Card, CardContent } from "../ui/Card"
+import { Badge } from "../ui/Badge"
+import { Image, Mic, Video, Activity, FileText, CheckCircle, ChevronRight, DollarSign, Users, Target, Clock, Shield, Zap } from "lucide-react"
 import type { TaskType } from "../../types"
+import { useAppStore } from "../../store/useAppStore"
+import { generateId } from "../../lib/utils"
 
 interface CreateTaskDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onTaskCreated?: (taskId: string) => void
 }
 
-export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) {
+export function CreateTaskDialog({ open, onOpenChange, onTaskCreated }: CreateTaskDialogProps) {
+  const addTask = useAppStore((state) => state.addTask)
+  const currentUser = useAppStore((state) => state.currentUser)
   const [step, setStep] = useState(1)
   const [taskType, setTaskType] = useState<TaskType>("image_segmentation")
+  const [showSuccess, setShowSuccess] = useState(false)
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    totalUnits: "",
-    unitPrice: "",
+    totalUnits: "100",
+    unitPrice: "0.5",
     deadline: "",
     requiredSkillLevel: "2",
     annotationPerUnit: "3",
@@ -36,6 +43,11 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
     samplingRate: "0.1",
     adversarialEnabled: true,
     adversarialRatio: "0.05",
+    paymentMethod: "wechat",
+    settlementCycle: "daily",
+    reviewThreshold: "0.7",
+    autoApprove: true,
+    reviewerAssignment: "auto",
   })
 
   const taskTypes = [
@@ -46,7 +58,7 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
   ]
 
   const handleNext = () => {
-    if (step < 3) setStep(step + 1)
+    if (step < 4) setStep(step + 1)
   }
 
   const handlePrev = () => {
@@ -54,12 +66,138 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
   }
 
   const handleSubmit = () => {
+    const newTask = {
+      id: generateId(),
+      title: formData.title || "新标注项目",
+      description: formData.description,
+      type: taskType,
+      status: "published" as const,
+      publisherId: currentUser?.id || "",
+      publisherName: currentUser?.name || "发布方",
+      totalUnits: parseInt(formData.totalUnits) || 100,
+      completedUnits: 0,
+      unitPrice: parseFloat(formData.unitPrice) || 0.5,
+      rewardPool: (parseInt(formData.totalUnits) || 100) * (parseFloat(formData.unitPrice) || 0.5),
+      requiredSkillLevel: parseInt(formData.requiredSkillLevel) || 2,
+      consistencyThreshold: parseFloat(formData.consistencyThreshold) || 0.85,
+      annotationPerUnit: parseInt(formData.annotationPerUnit) || 3,
+      deadline: formData.deadline || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      createdAt: new Date().toISOString().split('T')[0],
+      tags: [taskType],
+      qualityConfig: {
+        samplingRate: parseFloat(formData.samplingRate) || 0.1,
+        minConsistency: parseFloat(formData.consistencyThreshold) || 0.85,
+        adversarialEnabled: formData.adversarialEnabled,
+        adversarialRatio: parseFloat(formData.adversarialRatio) || 0.05,
+        reviewThreshold: parseFloat(formData.reviewThreshold) || 0.7,
+      },
+    }
+    
+    addTask(newTask)
+    setShowSuccess(true)
+    onTaskCreated?.(newTask.id)
+  }
+
+  const handleClose = () => {
     onOpenChange(false)
     setStep(1)
+    setShowSuccess(false)
+  }
+
+  if (showSuccess) {
+    return (
+      <Dialog open={open} onOpenChange={handleClose}>
+        <DialogContent className="max-w-lg">
+          <div className="text-center py-8">
+            <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+            </div>
+            <DialogTitle className="text-2xl font-bold mb-2">项目创建成功！</DialogTitle>
+            <DialogDescription className="mb-8">
+              您的标注项目已成功发布，系统将自动匹配符合资质的标注员
+            </DialogDescription>
+
+            <div className="grid grid-cols-2 gap-4 mb-8 text-left">
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Target className="w-4 h-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">任务类型</span>
+                  </div>
+                  <p className="font-semibold">
+                    {taskTypes.find(t => t.id === taskType)?.name}
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <DollarSign className="w-4 h-4 text-green-600" />
+                    <span className="text-xs text-muted-foreground">预算总额</span>
+                  </div>
+                  <p className="font-semibold">
+                    {(parseInt(formData.totalUnits) * parseFloat(formData.unitPrice)).toFixed(2)} 元
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4 text-blue-600" />
+                    <span className="text-xs text-muted-foreground">任务数量</span>
+                  </div>
+                  <p className="font-semibold">{formData.totalUnits} 条</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="w-4 h-4 text-amber-600" />
+                    <span className="text-xs text-muted-foreground">截止日期</span>
+                  </div>
+                  <p className="font-semibold">{formData.deadline || "30天后"}</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 mb-8">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="w-5 h-5 text-primary" />
+                <span className="font-medium">质检配置已生效</span>
+              </div>
+              <div className="grid grid-cols-3 gap-4 text-sm">
+                <div>
+                  <p className="text-xs text-muted-foreground">一致性阈值</p>
+                  <p className="font-medium">{(parseFloat(formData.consistencyThreshold) * 100).toFixed(0)}%</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">抽检比例</p>
+                  <p className="font-medium">{(parseFloat(formData.samplingRate) * 100).toFixed(0)}%</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">对抗样本</p>
+                  <p className="font-medium">{formData.adversarialEnabled ? "已开启" : "已关闭"}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Button variant="outline" className="flex-1" onClick={handleClose}>
+                返回项目列表
+              </Button>
+              <Button className="flex-1" onClick={handleClose}>
+                <Zap className="w-4 h-4 mr-2" />
+                立即上传数据
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    )
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>创建新项目</DialogTitle>
@@ -69,7 +207,7 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
         </DialogHeader>
 
         <div className="flex items-center justify-center gap-2 py-4">
-          {[1, 2, 3].map((s) => (
+          {[1, 2, 3, 4].map((s) => (
             <div key={s} className="flex items-center">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
@@ -82,15 +220,22 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
               >
                 {s}
               </div>
-              {s < 3 && (
+              {s < 4 && (
                 <div
-                  className={`w-16 h-0.5 ${
+                  className={`w-12 h-0.5 ${
                     step > s ? "bg-green-500" : "bg-muted"
                   }`}
                 />
               )}
             </div>
           ))}
+        </div>
+
+        <div className="flex items-center justify-center gap-6 pb-4 text-xs text-muted-foreground">
+          <span className={step === 1 ? "text-primary font-medium" : ""}>任务类型</span>
+          <span className={step === 2 ? "text-primary font-medium" : ""}>基本信息</span>
+          <span className={step === 3 ? "text-primary font-medium" : ""}>质检标准</span>
+          <span className={step === 4 ? "text-primary font-medium" : ""}>结算审核</span>
         </div>
 
         {step === 1 && (
@@ -303,6 +448,157 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
           </div>
         )}
 
+        {step === 4 && (
+          <div className="space-y-5">
+            <div className="p-4 rounded-lg bg-muted/50 space-y-4">
+              <div className="flex items-center gap-2 mb-2">
+                <DollarSign className="w-5 h-5 text-green-600" />
+                <h4 className="font-medium">结算规则</h4>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>支付方式</Label>
+                  <Select
+                    value={formData.paymentMethod}
+                    onValueChange={(v) => setFormData({ ...formData, paymentMethod: v })}
+                  >
+                    <SelectItem value="wechat">微信支付</SelectItem>
+                    <SelectItem value="alipay">支付宝</SelectItem>
+                    <SelectItem value="bank">银行卡转账</SelectItem>
+                    <SelectItem value="platform">平台钱包</SelectItem>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>结算周期</Label>
+                  <Select
+                    value={formData.settlementCycle}
+                    onValueChange={(v) => setFormData({ ...formData, settlementCycle: v })}
+                  >
+                    <SelectItem value="daily">日结（每日24点）</SelectItem>
+                    <SelectItem value="weekly">周结（每周一）</SelectItem>
+                    <SelectItem value="biweekly">双周结</SelectItem>
+                    <SelectItem value="monthly">月结（每月1号）</SelectItem>
+                    <SelectItem value="manual">人工触发</SelectItem>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-lg bg-white dark:bg-slate-800 border">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm">预估总支出</span>
+                  <span className="font-bold text-lg text-green-600">
+                    ¥ {(parseInt(formData.totalUnits) * parseFloat(formData.unitPrice)).toFixed(2)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>单价 × 数量</span>
+                  <span>¥{formData.unitPrice} × {formData.totalUnits}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs text-muted-foreground mt-1">
+                  <span>平台服务费 (5%)</span>
+                  <span>¥ {(parseInt(formData.totalUnits) * parseFloat(formData.unitPrice) * 0.05).toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-muted/50 space-y-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="w-5 h-5 text-amber-600" />
+                <h4 className="font-medium">审核配置</h4>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-normal">自动通过阈值</Label>
+                  <span className="text-sm font-medium">
+                    {(parseFloat(formData.reviewThreshold) * 100).toFixed(0)}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0.5"
+                  max="0.95"
+                  step="0.05"
+                  value={formData.reviewThreshold}
+                  onChange={(e) => setFormData({ ...formData, reviewThreshold: e.target.value })}
+                  className="w-full"
+                />
+                <p className="text-xs text-muted-foreground">
+                  多人标注一致性超过此阈值且通过抽检，将自动审核通过
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>审核员分配方式</Label>
+                <Select
+                  value={formData.reviewerAssignment}
+                  onValueChange={(v) => setFormData({ ...formData, reviewerAssignment: v })}
+                >
+                  <SelectItem value="auto">系统自动分配</SelectItem>
+                  <SelectItem value="manual">手动指定审核员</SelectItem>
+                  <SelectItem value="pool">从审核员池随机分配</SelectItem>
+                </Select>
+              </div>
+
+              <div className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-slate-800 border">
+                <div>
+                  <p className="text-sm font-medium">自动验收</p>
+                  <p className="text-xs text-muted-foreground">达标数据自动通过，无需人工审核</p>
+                </div>
+                <button
+                  onClick={() => setFormData({ ...formData, autoApprove: !formData.autoApprove })}
+                  className={`relative w-12 h-6 rounded-full transition-colors ${
+                    formData.autoApprove ? "bg-primary" : "bg-muted"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${
+                      formData.autoApprove ? "left-7" : "left-1"
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg border border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-900/20">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <h4 className="font-medium text-green-700 dark:text-green-400">配置摘要</h4>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">任务类型：</span>
+                  <span className="font-medium">{taskTypes.find(t => t.id === taskType)?.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">技能等级：</span>
+                  <span className="font-medium">Lv.{formData.requiredSkillLevel}+</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">一致性阈值：</span>
+                  <span className="font-medium">{(parseFloat(formData.consistencyThreshold) * 100).toFixed(0)}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">抽检比例：</span>
+                  <span className="font-medium">{(parseFloat(formData.samplingRate) * 100).toFixed(0)}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">结算周期：</span>
+                  <span className="font-medium">{
+                    { daily: "日结", weekly: "周结", biweekly: "双周结", monthly: "月结", manual: "人工" }[formData.settlementCycle]
+                  }</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">自动验收：</span>
+                  <span className="font-medium">{formData.autoApprove ? "已开启" : "已关闭"}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <DialogFooter className="flex justify-between">
           {step > 1 ? (
             <Button variant="outline" onClick={handlePrev}>
@@ -313,10 +609,13 @@ export function CreateTaskDialog({ open, onOpenChange }: CreateTaskDialogProps) 
               取消
             </Button>
           )}
-          {step < 3 ? (
+          {step < 4 ? (
             <Button onClick={handleNext}>下一步</Button>
           ) : (
-            <Button onClick={handleSubmit}>创建项目</Button>
+            <Button onClick={handleSubmit}>
+              <CheckCircle className="w-4 h-4 mr-2" />
+              创建项目
+            </Button>
           )}
         </DialogFooter>
       </DialogContent>

@@ -32,6 +32,7 @@ interface AppState {
   submitAnnotation: (unitId: string, annotation: Partial<Annotation>) => void
   addDispute: (dispute: Omit<Dispute, 'id' | 'status' | 'createdAt'>) => void
   resolveDispute: (disputeId: string, resolution: string, resolverId: string) => void
+  addTask: (task: Task) => void
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -99,6 +100,12 @@ export const useAppStore = create<AppState>((set, get) => ({
           ? { ...d, status: 'resolved', resolution, resolverId }
           : d
       ),
+    }))
+  },
+
+  addTask: (task: Task) => {
+    set(state => ({
+      tasks: [task, ...state.tasks],
     }))
   },
 }))
