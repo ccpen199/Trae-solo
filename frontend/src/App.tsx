@@ -89,7 +89,7 @@ export default function App() {
         <Route path="heatmap" element={<Heatmap />} />
         <Route path="price-forecast" element={<PriceForecast />} />
         <Route path="logistics/quotations/:orderId" element={<LogisticsQuotations />} />
-        <Route path="carrier/orders" element={<RequireRole roles={['carrier']}><CarrierOrders /></RequireRole>} />
+        <Route path="carrier/orders" element={<RequireRole roles={['carrier','admin','recycler','producer']}><CarrierOrders /></RequireRole>} />
         <Route path="tracking/:no" element={<Tracking />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="admin/enterprises" element={<RequireRole roles={['admin']}><AdminEnterprises /></RequireRole>} />

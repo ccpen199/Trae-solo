@@ -11,6 +11,9 @@ export default function Login() {
 
   const accounts = [
     { label: '平台管理员', user: 'admin', pwd: 'admin123', desc: '审核企业资质，查看平台数据' },
+    { label: '运营管理员', user: 'platform', pwd: 'platform123', desc: '平台运营管理' },
+    { label: '运维管理员', user: 'ops', pwd: 'ops123', desc: '系统运维管理' },
+    { label: '监管管理员', user: 'supervisor', pwd: 'supervisor123', desc: '监管数据查看' },
     { label: '回收商', user: 'recycler01', pwd: 'recycler01123', desc: '查看并收购废料' },
     { label: '产废单位', user: 'producer01', pwd: 'producer01123', desc: '发布废料供应信息' },
     { label: '质检机构', user: 'inspector01', pwd: 'inspector01123', desc: '出具CMA质检报告' },

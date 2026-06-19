@@ -28,19 +28,18 @@ export default function MainLayout({ children }: { children?: React.ReactNode })
     { to: '/negotiations', label: '议价中心', icon: '💬', roles: ['recycler', 'producer', 'admin'] },
     { to: '/contracts', label: '电子合同', icon: '📄', roles: ['recycler', 'producer', 'admin'] },
     { to: '/orders', label: '交易订单', icon: '📦', roles: ['*'] },
-    { to: '/logistics', label: '物流调度', icon: '🚛', roles: ['recycler', 'producer', 'carrier', 'admin'] },
+    { to: '/carrier/orders', label: '物流调度', icon: '🚛', roles: ['recycler', 'producer', 'carrier', 'admin'] },
     { to: '/trace-codes', label: '溯源码管理', icon: '🏷️', roles: ['*'] },
     { to: '/trace-verify', label: '溯源查询', icon: '🔍', roles: ['*'] },
     { to: '/credit-ratings', label: '信用评级', icon: '⭐', roles: ['*'] },
     { to: '/heatmap', label: '区域供需热力图', icon: '🗺️', roles: ['*'] },
     { to: '/price-forecast', label: '价格走势预测', icon: '📈', roles: ['*'] },
-    { to: '/carrier/orders', label: '承运任务', icon: '🚚', roles: ['carrier'] },
     { to: '/admin/enterprises', label: '企业审核', icon: '✅', roles: ['admin'] },
   ];
 
   const filteredNav = nav.filter(n => n.roles.includes('*') || (user && n.roles.includes(user.role)));
 
-  const mainNav = filteredNav.filter(n => !['/carrier/orders', '/admin/enterprises', '/logistics'].includes(n.to));
+  const mainNav = filteredNav.filter(n => !['/admin/enterprises'].includes(n.to));
   const adminNav = filteredNav.filter(n => ['/admin/enterprises'].includes(n.to));
 
   return (
