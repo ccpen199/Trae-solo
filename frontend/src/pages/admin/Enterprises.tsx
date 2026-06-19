@@ -21,7 +21,7 @@ export default function AdminEnterprises() {
     setTotal(d.total || 0); setLoading(false);
   };
 
-  useEffect(fetchData, [f.status, f.page, f.pageSize]);
+  useEffect(() => { void fetchData(); }, [f.status, f.page, f.pageSize]);
 
   const audit = async (id: string, status: 'approved' | 'rejected') => {
     const remark = status === 'rejected' ? prompt('请填写驳回原因：') || '资料不符' : '';

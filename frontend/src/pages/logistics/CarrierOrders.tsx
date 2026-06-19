@@ -11,9 +11,9 @@ export default function CarrierOrders() {
     api.get('/logistics/carrier/orders').then(d => { setData(d as any); setLoading(false); }).catch(() => setLoading(false));
   }, []);
 
-  const update = async (id: string, status: string, location: string, desc: string) => {
-    await api.post(`/logistics/logistics/${id}/update`, { status, location, description: desc });
-    location.reload();
+  const update = async (id: string, status: string, currentLocation: string, desc: string) => {
+    await api.post(`/logistics/logistics/${id}/update`, { status, location: currentLocation, description: desc });
+    window.location.reload();
   };
 
   return (

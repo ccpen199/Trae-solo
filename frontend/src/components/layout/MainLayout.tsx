@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth';
 import { ROLE_LABELS, ROLE_COLORS, VERIFICATION_STATUS } from '../../lib/constants';
 import { useEffect, useState } from 'react';
@@ -173,7 +173,7 @@ export default function MainLayout({ children }: { children?: React.ReactNode })
         </header>
 
         <main className="flex-1 p-6 overflow-auto">
-          {children}
+          {children ?? <Outlet />}
         </main>
       </div>
     </div>

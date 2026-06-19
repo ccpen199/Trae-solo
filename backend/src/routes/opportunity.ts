@@ -90,7 +90,7 @@ router.post('/', authMiddleware, requireVerifiedEnterprise, (req: AuthRequest, r
     const existingHeatmap = db.prepare(`
       SELECT id FROM heatmap_data 
       WHERE category = ? AND sub_category = ? AND region = ? AND record_date = date('now')
-    `).get(data.category, data.sub_category, data.region);
+    `).get(data.category, data.sub_category, data.region) as any;
 
     if (!existingHeatmap) {
       db.prepare(`
@@ -209,7 +209,7 @@ router.get('/:id', authMiddleware, (req, res) => {
 
 router.put('/:id', authMiddleware, (req: AuthRequest, res) => {
   const db = getDb();
-  const opp = db.prepare('SELECT * FROM business_opportunities WHERE id = ?').get(req.params.id);
+  const opp = db.prepare('SELECT * FROM business_opportunities WHERE id = ?').get(req.params.id) as any;
   if (!opp) {
     res.status(404).json({ error: '商机不存在' });
     return;
@@ -264,7 +264,7 @@ router.get('/subscriptions/my', authMiddleware, (req: AuthRequest, res) => {
   const db = getDb();
   const subscriptions = db.prepare(`
     SELECT * FROM subscriptions WHERE user_id = ? ORDER BY created_at DESC
-  `).all(req.user!.id);
+  `).all(req.user!.id) as any[];
 
   res.json(subscriptions.map(s => ({
     ...s,

@@ -32,7 +32,7 @@ export default function Notifications() {
     setLoading(false);
   };
 
-  useEffect(fetchData, [f]);
+  useEffect(() => { void fetchData(); }, [f]);
 
   const markRead = async (id: string) => { await api.put(`/notifications/${id}/read`); fetchData(); };
   const markAll = async () => {

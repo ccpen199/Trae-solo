@@ -19,7 +19,7 @@ export default function EnterpriseCert() {
     }
   }, [enterprise, profile]);
 
-  const update = (k: string, v: any) => setForm(f => ({ ...f, [k]: v }));
+  const update = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
 
   const save = async () => {
     setLoading(true); setSaved(false);
@@ -207,7 +207,7 @@ export default function EnterpriseCert() {
 
         <div className="pt-5 border-t border-slate-100 flex items-center justify-between">
           <div className="text-xs text-slate-500">
-            账号创建：{formatDateTime(user.created_at)} · 最近更新：{formatDateTime(enterprise.updated_at)}
+            账号创建：{formatDateTime(user.created_at || '')} · 最近更新：{formatDateTime(enterprise.updated_at)}
           </div>
           <div className="flex gap-2">
             <button onClick={() => nav(-1)} className="btn-secondary">取消</button>

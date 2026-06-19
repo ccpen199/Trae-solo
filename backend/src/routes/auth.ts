@@ -135,7 +135,7 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    const enterprise = db.prepare('SELECT * FROM enterprises WHERE user_id = ?').get(user.id);
+    const enterprise = db.prepare('SELECT * FROM enterprises WHERE user_id = ?').get(user.id) as any;
     const token = generateToken(user.id, user.role);
 
     res.json({
@@ -160,7 +160,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/me', authMiddleware, (req: AuthRequest, res) => {
   const db = getDb();
-  const enterprise = db.prepare('SELECT * FROM enterprises WHERE user_id = ?').get(req.user!.id);
+  const enterprise = db.prepare('SELECT * FROM enterprises WHERE user_id = ?').get(req.user!.id) as any;
   
   let profile = null;
   if (enterprise) {
@@ -215,7 +215,7 @@ router.put('/enterprise', authMiddleware, (req: AuthRequest, res) => {
     );
 
     if (req.user!.role === 'recycler' && (recycling_categories || annual_capacity || main_business_regions)) {
-      const enterprise = db.prepare('SELECT id FROM enterprises WHERE user_id = ?').get(req.user!.id);
+      const enterprise = db.prepare('SELECT id FROM enterprises WHERE user_id = ?').get(req.user!.id) as any;
       db.prepare(`
         UPDATE recycler_profiles
         SET recycling_categories = COALESCE(?, recycling_categories),
@@ -227,7 +227,7 @@ router.put('/enterprise', authMiddleware, (req: AuthRequest, res) => {
     }
 
     if (req.user!.role === 'producer' && (industry_type || annual_waste_volume || factory_locations || waste_types)) {
-      const enterprise = db.prepare('SELECT id FROM enterprises WHERE user_id = ?').get(req.user!.id);
+      const enterprise = db.prepare('SELECT id FROM enterprises WHERE user_id = ?').get(req.user!.id) as any;
       db.prepare(`
         UPDATE producer_profiles
         SET industry_type = COALESCE(?, industry_type),
@@ -288,7 +288,7 @@ router.post('/admin/enterprises/:id/verify', authMiddleware, requireRoles('admin
     }
 
     const db = getDb();
-    const enterprise = db.prepare('SELECT * FROM enterprises WHERE id = ?').get(req.params.id);
+    const enterprise = db.prepare('SELECT * FROM enterprises WHERE id = ?').get(req.params.id) as any;
     if (!enterprise) {
       res.status(404).json({ error: '企业不存在' });
       return;

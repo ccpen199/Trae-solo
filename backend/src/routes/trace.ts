@@ -275,7 +275,7 @@ router.get('/recyclers/ratings', authMiddleware, (req, res) => {
     WHERE ${where.join(' AND ')}
     ORDER BY e.credit_score DESC
     LIMIT ? OFFSET ?
-  `).all(...params).map(r => ({
+  `).all(...params).map((r: any) => ({
     ...r,
     recycling_categories: JSON.parse(r.recycling_categories || '[]'),
     main_business_regions: JSON.parse(r.main_business_regions || '[]')

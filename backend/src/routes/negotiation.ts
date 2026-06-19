@@ -27,7 +27,7 @@ router.post('/', authMiddleware, requireVerifiedEnterprise, (req: AuthRequest, r
     const existing = db.prepare(`
       SELECT id FROM negotiations 
       WHERE opportunity_id = ? AND initiator_id = ? AND responder_id = ? AND status = 'active'
-    `).get(opportunity_id, req.user!.id, opp.publisher_id);
+    `).get(opportunity_id, req.user!.id, opp.publisher_id) as any;
     
     if (existing) {
       res.status(200).json({ id: existing.id, message: '已有进行中的议价' });

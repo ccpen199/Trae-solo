@@ -185,7 +185,7 @@ export default function ContractDetail() {
                     </tr>
                   </thead>
                   <tbody>
-                    {payments.map(p => {
+                    {payments.map((p: any) => {
                       const ps = PAYMENT_STATUS[p.status];
                       return (
                         <tr key={p.id} className="border-t border-slate-100">

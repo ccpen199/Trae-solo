@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 
-const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: '/api',
   timeout: 30000,
   headers: {
@@ -8,7 +8,7 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
     if (error.response?.status === 401) {
@@ -29,5 +29,20 @@ api.interceptors.response.use(
     return Promise.reject(error.response?.data || error.message);
   }
 );
+
+const api = {
+  get<T = any>(url: string, config?: AxiosRequestConfig) {
+    return axiosInstance.get<T>(url, config) as unknown as Promise<T>;
+  },
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return axiosInstance.post<T>(url, data, config) as unknown as Promise<T>;
+  },
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return axiosInstance.put<T>(url, data, config) as unknown as Promise<T>;
+  },
+  delete<T = any>(url: string, config?: AxiosRequestConfig) {
+    return axiosInstance.delete<T>(url, config) as unknown as Promise<T>;
+  },
+};
 
 export default api;

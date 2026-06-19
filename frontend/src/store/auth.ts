@@ -9,6 +9,7 @@ interface User {
   role: UserRole;
   email?: string;
   phone?: string;
+  created_at?: string;
 }
 
 interface Enterprise {

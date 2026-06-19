@@ -101,7 +101,11 @@ export default function OpportunityPublish() {
         <div className="grid grid-cols-2 gap-5">
           <div>
             <label className="label">主品类</label>
-            <select value={form.category} onChange={e => update('category', e.target.value, update('sub_category', subCategories[e.target.value][0]))} className="input-field">
+            <select value={form.category} onChange={e => {
+              const category = e.target.value;
+              update('category', category);
+              update('sub_category', subCategories[category][0]);
+            }} className="input-field">
               {CATEGORY_OPTIONS.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
             </select>
           </div>

@@ -90,7 +90,7 @@ router.get('/:id', authMiddleware, (req: AuthRequest, res) => {
     ORDER BY tc.created_at DESC
   `).all(req.params.id);
 
-  res.json({ order, payments, logistics, inspection, trace_codes });
+  res.json({ order, payments, logistics, inspection, trace_codes: traceCodes });
 });
 
 router.post('/:id/pay-deposit', authMiddleware, (req: AuthRequest, res) => {

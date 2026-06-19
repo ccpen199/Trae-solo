@@ -51,7 +51,7 @@ router.get('/:id', authMiddleware, (req: AuthRequest, res) => {
     return;
   }
 
-  const order = db.prepare('SELECT * FROM orders WHERE contract_id = ?').get(contract.id);
+  const order = db.prepare('SELECT * FROM orders WHERE contract_id = ?').get(contract.id) as any;
   const payments = db.prepare('SELECT * FROM payment_records WHERE order_id = ?').all(order?.id || '');
 
   res.json({ contract, order, payments });

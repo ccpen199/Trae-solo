@@ -38,36 +38,36 @@ export default function OpportunityList() {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex bg-slate-100 rounded-lg p-1">
             {types.map(t => (
-              <button key={t.v} onClick={() => setF(x => ({ ...x, type: t.v, page: 1 }))}
+              <button key={t.v} onClick={() => setF((x: any) => ({ ...x, type: t.v, page: 1 }))}
                 className={`px-4 py-2 text-sm rounded-md transition font-medium ${
                   f.type === t.v ? 'bg-white text-primary-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                 }`}>{t.l}</button>
             ))}
           </div>
 
-          <select value={f.category} onChange={e => setF(x => ({ ...x, category: e.target.value, page: 1 }))} className="input-field w-36">
+          <select value={f.category} onChange={e => setF((x: any) => ({ ...x, category: e.target.value, page: 1 }))} className="input-field w-36">
             <option value="">所有品类</option>
             {CATEGORY_OPTIONS.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
           </select>
 
           {f.category && (
-            <select value={f.sub_category || ''} onChange={e => setF(x => ({ ...x, sub_category: e.target.value, page: 1 }))} className="input-field w-32">
+            <select value={f.sub_category || ''} onChange={e => setF((x: any) => ({ ...x, sub_category: e.target.value, page: 1 }))} className="input-field w-32">
               <option value="">全部子类</option>
               {subCategories[f.category].map(s => <option key={s} value={s}>{s}</option>)}
             </select>
           )}
 
-          <input placeholder="地域搜索..." value={f.region} onChange={e => setF(x => ({ ...x, region: e.target.value, page: 1 }))} className="input-field w-40" />
+          <input placeholder="地域搜索..." value={f.region} onChange={e => setF((x: any) => ({ ...x, region: e.target.value, page: 1 }))} className="input-field w-40" />
 
           <div className="flex items-center gap-2">
-            <input placeholder="最低价" type="number" value={f.min_price} onChange={e => setF(x => ({ ...x, min_price: e.target.value, page: 1 }))} className="input-field w-28" />
+            <input placeholder="最低价" type="number" value={f.min_price} onChange={e => setF((x: any) => ({ ...x, min_price: e.target.value, page: 1 }))} className="input-field w-28" />
             <span className="text-slate-400">-</span>
-            <input placeholder="最高价" type="number" value={f.max_price} onChange={e => setF(x => ({ ...x, max_price: e.target.value, page: 1 }))} className="input-field w-28" />
+            <input placeholder="最高价" type="number" value={f.max_price} onChange={e => setF((x: any) => ({ ...x, max_price: e.target.value, page: 1 }))} className="input-field w-28" />
           </div>
 
-          <input placeholder="最小吨数" type="number" value={f.min_quantity} onChange={e => setF(x => ({ ...x, min_quantity: e.target.value, page: 1 }))} className="input-field w-28" />
+          <input placeholder="最小吨数" type="number" value={f.min_quantity} onChange={e => setF((x: any) => ({ ...x, min_quantity: e.target.value, page: 1 }))} className="input-field w-28" />
 
-          <select value={f.sort} onChange={e => setF(x => ({ ...x, sort: e.target.value }))} className="input-field w-40">
+          <select value={f.sort} onChange={e => setF((x: any) => ({ ...x, sort: e.target.value }))} className="input-field w-40">
             <option value="created_at_desc">最新发布</option>
             <option value="quantity_desc">数量最多</option>
             <option value="price_asc">价格最低</option>
@@ -142,13 +142,13 @@ export default function OpportunityList() {
 
       {data.length > 0 && total > 16 && (
         <div className="flex justify-center gap-2 pt-4">
-          <button disabled={f.page === 1} onClick={() => setF(x => ({ ...x, page: x.page - 1 }))} className="btn-secondary disabled:opacity-50">
+          <button disabled={f.page === 1} onClick={() => setF((x: any) => ({ ...x, page: x.page - 1 }))} className="btn-secondary disabled:opacity-50">
             上一页
           </button>
           <div className="px-4 py-2 bg-white rounded-lg border border-slate-200 text-sm text-slate-600">
             第 {f.page} 页 / 共 {Math.ceil(total / 16)} 页
           </div>
-          <button disabled={f.page * 16 >= total} onClick={() => setF(x => ({ ...x, page: x.page + 1 }))} className="btn-secondary disabled:opacity-50">
+          <button disabled={f.page * 16 >= total} onClick={() => setF((x: any) => ({ ...x, page: x.page + 1 }))} className="btn-secondary disabled:opacity-50">
             下一页
           </button>
         </div>

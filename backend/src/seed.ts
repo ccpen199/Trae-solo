@@ -36,7 +36,7 @@ async function seed() {
   const createdUsers: Record<string, any> = {};
 
   for (const u of users) {
-    const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(u.username);
+    const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(u.username) as any;
     if (existing) {
       createdUsers[u.username] = { user_id: existing.id };
       continue;
