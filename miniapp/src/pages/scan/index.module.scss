@@ -1,0 +1,185 @@
+@use '@/styles/variables.scss' as *;
+
+.scanPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, $color-primary 0%, $color-bg-page 40%);
+  padding-bottom: 120rpx;
+}
+
+.scanArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl $page-padding;
+}
+
+.scanTitle {
+  color: $color-text-white;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+}
+
+.scanSubtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: $font-size-md;
+  margin-bottom: $spacing-xl;
+  text-align: center;
+}
+
+.qrContainer {
+  width: 560rpx;
+  height: 560rpx;
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.qrCode {
+  width: 400rpx;
+  height: 400rpx;
+  background: linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+              linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+              linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+  background-size: 40rpx 40rpx;
+  background-position: 0 0, 0 20rpx, 20rpx -20rpx, -20rpx 0rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.qrCenter {
+  width: 80rpx;
+  height: 80rpx;
+  background: $color-bg-card;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+}
+
+.codeInfo {
+  margin-top: $spacing-lg;
+  text-align: center;
+}
+
+.codeType {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  background: rgba(30, 64, 175, 0.1);
+  color: $color-primary;
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.codeValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  font-family: 'Menlo', 'Monaco', monospace;
+}
+
+.codeTabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-button;
+  padding: $spacing-xs;
+  margin-top: $spacing-xl;
+  backdrop-filter: blur(10rpx);
+}
+
+.codeTab {
+  flex: 1;
+  height: $button-height-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all $transition-base;
+  
+  &.active {
+    background: $color-bg-card;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    box-shadow: $shadow-card;
+  }
+}
+
+.scanTip {
+  margin-top: $spacing-xl;
+  text-align: center;
+}
+
+.tipItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-sm;
+  
+  Text {
+    margin-right: $spacing-sm;
+  }
+}
+
+.actionSection {
+  padding: $spacing-lg $page-spacing $page-padding;
+  background: $color-bg-page;
+}
+
+.historyBtn {
+  @include button-reset;
+  height: $button-height-md;
+  width: 100%;
+  background: $color-bg-card;
+  color: $color-text-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-card;
+  
+  &:active {
+    opacity: 0.9;
+  }
+  
+  Text {
+    margin-right: $spacing-sm;
+  }
+}
+
+.scanBtn {
+  @include button-reset;
+  height: $button-height-md;
+  padding: 0 $spacing-xl;
+  background: $color-accent;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  margin-top: $spacing-md;
+  width: 100%;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}

@@ -1,0 +1,328 @@
+@use '@/styles/variables.scss' as *;
+
+.merchantPage {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 140rpx;
+}
+
+.merchantBanner {
+  height: 360rpx;
+  background: linear-gradient(135deg, $color-accent-light 0%, $color-accent 100%);
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: $spacing-xl $page-padding;
+}
+
+.bannerContent {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  color: $color-text-white;
+  z-index: 2;
+}
+
+.merchantLogo {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: $radius-lg;
+  background: $color-bg-card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64rpx;
+  margin-right: $spacing-lg;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.merchantInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.merchantName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-xs;
+}
+
+.merchantTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-sm;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 12rpx;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  backdrop-filter: blur(10rpx);
+}
+
+.merchantStats {
+  display: flex;
+  gap: $spacing-lg;
+  font-size: $font-size-sm;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  
+  Text:first-child {
+    margin-right: 4rpx;
+  }
+}
+
+.infoCard {
+  margin: -$spacing-xl $page-padding $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+  position: relative;
+  z-index: 10;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  padding: $spacing-sm 0;
+  
+  & + & {
+    border-top: 1rpx solid $color-border;
+  }
+}
+
+.infoIcon {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-sm;
+  background: rgba(30, 64, 175, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-lg;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.infoContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.infoLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.infoValue {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: 1.5;
+}
+
+.infoAction {
+  color: $color-primary;
+  font-size: $font-size-sm;
+  flex-shrink: 0;
+  margin-left: $spacing-md;
+  
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.section {
+  margin: 0 $page-padding $spacing-lg;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+  
+  Text:first-child {
+    margin-right: $spacing-xs;
+    font-size: $font-size-xl;
+  }
+}
+
+.sectionCount {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.couponList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.branchList {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.branchItem {
+  padding: $spacing-md $spacing-lg;
+  
+  & + & {
+    border-top: 1rpx solid $color-border;
+  }
+}
+
+.branchName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.branchAddress {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+}
+
+.branchMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.branchDistance {
+  font-size: $font-size-sm;
+  color: $color-accent;
+  display: flex;
+  align-items: center;
+  
+  Text:first-child {
+    margin-right: 4rpx;
+  }
+}
+
+.branchHours {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+  z-index: 100;
+}
+
+.iconBtn {
+  @include button-reset;
+  width: 88rpx;
+  height: $button-height-md;
+  background: $color-bg-hover;
+  color: $color-text-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-xl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.primaryBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.secondaryBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  background: $color-bg-hover;
+  color: $color-text-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl 0;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  color: $color-text-tertiary;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+}
+
+.storeImages {
+  display: flex;
+  gap: $spacing-sm;
+  overflow-x: auto;
+  padding-bottom: $spacing-sm;
+}
+
+.storeImage {
+  width: 200rpx;
+  height: 160rpx;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f5ff 100%);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+}

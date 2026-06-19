@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "status": 200,
+  "url": "http://127.0.0.1:49130/login",
+  "title": "My Trae Project",
+  "bodyTextSample": "沈阳市福利券管理平台\n\n商户管理后台\n\n用户名*\n密码*\n记住我\n忘记密码？\n登 录\n\n测试账号\n\nadmin / 123456\n\n管理员\n\nmerchant / 123456\n\n商户管理员\n\ncashier / 123456\n\n收银员\n\nrisk / 123456\n\n风控专员\n\n© 2024 沈阳市商务局 福利券管理平台",
+  "rootHtmlLength": 19452,
+  "apiResponses": [],
+  "consoleIssues": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89130/dashboard/browser-check-may-89130.png"
+}

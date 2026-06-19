@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "initialStatus": 200,
+  "url": "http://127.0.0.1:49130/dashboard",
+  "title": "My Trae Project",
+  "bodyTextSample": "福利券平台\n仪表盘\n优惠券管理\n库存管理\n核销管理\n数据报表\n告警中心\n风控管理\n商户管理\n省级对接\n沈阳市福利券管理平台\n9+\n\n系统管理员\n\n管理员",
+  "rootHtmlLength": 21057,
+  "apiResponses": [],
+  "consoleIssues": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89130/dashboard/browser-login-check-may-89130.png"
+}

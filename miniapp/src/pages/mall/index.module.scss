@@ -1,0 +1,205 @@
+@use '@/styles/variables.scss' as *;
+
+.mallPage {
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+}
+
+.filterBar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  box-shadow: $shadow-float;
+}
+
+.viewToggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: $spacing-md;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-button;
+  background: $color-bg-hover;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  
+  &.active {
+    background: rgba(30, 64, 175, 0.1);
+    color: $color-primary;
+  }
+  
+  Text {
+    margin-left: $spacing-xs;
+  }
+}
+
+.categoryScroll {
+  @include scroll-x-container;
+  margin: 0 (-$page-padding);
+  padding: 0 $page-padding;
+}
+
+.categoryChip {
+  @include scroll-x-item(auto);
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-lg;
+  margin-right: $spacing-md;
+  background: $color-bg-hover;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  white-space: nowrap;
+  transition: all $transition-base;
+  
+  &.active {
+    background: $color-primary;
+    color: $color-text-white;
+  }
+  
+  Text:first-child {
+    margin-right: $spacing-xs;
+  }
+}
+
+.districtFilter {
+  display: flex;
+  align-items: center;
+  margin-top: $spacing-md;
+  gap: $spacing-sm;
+}
+
+.districtLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  white-space: nowrap;
+}
+
+.districtScroll {
+  @include scroll-x-container;
+  flex: 1;
+}
+
+.districtChip {
+  @include scroll-x-item(auto);
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-md;
+  margin-right: $spacing-sm;
+  background: $color-bg-page;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  white-space: nowrap;
+  border: 1rpx solid $color-border;
+  
+  &.active {
+    background: rgba(249, 115, 22, 0.1);
+    color: $color-accent;
+    border-color: $color-accent;
+  }
+}
+
+.contentArea {
+  padding: $spacing-md $page-padding;
+}
+
+.mapContainer {
+  height: 600rpx;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f5ff 100%);
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-md;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mapPlaceholder {
+  text-align: center;
+  color: $color-text-tertiary;
+  
+  Text {
+    display: block;
+    margin-top: $spacing-md;
+    font-size: $font-size-md;
+  }
+}
+
+.mapMarker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .markerIcon {
+    font-size: 48rpx;
+  }
+  
+  .markerLabel {
+    background: $color-bg-card;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+    box-shadow: $shadow-card;
+    margin-top: 4rpx;
+    @include text-ellipsis;
+    max-width: 200rpx;
+  }
+}
+
+.merchantList {
+  padding-top: $spacing-sm;
+}
+
+.statsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.statsText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.sortBtn {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  
+  Text {
+    margin-right: $spacing-xs;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl 0;
+  color: $color-text-tertiary;
+}
+
+.emptyIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-md;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+}

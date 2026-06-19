@@ -1,0 +1,155 @@
+@use '@/styles/variables.scss' as *;
+
+.couponCard {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.couponLeft {
+  flex: 0 0 180rpx;
+  background: linear-gradient(135deg, $coupon-gradient-start 0%, $coupon-gradient-end 100%);
+  padding: $spacing-lg $spacing-md;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $color-text-white;
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 20rpx;
+    height: 20rpx;
+    background: $color-bg-page;
+    border-radius: $radius-round;
+    right: -10rpx;
+  }
+  
+  &::before {
+    top: -10rpx;
+  }
+  
+  &::after {
+    bottom: -10rpx;
+  }
+}
+
+.couponValue {
+  font-size: 56rpx;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+}
+
+.couponUnit {
+  font-size: $font-size-md;
+  margin-top: $spacing-xs;
+}
+
+.couponCondition {
+  font-size: $font-size-xs;
+  opacity: 0.9;
+  margin-top: $spacing-xs;
+}
+
+.couponRight {
+  flex: 1;
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 2rpx dashed $color-border;
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 20rpx;
+    height: 20rpx;
+    background: $color-bg-page;
+    border-radius: $radius-round;
+    left: -10rpx;
+  }
+  
+  &::before {
+    top: -10rpx;
+  }
+  
+  &::after {
+    bottom: -10rpx;
+  }
+}
+
+.couponTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+}
+
+.couponDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-top: $spacing-xs;
+  @include text-ellipsis-multi(1);
+}
+
+.couponMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $spacing-md;
+}
+
+.couponExpiry {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.couponBtn {
+  @include button-reset;
+  height: $button-height-sm;
+  padding: 0 $spacing-lg;
+  background: $color-primary;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  
+  &:active {
+    background: $color-primary-dark;
+    opacity: 0.9;
+  }
+  
+  &.disabled {
+    background: $color-text-disabled;
+    color: $color-text-white;
+  }
+}
+
+.couponStatus {
+  font-size: $font-size-sm;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-sm;
+}
+
+.statusUsed {
+  background: rgba(16, 185, 129, 0.1);
+  color: $color-success;
+}
+
+.statusExpired {
+  background: rgba(239, 68, 68, 0.1);
+  color: $color-error;
+}

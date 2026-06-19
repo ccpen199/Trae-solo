@@ -1,0 +1,100 @@
+@use '@/styles/variables.scss' as *;
+
+.merchantCard {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.merchantImage {
+  flex: 0 0 200rpx;
+  height: 160rpx;
+  position: relative;
+  
+  Image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.merchantInfo {
+  flex: 1;
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.merchantName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+}
+
+.merchantMeta {
+  display: flex;
+  align-items: center;
+  margin-top: $spacing-xs;
+  gap: $spacing-sm;
+}
+
+.merchantRating {
+  display: flex;
+  align-items: center;
+  color: $color-warning;
+  font-size: $font-size-sm;
+}
+
+.merchantDistance {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.merchantAddress {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.merchantFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $spacing-sm;
+}
+
+.couponCount {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 12rpx;
+  background: rgba(30, 64, 175, 0.1);
+  color: $color-primary;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+}
+
+.viewBtn {
+  @include button-reset;
+  height: $button-height-sm;
+  padding: 0 $spacing-lg;
+  background: $color-accent;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  
+  &:active {
+    opacity: 0.9;
+    background: #EA580C;
+  }
+}
