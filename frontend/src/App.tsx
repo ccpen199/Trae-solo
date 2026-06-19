@@ -17,6 +17,15 @@ import AdminDashboard from './pages/admin/Dashboard';
 import FraudLogs from './pages/admin/FraudLogs';
 import RiskControl from './pages/admin/RiskControl';
 
+const getUser = () => {
+  try {
+    const stored = localStorage.getItem('user');
+    return stored ? JSON.parse(stored) : null;
+  } catch {
+    return null;
+  }
+};
+
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const token = localStorage.getItem('token');
   if (!token) return <Navigate to="/login" replace />;
@@ -25,8 +34,27 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const token = localStorage.getItem('token');
+  const user = getUser();
   if (!token) return <Navigate to="/login" replace />;
+  if (user?.role !== 'platform_admin') return <Navigate to="/" replace />;
   return <>{children}</>;
+};
+
+const PropertyAdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const token = localStorage.getItem('token');
+  const user = getUser();
+  if (!token) return <Navigate to="/login" replace />;
+  if (user?.role !== 'property_admin' && user?.role !== 'platform_admin') {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
+};
+
+const RoleBasedHome: React.FC = () => {
+  const user = getUser();
+  if (user?.role === 'platform_admin') return <Navigate to="/admin" replace />;
+  if (user?.role === 'property_admin') return <Navigate to="/property" replace />;
+  return <Home />;
 };
 
 const App: React.FC = () => {
@@ -34,7 +62,7 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route element={<PrivateRoute><MainLayout /></PrivateRoute>}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<RoleBasedHome />} />
         <Route path="/topics" element={<Topics />} />
         <Route path="/topics/aggregated" element={<AggregatedTopics />} />
         <Route path="/topics/create" element={<TopicCreate />} />
@@ -44,7 +72,7 @@ const App: React.FC = () => {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/partners" element={<Partners />} />
-        <Route path="/property" element={<Property />} />
+        <Route path="/property" element={<PropertyAdminRoute><Property /></PropertyAdminRoute>} />
       </Route>
       <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
         <Route index element={<AdminDashboard />} />

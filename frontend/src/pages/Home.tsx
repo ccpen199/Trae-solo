@@ -23,7 +23,13 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DashboardData | null>(null);
   const navigate = useNavigate();
-  const community = localStorage.getItem('community') || '默认社区';
+  const storedUser = localStorage.getItem('user');
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const storedCommunity = localStorage.getItem('community');
+  const community = storedCommunity ? JSON.parse(storedCommunity) : null;
+  const communityName = community?.name || '默认社区';
+  const userName = user?.real_name || '居民';
+  const userRole = user?.role || 'resident';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,8 +71,12 @@ const Home: React.FC = () => {
   return (
     <div>
       <Card style={{ marginBottom: 16 }}>
-        <h2 style={{ margin: 0 }}>🏘️ 欢迎来到{community}</h2>
-        <p style={{ color: '#888', marginTop: 8 }}>邻里互助，共建美好社区</p>
+        <h2 style={{ margin: 0 }}>🏘️ 欢迎来到{communityName}，{userName}</h2>
+        <p style={{ color: '#888', marginTop: 8 }}>
+          {userRole === 'property_admin' ? '物业管理员工作台 · 管理门禁、缴费、报修' :
+           userRole === 'platform_admin' ? '平台管理员 · 管理所有社区' :
+           '邻里互助，共建美好社区'}
+        </p>
       </Card>
 
       <Row gutter={16} style={{ marginBottom: 16 }}>
