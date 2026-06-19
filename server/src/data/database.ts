@@ -1,0 +1,449 @@
+import type { User, Task, TaskUnit, Settlement, Dispute, Annotation, Skill, TaskType } from '../types'
+
+let users: User[] = []
+let tasks: Task[] = []
+let taskUnits: TaskUnit[] = []
+let settlements: Settlement[] = []
+let disputes: Dispute[] = []
+
+function initializeMockData() {
+  users = [
+    {
+      id: 'u001',
+      name: '张明远',
+      email: 'zhangmy@example.com',
+      avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20asian%20male%20portrait%20headshot%20neutral%20background&image_size=square',
+      role: 'publisher',
+      skills: [
+        { id: 's1', name: '图像分割', category: 'image_segmentation', level: 3, accuracy: 95.2, certified: true },
+        { id: 's2', name: '语音标注', category: 'audio_transcription', level: 2, accuracy: 89.7, certified: true },
+      ],
+      accuracy: 92.5,
+      totalTasks: 156,
+      level: 5,
+      points: 12580,
+      joinedAt: '2024-01-15',
+    },
+    {
+      id: 'a001',
+      name: '李思琪',
+      email: 'lisiqi@example.com',
+      avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=young%20professional%20asian%20woman%20portrait%20headshot&image_size=square',
+      role: 'annotator',
+      skills: [
+        { id: 's1', name: '图像分割', category: 'image_segmentation', level: 3, accuracy: 96.8, certified: true },
+        { id: 's2', name: '视频动作识别', category: 'video_action', level: 2, accuracy: 91.3, certified: true },
+      ],
+      accuracy: 94.5,
+      totalTasks: 892,
+      level: 7,
+      points: 45620,
+      joinedAt: '2023-06-20',
+    },
+    {
+      id: 'a002',
+      name: '王浩然',
+      email: 'wanghr@example.com',
+      avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=young%20asian%20man%20glasses%20professional%20portrait&image_size=square',
+      role: 'annotator',
+      skills: [
+        { id: 's3', name: '医疗CT标注', category: 'medical_ct', level: 4, accuracy: 98.2, certified: true },
+      ],
+      accuracy: 97.1,
+      totalTasks: 456,
+      level: 5,
+      points: 28900,
+      joinedAt: '2023-09-10',
+    },
+    {
+      id: 'a003',
+      name: '陈雨萱',
+      email: 'chenyx@example.com',
+      avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=asian%20woman%20long%20hair%20professional%20portrait%20smiling&image_size=square',
+      role: 'annotator',
+      skills: [
+        { id: 's4', name: '语音情感标注', category: 'audio_transcription', level: 3, accuracy: 93.7, certified: true },
+        { id: 's1', name: '图像分割', category: 'image_segmentation', level: 2, accuracy: 88.5, certified: true },
+      ],
+      accuracy: 91.2,
+      totalTasks: 1205,
+      level: 8,
+      points: 52300,
+      joinedAt: '2023-03-15',
+    },
+    {
+      id: 'r001',
+      name: '赵文博',
+      email: 'zhaowb@example.com',
+      avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mature%20asian%20man%20professional%20suit%20portrait&image_size=square',
+      role: 'reviewer',
+      skills: [
+        { id: 's1', name: '图像分割审核', category: 'image_segmentation', level: 5, accuracy: 99.1, certified: true },
+      ],
+      accuracy: 98.8,
+      totalTasks: 2340,
+      level: 9,
+      points: 78500,
+      joinedAt: '2022-11-01',
+    },
+  ]
+
+  tasks = [
+    {
+      id: 't001',
+      title: '城市街景实例分割项目',
+      description: '对城市街景图像进行实例分割标注，包括车辆、行人、交通标志等20类目标，输出COCO格式。',
+      type: 'image_segmentation',
+      status: 'in_progress',
+      publisherId: 'u001',
+      publisherName: '张明远',
+      totalUnits: 5000,
+      completedUnits: 2340,
+      unitPrice: 0.85,
+      rewardPool: 4250,
+      requiredSkillLevel: 2,
+      consistencyThreshold: 0.85,
+      annotationPerUnit: 3,
+      deadline: '2024-12-31',
+      createdAt: '2024-06-01',
+      coverImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=urban%20street%20scene%20city%20buildings%20cars%20pedestrians%20photorealistic&image_size=landscape_16_9',
+      tags: ['图像分割', 'COCO', '自动驾驶'],
+      qualityConfig: {
+        samplingRate: 0.1,
+        minConsistency: 0.8,
+        adversarialEnabled: true,
+        adversarialRatio: 0.05,
+        reviewThreshold: 0.7,
+      },
+    },
+    {
+      id: 't002',
+      title: '客服语音情感识别标注',
+      description: '对客服通话录音进行时间戳切分和情感标签标注，分为积极、中性、消极、愤怒四类。',
+      type: 'audio_transcription',
+      status: 'in_progress',
+      publisherId: 'u001',
+      publisherName: '张明远',
+      totalUnits: 2000,
+      completedUnits: 856,
+      unitPrice: 1.20,
+      rewardPool: 2400,
+      requiredSkillLevel: 2,
+      consistencyThreshold: 0.8,
+      annotationPerUnit: 2,
+      deadline: '2024-11-30',
+      createdAt: '2024-07-15',
+      coverImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=audio%20waveform%20visualization%20sound%20waves%20purple%20blue%20gradient&image_size=landscape_16_9',
+      tags: ['语音标注', '情感识别', '时间戳'],
+      qualityConfig: {
+        samplingRate: 0.15,
+        minConsistency: 0.75,
+        adversarialEnabled: false,
+        adversarialRatio: 0,
+        reviewThreshold: 0.65,
+      },
+    },
+    {
+      id: 't003',
+      title: '肺部CT病灶检测标注',
+      description: '对肺部CT影像进行病灶框选和分类标注，包括结节、肿块、炎症等类型，需具备医疗背景。',
+      type: 'medical_ct',
+      status: 'published',
+      publisherId: 'u001',
+      publisherName: '张明远',
+      totalUnits: 1000,
+      completedUnits: 0,
+      unitPrice: 5.00,
+      rewardPool: 5000,
+      requiredSkillLevel: 4,
+      consistencyThreshold: 0.9,
+      annotationPerUnit: 3,
+      deadline: '2025-02-28',
+      createdAt: '2024-08-01',
+      coverImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=medical%20CT%20scan%20lung%20imaging%20radiology%20hospital%20professional&image_size=landscape_16_9',
+      tags: ['医疗影像', 'DICOM', '病灶检测'],
+      qualityConfig: {
+        samplingRate: 0.2,
+        minConsistency: 0.85,
+        adversarialEnabled: true,
+        adversarialRatio: 0.08,
+        reviewThreshold: 0.8,
+      },
+    },
+    {
+      id: 't004',
+      title: '运动视频动作识别标注',
+      description: '对运动视频进行帧序列动作打标，识别跑步、跳跃、投掷、球类等15种动作类型。',
+      type: 'video_action',
+      status: 'reviewing',
+      publisherId: 'u001',
+      publisherName: '张明远',
+      totalUnits: 800,
+      completedUnits: 720,
+      unitPrice: 2.50,
+      rewardPool: 2000,
+      requiredSkillLevel: 3,
+      consistencyThreshold: 0.82,
+      annotationPerUnit: 2,
+      deadline: '2024-10-31',
+      createdAt: '2024-05-20',
+      coverImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20action%20video%20frames%20athletes%20motion%20blur%20dynamic&image_size=landscape_16_9',
+      tags: ['视频标注', '动作识别', '帧序列'],
+      qualityConfig: {
+        samplingRate: 0.12,
+        minConsistency: 0.78,
+        adversarialEnabled: false,
+        adversarialRatio: 0,
+        reviewThreshold: 0.7,
+      },
+    },
+    {
+      id: 't005',
+      title: '电商商品图像分割',
+      description: '对电商商品图片进行精确分割，去除背景，输出透明背景商品图。',
+      type: 'image_segmentation',
+      status: 'completed',
+      publisherId: 'u001',
+      publisherName: '张明远',
+      totalUnits: 3000,
+      completedUnits: 3000,
+      unitPrice: 0.50,
+      rewardPool: 1500,
+      requiredSkillLevel: 1,
+      consistencyThreshold: 0.9,
+      annotationPerUnit: 2,
+      deadline: '2024-08-15',
+      createdAt: '2024-04-01',
+      coverImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ecommerce%20products%20white%20background%20various%20items%20clean&image_size=landscape_16_9',
+      tags: ['图像分割', '电商', '抠图'],
+      qualityConfig: {
+        samplingRate: 0.08,
+        minConsistency: 0.85,
+        adversarialEnabled: true,
+        adversarialRatio: 0.03,
+        reviewThreshold: 0.75,
+      },
+    },
+  ]
+
+  taskUnits = Array.from({ length: 20 }, (_, i) => ({
+    id: `unit-${i + 1}`,
+    taskId: 't001',
+    index: i + 1,
+    content: {
+      type: 'image_segmentation' as TaskType,
+      imageUrl: `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=street%20scene%20urban%20city%20traffic%20daylight%20photorealistic%20${i + 1}&image_size=landscape_4_3`,
+      metadata: {
+        width: 1280,
+        height: 960,
+        location: '城市街道',
+        weather: '晴朗',
+      },
+    },
+    status: i < 10 ? 'completed' : (i < 15 ? 'assigned' : 'pending') as any,
+    annotations: i < 10 ? [
+      {
+        id: `ann-${i}-1`,
+        unitId: `unit-${i + 1}`,
+        annotatorId: 'a001',
+        annotatorName: '李思琪',
+        data: {
+          labels: [{ id: 'l1', name: '汽车', color: '#ef4444' }],
+          boundingBoxes: [
+            { id: 'bb1', label: '汽车', x: 100 + i * 5, y: 200, width: 150, height: 100 },
+            { id: 'bb2', label: '汽车', x: 350 + i * 3, y: 220, width: 120, height: 80 },
+          ],
+          polygons: [
+            [
+              { x: 100 + i * 5, y: 200 },
+              { x: 250 + i * 5, y: 200 },
+              { x: 250 + i * 5, y: 300 },
+              { x: 100 + i * 5, y: 300 },
+            ],
+          ],
+        },
+        submittedAt: '2024-09-01T10:30:00Z',
+        status: 'approved' as const,
+      },
+    ] : [],
+    isAdversarial: i === 5 || i === 12,
+  }))
+
+  settlements = [
+    {
+      id: 'set001',
+      userId: 'a001',
+      userName: '李思琪',
+      taskId: 't001',
+      taskName: '城市街景实例分割项目',
+      amount: 892.50,
+      units: 1050,
+      status: 'completed' as const,
+      paymentMethod: 'wechat' as const,
+      createdAt: '2024-09-01',
+      completedAt: '2024-09-02',
+    },
+    {
+      id: 'set002',
+      userId: 'a003',
+      userName: '陈雨萱',
+      taskId: 't001',
+      taskName: '城市街景实例分割项目',
+      amount: 620.50,
+      units: 730,
+      status: 'completed' as const,
+      paymentMethod: 'bank' as const,
+      createdAt: '2024-09-01',
+      completedAt: '2024-09-02',
+    },
+    {
+      id: 'set003',
+      userId: 'a002',
+      userName: '王浩然',
+      taskId: 't002',
+      taskName: '客服语音情感识别标注',
+      amount: 348.00,
+      units: 290,
+      status: 'processing' as const,
+      paymentMethod: 'wechat' as const,
+      createdAt: '2024-09-10',
+    },
+  ]
+
+  disputes = [
+    {
+      id: 'd001',
+      unitId: 'unit-5',
+      taskId: 't001',
+      taskName: '城市街景实例分割项目',
+      annotatorId: 'a001',
+      annotatorName: '李思琪',
+      reason: '审核标准不明确，图中车辆边缘模糊无法精确分割',
+      status: 'pending' as const,
+      createdAt: '2024-09-05',
+    },
+    {
+      id: 'd002',
+      unitId: 'unit-8',
+      taskId: 't001',
+      taskName: '城市街景实例分割项目',
+      annotatorId: 'a003',
+      annotatorName: '陈雨萱',
+      reason: '被遮挡的行人是否需要标注未在规范中说明',
+      status: 'resolved' as const,
+      createdAt: '2024-09-03',
+      resolverId: 'r001',
+      resolution: '根据规范第3.2条，被遮挡超过30%的目标可省略标注。本次申诉有效。',
+    },
+  ]
+}
+
+initializeMockData()
+
+export const db = {
+  users,
+  tasks,
+  taskUnits,
+  settlements,
+  disputes,
+}
+
+export function findUserByEmail(email: string): User | undefined {
+  return users.find(u => u.email === email)
+}
+
+export function findUserById(id: string): User | undefined {
+  return users.find(u => u.id === id)
+}
+
+export function addUser(user: User): void {
+  users.push(user)
+}
+
+export function getAllTasks(): Task[] {
+  return tasks
+}
+
+export function getTaskById(id: string): Task | undefined {
+  return tasks.find(t => t.id === id)
+}
+
+export function addTask(task: Task): void {
+  tasks.push(task)
+}
+
+export function updateTask(id: string, updates: Partial<Task>): Task | undefined {
+  const index = tasks.findIndex(t => t.id === id)
+  if (index !== -1) {
+    tasks[index] = { ...tasks[index], ...updates }
+    return tasks[index]
+  }
+  return undefined
+}
+
+export function getUnitsByTaskId(taskId: string): TaskUnit[] {
+  return taskUnits.filter(u => u.taskId === taskId)
+}
+
+export function getUnitById(id: string): TaskUnit | undefined {
+  return taskUnits.find(u => u.id === id)
+}
+
+export function addAnnotation(unitId: string, annotation: Annotation): void {
+  const unit = taskUnits.find(u => u.id === unitId)
+  if (unit) {
+    unit.annotations.push(annotation)
+    if (unit.status === 'pending' || unit.status === 'assigned') {
+      unit.status = 'completed'
+    }
+  }
+}
+
+export function getSettlementsByUserId(userId: string): Settlement[] {
+  return settlements.filter(s => s.userId === userId)
+}
+
+export function getAllSettlements(): Settlement[] {
+  return settlements
+}
+
+export function addSettlement(settlement: Settlement): void {
+  settlements.push(settlement)
+}
+
+export function getDisputesByTaskId(taskId: string): Dispute[] {
+  return disputes.filter(d => d.taskId === taskId)
+}
+
+export function getAllDisputes(): Dispute[] {
+  return disputes
+}
+
+export function addDispute(dispute: Dispute): void {
+  disputes.push(dispute)
+}
+
+export function resolveDispute(id: string, resolution: string, resolverId: string): Dispute | undefined {
+  const dispute = disputes.find(d => d.id === id)
+  if (dispute) {
+    dispute.status = 'resolved'
+    dispute.resolution = resolution
+    dispute.resolverId = resolverId
+    return dispute
+  }
+  return undefined
+}
+
+export function getAnnotators(): User[] {
+  return users.filter(u => u.role === 'annotator')
+}
+
+export function calculateJaccard(setA: Set<string>, setB: Set<string>): number {
+  const intersection = new Set([...setA].filter(x => setB.has(x)))
+  const union = new Set([...setA, ...setB])
+  return union.size === 0 ? 0 : intersection.size / union.size
+}
+
+export function generateId(): string {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
