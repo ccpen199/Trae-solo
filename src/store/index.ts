@@ -5,6 +5,7 @@ import type {
   ApplicationCase,
   Certificate,
   ServiceDomain,
+  UserType,
 } from "@/types";
 import {
   mockUser,
@@ -23,6 +24,7 @@ interface AppState {
   certificates: Certificate[];
   selectedDomain: ServiceDomain | "all";
   searchKeyword: string;
+  userTypeFilter: UserType | null;
 
   setUser: (user: User) => void;
   clearUser: () => void;
@@ -31,6 +33,7 @@ interface AppState {
   switchView: (view: "citizen" | "admin") => void;
   setSelectedDomain: (domain: ServiceDomain | "all") => void;
   setSearchKeyword: (keyword: string) => void;
+  setUserTypeFilter: (userType: UserType | null) => void;
   addCase: (caseItem: ApplicationCase) => void;
   updateCase: (id: string, updates: Partial<ApplicationCase>) => void;
   getFilteredServices: () => ServiceItem[];
@@ -47,6 +50,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   certificates: mockCertificates,
   selectedDomain: "all",
   searchKeyword: "",
+  userTypeFilter: null,
 
   setUser: (u) => set({ user: u, isLoggedIn: true, currentView: u.userType === "admin" ? "admin" : "citizen" }),
   clearUser: () => set({ user: null, isLoggedIn: false }),
@@ -70,6 +74,8 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
 
+  setUserTypeFilter: (userType) => set({ userTypeFilter: userType }),
+
   addCase: (caseItem) =>
     set((state) => ({ cases: [caseItem, ...state.cases] })),
 
@@ -81,7 +87,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     })),
 
   getFilteredServices: () => {
-    const { services, selectedDomain, searchKeyword } = get();
+    const { services, selectedDomain, searchKeyword, userTypeFilter } = get();
     return services.filter((s) => {
       const domainMatch =
         selectedDomain === "all" || s.category === selectedDomain;
@@ -90,7 +96,11 @@ export const useAppStore = create<AppState>((set, get) => ({
         s.name.includes(searchKeyword) ||
         s.description.includes(searchKeyword) ||
         s.department.includes(searchKeyword);
-      return domainMatch && keywordMatch;
+      const userTypeMatch =
+        !userTypeFilter ||
+        (userTypeFilter === "citizen" && s.category !== "government") ||
+        (userTypeFilter === "enterprise" && (s.category === "government" || s.category === "lifestyle"));
+      return domainMatch && keywordMatch && userTypeMatch;
     });
   },
 

@@ -662,4 +662,250 @@ export default function Home() {
                     <Star className="w-8 h-8 text-success-500" />
                   </div>
                   <p className="text-ink-light mb-4">暂无进行中的办件</p>
-                  <Link to
+                  <Link to="/services" className="btn-secondary">
+                    去办事大厅看看
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {activeCases.slice(0, 2).map((c) => {
+                    const statusInfo = statusTextMap[c.status];
+                    return (
+                      <Link
+                        key={c.id}
+                        to={`/cases/${c.id}`}
+                        className="block p-4 rounded-lg border border-ink-border hover:border-gov-200 hover:bg-gov-50/30 transition-all group"
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors">
+                              {c.serviceName}
+                            </h3>
+                            <p className="text-xs text-ink-light mt-1">
+                              办件编号：{c.caseNo} · 提交于 {c.applyTime.split(" ")[0]}
+                            </p>
+                          </div>
+                          <span className={cn("shrink-0", statusInfo.badge)}>
+                            {statusInfo.text}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-0">
+                          {getLifecycleStatus(c).map((step, si) => {
+                            const StepIcon = step.icon;
+                            return (
+                              <div key={step.key} className="flex items-center">
+                                <div
+                                  className={cn(
+                                    "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
+                                    step.state === "done" && "bg-success-50 text-success-700",
+                                    step.state === "active" && "bg-gov-50 text-gov-700 ring-1 ring-gov-200",
+                                    step.state === "pending" && "bg-gray-50 text-gray-400",
+                                    step.state === "failed" && "bg-danger-50 text-danger-600"
+                                  )}
+                                >
+                                  {step.state === "done" ? (
+                                    <CheckCircle2 className="w-2.5 h-2.5" />
+                                  ) : step.state === "active" ? (
+                                    <Circle className="w-2.5 h-2.5 fill-current" />
+                                  ) : (
+                                    <Circle className="w-2.5 h-2.5" />
+                                  )}
+                                  {step.label}
+                                </div>
+                                {si < 5 && (
+                                  <div className={cn(
+                                    "w-2 h-px mx-0.5",
+                                    step.state === "done" ? "bg-success-400" : "bg-gray-200"
+                                  )} />
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        <p className="text-xs text-ink-light mt-2 flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> 当前节点：{c.currentNode}
+                        </p>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* 6大业务视图快捷入口 */}
+          <section>
+            <div className="card p-6 h-full">
+              <h2 className="section-title !mb-5">
+                <div className="w-1 h-6 bg-success-500 rounded-full" />
+                政务能力 · 业务视图
+              </h2>
+              <div className="grid grid-cols-2 gap-3">
+                {quickEntries.map((entry, idx) => {
+                  const Icon = entry.icon;
+                  return (
+                    <Link
+                      key={entry.name}
+                      to={entry.path}
+                      className="group p-4 rounded-xl border border-ink-border hover:border-gov-200 hover:shadow-lg transition-all bg-white"
+                      style={{ animationDelay: `${idx * 30}ms` }}
+                    >
+                      <div className="flex items-center gap-2 mb-2.5">
+                        <div className={cn(
+                          "w-9 h-9 rounded-lg bg-gradient-to-br flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform",
+                          entry.color
+                        )}>
+                          <Icon className="w-4.5 h-4.5 text-white" />
+                        </div>
+                        <span className="text-sm font-semibold text-ink group-hover:text-gov-700 transition-colors">
+                          {entry.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex-1 text-center py-1.5 rounded bg-gray-50">
+                          <div className="text-base font-bold text-gray-800 leading-none">
+                            {entry.stat1.value}<span className="text-[10px] text-gray-500 ml-0.5">{entry.stat1.unit}</span>
+                          </div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">{entry.stat1.label}</div>
+                        </div>
+                        <div className="flex-1 text-center py-1.5 rounded bg-gray-50">
+                          <div className="text-base font-bold text-gov-700 leading-none">
+                            {entry.stat2.value}<span className="text-[10px] text-gov-500 ml-0.5">{entry.stat2.unit}</span>
+                          </div>
+                          <div className="text-[10px] text-gray-500 mt-0.5">{entry.stat2.label}</div>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-gray-500 leading-tight border-t border-gray-100 pt-2">
+                        {entry.hint}
+                      </p>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="mt-4 p-3 rounded-lg bg-gradient-to-br from-gov-50 to-violet-50 border border-gov-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gov-600 text-white flex items-center justify-center">
+                      <Activity className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-ink">平台运行状态</p>
+                      <p className="text-xs text-ink-light">实时监控</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-success-600">正常</p>
+                    <p className="text-[10px] text-ink-light">480项服务在线</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* 热门服务推荐 */}
+        <section className="mt-8">
+          <div className="card p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="section-title !mb-0">
+                <div className="w-1 h-6 bg-danger-500 rounded-full" />
+                热门服务推荐
+                <span className="ml-2 text-sm font-normal text-ink-light">（本月办理量最高）</span>
+              </h2>
+              <Link
+                to="/services"
+                className="text-sm text-gov-600 hover:text-gov-700 flex items-center gap-1"
+              >
+                查看更多 <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {hotServices.slice(0, 10).map((svc, idx) => {
+                const domain = serviceDomains.find((d) => d.code === svc.category);
+                return (
+                  <Link
+                    key={svc.id}
+                    to={`/services/${svc.id}`}
+                    className="card-hover p-4 animate-fade-in"
+                    style={{ animationDelay: `${idx * 30}ms` }}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div
+                        className={cn(
+                          "w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br",
+                          domain?.color || "from-gov-500 to-gov-700"
+                        )}
+                      >
+                        {domain && iconMap[domain.icon] && (
+                          (() => {
+                            const Ic = iconMap[domain.icon];
+                            return <Ic className="w-5 h-5 text-white" />;
+                          })()
+                        )}
+                      </div>
+                      <span className="text-xs font-bold text-danger-500">
+                        TOP{idx + 1}
+                      </span>
+                    </div>
+                    <h3 className="font-medium text-ink mb-1 line-clamp-1">{svc.name}</h3>
+                    <p className="text-xs text-ink-light line-clamp-2 mb-3">
+                      {svc.subCategory} · {svc.department}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-ink-light">
+                      <span className="flex items-center gap-1">
+                        <TrendingUp className="w-3 h-3 text-success-500" />
+                        {svc.applyCount.toLocaleString()} 人办理
+                      </span>
+                      <span className="flex items-center gap-1 text-warning-600">
+                        <Star className="w-3 h-3 fill-current" />
+                        {svc.satisfactionRate.toFixed(1)}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gov-800 text-white/80 py-8">
+        <div className="container">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-serif text-lg font-bold text-white mb-3">
+                昆山市政务服务统一工作台
+              </h3>
+              <p className="text-sm leading-relaxed">
+                主办单位：昆山市数据局<br />
+                技术支持：昆山市大数据中心
+              </p>
+            </div>
+            <div>
+              <h4 className="font-medium text-white mb-3">联系我们</h4>
+              <p className="text-sm">服务热线：12345</p>
+              <p className="text-sm">工作时间：周一至周五 9:00-17:00</p>
+              <p className="text-sm">现场地址：昆山市前进中路219号政务服务中心</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-white mb-3">友情链接</h4>
+              <div className="flex flex-wrap gap-3 text-sm">
+                <a href="#" className="hover:text-white">江苏省政务服务网</a>
+                <a href="#" className="hover:text-white">苏州市人民政府</a>
+                <a href="#" className="hover:text-white">昆山市人民政府</a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-white/10 mt-8 pt-6 text-center text-xs text-white/50">
+            © 2024 昆山市数据局 版权所有 · 苏ICP备XXXXXXXX号 · 苏公网安备XXXXXXXXXXXXX号
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
