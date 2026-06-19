@@ -1,0 +1,397 @@
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Search,
+  Filter,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  UserPlus,
+  CheckSquare,
+  Square,
+  Calendar,
+  Tag,
+  Clock,
+  Shirt,
+  BookOpen,
+  Smartphone,
+  Package,
+  Trash2,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { mockQualityOrders, mockOrders } from '@/data/mockData';
+import type { QualityOrder, QualityOrderStatus, Category } from '../../../shared/types';
+
+const statusOptions: { value: QualityOrderStatus | 'all'; label: string }[] = [
+  { value: 'all', label: '全部状态' },
+  { value: 'pending', label: '待处理' },
+  { value: 'ai-screening', label: 'AI初筛中' },
+  { value: 'manual-inspection', label: '人工质检中' },
+  { value: 'completed', label: '已完成' },
+];
+
+const categoryOptions: { value: Category | 'all'; label: string }[] = [
+  { value: 'all', label: '全部品类' },
+  { value: 'clothing', label: '衣服' },
+  { value: 'books', label: '图书' },
+  { value: 'phones', label: '手机' },
+];
+
+const statusBadgeClass: Record<QualityOrderStatus, string> = {
+  pending: 'bg-neutral-100 text-neutral-600',
+  'ai-screening': 'bg-blue-100 text-blue-700',
+  'manual-inspection': 'bg-amber-100 text-amber-700',
+  completed: 'bg-eco-100 text-eco-700',
+};
+
+const statusLabelMap: Record<QualityOrderStatus, string> = {
+  pending: '待处理',
+  'ai-screening': 'AI初筛中',
+  'manual-inspection': '人工质检中',
+  completed: '已完成',
+};
+
+const categoryIconMap: Record<string, typeof Package> = {
+  clothing: Shirt,
+  books: BookOpen,
+  phones: Smartphone,
+};
+
+const categoryLabelMap: Record<string, string> = {
+  clothing: '衣服',
+  books: '图书',
+  phones: '手机',
+};
+
+type DropdownKey = 'status' | 'category' | null;
+
+export default function QualityList() {
+  const navigate = useNavigate();
+  const [statusFilter, setStatusFilter] = useState<QualityOrderStatus | 'all'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
+  const [searchText, setSearchText] = useState('');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [openDropdown, setOpenDropdown] = useState<DropdownKey>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+
+  const getOrderInfo = (qo: QualityOrder) => {
+    return mockOrders.find((o) => o.id === qo.orderId);
+  };
+
+  const filteredOrders = useMemo(() => {
+    return mockQualityOrders.filter((qo) => {
+      if (statusFilter !== 'all' && qo.status !== statusFilter) return false;
+      const order = getOrderInfo(qo);
+      if (categoryFilter !== 'all' && order?.category !== categoryFilter) return false;
+      if (searchText) {
+        const searchLower = searchText.toLowerCase();
+        const matchOrderNo = order?.orderNo.toLowerCase().includes(searchLower);
+        const matchAssignee = qo.assignee?.toLowerCase().includes(searchLower);
+        if (!matchOrderNo && !matchAssignee) return false;
+      }
+      if (dateFrom && qo.createdAt < dateFrom) return false;
+      if (dateTo && qo.createdAt > dateTo + ' 23:59:59') return false;
+      return true;
+    });
+  }, [statusFilter, categoryFilter, searchText, dateFrom, dateTo]);
+
+  const totalPages = Math.ceil(filteredOrders.length / pageSize);
+  const paginatedOrders = filteredOrders.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+  const allSelected = paginatedOrders.length > 0 && paginatedOrders.every((o) => selectedIds.has(o.id));
+
+  const toggleSelectAll = () => {
+    if (allSelected) {
+      const newSelected = new Set(selectedIds);
+      paginatedOrders.forEach((o) => newSelected.delete(o.id));
+      setSelectedIds(newSelected);
+    } else {
+      const newSelected = new Set(selectedIds);
+      paginatedOrders.forEach((o) => newSelected.add(o.id));
+      setSelectedIds(newSelected);
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) newSelected.delete(id);
+    else newSelected.add(id);
+    setSelectedIds(newSelected);
+  };
+
+  const renderDropdown = (
+    key: DropdownKey,
+    value: string,
+    options: { value: string; label: string }[],
+    onChange: (v: string) => void
+  ) => (
+    <div className="relative">
+      <button
+        onClick={() => setOpenDropdown(openDropdown === key ? null : key)}
+        className="btn-secondary !py-2.5 !px-4 gap-2 text-sm flex items-center"
+      >
+        <Filter className="w-4 h-4" />
+        <span>{options.find((o) => o.value === value)?.label}</span>
+        <ChevronDown className={cn('w-4 h-4 transition-transform', openDropdown === key && 'rotate-180')} />
+      </button>
+      {openDropdown === key && (
+        <div className="absolute top-full left-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-neutral-100 z-50 overflow-hidden animate-fade-in">
+          {options.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => {
+                onChange(opt.value);
+                setOpenDropdown(null);
+              }}
+              className={cn(
+                'w-full text-left px-4 py-2.5 text-sm transition-colors',
+                value === opt.value ? 'bg-eco-50 text-eco-700 font-medium' : 'text-neutral-700 hover:bg-neutral-50'
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="p-6 animate-fade-in">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-neutral-800">质检工单管理</h1>
+        <p className="text-sm text-neutral-500 mt-1">管理回收物品的质检流程和工单分配</p>
+      </div>
+
+      <div className="card p-4 mb-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[240px]">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+            <input
+              type="text"
+              placeholder="搜索订单号、质检师..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className="input-base !pl-10 !py-2.5"
+            />
+          </div>
+
+          {renderDropdown(
+            'status',
+            statusFilter,
+            statusOptions as unknown as { value: string; label: string }[],
+            (v) => setStatusFilter(v as QualityOrderStatus | 'all')
+          )}
+          {renderDropdown(
+            'category',
+            categoryFilter,
+            categoryOptions as unknown as { value: string; label: string }[],
+            (v) => setCategoryFilter(v as Category | 'all')
+          )}
+
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                className="input-base !pl-9 !py-2.5 !pr-3 text-sm w-40"
+              />
+            </div>
+            <span className="text-neutral-400">至</span>
+            <div className="relative">
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <input
+                type="date"
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                className="input-base !pl-9 !py-2.5 !pr-3 text-sm w-40"
+              />
+            </div>
+          </div>
+        </div>
+
+        {selectedIds.size > 0 && (
+          <div className="mt-4 pt-4 border-t border-neutral-100 flex items-center gap-3">
+            <span className="text-sm text-neutral-600">
+              已选择 <span className="font-semibold text-eco-600">{selectedIds.size}</span> 项
+            </span>
+            <button className="btn-secondary !py-2 !px-4 text-sm gap-1.5">
+              <UserPlus className="w-4 h-4" />
+              批量分配
+            </button>
+            <button className="btn-secondary !py-2 !px-4 text-sm gap-1.5 text-amber-600 hover:!text-amber-600 hover:!border-amber-300 hover:!bg-amber-50">
+              <Tag className="w-4 h-4" />
+              批量标记
+            </button>
+            <button className="btn-secondary !py-2 !px-4 text-sm gap-1.5 text-red-500 hover:!text-red-500 hover:!border-red-300 hover:!bg-red-50">
+              <Trash2 className="w-4 h-4" />
+              批量删除
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="table-th w-12">
+                  <button onClick={toggleSelectAll} className="p-1">
+                    {allSelected ? (
+                      <CheckSquare className="w-4 h-4 text-eco-600" />
+                    ) : (
+                      <Square className="w-4 h-4 text-neutral-400" />
+                    )}
+                  </button>
+                </th>
+                <th className="table-th">订单号</th>
+                <th className="table-th">品类</th>
+                <th className="table-th">状态</th>
+                <th className="table-th">创建时间</th>
+                <th className="table-th">分配给</th>
+                <th className="table-th text-right">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-16 text-center text-neutral-400">
+                    暂无质检工单
+                  </td>
+                </tr>
+              ) : (
+                paginatedOrders.map((qo, idx) => {
+                  const order = getOrderInfo(qo);
+                  const CatIcon = categoryIconMap[order?.category || ''] || Package;
+                  const isSelected = selectedIds.has(qo.id);
+                  return (
+                    <tr
+                      key={qo.id}
+                      className={cn(
+                        'hover:bg-eco-50/40 transition-colors animate-slide-up',
+                        isSelected && 'bg-eco-50/60'
+                      )}
+                      style={{ animationDelay: `${idx * 40}ms` }}
+                    >
+                      <td className="table-td">
+                        <button onClick={() => toggleSelect(qo.id)} className="p-1">
+                          {isSelected ? (
+                            <CheckSquare className="w-4 h-4 text-eco-600" />
+                          ) : (
+                            <Square className="w-4 h-4 text-neutral-400 hover:text-neutral-600" />
+                          )}
+                        </button>
+                      </td>
+                      <td className="table-td font-medium text-neutral-800">{order?.orderNo || '-'}</td>
+                      <td className="table-td">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-lg bg-eco-50 flex items-center justify-center">
+                            <CatIcon className="w-4 h-4 text-eco-600" />
+                          </div>
+                          <span className="text-neutral-700">
+                            {categoryLabelMap[order?.category || ''] || '-'}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="table-td">
+                        <span className={cn('badge', statusBadgeClass[qo.status])}>
+                          {statusLabelMap[qo.status]}
+                        </span>
+                      </td>
+                      <td className="table-td">
+                        <div className="flex items-center gap-1.5 text-neutral-600">
+                          <Clock className="w-3.5 h-3.5 text-neutral-400" />
+                          {qo.createdAt}
+                        </div>
+                      </td>
+                      <td className="table-td">
+                        {qo.assignee ? (
+                          <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-eco-400 to-eco-600 flex items-center justify-center text-white text-xs font-medium">
+                              {qo.assignee.slice(-2)}
+                            </div>
+                            <span className="text-neutral-700">{qo.assignee}</span>
+                          </div>
+                        ) : (
+                          <span className="text-neutral-400 text-sm">未分配</span>
+                        )}
+                      </td>
+                      <td className="table-td text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => navigate(`/admin/quality/${qo.id}`)}
+                            className="p-2 rounded-lg text-eco-600 hover:bg-eco-50 transition-colors"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          <button className="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 transition-colors">
+                            <UserPlus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="px-5 py-4 border-t border-neutral-100 flex items-center justify-between">
+          <div className="text-sm text-neutral-500">
+            共 <span className="font-semibold text-neutral-700">{filteredOrders.length}</span> 条记录，
+            第 <span className="font-semibold text-neutral-700">{currentPage}</span> /{' '}
+            <span className="font-semibold text-neutral-700">{totalPages || 1}</span> 页
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className={cn(
+                'w-9 h-9 rounded-lg flex items-center justify-center transition-colors',
+                currentPage === 1
+                  ? 'text-neutral-300 cursor-not-allowed'
+                  : 'text-neutral-600 hover:bg-neutral-100'
+              )}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            {Array.from({ length: totalPages || 1 }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setCurrentPage(p)}
+                className={cn(
+                  'w-9 h-9 rounded-lg text-sm font-medium transition-all',
+                  currentPage === p
+                    ? 'bg-gradient-to-r from-eco-500 to-eco-600 text-white shadow-card'
+                    : 'text-neutral-600 hover:bg-neutral-100'
+                )}
+              >
+                {p}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages || totalPages === 0}
+              className={cn(
+                'w-9 h-9 rounded-lg flex items-center justify-center transition-colors',
+                currentPage === totalPages || totalPages === 0
+                  ? 'text-neutral-300 cursor-not-allowed'
+                  : 'text-neutral-600 hover:bg-neutral-100'
+              )}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
