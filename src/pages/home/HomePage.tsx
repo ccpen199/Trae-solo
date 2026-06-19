@@ -23,7 +23,18 @@ import {
 } from 'lucide-react'
 import StatCard from '@/components/ui/StatCard'
 import { notifications, dashboardMetrics, policyDocuments } from '@/mocks/data'
+import { useAppStore } from '@/stores/appStore'
 import { cn } from '@/lib/utils'
+
+type ServiceRole = 'personal' | 'enterprise' | 'admin' | 'public'
+
+interface ServiceItem {
+  icon: typeof Shield
+  label: string
+  path: string
+  color: string
+  role: ServiceRole
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -34,16 +45,16 @@ const fadeUp = {
   }),
 }
 
-const serviceItems = [
-  { icon: Shield, label: '社保查询', path: '/personal/social-insurance', color: 'bg-gov-blue' },
-  { icon: Heart, label: '医保服务', path: '/personal/medical', color: 'bg-rose-600' },
-  { icon: GraduationCap, label: '考试报名', path: '/personal/exam', color: 'bg-amber-600' },
-  { icon: CreditCard, label: '电子社保卡', path: '/personal/essc', color: 'bg-emerald-600' },
-  { icon: Users, label: '参保申报', path: '/enterprise/insurance-declaration', color: 'bg-violet-600' },
-  { icon: FileText, label: '失业金申领', path: '/enterprise/unemployment', color: 'bg-gov-red' },
-  { icon: FileCheck, label: '电子合同', path: '/enterprise/e-contract', color: 'bg-cyan-700' },
-  { icon: BookOpen, label: '政策查询', path: '/admin/policy-tags', color: 'bg-gov-gold' },
-  { icon: Grid3x3, label: '更多服务', path: '/personal', color: 'bg-gray-600' },
+const serviceItems: ServiceItem[] = [
+  { icon: Shield, label: '社保查询', path: '/personal/social-insurance', color: 'bg-gov-blue', role: 'personal' },
+  { icon: Heart, label: '医保服务', path: '/personal/medical', color: 'bg-rose-600', role: 'personal' },
+  { icon: GraduationCap, label: '考试报名', path: '/personal/exam', color: 'bg-amber-600', role: 'personal' },
+  { icon: CreditCard, label: '电子社保卡', path: '/personal/essc', color: 'bg-emerald-600', role: 'personal' },
+  { icon: Users, label: '参保申报', path: '/enterprise/insurance-declaration', color: 'bg-violet-600', role: 'enterprise' },
+  { icon: FileText, label: '失业金申领', path: '/enterprise/unemployment', color: 'bg-gov-red', role: 'enterprise' },
+  { icon: FileCheck, label: '电子合同', path: '/enterprise/e-contract', color: 'bg-cyan-700', role: 'enterprise' },
+  { icon: BookOpen, label: '政策查询', path: '/admin/policy-tags', color: 'bg-gov-gold', role: 'admin' },
+  { icon: Grid3x3, label: '更多服务', path: '/personal', color: 'bg-gray-600', role: 'personal' },
 ]
 
 const notificationTypeConfig = {
@@ -126,13 +137,13 @@ function HeroSection() {
           <div className="flex gap-4">
             <button
               className="gov-btn-primary !shadow-gov-md !px-8 !py-3 !text-base"
-              onClick={() => navigate('/personal')}
+              onClick={() => navigate('/login?role=personal')}
             >
               个人登录
             </button>
             <button
               className="gov-btn-secondary !border-white/40 !text-white !px-8 !py-3 !text-base hover:!bg-white/10"
-              onClick={() => navigate('/enterprise')}
+              onClick={() => navigate('/login?role=enterprise')}
             >
               企业登录
             </button>
@@ -145,6 +156,19 @@ function HeroSection() {
 
 function QuickServiceNav() {
   const navigate = useNavigate()
+  const { currentRole } = useAppStore()
+
+  function handleNavClick(item: ServiceItem) {
+    if (item.role === 'public') {
+      navigate(item.path)
+      return
+    }
+    if (currentRole === item.role) {
+      navigate(item.path)
+    } else {
+      navigate(`/login?role=${item.role}`)
+    }
+  }
 
   return (
     <section className="mb-12">
@@ -159,7 +183,7 @@ function QuickServiceNav() {
             key={item.label}
             custom={i}
             variants={fadeUp}
-            onClick={() => navigate(item.path)}
+            onClick={() => handleNavClick(item)}
             className="gov-card flex flex-col items-center gap-3 py-7 px-4 cursor-pointer group"
           >
             <div

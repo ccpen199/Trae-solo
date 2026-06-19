@@ -35,10 +35,8 @@ export default function Navbar() {
   }, [])
 
   function handleRoleSwitch(role: 'personal' | 'enterprise' | 'admin') {
-    setCurrentRole(role)
     setDropdownOpen(false)
-    const pathMap = { personal: '/personal', enterprise: '/enterprise', admin: '/admin' }
-    navigate(pathMap[role])
+    navigate(`/login?role=${role}`)
   }
 
   return (
