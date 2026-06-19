@@ -20,9 +20,10 @@ import {
   TrendingUp,
   Activity,
   Clock,
+  AlertTriangle,
 } from 'lucide-react'
 import StatCard from '@/components/ui/StatCard'
-import { notifications, dashboardMetrics, policyDocuments } from '@/mocks/data'
+import { notifications, dashboardMetrics, policyDocuments, timeoutWarnings } from '@/mocks/data'
 import { useAppStore } from '@/stores/appStore'
 import { cn } from '@/lib/utils'
 
@@ -275,7 +276,18 @@ function NotificationsSection() {
 
 const metricIcons = [TrendingUp, Users, Clock, Activity]
 
+const metricLinks = [
+  '/admin/timeout-warning',
+  '/admin',
+  '/admin/timeout-warning',
+  '/admin',
+]
+
 function DashboardSection() {
+  const navigate = useNavigate()
+  const activeWarnings = timeoutWarnings.filter((w) => w.status === 'active')
+  const topWarnings = timeoutWarnings.slice(0, 3)
+
   return (
     <section className="mb-12">
       <motion.div
@@ -291,18 +303,86 @@ function DashboardSection() {
             const Icon = metricIcons[i]
             return (
               <motion.div key={metric.label} custom={i + 1} variants={fadeUp}>
-                <StatCard
-                  label={metric.label}
-                  value={metric.value.toLocaleString('zh-CN')}
-                  unit={metric.unit}
-                  trend={metric.trend}
-                  changePercent={metric.changePercent}
-                  icon={<Icon className="w-5 h-5 text-gov-blue" />}
-                />
+                <div
+                  className="cursor-pointer"
+                  onClick={() => navigate(metricLinks[i])}
+                >
+                  <StatCard
+                    label={metric.label}
+                    value={metric.value.toLocaleString('zh-CN')}
+                    unit={metric.unit}
+                    trend={metric.trend}
+                    changePercent={metric.changePercent}
+                    icon={<Icon className="w-5 h-5 text-gov-blue" />}
+                  />
+                </div>
+                {metric.label === '平均办理时长' && (
+                  <p className="text-xs text-gov-text-muted mt-2 px-1 leading-relaxed">
+                    含超时督办事项，社保转移超15工作日自动触发预警
+                  </p>
+                )}
               </motion.div>
             )
           })}
         </div>
+
+        <motion.div custom={5} variants={fadeUp} className="mt-6">
+          <div className="gov-card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gov-text flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-gov-red" />
+                业务预警
+                <span className="text-sm font-normal text-gov-text-secondary">
+                  当前 {activeWarnings.length} 条活跃预警
+                </span>
+              </h3>
+              <button
+                onClick={() => navigate('/admin/timeout-warning')}
+                className="text-sm text-gov-blue hover:underline"
+              >
+                查看全部预警 →
+              </button>
+            </div>
+            <div className="space-y-3">
+              {topWarnings.map((w) => (
+                <div
+                  key={w.warningId}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-gov-bg-light"
+                >
+                  <span
+                    className={cn(
+                      'w-2.5 h-2.5 rounded-full shrink-0',
+                      w.level === 'red'
+                        ? 'bg-gov-red'
+                        : w.level === 'orange'
+                          ? 'bg-orange-500'
+                          : 'bg-amber-400'
+                    )}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gov-text truncate">
+                      {w.businessType} - {w.applicantName}
+                    </p>
+                  </div>
+                  <span
+                    className={cn(
+                      'text-xs font-semibold shrink-0',
+                      w.remainingDays < 0
+                        ? 'text-gov-red'
+                        : w.remainingDays < 3
+                          ? 'text-orange-500'
+                          : 'text-amber-500'
+                    )}
+                  >
+                    {w.remainingDays < 0
+                      ? `已超时 ${Math.abs(w.remainingDays)}天`
+                      : `剩余 ${w.remainingDays}天`}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   )

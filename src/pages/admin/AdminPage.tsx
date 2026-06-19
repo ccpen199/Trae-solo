@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useMemo } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   PieChart,
@@ -7,8 +7,17 @@ import {
   Cell,
   ResponsiveContainer,
 } from 'recharts'
-import { AlertTriangle, BookOpen, Fingerprint } from 'lucide-react'
+import {
+  AlertTriangle,
+  BookOpen,
+  Fingerprint,
+  ShieldAlert,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+} from 'lucide-react'
 import { timeoutWarnings, policyDocuments, identityAudits } from '@/mocks/data'
+import { cn } from '@/lib/utils'
 
 const pieData = [
   { name: '通过', value: identityAudits.filter((a) => a.status === 'passed').length, color: '#10B981' },
@@ -46,18 +55,43 @@ const summaryCards = [
   },
 ]
 
-const levelColors: Record<string, string> = {
+const levelDotColor: Record<string, string> = {
   red: 'bg-gov-red',
   orange: 'bg-orange-500',
   yellow: 'bg-amber-400',
 }
 
 export default function AdminPage() {
-  const latestWarnings = useMemo(() => timeoutWarnings.slice(0, 3), [])
+  const navigate = useNavigate()
+  const [supervisedIds, setSupervisedIds] = useState<Set<string>>(() => {
+    const ids = new Set<string>()
+    timeoutWarnings.forEach((w) => {
+      if (w.status === 'supervised') ids.add(w.warningId)
+    })
+    return ids
+  })
+
+  const top5Warnings = useMemo(() => timeoutWarnings.slice(0, 5), [])
+
   const passRate = useMemo(() => {
     const passed = identityAudits.filter((a) => a.status === 'passed').length
     return identityAudits.length > 0 ? Math.round((passed / identityAudits.length) * 100) : 0
   }, [])
+
+  const suspiciousCount = useMemo(
+    () => identityAudits.filter((a) => a.status === 'suspicious').length,
+    []
+  )
+
+  const recentAudits = useMemo(() => identityAudits.slice(0, 3), [])
+
+  const handleSupervise = (warningId: string) => {
+    setSupervisedIds((prev) => {
+      const next = new Set(prev)
+      next.add(warningId)
+      return next
+    })
+  }
 
   return (
     <div className="space-y-6">
@@ -90,73 +124,204 @@ export default function AdminPage() {
 
       <div className="grid grid-cols-5 gap-6">
         <div className="col-span-3 gov-card p-5">
-          <h2 className="font-semibold text-gov-text mb-4">最新超时预警</h2>
-          <div className="space-y-3">
-            {latestWarnings.map((w, i) => (
-              <motion.div
-                key={w.warningId}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.08 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-gov-bg-light"
-              >
-                <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${levelColors[w.level]}`} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gov-text truncate">
-                    {w.businessType} - {w.applicantName}
-                  </p>
-                  <p className="text-xs text-gov-text-secondary">
-                    截止 {w.deadline} · 剩余
-                    <span className={`font-semibold ${w.remainingDays < 0 ? 'text-gov-red' : w.remainingDays < 3 ? 'text-orange-500' : 'text-amber-500'}`}>
-                      {w.remainingDays}天
-                    </span>
-                  </p>
-                </div>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${
-                  w.status === 'active' ? 'bg-gov-red/10 text-gov-red' :
-                  w.status === 'supervised' ? 'bg-gov-gold/10 text-amber-700' :
-                  'bg-emerald-100 text-emerald-700'
-                }`}>
-                  {w.status === 'active' ? '待督办' : w.status === 'supervised' ? '已督办' : '已解决'}
-                </span>
-              </motion.div>
-            ))}
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold text-gov-text">超时预警督办</h2>
+            <span className="text-sm text-gov-text-secondary">
+              共 {timeoutWarnings.length} 条预警
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gov-border/50 text-gov-text-secondary">
+                  <th className="text-left py-2.5 px-3 font-medium">业务类型</th>
+                  <th className="text-left py-2.5 px-3 font-medium">申请人</th>
+                  <th className="text-center py-2.5 px-3 font-medium">剩余天数</th>
+                  <th className="text-left py-2.5 px-3 font-medium">经办人</th>
+                  <th className="text-center py-2.5 px-3 font-medium">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {top5Warnings.map((w) => {
+                  const isSupervised = supervisedIds.has(w.warningId)
+                  return (
+                    <tr
+                      key={w.warningId}
+                      className="border-b border-gov-border/30 hover:bg-gov-bg-light/60 transition-colors"
+                    >
+                      <td className="py-2.5 px-3">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={cn(
+                              'w-2 h-2 rounded-full shrink-0',
+                              levelDotColor[w.level]
+                            )}
+                          />
+                          <span className="font-medium text-gov-text">{w.businessType}</span>
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 text-gov-text">{w.applicantName}</td>
+                      <td className="py-2.5 px-3 text-center">
+                        <span
+                          className={cn(
+                            'font-semibold',
+                            w.remainingDays < 0
+                              ? 'text-gov-red'
+                              : w.remainingDays < 3
+                                ? 'text-orange-500'
+                                : 'text-amber-500'
+                          )}
+                        >
+                          {w.remainingDays < 0
+                            ? `超时 ${Math.abs(w.remainingDays)}天`
+                            : `${w.remainingDays}天`}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 text-gov-text-secondary">{w.handler}</td>
+                      <td className="py-2.5 px-3 text-center">
+                        {isSupervised ? (
+                          <span className="inline-flex items-center gap-1 text-xs text-emerald-600">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            已督办
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => handleSupervise(w.warningId)}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium bg-gov-red/10 text-gov-red hover:bg-gov-red/20 transition-colors"
+                          >
+                            <ShieldAlert className="w-3.5 h-3.5" />
+                            督办
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex items-center justify-between mt-4 pt-3 border-t border-gov-border/30">
+            <span className="text-sm text-gov-text-secondary">
+              活跃预警 {timeoutWarnings.filter((w) => !supervisedIds.has(w.warningId)).length} 条
+              · 已督办 {supervisedIds.size} 条
+            </span>
+            <button
+              onClick={() => navigate('/admin/timeout-warning')}
+              className="text-sm text-gov-blue hover:underline"
+            >
+              进入预警督办中心 →
+            </button>
           </div>
         </div>
 
-        <div className="col-span-2 gov-card p-5">
-          <h2 className="font-semibold text-gov-text mb-4">实名认证通过率</h2>
-          <div className="flex items-center gap-4">
-            <div className="w-32 h-32">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={35}
-                    outerRadius={55}
-                    strokeWidth={0}
-                  >
-                    {pieData.map((entry) => (
-                      <Cell key={entry.name} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="space-y-2">
-              <p className="text-3xl font-bold text-gov-blue">{passRate}%</p>
-              <div className="space-y-1 text-xs text-gov-text-secondary">
-                {pieData.map((d) => (
-                  <div key={d.name} className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: d.color }} />
-                    {d.name}：{d.value}人
-                  </div>
-                ))}
+        <div className="col-span-2 space-y-6">
+          <div className="gov-card p-5">
+            <h2 className="font-semibold text-gov-text mb-4">实名认证通过率</h2>
+            <div className="flex items-center gap-4">
+              <div className="w-32 h-32">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={35}
+                      outerRadius={55}
+                      strokeWidth={0}
+                    >
+                      {pieData.map((entry) => (
+                        <Cell key={entry.name} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
               </div>
+              <div className="space-y-2">
+                <p className="text-3xl font-bold text-gov-blue">{passRate}%</p>
+                <div className="space-y-1 text-xs text-gov-text-secondary">
+                  {pieData.map((d) => (
+                    <div key={d.name} className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: d.color }} />
+                      {d.name}：{d.value}人
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="gov-card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold text-gov-text">审计报表摘要</h2>
+              <button
+                onClick={() => navigate('/admin/identity-audit')}
+                className="text-sm text-gov-blue hover:underline"
+              >
+                查看详情 →
+              </button>
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="p-3 rounded-lg bg-gov-bg-light text-center">
+                <p className="text-xs text-gov-text-secondary mb-1">今日认证请求</p>
+                <p className="text-xl font-bold text-gov-text">{identityAudits.length}</p>
+              </div>
+              <div className="p-3 rounded-lg bg-gov-bg-light text-center">
+                <p className="text-xs text-gov-text-secondary mb-1">通过率</p>
+                <p className="text-xl font-bold text-emerald-600">{passRate}%</p>
+              </div>
+              <div className="p-3 rounded-lg bg-gov-bg-light text-center">
+                <p className="text-xs text-gov-text-secondary mb-1">异常记录</p>
+                <p className={cn('text-xl font-bold', suspiciousCount > 0 ? 'text-gov-red' : 'text-gov-text')}>
+                  {suspiciousCount}
+                </p>
+              </div>
+            </div>
+            <div className="space-y-0">
+              <p className="text-xs font-medium text-gov-text-secondary mb-2">最近审计事件</p>
+              {recentAudits.map((a, i) => {
+                const statusConfig = {
+                  passed: { icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                  failed: { icon: XCircle, color: 'text-gov-red', bg: 'bg-gov-red/10' },
+                  suspicious: { icon: AlertCircle, color: 'text-gov-red', bg: 'bg-gov-red/10' },
+                }[a.status]
+                const StatusIcon = statusConfig.icon
+                return (
+                  <div
+                    key={a.auditId}
+                    className="flex items-center gap-3 py-2.5 border-b border-gov-border/20 last:border-b-0"
+                  >
+                    <div className="relative">
+                      <div className={cn('w-7 h-7 rounded-full flex items-center justify-center', statusConfig.bg)}>
+                        <StatusIcon className={cn('w-3.5 h-3.5', statusConfig.color)} />
+                      </div>
+                      {i < recentAudits.length - 1 && (
+                        <div className="absolute top-7 left-1/2 -translate-x-1/2 w-px h-2 bg-gov-border/40" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gov-text truncate">
+                        <span className="font-medium">{a.userName}</span>
+                        <span className="text-gov-text-secondary"> · {a.authMethod === 'face' ? '人脸识别' : '指纹认证'}</span>
+                      </p>
+                      <p className="text-xs text-gov-text-muted">{a.authTime}</p>
+                    </div>
+                    <span
+                      className={cn(
+                        'text-xs font-medium',
+                        a.status === 'passed'
+                          ? 'text-emerald-600'
+                          : a.status === 'failed'
+                            ? 'text-gov-red'
+                            : 'text-gov-red font-bold'
+                      )}
+                    >
+                      {a.status === 'passed' ? '通过' : a.status === 'failed' ? '失败' : '可疑'}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
