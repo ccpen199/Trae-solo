@@ -1,91 +1,164 @@
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Home,
-  MessageSquarePlus,
-  FileText,
-  Briefcase,
+  ChevronLeft,
+  ChevronRight,
   Gavel,
-  FolderKanban,
-  Award,
+  Briefcase,
+  ShieldCheck,
+  FileWarning,
   LayoutDashboard,
   Scale,
-  Users,
-  ShieldCheck,
-  BookOpen,
-  MessageSquareWarning,
-  BarChart3,
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { useAuthStore } from '@/store/useAuthStore'
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/auth.store';
+import type { UserRole } from '@/types';
 
-interface MenuItem {
-  to: string
-  icon: React.ElementType
-  label: string
+interface SidebarItem {
+  to: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
-const userMenu: MenuItem[] = [
-  { to: '/', icon: Home, label: '首页' },
-  { to: '/consultation/submit', icon: MessageSquarePlus, label: '提交咨询' },
-  { to: '/consultations', icon: FileText, label: '我的咨询' },
-]
+const lawyerMenuItems: SidebarItem[] = [
+  { to: '/lawyer/hall', label: '抢单大厅', icon: Gavel },
+  { to: '/lawyer/cases', label: '我的案件', icon: Briefcase },
+];
 
-const lawyerMenu: MenuItem[] = [
-  { to: '/lawyer/workspace', icon: Briefcase, label: '工作台' },
-  { to: '/lawyer/grab', icon: Gavel, label: '抢单大厅' },
-  { to: '/lawyer/cases', icon: FolderKanban, label: '我的案件' },
-  { to: '/lawyer/qualification', icon: Award, label: '资质中心' },
-]
+const adminMenuItems: SidebarItem[] = [
+  { to: '/admin/verify', label: '资质核验', icon: ShieldCheck },
+  { to: '/admin/disputes', label: '纠纷处理', icon: FileWarning },
+  { to: '/admin/monitor', label: '监控看板', icon: LayoutDashboard },
+];
 
-const adminMenu: MenuItem[] = [
-  { to: '/admin/dashboard', icon: LayoutDashboard, label: '运营监控台' },
-  { to: '/lawyer/qualification', icon: ShieldCheck, label: '资质核验中心' },
-  { to: '/lawyer/qualification', icon: BookOpen, label: '学分管理' },
-  { to: '/dispute/arbitrate', icon: Scale, label: '仲裁处理' },
-  { to: '/admin/dashboard', icon: MessageSquareWarning, label: '申诉管理' },
-  { to: '/admin/dashboard', icon: BarChart3, label: '数据报表' },
-]
+const roleTitle: Record<UserRole, string> = {
+  user: '用户端',
+  lawyer: '律师工作台',
+  admin: '管理后台',
+};
 
-export default function Sidebar() {
-  const { userType } = useAuthStore()
+export function Sidebar() {
+  const location = useLocation();
+  const { role } = useAuthStore();
+  const [collapsed, setCollapsed] = useState(false);
 
-  const getMenuItems = (): MenuItem[] => {
-    switch (userType) {
-      case 'user':
-        return userMenu
-      case 'lawyer':
-        return lawyerMenu
-      case 'admin':
-        return adminMenu
-      default:
-        return []
-    }
-  }
+  if (role === 'user') return null;
 
-  const menuItems = getMenuItems()
+  const menuItems = role === 'lawyer' ? lawyerMenuItems : adminMenuItems;
 
   return (
-    <aside className="h-[calc(100vh-4rem)] w-64 border-r border-slate-200 bg-white">
-      <nav className="flex flex-col gap-1 p-4">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to === '/'}
-            className={({ isActive }) =>
-              cn(
-                'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-              )
-            }
-          >
-            <item.icon className="h-5 w-5" />
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
+    <motion.aside
+      initial={false}
+      animate={{ width: collapsed ? 72 : 240 }}
+      transition={{ duration: 0.25, ease: 'easeInOut' }}
+      className="sticky top-16 h-[calc(100vh-4rem)] bg-white border-r border-primary-100 flex flex-col shadow-sm"
+    >
+      <div className="flex items-center justify-between px-4 py-4 border-b border-primary-100">
+        <AnimatePresence mode="wait">
+          {!collapsed && (
+            <motion.div
+              key="title"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2"
+            >
+              <Scale className="h-4 w-4 text-accent-gold" />
+              <span className="font-serif text-sm font-semibold text-primary-800">
+                {roleTitle[role]}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className={cn(
+            'flex h-7 w-7 items-center justify-center rounded-md text-primary-400 hover:bg-primary-50 hover:text-primary-600 transition-colors',
+            collapsed && 'mx-auto'
+          )}
+        >
+          {collapsed ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
+        </button>
+      </div>
+
+      <nav className="flex-1 p-3 overflow-y-auto scrollbar-thin">
+        <div className="flex flex-col gap-1">
+          {menuItems.map((item) => {
+            const isActive =
+              location.pathname === item.to ||
+              (item.to !== '/' && location.pathname.startsWith(item.to));
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className="relative"
+              >
+                {({ isActive: linkActive }) => (
+                  <motion.div
+                    whileHover={{ x: collapsed ? 0 : 2 }}
+                    className={cn(
+                      'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative overflow-hidden',
+                      linkActive || isActive
+                        ? 'bg-accent-gold/10 text-accent-gold-dark border border-accent-gold/40'
+                        : 'text-primary-600 hover:bg-primary-50 hover:text-primary-800 border border-transparent'
+                    )}
+                  >
+                    {(linkActive || isActive) && (
+                      <motion.span
+                        layoutId="sidebar-indicator"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 bg-accent-gold rounded-r-full"
+                      />
+                    )}
+                    <Icon
+                      className={cn(
+                        'h-5 w-5 flex-shrink-0',
+                        (linkActive || isActive) && 'text-accent-gold'
+                      )}
+                    />
+                    <AnimatePresence mode="wait">
+                      {!collapsed && (
+                        <motion.span
+                          key="label"
+                          initial={{ opacity: 0, x: -5 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -5 }}
+                          transition={{ duration: 0.15 }}
+                        >
+                          {item.label}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )}
+              </NavLink>
+            );
+          })}
+        </div>
       </nav>
-    </aside>
-  )
+
+      <AnimatePresence mode="wait">
+        {!collapsed && (
+          <motion.div
+            key="footer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="p-4 border-t border-primary-100"
+          >
+            <div className="rounded-lg bg-primary-50 p-3 text-center">
+              <p className="text-xs text-primary-500">法援在线</p>
+              <p className="text-xs text-primary-400 mt-0.5">公益法律服务平台</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.aside>
+  );
 }

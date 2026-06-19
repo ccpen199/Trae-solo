@@ -1,55 +1,116 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from "@/components/layout/MainLayout";
-import Home from "@/pages/Home";
-import Login from "@/pages/Login";
-import LawyerDesk from "@/pages/LawyerDesk/Desk";
-import GrabPool from "@/pages/LawyerDesk/GrabPool";
-import LawyerCases from "@/pages/LawyerDesk/Cases";
-import QualificationCenter from "@/pages/Qualification/Center";
-import ConsultationList from "@/pages/Consultation/List";
-import ConsultationSubmit from "@/pages/Consultation/Submit";
-import ConsultationDetail from "@/pages/Consultation/Detail";
-import ConsultationSummary from "@/pages/Consultation/Summary";
-import Evaluate from "@/pages/Dispute/Evaluate";
-import Appeal from "@/pages/Dispute/Appeal";
-import Arbitrate from "@/pages/Dispute/Arbitrate";
-import Dashboard from "@/pages/Admin/Dashboard";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { AppLayout } from "@/components/layout/AppLayout";
+import { ToastProvider } from "@/components/ui/ToastProvider";
+import HomePage from "@/pages/user/HomePage";
+import SubmitPage from "@/pages/user/SubmitPage";
+import ConsultationListPage from "@/pages/user/ConsultationListPage";
+import GrabHallPage from "@/pages/lawyer/GrabHallPage";
+import CaseManagePage from "@/pages/lawyer/CaseManagePage";
+import LegalOpinionPage from "@/pages/lawyer/LegalOpinionPage";
+import ChatPage from "@/pages/shared/ChatPage";
+import LoginPage from "@/pages/shared/LoginPage";
+import NotFoundPage from "@/pages/shared/NotFoundPage";
+import VerifyCenterPage from "@/pages/admin/VerifyCenterPage";
+import DisputeCenterPage from "@/pages/admin/DisputeCenterPage";
+import MonitorDashboardPage from "@/pages/admin/MonitorDashboardPage";
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-
-        <Route element={<MainLayout />}>
-          <Route path="/consultations" element={<ConsultationList />} />
-          <Route path="/consultation/submit" element={<ConsultationSubmit />} />
-          <Route path="/order/submit" element={<ConsultationSubmit />} />
-          <Route path="/consultation/:id" element={<ConsultationDetail />} />
-          <Route path="/consultation/:id/summary" element={<ConsultationSummary />} />
-
-          <Route path="/lawyer/workspace" element={<LawyerDesk />} />
-          <Route path="/lawyer/grab" element={<GrabPool />} />
-          <Route path="/lawyer/cases" element={<LawyerCases />} />
-          <Route path="/lawyer/qualification" element={<QualificationCenter />} />
-
-          <Route path="/dispute/evaluate/:id" element={<Evaluate />} />
-          <Route path="/dispute/appeal/:id" element={<Appeal />} />
-          <Route path="/dispute/arbitrate" element={<Arbitrate />} />
-
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-        </Route>
-
-        <Route path="*" element={
-          <div className="min-h-screen flex items-center justify-center bg-graphite-50">
-            <div className="text-center">
-              <h1 className="font-serif text-6xl font-bold text-justice-500 mb-4">404</h1>
-              <p className="text-graphite-400 mb-8">页面不存在或已被移除</p>
-            </div>
-          </div>
-        } />
-      </Routes>
-    </Router>
+    <ToastProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={
+              <AppLayout>
+                <Navigate to="/home" replace />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <AppLayout>
+                <HomePage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/submit"
+            element={
+              <AppLayout>
+                <SubmitPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/consultations"
+            element={
+              <AppLayout>
+                <ConsultationListPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/consultation/:id"
+            element={
+              <AppLayout showFooter={false}>
+                <ChatPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/lawyer-hall"
+            element={
+              <AppLayout showFooter={false}>
+                <GrabHallPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/lawyer-cases"
+            element={
+              <AppLayout showFooter={false}>
+                <CaseManagePage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/lawyer-opinion/:id"
+            element={
+              <AppLayout showFooter={false}>
+                <LegalOpinionPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/admin/verify"
+            element={
+              <AppLayout showFooter={false}>
+                <VerifyCenterPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/admin/disputes"
+            element={
+              <AppLayout showFooter={false}>
+                <DisputeCenterPage />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/admin/monitor"
+            element={
+              <AppLayout showFooter={false}>
+                <MonitorDashboardPage />
+              </AppLayout>
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </ToastProvider>
   );
 }

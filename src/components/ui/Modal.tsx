@@ -1,66 +1,75 @@
-import { useEffect } from 'react'
-import { X } from 'lucide-react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import { useEffect, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-interface ModalProps {
-  open: boolean
-  onClose: () => void
-  title?: string
-  children: React.ReactNode
-  footer?: React.ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  closeOnOverlay?: boolean
+export interface ModalProps {
+  open: boolean;
+  onClose: () => void;
+  title?: string;
+  children?: ReactNode;
+  footer?: ReactNode;
+  closable?: boolean;
+  maskClosable?: boolean;
+  width?: string;
+  className?: string;
 }
 
-const sizeMap = {
-  sm: 'max-w-sm',
-  md: 'max-w-md',
-  lg: 'max-w-lg',
-  xl: 'max-w-xl',
-}
-
-export default function Modal({
+export function Modal({
   open,
   onClose,
   title,
   children,
   footer,
-  size = 'md',
-  closeOnOverlay = true,
+  closable = true,
+  maskClosable = true,
+  width = 'max-w-lg',
+  className,
 }: ModalProps) {
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = ''
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = ''
-    }
-  }, [open])
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && open) {
-        onClose()
+        onClose();
       }
-    }
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [open, onClose])
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open, onClose]);
 
-  return (
+  const handleMaskClick = (e: React.MouseEvent) => {
+    if (maskClosable && e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  return createPortal(
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={handleMaskClick}
+        >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => closeOnOverlay && onClose()}
+            className="absolute inset-0 bg-primary-950/60 backdrop-blur-sm"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -68,31 +77,43 @@ export default function Modal({
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className={cn(
-              'relative z-10 w-full rounded-2xl bg-white shadow-2xl',
-              sizeMap[size]
+              'relative w-full',
+              width,
+              'rounded-xl bg-white shadow-card-hover border border-primary-100/50',
+              className
             )}
-            onClick={(e) => e.stopPropagation()}
           >
             {title && (
-              <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-                <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
-                <button
-                  onClick={onClose}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
-                >
-                  <X className="h-4 w-4" />
-                </button>
+              <div className="flex items-center justify-between border-b border-primary-100/50 px-6 py-4">
+                <h3 className="text-lg font-semibold text-primary-800 font-serif">{title}</h3>
+                {closable && (
+                  <button
+                    onClick={onClose}
+                    className="rounded-lg p-1.5 text-primary-400 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                )}
               </div>
             )}
-            <div className="px-6 py-5">{children}</div>
+            {!title && closable && (
+              <button
+                onClick={onClose}
+                className="absolute right-4 top-4 rounded-lg p-1.5 text-primary-400 hover:bg-primary-50 hover:text-primary-600 transition-colors z-10"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            )}
+            <div className="p-6">{children}</div>
             {footer && (
-              <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-6 py-4">
+              <div className="flex items-center justify-end gap-2 border-t border-primary-100/50 px-6 py-4">
                 {footer}
               </div>
             )}
           </motion.div>
-        </div>
+        </motion.div>
       )}
-    </AnimatePresence>
-  )
+    </AnimatePresence>,
+    document.body
+  );
 }

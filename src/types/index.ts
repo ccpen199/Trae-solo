@@ -1,189 +1,130 @@
-export type UserRole = 'user' | 'lawyer' | 'admin'
+export type UserRole = 'user' | 'lawyer' | 'admin';
 
-export type LegalCaseType =
-  | 'marriage'
-  | 'labor'
-  | 'debt'
-  | 'property'
-  | 'contract'
-  | 'traffic'
-  | 'criminal'
-  | 'other'
+export type CaseCategory = 'marriage' | 'labor' | 'debt' | 'traffic' | 'contract' | 'criminal' | 'other';
 
-export type ConsultationStatus =
-  | 'pending'
-  | 'dispatched'
-  | 'in_progress'
-  | 'completed'
-  | 'cancelled'
+export type ConsultationStatus = 'pending' | 'matched' | 'chatting' | 'closed' | 'reviewed';
 
-export type LawyerStatus = 'active' | 'inactive' | 'frozen' | 'pending_review'
+export type LawyerVerifyStatus = 'pending' | 'approved' | 'rejected' | 'frozen';
 
-export type MessageType = 'text' | 'image' | 'file' | 'system'
+export type DisputeStage = 'evaluation' | 'appeal' | 'arbitration' | 'resolved';
 
-export type AppealStatus = 'pending' | 'accepted' | 'rejected' | 'resolved'
+export type UrgencyLevel = 'low' | 'medium' | 'high';
 
 export interface User {
-  id: string
-  role: UserRole
-  phone: string
-  nickname: string
-  avatar?: string
-  realName?: string
-  idCard?: string
-  isVerified: boolean
-  createdAt: number
-  updatedAt: number
+  id: string;
+  role: UserRole;
+  phone: string;
+  nickname?: string;
+  avatar?: string;
+  realName?: string;
+  idCard?: string;
+  region?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Lawyer {
-  id: string
-  role: 'lawyer'
-  phone: string
-  nickname: string
-  avatar?: string
-  realName: string
-  licenseNumber: string
-  licenseVerified: boolean
-  lawFirm: string
-  practiceYears: number
-  expertise: LegalCaseType[]
-  regions: string[]
-  creditScore: number
-  continuingEducationCredits: number
-  status: LawyerStatus
-  totalCases: number
-  completedCases: number
-  avgRating: number
-  responseRate: number
-  avgResponseTime: number
-  lastActiveAt: number
-  createdAt: number
-  updatedAt: number
+  id: string;
+  userId: string;
+  licenseNumber: string;
+  licenseImage: string;
+  firmName: string;
+  practiceYears: number;
+  specialties: CaseCategory[];
+  verifyStatus: LawyerVerifyStatus;
+  verifyReason?: string;
+  creditScore: number;
+  consultationCount: number;
+  averageRating: number;
+  continuingEducationCredits: number;
+  frozenReason?: string;
+  createdAt: string;
+  verifiedAt?: string;
 }
 
-export interface AdminUser {
-  id: string
-  role: 'admin'
-  username: string
-  nickname: string
-  avatar?: string
-  permissions: string[]
-  createdAt: number
-  updatedAt: number
-}
-
-export interface Evidence {
-  id: string
-  consultationId: string
-  uploaderId: string
-  fileName: string
-  fileType: 'image' | 'pdf' | 'doc' | 'video' | 'audio'
-  fileSize: number
-  fileUrl: string
-  watermarkText?: string
-  createdAt: number
+export interface EvidenceFile {
+  id: string;
+  consultationId: string;
+  uploaderId: string;
+  fileName: string;
+  originalName: string;
+  fileType: 'image' | 'document' | 'other';
+  fileSize: number;
+  fileUrl: string;
+  watermarkEnabled: boolean;
+  uploadedAt: string;
 }
 
 export interface Consultation {
-  id: string
-  userId: string
-  lawyerId?: string
-  caseType: LegalCaseType
-  title: string
-  description: string
-  region: string
-  status: ConsultationStatus
-  dispatchMode: 'auto' | 'manual' | 'grab'
-  evidences: Evidence[]
-  createdAt: number
-  dispatchedAt?: number
-  acceptedAt?: number
-  completedAt?: number
-  cancelledAt?: number
+  id: string;
+  userId: string;
+  lawyerId?: string;
+  category: CaseCategory;
+  title: string;
+  description: string;
+  region?: string;
+  urgency: UrgencyLevel;
+  status: ConsultationStatus;
+  evidenceFiles: EvidenceFile[];
+  matchedAt?: string;
+  closedAt?: string;
+  reviewedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface Message {
-  id: string
-  consultationId: string
-  senderId: string
-  senderType: 'user' | 'lawyer' | 'system'
-  type: MessageType
-  messageType: MessageType
-  content: string
-  fileUrl?: string
-  fileName?: string
-  fileSize?: number
-  isEncrypted: boolean
-  encrypted: boolean
-  isSelfDestruct: boolean
-  burnAfterRead: boolean
-  burnDuration?: number
-  selfDestructAfter?: number
-  selfDestructedAt?: number
-  readAt?: number
-  createdAt: number
+export interface ChatMessage {
+  id: string;
+  consultationId: string;
+  senderId: string;
+  senderRole: UserRole;
+  content: string;
+  messageType: 'text' | 'image' | 'file' | 'system';
+  isEncrypted: boolean;
+  isRead: boolean;
+  burnAfterReading: boolean;
+  burnDuration?: number;
+  readAt?: string;
+  createdAt: string;
 }
 
-export interface LegalSummary {
-  id: string
-  consultationId: string
-  lawyerId: string
-  caseAnalysis: string
-  legalBasis: string
-  suggestions: string
-  riskWarning?: string
-  createdAt: number
-  confirmedByLawyer: boolean
-  confirmedByUser: boolean
+export interface LegalOpinion {
+  id: string;
+  consultationId: string;
+  lawyerId: string;
+  title: string;
+  caseSummary: string;
+  legalAnalysis: string;
+  suggestions: string;
+  relatedLaws: string[];
+  riskAssessment: string;
+  createdAt: string;
 }
 
-export interface Evaluation {
-  id: string
-  consultationId: string
-  userId: string
-  lawyerId: string
-  rating: number
-  content?: string
-  tags?: string[]
-  createdAt: number
+export interface ServiceEvaluation {
+  id: string;
+  consultationId: string;
+  userId: string;
+  lawyerId: string;
+  rating: number;
+  content?: string;
+  isComplaint: boolean;
+  disputeStage?: DisputeStage;
+  disputeResult?: string;
+  createdAt: string;
+  disputedAt?: string;
+  resolvedAt?: string;
 }
 
-export interface Appeal {
-  id: string
-  consultationId: string
-  appellantId: string
-  respondentId: string
-  reason: string
-  description: string
-  evidences: Evidence[]
-  status: AppealStatus
-  arbitratorId?: string
-  arbitrationResult?: string
-  createdAt: number
-  acceptedAt?: number
-  resolvedAt?: number
-}
-
-export interface LawyerDailyStat {
-  date: string
-  lawyerId: string
-  receivedCount: number
-  acceptedCount: number
-  completedCount: number
-  avgResponseTime: number
-  messageCount: number
-}
-
-export interface MonitoringStats {
-  totalConsultations: number
-  todayConsultations: number
-  pendingCount: number
-  inProgressCount: number
-  completedCount: number
-  activeLawyers: number
-  frozenLawyers: number
-  avgResponseTime: number
-  avgRating: number
-  dailyStats: LawyerDailyStat[]
+export interface MonitorStats {
+  totalConsultations: number;
+  pendingConsultations: number;
+  activeLawyers: number;
+  totalLawyers: number;
+  averageResponseTime: number;
+  averageRating: number;
+  zeroResponseLawyers: number;
+  consultationsPerLawyer: number;
+  periodStart: string;
+  periodEnd: string;
 }

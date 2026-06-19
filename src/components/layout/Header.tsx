@@ -1,207 +1,271 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Scale,
-  User,
-  LogOut,
   ChevronDown,
-  Shield,
-  UserCheck,
-  UserCircle,
-  LayoutDashboard,
+  Home,
+  FileText,
+  MessageSquare,
+  Gavel,
   Briefcase,
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { useAuthStore } from '@/store/useAuthStore'
-import Modal from '@/components/ui/Modal'
+  ShieldCheck,
+  FileWarning,
+  LayoutDashboard,
+  Menu,
+  X,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/auth.store';
+import type { UserRole } from '@/types';
 
-export default function Header() {
-  const navigate = useNavigate()
-  const { currentUser, userType, logout, login } = useAuthStore()
-  const [showDropdown, setShowDropdown] = useState(false)
-  const [showRoleModal, setShowRoleModal] = useState(false)
+const roleLabels: Record<UserRole, string> = {
+  user: '用户端',
+  lawyer: '律师端',
+  admin: '管理端',
+};
 
-  const handleLogout = () => {
-    logout()
-    setShowDropdown(false)
-    navigate('/')
-  }
+const userNavItems = [
+  { to: '/home', label: '首页', icon: Home },
+  { to: '/submit', label: '提交咨询', icon: FileText },
+  { to: '/consultations', label: '我的咨询', icon: MessageSquare },
+];
 
-  const handleSwitchRole = async (role: 'user' | 'lawyer' | 'admin') => {
-    const mockPhones: Record<string, string> = {
-      user: '13800000001',
-      lawyer: '13900000001',
-      admin: '13700000001',
-    }
-    await login(role, mockPhones[role], '123456')
-    setShowRoleModal(false)
-    setShowDropdown(false)
-    
-    if (role === 'lawyer') {
-      navigate('/lawyer/workspace')
-    } else if (role === 'admin') {
-      navigate('/admin/dashboard')
-    } else {
-      navigate('/')
-    }
-  }
+const lawyerNavItems = [
+  { to: '/lawyer-hall', label: '抢单大厅', icon: Gavel },
+  { to: '/lawyer-cases', label: '我的案件', icon: Briefcase },
+];
 
-  const roleLabel =
-    userType === 'user' ? '普通用户' : userType === 'lawyer' ? '执业律师' : '平台管理员'
+const adminNavItems = [
+  { to: '/admin/verify', label: '资质核验', icon: ShieldCheck },
+  { to: '/admin/disputes', label: '纠纷处理', icon: FileWarning },
+  { to: '/admin/monitor', label: '监控看板', icon: LayoutDashboard },
+];
 
-  const roleIcon =
-    userType === 'user'
-      ? UserCircle
-      : userType === 'lawyer'
-        ? UserCheck
-        : Shield
+export function Header() {
+  const location = useLocation();
+  const { currentUser, role, switchRole } = useAuthStore();
+  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const RoleIcon = roleIcon
+  const navItems = role === 'user' ? userNavItems : role === 'lawyer' ? lawyerNavItems : adminNavItems;
+
+  const displayName =
+    currentUser && 'nickname' in currentUser
+      ? (currentUser as { nickname?: string }).nickname || '用户'
+      : '用户';
+
+  const avatar = currentUser && 'avatar' in currentUser
+    ? (currentUser as { avatar?: string }).avatar
+    : undefined;
+
+  const handleSwitchRole = (newRole: UserRole) => {
+    switchRole(newRole);
+    setRoleDropdownOpen(false);
+  };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur-sm">
-      <div className="flex h-16 items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-            <Scale className="h-5 w-5" />
+    <header className="sticky top-0 z-40 bg-primary-700 border-b border-primary-600/50 shadow-lg">
+      <div className="h-16 px-4 md:px-6">
+        <div className="flex h-full items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-gold/20">
+                <Scale className="h-5 w-5 text-accent-gold" strokeWidth={2.5} />
+              </div>
+              <span className="text-xl font-bold text-accent-gold font-serif tracking-wide">
+                法援在线
+              </span>
+            </div>
+
+            <nav className="hidden md:flex items-center gap-1 ml-8">
+              {navItems.map((item) => {
+                const isActive =
+                  location.pathname === item.to ||
+                  (item.to !== '/' && location.pathname.startsWith(item.to));
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    className={cn(
+                      'relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                      isActive
+                        ? 'text-accent-gold bg-primary-600'
+                        : 'text-primary-100 hover:text-accent-gold hover:bg-primary-600/50'
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-indicator"
+                        className="absolute -bottom-[17px] left-1/2 -translate-x-1/2 h-0.5 w-8 bg-accent-gold rounded-full"
+                      />
+                    )}
+                  </NavLink>
+                );
+              })}
+            </nav>
           </div>
-          <span className="text-lg font-semibold text-slate-900">法援在线</span>
-        </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          <Link
-            to="/"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-          >
-            首页
-          </Link>
-          <Link
-            to="/consultations"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-          >
-            咨询
-          </Link>
-          <Link
-            to="/lawyers"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-          >
-            律师
-          </Link>
-        </nav>
-
-        <div className="flex items-center gap-4">
-          {currentUser ? (
-            <div className="relative">
+          <div className="flex items-center gap-3">
+            <div className="relative hidden md:block">
               <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50"
+                onClick={() => {
+                  setRoleDropdownOpen(!roleDropdownOpen);
+                  setUserMenuOpen(false);
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-600/50 text-primary-100 text-sm font-medium hover:bg-primary-600 hover:text-accent-gold transition-colors"
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-slate-100 to-slate-200">
-                  <User className="h-4 w-4 text-slate-600" />
-                </div>
-                <div className="text-left">
-                  <div className="font-medium text-slate-900">
-                    {currentUser.nickname}
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-slate-500">
-                    <RoleIcon className="h-3 w-3" />
-                    <span>{roleLabel}</span>
-                  </div>
-                </div>
+                <span className="text-accent-gold">{roleLabels[role || 'user']}</span>
                 <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-slate-400 transition-transform',
-                    showDropdown && 'rotate-180'
-                  )}
+                  className={cn('h-4 w-4 transition-transform', roleDropdownOpen && 'rotate-180')}
                 />
               </button>
-
-              {showDropdown && (
-                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white shadow-lg">
-                  <div className="p-2">
-                    <button
-                      onClick={() => setShowRoleModal(true)}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50"
-                    >
-                      <Shield className="h-4 w-4" />
-                      <span>切换角色（演示）</span>
-                    </button>
-                    <button
-                      onClick={handleLogout}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      <span>退出登录</span>
-                    </button>
-                  </div>
-                </div>
-              )}
+              <AnimatePresence>
+                {roleDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    className="absolute right-0 mt-2 w-36 rounded-lg bg-white shadow-card-hover border border-primary-100 overflow-hidden"
+                  >
+                    {(['user', 'lawyer', 'admin'] as UserRole[]).map((r) => (
+                      <button
+                        key={r}
+                        onClick={() => handleSwitchRole(r as UserRole)}
+                        className={cn(
+                          'w-full text-left px-4 py-2.5 text-sm hover:bg-primary-50 transition-colors',
+                          role === r
+                            ? 'text-accent-gold-dark font-medium bg-accent-gold/10'
+                            : 'text-primary-700'
+                        )}
+                      >
+                        {roleLabels[r as UserRole]}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          ) : (
-            <Link
-              to="/login"
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setUserMenuOpen(!userMenuOpen);
+                  setRoleDropdownOpen(false);
+                }}
+                className="flex items-center gap-2.5"
+              >
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-gold/20 ring-2 ring-accent-gold/30">
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      alt={displayName}
+                      className="h-full w-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-accent-gold font-medium text-sm">
+                      {displayName.charAt(0)}
+                    </span>
+                  )}
+                </div>
+                <div className="hidden md:block text-left">
+                  <p className="text-sm font-medium text-accent-gold">{displayName}</p>
+                  <p className="text-xs text-primary-300">{roleLabels[role || 'user']}</p>
+                </div>
+              </button>
+              <AnimatePresence>
+                {userMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    className="absolute right-0 mt-2 w-40 rounded-lg bg-white shadow-card-hover border border-primary-100 overflow-hidden"
+                  >
+                    <button className="w-full text-left px-4 py-2.5 text-sm text-primary-700 hover:bg-primary-50 transition-colors">
+                      个人中心
+                    </button>
+                    <button className="w-full text-left px-4 py-2.5 text-sm text-primary-700 hover:bg-primary-50 transition-colors">
+                      设置
+                    </button>
+                    <div className="border-t border-primary-100" />
+                    <button className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                      退出登录
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-primary-100 hover:bg-primary-600/50 transition-colors"
             >
-              <User className="h-4 w-4" />
-              登录
-            </Link>
-          )}
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
-      <Modal
-        open={showRoleModal}
-        onClose={() => setShowRoleModal(false)}
-        title="切换角色（演示）"
-      >
-        <div className="space-y-2">
-          <button
-            onClick={() => handleSwitchRole('user')}
-            className={cn(
-              'flex w-full items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors',
-              userType === 'user'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
-                : 'border-slate-200 text-slate-700 hover:bg-slate-50'
-            )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden border-t border-primary-600/50 bg-primary-700"
           >
-            <UserCircle className="h-5 w-5" />
-            <div>
-              <div className="font-medium">普通用户</div>
-              <div className="text-xs text-slate-500">提交法律咨询，获得专业帮助</div>
-            </div>
-          </button>
-          <button
-            onClick={() => handleSwitchRole('lawyer')}
-            className={cn(
-              'flex w-full items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors',
-              userType === 'lawyer'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
-                : 'border-slate-200 text-slate-700 hover:bg-slate-50'
-            )}
-          >
-            <UserCheck className="h-5 w-5" />
-            <div>
-              <div className="font-medium">执业律师</div>
-              <div className="text-xs text-slate-500">接收案件，提供法律服务</div>
-            </div>
-          </button>
-          <button
-            onClick={() => handleSwitchRole('admin')}
-            className={cn(
-              'flex w-full items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors',
-              userType === 'admin'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
-                : 'border-slate-200 text-slate-700 hover:bg-slate-50'
-            )}
-          >
-            <Shield className="h-5 w-5" />
-            <div>
-              <div className="font-medium">平台管理员</div>
-              <div className="text-xs text-slate-500">监控平台运营，处理仲裁纠纷</div>
-            </div>
-          </button>
-        </div>
-      </Modal>
+            <nav className="flex flex-col p-3 gap-1">
+              {navItems.map((item) => {
+                const isActive =
+                  location.pathname === item.to ||
+                  (item.to !== '/' && location.pathname.startsWith(item.to));
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      'flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                      isActive
+                        ? 'text-accent-gold bg-primary-600'
+                        : 'text-primary-100 hover:text-accent-gold hover:bg-primary-600/50'
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </NavLink>
+                );
+              })}
+              <div className="border-t border-primary-600/50 my-1" />
+              <div className="flex items-center gap-2 px-4 py-2">
+                <span className="text-xs text-primary-300">角色切换</span>
+              </div>
+              <div className="flex gap-2 px-4">
+                {(['user', 'lawyer', 'admin'] as UserRole[]).map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => handleSwitchRole(r)}
+                    className={cn(
+                      'flex-1 py-1.5 px-3 rounded-md text-xs font-medium transition-colors',
+                      role === r
+                        ? 'bg-accent-gold/20 text-accent-gold'
+                        : 'bg-primary-600/50 text-primary-100 hover:text-accent-gold'
+                    )}
+                  >
+                    {roleLabels[r]}
+                  </button>
+                ))}
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
-  )
+  );
 }

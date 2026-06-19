@@ -1,30 +1,25 @@
-const SHIFT = 3;
-
-export function encrypt(text: string): string {
-  const shifted = text
-    .split('')
-    .map((char) => String.fromCharCode(char.charCodeAt(0) + SHIFT))
-    .join('');
-  return btoa(unescape(encodeURIComponent(shifted)));
-}
-
-export function decrypt(text: string): string {
+export function encryptMessage(text: string): string {
   try {
-    const decoded = decodeURIComponent(escape(atob(text)));
-    return decoded
-      .split('')
-      .map((char) => String.fromCharCode(char.charCodeAt(0) - SHIFT))
-      .join('');
+    return btoa(encodeURIComponent(text));
   } catch {
-    return '';
+    return text;
   }
 }
 
-export function generateKey(): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let key = '';
-  for (let i = 0; i < 32; i++) {
-    key += chars.charAt(Math.floor(Math.random() * chars.length));
+export function decryptMessage(text: string): string {
+  try {
+    return decodeURIComponent(atob(text));
+  } catch {
+    return text;
   }
-  return key;
+}
+
+export function generateWatermarkText(userId: string, timestamp: number): string {
+  const date = new Date(timestamp);
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  const h = String(date.getHours()).padStart(2, '0');
+  const min = String(date.getMinutes()).padStart(2, '0');
+  return `用户ID:${userId} ${y}-${m}-${d} ${h}:${min}`;
 }

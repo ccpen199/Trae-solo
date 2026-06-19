@@ -5,23 +5,20 @@ import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '')
-  const backendPort = env.BACKEND_PORT || '59149'
-  const frontendPort = Number(env.FRONTEND_PORT || 49149)
+  const env = loadEnv(mode, process.cwd(), '');
+  const frontendHost = env.FRONTEND_HOST || '127.0.0.1';
+  const frontendPort = Number(env.FRONTEND_PORT || 49149);
 
   return {
     server: {
-      host: '127.0.0.1',
+      host: frontendHost,
       port: frontendPort,
-      proxy: {
-        '/api': {
-          target: `http://127.0.0.1:${backendPort}`,
-          changeOrigin: true,
-          secure: false,
-          timeout: 10000,
-          proxyTimeout: 10000,
-        },
-      },
+      strictPort: true,
+    },
+    preview: {
+      host: frontendHost,
+      port: frontendPort,
+      strictPort: true,
     },
     build: {
       sourcemap: 'hidden',
@@ -42,8 +39,8 @@ export default defineConfig(({ mode }) => {
         clickUrl: 'https://www.trae.ai/solo?showJoin=1',
         autoTheme: true,
         autoThemeTarget: '#root'
-      }), 
+      }),
       tsconfigPaths()
     ],
-  }
+  };
 })
