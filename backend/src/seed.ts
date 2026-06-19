@@ -93,11 +93,15 @@ function seed() {
       'delivered', 'delivered', 'delivered', 'delivered', 'delivered',
       'delivered', 'delivered', 'delivered', 'delivered', 'delivered',
       'delivered', 'delivered', 'delivered', 'delivered', 'delivered',
-      'delivered', 'delivered', 'delivering', 'picking', 'assigned',
+      'delivered', 'delivered', 'delivered', 'delivered', 'delivered',
+      'delivered', 'delivered', 'delivered', 'delivered', 'delivered',
+      'delivered', 'delivered', 'delivered', 'delivered', 'delivered',
+      'delivering', 'picking', 'assigned',
       'assigned', 'pending', 'pending', 'pending', 'cancelled',
+      'cancelled', 'refunded',
     ];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 45; i++) {
       const orderNo = `DD${now - i * 1800}${String(i).padStart(4, '0')}`;
       const merchant = merchants[i % merchants.length];
       const goods = goodsList[i % goodsList.length];
@@ -118,7 +122,7 @@ function seed() {
       const deliveredAt = status === 'delivered' ? createdAt + 1800 + Math.floor(Math.random() * 900) : null;
       const cancelledAt = status === 'cancelled' ? createdAt + 600 : null;
 
-      const riderId = status !== 'pending' && status !== 'cancelled' ? (i % 10) + 1 : null;
+      const riderId = status !== 'pending' && status !== 'cancelled' ? (i % 15) + 1 : null;
 
       const distance = 2 + Math.random() * 6;
 
@@ -169,7 +173,7 @@ function seed() {
         );
 
         if (status === 'assigned' || status === 'picking' || status === 'delivering') {
-          const altRiderId = ((riderId + 3) % 10) + 1;
+          const altRiderId = ((riderId + 3) % 15) + 1;
           db.prepare(
             `INSERT INTO order_assignments 
              (order_id, rider_id, status, score, distance, created_at)
@@ -217,24 +221,31 @@ function seed() {
           );
         }
 
-        if (i % 5 === 0) {
+        if (riderId % 3 === 0 || i % 4 === 0) {
           const lastBal3 = db.prepare(
             'SELECT balance FROM income_details WHERE rider_id = ? ORDER BY id DESC LIMIT 1'
           ).get(riderId) as { balance: number };
+
+          const rewardTypes = [
+            { type: 'peak_hour_bonus', desc: '高峰期配送奖励', amt: 3 },
+            { type: 'weather_bonus', desc: '恶劣天气配送补贴', amt: 5 },
+            { type: 'five_star_review', desc: '五星好评奖励', amt: 2 },
+          ];
+          const reward = rewardTypes[riderId % rewardTypes.length];
 
           db.prepare(
             `INSERT INTO income_details 
              (rider_id, order_id, type, amount, balance, description, platform_commission, insurance_fee, reward_type, created_at)
              VALUES (?, ?, 'reward', ?, ?, ?, 0, 0, ?, ?)`
           ).run(
-            riderId, i + 1, 3, lastBal3.balance + 3,
-            `高峰期配送奖励`,
-            'peak_hour_bonus',
+            riderId, i + 1, reward.amt, lastBal3.balance + reward.amt,
+            reward.desc,
+            reward.type,
             deliveredAt || createdAt + 2000
           );
         }
 
-        if (i % 8 === 0) {
+        if (riderId % 4 === 0 || i % 7 === 0) {
           const lastBal4 = db.prepare(
             'SELECT balance FROM income_details WHERE rider_id = ? ORDER BY id DESC LIMIT 1'
           ).get(riderId) as { balance: number };

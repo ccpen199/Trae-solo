@@ -103,6 +103,17 @@ function Income() {
     }
   };
 
+  const handleSearch = () => {
+    if (!selectedRider) {
+      message.warning('请先选择骑士');
+      return;
+    }
+    setPage(1);
+    loadIncomeData();
+    loadSummary();
+    loadBalance();
+  };
+
   const viewDetail = (record: any) => {
     setCurrentRecord(record);
     setDetailModal(true);
@@ -305,7 +316,7 @@ function Income() {
                 <RangePicker style={{ width: '100%' }} />
               </Col>
               <Col span={4}>
-                <Button type="primary" icon={<SearchOutlined />} onClick={loadIncomeData}>
+                <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>
                   查询
                 </Button>
               </Col>
