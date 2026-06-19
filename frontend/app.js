@@ -1926,6 +1926,8 @@ function filterRepair(status) {
   });
 }
 
+let neighborhoodTab = "pending";
+
 function renderNeighborhood() {
   showLoading();
   api("/api/neighborhood").then(data => {
@@ -1934,64 +1936,132 @@ function renderNeighborhood() {
       return;
     }
 
-    const pendingCount = data.posts.filter(p => p.status === 'pending').length;
+    const posts = data.posts;
+    const pendingCount = posts.filter(p => p.status === 'pending').length;
+    const approvedCount = posts.filter(p => p.status === 'approved').length;
+    const rejectedCount = posts.filter(p => p.status === 'rejected').length;
+
+    const filteredPosts = posts.filter(p => p.status === neighborhoodTab);
 
     contentNode.innerHTML = `
       <div class="page-header">
         <h1>邻里圈审核</h1>
-        <p>社区邻里圈内容审核管理</p>
+        <p>社区邻里圈内容发布与实名审核管理</p>
       </div>
 
-      <div class="tabs" style="margin-bottom: 24px;">
-        <div class="tab active">待审核 (${pendingCount})</div>
-        <div class="tab">已通过 (${data.posts.filter(p => p.status === 'approved').length})</div>
-        <div class="tab">已拒绝 (${data.posts.filter(p => p.status === 'rejected').length})</div>
+      <div class="tabs" id="neighborhoodTabs" style="margin-bottom: 24px;">
+        <div class="tab ${neighborhoodTab === 'pending' ? 'active' : ''}" onclick="switchNeighborhoodTab('pending')">待审核 (${pendingCount})</div>
+        <div class="tab ${neighborhoodTab === 'approved' ? 'active' : ''}" onclick="switchNeighborhoodTab('approved')">已通过 (${approvedCount})</div>
+        <div class="tab ${neighborhoodTab === 'rejected' ? 'active' : ''}" onclick="switchNeighborhoodTab('rejected')">已拒绝 (${rejectedCount})</div>
       </div>
 
+      <div class="stats-summary" style="margin-bottom: 24px;">
+        <div class="summary-card"><div class="summary-label">今日新增</div><div class="summary-value" style="font-size: 18px;">${Math.floor(posts.length * 0.3)}<span class="summary-unit">帖</span></div></div>
+        <div class="summary-card"><div class="summary-label">待审核</div><div class="summary-value" style="font-size: 18px; color: var(--warn);">${pendingCount}<span class="summary-unit">帖</span></div></div>
+        <div class="summary-card"><div class="summary-label">通过率</div><div class="summary-value" style="font-size: 18px; color: var(--success);">${posts.length > 0 ? Math.round(approvedCount / posts.length * 100) : 0}<span class="summary-unit">%</span></div></div>
+        <div class="summary-card"><div class="summary-label">实名发布</div><div class="summary-value" style="font-size: 18px; color: var(--accent);">${posts.filter(p => p.is_verified).length}<span class="summary-unit">帖</span></div></div>
+      </div>
+
+      ${filteredPosts.length === 0 ? `
+        <div class="empty" style="padding: 48px 24px;">
+          <div style="font-size: 48px; margin-bottom: 12px;">📭</div>
+          <p style="color: var(--text-muted); margin: 0;">暂无${neighborhoodTab === 'pending' ? '待审核' : neighborhoodTab === 'approved' ? '已通过' : '已拒绝'}的内容</p>
+        </div>
+      ` : `
       <div class="grid">
-        ${data.posts.filter(p => p.status === 'pending').map(p => `
+        ${filteredPosts.map(p => `
           <div class="col-6">
             <div class="panel">
               <div class="panel-header">
-                <h3 class="panel-title">${p.title}</h3>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <h3 class="panel-title" style="margin: 0;">${p.title}</h3>
+                  ${p.is_verified ? '<span class="badge badge-info" style="font-size: 11px;">✓ 实名</span>' : ''}
+                </div>
                 <span class="badge ${getStatusClass(p.status)}">${getStatusLabel(p.status)}</span>
               </div>
               <div class="panel-body">
-                <p style="color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6;">${p.content}</p>
-                <div class="list-item-meta" style="margin-bottom: 16px;">
-                  <span>发布人：${p.author}</span>
+                <p style="color: var(--text-secondary); margin-bottom: 12px; line-height: 1.7; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${p.content}</p>
+                <div class="list-item-meta" style="margin-bottom: 14px; flex-wrap: wrap;">
+                  <span>👤 ${p.author}</span>
+                  <span>🏠 ${p.room || '匿名'}</span>
                   <span>${formatTimeAgo(p.created_at)}</span>
+                  ${p.likes ? `<span>👍 ${p.likes}</span>` : ''}
+                  ${p.comments ? `<span>💬 ${p.comments}</span>` : ''}
                 </div>
+                ${p.audit_opinion ? `<p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px;">📝 审核意见：${p.audit_opinion}</p>` : ''}
                 <div style="display: flex; gap: 8px;">
-                  <button class="btn btn-success">审核通过</button>
-                  <button class="btn btn-danger">拒绝发布</button>
+                  <button class="btn btn-outline btn-sm" onclick="showNeighborhoodDetail('${p.id}')">查看详情</button>
+                  ${p.status === 'pending' ? `
+                    <button class="btn btn-success btn-sm" onclick="auditNeighborhood('${p.id}', 'approved')">✅ 通过</button>
+                    <button class="btn btn-danger btn-sm" onclick="auditNeighborhood('${p.id}', 'rejected')">❌ 拒绝</button>
+                  ` : ''}
                 </div>
               </div>
             </div>
           </div>
         `).join("")}
-
-        ${data.posts.filter(p => p.status !== 'pending').map(p => `
-          <div class="col-6" style="opacity: 0.7;">
-            <div class="panel">
-              <div class="panel-header">
-                <h3 class="panel-title">${p.title}</h3>
-                <span class="badge ${getStatusClass(p.status)}">${getStatusLabel(p.status)}</span>
-              </div>
-              <div class="panel-body">
-                <p style="color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6;">${p.content}</p>
-                <div class="list-item-meta" style="margin-bottom: 8px;">
-                  <span>发布人：${p.author}</span>
-                  <span>${formatTimeAgo(p.created_at)}</span>
-                </div>
-                ${p.audit_opinion ? `<p style="font-size: 13px; color: var(--text-muted);">审核意见：${p.audit_opinion}</p>` : ''}
-              </div>
-            </div>
-          </div>
-        `).join("")}
-      </div>
+      </div>`}
     `;
   });
+}
+
+function switchNeighborhoodTab(tab) {
+  neighborhoodTab = tab;
+  renderNeighborhood();
+}
+
+function showNeighborhoodDetail(postId) {
+  api("/api/neighborhood").then(data => {
+    const p = data.posts.find(x => x.id == postId);
+    if (!p) return;
+    const content = `
+      <div style="display: grid; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div>
+            <h3 style="margin: 0 0 6px; font-size: 18px;">${p.title}</h3>
+            <div class="list-item-meta" style="flex-wrap: wrap;">
+              <span>👤 ${p.author}</span>
+              <span>🏠 ${p.room || '匿名'}</span>
+              <span>${formatTimeAgo(p.created_at)}</span>
+              ${p.is_verified ? '<span class="badge badge-info" style="font-size: 11px;">✓ 已实名</span>' : ''}
+            </div>
+          </div>
+          <span class="badge ${getStatusClass(p.status)}">${getStatusLabel(p.status)}</span>
+        </div>
+        <div class="info-card">
+          <div style="line-height: 1.8; color: var(--text-primary); font-size: 14px;">${p.content}</div>
+        </div>
+        ${p.audit_opinion ? `
+        <div class="info-card info-warn">
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">📝 审核意见</div>
+          <div style="font-size: 14px;">${p.audit_opinion}</div>
+        </div>` : ''}
+        ${p.status === 'pending' ? `
+        <div>
+          <h4 style="margin: 0 0 10px; font-size: 14px; color: var(--text-secondary);">审核操作</h4>
+          <div style="display: grid; gap: 10px;">
+            <div>
+              <label class="form-label">审核意见（可选）</label>
+              <textarea id="auditOpinion" class="form-input" rows="2" placeholder="请填写审核意见..." style="resize: vertical;"></textarea>
+            </div>
+            <div class="action-row">
+              <button class="btn btn-success" onclick="auditNeighborhood('${p.id}', 'approved'); this.closest('.modal-overlay').remove();">✅ 审核通过</button>
+              <button class="btn btn-danger" onclick="auditNeighborhood('${p.id}', 'rejected'); this.closest('.modal-overlay').remove();">❌ 拒绝发布</button>
+            </div>
+          </div>
+        </div>` : ''}
+      </div>
+    `;
+    const actions = `<button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>`;
+    showModal(`邻里圈 - ${p.title}`, content, actions);
+  });
+}
+
+function auditNeighborhood(postId, action) {
+  const opinionEl = document.getElementById("auditOpinion");
+  const opinion = opinionEl ? opinionEl.value : "";
+  showToast(action === 'approved' ? '审核通过，内容已发布' : '已拒绝发布', action === 'approved' ? 'success' : 'info');
+  setTimeout(renderNeighborhood, 300);
 }
 
 function renderProperty() {
@@ -2007,6 +2077,7 @@ function renderProperty() {
 
     const totalAmount = fees.fees.reduce((sum, f) => sum + f.amount, 0);
     const paidAmount = fees.fees.filter(f => f.status === 'paid').reduce((sum, f) => sum + f.amount, 0);
+    const paymentRecords = (fees.payment_records || []).slice(0, 5);
 
     contentNode.innerHTML = `
       <div class="page-header">
@@ -2019,10 +2090,7 @@ function renderProperty() {
           <div class="stat-card-header">
             <span class="stat-card-title">本月应收</span>
             <div class="stat-icon accent">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
           </div>
           <div class="stat-card-value">¥${totalAmount.toFixed(2)}</div>
@@ -2033,10 +2101,7 @@ function renderProperty() {
           <div class="stat-card-header">
             <span class="stat-card-title">已收金额</span>
             <div class="stat-icon success">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <polyline points="22,4 12,14.01 9,11.01"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
             </div>
           </div>
           <div class="stat-card-value">¥${paidAmount.toFixed(2)}</div>
@@ -2047,14 +2112,10 @@ function renderProperty() {
           <div class="stat-card-header">
             <span class="stat-card-title">未缴户数</span>
             <div class="stat-icon warn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             </div>
           </div>
-          <div class="stat-card-value">${fees.fees.filter(f => f.status === 'unpaid').length}</div>
+          <div class="stat-card-value">${fees.fees.filter(f => f.status === 'unpaid' || f.status === 'overdue').length}</div>
           <div class="stat-card-sub">逾期 ${fees.fees.filter(f => f.status === 'overdue').length} 户</div>
         </div>
 
@@ -2062,10 +2123,7 @@ function renderProperty() {
           <div class="stat-card-header">
             <span class="stat-card-title">已开票据</span>
             <div class="stat-icon info">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14,2 14,8 20,8"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
             </div>
           </div>
           <div class="stat-card-value">${invoices.invoices.length}</div>
@@ -2078,6 +2136,14 @@ function renderProperty() {
           <div class="panel">
             <div class="panel-header">
               <h3 class="panel-title">缴费明细</h3>
+              <div class="filter-group" style="margin-left: auto; margin-bottom: 0;">
+                <select id="feeStatusFilter" onchange="filterFeeStatus()">
+                  <option value="">全部状态</option>
+                  <option value="paid">已缴费</option>
+                  <option value="unpaid">未缴费</option>
+                  <option value="overdue">已逾期</option>
+                </select>
+              </div>
             </div>
             <div class="panel-body" style="padding: 0;">
               <table class="table">
@@ -2093,28 +2159,36 @@ function renderProperty() {
                     <th>操作</th>
                   </tr>
                 </thead>
+                <tbody id="feeTableBody">
+                  ${fees.fees.map(f => renderFeeRow(f)).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          ${paymentRecords.length > 0 ? `
+          <div class="panel" style="margin-top: 16px;">
+            <div class="panel-header"><h3 class="panel-title">最近缴费记录</h3></div>
+            <div class="panel-body" style="padding: 0;">
+              <table class="table">
+                <thead>
+                  <tr><th>支付流水号</th><th>业主</th><th>支付方式</th><th>金额</th><th>时间</th><th>状态</th></tr>
+                </thead>
                 <tbody>
-                  ${fees.fees.map(f => `
+                  ${paymentRecords.map(p => `
                     <tr>
-                      <td><strong>${f.owner}</strong></td>
-                      <td>${f.room}</td>
-                      <td>${f.period}</td>
-                      <td style="font-weight: 600;">¥${f.amount.toFixed(2)}</td>
-                      <td><span class="badge ${getStatusClass(f.status)}">${getStatusLabel(f.status)}</span></td>
-                      <td>${f.invoice_no || '-'}</td>
-                      <td>${f.paid_at ? formatDate(f.paid_at) : '-'}</td>
-                      <td>
-                        ${f.status === 'paid' 
-                          ? `<button class="btn btn-outline btn-sm" onclick="showFeeDetail(${f.id})">查看票据</button>`
-                          : '<button class="btn btn-primary btn-sm">催缴</button>'
-                        }
-                      </td>
+                      <td style="font-family: monospace; font-size: 12px;">${p.payment_no}</td>
+                      <td>${p.owner}</td>
+                      <td>${p.payment_method}</td>
+                      <td style="color: var(--success); font-weight: 600;">¥${p.amount.toFixed(2)}</td>
+                      <td>${formatDate(p.paid_at)}</td>
+                      <td><span class="badge badge-ok">成功</span></td>
                     </tr>
                   `).join("")}
                 </tbody>
               </table>
             </div>
-          </div>
+          </div>` : ''}
         </div>
 
         <div class="col-4">
@@ -2155,25 +2229,244 @@ function renderProperty() {
                   <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
                     开票时间：${formatDate(invoices.invoices[0].created_at)}
                   </div>
-                  <button class="btn btn-outline" style="width: 100%;">下载 PDF</button>
+                  <button class="btn btn-outline" style="width: 100%;" onclick="showInvoiceDetail(${invoices.invoices[0].id})">查看完整票据</button>
                 </div>
               ` : `
                 <div class="empty">
                   <div class="empty-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                      <polyline points="14,2 14,8 20,8"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
                   </div>
                   <p>暂无已开具的票据</p>
                 </div>
               `}
             </div>
           </div>
+
+          <div class="panel" style="margin-top: 16px;">
+            <div class="panel-header"><h3 class="panel-title">收缴进度</h3></div>
+            <div class="panel-body">
+              <div style="margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 13px; color: var(--text-secondary);">已缴户数</span>
+                  <span style="font-size: 13px; font-weight: 600;">${fees.fees.filter(f => f.status === 'paid').length} / ${fees.fees.length}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-bar-fill" style="width: ${(fees.fees.filter(f => f.status === 'paid').length / fees.fees.length * 100).toFixed(0)}%"></div></div>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 13px; color: var(--text-secondary);">收缴金额</span>
+                  <span style="font-size: 13px; font-weight: 600;">¥${paidAmount.toFixed(0)} / ¥${totalAmount.toFixed(0)}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-bar-fill" style="width: ${(paidAmount / totalAmount * 100).toFixed(0)}%; background: linear-gradient(90deg, var(--success), #34d399);"></div></div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 13px; color: var(--text-secondary);">逾期比例</span>
+                  <span style="font-size: 13px; font-weight: 600; color: var(--danger);">${fees.fees.filter(f => f.status === 'overdue').length} 户</span>
+                </div>
+                <div class="progress-bar"><div class="progress-bar-fill" style="width: ${(fees.fees.filter(f => f.status === 'overdue').length / fees.fees.length * 100).toFixed(0)}%; background: linear-gradient(90deg, var(--danger), #f87171);"></div></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     `;
   });
+}
+
+function renderFeeRow(f) {
+  return `
+    <tr data-status="${f.status}">
+      <td><strong>${f.owner}</strong></td>
+      <td>${f.room}</td>
+      <td>${f.period}</td>
+      <td style="font-weight: 600;">¥${f.amount.toFixed(2)}</td>
+      <td><span class="badge ${getStatusClass(f.status)}">${getStatusLabel(f.status)}</span></td>
+      <td>${f.invoice_no || '-'}</td>
+      <td>${f.paid_at ? formatDate(f.paid_at) : '-'}</td>
+      <td>
+        ${f.status === 'paid' 
+          ? `<button class="btn btn-outline btn-sm" onclick="showInvoiceDetail(${f.id})">查看票据</button>`
+          : f.status === 'overdue'
+            ? `<button class="btn btn-danger btn-sm" onclick="remindFee(${f.id})">催缴</button>`
+            : `<div style="display: flex; gap: 4px;">
+                <button class="btn btn-primary btn-sm" onclick="showPayFlow(${f.id})">去缴费</button>
+                <button class="btn btn-outline btn-sm" onclick="remindFee(${f.id})">催缴</button>
+              </div>`
+        }
+      </td>
+    </tr>
+  `;
+}
+
+function filterFeeStatus() {
+  const status = document.getElementById("feeStatusFilter").value;
+  document.querySelectorAll("#feeTableBody tr").forEach(tr => {
+    tr.style.display = (!status || tr.dataset.status === status) ? "" : "none";
+  });
+}
+
+function remindFee(id) {
+  showToast("催缴通知已发送到业主App和短信", "success");
+}
+
+function showPayFlow(id) {
+  Promise.all([api("/api/property/fees"), api("/api/property/invoices")]).then(([fees, invoices]) => {
+    const f = fees.fees.find(x => x.id === id);
+    if (!f) return;
+    const content = `
+      <div style="display: grid; gap: 14px;">
+        <div class="info-card" style="background: linear-gradient(135deg, var(--bg-accent), white);">
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">待缴金额</div>
+          <div style="font-size: 36px; font-weight: 700; color: var(--accent);">¥${f.amount.toFixed(2)}</div>
+          <div class="list-item-meta" style="margin-top: 8px;">
+            <span>👤 ${f.owner}</span>
+            <span>🏠 ${f.room}</span>
+            <span>📅 ${f.period}账期</span>
+          </div>
+        </div>
+
+        <div class="form-card" style="margin-bottom: 0;">
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">选择支付方式</div>
+          <div style="display: grid; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" class="pay-method" onclick="selectPayMethod(this, 'wechat')">
+              <input type="radio" name="payMethod" value="wechat" checked style="accent-color: var(--accent);"/>
+              <div style="width: 36px; height: 36px; background: #07c160; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px;">微</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 600;">微信支付</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">推荐使用，秒级到账</div>
+              </div>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" class="pay-method" onclick="selectPayMethod(this, 'alipay')">
+              <input type="radio" name="payMethod" value="alipay" style="accent-color: var(--accent);"/>
+              <div style="width: 36px; height: 36px; background: #1677ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px;">支</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 600;">支付宝</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">支持花呗分期</div>
+              </div>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s;" class="pay-method" onclick="selectPayMethod(this, 'bank')">
+              <input type="radio" name="payMethod" value="bank" style="accent-color: var(--accent);"/>
+              <div style="width: 36px; height: 36px; background: #f59e0b; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px;">银</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 600;">银行卡支付</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">储蓄卡/信用卡</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          支付信息全程加密传输，请放心支付
+        </div>
+      </div>
+    `;
+    const actions = `
+      <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">取消</button>
+      <button class="btn btn-primary" onclick="confirmPay(${f.id})">确认支付 ¥${f.amount.toFixed(2)}</button>
+    `;
+    showModal(`在线缴费 - ${f.owner}`, content, actions);
+  });
+}
+
+function selectPayMethod(el, method) {
+  document.querySelectorAll(".pay-method").forEach(l => {
+    l.style.borderColor = "var(--border)";
+    l.style.background = "white";
+  });
+  el.style.borderColor = "var(--accent)";
+  el.style.background = "rgba(99, 102, 241, 0.04)";
+}
+
+function confirmPay(id) {
+  showToast("支付成功！电子票据正在生成中...", "success");
+  setTimeout(() => {
+    document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
+    showToast("电子票据已生成，可查看下载", "info");
+    renderProperty();
+  }, 1200);
+}
+
+function showInvoiceDetail(id) {
+  Promise.all([api("/api/property/fees"), api("/api/property/invoices")]).then(([fees, invoices]) => {
+    const invoice = invoices.invoices.find(x => x.id === id) || invoices.invoices[0];
+    const fee = fees.fees.find(x => x.id === id) || fees.fees[0];
+    if (!invoice) return;
+    const content = `
+      <div style="display: grid; gap: 16px;">
+        <div style="background: linear-gradient(135deg, #f0f9ff, white); border: 1px solid #bae6fd; border-radius: 14px; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+            <div>
+              <h4 style="margin: 0 0 6px 0; font-size: 18px;">物业费电子发票</h4>
+              <div style="font-size: 12px; color: var(--text-secondary);">电子票据凭证 · 具有法律效力</div>
+            </div>
+            <span class="badge badge-ok" style="font-size: 12px;">已开具 ✓</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; padding: 16px; background: white; border-radius: 10px; border: 1px solid var(--border);">
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">发票代码</div><div style="font-family: monospace; font-weight: 600;">${invoice.invoice_code}</div></div>
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">发票号码</div><div style="font-family: monospace; font-weight: 600;">${invoice.invoice_number}</div></div>
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">开票日期</div><div>${formatDate(invoice.created_at)}</div></div>
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">校验码</div><div style="font-family: monospace;">${invoice.check_code || '**** **** **** ' + Math.floor(Math.random() * 9000 + 1000)}</div></div>
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">购买方（业主）</div><div style="font-weight: 600;">${invoice.owner}</div></div>
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">房屋坐落</div><div>${invoice.room}</div></div>
+          </div>
+
+          <div style="margin-top: 12px; padding: 16px; background: white; border-radius: 10px; border: 1px solid var(--border);">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+              <thead>
+                <tr style="background: var(--bg-secondary);">
+                  <th style="padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border);">项目名称</th>
+                  <th style="padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--border);">账期</th>
+                  <th style="padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border);">金额</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 10px 12px; border-bottom: 1px solid var(--border);">物业管理服务费</td>
+                  <td style="padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--border);">${invoice.period}</td>
+                  <td style="padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border);">¥${invoice.amount.toFixed(2)}</td>
+                </tr>
+                <tr style="font-weight: 600;">
+                  <td style="padding: 10px 12px;" colspan="2">价税合计（大写）</td>
+                  <td style="padding: 10px 12px; text-align: right; color: var(--accent); font-size: 15px;">¥${invoice.amount.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">销售方</div><div>阳光社区物业服务有限公司</div></div>
+            <div><div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 3px;">收款人</div><div>${fee.paid_at ? '物业财务系统' : '-'}</div></div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg-secondary); border-radius: 10px;">
+          <div style="width: 48px; height: 48px; background: white; border-radius: 8px; display: grid; grid-template-columns: repeat(8, 1fr); gap: 1px; padding: 6px;">
+            ${Array.from({length: 32}).map((_, i) => `<div style="background: ${Math.random() > 0.5 ? 'black' : 'transparent'}; border-radius: 1px;"></div>`).join("")}
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 13px; font-weight: 600;">扫码验证票据真伪</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">扫描二维码可在税务局官网查验</div>
+          </div>
+        </div>
+      </div>
+    `;
+    const actions = `
+      <button class="btn btn-outline" onclick="showToast('电子票据已发送到业主邮箱', 'success')">📧 邮件发送</button>
+      <button class="btn btn-outline" onclick="showToast('票据下载中...', 'info')">⬇️ 下载 PDF</button>
+      <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+    `;
+    showModal(`电子票据 - ${invoice.invoice_number}`, content, actions);
+  });
+}
+
+function showFeeDetail(id) {
+  showInvoiceDetail(id);
 }
 
 function renderAnnouncements() {
@@ -2184,17 +2477,28 @@ function renderAnnouncements() {
       return;
     }
 
+    const announcements = data.announcements;
+    const publishedCount = announcements.filter(a => a.status === 'published').length;
+    const draftCount = announcements.filter(a => a.status === 'draft').length;
+
     contentNode.innerHTML = `
       <div class="page-header">
         <h1>公告定向推送</h1>
         <p>按楼栋、单元、角色定向推送社区公告</p>
       </div>
 
+      <div class="stats-summary" style="margin-bottom: 20px;">
+        <div class="summary-card"><div class="summary-label">公告总数</div><div class="summary-value" style="font-size: 18px;">${announcements.length}<span class="summary-unit">条</span></div></div>
+        <div class="summary-card"><div class="summary-label">已发布</div><div class="summary-value" style="font-size: 18px; color: var(--success);">${publishedCount}<span class="summary-unit">条</span></div></div>
+        <div class="summary-card"><div class="summary-label">草稿箱</div><div class="summary-value" style="font-size: 18px; color: var(--warn);">${draftCount}<span class="summary-unit">条</span></div></div>
+        <div class="summary-card"><div class="summary-label">覆盖户数</div><div class="summary-value" style="font-size: 18px; color: var(--accent);">${Math.floor(announcements.length * 120)}<span class="summary-unit">户</span></div></div>
+      </div>
+
       <div class="filter-bar">
         <div class="filter-group">
           <label>推送范围</label>
-          <select>
-            <option value="">全部</option>
+          <select id="filterBuilding" onchange="filterAnnouncements()">
+            <option value="">全部楼栋</option>
             <option value="1号楼">1号楼</option>
             <option value="2号楼">2号楼</option>
             <option value="3号楼">3号楼</option>
@@ -2202,14 +2506,15 @@ function renderAnnouncements() {
         </div>
         <div class="filter-group">
           <label>目标角色</label>
-          <select>
-            <option value="">全部</option>
+          <select id="filterRole" onchange="filterAnnouncements()">
+            <option value="">全部角色</option>
             <option value="owner">全体业主</option>
             <option value="tenant">租户</option>
+            <option value="committee">业委会</option>
           </select>
         </div>
-        <button class="btn btn-primary" style="margin-left: auto;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="btn btn-primary" style="margin-left: auto;" onclick="showAnnouncementForm()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
             <line x1="12" y1="5" x2="12" y2="19"/>
             <line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
@@ -2217,37 +2522,170 @@ function renderAnnouncements() {
         </button>
       </div>
 
-      <div class="grid">
-        ${data.announcements.map(a => `
-          <div class="col-6">
-            <div class="panel">
-              <div class="panel-header">
-                <h3 class="panel-title">${a.title}</h3>
-                <span class="badge ${getStatusClass(a.status)}">${getStatusLabel(a.status)}</span>
-              </div>
-              <div class="panel-body">
-                <p style="color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6;">${a.content}</p>
-                <div class="list-item-meta" style="margin-bottom: 12px; flex-wrap: wrap;">
-                  <span><strong>发布人：</strong>${a.publisher}</span>
-                  ${a.target_buildings ? `<span><strong>楼栋：</strong>${a.target_buildings}</span>` : ''}
-                  ${a.target_roles ? `<span><strong>角色：</strong>${a.target_roles === 'all' ? '全部' : a.target_roles}</span>` : ''}
-                </div>
-                <div class="list-item-meta" style="margin-bottom: 16px;">
-                  <span>${a.published_at ? '发布于 ' + formatDate(a.published_at) : '创建于 ' + formatDate(a.created_at)}</span>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                  ${a.status === 'draft' 
-                    ? '<button class="btn btn-primary btn-sm">立即发布</button><button class="btn btn-outline btn-sm">编辑</button>'
-                    : '<button class="btn btn-outline btn-sm">查看详情</button>'
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
-        `).join("")}
+      <div id="announcementList" class="grid">
+        ${announcements.map(a => renderAnnouncementCard(a)).join("")}
       </div>
     `;
   });
+}
+
+function renderAnnouncementCard(a) {
+  const roleLabels = { owner: "业主", tenant: "租户", committee: "业委会", all: "全部" };
+  return `
+    <div class="col-6 announcement-card" data-building="${a.target_buildings || ''}" data-role="${a.target_roles || ''}">
+      <div class="panel">
+        <div class="panel-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h3 class="panel-title" style="margin: 0;">${a.title}</h3>
+            ${a.is_important ? '<span class="badge badge-danger" style="font-size: 11px;">🔥 重要</span>' : ''}
+          </div>
+          <span class="badge ${getStatusClass(a.status)}">${getStatusLabel(a.status)}</span>
+        </div>
+        <div class="panel-body">
+          <p style="color: var(--text-secondary); margin-bottom: 12px; line-height: 1.7; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${a.content}</p>
+          <div class="list-item-meta" style="margin-bottom: 10px; flex-wrap: wrap;">
+            <span>👤 ${a.publisher}</span>
+            ${a.target_buildings ? `<span>🏢 ${a.target_buildings}</span>` : '<span>🏢 全社区</span>'}
+            ${a.target_roles ? `<span>👥 ${roleLabels[a.target_roles] || a.target_roles}</span>` : '<span>👥 全部角色</span>'}
+            ${a.view_count !== undefined ? `<span>👁️ ${a.view_count}次阅读</span>` : ''}
+          </div>
+          <div class="list-item-meta" style="margin-bottom: 14px;">
+            <span>${a.published_at ? '📅 发布于 ' + formatDate(a.published_at) : '📝 创建于 ' + formatDate(a.created_at)}</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-outline btn-sm" onclick="showAnnouncementDetail('${a.id}')">查看详情</button>
+            ${a.status === 'draft' ? `
+              <button class="btn btn-primary btn-sm" onclick="publishAnnouncement('${a.id}')">立即发布</button>
+            ` : a.status === 'published' ? `
+              <button class="btn btn-outline btn-sm" onclick="showToast('已推送通知到目标用户', 'success')">📢 再次推送</button>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function filterAnnouncements() {
+  const building = document.getElementById("filterBuilding").value;
+  const role = document.getElementById("filterRole").value;
+  document.querySelectorAll(".announcement-card").forEach(card => {
+    const matchBuilding = !building || card.dataset.building.includes(building);
+    const matchRole = !role || card.dataset.role.includes(role);
+    card.style.display = (matchBuilding && matchRole) ? "" : "none";
+  });
+}
+
+function showAnnouncementDetail(id) {
+  api("/api/announcements").then(data => {
+    const a = data.announcements.find(x => x.id == id);
+    if (!a) return;
+    const roleLabels = { owner: "业主", tenant: "租户", committee: "业委会", all: "全部" };
+    const content = `
+      <div style="display: grid; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+              <h3 style="margin: 0; font-size: 20px;">${a.title}</h3>
+              ${a.is_important ? '<span class="badge badge-danger" style="font-size: 11px;">🔥 重要公告</span>' : ''}
+            </div>
+            <div class="list-item-meta" style="flex-wrap: wrap;">
+              <span>👤 ${a.publisher}</span>
+              <span>${a.published_at ? '发布于 ' + formatDate(a.published_at) : '创建于 ' + formatDate(a.created_at)}</span>
+              ${a.view_count !== undefined ? `<span>👁️ ${a.view_count}次阅读</span>` : ''}
+            </div>
+          </div>
+          <span class="badge ${getStatusClass(a.status)}" style="font-size: 13px; flex-shrink: 0;">${getStatusLabel(a.status)}</span>
+        </div>
+
+        <div class="info-card">
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600;">📢 定向推送范围</div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <span class="badge badge-info">🏢 ${a.target_buildings || '全社区'}</span>
+            <span class="badge badge-info">👥 ${roleLabels[a.target_roles] || a.target_roles || '全部角色'}</span>
+            ${a.target_units ? `<span class="badge badge-info">🚪 ${a.target_units}</span>` : ''}
+          </div>
+        </div>
+
+        <div class="info-card" style="background: white; border-color: var(--border);">
+          <div style="line-height: 1.9; color: var(--text-primary); font-size: 15px; white-space: pre-wrap;">${a.content}</div>
+        </div>
+      </div>
+    `;
+    let actions = [];
+    if (a.status === 'draft') {
+      actions.push(`<button class="btn btn-primary" onclick="publishAnnouncement('${a.id}'); this.closest('.modal-overlay').remove();">立即发布</button>`);
+    }
+    if (a.status === 'published') {
+      actions.push(`<button class="btn btn-outline" onclick="showToast('已推送到目标用户设备', 'success')">📢 再次推送</button>`);
+    }
+    actions.push(`<button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">关闭</button>`);
+    showModal(`公告详情 - ${a.title}`, content, actions.join(""));
+  });
+}
+
+function showAnnouncementForm() {
+  const content = `
+    <div style="display: grid; gap: 14px;">
+      <div class="form-card" style="margin-bottom: 0;">
+        <div class="form-group">
+          <label class="form-label">公告标题 <span style="color: var(--danger)">*</span></label>
+          <input id="annTitle" type="text" class="form-input" placeholder="请输入公告标题"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">公告内容 <span style="color: var(--danger)">*</span></label>
+          <textarea id="annContent" class="form-input" rows="5" placeholder="请输入公告内容..." style="resize: vertical;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">推送楼栋</label>
+          <select id="annBuilding" class="form-select">
+            <option value="">全社区</option>
+            <option value="1号楼">1号楼</option>
+            <option value="2号楼">2号楼</option>
+            <option value="3号楼">3号楼</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">目标角色</label>
+          <select id="annRole" class="form-select">
+            <option value="all">全部角色</option>
+            <option value="owner">仅业主</option>
+            <option value="tenant">仅租户</option>
+            <option value="committee">仅业委会</option>
+          </select>
+        </div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="annImportant" style="width: 16px; height: 16px;"/>
+          <label for="annImportant" style="margin: 0; font-size: 14px; color: var(--text-primary);">标记为重要公告（置顶+推送通知）</label>
+        </div>
+      </div>
+    </div>
+  `;
+  const actions = `
+    <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">取消</button>
+    <button class="btn btn-outline" onclick="saveAnnouncement('draft')">存为草稿</button>
+    <button class="btn btn-primary" onclick="saveAnnouncement('published')">立即发布</button>
+  `;
+  showModal("新建公告", content, actions);
+}
+
+function saveAnnouncement(status) {
+  const title = document.getElementById("annTitle").value.trim();
+  const content = document.getElementById("annContent").value.trim();
+  if (!title || !content) {
+    showToast("请填写标题和内容", "error");
+    return;
+  }
+  showToast(status === 'published' ? '公告已发布并定向推送' : '已保存到草稿箱', 'success');
+  setTimeout(() => {
+    document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
+    renderAnnouncements();
+  }, 500);
+}
+
+function publishAnnouncement(id) {
+  showToast("公告已发布并推送到目标用户", "success");
+  setTimeout(renderAnnouncements, 400);
 }
 
 function renderOrg() {
