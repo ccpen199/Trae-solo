@@ -21,9 +21,10 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  console.log(`🚀 Community backend running on http://localhost:${port}/api`);
+  const port = Number(process.env.PORT || 59144);
+  const host = process.env.HOST || '127.0.0.1';
+  await app.listen(port, host);
+  console.log(`Community backend running on http://${host}:${port}/api`);
 }
 
 bootstrap();

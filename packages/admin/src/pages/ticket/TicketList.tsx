@@ -47,7 +47,7 @@ export default function TicketList() {
   const navigate = useNavigate();
   const { message } = App.useApp();
 
-  const columns = [
+  const columns: any[] = [
     { title: '工单编号', dataIndex: 'id', width: 110 },
     {
       title: '类型',

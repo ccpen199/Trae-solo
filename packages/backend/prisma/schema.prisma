@@ -3,85 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-enum Role {
-  RESIDENT
-  PROPERTY_STAFF
-  PROPERTY_ADMIN
-  COMMITTEE_MEMBER
-  COMMITTEE_CHAIR
-  SERVICE_PROVIDER
-  SUPER_ADMIN
-}
-
-enum TicketType {
-  REPAIR
-  COMPLAINT
-  SUGGESTION
-}
-
-enum TicketStatus {
-  PENDING
-  ASSIGNED
-  PROCESSING
-  COMPLETED
-  CLOSED
-  CANCELLED
-}
-
-enum TicketPriority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
-}
-
-enum AccessDeviceType {
-  BLUETOOTH
-  NFC
-  QRCODE
-  FACE
-}
-
-enum AccessAuthType {
-  PERMANENT
-  TEMPORARY
-  ONCE
-}
-
-enum ServiceStatus {
-  PENDING_REVIEW
-  APPROVED
-  REJECTED
-  SUSPENDED
-  OFFLINE
-}
-
-enum OrderStatus {
-  PENDING_PAYMENT
-  PAID
-  ACCEPTED
-  IN_PROGRESS
-  COMPLETED
-  REFUND_REQUESTED
-  REFUNDED
-  CANCELLED
-}
-
-enum CommissionStatus {
-  PENDING
-  SETTLED
-  PAID
-}
-
-enum AlertLevel {
-  INFO
-  WARNING
-  ERROR
-  CRITICAL
 }
 
 model Community {
@@ -128,12 +51,13 @@ model House {
   id          String    @id @default(uuid())
   unitId      String
   roomNumber  String
-  area        Decimal?  @db.Decimal(10, 2)
+  area        Float?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
   unit        Unit      @relation(fields: [unitId], references: [id])
   users       UserHouse[]
+  tickets     Ticket[]
 }
 
 model User {
@@ -145,7 +69,7 @@ model User {
   realName        String?
   idCard          String?
   wxOpenId        String?   @unique
-  role            Role      @default(RESIDENT)
+  role            String    @default("RESIDENT")
   status          Int       @default(1)
   lastLoginAt     DateTime?
   createdAt       DateTime  @default(now())
@@ -159,6 +83,7 @@ model User {
   handledTickets  Ticket[]       @relation("TicketHandler")
   ticketComments  TicketComment[]
   serviceOrders   ServiceOrder[] @relation("ServiceOrderUser")
+  serviceOrderRatings ServiceOrderRating[]
   provider        ServiceProvider?
   alerts          Alert[]
   ratings         TicketRating[]
@@ -168,7 +93,7 @@ model UserCommunity {
   id          String    @id @default(uuid())
   userId      String
   communityId String
-  roleInCommunity Role @default(RESIDENT)
+  roleInCommunity String @default("RESIDENT")
   joinedAt    DateTime  @default(now())
 
   user        User      @relation(fields: [userId], references: [id])
@@ -195,7 +120,7 @@ model UserHouse {
 model AccessDevice {
   id          String    @id @default(uuid())
   name        String
-  type        AccessDeviceType
+  type        String
   communityId String?
   buildingId  String?
   location    String
@@ -217,7 +142,7 @@ model AccessAuth {
   id          String    @id @default(uuid())
   userId      String
   deviceId    String
-  authType    AccessAuthType
+  authType    String
   qrCodeToken String?   @unique
   startTime   DateTime?
   endTime     DateTime?
@@ -241,7 +166,7 @@ model AccessLog {
   accessResult Boolean
   failReason  String?
   accessedAt  DateTime  @default(now())
-  extra       Json?
+  extra       String?
 
   device      AccessDevice @relation(fields: [deviceId], references: [id])
   user        User?      @relation("AccessLogUser", fields: [userId], references: [id])
@@ -250,12 +175,12 @@ model AccessLog {
 
 model Ticket {
   id            String    @id @default(uuid())
-  type          TicketType
+  type          String
   title         String
   content       String
-  images        Json?
-  status        TicketStatus @default(PENDING)
-  priority      TicketPriority @default(MEDIUM)
+  images        String?
+  status        String @default("PENDING")
+  priority      String @default("MEDIUM")
   creatorId     String
   handlerId     String?
   communityId   String
@@ -285,7 +210,7 @@ model TicketComment {
   ticketId    String
   userId      String
   content     String
-  images      Json?
+  images      String?
   isInternal  Boolean   @default(false)
   createdAt   DateTime  @default(now())
 
@@ -297,8 +222,8 @@ model TicketLog {
   id          String    @id @default(uuid())
   ticketId    String
   action      String
-  oldStatus   TicketStatus?
-  newStatus   TicketStatus?
+  oldStatus   String?
+  newStatus   String?
   operatorId  String?
   remark      String?
   createdAt   DateTime  @default(now())
@@ -352,8 +277,8 @@ model ServiceProvider {
   businessLicense String?
   idCardFront String?
   idCardBack  String?
-  status      ServiceStatus @default(PENDING_REVIEW)
-  commissionRate Decimal @db.Decimal(5, 2) @default("10.00")
+  status      String @default("PENDING_REVIEW")
+  commissionRate Float @default(10.0)
   reviewComment String?
   reviewedBy  String?
   reviewedAt  DateTime?
@@ -372,15 +297,15 @@ model ServiceItem {
   categoryId      String
   name            String
   description     String
-  images          Json?
-  price           Decimal   @db.Decimal(10, 2)
-  originalPrice   Decimal?  @db.Decimal(10, 2)
+  images          String?
+  price           Float
+  originalPrice   Float?
   unit            String
   stock           Int?
   sales           Int       @default(0)
-  rating          Decimal   @db.Decimal(2, 1) @default("5.0")
+  rating          Float     @default(5.0)
   ratingCount     Int       @default(0)
-  status          ServiceStatus @default(PENDING_REVIEW)
+  status          String @default("PENDING_REVIEW")
   sort            Int       @default(0)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -395,11 +320,11 @@ model ServiceOrder {
   orderNo         String    @unique
   userId          String
   providerId      String
-  totalAmount     Decimal   @db.Decimal(10, 2)
-  discountAmount  Decimal   @db.Decimal(10, 2) @default("0.00")
-  payAmount       Decimal   @db.Decimal(10, 2)
-  commissionAmount Decimal  @db.Decimal(10, 2) @default("0.00")
-  status          OrderStatus @default(PENDING_PAYMENT)
+  totalAmount     Float
+  discountAmount  Float     @default(0.0)
+  payAmount       Float
+  commissionAmount Float    @default(0.0)
+  status          String @default("PENDING_PAYMENT")
   contactName     String
   contactPhone    String
   address         String
@@ -424,8 +349,8 @@ model ServiceOrderItem {
   serviceId   String
   serviceName String
   quantity    Int
-  unitPrice   Decimal   @db.Decimal(10, 2)
-  subtotal    Decimal   @db.Decimal(10, 2)
+  unitPrice   Float
+  subtotal    Float
 
   order       ServiceOrder @relation(fields: [orderId], references: [id])
   service     ServiceItem  @relation(fields: [serviceId], references: [id])
@@ -437,7 +362,7 @@ model ServiceOrderRating {
   userId      String
   score       Int
   content     String?
-  images      Json?
+  images      String?
   createdAt   DateTime  @default(now())
 
   order       ServiceOrder @relation(fields: [orderId], references: [id])
@@ -448,11 +373,11 @@ model CommissionSettlement {
   id              String    @id @default(uuid())
   providerId      String
   orderId         String    @unique
-  orderAmount     Decimal   @db.Decimal(10, 2)
-  commissionRate  Decimal   @db.Decimal(5, 2)
-  commissionAmount Decimal  @db.Decimal(10, 2)
-  providerEarning  Decimal  @db.Decimal(10, 2)
-  status          CommissionStatus @default(PENDING)
+  orderAmount     Float
+  commissionRate  Float
+  commissionAmount Float
+  providerEarning  Float
+  status          String @default("PENDING")
   settledAt       DateTime?
   paidAt          DateTime?
   createdAt       DateTime  @default(now())
@@ -465,14 +390,14 @@ model CommissionSettlement {
 model Alert {
   id          String    @id @default(uuid())
   type        String
-  level       AlertLevel @default(WARNING)
+  level       String @default("WARNING")
   title       String
   content     String
   deviceId    String?
   userId      String?
   isRead      Boolean   @default(false)
   readAt      DateTime?
-  extra       Json?
+  extra       String?
   createdAt   DateTime  @default(now())
 
   device      AccessDevice? @relation(fields: [deviceId], references: [id])

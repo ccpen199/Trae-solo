@@ -10,6 +10,7 @@ import { ServiceModule } from './service/service.module';
 import { KpiModule } from './kpi/kpi.module';
 import { MonitorModule } from './monitor/monitor.module';
 import { RolesGuard } from './common/guards/roles.guard';
+import { HealthController } from './health.controller';
 
 @Module({
   imports: [
@@ -29,5 +30,6 @@ import { RolesGuard } from './common/guards/roles.guard';
       useClass: RolesGuard,
     },
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}

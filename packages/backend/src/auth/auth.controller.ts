@@ -11,7 +11,7 @@ import { AuthGuard } from '@nestjs/passport';
 import * as bcrypt from 'bcrypt';
 import { IsPhoneNumber, IsString, MinLength, IsOptional, IsEnum } from 'class-validator';
 import { PrismaService } from '../prisma/prisma.service';
-import { Role } from '@prisma/client';
+import { Role } from '../common/enums';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 class LoginDto {

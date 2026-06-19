@@ -29,7 +29,7 @@ export default function Commission() {
   const totalEarning = mockData.reduce((sum, d) => sum + parseFloat(d.providerEarning), 0);
   const pendingCount = mockData.filter(d => d.status === 'PENDING').length;
 
-  const columns = [
+  const columns: any[] = [
     { title: '结算编号', dataIndex: 'id', width: 130 },
     { title: '关联订单', dataIndex: 'orderNo', width: 170 },
     { title: '服务商', dataIndex: 'providerName', width: 140 },

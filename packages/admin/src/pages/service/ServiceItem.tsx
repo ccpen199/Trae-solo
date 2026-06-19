@@ -26,7 +26,7 @@ const mockData = Array.from({ length: 20 }, (_, i) => ({
 export default function ServiceItem() {
   const { message } = App.useApp();
 
-  const columns = [
+  const columns: any[] = [
     { title: 'ID', dataIndex: 'id', width: 100 },
     { title: '服务名称', dataIndex: 'name', width: 140 },
     { title: '所属服务商', dataIndex: 'providerName', width: 140 },

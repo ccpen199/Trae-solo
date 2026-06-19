@@ -29,7 +29,7 @@ const mockData = Array.from({ length: 30 }, (_, i) => ({
 export default function UserList() {
   const { message } = App.useApp();
 
-  const columns = [
+  const columns: any[] = [
     { title: '用户ID', dataIndex: 'id', width: 100 },
     { title: '手机号', dataIndex: 'phone', width: 130 },
     { title: '昵称', dataIndex: 'nickname', width: 100 },

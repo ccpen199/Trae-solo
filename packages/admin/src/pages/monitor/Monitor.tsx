@@ -42,7 +42,7 @@ export default function Monitor() {
     }],
   };
 
-  const columns = [
+  const columns: any[] = [
     { title: '设备名称', dataIndex: 'name', width: 140 },
     { title: '设备类型', dataIndex: 'type', width: 100 },
     { title: '位置', dataIndex: 'location', width: 140 },

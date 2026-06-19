@@ -36,7 +36,7 @@ const mockData = Array.from({ length: 30 }, (_, i) => ({
 export default function ServiceOrder() {
   const [viewItem, setViewItem] = useState<any>(null);
 
-  const columns = [
+  const columns: any[] = [
     { title: '订单号', dataIndex: 'orderNo', width: 180 },
     { title: '服务名称', dataIndex: 'serviceName', width: 160, ellipsis: true },
     { title: '服务商', dataIndex: 'providerName', width: 120 },

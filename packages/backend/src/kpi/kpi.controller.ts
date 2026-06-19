@@ -1,6 +1,6 @@
 import { Controller, Get, Query, UseGuards, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Role, TicketStatus, TicketType } from '@prisma/client';
+import { Role, TicketStatus, TicketType } from '../common/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { Roles, RolesGuard } from '../common/guards/roles.guard';
 

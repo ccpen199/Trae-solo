@@ -1,6 +1,6 @@
 import { ProTable } from '@ant-design/pro-components';
-import { Tag, Button, Space, PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { App, Popconfirm } from 'antd';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { App, Popconfirm, Tag, Button, Space } from 'antd';
 
 const mockData = Array.from({ length: 20 }, (_, i) => ({
   id: `B${String(i + 1).padStart(3, '0')}`,
@@ -16,7 +16,7 @@ const mockData = Array.from({ length: 20 }, (_, i) => ({
 export default function BuildingList() {
   const { message } = App.useApp();
 
-  const columns = [
+  const columns: any[] = [
     { title: '编号', dataIndex: 'id', width: 100 },
     { title: '所属小区', dataIndex: 'communityName', width: 140 },
     { title: '楼栋名称', dataIndex: 'name', width: 120 },

@@ -22,7 +22,7 @@ const mockData = Array.from({ length: 50 }, (_, i) => ({
 }));
 
 export default function AccessLog() {
-  const columns = [
+  const columns: any[] = [
     { title: '日志编号', dataIndex: 'id', width: 120 },
     { title: '门禁设备', dataIndex: 'deviceName', width: 140 },
     { title: '设备位置', dataIndex: 'location', width: 120 },

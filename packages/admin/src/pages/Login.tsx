@@ -44,7 +44,7 @@ export default function Login() {
       >
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏘️</div>
-          <Title level={3} style={{ margin: '0 0 8px', color: '#0F172A' }}>社区服务中台</title>
+          <Title level={3} style={{ margin: '0 0 8px', color: '#0F172A' }}>社区服务中台</Title>
           <Text type="secondary">请登录管理账户</Text>
         </div>
         <Form

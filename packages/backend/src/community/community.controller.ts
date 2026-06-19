@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards, Query, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Role } from '@prisma/client';
+import { Role } from '../common/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles, RolesGuard } from '../common/guards/roles.guard';
@@ -50,7 +50,7 @@ export class CommunityController {
   async getBuildings(@Param('id') id: string) {
     return this.prisma.building.findMany({
       where: { communityId: id },
-      include: { _count: { select: { units: true, devices: true } },
+      include: { _count: { select: { units: true, devices: true } } },
     });
   }
 
@@ -58,7 +58,7 @@ export class CommunityController {
   async getUnits(@Param('buildingId') buildingId: string) {
     return this.prisma.unit.findMany({
       where: { buildingId },
-      include: { _count: { select: { houses: true } },
+      include: { _count: { select: { houses: true } } },
     });
   }
 
@@ -66,7 +66,7 @@ export class CommunityController {
   async getHouses(@Param('unitId') unitId: string) {
     return this.prisma.house.findMany({
       where: { unitId },
-      include: { users: { include: { user: true } },
+      include: { users: { include: { user: true } } },
     });
   }
 }

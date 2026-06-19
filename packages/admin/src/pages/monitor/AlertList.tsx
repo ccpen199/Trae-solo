@@ -58,7 +58,7 @@ export default function AlertList() {
     });
   };
 
-  const columns = [
+  const columns: any[] = [
     {
       title: '状态',
       dataIndex: 'isRead',

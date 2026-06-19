@@ -1,5 +1,6 @@
-import { PrismaClient, Role, TicketType, TicketStatus, TicketPriority, AccessDeviceType, AccessAuthType, ServiceStatus } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { AccessAuthType, AccessDeviceType, Role, ServiceStatus, TicketPriority, TicketStatus, TicketType } from '../src/common/enums';
 
 const prisma = new PrismaClient();
 
@@ -7,6 +8,32 @@ async function main() {
   console.log('🌱 Seeding database...');
 
   const hashedPwd = await bcrypt.hash('123456', 10);
+
+  await prisma.$transaction([
+    prisma.commissionSettlement.deleteMany(),
+    prisma.serviceOrderRating.deleteMany(),
+    prisma.serviceOrderItem.deleteMany(),
+    prisma.serviceOrder.deleteMany(),
+    prisma.serviceItem.deleteMany(),
+    prisma.serviceProvider.deleteMany(),
+    prisma.serviceCategory.deleteMany(),
+    prisma.ticketTag.deleteMany(),
+    prisma.ticketRating.deleteMany(),
+    prisma.ticketLog.deleteMany(),
+    prisma.ticketComment.deleteMany(),
+    prisma.ticket.deleteMany(),
+    prisma.accessLog.deleteMany(),
+    prisma.accessAuth.deleteMany(),
+    prisma.alert.deleteMany(),
+    prisma.accessDevice.deleteMany(),
+    prisma.userHouse.deleteMany(),
+    prisma.userCommunity.deleteMany(),
+    prisma.house.deleteMany(),
+    prisma.unit.deleteMany(),
+    prisma.building.deleteMany(),
+    prisma.community.deleteMany(),
+    prisma.user.deleteMany(),
+  ]);
 
   const superAdmin = await prisma.user.upsert({
     where: { phone: '13800000001' },
@@ -91,15 +118,25 @@ async function main() {
     },
   });
 
-  await prisma.userCommunity.createMany({
-    skipDuplicates: true,
-    data: [
-      { userId: propertyAdmin.id, communityId: community.id, roleInCommunity: Role.PROPERTY_ADMIN },
-      { userId: propertyStaff.id, communityId: community.id, roleInCommunity: Role.PROPERTY_STAFF },
-      { userId: committeeChair.id, communityId: community.id, roleInCommunity: Role.COMMITTEE_CHAIR },
-      { userId: resident.id, communityId: community.id, roleInCommunity: Role.RESIDENT },
-    ],
-  });
+  const userCommunities = [
+    { userId: propertyAdmin.id, communityId: community.id, roleInCommunity: Role.PROPERTY_ADMIN },
+    { userId: propertyStaff.id, communityId: community.id, roleInCommunity: Role.PROPERTY_STAFF },
+    { userId: committeeChair.id, communityId: community.id, roleInCommunity: Role.COMMITTEE_CHAIR },
+    { userId: resident.id, communityId: community.id, roleInCommunity: Role.RESIDENT },
+  ];
+
+  for (const userCommunity of userCommunities) {
+    await prisma.userCommunity.upsert({
+      where: {
+        userId_communityId: {
+          userId: userCommunity.userId,
+          communityId: userCommunity.communityId,
+        },
+      },
+      update: { roleInCommunity: userCommunity.roleInCommunity },
+      create: userCommunity,
+    });
+  }
 
   const buildings: any[] = [];
   for (let i = 1; i <= 3; i++) {
@@ -146,7 +183,7 @@ async function main() {
     }
   }
 
-  const devices = [];
+  const devices: any[] = [];
   for (let i = 0; i < 4; i++) {
     const device = await prisma.accessDevice.create({
       data: {

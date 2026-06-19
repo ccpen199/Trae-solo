@@ -29,7 +29,7 @@ export default function ServiceProvider() {
   const { message } = App.useApp();
   const [viewItem, setViewItem] = useState<any>(null);
 
-  const columns = [
+  const columns: any[] = [
     { title: 'ID', dataIndex: 'id', width: 100 },
     {
       title: '服务商名称',

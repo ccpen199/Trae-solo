@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Post, Body, UseGuards, Put, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AlertLevel, Role } from '@prisma/client';
+import { AlertLevel, Role } from '../common/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles, RolesGuard } from '../common/guards/roles.guard';

@@ -1,0 +1,1238 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-19T04:14:23.830Z",
+  "order": "may-89144",
+  "roundIndex": 2,
+  "captureId": "may-89144-service-repair",
+  "url": "http://127.0.0.1:49144/",
+  "initialUrl": "http://127.0.0.1:49144/",
+  "finalUrl": "http://127.0.0.1:49144/dashboard",
+  "status": 200,
+  "title": "社区服务中台管理系统",
+  "initialTitle": "社区服务中台管理系统",
+  "navigationError": "",
+  "screenshotPath": "browser-check/may-89144-service-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.png"
+  ],
+  "issueTextPreview": "service repair verification: frontend and backend previously connection refused",
+  "targetReason": "登录注册相关问题；后台管理相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49144/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49144/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:数据概览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:KPI 看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:门禁管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:工单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:O2O 服务",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:社区管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49144/dashboard",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "工单管理",
+          "file-text",
+          "O2O 服务",
+          "shop",
+          "社区管理",
+          "home",
+          "用户管理",
+          "team",
+          "监控告警",
+          "monitor"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理工单管理O2O 服务社区管理用户管理监控告警欢迎回来，超级管理员超超级管理员数据概览欢迎使用社区服务中台管理系统小区居民1,258↑ 5.2% 较上月工单总数312↑ 12.5% 较上周门禁设备12台0服务订单856↑ 8.3% 较上月工单完结率92.6%平均响应时长15.5分钟待处理告警3工单趋势工单类型分布",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49144/dashboard",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.png",
+          "elementCount": 193,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "工单管理",
+            "O2O 服务",
+            "社区管理",
+            "用户管理",
+            "监控告警"
+          ]
+        }
+      },
+      {
+        "label": "导航:数据概览",
+        "url": "http://127.0.0.1:49144/dashboard",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "工单管理",
+          "file-text",
+          "O2O 服务",
+          "shop",
+          "社区管理",
+          "home",
+          "用户管理",
+          "team",
+          "监控告警",
+          "monitor"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理工单管理O2O 服务社区管理用户管理监控告警欢迎回来，超级管理员超超级管理员数据概览欢迎使用社区服务中台管理系统小区居民1,258↑ 5.2% 较上月工单总数312↑ 12.5% 较上周门禁设备12台0服务订单856↑ 8.3% 较上月工单完结率92.6%平均响应时长15.5分钟待处理告警3工单趋势工单类型分布",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-02-导航-数据概览",
+          "label": "导航:数据概览",
+          "finalUrl": "http://127.0.0.1:49144/dashboard",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.png",
+          "elementCount": 193,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "工单管理",
+            "O2O 服务",
+            "社区管理",
+            "用户管理",
+            "监控告警"
+          ]
+        }
+      },
+      {
+        "label": "导航:KPI 看板",
+        "url": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "工单管理",
+          "file-text",
+          "O2O 服务",
+          "shop",
+          "社区管理",
+          "home",
+          "用户管理",
+          "team",
+          "监控告警",
+          "monitor"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "处理人员",
+              "处理工单数",
+              "完成工单数",
+              "完结率",
+              "平均评分",
+              "平均响应",
+              "平均处理"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "处理人员 处理工单数 完成工单数 完结率 平均评分 平均响应 平均处理 李客服 89 85 95.5% ⭐ 4.9 10分钟 45分钟 王师傅 76 72 94.7% ⭐ 4.8 12分钟 58分钟 张工程 65 61 93.8% ⭐ 4.7 15分钟 52分钟 刘物业 52 48 92.3% ⭐ 4.6 18分钟 65分钟"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理工单管理O2O 服务社区管理用户管理监控告警欢迎回来，超级管理员超超级管理员物业 KPI 看板实时监控物业运营数据与服务质量工单完结率92.6%平均响应时长15.5分钟平均处理时长52分钟平均满意度4.8分工单趋势分析工单类型分布响应/处理时长趋势满意度分布物业人员绩效排名处理人员处理工单数完成工单数完结率平均评分平均响应平均处理李客服898595.5%⭐ 4.910分钟45分钟王师傅767294.7%⭐ 4.812分钟58分钟张工程656193.8%⭐ 4.715分钟52分钟刘物业524892.3%⭐ 4.618分钟65分钟",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1344,
+          "scrollWidth": 1568,
+          "scrollHeight": 1344,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-03-导航-KPI-看板",
+          "label": "导航:KPI 看板",
+          "finalUrl": "http://127.0.0.1:49144/kpi",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.png",
+          "elementCount": 270,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "工单管理",
+            "O2O 服务",
+            "社区管理",
+            "用户管理",
+            "监控告警",
+            "处理工单数",
+            "完成工单数"
+          ]
+        }
+      },
+      {
+        "label": "导航:门禁管理",
+        "url": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "file-text",
+          "O2O 服务",
+          "shop",
+          "社区管理",
+          "home",
+          "用户管理",
+          "team",
+          "监控告警",
+          "monitor"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "处理人员",
+              "处理工单数",
+              "完成工单数",
+              "完结率",
+              "平均评分",
+              "平均响应",
+              "平均处理"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "处理人员 处理工单数 完成工单数 完结率 平均评分 平均响应 平均处理 李客服 89 85 95.5% ⭐ 4.9 10分钟 45分钟 王师傅 76 72 94.7% ⭐ 4.8 12分钟 58分钟 张工程 65 61 93.8% ⭐ 4.7 15分钟 52分钟 刘物业 52 48 92.3% ⭐ 4.6 18分钟 65分钟"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理门禁设备通行日志工单管理O2O 服务社区管理用户管理监控告警欢迎回来，超级管理员超超级管理员物业 KPI 看板实时监控物业运营数据与服务质量工单完结率92.6%平均响应时长15.5分钟平均处理时长52分钟平均满意度4.8分工单趋势分析工单类型分布响应/处理时长趋势满意度分布物业人员绩效排名处理人员处理工单数完成工单数完结率平均评分平均响应平均处理李客服898595.5%⭐ 4.910分钟45分钟王师傅767294.7%⭐ 4.812分钟58分钟张工程656193.8%⭐ 4.715分钟52分钟刘物业524892.3%⭐ 4.618分钟65分钟",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1344,
+          "scrollWidth": 1600,
+          "scrollHeight": 1344,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-04-导航-门禁管理",
+          "label": "导航:门禁管理",
+          "finalUrl": "http://127.0.0.1:49144/kpi",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.png",
+          "elementCount": 275,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "门禁设备",
+            "通行日志",
+            "工单管理",
+            "O2O 服务",
+            "社区管理",
+            "用户管理",
+            "监控告警",
+            "处理工单数",
+            "完成工单数"
+          ]
+        }
+      },
+      {
+        "label": "导航:工单管理",
+        "url": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "file-text",
+          "工单列表",
+          "O2O 服务",
+          "shop",
+          "社区管理",
+          "home",
+          "用户管理",
+          "team",
+          "监控告警",
+          "monitor"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "处理人员",
+              "处理工单数",
+              "完成工单数",
+              "完结率",
+              "平均评分",
+              "平均响应",
+              "平均处理"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "处理人员 处理工单数 完成工单数 完结率 平均评分 平均响应 平均处理 李客服 89 85 95.5% ⭐ 4.9 10分钟 45分钟 王师傅 76 72 94.7% ⭐ 4.8 12分钟 58分钟 张工程 65 61 93.8% ⭐ 4.7 15分钟 52分钟 刘物业 52 48 92.3% ⭐ 4.6 18分钟 65分钟"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理门禁设备通行日志工单管理工单列表O2O 服务社区管理用户管理监控告警欢迎回来，超级管理员超超级管理员物业 KPI 看板实时监控物业运营数据与服务质量工单完结率92.6%平均响应时长15.5分钟平均处理时长52分钟平均满意度4.8分工单趋势分析工单类型分布响应/处理时长趋势满意度分布物业人员绩效排名处理人员处理工单数完成工单数完结率平均评分平均响应平均处理李客服898595.5%⭐ 4.910分钟45分钟王师傅767294.7%⭐ 4.812分钟58分钟张工程656193.8%⭐ 4.715分钟52分钟刘物业524892.3%⭐ 4.618分钟65分钟",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1344,
+          "scrollWidth": 1632,
+          "scrollHeight": 1344,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-05-导航-工单管理",
+          "label": "导航:工单管理",
+          "finalUrl": "http://127.0.0.1:49144/kpi",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-05-导航-工单管理.json",
+          "screenshotPath": "",
+          "elementCount": 278,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 社区管理 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "门禁设备",
+            "通行日志",
+            "工单管理",
+            "工单列表",
+            "O2O 服务",
+            "社区管理",
+            "用户管理",
+            "监控告警",
+            "处理工单数",
+            "完成工单数"
+          ]
+        }
+      },
+      {
+        "label": "导航:O2O 服务",
+        "url": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "file-text",
+          "工单列表",
+          "O2O 服务",
+          "shop",
+          "服务商管理",
+          "服务商品",
+          "服务订单",
+          "佣金结算",
+          "社区管理",
+          "home",
+          "用户管理",
+          "team",
+          "监控告警",
+          "monitor"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "处理人员",
+              "处理工单数",
+              "完成工单数",
+              "完结率",
+              "平均评分",
+              "平均响应",
+              "平均处理"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "处理人员 处理工单数 完成工单数 完结率 平均评分 平均响应 平均处理 李客服 89 85 95.5% ⭐ 4.9 10分钟 45分钟 王师傅 76 72 94.7% ⭐ 4.8 12分钟 58分钟 张工程 65 61 93.8% ⭐ 4.7 15分钟 52分钟 刘物业 52 48 92.3% ⭐ 4.6 18分钟 65分钟"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理门禁设备通行日志工单管理工单列表O2O 服务服务商管理服务商品服务订单佣金结算社区管理用户管理监控告警欢迎回来，超级管理员超超级管理员物业 KPI 看板实时监控物业运营数据与服务质量工单完结率92.6%平均响应时长15.5分钟平均处理时长52分钟平均满意度4.8分工单趋势分析工单类型分布响应/处理时长趋势满意度分布物业人员绩效排名处理人员处理工单数完成工单数完结率平均评分平均响应平均处理李客服898595.5%⭐ 4.910分钟45分钟王师傅767294.7%⭐ 4.812分钟58分钟张工程656193.8%⭐ 4.715分钟52分钟刘物业524892.3%⭐ 4.618分钟65分钟",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1344,
+          "scrollWidth": 1664,
+          "scrollHeight": 1344,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-06-导航-O2O-服务",
+          "label": "导航:O2O 服务",
+          "finalUrl": "http://127.0.0.1:49144/kpi",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-06-导航-O2O-服务.json",
+          "screenshotPath": "",
+          "elementCount": 287,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 服务商管理 服务商品 服务订单 佣金结算 社区管理 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "门禁设备",
+            "通行日志",
+            "工单管理",
+            "工单列表",
+            "O2O 服务",
+            "服务商管理",
+            "服务商品",
+            "服务订单",
+            "佣金结算",
+            "社区管理",
+            "用户管理",
+            "监控告警",
+            "处理工单数",
+            "完成工单数"
+          ]
+        }
+      },
+      {
+        "label": "导航:社区管理",
+        "url": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "headings": [],
+        "navLabels": [
+          "数据概览",
+          "dashboard",
+          "KPI 看板",
+          "bar-chart",
+          "门禁管理",
+          "key",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "file-text",
+          "工单列表",
+          "O2O 服务",
+          "shop",
+          "服务商管理",
+          "服务商品",
+          "服务订单",
+          "佣金结算",
+          "社区管理",
+          "home",
+          "小区列表",
+          "楼栋房产",
+          "用户管理",
+          "team",
+          "监控告警"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "处理人员",
+              "处理工单数",
+              "完成工单数",
+              "完结率",
+              "平均评分",
+              "平均响应",
+              "平均处理"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "处理人员 处理工单数 完成工单数 完结率 平均评分 平均响应 平均处理 李客服 89 85 95.5% ⭐ 4.9 10分钟 45分钟 王师傅 76 72 94.7% ⭐ 4.8 12分钟 58分钟 张工程 65 61 93.8% ⭐ 4.7 15分钟 52分钟 刘物业 52 48 92.3% ⭐ 4.6 18分钟 65分钟"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏘️社区服务中台数据概览KPI 看板门禁管理门禁设备通行日志工单管理工单列表O2O 服务服务商管理服务商品服务订单佣金结算社区管理小区列表楼栋房产用户管理监控告警欢迎回来，超级管理员超超级管理员物业 KPI 看板实时监控物业运营数据与服务质量工单完结率92.6%平均响应时长15.5分钟平均处理时长52分钟平均满意度4.8分工单趋势分析工单类型分布响应/处理时长趋势满意度分布物业人员绩效排名处理人员处理工单数完成工单数完结率平均评分平均响应平均处理李客服898595.5%⭐ 4.910分钟45分钟王师傅767294.7%⭐ 4.812分钟58分钟张工程656193.8%⭐ 4.715分钟52分钟刘物业524892.3%⭐ 4.618分钟65分钟",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1344,
+          "scrollWidth": 1696,
+          "scrollHeight": 1344,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89144-service-repair-structure-07-导航-社区管理",
+          "label": "导航:社区管理",
+          "finalUrl": "http://127.0.0.1:49144/kpi",
+          "title": "社区服务中台管理系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-07-导航-社区管理.json",
+          "screenshotPath": "",
+          "elementCount": 292,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 服务商管理 服务商品 服务订单 佣金结算 社区管理 小区列表 楼栋房产 用户管理 监控告警",
+            "数据概览",
+            "KPI 看板",
+            "门禁管理",
+            "门禁设备",
+            "通行日志",
+            "工单管理",
+            "工单列表",
+            "O2O 服务",
+            "服务商管理",
+            "服务商品",
+            "服务订单",
+            "佣金结算",
+            "社区管理",
+            "小区列表",
+            "楼栋房产",
+            "用户管理",
+            "监控告警",
+            "处理工单数",
+            "完成工单数"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49144/dashboard",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.png",
+        "elementCount": 193,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-02-导航-数据概览",
+        "label": "导航:数据概览",
+        "finalUrl": "http://127.0.0.1:49144/dashboard",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.png",
+        "elementCount": 193,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-03-导航-KPI-看板",
+        "label": "导航:KPI 看板",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.png",
+        "elementCount": 270,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-04-导航-门禁管理",
+        "label": "导航:门禁管理",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.png",
+        "elementCount": 275,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-05-导航-工单管理",
+        "label": "导航:工单管理",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-05-导航-工单管理.json",
+        "screenshotPath": "",
+        "elementCount": 278,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "工单列表",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-06-导航-O2O-服务",
+        "label": "导航:O2O 服务",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-06-导航-O2O-服务.json",
+        "screenshotPath": "",
+        "elementCount": 287,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 服务商管理 服务商品 服务订单 佣金结算 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "工单列表",
+          "O2O 服务",
+          "服务商管理",
+          "服务商品",
+          "服务订单",
+          "佣金结算",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-07-导航-社区管理",
+        "label": "导航:社区管理",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-07-导航-社区管理.json",
+        "screenshotPath": "",
+        "elementCount": 292,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 服务商管理 服务商品 服务订单 佣金结算 社区管理 小区列表 楼栋房产 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "工单列表",
+          "O2O 服务",
+          "服务商管理",
+          "服务商品",
+          "服务订单",
+          "佣金结算",
+          "社区管理",
+          "小区列表",
+          "楼栋房产",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49144/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49144/dashboard",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-01-首屏.png",
+        "elementCount": 193,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-02-导航-数据概览",
+        "label": "导航:数据概览",
+        "finalUrl": "http://127.0.0.1:49144/dashboard",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-02-导航-数据概览.png",
+        "elementCount": 193,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-03-导航-KPI-看板",
+        "label": "导航:KPI 看板",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-03-导航-KPI-看板.png",
+        "elementCount": 270,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-04-导航-门禁管理",
+        "label": "导航:门禁管理",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-04-导航-门禁管理.png",
+        "elementCount": 275,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-05-导航-工单管理",
+        "label": "导航:工单管理",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-05-导航-工单管理.json",
+        "screenshotPath": "",
+        "elementCount": 278,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "工单列表",
+          "O2O 服务",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-06-导航-O2O-服务",
+        "label": "导航:O2O 服务",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-06-导航-O2O-服务.json",
+        "screenshotPath": "",
+        "elementCount": 287,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 服务商管理 服务商品 服务订单 佣金结算 社区管理 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "工单列表",
+          "O2O 服务",
+          "服务商管理",
+          "服务商品",
+          "服务订单",
+          "佣金结算",
+          "社区管理",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89144-service-repair-structure-07-导航-社区管理",
+        "label": "导航:社区管理",
+        "finalUrl": "http://127.0.0.1:49144/kpi",
+        "title": "社区服务中台管理系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89144/browser-check/may-89144-service-repair-structure-07-导航-社区管理.json",
+        "screenshotPath": "",
+        "elementCount": 292,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "数据概览 KPI 看板 门禁管理 门禁设备 通行日志 工单管理 工单列表 O2O 服务 服务商管理 服务商品 服务订单 佣金结算 社区管理 小区列表 楼栋房产 用户管理 监控告警",
+          "数据概览",
+          "KPI 看板",
+          "门禁管理",
+          "门禁设备",
+          "通行日志",
+          "工单管理",
+          "工单列表",
+          "O2O 服务",
+          "服务商管理",
+          "服务商品",
+          "服务订单",
+          "佣金结算",
+          "社区管理",
+          "小区列表",
+          "楼栋房产",
+          "用户管理",
+          "监控告警",
+          "处理工单数",
+          "完成工单数"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1344,
+    "scrollWidth": 1696,
+    "scrollHeight": 1344
+  },
+  "initialBodyTextPreview": "🏘️\n社区服务中台\n数据概览\nKPI 看板\n门禁管理\n工单管理\nO2O 服务\n社区管理\n用户管理\n监控告警\n欢迎回来，超级管理员\n超\n超级管理员\n数据概览\n欢迎使用社区服务中台管理系统\n小区居民\n1,258\n↑ 5.2% 较上月\n工单总数\n312\n↑ 12.5% 较上周\n门禁设备\n12\n台\n0\n服务订单\n856\n↑ 8.3% 较上月\n工单完结率\n92.6%\n平均响应时长\n15.5分钟\n待处理告警\n3\n工单趋势\n工单类型分布",
+  "bodyTextPreview": "🏘️\n社区服务中台\n数据概览\nKPI 看板\n门禁管理\n工单管理\nO2O 服务\n社区管理\n用户管理\n监控告警\n欢迎回来，超级管理员\n超\n超级管理员\n数据概览\n欢迎使用社区服务中台管理系统\n小区居民\n1,258\n↑ 5.2% 较上月\n工单总数\n312\n↑ 12.5% 较上周\n门禁设备\n12\n台\n0\n服务订单\n856\n↑ 8.3% 较上月\n工单完结率\n92.6%\n平均响应时长\n15.5分钟\n待处理告警\n3\n工单趋势\n工单类型分布",
+  "apiBase": "http://127.0.0.1:59144",
+  "businessGoalPreview": "社区服务中台管理系统，验证登录页/后台页面可渲染，前端代理和后端健康接口可访问。",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"service\":\"community-backend\",\"database\":\"sqlite\",\"timestamp\":\"2026-06-19T04:14:06.194Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/auth/me\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/users/profile\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/user/profile\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/admin/stats\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/admin/dashboard\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/products\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/orders\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59144/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/cart\",\"error\":\"Not Found\",\"statusCode\":404}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49144/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49144/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/chunk-4BNWP4XY.js?v=6a422d39",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/react-router-dom.js?v=fe632f1b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/react-router-dom.js?v=fe632f1b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49144/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/chunk-4BNWP4XY.js?v=6a422d39",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/react-router-dom.js?v=fe632f1b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/react-router-dom.js?v=fe632f1b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49144/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49144/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49144/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/chunk-4BNWP4XY.js?v=6a422d39",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/react-router-dom.js?v=fe632f1b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49144/node_modules/.vite/deps/react-router-dom.js?v=fe632f1b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

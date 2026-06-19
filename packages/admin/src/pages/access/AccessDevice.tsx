@@ -27,7 +27,7 @@ const mockData = Array.from({ length: 12 }, (_, i) => ({
 export default function AccessDevice() {
   const { message } = App.useApp();
 
-  const columns = [
+  const columns: any[] = [
     { title: '设备编号', dataIndex: 'id', width: 120 },
     { title: '设备名称', dataIndex: 'name', width: 160 },
     {

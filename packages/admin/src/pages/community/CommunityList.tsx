@@ -12,7 +12,7 @@ const mockData = [
 export default function CommunityList() {
   const [viewItem, setViewItem] = useState<any>(null);
 
-  const columns = [
+  const columns: any[] = [
     { title: '编号', dataIndex: 'id', width: 90 },
     { title: '小区名称', dataIndex: 'name', width: 140 },
     { title: '地址', dataIndex: 'address', width: 260, ellipsis: true },

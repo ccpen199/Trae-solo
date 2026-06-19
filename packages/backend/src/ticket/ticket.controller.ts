@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Param, Post, Body, UseGuards, Put, HttpException, HttpStatus, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Role, TicketPriority, TicketStatus, TicketType } from '@prisma/client';
+import { Role, TicketPriority, TicketStatus, TicketType } from '../common/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles, RolesGuard } from '../common/guards/roles.guard';
@@ -58,7 +58,7 @@ export class TicketController {
 
   @Get('my')
   async getMyTickets(@Query() pagination: PaginationDto, @CurrentUser() user: any) {
-    return this.findAll(pagination, undefined, undefined, undefined, undefined, undefined, user.id, undefined, user);
+    return this.findAll(pagination, undefined, undefined, undefined, undefined, user.id, undefined, user);
   }
 
   @Get('stats')

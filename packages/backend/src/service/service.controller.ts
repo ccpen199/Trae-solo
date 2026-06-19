@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Param, Post, Body, UseGuards, Put, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Role, OrderStatus, ServiceStatus } from '@prisma/client';
+import { Role, OrderStatus, ServiceStatus } from '../common/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles, RolesGuard } from '../common/guards/roles.guard';
@@ -49,7 +49,7 @@ export class ServiceProviderController {
       this.prisma.serviceProvider.findMany({
         ...buildPagination(pagination),
         where,
-        include: { user: { select: { id: true, nickname: true, phone: true } },
+        include: { user: { select: { id: true, nickname: true, phone: true } } },
         orderBy: { createdAt: 'desc' },
       }),
       this.prisma.serviceProvider.count({ where }),
@@ -277,7 +277,7 @@ export class ServiceOrderController {
     });
 
     const commissionRate = parseFloat(serviceItems[0].provider.commissionRate.toString());
-    const commissionAmount = parseFloat(((totalAmount * commissionRate) / 100);
+    const commissionAmount = (totalAmount * commissionRate) / 100;
 
     const orderNo = `SO${Date.now()}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
 
@@ -316,23 +316,24 @@ export class ServiceOrderController {
     if (body.status === OrderStatus.PAID) updateData.paidAt = new Date();
     if (body.status === OrderStatus.ACCEPTED) updateData.acceptedAt = new Date();
     if (body.status === OrderStatus.COMPLETED) {
-  updateData.completedAt = new Date();
+      updateData.completedAt = new Date();
 
-  const provider = await this.prisma.serviceProvider.findUnique({ where: { id: order.providerId } });
-  const commissionRate = provider ? parseFloat(provider.commissionRate.toString()) : 10;
-  const commission = (parseFloat(order.totalAmount.toString()) * commissionRate / 100;
+      const provider = await this.prisma.serviceProvider.findUnique({ where: { id: order.providerId } });
+      const commissionRate = provider ? parseFloat(provider.commissionRate.toString()) : 10;
+      const orderAmount = parseFloat(order.totalAmount.toString());
+      const commission = (orderAmount * commissionRate) / 100;
 
-  await this.prisma.commissionSettlement.create({
-    data: {
-      providerId: order.providerId,
-      orderId: order.id,
-      orderAmount: order.totalAmount,
-      commissionRate: commissionRate as any,
-      commissionAmount: commission as any,
-      providerEarning: (parseFloat(order.totalAmount.toString()) - commission as any,
-    },
-  });
-}
+      await this.prisma.commissionSettlement.create({
+        data: {
+          providerId: order.providerId,
+          orderId: order.id,
+          orderAmount: order.totalAmount,
+          commissionRate: commissionRate as any,
+          commissionAmount: commission as any,
+          providerEarning: (orderAmount - commission) as any,
+        },
+      });
+    }
 
     return this.prisma.serviceOrder.update({ where: { id }, data: updateData });
   }

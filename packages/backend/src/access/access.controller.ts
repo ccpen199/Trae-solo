@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Param, Post, Body, UseGuards, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AccessAuthType, AccessDeviceType, Role } from '@prisma/client';
+import { AccessAuthType, AccessDeviceType, Role } from '../common/enums';
 import * as QRCode from 'qrcode';
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaService } from '../prisma/prisma.service';
@@ -131,7 +131,7 @@ export class AccessAuthController {
       },
     });
 
-    let qrCode = null;
+    let qrCode: string | null = null;
     if (auth.qrCodeToken) {
       qrCode = await QRCode.toDataURL(JSON.stringify({
         token: auth.qrCodeToken,
@@ -152,8 +152,8 @@ export class AccessAuthController {
       accessType: string;
     },
   ) {
-    let auth = null;
-    let user = null;
+    let auth: any = null;
+    let user: any = null;
 
     if (body.token) {
       auth = await this.prisma.accessAuth.findUnique({
