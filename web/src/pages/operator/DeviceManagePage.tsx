@@ -12,18 +12,14 @@ const statusMap: Record<string, { label: string; color: string; bg: string; dot:
 
 const typeLabelMap: Record<string, string> = {
   washing_machine: '洗衣机',
-  dryer: '烘干机',
-  air_purifier: '空气净化器',
-  water_purifier: '净水器',
-  fitness_equipment: '健身器材'
+  water_purifier: '饮水机',
+  shower: '淋浴终端'
 };
 
 const typeIconMap: Record<string, string> = {
   washing_machine: '🧺',
-  dryer: '💨',
-  air_purifier: '🌬️',
   water_purifier: '💧',
-  fitness_equipment: '🏋️'
+  shower: '🚿'
 };
 
 const DeviceManagePage = () => {
@@ -133,10 +129,8 @@ const DeviceManagePage = () => {
         {[
           { value: 'all', label: '全部类型' },
           { value: 'washing_machine', label: '洗衣机' },
-          { value: 'dryer', label: '烘干机' },
-          { value: 'air_purifier', label: '净化器' },
-          { value: 'water_purifier', label: '净水器' },
-          { value: 'fitness_equipment', label: '健身器材' }
+          { value: 'water_purifier', label: '饮水机' },
+          { value: 'shower', label: '淋浴终端' }
         ].map((item) => (
           <button
             key={item.value}

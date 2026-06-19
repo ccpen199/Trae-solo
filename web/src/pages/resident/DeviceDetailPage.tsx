@@ -5,16 +5,14 @@ import type { Device, DeviceStatus, Package } from '../../types';
 
 const typeLabelMap: Record<string, string> = {
   washing_machine: '洗衣机',
-  dryer: '烘干机',
-  air_purifier: '空气净化器',
-  water_purifier: '净水器',
-  fitness_equipment: '健身器材'
+  water_purifier: '饮水机',
+  shower: '淋浴终端'
 };
 
 const mockPackages: Package[] = [
-  { id: '1', name: '标准模式', description: '标准洗衣/烘干 30 分钟', price: 5, durationMinutes: 30, type: 'washing_machine', isActive: true, createdAt: '2024-01-01' },
-  { id: '2', name: '强力模式', description: '强力清洗 45 分钟', price: 8, durationMinutes: 45, type: 'washing_machine', isActive: true, createdAt: '2024-01-01' },
-  { id: '3', name: '快速模式', description: '快速清洗 15 分钟', price: 3, durationMinutes: 15, type: 'washing_machine', isActive: true, createdAt: '2024-01-01' }
+  { id: '1', name: '标准模式', description: '标准服务 30 分钟', price: 5, durationMinutes: 30, type: 'washing_machine', isActive: true, createdAt: '2024-01-01' },
+  { id: '2', name: '加强模式', description: '加强服务 45 分钟', price: 8, durationMinutes: 45, type: 'washing_machine', isActive: true, createdAt: '2024-01-01' },
+  { id: '3', name: '快速模式', description: '快速服务 15 分钟', price: 3, durationMinutes: 15, type: 'washing_machine', isActive: true, createdAt: '2024-01-01' }
 ];
 
 const DeviceDetailPage = () => {
@@ -110,10 +108,8 @@ const DeviceDetailPage = () => {
         </button>
         <span className="text-7xl">
           {device.type === 'washing_machine' && '🧺'}
-          {device.type === 'dryer' && '💨'}
-          {device.type === 'air_purifier' && '🌬️'}
           {device.type === 'water_purifier' && '💧'}
-          {device.type === 'fitness_equipment' && '🏋️'}
+          {device.type === 'shower' && '🚿'}
         </span>
       </div>
 

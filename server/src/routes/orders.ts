@@ -3,27 +3,49 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db';
 import { authMiddleware } from '../middleware/auth';
 import { Device, Order, OrderStatus, OrderType } from '../types';
+import {
+  pageResult,
+  parsePage,
+  serializeOrder,
+  toDbDeviceType,
+  toDbOrderStatus,
+} from '../serializers';
 
 const router = Router();
 
-router.get('/', authMiddleware, (req: Request, res: Response): void => {
+function listUserOrders(req: Request, res: Response): void {
   if (!req.user) {
     res.status(401).json({ error: '未认证' });
     return;
   }
 
+  const { page, pageSize } = parsePage(req);
+  const dbStatus = toDbOrderStatus(req.query.status);
   const db = getDb();
-  const orders = db.prepare(`
+  let sql = `
     SELECT o.*, d.name as deviceName, d.type as deviceType
     FROM orders o
     LEFT JOIN devices d ON o.deviceId = d.id
     WHERE o.userId = ?
-    ORDER BY o.startTime DESC
-    LIMIT 50
-  `).all(req.user.userId);
+  `;
+  const params: any[] = [req.user.userId];
 
-  res.json(orders);
-});
+  if (dbStatus) {
+    sql += ' AND o.status = ?';
+    params.push(dbStatus);
+  }
+
+  sql += `
+    ORDER BY COALESCE(o.startTime, o.endTime, o.id) DESC
+    LIMIT 50
+  `;
+  const orders = (db.prepare(sql).all(...params) as Order[]).map(serializeOrder);
+
+  res.json(pageResult(orders, page, pageSize, orders.length));
+}
+
+router.get('/', authMiddleware, listUserOrders);
+router.get('/my', authMiddleware, listUserOrders);
 
 router.post('/', authMiddleware, (req: Request, res: Response): void => {
   if (!req.user) {
@@ -31,9 +53,9 @@ router.post('/', authMiddleware, (req: Request, res: Response): void => {
     return;
   }
 
-  const { deviceId, type, duration } = req.body;
+  const { deviceId, packageId, type, duration } = req.body;
 
-  if (!deviceId || !type) {
+  if (!deviceId) {
     res.status(400).json({ error: '缺少必要参数' });
     return;
   }
@@ -56,24 +78,30 @@ router.post('/', authMiddleware, (req: Request, res: Response): void => {
     return;
   }
 
+  const selectedPackage = packageId
+    ? db.prepare('SELECT * FROM packages WHERE id = ?').get(packageId) as any | undefined
+    : undefined;
+  const fallbackDurations: Record<string, number> = { '1': 30, '2': 45, '3': 15 };
+  const selectedType = toDbDeviceType(type) || selectedPackage?.deviceType || device.type;
+
   const validTypes: OrderType[] = ['washer', 'water_dispenser', 'shower'];
-  if (!validTypes.includes(type)) {
+  if (!validTypes.includes(selectedType as OrderType)) {
     res.status(400).json({ error: '无效的订单类型' });
     return;
   }
 
   const orderId = uuidv4();
-  const estimatedDuration = duration || 30;
-  const amount = device.pricing * (estimatedDuration / 30);
+  const estimatedDuration = Number(duration || selectedPackage?.totalMinutes || fallbackDurations[String(packageId)] || 30);
+  const amount = Number(selectedPackage?.price || (device.pricing * (estimatedDuration / 30)));
   const status: OrderStatus = 'pending';
 
   db.prepare(`
     INSERT INTO orders (id, userId, deviceId, type, startTime, endTime, duration, amount, status, payMethod, refundAmount)
     VALUES (?, ?, ?, ?, NULL, NULL, ?, ?, ?, 'balance', 0)
-  `).run(orderId, req.user.userId, deviceId, type, estimatedDuration, amount, status);
+  `).run(orderId, req.user.userId, deviceId, selectedType, estimatedDuration, amount, status);
 
   const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(orderId) as Order;
-  res.status(201).json(order);
+  res.status(201).json(serializeOrder(order));
 });
 
 router.post('/:id/start', authMiddleware, (req: Request, res: Response): void => {
@@ -110,7 +138,7 @@ router.post('/:id/start', authMiddleware, (req: Request, res: Response): void =>
   `).run(order.deviceId);
 
   const updated = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id) as Order;
-  res.json(updated);
+  res.json(serializeOrder(updated));
 });
 
 router.post('/:id/finish', authMiddleware, (req: Request, res: Response): void => {
@@ -162,7 +190,7 @@ router.post('/:id/finish', authMiddleware, (req: Request, res: Response): void =
   }
 
   const updated = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id) as Order;
-  res.json(updated);
+  res.json(serializeOrder(updated));
 });
 
 router.post('/:id/refund', authMiddleware, (req: Request, res: Response): void => {
@@ -200,7 +228,7 @@ router.post('/:id/refund', authMiddleware, (req: Request, res: Response): void =
   db.prepare('UPDATE users SET balance = balance + ? WHERE id = ?').run(amount, req.user.userId);
 
   const updated = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id) as Order;
-  res.json(updated);
+  res.json(serializeOrder(updated));
 });
 
 router.post('/:id/pay', authMiddleware, (req: Request, res: Response): void => {
@@ -209,7 +237,7 @@ router.post('/:id/pay', authMiddleware, (req: Request, res: Response): void => {
     return;
   }
 
-  const { payMethod } = req.body;
+  const payMethod = req.body.payMethod || req.body.paymentMethod || 'balance';
 
   const db = getDb();
   const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id) as Order | undefined;
@@ -234,7 +262,7 @@ router.post('/:id/pay', authMiddleware, (req: Request, res: Response): void => {
   `).run(payMethod || 'balance', req.params.id);
 
   const updated = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id) as Order;
-  res.json(updated);
+  res.json(serializeOrder(updated));
 });
 
 export default router;

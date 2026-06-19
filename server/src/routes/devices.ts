@@ -3,33 +3,44 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db';
 import { authMiddleware, requireRoles } from '../middleware/auth';
 import { Device, DeviceCommand, DeviceStatus, DeviceType, CommandStatus } from '../types';
+import {
+  pageResult,
+  parsePage,
+  serializeDevice,
+  serializeDeviceStatus,
+  toDbDeviceStatus,
+  toDbDeviceType,
+} from '../serializers';
 
 const router = Router();
 
 router.get('/', authMiddleware, (req: Request, res: Response): void => {
-  const { type, area, status } = req.query;
+  const { type, area, areaId, status } = req.query;
+  const { page, pageSize } = parsePage(req);
   const db = getDb();
 
   let sql = 'SELECT * FROM devices WHERE 1=1';
   const params: any[] = [];
+  const dbType = toDbDeviceType(type);
+  const dbStatus = toDbDeviceStatus(status);
 
-  if (type) {
+  if (dbType) {
     sql += ' AND type = ?';
-    params.push(type);
+    params.push(dbType);
   }
-  if (area) {
+  if (area || areaId) {
     sql += ' AND areaId = ?';
-    params.push(area);
+    params.push(area || areaId);
   }
-  if (status) {
+  if (dbStatus) {
     sql += ' AND status = ?';
-    params.push(status);
+    params.push(dbStatus);
   }
 
   sql += ' ORDER BY name ASC';
-  const devices = db.prepare(sql).all(...params) as Device[];
+  const devices = (db.prepare(sql).all(...params) as Device[]).map(serializeDevice);
 
-  res.json(devices);
+  res.json(pageResult(devices, page, pageSize, devices.length));
 });
 
 router.get('/:id', authMiddleware, (req: Request, res: Response): void => {
@@ -41,19 +52,32 @@ router.get('/:id', authMiddleware, (req: Request, res: Response): void => {
     return;
   }
 
-  res.json(device);
+  res.json(serializeDevice(device));
+});
+
+router.get('/:id/status', authMiddleware, (req: Request, res: Response): void => {
+  const db = getDb();
+  const device = db.prepare('SELECT * FROM devices WHERE id = ?').get(req.params.id) as Device | undefined;
+
+  if (!device) {
+    res.status(404).json({ error: '设备不存在' });
+    return;
+  }
+
+  res.json(serializeDeviceStatus(device));
 });
 
 router.post('/', authMiddleware, requireRoles('operator'), (req: Request, res: Response): void => {
   const { name, type, location, lat, lng, areaId, pricing } = req.body;
+  const deviceType = toDbDeviceType(type);
 
-  if (!name || !type || !location || lat == null || lng == null || !areaId || pricing == null) {
+  if (!name || !deviceType || !location || lat == null || lng == null || !areaId || pricing == null) {
     res.status(400).json({ error: '缺少必要参数' });
     return;
   }
 
   const validTypes: DeviceType[] = ['washer', 'water_dispenser', 'shower'];
-  if (!validTypes.includes(type)) {
+  if (!validTypes.includes(deviceType as DeviceType)) {
     res.status(400).json({ error: '无效的设备类型' });
     return;
   }
@@ -66,10 +90,10 @@ router.post('/', authMiddleware, requireRoles('operator'), (req: Request, res: R
   db.prepare(`
     INSERT INTO devices (id, name, type, status, location, lat, lng, areaId, pricing, lastHeartbeat, isOnline)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
-  `).run(id, name, type, status, location, lat, lng, areaId, pricing, now);
+  `).run(id, name, deviceType, status, location, lat, lng, areaId, pricing, now);
 
   const device = db.prepare('SELECT * FROM devices WHERE id = ?').get(id) as Device;
-  res.status(201).json(device);
+  res.status(201).json(serializeDevice(device));
 });
 
 router.put('/:id', authMiddleware, requireRoles('operator', 'property'), (req: Request, res: Response): void => {
@@ -82,6 +106,8 @@ router.put('/:id', authMiddleware, requireRoles('operator', 'property'), (req: R
   }
 
   const { name, type, location, lat, lng, areaId, pricing, status } = req.body;
+  const deviceType = toDbDeviceType(type);
+  const deviceStatus = toDbDeviceStatus(status);
 
   db.prepare(`
     UPDATE devices SET
@@ -94,14 +120,14 @@ router.put('/:id', authMiddleware, requireRoles('operator', 'property'), (req: R
       pricing = COALESCE(?, pricing),
       status = COALESCE(?, status)
     WHERE id = ?
-  `).run(name, type, location, lat, lng, areaId, pricing, status, req.params.id);
+  `).run(name, deviceType, location, lat, lng, areaId, pricing, deviceStatus, req.params.id);
 
   const updated = db.prepare('SELECT * FROM devices WHERE id = ?').get(req.params.id) as Device;
-  res.json(updated);
+  res.json(serializeDevice(updated));
 });
 
 router.put('/:id/status', authMiddleware, (req: Request, res: Response): void => {
-  const { status } = req.body;
+  const status = toDbDeviceStatus(req.body.status);
 
   if (!status) {
     res.status(400).json({ error: '状态不能为空' });
@@ -109,7 +135,7 @@ router.put('/:id/status', authMiddleware, (req: Request, res: Response): void =>
   }
 
   const validStatuses: DeviceStatus[] = ['idle', 'running', 'fault', 'offline', 'reserved'];
-  if (!validStatuses.includes(status)) {
+  if (!validStatuses.includes(status as DeviceStatus)) {
     res.status(400).json({ error: '无效的设备状态' });
     return;
   }
@@ -124,7 +150,7 @@ router.put('/:id/status', authMiddleware, (req: Request, res: Response): void =>
 
   db.prepare('UPDATE devices SET status = ? WHERE id = ?').run(status, req.params.id);
   const updated = db.prepare('SELECT * FROM devices WHERE id = ?').get(req.params.id) as Device;
-  res.json(updated);
+  res.json(serializeDevice(updated));
 });
 
 router.post('/:id/command', authMiddleware, (req: Request, res: Response): void => {

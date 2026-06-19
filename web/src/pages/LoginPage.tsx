@@ -115,7 +115,7 @@ const LoginPage = () => {
           </div>
 
           <div className="mt-6 text-center text-xs text-gray-400">
-            <p>测试账号：任意手机号 + 任意6位验证码</p>
+            <p>测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位</p>
           </div>
         </div>
       </div>

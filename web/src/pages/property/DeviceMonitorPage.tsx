@@ -12,10 +12,8 @@ const statusMap: Record<string, { label: string; color: string; bg: string; dot:
 
 const typeIconMap: Record<string, string> = {
   washing_machine: '🧺',
-  dryer: '💨',
-  air_purifier: '🌬️',
   water_purifier: '💧',
-  fitness_equipment: '🏋️'
+  shower: '🚿'
 };
 
 const DeviceMonitorPage = () => {

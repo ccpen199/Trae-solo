@@ -1,0 +1,1621 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-19T09:56:40.964Z",
+  "order": "may-89240",
+  "roundIndex": 24,
+  "captureId": "may-89240-service-repair",
+  "url": "http://127.0.0.1:49240/",
+  "initialUrl": "http://127.0.0.1:49240/",
+  "finalUrl": "http://127.0.0.1:49240/home",
+  "status": 200,
+  "title": "社区共享设备服务平台",
+  "initialTitle": "社区共享设备服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题；购买/提交相关问题；服务/网络未进入网页",
+  "targetReason": "登录注册相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "购买/提交相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "购买/提交相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49240/home"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49240/home",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部 →",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部 →:登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:报修中心",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:淋浴终端 1台",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:扫码使用",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:我",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:我:帮助中心 ›",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:设备",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:获取验证码",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49240/home",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备",
+          "欢迎使用共享设备",
+          "设备分类",
+          "最近活动"
+        ],
+        "navLabels": [
+          "首页 📱 设备 📋 订单 🎁 奖励 👤 我的",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ],
+        "buttons": [
+          "我",
+          "📷 扫码使用",
+          "📅 预约设备",
+          "📋 我的订单",
+          "🔧 报修中心",
+          "查看全部 →",
+          "🧺 洗衣机 5台",
+          "💧 饮水机 2台",
+          "🚿 淋浴终端 1台"
+        ],
+        "links": [
+          "🏠 首页",
+          "📱 设备",
+          "📋 订单",
+          "🎁 奖励",
+          "👤 我的"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社区共享设备我下午好欢迎使用共享设备👋23可用设备156累计积分7连续签到📷扫码使用📅预约设备📋我的订单🔧报修中心设备分类查看全部 →🧺洗衣机5台💧饮水机2台🚿淋浴终端1台最近活动📌洗衣机-001 使用完成标准洗衣30分钟2小时前📌获得签到奖励+10 积分今天 08:30📌烘干机-003 预约成功19:00-19:45昨天 18:00🏠首页📱设备📋订单🎁奖励👤我的",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49240/home",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.png",
+          "elementCount": 111,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "我",
+            "扫码使用",
+            "预约设备",
+            "我的订单",
+            "报修中心",
+            "查看全部 →",
+            "洗衣机 5台",
+            "饮水机 2台",
+            "淋浴终端 1台",
+            "首页",
+            "设备",
+            "订单",
+            "奖励",
+            "我的"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49240/home",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备",
+          "欢迎使用共享设备",
+          "设备分类",
+          "最近活动"
+        ],
+        "navLabels": [
+          "首页 📱 设备 📋 订单 🎁 奖励 👤 我的",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ],
+        "buttons": [
+          "我",
+          "📷 扫码使用",
+          "📅 预约设备",
+          "📋 我的订单",
+          "🔧 报修中心",
+          "查看全部 →",
+          "🧺 洗衣机 5台",
+          "💧 饮水机 2台",
+          "🚿 淋浴终端 1台"
+        ],
+        "links": [
+          "🏠 首页",
+          "📱 设备",
+          "📋 订单",
+          "🎁 奖励",
+          "👤 我的"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社区共享设备我下午好欢迎使用共享设备👋23可用设备156累计积分7连续签到📷扫码使用📅预约设备📋我的订单🔧报修中心设备分类查看全部 →🧺洗衣机5台💧饮水机2台🚿淋浴终端1台最近活动📌洗衣机-001 使用完成标准洗衣30分钟2小时前📌获得签到奖励+10 积分今天 08:30📌烘干机-003 预约成功19:00-19:45昨天 18:00🏠首页📱设备📋订单🎁奖励👤我的",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49240/home",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.png",
+          "elementCount": 111,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "我",
+            "扫码使用",
+            "预约设备",
+            "我的订单",
+            "报修中心",
+            "查看全部 →",
+            "洗衣机 5台",
+            "饮水机 2台",
+            "淋浴终端 1台",
+            "首页",
+            "设备",
+            "订单",
+            "奖励",
+            "我的"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部 →",
+        "url": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备服务",
+          "登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "获取验证码",
+          "登录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入验证码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏠社区共享设备服务便捷生活，智慧共享登录手机号验证码获取验证码登录测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-03-操作-查看全部",
+          "label": "操作:查看全部 →",
+          "finalUrl": "http://127.0.0.1:49240/login",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.png",
+          "elementCount": 29,
+          "interactiveCount": 4,
+          "interactiveLabels": [
+            "请输入手机号",
+            "请输入验证码",
+            "获取验证码",
+            "登录"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部 →->登录",
+        "url": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备服务",
+          "登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "获取验证码",
+          "登录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入验证码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏠社区共享设备服务便捷生活，智慧共享登录手机号验证码获取验证码登录测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-04-二层操作-查看全部-登录",
+          "label": "二层操作:查看全部 →->登录",
+          "finalUrl": "http://127.0.0.1:49240/login",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.png",
+          "elementCount": 29,
+          "interactiveCount": 4,
+          "interactiveLabels": [
+            "请输入手机号",
+            "请输入验证码",
+            "获取验证码",
+            "登录"
+          ]
+        }
+      },
+      {
+        "label": "操作:我",
+        "url": "http://127.0.0.1:49240/profile",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备",
+          "社区居民"
+        ],
+        "navLabels": [
+          "首页 📱 设备 📋 订单 🎁 奖励 👤 我的",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ],
+        "buttons": [
+          "我",
+          "⚙️",
+          "📋 我的订单 ›",
+          "📅 我的预约 ›",
+          "🔧 我的报修 ›",
+          "📍 收货地址 ›",
+          "🔔 消息通知 ›",
+          "❓ 帮助中心 ›",
+          "ℹ️ 关于我们 ›",
+          "退出登录"
+        ],
+        "links": [
+          "🏠 首页",
+          "📱 设备",
+          "📋 订单",
+          "🎁 奖励",
+          "👤 我的"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社区共享设备我👤社区居民未登录⚙️5订单2预约156积分3优惠券📋我的订单›📅我的预约›🔧我的报修›📍收货地址›🔔消息通知›❓帮助中心›ℹ️关于我们›退出登录🏠首页📱设备📋订单🎁奖励👤我的",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-05-操作-我",
+          "label": "操作:我",
+          "finalUrl": "http://127.0.0.1:49240/profile",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.png",
+          "elementCount": 85,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "我",
+            "我的订单 ›",
+            "我的预约 ›",
+            "我的报修 ›",
+            "收货地址 ›",
+            "消息通知 ›",
+            "帮助中心 ›",
+            "关于我们 ›",
+            "退出登录",
+            "首页",
+            "设备",
+            "订单",
+            "奖励",
+            "我的"
+          ]
+        }
+      },
+      {
+        "label": "导航:设备",
+        "url": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备服务",
+          "登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "获取验证码",
+          "登录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入验证码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏠社区共享设备服务便捷生活，智慧共享登录手机号验证码获取验证码登录测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-06-导航-设备",
+          "label": "导航:设备",
+          "finalUrl": "http://127.0.0.1:49240/login",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.png",
+          "elementCount": 29,
+          "interactiveCount": 4,
+          "interactiveLabels": [
+            "请输入手机号",
+            "请输入验证码",
+            "获取验证码",
+            "登录"
+          ]
+        }
+      },
+      {
+        "label": "操作:登录",
+        "url": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备服务",
+          "登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "获取验证码",
+          "登录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入验证码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏠社区共享设备服务便捷生活，智慧共享登录手机号验证码获取验证码登录测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-07-操作-登录",
+          "label": "操作:登录",
+          "finalUrl": "http://127.0.0.1:49240/login",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.png",
+          "elementCount": 29,
+          "interactiveCount": 4,
+          "interactiveLabels": [
+            "请输入手机号",
+            "请输入验证码",
+            "获取验证码",
+            "登录"
+          ]
+        }
+      },
+      {
+        "label": "操作:获取验证码",
+        "url": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "headings": [
+          "社区共享设备服务",
+          "登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "获取验证码",
+          "登录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入验证码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏠社区共享设备服务便捷生活，智慧共享登录手机号验证码获取验证码登录测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89240-service-repair-structure-08-操作-获取验证码",
+          "label": "操作:获取验证码",
+          "finalUrl": "http://127.0.0.1:49240/login",
+          "title": "社区共享设备服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.png",
+          "elementCount": 29,
+          "interactiveCount": 4,
+          "interactiveLabels": [
+            "请输入手机号",
+            "请输入验证码",
+            "获取验证码",
+            "登录"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/devices 返回 HTTP 401，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "补齐 /api/devices 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/devices"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看全部 →",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部 →->登录",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "我",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "设备",
+        "label": "登录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "设备",
+        "label": "获取验证码",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49240/home",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.png",
+        "elementCount": 111,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "我",
+          "扫码使用",
+          "预约设备",
+          "我的订单",
+          "报修中心",
+          "查看全部 →",
+          "洗衣机 5台",
+          "饮水机 2台",
+          "淋浴终端 1台",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49240/home",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.png",
+        "elementCount": 111,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "我",
+          "扫码使用",
+          "预约设备",
+          "我的订单",
+          "报修中心",
+          "查看全部 →",
+          "洗衣机 5台",
+          "饮水机 2台",
+          "淋浴终端 1台",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-03-操作-查看全部",
+        "label": "操作:查看全部 →",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-04-二层操作-查看全部-登录",
+        "label": "二层操作:查看全部 →->登录",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-05-操作-我",
+        "label": "操作:我",
+        "finalUrl": "http://127.0.0.1:49240/profile",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.png",
+        "elementCount": 85,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "我",
+          "我的订单 ›",
+          "我的预约 ›",
+          "我的报修 ›",
+          "收货地址 ›",
+          "消息通知 ›",
+          "帮助中心 ›",
+          "关于我们 ›",
+          "退出登录",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-06-导航-设备",
+        "label": "导航:设备",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-07-操作-登录",
+        "label": "操作:登录",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-08-操作-获取验证码",
+        "label": "操作:获取验证码",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49240/home",
+    "representativeScreenshotLabel": "社区共享设备"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49240/home",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-01-首屏.png",
+        "elementCount": 111,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "我",
+          "扫码使用",
+          "预约设备",
+          "我的订单",
+          "报修中心",
+          "查看全部 →",
+          "洗衣机 5台",
+          "饮水机 2台",
+          "淋浴终端 1台",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49240/home",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-02-导航-首页.png",
+        "elementCount": 111,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "我",
+          "扫码使用",
+          "预约设备",
+          "我的订单",
+          "报修中心",
+          "查看全部 →",
+          "洗衣机 5台",
+          "饮水机 2台",
+          "淋浴终端 1台",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-03-操作-查看全部",
+        "label": "操作:查看全部 →",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-03-操作-查看全部.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-04-二层操作-查看全部-登录",
+        "label": "二层操作:查看全部 →->登录",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-04-二层操作-查看全部-登录.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-05-操作-我",
+        "label": "操作:我",
+        "finalUrl": "http://127.0.0.1:49240/profile",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-05-操作-我.png",
+        "elementCount": 85,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "我",
+          "我的订单 ›",
+          "我的预约 ›",
+          "我的报修 ›",
+          "收货地址 ›",
+          "消息通知 ›",
+          "帮助中心 ›",
+          "关于我们 ›",
+          "退出登录",
+          "首页",
+          "设备",
+          "订单",
+          "奖励",
+          "我的"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-06-导航-设备",
+        "label": "导航:设备",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-06-导航-设备.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-07-操作-登录",
+        "label": "操作:登录",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-07-操作-登录.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89240-service-repair-structure-08-操作-获取验证码",
+        "label": "操作:获取验证码",
+        "finalUrl": "http://127.0.0.1:49240/login",
+        "title": "社区共享设备服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89240/runtime-check/may-89240-service-repair-structure-08-操作-获取验证码.png",
+        "elementCount": 29,
+        "interactiveCount": 4,
+        "interactiveLabels": [
+          "请输入手机号",
+          "请输入验证码",
+          "获取验证码",
+          "登录"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1000,
+    "scrollWidth": 1728,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "社区共享设备\n我\n\n下午好\n\n欢迎使用共享设备\n👋\n\n23\n\n可用设备\n\n156\n\n累计积分\n\n7\n\n连续签到\n\n📷\n扫码使用\n📅\n预约设备\n📋\n我的订单\n🔧\n报修中心\n设备分类\n查看全部 →\n🧺\n洗衣机\n5台\n💧\n饮水机\n2台\n🚿\n淋浴终端\n1台\n最近活动\n📌\n\n洗衣机-001 使用完成\n\n标准洗衣30分钟\n\n2小时前\n📌\n\n获得签到奖励\n\n+10 积分\n\n今天 08:30\n📌\n\n烘干机-003 预约成功\n\n19:00-19:45\n\n昨天 18:00\n🏠\n首页\n📱\n设备\n📋\n订单\n🎁\n奖励\n👤\n我的",
+  "bodyTextPreview": "社区共享设备\n我\n\n下午好\n\n欢迎使用共享设备\n👋\n\n23\n\n可用设备\n\n156\n\n累计积分\n\n7\n\n连续签到\n\n📷\n扫码使用\n📅\n预约设备\n📋\n我的订单\n🔧\n报修中心\n设备分类\n查看全部 →\n🧺\n洗衣机\n5台\n💧\n饮水机\n2台\n🚿\n淋浴终端\n1台\n最近活动\n📌\n\n洗衣机-001 使用完成\n\n标准洗衣30分钟\n\n2小时前\n📌\n\n获得签到奖励\n\n+10 积分\n\n今天 08:30\n📌\n\n烘干机-003 预约成功\n\n19:00-19:45\n\n昨天 18:00\n🏠\n首页\n📱\n设备\n📋\n订单\n🎁\n奖励\n👤\n我的",
+  "apiBase": "http://127.0.0.1:59240",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-19T09:56:20.430Z\",\"message\":\"IoT Platform Server is running\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/devices?pageSize=50",
+      "path": "/api/devices?pageSize=50",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/teachers\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/courses\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/bookings\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/orders",
+      "path": "/api/orders",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/users/profile\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/user/profile\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/admin/stats\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/admin/dashboard\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/products\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59240/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API端点不存在\",\"path\":\"/api/cart\"}"
+    }
+  ],
+  "dialogs": [
+    {
+      "type": "alert",
+      "message": "请输入手机号和验证码"
+    },
+    {
+      "type": "alert",
+      "message": "请输入手机号和验证码"
+    }
+  ],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49240/api/devices?pageSize=50",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载设备列表失败 AxiosError: Request failed with status code 401\n    at settle (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1523:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1977:7)",
+      "location": {
+        "url": "http://127.0.0.1:49240/src/pages/resident/DeviceListPage.tsx",
+        "lineNumber": 62,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49240/api/devices?pageSize=50",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载设备列表失败 AxiosError: Request failed with status code 401\n    at settle (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1523:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1977:7)",
+      "location": {
+        "url": "http://127.0.0.1:49240/src/pages/resident/DeviceListPage.tsx",
+        "lineNumber": 62,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49240/api/devices?pageSize=50",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载设备列表失败 AxiosError: Request failed with status code 401\n    at settle (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1523:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1977:7)",
+      "location": {
+        "url": "http://127.0.0.1:49240/src/pages/resident/DeviceListPage.tsx",
+        "lineNumber": 62,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49240/api/devices?pageSize=50",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载设备列表失败 AxiosError: Request failed with status code 401\n    at settle (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1523:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49240/node_modules/.vite/deps/axios.js?v=b3539993:1977:7)",
+      "location": {
+        "url": "http://127.0.0.1:49240/src/pages/resident/DeviceListPage.tsx",
+        "lineNumber": 62,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49240/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/chunk-6GSFWH52.js?v=b3539993",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49240/node_modules/.vite/deps/react-router-dom.js?v=b3539993",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49240/login",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49240/login",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49240/api/devices?pageSize=50"
+    }
+  ]
+}

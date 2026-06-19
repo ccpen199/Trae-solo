@@ -97,17 +97,13 @@ const DashboardPage = () => {
                   <div className="flex items-center">
                     <span className="text-xl mr-3">
                       {type === 'washing_machine' && '🧺'}
-                      {type === 'dryer' && '💨'}
-                      {type === 'air_purifier' && '🌬️'}
                       {type === 'water_purifier' && '💧'}
-                      {type === 'fitness_equipment' && '🏋️'}
+                      {type === 'shower' && '🚿'}
                     </span>
                     <span className="text-gray-700">
                       {type === 'washing_machine' && '洗衣机'}
-                      {type === 'dryer' && '烘干机'}
-                      {type === 'air_purifier' && '空气净化器'}
-                      {type === 'water_purifier' && '净水器'}
-                      {type === 'fitness_equipment' && '健身器材'}
+                      {type === 'water_purifier' && '饮水机'}
+                      {type === 'shower' && '淋浴终端'}
                     </span>
                   </div>
                   <span className="font-semibold text-green-600">¥{amount.toFixed(2)}</span>

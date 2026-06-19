@@ -1,73 +1,64 @@
+export type DeviceType = 'washer' | 'water_dispenser' | 'shower';
+
+export type UserRole = 'resident' | 'property' | 'operator';
+
+export type OrderStatus = 'pending' | 'active' | 'completed' | 'refunded' | 'cancelled';
+
+export type OrderType = 'washer' | 'water_dispenser' | 'shower';
+
+export type ReservationStatus = 'pending' | 'active' | 'completed' | 'cancelled';
+
+export type WorkOrderStatus = 'pending' | 'assigned' | 'processing' | 'resolved' | 'closed';
+
+export type WorkOrderType = 'repair' | 'maintenance' | 'complaint';
+
+export type WorkOrderPriority = 'low' | 'medium' | 'high' | 'urgent';
+
+export type DeviceStatus = 'idle' | 'running' | 'fault' | 'offline' | 'reserved';
+
+export type CommandStatus = 'pending' | 'synced' | 'executed' | 'failed';
+
+export type CouponType = 'discount' | 'cash';
+
 export interface User {
   id: string;
   phone: string;
   nickname: string;
-  avatar?: string;
-  role: 'resident' | 'property' | 'operator';
-  buildingId?: string;
-  unitNumber?: string;
+  avatar: string | null;
+  role: UserRole;
+  balance: number;
   createdAt: string;
 }
 
 export interface Device {
   id: string;
   name: string;
-  type: 'washing_machine' | 'dryer' | 'air_purifier' | 'water_purifier' | 'fitness_equipment';
-  status: 'idle' | 'in_use' | 'reserved' | 'maintenance' | 'offline';
-  areaId: string;
+  type: DeviceType;
+  status: DeviceStatus;
   location: string;
-  qrCode: string;
-  currentUser?: string;
-  estimatedEndTime?: string;
-  createdAt: string;
-}
-
-export interface DeviceStatus {
-  deviceId: string;
-  status: Device['status'];
-  remainingMinutes?: number;
-  currentUser?: string;
-  lastHeartbeat: string;
-}
-
-export interface DeviceCommand {
-  deviceId: string;
-  command: 'start' | 'stop' | 'pause' | 'resume' | 'lock' | 'unlock' | 'restart';
-  params?: Record<string, any>;
-}
-
-export interface Area {
-  id: string;
-  name: string;
-  address: string;
-  deviceCount: number;
-  managerId?: string;
-  createdAt: string;
-}
-
-export interface Package {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  durationMinutes: number;
-  type: Device['type'];
-  isActive: boolean;
-  createdAt: string;
+  lat: number;
+  lng: number;
+  areaId: string;
+  pricing: number;
+  lastHeartbeat: string | null;
+  isOnline: boolean;
+  areaName?: string;
 }
 
 export interface Order {
   id: string;
   userId: string;
   deviceId: string;
-  packageId: string;
+  type: OrderType;
+  startTime: string | null;
+  endTime: string | null;
+  duration: number;
   amount: number;
-  status: 'pending' | 'paid' | 'in_progress' | 'completed' | 'refunded' | 'cancelled';
-  paymentMethod?: 'wechat' | 'alipay' | 'balance';
-  paidAt?: string;
-  startedAt?: string;
-  finishedAt?: string;
-  createdAt: string;
+  status: OrderStatus;
+  payMethod: string;
+  refundAmount: number;
+  deviceName?: string;
+  deviceType?: DeviceType;
 }
 
 export interface Reservation {
@@ -76,21 +67,74 @@ export interface Reservation {
   deviceId: string;
   startTime: string;
   endTime: string;
-  status: 'pending' | 'active' | 'completed' | 'cancelled';
-  createdAt: string;
+  status: ReservationStatus;
+  amount: number;
+  deviceName?: string;
+  deviceType?: DeviceType;
 }
 
 export interface WorkOrder {
   id: string;
-  title: string;
-  description: string;
   deviceId: string;
   reporterId: string;
-  assigneeId?: string;
-  priority: 'low' | 'medium' | 'high';
-  status: 'open' | 'in_progress' | 'resolved' | 'closed';
+  handlerId: string | null;
+  type: WorkOrderType;
+  description: string;
+  status: WorkOrderStatus;
+  priority: WorkOrderPriority;
   createdAt: string;
-  updatedAt: string;
+  resolvedAt: string | null;
+  deviceName?: string;
+  reporterName?: string;
+  handlerName?: string;
+}
+
+export interface Area {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  propertyManagerId: string | null;
+  deviceCount?: number;
+}
+
+export interface Package {
+  id: string;
+  name: string;
+  deviceType: DeviceType;
+  totalMinutes: number;
+  price: number;
+  description: string;
+}
+
+export interface UserPackage {
+  id: string;
+  userId: string;
+  packageId: string;
+  remainingMinutes: number;
+  expireAt: string;
+  package?: Package;
+}
+
+export interface RewardCoupon {
+  id: string;
+  userId: string;
+  name: string;
+  type: CouponType;
+  value: number;
+  minAmount: number;
+  expireAt: string;
+  isUsed: boolean;
+}
+
+export interface RewardRecord {
+  id: string;
+  userId: string;
+  action: string;
+  points: number;
+  description: string;
+  createdAt: string;
+  deviceType: DeviceType | null;
 }
 
 export interface LoginRequest {
@@ -101,6 +145,13 @@ export interface LoginRequest {
 export interface LoginResponse {
   token: string;
   user: User;
+}
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export interface UsageStats {
@@ -137,33 +188,19 @@ export interface RevenueData {
   }[];
 }
 
-export interface Reward {
-  id: string;
-  name: string;
-  description: string;
-  points: number;
-  imageUrl?: string;
-}
-
-export interface Coupon {
-  id: string;
-  name: string;
-  discount: number;
-  minAmount: number;
-  expireAt: string;
-  isUsed: boolean;
-}
-
 export interface StreakData {
   currentStreak: number;
   longestStreak: number;
+  totalPoints: number;
   checkInDates: string[];
+  canCheckIn: boolean;
 }
 
 export interface WorkOrderSummary {
   total: number;
-  open: number;
-  inProgress: number;
+  pending: number;
+  assigned: number;
+  processing: number;
   resolved: number;
   byPriority: Record<string, number>;
 }
@@ -172,11 +209,4 @@ export interface ApiResponse<T = any> {
   code: number;
   message: string;
   data: T;
-}
-
-export interface PaginatedResponse<T> {
-  items: T[];
-  total: number;
-  page: number;
-  pageSize: number;
 }

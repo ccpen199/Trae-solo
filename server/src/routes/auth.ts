@@ -7,6 +7,17 @@ import { User, UserRole } from '../types';
 
 const router = Router();
 
+router.post('/send-code', (req: Request, res: Response): void => {
+  const { phone } = req.body;
+
+  if (!phone) {
+    res.status(400).json({ error: '手机号不能为空' });
+    return;
+  }
+
+  res.json({ success: true, message: '验证码已发送，演示环境可输入任意6位数字' });
+});
+
 router.post('/login', (req: Request, res: Response): void => {
   const { phone, code } = req.body;
 
@@ -15,7 +26,7 @@ router.post('/login', (req: Request, res: Response): void => {
     return;
   }
 
-  if (code !== '123456') {
+  if (!/^\d{6}$/.test(String(code))) {
     res.status(401).json({ error: '验证码错误' });
     return;
   }

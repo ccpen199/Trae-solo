@@ -8,11 +8,9 @@ const quickActions = [
 ];
 
 const deviceTypes = [
-  { type: 'washing_machine', label: '洗衣机', icon: '🧺', count: 8 },
-  { type: 'dryer', label: '烘干机', icon: '💨', count: 5 },
-  { type: 'air_purifier', label: '空气净化器', icon: '🌬️', count: 6 },
-  { type: 'water_purifier', label: '净水器', icon: '💧', count: 4 },
-  { type: 'fitness_equipment', label: '健身器材', icon: '🏋️', count: 3 }
+  { type: 'washing_machine', label: '洗衣机', icon: '🧺', count: 5 },
+  { type: 'water_purifier', label: '饮水机', icon: '💧', count: 2 },
+  { type: 'shower', label: '淋浴终端', icon: '🚿', count: 1 }
 ];
 
 const HomePage = () => {

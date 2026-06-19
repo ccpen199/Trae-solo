@@ -3,12 +3,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db';
 import { authMiddleware, requireRoles } from '../middleware/auth';
 import { WorkOrder, WorkOrderPriority, WorkOrderStatus, WorkOrderType } from '../types';
+import {
+  pageResult,
+  parsePage,
+  serializeWorkOrder,
+  toDbWorkOrderStatus,
+} from '../serializers';
 
 const router = Router();
 
 router.get('/', authMiddleware, (req: Request, res: Response): void => {
   const { status, area } = req.query;
+  const { page, pageSize } = parsePage(req);
   const db = getDb();
+  const dbStatus = toDbWorkOrderStatus(status);
 
   let sql = `
     SELECT w.*, d.name as deviceName, d.location as deviceLocation, d.areaId as areaId,
@@ -21,9 +29,9 @@ router.get('/', authMiddleware, (req: Request, res: Response): void => {
   `;
   const params: any[] = [];
 
-  if (status) {
+  if (dbStatus) {
     sql += ' AND w.status = ?';
-    params.push(status);
+    params.push(dbStatus);
   }
   if (area) {
     sql += ' AND d.areaId = ?';
@@ -36,9 +44,9 @@ router.get('/', authMiddleware, (req: Request, res: Response): void => {
   }
 
   sql += ' ORDER BY w.createdAt DESC LIMIT 100';
-  const workOrders = db.prepare(sql).all(...params);
+  const workOrders = db.prepare(sql).all(...params).map(serializeWorkOrder);
 
-  res.json(workOrders);
+  res.json(pageResult(workOrders, page, pageSize, workOrders.length));
 });
 
 router.post('/', authMiddleware, (req: Request, res: Response): void => {
@@ -47,10 +55,23 @@ router.post('/', authMiddleware, (req: Request, res: Response): void => {
     return;
   }
 
-  const { deviceId, type, description, priority } = req.body;
+  const { title, description, priority } = req.body;
+  let { deviceId, type } = req.body;
 
-  if (!deviceId || !type || !description) {
+  if (!description && !title) {
     res.status(400).json({ error: '缺少必要参数' });
+    return;
+  }
+
+  const db = getDb();
+  if (!deviceId) {
+    const firstDevice = db.prepare('SELECT id FROM devices ORDER BY name ASC LIMIT 1').get() as { id: string } | undefined;
+    deviceId = firstDevice?.id;
+  }
+  type = type || 'repair';
+
+  if (!deviceId) {
+    res.status(400).json({ error: '缺少关联设备' });
     return;
   }
 
@@ -63,15 +84,15 @@ router.post('/', authMiddleware, (req: Request, res: Response): void => {
   const validPriorities: WorkOrderPriority[] = ['low', 'medium', 'high', 'urgent'];
   const finalPriority = validPriorities.includes(priority) ? priority : 'medium';
 
-  const db = getDb();
   const id = uuidv4();
   const now = new Date().toISOString();
   const status: WorkOrderStatus = 'pending';
+  const finalDescription = description || title;
 
   db.prepare(`
     INSERT INTO workorders (id, deviceId, reporterId, handlerId, type, description, status, priority, createdAt, resolvedAt)
     VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?, NULL)
-  `).run(id, deviceId, req.user.userId, type, description, status, finalPriority, now);
+  `).run(id, deviceId, req.user.userId, type, finalDescription, status, finalPriority, now);
 
   const workOrder = db.prepare(`
     SELECT w.*, d.name as deviceName, u.nickname as reporterName
@@ -79,13 +100,14 @@ router.post('/', authMiddleware, (req: Request, res: Response): void => {
     LEFT JOIN devices d ON w.deviceId = d.id
     LEFT JOIN users u ON w.reporterId = u.id
     WHERE w.id = ?
-  `).get(id);
+  `).get(id) as Record<string, unknown>;
 
-  res.status(201).json(workOrder);
+  res.status(201).json(serializeWorkOrder({ ...workOrder, title }));
 });
 
-router.put('/:id', authMiddleware, requireRoles('operator', 'property'), (req: Request, res: Response): void => {
-  const { status, description } = req.body;
+function updateWorkOrder(req: Request, res: Response): void {
+  const { description } = req.body;
+  const status = toDbWorkOrderStatus(req.body.status);
 
   const db = getDb();
   const existing = db.prepare('SELECT * FROM workorders WHERE id = ?').get(req.params.id) as WorkOrder | undefined;
@@ -97,7 +119,7 @@ router.put('/:id', authMiddleware, requireRoles('operator', 'property'), (req: R
 
   if (status) {
     const validStatuses: WorkOrderStatus[] = ['pending', 'assigned', 'processing', 'resolved', 'closed'];
-    if (!validStatuses.includes(status)) {
+    if (!validStatuses.includes(status as WorkOrderStatus)) {
       res.status(400).json({ error: '无效的工单状态' });
       return;
     }
@@ -126,11 +148,14 @@ router.put('/:id', authMiddleware, requireRoles('operator', 'property'), (req: R
     WHERE w.id = ?
   `).get(req.params.id);
 
-  res.json(updated);
-});
+  res.json(serializeWorkOrder(updated));
+}
 
-router.put('/:id/assign', authMiddleware, requireRoles('operator', 'property'), (req: Request, res: Response): void => {
-  const { handlerId } = req.body;
+router.put('/:id', authMiddleware, requireRoles('operator', 'property'), updateWorkOrder);
+router.patch('/:id', authMiddleware, requireRoles('operator', 'property'), updateWorkOrder);
+
+function assignWorkOrder(req: Request, res: Response): void {
+  const handlerId = req.body.handlerId || req.body.assigneeId;
 
   if (!handlerId) {
     res.status(400).json({ error: '处理人ID不能为空' });
@@ -165,7 +190,10 @@ router.put('/:id/assign', authMiddleware, requireRoles('operator', 'property'), 
     WHERE w.id = ?
   `).get(req.params.id);
 
-  res.json(updated);
-});
+  res.json(serializeWorkOrder(updated));
+}
+
+router.put('/:id/assign', authMiddleware, requireRoles('operator', 'property'), assignWorkOrder);
+router.post('/:id/assign', authMiddleware, requireRoles('operator', 'property'), assignWorkOrder);
 
 export default router;

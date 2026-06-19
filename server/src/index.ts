@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import http from 'http';
+import fs from 'fs';
+import path from 'path';
 import { Server as SocketIOServer } from 'socket.io';
 import { getDb } from './db';
 import authRoutes from './routes/auth';
@@ -12,7 +14,27 @@ import analyticsRoutes from './routes/analytics';
 import rewardsRoutes from './routes/rewards';
 import adminRoutes from './routes/admin';
 
-const PORT = 3001;
+function loadProjectEnv(): void {
+  const envPath = path.resolve(__dirname, '..', '..', '.env');
+  if (!fs.existsSync(envPath)) return;
+
+  const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+    const eq = trimmed.indexOf('=');
+    const key = trimmed.slice(0, eq).trim();
+    const value = trimmed.slice(eq + 1).trim();
+    if (key && process.env[key] == null) {
+      process.env[key] = value;
+    }
+  }
+}
+
+loadProjectEnv();
+
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59240);
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
 
 const app = express();
 const server = http.createServer(app);
@@ -105,10 +127,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`IoT Platform Server running on http://localhost:${PORT}`);
-  console.log(`API Base URL: http://localhost:${PORT}/api`);
-  console.log(`Health Check: http://localhost:${PORT}/api/health`);
+server.listen(PORT, HOST, () => {
+  console.log(`IoT Platform Server running on http://${HOST}:${PORT}`);
+  console.log(`API Base URL: http://${HOST}:${PORT}/api`);
+  console.log(`Health Check: http://${HOST}:${PORT}/api/health`);
   console.log(`Socket.IO server enabled`);
 });
 

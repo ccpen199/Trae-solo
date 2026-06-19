@@ -1,7 +1,9 @@
 import { Router, Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db';
 import { authMiddleware } from '../middleware/auth';
-import { RewardCoupon, RewardRecord } from '../types';
+import { RewardCoupon } from '../types';
+import { serializeCoupon } from '../serializers';
 
 const router = Router();
 
@@ -26,18 +28,11 @@ router.get('/', authMiddleware, (req: Request, res: Response): void => {
     WHERE userId = ? AND isUsed = 0 AND expireAt > datetime('now')
   `).get(userId) as { count: number };
 
-  const recentRecords = db.prepare(`
-    SELECT * FROM rewardRecords
-    WHERE userId = ?
-    ORDER BY createdAt DESC
-    LIMIT 10
-  `).all(userId) as RewardRecord[];
-
-  res.json({
-    totalPoints: totalPointsResult.totalPoints,
-    availableCoupons: availableCouponsResult.count,
-    recentRecords,
-  });
+  res.json([
+    { id: 'coupon-water', name: '水电券兑换', description: `可用优惠券 ${availableCouponsResult.count} 张，当前积分 ${totalPointsResult.totalPoints}`, points: 100, imageUrl: '🎫' },
+    { id: 'low-carbon', name: '低碳洗衣奖励', description: '连续使用节能模式可兑换社区水电券', points: 70, imageUrl: '🌱' },
+    { id: 'maintenance', name: '报修贡献奖励', description: '提交有效设备异常线索获得积分', points: 30, imageUrl: '🔧' },
+  ]);
 });
 
 router.get('/coupons', authMiddleware, (req: Request, res: Response): void => {
@@ -65,7 +60,7 @@ router.get('/coupons', authMiddleware, (req: Request, res: Response): void => {
   }
 
   sql += ' ORDER BY expireAt ASC';
-  const coupons = db.prepare(sql).all(...params) as RewardCoupon[];
+  const coupons = (db.prepare(sql).all(...params) as RewardCoupon[]).map(serializeCoupon);
 
   res.json(coupons);
 });
@@ -102,7 +97,7 @@ router.post('/coupons/:id/use', authMiddleware, (req: Request, res: Response): v
   db.prepare('UPDATE rewardCoupons SET isUsed = 1 WHERE id = ?').run(req.params.id);
 
   const updated = db.prepare('SELECT * FROM rewardCoupons WHERE id = ?').get(req.params.id) as RewardCoupon;
-  res.json(updated);
+  res.json({ success: true, coupon: serializeCoupon(updated) });
 });
 
 router.get('/streak', authMiddleware, (req: Request, res: Response): void => {
@@ -146,9 +141,47 @@ router.get('/streak', authMiddleware, (req: Request, res: Response): void => {
     new Date(checkInRecords[0].checkDate).toDateString() === today.toDateString();
 
   res.json({
-    streak,
+    currentStreak: streak,
+    longestStreak: Math.max(streak, checkInRecords.length),
+    checkInDates: checkInRecords.map((record) => record.checkDate),
     todayCheckedIn,
-    totalDays: checkInRecords.length,
+  });
+});
+
+router.post('/checkin', authMiddleware, (req: Request, res: Response): void => {
+  if (!req.user) {
+    res.status(401).json({ error: '未认证' });
+    return;
+  }
+
+  const db = getDb();
+  const userId = req.user.userId;
+  const today = new Date().toISOString().slice(0, 10);
+
+  const existing = db.prepare(`
+    SELECT id FROM rewardRecords
+    WHERE userId = ? AND action = 'checkin' AND date(createdAt) = ?
+  `).get(userId, today);
+
+  if (!existing) {
+    db.prepare(`
+      INSERT INTO rewardRecords (id, userId, action, points, description, createdAt, deviceType)
+      VALUES (?, ?, 'checkin', 10, '每日签到', ?, NULL)
+    `).run(uuidv4(), userId, new Date().toISOString());
+  }
+
+  const checkInRecords = db.prepare(`
+    SELECT DISTINCT date(createdAt) as checkDate
+    FROM rewardRecords
+    WHERE userId = ? AND action = 'checkin'
+    ORDER BY checkDate DESC
+  `).all(userId) as { checkDate: string }[];
+
+  res.json({
+    currentStreak: checkInRecords.length,
+    longestStreak: checkInRecords.length,
+    checkInDates: checkInRecords.map((record) => record.checkDate),
+    todayCheckedIn: true,
   });
 });
 

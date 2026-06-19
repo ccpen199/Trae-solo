@@ -3,27 +3,32 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db';
 import { authMiddleware } from '../middleware/auth';
 import { Device, Reservation, ReservationStatus } from '../types';
+import { pageResult, parsePage, serializeReservation } from '../serializers';
 
 const router = Router();
 
-router.get('/', authMiddleware, (req: Request, res: Response): void => {
+function listUserReservations(req: Request, res: Response): void {
   if (!req.user) {
     res.status(401).json({ error: '未认证' });
     return;
   }
 
+  const { page, pageSize } = parsePage(req);
   const db = getDb();
-  const reservations = db.prepare(`
+  const reservations = (db.prepare(`
     SELECT r.*, d.name as deviceName, d.type as deviceType
     FROM reservations r
     LEFT JOIN devices d ON r.deviceId = d.id
     WHERE r.userId = ?
     ORDER BY r.startTime DESC
     LIMIT 50
-  `).all(req.user.userId);
+  `).all(req.user.userId) as Reservation[]).map(serializeReservation);
 
-  res.json(reservations);
-});
+  res.json(pageResult(reservations, page, pageSize, reservations.length));
+}
+
+router.get('/', authMiddleware, listUserReservations);
+router.get('/my', authMiddleware, listUserReservations);
 
 router.post('/', authMiddleware, (req: Request, res: Response): void => {
   if (!req.user) {
@@ -68,10 +73,10 @@ router.post('/', authMiddleware, (req: Request, res: Response): void => {
   `).run(id, req.user.userId, deviceId, startTime, endTime, status, finalAmount);
 
   const reservation = db.prepare('SELECT * FROM reservations WHERE id = ?').get(id) as Reservation;
-  res.status(201).json(reservation);
+  res.status(201).json(serializeReservation(reservation));
 });
 
-router.put('/:id/cancel', authMiddleware, (req: Request, res: Response): void => {
+function cancelReservation(req: Request, res: Response): void {
   if (!req.user) {
     res.status(401).json({ error: '未认证' });
     return;
@@ -100,7 +105,10 @@ router.put('/:id/cancel', authMiddleware, (req: Request, res: Response): void =>
   `).run(req.params.id);
 
   const updated = db.prepare('SELECT * FROM reservations WHERE id = ?').get(req.params.id) as Reservation;
-  res.json(updated);
-});
+  res.json(serializeReservation(updated));
+}
+
+router.put('/:id/cancel', authMiddleware, cancelReservation);
+router.post('/:id/cancel', authMiddleware, cancelReservation);
 
 export default router;
