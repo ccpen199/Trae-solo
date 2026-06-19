@@ -17,12 +17,14 @@ import {
   TrendingDown,
   Clock,
 } from 'lucide-react'
+import { useBusinessStore } from '@/store/business'
 
 type TabKey = 'ai_audit' | 'aml' | 'geofence'
 
 export default function Compliance() {
   const [activeTab, setActiveTab] = useState<TabKey>('ai_audit')
   const [keyword, setKeyword] = useState('')
+  const { addToast, openModal } = useBusinessStore()
 
   const stats = [
     { label: '今日审核', value: '2,861', icon: Eye, color: 'from-sky-500 to-blue-600' },
@@ -210,7 +212,8 @@ export default function Compliance() {
           return (
             <div
               key={s.label}
-              className="bg-white rounded-2xl p-5 border border-slate-200 flex items-center gap-4"
+              onClick={() => openModal('performance_detail', { type: 'compliance', category: s.label })}
+              className="bg-white rounded-2xl p-5 border border-slate-200 flex items-center gap-4 cursor-pointer hover:shadow-lg transition"
             >
               <div
                 className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center shadow-lg`}
@@ -300,8 +303,11 @@ export default function Compliance() {
                   const sc = statusColors[log.status]
                   const StatusIcon = sc.icon
                   return (
-                    <div key={log.id} className="p-6 hover:bg-slate-50 transition">
-                      <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div
+                      key={log.id}
+                      onClick={() => addToast({ type: 'info', title: '审核详情', description: '正在加载 AI 审核证据链...' })}
+                      className="p-6 hover:bg-slate-50 transition cursor-pointer"
+                    >                      <div className="flex flex-wrap items-start justify-between gap-4">
                         <div className="flex items-start gap-4 flex-1 min-w-0">
                           <div
                             className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
@@ -423,8 +429,11 @@ export default function Compliance() {
                   const sc = statusColors[r.status]
                   const StatusIcon = sc.icon
                   return (
-                    <tr key={r.id} className="hover:bg-slate-50 transition">
-                      <td className="py-4 px-6">
+                    <tr
+                      key={r.id}
+                      onClick={() => addToast({ type: 'info', title: '交易详情', description: `正在加载 ${r.user} 的交易风控记录...` })}
+                      className="hover:bg-slate-50 transition cursor-pointer"
+                    >                      <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center font-medium text-slate-700">
                             {r.user.charAt(0)}
@@ -510,7 +519,8 @@ export default function Compliance() {
             {geoAlerts.map((g) => (
               <div
                 key={g.id}
-                className={`bg-white rounded-2xl p-6 border transition hover:shadow-lg ${
+                onClick={() => addToast({ type: 'info', title: '围栏详情', description: `正在加载 ${g.user} 的区域合规数据...` })}
+                className={`bg-white rounded-2xl p-6 border transition hover:shadow-lg cursor-pointer ${
                   g.risk === 'high'
                     ? 'border-rose-200'
                     : g.risk === 'medium'

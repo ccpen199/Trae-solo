@@ -11,12 +11,14 @@ import {
   Star,
   Filter,
 } from 'lucide-react'
+import { useBusinessStore } from '@/store/business'
 
 type PeriodKey = 'month' | 'quarter' | 'year'
 
 export default function Ranking() {
   const [period, setPeriod] = useState<PeriodKey>('month')
   const [category, setCategory] = useState('业绩')
+  const { addToast, openModal } = useBusinessStore()
 
   const periods: { key: PeriodKey; label: string }[] = [
     { key: 'month', label: '本月' },
@@ -108,22 +110,34 @@ export default function Ranking() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 lg:col-span-2">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+            <div
+              onClick={() => openModal('performance_detail', { type: 'performance' })}
+              className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 cursor-pointer hover:bg-white/20 transition"
+            >
               <Award className="w-5 h-5 text-white/70" />
               <div className="text-2xl font-bold mt-2">¥{myRanking.performance.toLocaleString()}</div>
               <div className="text-xs text-white/70 mt-1">当前业绩</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+            <div
+              onClick={() => openModal('performance_detail', { type: 'growth' })}
+              className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 cursor-pointer hover:bg-white/20 transition"
+            >
               <TrendingUp className="w-5 h-5 text-white/70" />
               <div className="text-2xl font-bold mt-2">+23.5%</div>
               <div className="text-xs text-white/70 mt-1">环比增长</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+            <div
+              onClick={() => openModal('performance_detail', { type: 'customers' })}
+              className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 cursor-pointer hover:bg-white/20 transition"
+            >
               <Users className="w-5 h-5 text-white/70" />
               <div className="text-2xl font-bold mt-2">186</div>
               <div className="text-xs text-white/70 mt-1">客户总数</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+            <div
+              onClick={() => openModal('performance_detail', { type: 'team' })}
+              className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20 cursor-pointer hover:bg-white/20 transition"
+            >
               <Star className="w-5 h-5 text-white/70" />
               <div className="text-2xl font-bold mt-2">3</div>
               <div className="text-xs text-white/70 mt-1">团队成员</div>
@@ -138,7 +152,10 @@ export default function Ranking() {
           {periods.map((p) => (
             <button
               key={p.key}
-              onClick={() => setPeriod(p.key)}
+              onClick={() => {
+                setPeriod(p.key)
+                addToast({ type: 'info', title: '切换排行周期', description: `已切换至${p.label}排行榜` })
+              }}
               className={`px-5 py-2 rounded-xl text-sm font-medium transition ${
                 period === p.key
                   ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md shadow-amber-500/30'
@@ -180,8 +197,10 @@ export default function Ranking() {
           <div className="grid gap-4 md:grid-cols-3 items-end">
             {/* 第二名 */}
             <div className="order-1 md:order-1">
-              <div className="bg-white rounded-2xl p-6 border border-slate-200 text-center relative hover:shadow-lg transition">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+              <div
+                onClick={() => openModal('performance_detail', { type: 'team', name: rankings[1].name, id: rankings[1].id })}
+                className="bg-white rounded-2xl p-6 border border-slate-200 text-center relative hover:shadow-lg transition cursor-pointer"
+              >                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center shadow-lg shadow-slate-400/50">
                     <Medal className="w-6 h-6 text-white" />
                   </div>
@@ -200,8 +219,10 @@ export default function Ranking() {
 
             {/* 第一名 */}
             <div className="order-0 md:order-2 md:-mt-6">
-              <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-300 text-center relative hover:shadow-xl transition">
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2">
+              <div
+                onClick={() => openModal('performance_detail', { type: 'team', name: rankings[0].name, id: rankings[0].id })}
+                className="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-300 text-center relative hover:shadow-xl transition cursor-pointer"
+              >                <div className="absolute -top-8 left-1/2 -translate-x-1/2">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center shadow-xl shadow-amber-500/50 ring-4 ring-white">
                     <Crown className="w-8 h-8 text-white" />
                   </div>
@@ -224,8 +245,10 @@ export default function Ranking() {
 
             {/* 第三名 */}
             <div className="order-2 md:order-3">
-              <div className="bg-white rounded-2xl p-6 border border-slate-200 text-center relative hover:shadow-lg transition">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+              <div
+                onClick={() => openModal('performance_detail', { type: 'team', name: rankings[2].name, id: rankings[2].id })}
+                className="bg-white rounded-2xl p-6 border border-slate-200 text-center relative hover:shadow-lg transition cursor-pointer"
+              >                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/50">
                     <Trophy className="w-6 h-6 text-white" />
                   </div>
@@ -252,7 +275,11 @@ export default function Ranking() {
             return (
               <div
                 key={r.id}
-                className={`px-6 py-4 flex items-center gap-4 hover:bg-slate-50 transition ${
+                onClick={() => {
+                  addToast({ type: 'info', title: '查看业绩详情', description: `正在加载 ${r.name} 的业绩数据...` })
+                  openModal('performance_detail', { type: 'team', name: r.name, id: r.id })
+                }}
+                className={`px-6 py-4 flex items-center gap-4 hover:bg-slate-50 transition cursor-pointer ${
                   r.isMe ? 'bg-gradient-to-r from-violet-50 to-indigo-50' : ''
                 }`}
               >

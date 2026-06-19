@@ -1,11 +1,11 @@
 import { useState } from 'react'
+import { useBusinessStore } from '@/store/business'
 import {
   Building2,
   Calendar,
   Clock,
   MapPin,
   Star,
-  User,
   Phone,
   FileCheck,
   MessageSquare,
@@ -24,33 +24,6 @@ import {
 
 type TabKey = 'appointments' | 'services' | 'reviews' | 'stores'
 
-interface Appointment {
-  id: string
-  customer: string
-  phone: string
-  service: string
-  store: string
-  date: string
-  time: string
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled'
-  note?: string
-  avatar: string
-}
-
-interface ServiceRecord {
-  id: string
-  customer: string
-  avatar: string
-  service: string
-  store: string
-  date: string
-  duration: string
-  consultant: string
-  products: string[]
-  hash: string
-  status: 'chained' | 'pending'
-}
-
 interface Review {
   id: string
   customer: string
@@ -64,131 +37,6 @@ interface Review {
   reply?: string
   helpful: number
 }
-
-const appointments: Appointment[] = [
-  {
-    id: 'AP001',
-    customer: '陈雅婷',
-    phone: '138****5821',
-    service: '松花粉体验+体质检测',
-    store: '浦东旗舰店',
-    date: '2026-06-18',
-    time: '14:00',
-    status: 'confirmed',
-    avatar: '陈',
-  },
-  {
-    id: 'AP002',
-    customer: '刘志强',
-    phone: '139****3344',
-    service: '心脑血管养护方案咨询',
-    store: '浦东旗舰店',
-    date: '2026-06-18',
-    time: '15:30',
-    status: 'pending',
-    note: '需准备血压检测报告',
-    avatar: '刘',
-  },
-  {
-    id: 'AP003',
-    customer: '王俊杰',
-    phone: '136****9900',
-    service: '新客户首次体验',
-    store: '浦东旗舰店',
-    date: '2026-06-18',
-    time: '10:00',
-    status: 'completed',
-    avatar: '王',
-  },
-  {
-    id: 'AP004',
-    customer: '李美华',
-    phone: '135****2211',
-    service: '美容养颜方案定制',
-    store: '徐汇体验店',
-    date: '2026-06-19',
-    time: '11:00',
-    status: 'confirmed',
-    avatar: '李',
-  },
-  {
-    id: 'AP005',
-    customer: '张秀兰',
-    phone: '137****7788',
-    service: '定期复查',
-    store: '长宁服务中心',
-    date: '2026-06-20',
-    time: '09:30',
-    status: 'pending',
-    avatar: '张',
-  },
-  {
-    id: 'AP006',
-    customer: '赵海涛',
-    phone: '134****6677',
-    service: '产品使用指导',
-    store: '浦东旗舰店',
-    date: '2026-06-17',
-    time: '16:00',
-    status: 'cancelled',
-    avatar: '赵',
-  },
-]
-
-const serviceRecords: ServiceRecord[] = [
-  {
-    id: 'SR001',
-    customer: '陈雅婷',
-    avatar: '陈',
-    service: '松花粉体验+体质检测',
-    store: '浦东旗舰店',
-    date: '2026-06-15',
-    duration: '90 分钟',
-    consultant: '王芳（高级健康顾问）',
-    products: ['国珍松花粉片 x1', '体质检测报告 x1'],
-    hash: '0x8f3a...e291',
-    status: 'chained',
-  },
-  {
-    id: 'SR002',
-    customer: '刘志强',
-    avatar: '刘',
-    service: '心脑血管养护方案',
-    store: '浦东旗舰店',
-    date: '2026-06-10',
-    duration: '120 分钟',
-    consultant: '李明（资深营养师）',
-    products: ['国珍竹康宁片 x2', '国珍鱼油软胶囊 x1'],
-    hash: '0x7c2b...91d4',
-    status: 'chained',
-  },
-  {
-    id: 'SR003',
-    customer: '李美华',
-    avatar: '李',
-    service: '美容养颜方案咨询',
-    store: '徐汇体验店',
-    date: '2026-06-12',
-    duration: '60 分钟',
-    consultant: '孙丽华（美容顾问）',
-    products: ['国珍葡萄籽VE x1', '养颜调理方案 x1'],
-    hash: '0x5e1f...38a7',
-    status: 'chained',
-  },
-  {
-    id: 'SR004',
-    customer: '张秀兰',
-    avatar: '张',
-    service: '季度健康复查',
-    store: '长宁服务中心',
-    date: '2026-06-16',
-    duration: '45 分钟',
-    consultant: '周建国（健康管理师）',
-    products: ['复查报告 x1'],
-    hash: '—',
-    status: 'pending',
-  },
-]
 
 const reviews: Review[] = [
   {
@@ -287,6 +135,7 @@ const stores = [
 ]
 
 export default function Stores() {
+  const { appointments, serviceRecords, openModal, addToast, updateAppointmentStatus, addServiceRecord } = useBusinessStore()
   const [activeTab, setActiveTab] = useState<TabKey>('appointments')
   const [keyword, setKeyword] = useState('')
   const [filterStatus, setFilterStatus] = useState('全部')
@@ -322,7 +171,10 @@ export default function Stores() {
             <Filter className="w-4 h-4" />
             筛选
           </button>
-          <button className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/30 hover:shadow-amber-500/40 hover:-translate-y-0.5 transition-all flex items-center gap-2">
+          <button
+            onClick={() => addToast({ type: 'info', title: '新建预约', description: '请选择客户、服务项目和预约时间' })}
+            className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/30 hover:shadow-amber-500/40 hover:-translate-y-0.5 transition-all flex items-center gap-2"
+          >
             <Plus className="w-4 h-4" />
             新建预约
           </button>
@@ -333,7 +185,7 @@ export default function Stores() {
       <div className="bg-white rounded-2xl p-2 border border-slate-200 inline-flex">
         {[
           { key: 'appointments', label: '预约管理', icon: Calendar, badge: appointments.filter((a) => a.status === 'pending').length },
-          { key: 'services', label: '服务记录', icon: FileCheck },
+          { key: 'services', label: '服务记录', icon: FileCheck, badge: serviceRecords.length },
           { key: 'reviews', label: '客户评价', icon: MessageSquare, badge: reviews.length },
           { key: 'stores', label: '生活馆网络', icon: MapPin },
         ].map((tab) => {
@@ -404,7 +256,8 @@ export default function Stores() {
               return (
                 <div
                   key={a.id}
-                  className="bg-white rounded-2xl p-5 border border-slate-200 hover:shadow-lg hover:border-amber-200 transition-all"
+                  onClick={() => { openModal('appointment_detail', a as any); addToast({ type: 'info', title: '预约详情', description: `正在加载 ${a.customer} 的预约信息...` }) }}
+                  className="bg-white rounded-2xl p-5 border border-slate-200 hover:shadow-lg hover:border-amber-200 transition-all cursor-pointer"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
@@ -452,21 +305,33 @@ export default function Stores() {
 
                   {a.status === 'pending' && (
                     <div className="mt-4 flex gap-2">
-                      <button className="flex-1 py-2 text-sm font-medium bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:shadow-md transition">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); updateAppointmentStatus(a.id, 'confirmed'); addToast({ type: 'success', title: '预约已确认', description: `${a.customer} 的预约已确认` }) }}
+                        className="flex-1 py-2 text-sm font-medium bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:shadow-md transition"
+                      >
                         确认预约
                       </button>
-                      <button className="flex-1 py-2 text-sm font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); updateAppointmentStatus(a.id, 'cancelled'); addToast({ type: 'warning', title: '预约已取消', description: `${a.customer} 的预约已取消` }) }}
+                        className="flex-1 py-2 text-sm font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition"
+                      >
                         取消
                       </button>
                     </div>
                   )}
                   {a.status === 'confirmed' && (
-                    <button className="mt-4 w-full py-2 text-sm font-medium bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg hover:shadow-md transition">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); updateAppointmentStatus(a.id, 'completed'); addServiceRecord({ customer: a.customer, avatar: a.avatar, service: a.service, store: a.store, date: a.date, duration: '60 分钟', consultant: '李明（资深营养师）', products: ['服务完成确认'] }); addToast({ type: 'success', title: '服务已完成', description: '服务记录已上链' }) }}
+                      className="mt-4 w-full py-2 text-sm font-medium bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg hover:shadow-md transition"
+                    >
                       标记完成
                     </button>
                   )}
                   {a.status === 'completed' && (
-                    <button className="mt-4 w-full py-2 text-sm font-medium bg-slate-50 text-slate-700 rounded-lg hover:bg-slate-100 transition flex items-center justify-center gap-1">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); openModal('appointment_detail', a as any) }}
+                      className="mt-4 w-full py-2 text-sm font-medium bg-slate-50 text-slate-700 rounded-lg hover:bg-slate-100 transition flex items-center justify-center gap-1"
+                    >
                       <FileCheck className="w-4 h-4" />
                       查看服务记录
                     </button>
@@ -494,7 +359,8 @@ export default function Stores() {
             {serviceRecords.map((s) => (
               <div
                 key={s.id}
-                className="p-6 hover:bg-slate-50 transition"
+                onClick={() => addToast({ type: 'info', title: '服务记录详情', description: `正在查看 ${s.customer} 的服务记录` })}
+                className="p-6 hover:bg-slate-50 transition cursor-pointer"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="flex items-start gap-4">
@@ -659,7 +525,10 @@ export default function Stores() {
                       </span>
                       <div className="flex items-center gap-2">
                         {!r.reply && (
-                          <button className="px-4 py-1.5 text-sm font-medium bg-gradient-to-r from-sky-500 to-violet-600 text-white rounded-lg hover:shadow-md transition">
+                          <button
+                            onClick={() => addToast({ type: 'info', title: '回复评价', description: `正在回复 ${r.customer} 的评价` })}
+                            className="px-4 py-1.5 text-sm font-medium bg-gradient-to-r from-sky-500 to-violet-600 text-white rounded-lg hover:shadow-md transition"
+                          >
                             回复评价
                           </button>
                         )}
@@ -679,7 +548,8 @@ export default function Stores() {
           {stores.map((s) => (
             <div
               key={s.id}
-              className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-xl hover:border-amber-200 transition-all group"
+              onClick={() => addToast({ type: 'info', title: '生活馆详情', description: `正在查看 ${s.name} 的详情信息` })}
+              className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-xl hover:border-amber-200 transition-all group cursor-pointer"
             >
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">

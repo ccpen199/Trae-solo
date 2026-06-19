@@ -14,9 +14,11 @@ import {
   Target,
   TrendingUp,
 } from 'lucide-react'
+import { useBusinessStore } from '@/store/business'
 
 export default function Exams() {
   const [activeTab, setActiveTab] = useState<'courses' | 'exams'>('courses')
+  const { addToast, openModal } = useBusinessStore()
 
   const courses = [
     {
@@ -224,7 +226,8 @@ export default function Exams() {
             {courses.map((c) => (
               <div
                 key={c.id}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition group"
+                onClick={() => addToast({ type: 'info', title: '课程详情', description: '正在加载课程内容与课件...' })}
+                className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition group cursor-pointer"
               >
                 <div className="flex">
                   <div
@@ -273,7 +276,17 @@ export default function Exams() {
                         />
                       </div>
                     </div>
-                    <button className="mt-4 w-full py-2 text-sm font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-center gap-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (c.progress === 100) {
+                          addToast({ type: 'success', title: '我的证书', description: '正在加载电子证书...' })
+                        } else {
+                          addToast({ type: 'info', title: '学习记录', description: '继续上次学习进度...' })
+                        }
+                      }}
+                      className="mt-4 w-full py-2 text-sm font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition flex items-center justify-center gap-1"
+                    >
                       {c.progress === 0 ? '开始学习' : c.progress === 100 ? '查看证书' : '继续学习'}
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -368,6 +381,13 @@ export default function Exams() {
                   </div>
                 </div>
                 <button
+                  onClick={() => {
+                    if (e.status === 'pending' || e.status === 'failed') {
+                      addToast({ type: 'success', title: '进入考场', description: '请在规定时间内完成答题' })
+                    } else {
+                      addToast({ type: 'info', title: '题解详情', description: '正在加载答卷解析与评分详情...' })
+                    }
+                  }}
                   className={`px-5 py-2.5 rounded-xl font-medium text-sm transition flex items-center gap-1.5 ${
                     e.status === 'pending'
                       ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg shadow-amber-500/30 hover:shadow-amber-500/40 hover:-translate-y-0.5'

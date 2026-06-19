@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useBusinessStore } from '@/store/business'
 import {
   Package,
   Search,
@@ -150,6 +151,7 @@ const traceSteps = [
 ]
 
 export default function Products() {
+  const { addToast, openModal } = useBusinessStore()
   const [activeTab, setActiveTab] = useState<'list' | 'inventory' | 'promotions' | 'trace'>('list')
   const [keyword, setKeyword] = useState('')
   const [category, setCategory] = useState('全部')
@@ -239,11 +241,17 @@ export default function Products() {
           <p className="text-slate-500 text-sm mt-1">产品全生命周期管理 · 批次溯源 · 库存同步 · 促销规则</p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-700 font-medium hover:bg-slate-50 transition flex items-center gap-2">
+          <button
+            onClick={() => addToast({ type: 'info', title: '扫码溯源', description: '正在启动摄像头，请对准产品条码或二维码...' })}
+            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-700 font-medium hover:bg-slate-50 transition flex items-center gap-2"
+          >
             <Barcode className="w-4 h-4" />
             扫码溯源
           </button>
-          <button className="px-5 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold rounded-xl shadow-lg shadow-violet-500/30 hover:shadow-violet-500/40 hover:-translate-y-0.5 transition-all flex items-center gap-2">
+          <button
+            onClick={() => addToast({ type: 'info', title: '新增产品', description: '正在打开产品创建表单...' })}
+            className="px-5 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold rounded-xl shadow-lg shadow-violet-500/30 hover:shadow-violet-500/40 hover:-translate-y-0.5 transition-all flex items-center gap-2"
+          >
             <Plus className="w-4 h-4" />
             新增产品
           </button>
@@ -307,7 +315,10 @@ export default function Products() {
                   </button>
                 ))}
               </div>
-              <button className="px-4 py-2.5 border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 transition flex items-center gap-2 whitespace-nowrap">
+              <button
+                onClick={() => addToast({ type: 'info', title: '高级筛选', description: '正在打开高级筛选面板...' })}
+                className="px-4 py-2.5 border border-slate-200 rounded-xl text-slate-600 font-medium hover:bg-slate-50 transition flex items-center gap-2 whitespace-nowrap"
+              >
                 <Filter className="w-4 h-4" />
                 高级筛选
               </button>
@@ -319,7 +330,8 @@ export default function Products() {
             {filtered.map((p) => (
               <div
                 key={p.id}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all group"
+                onClick={() => addToast({ type: 'info', title: '产品详情', description: '正在加载产品完整资料与批次溯源信息...' })}
+                className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all group cursor-pointer"
               >
                 <div className="relative h-40 bg-gradient-to-br from-slate-50 to-violet-50 flex items-center justify-center">
                   <span className="text-6xl">{p.image}</span>
@@ -375,13 +387,31 @@ export default function Products() {
                       </div>
                     </div>
                     <div className="flex items-center gap-1">
-                      <button className="p-2 text-slate-500 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          addToast({ type: 'info', title: '查看详情', description: '正在打开产品详情页...' })
+                        }}
+                        className="p-2 text-slate-500 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition"
+                      >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="p-2 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          addToast({ type: 'info', title: '分享产品', description: '正在生成分享链接...' })
+                        }}
+                        className="p-2 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition"
+                      >
                         <Share2 className="w-4 h-4" />
                       </button>
-                      <button className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          addToast({ type: 'success', title: '加入购物车', description: '产品已成功加入购物车' })
+                        }}
+                        className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                      >
                         <ShoppingCart className="w-4 h-4" />
                       </button>
                     </div>
@@ -402,7 +432,8 @@ export default function Products() {
               return (
                 <div
                   key={item.label}
-                  className="bg-white rounded-2xl p-5 border border-slate-200 flex items-center gap-4"
+                  onClick={() => openModal('performance_detail', { type: 'revenue' })}
+                  className="bg-white rounded-2xl p-5 border border-slate-200 flex items-center gap-4 cursor-pointer hover:shadow-lg transition"
                 >
                   <div
                     className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg`}
@@ -442,7 +473,11 @@ export default function Products() {
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {products.map((p) => (
-                    <tr key={p.id} className="hover:bg-slate-50 transition">
+                    <tr
+                      key={p.id}
+                      onClick={() => openModal('performance_detail', { type: 'revenue' })}
+                      className="hover:bg-slate-50 transition cursor-pointer"
+                    >
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
                           <span className="text-2xl">{p.image}</span>
@@ -498,7 +533,10 @@ export default function Products() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="text-slate-600 text-sm">共 {promotions.length} 个活动规则</div>
-            <button className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-xl shadow-lg shadow-rose-500/30 hover:shadow-rose-500/40 transition-all flex items-center gap-2">
+            <button
+              onClick={() => addToast({ type: 'info', title: '发起促销', description: '正在打开促销活动创建向导...' })}
+              className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-xl shadow-lg shadow-rose-500/30 hover:shadow-rose-500/40 transition-all flex items-center gap-2"
+            >
               <Plus className="w-4 h-4" />
               创建促销活动
             </button>
@@ -507,7 +545,8 @@ export default function Products() {
             {promotions.map((promo) => (
               <div
                 key={promo.id}
-                className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-lg transition"
+                onClick={() => addToast({ type: 'info', title: '活动详情', description: `正在加载「${promo.name}」的活动数据...` })}
+                className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-lg transition cursor-pointer"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
@@ -585,7 +624,11 @@ export default function Products() {
             {traceSteps.map((step, i) => {
               const Icon = step.icon
               return (
-                <div key={step.step} className="relative pb-8 last:pb-0">
+                <div
+                  key={step.step}
+                  onClick={() => addToast({ type: 'info', title: '批次详情', description: '正在查询该批次的完整溯源链路...' })}
+                  className="relative pb-8 last:pb-0 cursor-pointer"
+                >
                   <div
                     className={`absolute -left-8 w-6 h-6 rounded-full flex items-center justify-center border-4 border-white ${
                       step.status === 'current'
@@ -645,7 +688,10 @@ export default function Products() {
                   国家市场监督管理总局区块链存证 · 上链时间 2026-03-18 14:32:18
                 </div>
               </div>
-              <button className="px-4 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-medium rounded-xl flex items-center gap-2 hover:shadow-lg transition">
+              <button
+                onClick={() => addToast({ type: 'info', title: '溯源证书', description: '正在加载区块链存证的溯源证书...' })}
+                className="px-4 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-medium rounded-xl flex items-center gap-2 hover:shadow-lg transition"
+              >
                 <Eye className="w-4 h-4" />
                 查看溯源证书
                 <ChevronRight className="w-4 h-4" />
