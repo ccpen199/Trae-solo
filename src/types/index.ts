@@ -11,6 +11,26 @@ export interface Student {
   credits: number;
 }
 
+export type TeamStatus =
+  | 'draft'
+  | 'pending'
+  | 'advisor_reviewing'
+  | 'advisor_rejected'
+  | 'dept_reviewing'
+  | 'dept_rejected'
+  | 'approved'
+  | 'ongoing'
+  | 'completed'
+  | 'certified';
+
+export type CreditProgress =
+  | 'not_started'
+  | 'hours_collecting'
+  | 'hours_confirmed'
+  | 'dept_reviewing'
+  | 'credited'
+  | 'rejected';
+
 export interface Team {
   id: string;
   name: string;
@@ -19,13 +39,38 @@ export interface Team {
   leaderId: string;
   leaderName: string;
   members: Student[];
-  status: 'pending' | 'approved' | 'rejected' | 'ongoing' | 'completed';
+  status: TeamStatus;
   startDate: string;
   endDate: string;
   location: string;
   description: string;
   checkInCount: number;
   logCount: number;
+
+  advisorId?: string;
+  advisorName?: string;
+  applyTime?: string;
+
+  advisorOpinion?: string;
+  advisorStatus?: 'pending' | 'approved' | 'rejected';
+  advisorReviewTime?: string;
+
+  departmentOpinion?: string;
+  departmentRejectReason?: string;
+  departmentStatus?: 'pending' | 'approved' | 'rejected';
+  departmentReviewTime?: string;
+
+  creditProgress?: CreditProgress;
+  creditAmount?: number;
+  creditReviewer?: string;
+  creditReviewTime?: string;
+
+  certificationStatus?: 'not_started' | 'submitted' | 'reviewing' | 'approved' | 'rejected';
+  certificationOpinion?: string;
+
+  totalServiceHours?: number;
+  allKeywords?: string[];
+  teamAchievements?: string[];
 }
 
 export interface CheckInRecord {
@@ -38,6 +83,14 @@ export interface CheckInRecord {
   photoUrl?: string;
   timestamp: string;
   description: string;
+  hasWatermark?: boolean;
+  watermarkInfo?: {
+    time: string;
+    gps: string;
+    team: string;
+  };
+  authorId?: string;
+  authorName?: string;
 }
 
 export interface PracticeLog {
@@ -45,11 +98,16 @@ export interface PracticeLog {
   teamId: string;
   teamName: string;
   author: string;
+  authorId?: string;
   date: string;
   content: string;
   summary?: string;
   keywords: string[];
   serviceHours: number;
+  status?: 'draft' | 'submitted' | 'reviewing' | 'approved' | 'rejected';
+  reviewer?: string;
+  reviewComment?: string;
+  reviewTime?: string;
 }
 
 export interface Scholarship {
@@ -103,6 +161,9 @@ export interface Department {
   participationRate: number;
   totalHours: number;
   avgCredits: number;
+  teamCount?: number;
+  completedTeamCount?: number;
+  certifiedTeamCount?: number;
 }
 
 export interface PracticeBase {
@@ -115,6 +176,9 @@ export interface PracticeBase {
   satisfaction: number;
   positionCount: number;
   description: string;
+  totalCheckIns?: number;
+  totalTeams?: number;
+  totalStudents?: number;
 }
 
 export interface StatsData {
@@ -124,7 +188,9 @@ export interface StatsData {
   totalBases: number;
   participationRate: number;
   avgCredits: number;
-  monthlyData: { month: string; hours: number; teams: number }[];
-  departmentRanking: { name: string; hours: number; rate: number }[];
-  baseSatisfaction: { name: string; score: number }[];
+  pendingReviewTeams: number;
+  certifiedTeams: number;
+  monthlyData: { month: string; hours: number; teams: number; logs: number; checkins: number }[];
+  departmentRanking: { name: string; hours: number; rate: number; teamCount: number; avgHours: number }[];
+  baseSatisfaction: { name: string; score: number; checkins: number; teams: number }[];
 }
