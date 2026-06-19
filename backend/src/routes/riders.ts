@@ -8,6 +8,10 @@ import {
   reportRiderLocation,
   createRider,
   getAllOnlineRiders,
+  getRiderOfflineCache,
+  getRiderLocationReportStatus,
+  getRiderAssignments,
+  getRiderAnomalyRecords,
 } from '../services/riderService';
 import { nowTimestamp } from '../utils';
 
@@ -50,6 +54,31 @@ router.get('/:id/track', (req, res) => {
   const hours = req.query.hours ? parseInt(req.query.hours as string) : 1;
   const locations = getRiderLocations(id, hours);
   res.json({ code: 0, data: locations });
+});
+
+router.get('/:id/report-status', (req, res) => {
+  const id = parseInt(req.params.id);
+  const status = getRiderLocationReportStatus(id);
+  res.json({ code: 0, data: status });
+});
+
+router.get('/:id/offline-cache', (req, res) => {
+  const id = parseInt(req.params.id);
+  const cache = getRiderOfflineCache(id);
+  res.json({ code: 0, data: cache });
+});
+
+router.get('/:id/assignments', (req, res) => {
+  const id = parseInt(req.params.id);
+  const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
+  const assignments = getRiderAssignments(id, limit);
+  res.json({ code: 0, data: assignments });
+});
+
+router.get('/:id/anomaly-records', (req, res) => {
+  const id = parseInt(req.params.id);
+  const records = getRiderAnomalyRecords(id);
+  res.json({ code: 0, data: records });
 });
 
 router.post('/', (req, res) => {

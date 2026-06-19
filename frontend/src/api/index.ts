@@ -27,6 +27,10 @@ export const riderApi = {
   getOnline: () => api.get('/riders/online'),
   create: (data: any) => api.post('/riders', data),
   updateStatus: (id: number, status: string) => api.put(`/riders/${id}/status`, { status }),
+  getReportStatus: (id: number) => api.get(`/riders/${id}/report-status`),
+  getOfflineCache: (id: number) => api.get(`/riders/${id}/offline-cache`),
+  getAssignments: (id: number) => api.get(`/riders/${id}/assignments`),
+  getAnomalyRecords: (id: number) => api.get(`/riders/${id}/anomaly-records`),
 };
 
 export const orderApi = {

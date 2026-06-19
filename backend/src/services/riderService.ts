@@ -161,3 +161,94 @@ export function getAllOnlineRiders(): Rider[] {
     )
     .all() as Rider[];
 }
+
+export function getRiderOfflineCache(riderId: number): any[] {
+  const db = getDb();
+  return db
+    .prepare(
+      `SELECT * FROM offline_orders_cache 
+       WHERE rider_id = ? AND synced = 0
+       ORDER BY created_at DESC`
+    )
+    .all(riderId);
+}
+
+export function getRiderLocationReportStatus(riderId: number): {
+  last_report_time: number | null;
+  interval_seconds: number | null;
+  is_normal: boolean;
+  expected_interval: number;
+} {
+  const db = getDb();
+  const lastLocation = db
+    .prepare(
+      'SELECT timestamp FROM rider_locations WHERE rider_id = ? ORDER BY timestamp DESC LIMIT 1'
+    )
+    .get(riderId) as { timestamp: number } | undefined;
+
+  const secondLastLocation = db
+    .prepare(
+      'SELECT timestamp FROM rider_locations WHERE rider_id = ? ORDER BY timestamp DESC LIMIT 1 OFFSET 1'
+    )
+    .get(riderId) as { timestamp: number } | undefined;
+
+  const expectedInterval = 15;
+
+  if (!lastLocation) {
+    return { last_report_time: null, interval_seconds: null, is_normal: false, expected_interval: expectedInterval };
+  }
+
+  const interval = secondLastLocation
+    ? lastLocation.timestamp - secondLastLocation.timestamp
+    : null;
+
+  const now = nowTimestamp();
+  const isNormal = (now - lastLocation.timestamp) < 60;
+
+  return {
+    last_report_time: lastLocation.timestamp,
+    interval_seconds: interval,
+    is_normal: isNormal,
+    expected_interval: expectedInterval,
+  };
+}
+
+export function getRiderAssignments(riderId: number, limit: number = 10): any[] {
+  const db = getDb();
+  return db
+    .prepare(
+      `SELECT oa.*, o.order_no, o.merchant_name, o.status as order_status,
+              o.merchant_lat, o.merchant_lng, o.estimated_distance, o.estimated_duration
+       FROM order_assignments oa
+       LEFT JOIN orders o ON oa.order_id = o.id
+       WHERE oa.rider_id = ?
+       ORDER BY oa.created_at DESC
+       LIMIT ?`
+    )
+    .all(riderId, limit);
+}
+
+export function getRiderAnomalyRecords(riderId: number, limit: number = 10): { complaints: any[]; creditRecords: any[] } {
+  const db = getDb();
+  const complaints = db
+    .prepare(
+      `SELECT c.*, o.order_no, o.merchant_name
+       FROM complaints c
+       LEFT JOIN orders o ON c.order_id = o.id
+       WHERE c.rider_id = ?
+       ORDER BY c.created_at DESC
+       LIMIT ?`
+    )
+    .all(riderId, limit);
+
+  const creditRecords = db
+    .prepare(
+      `SELECT * FROM credit_score_records
+       WHERE rider_id = ? AND change_amount < 0
+       ORDER BY created_at DESC
+       LIMIT ?`
+    )
+    .all(riderId, limit);
+
+  return { complaints, creditRecords };
+}
