@@ -16,6 +16,12 @@ import {
   Coffee,
   Grid3X3,
   List,
+  CalendarCheck,
+  FileEdit,
+  Upload,
+  Route,
+  Bell,
+  MessageSquare,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { serviceDomains, mockDepartments, statusTextMap } from "@/data/mockData";
@@ -31,23 +37,44 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Coffee,
 };
 
+const lifecycleQuickActions = [
+  { key: "appointment", label: "预约", icon: CalendarCheck },
+  { key: "apply", label: "申办", icon: FileEdit },
+  { key: "upload", label: "材料", icon: Upload },
+  { key: "track", label: "进度", icon: Route },
+  { key: "push", label: "结果", icon: Bell },
+  { key: "evaluate", label: "评价", icon: MessageSquare },
+];
+
 export default function Services() {
-  const {
-    services,
-    selectedDomain,
-    setSelectedDomain,
-    searchKeyword,
-    setSearchKeyword,
-    getFilteredServices,
-  } = useAppStore();
+  const services = useAppStore((s) => s.services);
+  const selectedDomain = useAppStore((s) => s.selectedDomain);
+  const searchKeyword = useAppStore((s) => s.searchKeyword);
+  const userTypeFilter = useAppStore((s) => s.userTypeFilter);
+  const setSelectedDomain = useAppStore((s) => s.setSelectedDomain);
+  const setSearchKeyword = useAppStore((s) => s.setSearchKeyword);
 
   const [selectedDept, setSelectedDept] = useState<string>("all");
   const [onlineOnly, setOnlineOnly] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState<"apply" | "rating" | "time">("apply");
+  const [displayCount, setDisplayCount] = useState(20);
 
   const filtered = useMemo(() => {
-    let list = getFilteredServices();
+    let list = services.filter((s) => {
+      const domainMatch = selectedDomain === "all" || s.category === selectedDomain;
+      const kwMatch =
+        !searchKeyword ||
+        s.name.includes(searchKeyword) ||
+        s.description.includes(searchKeyword) ||
+        s.department.includes(searchKeyword) ||
+        s.subCategory.includes(searchKeyword);
+      const userTypeMatch =
+        !userTypeFilter ||
+        (userTypeFilter === "citizen" && s.category !== "government") ||
+        (userTypeFilter === "enterprise" && (s.category === "government" || s.category === "lifestyle"));
+      return domainMatch && kwMatch && userTypeMatch;
+    });
     if (selectedDept !== "all") {
       list = list.filter((s) => s.departmentId === selectedDept);
     }
@@ -60,7 +87,11 @@ export default function Services() {
       return a.handlingTime.localeCompare(b.handlingTime);
     });
     return list;
-  }, [getFilteredServices, selectedDept, onlineOnly, sortBy]);
+  }, [services, selectedDomain, searchKeyword, userTypeFilter, selectedDept, onlineOnly, sortBy]);
+
+  const displayedList = filtered.slice(0, displayCount);
+  const hasMore = displayCount < filtered.length;
+  const remaining = filtered.length - displayCount;
 
   const stats = useMemo(() => {
     const total = services.length;
