@@ -1,40 +1,256 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>may-89231 Service Console</title>
+    <title>家政从业者赋能工作台</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <nav class="navbar">
+      <div class="nav-inner">
+        <div class="nav-brand">
+          <span class="brand-logo">🏠</span>
+          <span class="brand-text">家政赋能工作台</span>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item active" data-section="dashboard">
+            <span class="nav-icon">📊</span><span>首页</span>
+          </li>
+          <li class="nav-item" data-section="ayahs">
+            <span class="nav-icon">👩</span><span>阿姨档案</span>
+          </li>
+          <li class="nav-item" data-section="demands">
+            <span class="nav-icon">📋</span><span>雇主需求</span>
+          </li>
+          <li class="nav-item" data-section="orders">
+            <span class="nav-icon">📦</span><span>订单管理</span>
+          </li>
+          <li class="nav-item" data-section="reports">
+            <span class="nav-icon">📈</span><span>数据报表</span>
+          </li>
+          <li class="nav-item" data-section="training">
+            <span class="nav-icon">🎓</span><span>岗前培训</span>
+          </li>
+          <li class="nav-item" data-section="community">
+            <span class="nav-icon">💬</span><span>圈子社区</span>
+          </li>
+          <li class="nav-item" data-section="security">
+            <span class="nav-icon">🛡️</span><span>保障中心</span>
+          </li>
+        </ul>
+        <div class="nav-right">
+          <div class="role-switch">
+            <button class="role-btn active" data-role="all">全部</button>
+            <button class="role-btn" data-role="月嫂">月嫂</button>
+            <button class="role-btn" data-role="保姆">保姆</button>
+            <button class="role-btn" data-role="保洁">保洁</button>
+          </div>
+          <div class="user-avatar">机</div>
+        </div>
+      </div>
+    </nav>
+
     <main class="shell">
       <section class="hero">
         <div>
-          <p class="eyebrow">Local full-stack repair</p>
-          <h1>may-89231 Service Console</h1>
-          <p class="summary">Frontend, backend, and SQLite are running inside this project path.</p>
+          <p class="eyebrow">机构管理员视图</p>
+          <h1>家政从业者赋能工作台</h1>
+          <p class="summary">一站式管理阿姨档案、雇主需求、订单派单、上户打卡、培训认证及薪资代发，助力家政服务数字化升级。</p>
         </div>
-        <div class="status-pill" id="connectionStatus">Checking API</div>
+        <div class="hero-actions">
+          <div class="status-pill" id="connectionStatus">系统运行中</div>
+          <button id="refreshButton" type="button" class="btn-primary">
+            <span>🔄</span> 刷新数据
+          </button>
+        </div>
       </section>
 
-      <section class="grid" id="metricGrid" aria-label="Service metrics"></section>
+      <section class="quick-actions">
+        <div class="action-card" data-action="ayah">
+          <div class="action-icon">👩‍🦰</div>
+          <div class="action-body">
+            <h3>阿姨档案</h3>
+            <p>管理在档阿姨信息与资质</p>
+          </div>
+          <span class="action-arrow">→</span>
+        </div>
+        <div class="action-card" data-action="demand">
+          <div class="action-icon">📝</div>
+          <div class="action-body">
+            <h3>发布需求</h3>
+            <p>录入雇主服务需求信息</p>
+          </div>
+          <span class="action-arrow">→</span>
+        </div>
+        <div class="action-card" data-action="dispatch">
+          <div class="action-icon">⚡</div>
+          <div class="action-body">
+            <h3>抢单/派单</h3>
+            <p>需求匹配与订单分派</p>
+          </div>
+          <span class="action-arrow">→</span>
+        </div>
+        <div class="action-card" data-action="checkin">
+          <div class="action-icon">📍</div>
+          <div class="action-body">
+            <h3>上户打卡</h3>
+            <p>阿姨服务签到记录</p>
+          </div>
+          <span class="action-arrow">→</span>
+        </div>
+        <div class="action-card" data-action="face">
+          <div class="action-icon">😊</div>
+          <div class="action-body">
+            <h3>人脸核验</h3>
+            <p>身份验证与人脸识别</p>
+          </div>
+          <span class="action-arrow">→</span>
+        </div>
+        <div class="action-card" data-action="report-node">
+          <div class="action-icon">✅</div>
+          <div class="action-body">
+            <h3>节点上报</h3>
+            <p>服务节点进度提交</p>
+          </div>
+          <span class="action-arrow">→</span>
+        </div>
+      </section>
+
+      <section class="grid" id="metricGrid" aria-label="运营指标"></section>
+
+      <section class="content-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">阿姨管理</p>
+              <h2>金牌阿姨档案</h2>
+            </div>
+            <button class="btn-link" data-section="ayahs">查看全部 →</button>
+          </div>
+          <div class="ayah-list" id="ayahList"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">需求池</p>
+              <h2>最新雇主需求</h2>
+            </div>
+            <button class="btn-link" data-section="demands">查看全部 →</button>
+          </div>
+          <div class="demand-list" id="demandList"></div>
+        </div>
+      </section>
 
       <section class="panel">
         <div class="panel-head">
           <div>
-            <p class="eyebrow">Runtime</p>
-            <h2>Repair workflow</h2>
+            <p class="eyebrow">订单中心</p>
+            <h2>进行中订单</h2>
           </div>
-          <button id="refreshButton" type="button">Refresh</button>
+          <button class="btn-link" data-section="orders">查看全部 →</button>
         </div>
-        <div class="table" id="workItems"></div>
+        <div class="order-list" id="orderList"></div>
       </section>
 
-      <section class="panel compact">
-        <h2>API response</h2>
-        <pre id="apiPayload">Loading...</pre>
+      <section class="content-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">城市服务网格</p>
+              <h2>各城市运营数据</h2>
+            </div>
+          </div>
+          <div class="city-grid" id="cityGrid"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">接单转化漏斗</p>
+              <h2>阿姨接单转化路径</h2>
+            </div>
+          </div>
+          <div class="funnel" id="funnelChart"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">服务质量监控</p>
+            <h2>关键指标阈值</h2>
+          </div>
+        </div>
+        <div class="threshold-grid" id="thresholdGrid"></div>
+      </section>
+
+      <section class="content-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">岗前培训</p>
+              <h2>推荐学习课程</h2>
+            </div>
+            <button class="btn-link" data-section="training">进入培训中心 →</button>
+          </div>
+          <div class="course-list" id="courseList"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">保障中心</p>
+              <h2>权益服务入口</h2>
+            </div>
+            <button class="btn-link" data-section="security">进入保障中心 →</button>
+          </div>
+          <div class="security-list">
+            <div class="security-item" data-action="cert">
+              <span class="sec-icon">📜</span>
+              <div>
+                <h4>证书存证</h4>
+                <p>6 张证书已上链存证</p>
+              </div>
+            </div>
+            <div class="security-item" data-action="dispute">
+              <span class="sec-icon">⚖️</span>
+              <div>
+                <h4>纠纷仲裁</h4>
+                <p>1 件纠纷调解中</p>
+              </div>
+            </div>
+            <div class="security-item" data-action="expert">
+              <span class="sec-icon">👨‍⚕️</span>
+              <div>
+                <h4>专家答疑</h4>
+                <p>3 位专家在线坐诊</p>
+              </div>
+            </div>
+            <div class="security-item" data-action="salary">
+              <span class="sec-icon">💰</span>
+              <div>
+                <h4>薪资代发</h4>
+                <p>2 笔薪资发放中</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">圈子社区</p>
+            <h2>阿姨经验分享</h2>
+          </div>
+          <button class="btn-link" data-section="community">进入社区 →</button>
+        </div>
+        <div class="post-list" id="postList"></div>
       </section>
     </main>
+
     <script src="./app.js"></script>
   </body>
 </html>
