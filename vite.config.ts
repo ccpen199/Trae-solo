@@ -50,7 +50,13 @@ export default defineConfig(({ mode }) => {
               console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
             });
           },
-        }
+        },
+        '/socket.io': {
+          target: `http://${host}:${backendPort}`,
+          changeOrigin: true,
+          secure: false,
+          ws: true,
+        },
       }
     }
   }

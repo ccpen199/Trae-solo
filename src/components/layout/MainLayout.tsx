@@ -11,10 +11,6 @@ export const MainLayout: React.FC = () => {
 
   useEffect(() => {
     websocketService.connect();
-
-    return () => {
-      websocketService.disconnect();
-    };
   }, []);
 
   const handleToggleSidebar = () => {

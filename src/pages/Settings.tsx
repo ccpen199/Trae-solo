@@ -16,7 +16,13 @@ import {
   Smartphone,
   Tablet,
   ChevronRight,
+  ChevronDown,
   AlertTriangle,
+  History,
+  Activity,
+  Database,
+  RefreshCw,
+  Globe,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -89,6 +95,81 @@ const deviceList = [
   { id: 'dev1', name: 'MacBook Pro', icon: Monitor, detail: 'Chrome · macOS · 当前设备', lastActive: '刚刚' },
   { id: 'dev2', name: 'iPhone 15', icon: Smartphone, detail: 'Safari · iOS 17', lastActive: '2小时前' },
   { id: 'dev3', name: 'iPad Air', icon: Tablet, detail: 'Safari · iPadOS 17', lastActive: '1天前' },
+];
+
+interface MerchantScope {
+  id: string;
+  label: string;
+  count: number;
+}
+
+const merchantScopes: MerchantScope[] = [
+  { id: 'scope-all', label: '全部商户', count: 25 },
+  { id: 'scope-east', label: '限华东区', count: 8 },
+  { id: 'scope-north', label: '限华北区', count: 6 },
+  { id: 'scope-south', label: '限华南区', count: 7 },
+];
+
+interface PermissionScope {
+  key: string;
+  label: string;
+  color: string;
+}
+
+const permissionScopes: PermissionScope[] = [
+  { key: 'orders:read', label: 'orders:read', color: 'border-info-500/50 text-info-400 bg-info-500/10' },
+  { key: 'orders:write', label: 'orders:write', color: 'border-warning-500/50 text-warning-400 bg-warning-500/10' },
+  { key: 'riders:read', label: 'riders:read', color: 'border-success-500/50 text-success-400 bg-success-500/10' },
+  { key: 'pricing:read', label: 'pricing:read', color: 'border-amber-accent-500/50 text-amber-accent-400 bg-amber-accent-500/10' },
+  { key: 'waybills:read', label: 'waybills:read', color: 'border-danger-500/50 text-danger-400 bg-danger-500/10' },
+];
+
+interface ReviewRecord {
+  id: string;
+  time: string;
+  reviewer: string;
+  reviewerTitle: string;
+  result: '通过' | '调整权限' | '拒绝';
+  remark: string;
+}
+
+const reviewRecords: ReviewRecord[] = [
+  { id: 'rr1', time: '2024-06-10 14:30', reviewer: '张经理', reviewerTitle: '运营总监', result: '通过', remark: '配额正常，无异常调用' },
+  { id: 'rr2', time: '2024-05-25 09:15', reviewer: '李主管', reviewerTitle: '风控', result: '通过', remark: '检查异常调用IP，无风险' },
+  { id: 'rr3', time: '2024-04-20 16:45', reviewer: '王总', reviewerTitle: 'CTO', result: '调整权限', remark: '移除waybills:write权限' },
+];
+
+interface AuditLogRecord {
+  id: string;
+  time: string;
+  endpoint: string;
+  ip: string;
+  result: '成功' | '失败' | '限流';
+  responseTime: number;
+}
+
+const auditLogRecords: AuditLogRecord[] = [
+  { id: 'al1', time: '2024-06-12 15:42:18', endpoint: 'GET /api/v1/orders', ip: '192.168.1.101', result: '成功', responseTime: 45 },
+  { id: 'al2', time: '2024-06-12 15:41:55', endpoint: 'POST /api/v1/riders/location', ip: '192.168.1.102', result: '成功', responseTime: 32 },
+  { id: 'al3', time: '2024-06-12 15:41:30', endpoint: 'GET /api/v1/pricing/rules', ip: '10.0.0.88', result: '成功', responseTime: 68 },
+  { id: 'al4', time: '2024-06-12 15:40:12', endpoint: 'GET /api/v1/waybills/DD20240612008', ip: '192.168.1.101', result: '成功', responseTime: 52 },
+  { id: 'al5', time: '2024-06-12 15:39:45', endpoint: 'POST /api/v1/orders/create', ip: '192.168.1.105', result: '成功', responseTime: 128 },
+  { id: 'al6', time: '2024-06-12 15:38:20', endpoint: 'GET /api/v1/orders?page=2', ip: '192.168.1.101', result: '成功', responseTime: 41 },
+  { id: 'al7', time: '2024-06-12 15:37:58', endpoint: 'POST /api/v1/orders/batch', ip: '10.0.0.92', result: '限流', responseTime: 8 },
+  { id: 'al8', time: '2024-06-12 15:36:33', endpoint: 'GET /api/v1/riders/status', ip: '192.168.1.103', result: '成功', responseTime: 36 },
+  { id: 'al9', time: '2024-06-12 15:35:10', endpoint: 'GET /api/v1/waybills?status=delivering', ip: '192.168.1.101', result: '失败', responseTime: 185 },
+  { id: 'al10', time: '2024-06-12 15:34:42', endpoint: 'POST /api/v1/pricing/calculate', ip: '10.0.0.77', result: '成功', responseTime: 95 },
+];
+
+interface ErpSystem {
+  id: string;
+  name: string;
+}
+
+const erpSystems: ErpSystem[] = [
+  { id: 'dingjie', name: '鼎捷ERP' },
+  { id: 'yonyou', name: '用友U8' },
+  { id: 'webhook', name: '自定义Webhook' },
 ];
 
 function ProfileTab() {
@@ -360,7 +441,16 @@ function AuditTab() {
 function SecurityTab() {
   const [twoFactor, setTwoFactor] = useState(true);
   const [showApiKey, setShowApiKey] = useState(false);
+  const [merchantScopeOpen, setMerchantScopeOpen] = useState(false);
+  const [selectedMerchantScope, setSelectedMerchantScope] = useState<MerchantScope>(merchantScopes[0]);
+  const [reviewRecordsOpen, setReviewRecordsOpen] = useState(true);
+  const [auditLogsOpen, setAuditLogsOpen] = useState(false);
+  const [selectedErpSystem, setSelectedErpSystem] = useState<ErpSystem>(erpSystems[0]);
+  const [erpConnected, setErpConnected] = useState(true);
   const apiKey = 'sk-live-a8f3e2d1c9b7a6f5e4d3c2b1a0';
+  const dailyQuota = 100000;
+  const dailyUsed = 68452;
+  const quotaPercent = Math.round((dailyUsed / dailyQuota) * 100);
 
   const handleCopyKey = () => {
     navigator.clipboard.writeText(apiKey).then(() => {
@@ -370,6 +460,38 @@ function SecurityTab() {
 
   const handleRevokeKey = () => {
     showToast('warning', 'API密钥撤销请求已提交，将在24小时后生效');
+  };
+
+  const handleMerchantScopeSelect = (scope: MerchantScope) => {
+    setSelectedMerchantScope(scope);
+    setMerchantScopeOpen(false);
+    showToast('info', `接入商户范围已切换为「${scope.label}」`);
+  };
+
+  const handleErpResync = () => {
+    showToast('info', 'ERP同步任务已启动，请稍候查看结果');
+  };
+
+  const getReviewResultVariant = (result: ReviewRecord['result']): 'success' | 'warning' | 'danger' => {
+    switch (result) {
+      case '通过':
+        return 'success';
+      case '调整权限':
+        return 'warning';
+      case '拒绝':
+        return 'danger';
+    }
+  };
+
+  const getAuditResultVariant = (result: AuditLogRecord['result']): 'success' | 'warning' | 'danger' => {
+    switch (result) {
+      case '成功':
+        return 'success';
+      case '限流':
+        return 'warning';
+      case '失败':
+        return 'danger';
+    }
   };
 
   return (
@@ -440,7 +562,7 @@ function SecurityTab() {
 
       <div className="space-y-3">
         <h3 className="text-base font-semibold text-gray-100">API 密钥管理</h3>
-        <div className="rounded-lg border border-space-blue-600 bg-space-blue-900/70 p-4 space-y-3">
+        <div className="rounded-lg border border-space-blue-600 bg-space-blue-900/70 p-4 space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-300">生产环境密钥</span>
             <div className="flex items-center gap-2">
@@ -470,6 +592,233 @@ function SecurityTab() {
             {showApiKey ? apiKey : 'sk-live-••••••••••••••••••••••••'}
           </div>
           <p className="text-xs text-gray-500">创建于 2024-03-15 · 上次使用 2024-06-12</p>
+
+          <div className="pt-2 border-t border-space-blue-600 space-y-4">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="space-y-1.5">
+                <span className="text-xs text-gray-500">接入商户范围</span>
+                <div className="relative">
+                  <button
+                    onClick={() => setMerchantScopeOpen(!merchantScopeOpen)}
+                    className="inline-flex items-center gap-1.5 rounded-md border border-amber-accent-500/40 bg-amber-accent-500/10 px-2.5 py-1 text-xs text-amber-accent-400 hover:bg-amber-accent-500/20 transition-colors"
+                  >
+                    <Globe className="h-3 w-3" />
+                    {selectedMerchantScope.label}({selectedMerchantScope.count}家)
+                    <ChevronDown className={cn('h-3 w-3 transition-transform', merchantScopeOpen && 'rotate-180')} />
+                  </button>
+                  {merchantScopeOpen && (
+                    <div className="absolute top-full left-0 mt-1 z-10 w-40 rounded-md border border-space-blue-600 bg-space-blue-800 py-1 shadow-card animate-fade-in">
+                      {merchantScopes.map((scope) => (
+                        <button
+                          key={scope.id}
+                          onClick={() => handleMerchantScopeSelect(scope)}
+                          className={cn(
+                            'w-full flex items-center justify-between px-3 py-1.5 text-xs text-left hover:bg-space-blue-700 transition-colors',
+                            selectedMerchantScope.id === scope.id ? 'text-amber-accent-400' : 'text-gray-300'
+                          )}
+                        >
+                          <span>{scope.label}</span>
+                          <span className="text-gray-500">{scope.count}家</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="space-y-1.5 flex-1 min-w-[280px]">
+                <span className="text-xs text-gray-500">权限范围标签</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {permissionScopes.map((perm) => (
+                    <span
+                      key={perm.key}
+                      className={cn(
+                        'inline-flex items-center rounded px-2 py-0.5 text-[11px] font-mono border',
+                        perm.color
+                      )}
+                    >
+                      {perm.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-500">每日调用配额</span>
+                <span className="text-xs text-gray-400 font-mono">
+                  {dailyUsed.toLocaleString()} / {dailyQuota.toLocaleString()}次/天
+                </span>
+              </div>
+              <div className="h-2 w-full rounded-full bg-space-blue-700 overflow-hidden">
+                <div
+                  className={cn(
+                    'h-full rounded-full transition-all duration-500',
+                    quotaPercent >= 90
+                      ? 'bg-danger-500'
+                      : quotaPercent >= 70
+                      ? 'bg-warning-500'
+                      : 'bg-gradient-to-r from-amber-accent-500 to-amber-accent-400'
+                  )}
+                  style={{ width: `${quotaPercent}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] text-gray-500">已使用 {quotaPercent}%</span>
+                <span className="text-[11px] text-gray-500">剩余 {(dailyQuota - dailyUsed).toLocaleString()}次</span>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-1">
+              <button
+                onClick={() => setReviewRecordsOpen(!reviewRecordsOpen)}
+                className="flex w-full items-center justify-between rounded-md border border-space-blue-600 bg-space-blue-800/50 px-3 py-2 hover:bg-space-blue-800 transition-colors"
+              >
+                <div className="flex items-center gap-2 text-xs text-gray-300">
+                  <History className="h-3.5 w-3.5 text-amber-accent-400" />
+                  <span>复核记录</span>
+                  <span className="text-gray-500">({reviewRecords.length}条)</span>
+                </div>
+                <ChevronDown className={cn('h-4 w-4 text-gray-400 transition-transform', reviewRecordsOpen && 'rotate-180')} />
+              </button>
+              {reviewRecordsOpen && (
+                <div className="overflow-hidden rounded-md border border-space-blue-600 bg-space-blue-800/30 animate-fade-in">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-space-blue-600 bg-space-blue-800/50">
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium">时间</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium">复核人</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium">结果</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium">备注</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {reviewRecords.map((record) => (
+                        <tr key={record.id} className="border-b border-space-blue-600/50 last:border-0 hover:bg-space-blue-800/30 transition-colors">
+                          <td className="px-3 py-2 text-gray-400 whitespace-nowrap font-mono">{record.time}</td>
+                          <td className="px-3 py-2 text-gray-200 whitespace-nowrap">
+                            {record.reviewer}
+                            <span className="text-gray-500 ml-1">({record.reviewerTitle})</span>
+                          </td>
+                          <td className="px-3 py-2 whitespace-nowrap">
+                            <StatusBadge variant={getReviewResultVariant(record.result)} size="sm" showDot={false}>
+                              {record.result}
+                            </StatusBadge>
+                          </td>
+                          <td className="px-3 py-2 text-gray-400">{record.remark}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <button
+                onClick={() => setAuditLogsOpen(!auditLogsOpen)}
+                className="flex w-full items-center justify-between rounded-md border border-space-blue-600 bg-space-blue-800/50 px-3 py-2 hover:bg-space-blue-800 transition-colors"
+              >
+                <div className="flex items-center gap-2 text-xs text-gray-300">
+                  <Activity className="h-3.5 w-3.5 text-info-400" />
+                  <span>查看调用审计</span>
+                  <span className="text-gray-500">(最近10条)</span>
+                </div>
+                <ChevronDown className={cn('h-4 w-4 text-gray-400 transition-transform', auditLogsOpen && 'rotate-180')} />
+              </button>
+              {auditLogsOpen && (
+                <div className="overflow-x-auto overflow-hidden rounded-md border border-space-blue-600 bg-space-blue-800/30 animate-fade-in">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-space-blue-600 bg-space-blue-800/50">
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium whitespace-nowrap">时间</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium whitespace-nowrap">接口</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium whitespace-nowrap">IP地址</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium whitespace-nowrap">调用结果</th>
+                        <th className="px-3 py-2 text-left text-gray-400 font-medium whitespace-nowrap">响应时间</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {auditLogRecords.map((log) => (
+                        <tr key={log.id} className="border-b border-space-blue-600/50 last:border-0 hover:bg-space-blue-800/30 transition-colors">
+                          <td className="px-3 py-2 text-gray-400 whitespace-nowrap font-mono">{log.time}</td>
+                          <td className="px-3 py-2 text-gray-200 whitespace-nowrap font-mono">{log.endpoint}</td>
+                          <td className="px-3 py-2 text-gray-400 whitespace-nowrap font-mono">{log.ip}</td>
+                          <td className="px-3 py-2 whitespace-nowrap">
+                            <StatusBadge variant={getAuditResultVariant(log.result)} size="sm" showDot={false}>
+                              {log.result}
+                            </StatusBadge>
+                          </td>
+                          <td className={cn(
+                            'px-3 py-2 whitespace-nowrap font-mono',
+                            log.responseTime >= 150 ? 'text-danger-400' : log.responseTime >= 100 ? 'text-warning-400' : 'text-success-400'
+                          )}>
+                            {log.responseTime}ms
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <h3 className="text-base font-semibold text-gray-100">ERP对接状态</h3>
+        <div className="rounded-lg border border-space-blue-600 bg-space-blue-900/70 p-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-space-blue-800">
+                <Database className="h-5 w-5 text-amber-accent-400" />
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <select
+                    value={selectedErpSystem.id}
+                    onChange={(e) => {
+                      const system = erpSystems.find((s) => s.id === e.target.value);
+                      if (system) {
+                        setSelectedErpSystem(system);
+                        showToast('info', `已切换对接系统为「${system.name}」`);
+                      }
+                    }}
+                    className="rounded-md border border-space-blue-600 bg-space-blue-800 px-2 py-1 text-sm text-gray-200 focus:outline-none focus:border-amber-accent-500/70"
+                  >
+                    {erpSystems.map((sys) => (
+                      <option key={sys.id} value={sys.id}>{sys.name}</option>
+                    ))}
+                  </select>
+                  <StatusBadge variant={erpConnected ? 'success' : 'danger'} size="sm" showDot pulse={erpConnected}>
+                    {erpConnected ? '已连接' : '连接异常'}
+                  </StatusBadge>
+                </div>
+                <p className="text-xs text-gray-500">
+                  最近同步：<span className="text-gray-400">2分钟前</span> · 同步订单 <span className="text-amber-accent-400 font-mono">156</span> 笔
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setErpConnected(!erpConnected);
+                  showToast('info', erpConnected ? '已断开ERP连接' : 'ERP已重新连接');
+                }}
+                className="rounded-md border border-space-blue-600 px-2.5 py-1 text-xs text-gray-300 hover:bg-space-blue-800 transition-colors"
+              >
+                {erpConnected ? '断开' : '连接'}
+              </button>
+              <button
+                onClick={handleErpResync}
+                className="inline-flex items-center gap-1 rounded-md border border-amber-accent-500/40 bg-amber-accent-500/10 px-2.5 py-1 text-xs text-amber-accent-400 hover:bg-amber-accent-500/20 transition-colors"
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+                重新同步
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

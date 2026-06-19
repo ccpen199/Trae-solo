@@ -1,0 +1,2539 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-19T04:51:00.266Z",
+  "order": "may-89150",
+  "roundIndex": 48,
+  "captureId": "may-89150-cycle-48",
+  "url": "http://127.0.0.1:49150/",
+  "initialUrl": "http://127.0.0.1:49150/",
+  "finalUrl": "http://127.0.0.1:49150/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.png"
+  ],
+  "issueTextPreview": "service: frontend curl timed out; verify local full-stack dashboard loads without chrome-error and backend API is reachable",
+  "targetReason": "后台管理相关问题；购买/提交相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49150/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49150/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:个人设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:个人设置:安全设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新数据",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:筛选:待处理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:待处理8",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:待处理8:已取消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "headings": [
+          "商家仪表盘",
+          "实时订单流",
+          "配送地图",
+          "订单状态分布",
+          "近7日趋势",
+          "异常订单告警"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "个人设置",
+          "退出登录",
+          "刷新数据",
+          "全部已读"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统仪表盘管理员管理员admin@example.com个人设置退出登录商家仪表盘实时监控订单、骑手和运营数据实时连接刷新数据2026年6月19日星期五今日订单数25实时+12%较昨日完成率28.0%健康+3.2%较昨日平均配送时长0 分钟-2%较昨日今日营收¥107.29增长中+8.5%较昨日实时订单流WebSocketDD202406110001配送中张先生 · 餐饮海淀区中关村大街1号李骑手¥28DD202406110002已取件王女士 · 文件西城区金融街7号赵骑手¥18DD202406110003待处理刘先生 · 生鲜朝阳区三里屯路19号待派单¥42DD202406110004运输中陈女士 · 数码朝阳区望京SOHO孙骑手¥52DD202406110005异常周先生 · 医药东直门南大街1号待派单¥22配送地图在线 5配送中 3李骑手ETA: 8分钟赵骑手ETA: 15分钟孙骑手ETA: 22分钟周骑手空闲吴骑手ETA: 12分钟骑手位置配送点配送路线订单状态分布19总订单待处理421%配送中526%已完成737%异常316%近7日趋势订单量营收异常订单告警3 条未读全部已读高危订单 DD202406110005 地址模糊，需人工处理507:05中危订单 DD202406110001 预计超时3分钟107:42紧急生鲜订单 DD202406110003 待派单超过5分钟307:48",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1212,
+          "scrollWidth": 1504,
+          "scrollHeight": 1212,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49150/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.png",
+          "elementCount": 595,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "退出登录",
+            "刷新数据",
+            "全部已读"
+          ]
+        }
+      },
+      {
+        "label": "导航:仪表盘",
+        "url": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "headings": [
+          "商家仪表盘",
+          "实时订单流",
+          "配送地图",
+          "订单状态分布",
+          "近7日趋势",
+          "异常订单告警"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "个人设置",
+          "退出登录",
+          "刷新数据",
+          "全部已读"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统仪表盘管理员管理员admin@example.com个人设置退出登录商家仪表盘实时监控订单、骑手和运营数据实时连接刷新数据2026年6月19日星期五今日订单数25实时+12%较昨日完成率28.0%健康+3.2%较昨日平均配送时长0 分钟-2%较昨日今日营收¥107.29增长中+8.5%较昨日实时订单流WebSocketDD202406110001配送中张先生 · 餐饮海淀区中关村大街1号李骑手¥28DD202406110002已取件王女士 · 文件西城区金融街7号赵骑手¥18DD202406110003待处理刘先生 · 生鲜朝阳区三里屯路19号待派单¥42DD202406110004运输中陈女士 · 数码朝阳区望京SOHO孙骑手¥52DD202406110005异常周先生 · 医药东直门南大街1号待派单¥22配送地图在线 5配送中 3李骑手ETA: 8分钟赵骑手ETA: 15分钟孙骑手ETA: 22分钟周骑手空闲吴骑手ETA: 12分钟骑手位置配送点配送路线订单状态分布19总订单待处理421%配送中526%已完成737%异常316%近7日趋势订单量营收异常订单告警3 条未读全部已读高危订单 DD202406110005 地址模糊，需人工处理507:05中危订单 DD202406110001 预计超时3分钟107:42紧急生鲜订单 DD202406110003 待派单超过5分钟307:48",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1212,
+          "scrollWidth": 1536,
+          "scrollHeight": 1212,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-02-导航-仪表盘",
+          "label": "导航:仪表盘",
+          "finalUrl": "http://127.0.0.1:49150/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.png",
+          "elementCount": 595,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "退出登录",
+            "刷新数据",
+            "全部已读"
+          ]
+        }
+      },
+      {
+        "label": "操作:个人设置",
+        "url": "http://127.0.0.1:49150/settings",
+        "title": "My Trae Project",
+        "headings": [
+          "个人设置",
+          "张伟"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "角色资料",
+          "权限边界",
+          "审计信息",
+          "安全设置",
+          "保存资料"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统未知页面管理员管理员admin@example.com个人设置管理角色资料、权限、审计日志和安全策略。角色资料权限边界审计信息安全设置张伟账号正常姓名手机号邮箱所属商户角色徽章管理员商家运营骑手保存资料",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1212,
+          "scrollWidth": 1568,
+          "scrollHeight": 1212,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-03-操作-个人设置",
+          "label": "操作:个人设置",
+          "finalUrl": "http://127.0.0.1:49150/settings",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.png",
+          "elementCount": 215,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "角色资料",
+            "权限边界",
+            "审计信息",
+            "安全设置",
+            "张伟",
+            "138****6789",
+            "zhangwei@logistics.com",
+            "物流运营中心",
+            "保存资料"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:个人设置->安全设置",
+        "url": "http://127.0.0.1:49150/settings",
+        "title": "My Trae Project",
+        "headings": [
+          "个人设置",
+          "修改密码",
+          "双因素认证",
+          "API 密钥管理",
+          "登录设备"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "角色资料",
+          "权限边界",
+          "审计信息",
+          "安全设置",
+          "更新密码",
+          "显示",
+          "复制",
+          "撤销"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入当前密码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入新密码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请再次输入新密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统未知页面管理员管理员admin@example.com个人设置管理角色资料、权限、审计日志和安全策略。角色资料权限边界审计信息安全设置修改密码当前密码新密码确认密码更新密码双因素认证启用双因素认证 (2FA)登录时需要输入手机验证码API 密钥管理生产环境密钥显示复制撤销sk-live-••••••••••••••••••••••••创建于 2024-03-15 · 上次使用 2024-06-12登录设备MacBook ProChrome · macOS · 当前设备刚刚当前设备iPhone 15Safari · iOS 172小时前iPad AirSafari · iPadOS 171天前",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1274,
+          "scrollWidth": 1600,
+          "scrollHeight": 1274,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置",
+          "label": "二层操作:个人设置->安全设置",
+          "finalUrl": "http://127.0.0.1:49150/settings",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.png",
+          "elementCount": 241,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "角色资料",
+            "权限边界",
+            "审计信息",
+            "安全设置",
+            "请输入当前密码",
+            "请输入新密码",
+            "请再次输入新密码",
+            "更新密码",
+            "显示",
+            "复制",
+            "撤销"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新数据",
+        "url": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "headings": [
+          "商家仪表盘",
+          "实时订单流",
+          "配送地图",
+          "订单状态分布",
+          "近7日趋势",
+          "异常订单告警"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "刷新数据",
+          "全部已读"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "数据刷新中...数据已更新物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统仪表盘管理员管理员admin@example.com商家仪表盘实时监控订单、骑手和运营数据实时连接刷新数据2026年6月19日星期五今日订单数25实时+12%较昨日完成率28.0%健康+3.2%较昨日平均配送时长0 分钟-2%较昨日今日营收¥107.29增长中+8.5%较昨日实时订单流WebSocketDD202406110001配送中张先生 · 餐饮海淀区中关村大街1号李骑手¥28DD202406110002已取件王女士 · 文件西城区金融街7号赵骑手¥18DD202406110003待处理刘先生 · 生鲜朝阳区三里屯路19号待派单¥42DD202406110004运输中陈女士 · 数码朝阳区望京SOHO孙骑手¥52DD202406110005异常周先生 · 医药东直门南大街1号待派单¥22配送地图在线 5配送中 3李骑手ETA: 8分钟赵骑手ETA: 15分钟孙骑手ETA: 22分钟周骑手空闲吴骑手ETA: 12分钟骑手位置配送点配送路线订单状态分布19总订单待处理421%配送中526%已完成737%异常316%近7日趋势订单量营收异常订单告警3 条未读全部已读高危订单 DD202406110005 地址模糊，需人工处理507:05中危订单 DD202406110001 预计超时3分钟107:42紧急生鲜订单 DD202406110003 待派单超过5分钟307:48",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1274,
+          "scrollWidth": 1632,
+          "scrollHeight": 1274,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-05-操作-刷新数据",
+          "label": "操作:刷新数据",
+          "finalUrl": "http://127.0.0.1:49150/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-05-操作-刷新数据.json",
+          "screenshotPath": "",
+          "elementCount": 603,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "刷新数据",
+            "全部已读"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "筛选",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号、客户姓名、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "客户信息",
+              "物品信息",
+              "配送地址",
+              "骑手",
+              "运费",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "订单号 客户信息 物品信息 配送地址 骑手 运费 状态 操作 DD202406110001 12:30 张先生 138****1234 餐饮 2.5kg · 8.5km 朝阳区建国路88号SOHO现代城A座1层 海淀区中关村大街1号清华科技园B栋1203 李骑手 ¥28 配送中 DD202406110002 12:45 王女士 139****5678 文件 0.5kg · 5.2km 东城区王府井大街138号新东安市场 西城区金融街7号英蓝国际金融中心 赵骑手 ¥18 已取件 DD202406110003 13:05 刘先生 137****9012 生鲜 5kg · 12.3km 丰台区方庄路"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统订单管理管理员管理员admin@example.com订单管理查看、筛选和处理所有配送订单智能调度导出今日昨日近7天近30天自定义筛选全部15待处理8已分配1已取件1运输中1配送中1订单号客户信息物品信息配送地址骑手运费状态操作DD20240611000112:30张先生138****1234餐饮2.5kg · 8.5km朝阳区建国路88号SOHO现代城A座1层海淀区中关村大街1号清华科技园B栋1203李骑手¥28配送中DD20240611000212:45王女士139****5678文件0.5kg · 5.2km东城区王府井大街138号新东安市场西城区金融街7号英蓝国际金融中心赵骑手¥18已取件DD20240611000313:05刘先生137****9012生鲜5kg · 12.3km丰台区方庄路2号方庄购物中心朝阳区三里屯路19号太古里北区待派单¥42待处理DD20240611000412:15陈女士136****3456数码1.2kg · 15.8km海淀区学院路15号北京科技大学朝阳区望京SOHO T3孙骑手¥52运输中DD20240611000512:00周先生135****7890医药0.3kg · 6.5km西城区西直门北大街甲43号东城区东直门南大街1号待派单¥22异常DD20240611000611:30吴女士134****2345服装1.8kg · 18.2km石景山区万达广场海淀区五道口华清嘉园郑骑手¥62已送达DD20240611000711:00郑先生133****6789餐饮3.2kg · 22.5km通州区新华大街朝阳区CBD万达广场待派单¥72已取消DD20240611000813:00孙女士132****0123文件0.8kg · 10.5km昌平区回龙观海淀区上地信息路钱骑手¥32已分配DD20240611000913:30李先生131****4567餐饮1.8kg · 1.2km朝阳区建国路89号华贸中心3号楼朝阳区建国路93号万达广场8号楼待派单¥15待处理DD20240611001013:32王女士135****8901生鲜3.5kg · 2.1km朝阳区建国路88号SOHO现代城B座朝阳区光华路9号世贸天阶待派单¥22待处理DD20240611001113:35张先生139****2345文件0.5kg · 2.8km朝阳区建国路81号华贸中心写字楼1座朝阳区建国门外大街1号国贸商城待派单¥18待处理DD20240611001213:38刘女士136****6789数码1.2kg · 1.8km朝阳区大望路1号温特莱中心朝阳区建国路88号SOHO现代城A座待派单¥20待处理DD20240611001313:40陈先生137****0123医药0.3kg · 2.5km朝阳区建国路93号万达广场12号楼朝阳区光华路2号阳光100国际公寓待派单¥19待处理DD20240611001413:25赵女士134****3456餐饮2kg · 3.2km海淀区中关村大街27号中关村大厦海淀区苏州街18号长远天地大厦待派单¥25待处理DD20240611001513:28孙先生133****7890文件0.6kg · 2.8km海淀区中关村大街19号新中关购物中心海淀区海淀大街38号银科大厦待派单¥22待处理共 15 条10 条/页20 条/页50 条/页100 条/页1 / 2",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1694,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-06-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:49150/orders",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-06-导航-订单管理.json",
+          "screenshotPath": "",
+          "elementCount": 1133,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "智能调度",
+            "导出",
+            "搜索订单号、客户姓名、地址...",
+            "今日 昨日 近7天 近30天 自定义",
+            "筛选",
+            "全部15",
+            "待处理8",
+            "已分配1",
+            "已取件1",
+            "运输中1",
+            "配送中1",
+            "10 条/页 20 条/页 50 条/页 100 条/页"
+          ]
+        }
+      },
+      {
+        "label": "操作:筛选",
+        "url": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号、客户姓名、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "客户信息",
+              "物品信息",
+              "配送地址",
+              "骑手",
+              "运费",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "订单号 客户信息 物品信息 配送地址 骑手 运费 状态 操作 DD202406110001 12:30 张先生 138****1234 餐饮 2.5kg · 8.5km 朝阳区建国路88号SOHO现代城A座1层 海淀区中关村大街1号清华科技园B栋1203 李骑手 ¥28 配送中 DD202406110002 12:45 王女士 139****5678 文件 0.5kg · 5.2km 东城区王府井大街138号新东安市场 西城区金融街7号英蓝国际金融中心 赵骑手 ¥18 已取件 DD202406110003 13:05 刘先生 137****9012 生鲜 5kg · 12.3km 丰台区方庄路"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统订单管理管理员管理员admin@example.com订单管理查看、筛选和处理所有配送订单智能调度导出今日昨日近7天近30天自定义筛选全部待处理已分配已取件运输中配送中已送达已完成异常已取消全部15待处理8已分配1已取件1运输中1配送中1订单号客户信息物品信息配送地址骑手运费状态操作DD20240611000112:30张先生138****1234餐饮2.5kg · 8.5km朝阳区建国路88号SOHO现代城A座1层海淀区中关村大街1号清华科技园B栋1203李骑手¥28配送中DD20240611000212:45王女士139****5678文件0.5kg · 5.2km东城区王府井大街138号新东安市场西城区金融街7号英蓝国际金融中心赵骑手¥18已取件DD20240611000313:05刘先生137****9012生鲜5kg · 12.3km丰台区方庄路2号方庄购物中心朝阳区三里屯路19号太古里北区待派单¥42待处理DD20240611000412:15陈女士136****3456数码1.2kg · 15.8km海淀区学院路15号北京科技大学朝阳区望京SOHO T3孙骑手¥52运输中DD20240611000512:00周先生135****7890医药0.3kg · 6.5km西城区西直门北大街甲43号东城区东直门南大街1号待派单¥22异常DD20240611000611:30吴女士134****2345服装1.8kg · 18.2km石景山区万达广场海淀区五道口华清嘉园郑骑手¥62已送达DD20240611000711:00郑先生133****6789餐饮3.2kg · 22.5km通州区新华大街朝阳区CBD万达广场待派单¥72已取消DD20240611000813:00孙女士132****0123文件0.8kg · 10.5km昌平区回龙观海淀区上地信息路钱骑手¥32已分配DD20240611000913:30李先生131****4567餐饮1.8kg · 1.2km朝阳区建国路89号华贸中心3号楼朝阳区建国路93号万达广场8号楼待派单¥15待处理DD20240611001013:32王女士135****8901生鲜3.5kg · 2.1km朝阳区建国路88号SOHO现代城B座朝阳区光华路9号世贸天阶待派单¥22待处理DD20240611001113:35张先生139****2345文件0.5kg · 2.8km朝阳区建国路81号华贸中心写字楼1座朝阳区建国门外大街1号国贸商城待派单¥18待处理DD20240611001213:38刘女士136****6789数码1.2kg · 1.8km朝阳区大望路1号温特莱中心朝阳区建国路88号SOHO现代城A座待派单¥20待处理DD20240611001313:40陈先生137****0123医药0.3kg · 2.5km朝阳区建国路93号万达广场12号楼朝阳区光华路2号阳光100国际公寓待派单¥19待处理DD20240611001413:25赵女士134****3456餐饮2kg · 3.2km海淀区中关村大街27号中关村大厦海淀区苏州街18号长远天地大厦待派单¥25待处理DD20240611001513:28孙先生133****7890文件0.6kg · 2.8km海淀区中关村大街19号新中关购物中心海淀区海淀大街38号银科大厦待派单¥22待处理共 15 条10 条/页20 条/页50 条/页100 条/页1 / 2",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1755,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-07-操作-筛选",
+          "label": "操作:筛选",
+          "finalUrl": "http://127.0.0.1:49150/orders",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-07-操作-筛选.json",
+          "screenshotPath": "",
+          "elementCount": 1145,
+          "interactiveCount": 55,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "智能调度",
+            "导出",
+            "搜索订单号、客户姓名、地址...",
+            "今日 昨日 近7天 近30天 自定义",
+            "筛选",
+            "全部",
+            "待处理",
+            "已分配",
+            "已取件",
+            "运输中",
+            "配送中",
+            "已送达",
+            "已完成",
+            "异常",
+            "已取消",
+            "全部15"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:筛选->待处理",
+        "url": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "headings": [
+          "订单管理",
+          "智能聚合调度建议"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1",
+          "展开详情",
+          "一键派单"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号、客户姓名、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "客户信息",
+              "物品信息",
+              "配送地址",
+              "骑手",
+              "运费",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "订单号 客户信息 物品信息 配送地址 骑手 运费 状态 操作 DD202406110003 13:05 刘先生 137****9012 生鲜 5kg · 12.3km 丰台区方庄路2号方庄购物中心 朝阳区三里屯路19号太古里北区 待派单 ¥42 待处理 DD202406110009 13:30 李先生 131****4567 餐饮 1.8kg · 1.2km 朝阳区建国路89号华贸中心3号楼 朝阳区建国路93号万达广场8号楼 待派单 ¥15 待处理 DD202406110010 13:32 王女士 135****8901 生鲜 3.5kg · 2.1km 朝阳区建国路88号SOHO现代城B座 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统订单管理管理员管理员admin@example.com订单管理查看、筛选和处理所有配送订单智能调度导出今日昨日近7天近30天自定义筛选全部待处理已分配已取件运输中配送中已送达已完成异常已取消全部15待处理8已分配1已取件1运输中1配送中1智能聚合调度建议AI 识别到 2 组可聚合订单，优化后可显著提升配送效率A组 · 朝阳CBD片区3单可聚合朝阳区CBD 3公里内5.2总里程(km)35总耗时(分)-18节省时间-¥12节省费用省 22%比单独派送展开详情一键派单B组 · 海淀中关村片区2单可聚合海淀区中关村 3公里内4.8总里程(km)28总耗时(分)-12节省时间-¥8节省费用省 18%比单独派送展开详情一键派单订单号客户信息物品信息配送地址骑手运费状态操作DD20240611000313:05刘先生137****9012生鲜5kg · 12.3km丰台区方庄路2号方庄购物中心朝阳区三里屯路19号太古里北区待派单¥42待处理DD20240611000913:30李先生131****4567餐饮1.8kg · 1.2km朝阳区建国路89号华贸中心3号楼朝阳区建国路93号万达广场8号楼待派单¥15待处理DD20240611001013:32王女士135****8901生鲜3.5kg · 2.1km朝阳区建国路88号SOHO现代城B座朝阳区光华路9号世贸天阶待派单¥22待处理DD20240611001113:35张先生139****2345文件0.5kg · 2.8km朝阳区建国路81号华贸中心写字楼1座朝阳区建国门外大街1号国贸商城待派单¥18待处理DD20240611001213:38刘女士136****6789数码1.2kg · 1.8km朝阳区大望路1号温特莱中心朝阳区建国路88号SOHO现代城A座待派单¥20待处理DD20240611001313:40陈先生137****0123医药0.3kg · 2.5km朝阳区建国路93号万达广场12号楼朝阳区光华路2号阳光100国际公寓待派单¥19待处理DD20240611001413:25赵女士134****3456餐饮2kg · 3.2km海淀区中关村大街27号中关村大厦海淀区苏州街18号长远天地大厦待派单¥25待处理DD20240611001513:28孙先生133****7890文件0.6kg · 2.8km海淀区中关村大街19号新中关购物中心海淀区海淀大街38号银科大厦待派单¥22待处理共 8 条10 条/页20 条/页50 条/页100 条/页1 / 1",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-08-二层操作-筛选-待处理",
+          "label": "二层操作:筛选->待处理",
+          "finalUrl": "http://127.0.0.1:49150/orders",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-08-二层操作-筛选-待处理.json",
+          "screenshotPath": "",
+          "elementCount": 797,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "智能调度",
+            "导出",
+            "搜索订单号、客户姓名、地址...",
+            "今日 昨日 近7天 近30天 自定义",
+            "筛选",
+            "全部",
+            "待处理",
+            "已分配",
+            "已取件",
+            "运输中",
+            "配送中",
+            "已送达",
+            "已完成",
+            "异常",
+            "已取消",
+            "全部15"
+          ]
+        }
+      },
+      {
+        "label": "操作:待处理8",
+        "url": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "headings": [
+          "订单管理",
+          "智能聚合调度建议"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1",
+          "展开详情",
+          "一键派单"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号、客户姓名、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "客户信息",
+              "物品信息",
+              "配送地址",
+              "骑手",
+              "运费",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "订单号 客户信息 物品信息 配送地址 骑手 运费 状态 操作 DD202406110003 13:05 刘先生 137****9012 生鲜 5kg · 12.3km 丰台区方庄路2号方庄购物中心 朝阳区三里屯路19号太古里北区 待派单 ¥42 待处理 DD202406110009 13:30 李先生 131****4567 餐饮 1.8kg · 1.2km 朝阳区建国路89号华贸中心3号楼 朝阳区建国路93号万达广场8号楼 待派单 ¥15 待处理 DD202406110010 13:32 王女士 135****8901 生鲜 3.5kg · 2.1km 朝阳区建国路88号SOHO现代城B座 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统订单管理管理员管理员admin@example.com订单管理查看、筛选和处理所有配送订单智能调度导出今日昨日近7天近30天自定义筛选全部待处理已分配已取件运输中配送中已送达已完成异常已取消全部15待处理8已分配1已取件1运输中1配送中1智能聚合调度建议AI 识别到 2 组可聚合订单，优化后可显著提升配送效率A组 · 朝阳CBD片区3单可聚合朝阳区CBD 3公里内5.2总里程(km)35总耗时(分)-18节省时间-¥12节省费用省 22%比单独派送展开详情一键派单B组 · 海淀中关村片区2单可聚合海淀区中关村 3公里内4.8总里程(km)28总耗时(分)-12节省时间-¥8节省费用省 18%比单独派送展开详情一键派单订单号客户信息物品信息配送地址骑手运费状态操作DD20240611000313:05刘先生137****9012生鲜5kg · 12.3km丰台区方庄路2号方庄购物中心朝阳区三里屯路19号太古里北区待派单¥42待处理DD20240611000913:30李先生131****4567餐饮1.8kg · 1.2km朝阳区建国路89号华贸中心3号楼朝阳区建国路93号万达广场8号楼待派单¥15待处理DD20240611001013:32王女士135****8901生鲜3.5kg · 2.1km朝阳区建国路88号SOHO现代城B座朝阳区光华路9号世贸天阶待派单¥22待处理DD20240611001113:35张先生139****2345文件0.5kg · 2.8km朝阳区建国路81号华贸中心写字楼1座朝阳区建国门外大街1号国贸商城待派单¥18待处理DD20240611001213:38刘女士136****6789数码1.2kg · 1.8km朝阳区大望路1号温特莱中心朝阳区建国路88号SOHO现代城A座待派单¥20待处理DD20240611001313:40陈先生137****0123医药0.3kg · 2.5km朝阳区建国路93号万达广场12号楼朝阳区光华路2号阳光100国际公寓待派单¥19待处理DD20240611001413:25赵女士134****3456餐饮2kg · 3.2km海淀区中关村大街27号中关村大厦海淀区苏州街18号长远天地大厦待派单¥25待处理DD20240611001513:28孙先生133****7890文件0.6kg · 2.8km海淀区中关村大街19号新中关购物中心海淀区海淀大街38号银科大厦待派单¥22待处理共 8 条10 条/页20 条/页50 条/页100 条/页1 / 1",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-09-操作-待处理8",
+          "label": "操作:待处理8",
+          "finalUrl": "http://127.0.0.1:49150/orders",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-09-操作-待处理8.json",
+          "screenshotPath": "",
+          "elementCount": 797,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "智能调度",
+            "导出",
+            "搜索订单号、客户姓名、地址...",
+            "今日 昨日 近7天 近30天 自定义",
+            "筛选",
+            "全部",
+            "待处理",
+            "已分配",
+            "已取件",
+            "运输中",
+            "配送中",
+            "已送达",
+            "已完成",
+            "异常",
+            "已取消",
+            "全部15"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:待处理8->已取消",
+        "url": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "物流管理",
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单"
+        ],
+        "buttons": [
+          "收起菜单",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1"
+        ],
+        "links": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单、骑手...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号、客户姓名、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "客户信息",
+              "物品信息",
+              "配送地址",
+              "骑手",
+              "运费",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "订单号 客户信息 物品信息 配送地址 骑手 运费 状态 操作 DD202406110007 11:00 郑先生 133****6789 餐饮 3.2kg · 22.5km 通州区新华大街 朝阳区CBD万达广场 待派单 ¥72 已取消"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "物流管理仪表盘订单管理异常订单5骑手管理信用分体系运力热力图运单中心赔付管理定价配置API集成个人设置收起菜单物流管理系统订单管理管理员管理员admin@example.com订单管理查看、筛选和处理所有配送订单智能调度导出今日昨日近7天近30天自定义筛选全部待处理已分配已取件运输中配送中已送达已完成异常已取消全部15待处理8已分配1已取件1运输中1配送中1订单号客户信息物品信息配送地址骑手运费状态操作DD20240611000711:00郑先生133****6789餐饮3.2kg · 22.5km通州区新华大街朝阳区CBD万达广场待派单¥72已取消共 1 条10 条/页20 条/页50 条/页100 条/页1 / 1",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89150-cycle-48-structure-10-二层操作-待处理8-已取消",
+          "label": "二层操作:待处理8->已取消",
+          "finalUrl": "http://127.0.0.1:49150/orders",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-10-二层操作-待处理8-已取消.json",
+          "screenshotPath": "",
+          "elementCount": 298,
+          "interactiveCount": 41,
+          "interactiveLabels": [
+            "仪表盘",
+            "订单管理",
+            "异常订单 5",
+            "骑手管理",
+            "信用分体系",
+            "运力热力图",
+            "运单中心",
+            "赔付管理",
+            "定价配置",
+            "API集成",
+            "个人设置",
+            "收起菜单",
+            "搜索订单、骑手...",
+            "管理员 管理员 admin@example.com",
+            "智能调度",
+            "导出",
+            "搜索订单号、客户姓名、地址...",
+            "今日 昨日 近7天 近30天 自定义",
+            "筛选",
+            "全部",
+            "待处理",
+            "已分配",
+            "已取件",
+            "运输中",
+            "配送中",
+            "已送达",
+            "已完成",
+            "异常",
+            "已取消",
+            "全部15"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "仪表盘",
+        "label": "个人设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "个人设置->安全设置",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "刷新数据",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "筛选",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "筛选->待处理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "待处理8",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "待处理8->已取消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.png",
+        "elementCount": 595,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "退出登录",
+          "刷新数据",
+          "全部已读"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.png",
+        "elementCount": 595,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "退出登录",
+          "刷新数据",
+          "全部已读"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-03-操作-个人设置",
+        "label": "操作:个人设置",
+        "finalUrl": "http://127.0.0.1:49150/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.png",
+        "elementCount": 215,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "角色资料",
+          "权限边界",
+          "审计信息",
+          "安全设置",
+          "张伟",
+          "138****6789",
+          "zhangwei@logistics.com",
+          "物流运营中心",
+          "保存资料"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置",
+        "label": "二层操作:个人设置->安全设置",
+        "finalUrl": "http://127.0.0.1:49150/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.png",
+        "elementCount": 241,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "角色资料",
+          "权限边界",
+          "审计信息",
+          "安全设置",
+          "请输入当前密码",
+          "请输入新密码",
+          "请再次输入新密码",
+          "更新密码",
+          "显示",
+          "复制",
+          "撤销"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-05-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-05-操作-刷新数据.json",
+        "screenshotPath": "",
+        "elementCount": 603,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "刷新数据",
+          "全部已读"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-06-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-06-导航-订单管理.json",
+        "screenshotPath": "",
+        "elementCount": 1133,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1",
+          "10 条/页 20 条/页 50 条/页 100 条/页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-07-操作-筛选",
+        "label": "操作:筛选",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-07-操作-筛选.json",
+        "screenshotPath": "",
+        "elementCount": 1145,
+        "interactiveCount": 55,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-08-二层操作-筛选-待处理",
+        "label": "二层操作:筛选->待处理",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-08-二层操作-筛选-待处理.json",
+        "screenshotPath": "",
+        "elementCount": 797,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-09-操作-待处理8",
+        "label": "操作:待处理8",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-09-操作-待处理8.json",
+        "screenshotPath": "",
+        "elementCount": 797,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-10-二层操作-待处理8-已取消",
+        "label": "二层操作:待处理8->已取消",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-10-二层操作-待处理8-已取消.json",
+        "screenshotPath": "",
+        "elementCount": 298,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49150/",
+    "representativeScreenshotLabel": "商家仪表盘"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 10,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-01-首屏.png",
+        "elementCount": 595,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "退出登录",
+          "刷新数据",
+          "全部已读"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-02-导航-仪表盘.png",
+        "elementCount": 595,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "退出登录",
+          "刷新数据",
+          "全部已读"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-03-操作-个人设置",
+        "label": "操作:个人设置",
+        "finalUrl": "http://127.0.0.1:49150/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-03-操作-个人设置.png",
+        "elementCount": 215,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "角色资料",
+          "权限边界",
+          "审计信息",
+          "安全设置",
+          "张伟",
+          "138****6789",
+          "zhangwei@logistics.com",
+          "物流运营中心",
+          "保存资料"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置",
+        "label": "二层操作:个人设置->安全设置",
+        "finalUrl": "http://127.0.0.1:49150/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-04-二层操作-个人设置-安全设置.png",
+        "elementCount": 241,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "角色资料",
+          "权限边界",
+          "审计信息",
+          "安全设置",
+          "请输入当前密码",
+          "请输入新密码",
+          "请再次输入新密码",
+          "更新密码",
+          "显示",
+          "复制",
+          "撤销"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-05-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49150/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-05-操作-刷新数据.json",
+        "screenshotPath": "",
+        "elementCount": 603,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "刷新数据",
+          "全部已读"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-06-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-06-导航-订单管理.json",
+        "screenshotPath": "",
+        "elementCount": 1133,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部15",
+          "待处理8",
+          "已分配1",
+          "已取件1",
+          "运输中1",
+          "配送中1",
+          "10 条/页 20 条/页 50 条/页 100 条/页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-07-操作-筛选",
+        "label": "操作:筛选",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-07-操作-筛选.json",
+        "screenshotPath": "",
+        "elementCount": 1145,
+        "interactiveCount": 55,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-08-二层操作-筛选-待处理",
+        "label": "二层操作:筛选->待处理",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-08-二层操作-筛选-待处理.json",
+        "screenshotPath": "",
+        "elementCount": 797,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-09-操作-待处理8",
+        "label": "操作:待处理8",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-09-操作-待处理8.json",
+        "screenshotPath": "",
+        "elementCount": 797,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89150-cycle-48-structure-10-二层操作-待处理8-已取消",
+        "label": "二层操作:待处理8->已取消",
+        "finalUrl": "http://127.0.0.1:49150/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89150/.trae/repair-checks/full-20260619-052912-cycle-48/may-89150-cycle-48-structure-10-二层操作-待处理8-已取消.json",
+        "screenshotPath": "",
+        "elementCount": 298,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "仪表盘",
+          "订单管理",
+          "异常订单 5",
+          "骑手管理",
+          "信用分体系",
+          "运力热力图",
+          "运单中心",
+          "赔付管理",
+          "定价配置",
+          "API集成",
+          "个人设置",
+          "收起菜单",
+          "搜索订单、骑手...",
+          "管理员 管理员 admin@example.com",
+          "智能调度",
+          "导出",
+          "搜索订单号、客户姓名、地址...",
+          "今日 昨日 近7天 近30天 自定义",
+          "筛选",
+          "全部",
+          "待处理",
+          "已分配",
+          "已取件",
+          "运输中",
+          "配送中",
+          "已送达",
+          "已完成",
+          "异常",
+          "已取消",
+          "全部15"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1824,
+    "height": 1600,
+    "scrollWidth": 1792,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "物流管理\n仪表盘\n订单管理\n异常订单\n5\n骑手管理\n信用分体系\n运力热力图\n运单中心\n赔付管理\n定价配置\nAPI集成\n个人设置\n收起菜单\n物流管理系统\n仪表盘\n管理员\n管理员\nadmin@example.com\n商家仪表盘\n\n实时监控订单、骑手和运营数据\n\n实时连接\n刷新数据\n2026年6月19日星期五\n今日订单数\n25\n实时\n+12%\n较昨日\n完成率\n28.0%\n健康\n+3.2%\n较昨日\n平均配送时长\n0 分钟\n-2%\n较昨日\n今日营收\n¥107.29\n增长中\n+8.5%\n较昨日\n实时订单流\nWebSocket\nDD202406110001\n配送中\n张先生 · 餐饮\n海淀区中关村大街1号\n李骑手\n¥28\nDD202406110002\n已取件\n王女士 · 文件\n西城区金融街7号\n赵骑手\n¥18\nDD202406110003\n待处理\n刘先生 · 生鲜\n朝阳区三里屯路19号\n待派单\n¥42\nDD202406110004\n运输中\n陈女士 · 数码\n朝阳区望京SOHO\n孙骑手\n¥52\nDD202406110005\n异常\n周先生 · 医药\n东直门南大街1号\n待派单\n¥22\n配送地图\n在线 5\n配送中 3\n李骑手\nETA: 8分钟\n赵骑手\nETA: 15分钟\n孙骑手\nETA: 22分钟\n周骑手\n空闲\n吴骑手\nETA: 12分钟\n骑手位置\n配送点\n配送路线\n订单状态分布\n19\n总订单\n待处理\n4\n21%\n配送中\n5\n26%\n已完成\n7\n37%\n异常\n3\n16%\n近7日趋势\n订单量\n营收\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n异常订单告警\n3 条未读\n全部已读\n高危\n\n订单 DD202406110005 地址模糊，需人工处理\n\n5\n07:05\n中危\n\n订单 DD202406110001 预计超时3分钟\n\n1\n07:42\n紧急\n\n生鲜订单 DD202406110003 待派单超过5分钟\n\n3\n07:48",
+  "bodyTextPreview": "物流管理\n仪表盘\n订单管理\n异常订单\n5\n骑手管理\n信用分体系\n运力热力图\n运单中心\n赔付管理\n定价配置\nAPI集成\n个人设置\n收起菜单\n物流管理系统\n仪表盘\n管理员\n管理员\nadmin@example.com\n商家仪表盘\n\n实时监控订单、骑手和运营数据\n\n实时连接\n刷新数据\n2026年6月19日星期五\n今日订单数\n25\n实时\n+12%\n较昨日\n完成率\n28.0%\n健康\n+3.2%\n较昨日\n平均配送时长\n0 分钟\n-2%\n较昨日\n今日营收\n¥107.29\n增长中\n+8.5%\n较昨日\n实时订单流\nWebSocket\nDD202406110001\n配送中\n张先生 · 餐饮\n海淀区中关村大街1号\n李骑手\n¥28\nDD202406110002\n已取件\n王女士 · 文件\n西城区金融街7号\n赵骑手\n¥18\nDD202406110003\n待处理\n刘先生 · 生鲜\n朝阳区三里屯路19号\n待派单\n¥42\nDD202406110004\n运输中\n陈女士 · 数码\n朝阳区望京SOHO\n孙骑手\n¥52\nDD202406110005\n异常\n周先生 · 医药\n东直门南大街1号\n待派单\n¥22\n配送地图\n在线 5\n配送中 3\n李骑手\nETA: 8分钟\n赵骑手\nETA: 15分钟\n孙骑手\nETA: 22分钟\n周骑手\n空闲\n吴骑手\nETA: 12分钟\n骑手位置\n配送点\n配送路线\n订单状态分布\n19\n总订单\n待处理\n4\n21%\n配送中\n5\n26%\n已完成\n7\n37%\n异常\n3\n16%\n近7日趋势\n订单量\n营收\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n异常订单告警\n3 条未读\n全部已读\n高危\n\n订单 DD202406110005 地址模糊，需人工处理\n\n5\n07:05\n中危\n\n订单 DD202406110001 预计超时3分钟\n\n1\n07:42\n紧急\n\n生鲜订单 DD202406110003 待派单超过5分钟\n\n3\n07:48",
+  "apiBase": "http://127.0.0.1:59150/api",
+  "businessGoalPreview": "同城配送运营后台，包含订单调度、骑手管理、异常订单处理、价格策略、热力图和系统设置等业务页面",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/dashboard/metrics",
+      "path": "/api/dashboard/metrics",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"total_orders\":25,\"completed_orders\":7,\"pending_orders\":4,\"exception_orders\":3,\"total_revenue\":107.28999999999999,\"active_riders\":10,\"avg_delivery_time\":0,\"today_orders\":0,\"today_revenue\":0,\"weekly_orders\":0,\"weekly_revenue\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"orders\":[{\"id\":\"b9e4c0b0-4378-4a32-93f2-672320ac44e1\",\"order_no\":\"DD17811462434040000\",\"merchant_id\":\"merchant_1\",\"rider_id\":null,\"status\":\"pending\",\"pickup_address\":\"上海市黄浦区南京东路100号\",\"pickup_lat\":31.252703523577523,\"pickup_lng\":121.45871818428358,\"delivery_address\":\"上海市黄浦区外滩18号\",\"delivery_lat\":31.185627096108142,\"delivery_lng\":121.49428538095403,\"goods_type\":\"餐饮\",\"goods_weight\":3.1,\"distance_km\":4.1,\"estimated_price\":16.2,\"actual_price\":0,\"estimated_delivery_time\":\"2026-"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59150/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49150/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49150/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49150/node_modules/.vite/deps/chunk-NXESFFTV.js?v=03615bf4",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "log",
+      "text": "[WebSocket] Connected",
+      "location": {
+        "url": "http://127.0.0.1:49150/src/services/websocket.ts?t=1781844492103",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49150/settings",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49150/settings",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49150/settings",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49150/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49150/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49150/node_modules/.vite/deps/chunk-NXESFFTV.js?v=03615bf4",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "log",
+      "text": "[WebSocket] Connected",
+      "location": {
+        "url": "http://127.0.0.1:49150/src/services/websocket.ts?t=1781844492103",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49150/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49150/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49150/node_modules/.vite/deps/chunk-NXESFFTV.js?v=03615bf4",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "log",
+      "text": "[WebSocket] Connected",
+      "location": {
+        "url": "http://127.0.0.1:49150/src/services/websocket.ts?t=1781844492103",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

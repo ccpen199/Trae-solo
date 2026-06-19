@@ -4,6 +4,7 @@ import {
   Filter,
   Calendar,
   ChevronDown,
+  ChevronUp,
   MapPin,
   User,
   Phone,
@@ -19,13 +20,22 @@ import {
   Download,
   Sparkles,
   Bike,
-  Eye,
-  X,
   RefreshCw,
+  Zap,
+  Star,
+  Sun,
+  CloudRain,
+  Thermometer,
+  Snowflake,
+  ShieldCheck,
+  Send,
+  TrendingUp,
 } from 'lucide-react';
 import { DataTable } from '@/components/ui/DataTable';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Modal } from '@/components/ui/Modal';
+import { FareBreakdown } from '@/components/common/FareBreakdown';
+import { ETAPredictor } from '@/components/common/ETAPredictor';
 import { cn } from '@/lib/utils';
 import type { Order, TableColumn, TableAction } from '@/types';
 
@@ -197,6 +207,139 @@ const mockOrders: Order[] = [
     delivery_lat: 40.0342,
     delivery_lng: 116.3074,
   },
+  {
+    id: '9',
+    order_no: 'DD202406110009',
+    customerName: '李先生',
+    customerPhone: '131****4567',
+    pickup_address: '朝阳区建国路89号华贸中心3号楼',
+    delivery_address: '朝阳区建国路93号万达广场8号楼',
+    goods_type: '餐饮',
+    goods_weight: 1.8,
+    distance_km: 1.2,
+    estimated_price: 15,
+    status: 'pending',
+    created_at: '2024-06-11T10:30:00Z',
+    estimated_delivery_at: '2024-06-11T10:55:00Z',
+    pickup_lat: 39.9085,
+    pickup_lng: 116.4612,
+    delivery_lat: 39.9098,
+    delivery_lng: 116.4658,
+  },
+  {
+    id: '10',
+    order_no: 'DD202406110010',
+    customerName: '王女士',
+    customerPhone: '135****8901',
+    pickup_address: '朝阳区建国路88号SOHO现代城B座',
+    delivery_address: '朝阳区光华路9号世贸天阶',
+    goods_type: '生鲜',
+    goods_weight: 3.5,
+    distance_km: 2.1,
+    estimated_price: 22,
+    status: 'pending',
+    created_at: '2024-06-11T10:32:00Z',
+    estimated_delivery_at: '2024-06-11T11:00:00Z',
+    pickup_lat: 39.9078,
+    pickup_lng: 116.4598,
+    delivery_lat: 39.9142,
+    delivery_lng: 116.4542,
+  },
+  {
+    id: '11',
+    order_no: 'DD202406110011',
+    customerName: '张先生',
+    customerPhone: '139****2345',
+    pickup_address: '朝阳区建国路81号华贸中心写字楼1座',
+    delivery_address: '朝阳区建国门外大街1号国贸商城',
+    goods_type: '文件',
+    goods_weight: 0.5,
+    distance_km: 2.8,
+    estimated_price: 18,
+    status: 'pending',
+    created_at: '2024-06-11T10:35:00Z',
+    estimated_delivery_at: '2024-06-11T11:05:00Z',
+    pickup_lat: 39.9092,
+    pickup_lng: 116.4625,
+    delivery_lat: 39.9085,
+    delivery_lng: 116.4582,
+  },
+  {
+    id: '12',
+    order_no: 'DD202406110012',
+    customerName: '刘女士',
+    customerPhone: '136****6789',
+    pickup_address: '朝阳区大望路1号温特莱中心',
+    delivery_address: '朝阳区建国路88号SOHO现代城A座',
+    goods_type: '数码',
+    goods_weight: 1.2,
+    distance_km: 1.8,
+    estimated_price: 20,
+    status: 'pending',
+    created_at: '2024-06-11T10:38:00Z',
+    estimated_delivery_at: '2024-06-11T10:58:00Z',
+    pickup_lat: 39.9125,
+    pickup_lng: 116.4678,
+    delivery_lat: 39.9072,
+    delivery_lng: 116.4595,
+  },
+  {
+    id: '13',
+    order_no: 'DD202406110013',
+    customerName: '陈先生',
+    customerPhone: '137****0123',
+    pickup_address: '朝阳区建国路93号万达广场12号楼',
+    delivery_address: '朝阳区光华路2号阳光100国际公寓',
+    goods_type: '医药',
+    goods_weight: 0.3,
+    distance_km: 2.5,
+    estimated_price: 19,
+    status: 'pending',
+    created_at: '2024-06-11T10:40:00Z',
+    estimated_delivery_at: '2024-06-11T11:02:00Z',
+    pickup_lat: 39.9105,
+    pickup_lng: 116.4642,
+    delivery_lat: 39.9158,
+    delivery_lng: 116.4685,
+  },
+  {
+    id: '14',
+    order_no: 'DD202406110014',
+    customerName: '赵女士',
+    customerPhone: '134****3456',
+    pickup_address: '海淀区中关村大街27号中关村大厦',
+    delivery_address: '海淀区苏州街18号长远天地大厦',
+    goods_type: '餐饮',
+    goods_weight: 2.0,
+    distance_km: 3.2,
+    estimated_price: 25,
+    status: 'pending',
+    created_at: '2024-06-11T10:25:00Z',
+    estimated_delivery_at: '2024-06-11T11:00:00Z',
+    pickup_lat: 39.9842,
+    pickup_lng: 116.3174,
+    delivery_lat: 39.9825,
+    delivery_lng: 116.3058,
+  },
+  {
+    id: '15',
+    order_no: 'DD202406110015',
+    customerName: '孙先生',
+    customerPhone: '133****7890',
+    pickup_address: '海淀区中关村大街19号新中关购物中心',
+    delivery_address: '海淀区海淀大街38号银科大厦',
+    goods_type: '文件',
+    goods_weight: 0.6,
+    distance_km: 2.8,
+    estimated_price: 22,
+    status: 'pending',
+    created_at: '2024-06-11T10:28:00Z',
+    estimated_delivery_at: '2024-06-11T10:55:00Z',
+    pickup_lat: 39.9828,
+    pickup_lng: 116.3152,
+    delivery_lat: 39.9805,
+    delivery_lng: 116.3085,
+  },
 ];
 
 const statusFilters = [
@@ -228,6 +371,250 @@ const clusterOrders = [
   },
 ];
 
+interface DispatchRiderCandidate {
+  id: string;
+  name: string;
+  creditScore: number;
+  currentOrders: number;
+  maxCapacity: number;
+  distanceToCenter: number;
+  onTimeRate: number;
+  isRecommended: boolean;
+}
+
+type WeatherType = 'sunny' | 'cloudy' | 'rain' | 'snow';
+type GoodsType = '餐饮' | '生鲜' | '医药' | '数码' | '文件' | '服装';
+
+interface DispatchPricingBasis {
+  timeSlot: {
+    label: string;
+    multiplier: number;
+    description: string;
+  };
+  weather: {
+    type: WeatherType;
+    label: string;
+    multiplier: number;
+  };
+  goodsFees: Array<{
+    type: GoodsType;
+    count: number;
+    fee: number;
+    reason: string;
+  }>;
+  distanceFee: {
+    ratePerKm: number;
+    distance: number;
+    total: number;
+  };
+  basePrice: number;
+}
+
+interface DispatchDecision {
+  recommendedRiderName: string;
+  recommendedRiderCredit: number;
+  recommendedRiderDistance: number;
+  canCarry: boolean;
+  dispatchTime: string;
+  savedTimeMinutes: number;
+  savedCostYuan: number;
+}
+
+interface DispatchGroup {
+  id: string;
+  name: string;
+  orderIds: string[];
+  totalDistance: number;
+  totalTime: number;
+  savedTime: number;
+  savedCost: number;
+  savedPercentage: number;
+  totalFare: number;
+  area: string;
+  route: Array<{
+    label: string;
+    name: string;
+    type: 'pickup' | 'delivery';
+    time: string;
+    distanceFromPrev: number;
+    cumulativeTime: number;
+  }>;
+  optimizationNote: string;
+  riders: DispatchRiderCandidate[];
+  pricingBasis: DispatchPricingBasis;
+  decision: DispatchDecision;
+}
+
+const dispatchGroups: DispatchGroup[] = [
+  {
+    id: 'group-a',
+    name: 'A组 · 朝阳CBD片区',
+    orderIds: ['9', '10', '11'],
+    totalDistance: 5.2,
+    totalTime: 35,
+    savedTime: 18,
+    savedCost: 12,
+    savedPercentage: 22,
+    totalFare: 55,
+    area: '朝阳区CBD 3公里内',
+    route: [
+      { label: 'P1', name: '朝阳区建国路89号华贸中心', type: 'pickup', time: '10:45', distanceFromPrev: 0, cumulativeTime: 0 },
+      { label: 'P2', name: '朝阳区建国路88号SOHO现代城', type: 'pickup', time: '10:50', distanceFromPrev: 0.5, cumulativeTime: 5 },
+      { label: 'P3', name: '朝阳区建国路81号华贸中心1座', type: 'pickup', time: '10:55', distanceFromPrev: 0.8, cumulativeTime: 10 },
+      { label: 'D1', name: '朝阳区建国路93号万达广场', type: 'delivery', time: '11:00', distanceFromPrev: 1.2, cumulativeTime: 15 },
+      { label: 'D2', name: '朝阳区光华路9号世贸天阶', type: 'delivery', time: '11:10', distanceFromPrev: 1.5, cumulativeTime: 25 },
+      { label: 'D3', name: '朝阳区建国门外大街1号国贸商城', type: 'delivery', time: '11:20', distanceFromPrev: 1.2, cumulativeTime: 35 },
+    ],
+    optimizationNote: '基于Haversine距离最近邻算法，路径减少回头率35%',
+    riders: [
+      {
+        id: 'r-001',
+        name: '李建国',
+        creditScore: 98,
+        currentOrders: 2,
+        maxCapacity: 5,
+        distanceToCenter: 0.8,
+        onTimeRate: 98.5,
+        isRecommended: true,
+      },
+      {
+        id: 'r-002',
+        name: '王志强',
+        creditScore: 95,
+        currentOrders: 0,
+        maxCapacity: 5,
+        distanceToCenter: 1.2,
+        onTimeRate: 96.2,
+        isRecommended: false,
+      },
+      {
+        id: 'r-003',
+        name: '张伟明',
+        creditScore: 91,
+        currentOrders: 3,
+        maxCapacity: 5,
+        distanceToCenter: 2.1,
+        onTimeRate: 92.1,
+        isRecommended: false,
+      },
+    ],
+    pricingBasis: {
+      timeSlot: {
+        label: '午高峰(11:00-13:00)',
+        multiplier: 1.2,
+        description: '+20%',
+      },
+      weather: {
+        type: 'sunny',
+        label: '晴',
+        multiplier: 1.0,
+      },
+      goodsFees: [
+        { type: '餐饮', count: 1, fee: 0, reason: '普通保温配送' },
+        { type: '生鲜', count: 1, fee: 3, reason: '冷链需求' },
+        { type: '文件', count: 1, fee: 0, reason: '标准配送' },
+      ],
+      distanceFee: {
+        ratePerKm: 2.5,
+        distance: 5.2,
+        total: 13,
+      },
+      basePrice: 8,
+    },
+    decision: {
+      recommendedRiderName: '李建国',
+      recommendedRiderCredit: 98.5,
+      recommendedRiderDistance: 0.8,
+      canCarry: true,
+      dispatchTime: '立即',
+      savedTimeMinutes: 18,
+      savedCostYuan: 12,
+    },
+  },
+  {
+    id: 'group-b',
+    name: 'B组 · 海淀中关村片区',
+    orderIds: ['14', '15'],
+    totalDistance: 4.8,
+    totalTime: 28,
+    savedTime: 12,
+    savedCost: 8,
+    savedPercentage: 18,
+    totalFare: 47,
+    area: '海淀区中关村 3公里内',
+    route: [
+      { label: 'P1', name: '海淀区中关村大街27号中关村大厦', type: 'pickup', time: '10:50', distanceFromPrev: 0, cumulativeTime: 0 },
+      { label: 'P2', name: '海淀区中关村大街19号新中关购物中心', type: 'pickup', time: '10:55', distanceFromPrev: 0.6, cumulativeTime: 5 },
+      { label: 'D1', name: '海淀区苏州街18号长远天地大厦', type: 'delivery', time: '11:08', distanceFromPrev: 2.0, cumulativeTime: 18 },
+      { label: 'D2', name: '海淀区海淀大街38号银科大厦', type: 'delivery', time: '11:18', distanceFromPrev: 2.2, cumulativeTime: 28 },
+    ],
+    optimizationNote: '基于Haversine距离最近邻算法，路径减少回头率35%',
+    riders: [
+      {
+        id: 'r-004',
+        name: '赵海涛',
+        creditScore: 97,
+        currentOrders: 1,
+        maxCapacity: 5,
+        distanceToCenter: 0.6,
+        onTimeRate: 97.8,
+        isRecommended: true,
+      },
+      {
+        id: 'r-005',
+        name: '孙晓峰',
+        creditScore: 94,
+        currentOrders: 2,
+        maxCapacity: 5,
+        distanceToCenter: 1.5,
+        onTimeRate: 95.4,
+        isRecommended: false,
+      },
+      {
+        id: 'r-006',
+        name: '周磊',
+        creditScore: 90,
+        currentOrders: 0,
+        maxCapacity: 5,
+        distanceToCenter: 2.5,
+        onTimeRate: 91.8,
+        isRecommended: false,
+      },
+    ],
+    pricingBasis: {
+      timeSlot: {
+        label: '午高峰(11:00-13:00)',
+        multiplier: 1.2,
+        description: '+20%',
+      },
+      weather: {
+        type: 'rain',
+        label: '小雨',
+        multiplier: 1.15,
+      },
+      goodsFees: [
+        { type: '餐饮', count: 1, fee: 0, reason: '普通保温配送' },
+        { type: '文件', count: 1, fee: 0, reason: '标准配送' },
+      ],
+      distanceFee: {
+        ratePerKm: 2.5,
+        distance: 4.8,
+        total: 12,
+      },
+      basePrice: 8,
+    },
+    decision: {
+      recommendedRiderName: '赵海涛',
+      recommendedRiderCredit: 97.8,
+      recommendedRiderDistance: 0.6,
+      canCarry: true,
+      dispatchTime: '立即',
+      savedTimeMinutes: 12,
+      savedCostYuan: 8,
+    },
+  },
+];
+
 export default function Orders() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [keyword, setKeyword] = useState('');
@@ -236,6 +623,8 @@ export default function Orders() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [dispatchOpen, setDispatchOpen] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const [detailTab, setDetailTab] = useState<'timeline' | 'fare'>('timeline');
 
   const filteredOrders = useMemo(() => {
     return mockOrders.filter((order) => {
@@ -548,6 +937,507 @@ export default function Orders() {
         })}
       </div>
 
+      {statusFilter === 'pending' && dispatchGroups.length > 0 && (
+        <div className="bg-space-blue-800 border border-space-blue-600 rounded-xl p-5 shadow-card">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-amber-accent-500/15 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-amber-accent-400" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-gray-100">智能聚合调度建议</h2>
+              <p className="text-xs text-gray-400 mt-0.5">
+                AI 识别到 {dispatchGroups.length} 组可聚合订单，优化后可显著提升配送效率
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {dispatchGroups.map((group) => {
+              const isExpanded = expandedGroups[group.id];
+              const groupOrders = mockOrders.filter((o) => group.orderIds.includes(o.id));
+              return (
+                <div
+                  key={group.id}
+                  className="bg-space-blue-900/50 border border-space-blue-600 rounded-xl overflow-hidden"
+                >
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-amber-accent-500/20 flex items-center justify-center">
+                          <Zap className="w-4 h-4 text-amber-accent-400" />
+                        </div>
+                        <span className="text-sm font-semibold text-gray-100">{group.name}</span>
+                      </div>
+                      <span className="text-xs px-2 py-0.5 bg-success-500/15 text-success-400 rounded-full">
+                        {group.orderIds.length}单可聚合
+                      </span>
+                    </div>
+
+                    <div className="text-xs text-gray-400 mb-3 flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-amber-accent-400" />
+                      {group.area}
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-2 mb-4">
+                      <div className="bg-space-blue-700/50 rounded-lg p-2 text-center">
+                        <div className="text-base font-bold text-amber-accent-400 font-mono-code">{group.totalDistance}</div>
+                        <div className="text-[10px] text-gray-500">总里程(km)</div>
+                      </div>
+                      <div className="bg-space-blue-700/50 rounded-lg p-2 text-center">
+                        <div className="text-base font-bold text-info-400 font-mono-code">{group.totalTime}</div>
+                        <div className="text-[10px] text-gray-500">总耗时(分)</div>
+                      </div>
+                      <div className="bg-space-blue-700/50 rounded-lg p-2 text-center">
+                        <div className="text-base font-bold text-success-400 font-mono-code">-{group.savedTime}</div>
+                        <div className="text-[10px] text-gray-500">节省时间</div>
+                      </div>
+                      <div className="bg-space-blue-700/50 rounded-lg p-2 text-center">
+                        <div className="text-base font-bold text-warning-400 font-mono-code">-¥{group.savedCost}</div>
+                        <div className="text-[10px] text-gray-500">节省费用</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1 text-xs text-gray-400">
+                        <span className="text-success-400 font-medium">省 {group.savedPercentage}%</span>
+                        <span>比单独派送</span>
+                      </div>
+                      <button
+                        onClick={() => setExpandedGroups((prev) => ({ ...prev, [group.id]: !prev[group.id] }))}
+                        className="flex items-center gap-1 text-xs text-gray-400 hover:text-amber-accent-400 transition-colors"
+                      >
+                        {isExpanded ? (
+                          <><ChevronUp className="w-3.5 h-3.5" />收起详情</>
+                        ) : (
+                          <><ChevronDown className="w-3.5 h-3.5" />展开详情</>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="border-t border-space-blue-600 p-4 space-y-4">
+                      <div>
+                        <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                          <Package className="w-3.5 h-3.5" />
+                          组内订单
+                        </h4>
+                        <div className="space-y-2">
+                          {groupOrders.map((order, idx) => (
+                            <div
+                              key={order.id}
+                              className="flex items-center gap-3 p-2 bg-space-blue-700/30 rounded-lg hover:bg-space-blue-700/50 transition-colors cursor-pointer"
+                              onClick={() => {
+                                setSelectedOrder(order);
+                                setDetailOpen(true);
+                              }}
+                            >
+                              <span className="text-xs px-1.5 py-0.5 bg-amber-accent-500/20 text-amber-accent-400 rounded font-mono-code">
+                                第{idx + 1}单
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm text-gray-200 font-mono-code truncate">{order.order_no}</div>
+                                <div className="text-xs text-gray-500 truncate">{order.goods_type} · {order.distance_km}km</div>
+                              </div>
+                              <span className="text-sm text-amber-accent-400 font-semibold font-mono-code">¥{order.estimated_price}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                          <Route className="w-3.5 h-3.5" />
+                          路径规划
+                        </h4>
+                        <div className="relative h-[180px] bg-space-blue-900 rounded-lg overflow-hidden">
+                          <svg className="absolute inset-0 w-full h-full">
+                            <defs>
+                              <pattern id={`grid-${group.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e3a5f" strokeWidth="0.5" />
+                              </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill={`url(#grid-${group.id})`} />
+                          </svg>
+
+                          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 180" preserveAspectRatio="xMidYMid meet">
+                            {group.route.map((point, idx) => {
+                              if (idx === 0) return null;
+                              const prevPoint = group.route[idx - 1];
+                              const x1 = 50 + (idx - 1) * (500 / (group.route.length - 1));
+                              const y1 = point.type === 'pickup' ? 50 + (idx % 3) * 20 : 120 - (idx % 3) * 15;
+                              const x2 = 50 + idx * (500 / (group.route.length - 1));
+                              const y2 = point.type === 'pickup' ? 50 + ((idx + 1) % 3) * 20 : 120 - ((idx + 1) % 3) * 15;
+                              const midX = (x1 + x2) / 2;
+                              const midY = (y1 + y2) / 2 - 10;
+                              return (
+                                <g key={`line-${idx}`}>
+                                  <path
+                                    d={`M ${x1} ${y1} Q ${midX} ${midY} ${x2} ${y2}`}
+                                    fill="none"
+                                    stroke={point.type === 'pickup' ? '#F59E0B' : '#10B981'}
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeDasharray="6 3"
+                                    opacity="0.8"
+                                  />
+                                  <text
+                                    x={(x1 + x2) / 2}
+                                    y={(y1 + y2) / 2 - 15}
+                                    textAnchor="middle"
+                                    fill="#94a3b8"
+                                    fontSize="10"
+                                    fontFamily="monospace"
+                                  >
+                                    {point.distanceFromPrev}km · {point.cumulativeTime - prevPoint.cumulativeTime}分
+                                  </text>
+                                </g>
+                              );
+                            })}
+
+                            {group.route.map((point, idx) => {
+                              const x = 50 + idx * (500 / (group.route.length - 1));
+                              const y = point.type === 'pickup' ? 50 + ((idx + 1) % 3) * 20 : 120 - ((idx + 1) % 3) * 15;
+                              return (
+                                <g key={`point-${idx}`}>
+                                  <circle
+                                    cx={x}
+                                    cy={y}
+                                    r="12"
+                                    fill={point.type === 'pickup' ? '#F59E0B' : '#10B981'}
+                                    stroke={point.type === 'pickup' ? '#FCD34D' : '#6EE7B7'}
+                                    strokeWidth="2"
+                                  />
+                                  <text
+                                    x={x}
+                                    y={y + 1}
+                                    textAnchor="middle"
+                                    dominantBaseline="middle"
+                                    fill="#fff"
+                                    fontSize="9"
+                                    fontWeight="bold"
+                                    fontFamily="monospace"
+                                  >
+                                    {point.label}
+                                  </text>
+                                  <text
+                                    x={x}
+                                    y={y + 25}
+                                    textAnchor="middle"
+                                    fill="#64748b"
+                                    fontSize="9"
+                                  >
+                                    {point.time}
+                                  </text>
+                                  <text
+                                    x={x}
+                                    y={y - 18}
+                                    textAnchor="middle"
+                                    fill={point.type === 'pickup' ? '#F59E0B' : '#10B981'}
+                                    fontSize="9"
+                                    fontWeight="500"
+                                  >
+                                    {point.cumulativeTime}分
+                                  </text>
+                                </g>
+                              );
+                            })}
+                          </svg>
+
+                          <div className="absolute bottom-2 left-2 flex items-center gap-3 text-[10px]">
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 rounded-full bg-warning-500" />
+                              <span className="text-gray-400">取件点</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 rounded-full bg-success-500" />
+                              <span className="text-gray-400">送件点</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-3 space-y-2">
+                          <h5 className="text-[11px] font-semibold text-gray-400 flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3 text-info-400" />
+                            路径顺序详情
+                          </h5>
+                          <div className="space-y-1.5">
+                            {group.route.map((point, idx) => {
+                              if (idx === 0) return null;
+                              const prevPoint = group.route[idx - 1];
+                              const segmentTime = point.cumulativeTime - prevPoint.cumulativeTime;
+                              return (
+                                <div
+                                  key={`seg-${idx}`}
+                                  className="flex items-center gap-2 text-[11px] bg-space-blue-700/30 rounded px-2.5 py-1.5"
+                                >
+                                  <span className={cn(
+                                    'px-1.5 py-0.5 rounded font-mono-code font-bold text-white',
+                                    prevPoint.type === 'pickup' ? 'bg-warning-500' : 'bg-success-500'
+                                  )}>
+                                    {prevPoint.label}
+                                  </span>
+                                  <ArrowRight className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                                  <span className={cn(
+                                    'px-1.5 py-0.5 rounded font-mono-code font-bold text-white',
+                                    point.type === 'pickup' ? 'bg-warning-500' : 'bg-success-500'
+                                  )}>
+                                    {point.label}
+                                  </span>
+                                  <span className="text-gray-400 font-mono-code ml-auto">
+                                    {point.distanceFromPrev}km · {segmentTime}分
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-2 px-2.5 py-2 bg-info-500/10 border border-info-500/30 rounded-lg">
+                            <Sparkles className="w-3.5 h-3.5 text-info-400 flex-shrink-0" />
+                            <span className="text-[11px] text-info-400">{group.optimizationNote}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                          <Bike className="w-3.5 h-3.5" />
+                          候选骑手
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          {group.riders.map((rider) => (
+                            <div
+                              key={rider.id}
+                              className={cn(
+                                'relative rounded-lg p-3 transition-all border-2',
+                                rider.isRecommended
+                                  ? 'bg-amber-accent-500/10 border-amber-accent-500/60 shadow-[0_0_0_1px_rgba(245,158,11,0.2)]'
+                                  : 'bg-space-blue-700/30 border-transparent hover:border-space-blue-500'
+                              )}
+                            >
+                              {rider.isRecommended && (
+                                <div className="absolute -top-2 -right-2 px-1.5 py-0.5 bg-amber-accent-500 text-space-blue-900 rounded text-[9px] font-bold flex items-center gap-0.5">
+                                  <Star className="w-2.5 h-2.5 fill-current" />
+                                  推荐
+                                </div>
+                              )}
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className={cn(
+                                  'w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0',
+                                  rider.isRecommended
+                                    ? 'bg-amber-accent-500/20 ring-2 ring-amber-accent-500/40'
+                                    : 'bg-space-blue-600'
+                                )}>
+                                  <User className={cn(
+                                    'w-5 h-5',
+                                    rider.isRecommended ? 'text-amber-accent-400' : 'text-gray-400'
+                                  )} />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-medium text-gray-100 truncate">{rider.name}</div>
+                                  <div className="flex items-center gap-1 mt-0.5">
+                                    <Star className="w-3 h-3 text-success-400 fill-success-400" />
+                                    <span className="text-[11px] font-semibold text-success-400 font-mono-code">
+                                      {rider.creditScore}
+                                    </span>
+                                    <span className="text-[10px] text-gray-500">/100</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="space-y-1 text-[11px]">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-500">承载状态</span>
+                                  <span className="text-gray-300">
+                                    当前{rider.currentOrders}单 · 可再加{rider.maxCapacity - rider.currentOrders}单
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-500">距聚合中心</span>
+                                  <span className="text-amber-accent-400 font-mono-code">{rider.distanceToCenter}km</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-500">历史准时率</span>
+                                  <span className="text-info-400 font-mono-code">{rider.onTimeRate}%</span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                          <Sparkles className="w-3.5 h-3.5" />
+                          定价依据
+                        </h4>
+                        <div className="bg-space-blue-700/30 rounded-lg p-3 space-y-2.5">
+                          <div className="flex items-center justify-between text-[11px]">
+                            <div className="flex items-center gap-1.5">
+                              <Clock className="w-3 h-3 text-warning-400" />
+                              <span className="text-gray-400">时段</span>
+                              <span className="text-gray-200">{group.pricingBasis.timeSlot.label}</span>
+                            </div>
+                            <span className={cn(
+                              'font-mono-code',
+                              group.pricingBasis.timeSlot.multiplier > 1
+                                ? 'text-warning-400'
+                                : 'text-gray-500'
+                            )}>
+                              {group.pricingBasis.timeSlot.multiplier > 1
+                                ? group.pricingBasis.timeSlot.description
+                                : '0%'}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-[11px]">
+                            <div className="flex items-center gap-1.5">
+                              {group.pricingBasis.weather.type === 'sunny' ? (
+                                <Sun className="w-3 h-3 text-warning-400" />
+                              ) : group.pricingBasis.weather.type === 'rain' ? (
+                                <CloudRain className="w-3 h-3 text-info-400" />
+                              ) : group.pricingBasis.weather.type === 'snow' ? (
+                                <Snowflake className="w-3 h-3 text-info-300" />
+                              ) : (
+                                <CloudRain className="w-3 h-3 text-gray-400" />
+                              )}
+                              <span className="text-gray-400">天气</span>
+                              <span className="text-gray-200">{group.pricingBasis.weather.label}</span>
+                            </div>
+                            <span className={cn(
+                              'font-mono-code',
+                              group.pricingBasis.weather.multiplier > 1
+                                ? 'text-warning-400'
+                                : 'text-gray-500'
+                            )}>
+                              {group.pricingBasis.weather.multiplier > 1
+                                ? `+${Math.round((group.pricingBasis.weather.multiplier - 1) * 100)}%`
+                                : '0%'}
+                            </span>
+                          </div>
+
+                          <div className="border-t border-space-blue-500/50 pt-2">
+                            <div className="flex items-center gap-1.5 text-[11px] mb-1.5">
+                              <Package className="w-3 h-3 text-info-400" />
+                              <span className="text-gray-400">货品类型</span>
+                            </div>
+                            <div className="space-y-1">
+                              {group.pricingBasis.goodsFees.map((goods, idx) => (
+                                <div key={idx} className="flex items-center justify-between text-[11px] pl-4">
+                                  <div className="flex items-center gap-1.5">
+                                    {goods.type === '生鲜' && <Snowflake className="w-2.5 h-2.5 text-info-400" />}
+                                    {goods.type === '医药' && <Thermometer className="w-2.5 h-2.5 text-danger-400" />}
+                                    {goods.type === '数码' && <ShieldCheck className="w-2.5 h-2.5 text-warning-400" />}
+                                    <span className="text-gray-200">{goods.type}</span>
+                                    {goods.count > 1 && (
+                                      <span className="text-gray-500">×{goods.count}</span>
+                                    )}
+                                    <span className="text-gray-500">({goods.reason})</span>
+                                  </div>
+                                  <span className={cn(
+                                    'font-mono-code',
+                                    goods.fee > 0 ? 'text-warning-400' : 'text-gray-500'
+                                  )}>
+                                    {goods.fee > 0 ? `+¥${goods.fee}` : '¥0'}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between text-[11px]">
+                            <div className="flex items-center gap-1.5">
+                              <MapPin className="w-3 h-3 text-success-400" />
+                              <span className="text-gray-400">里程费</span>
+                              <span className="text-gray-500">
+                                ¥{group.pricingBasis.distanceFee.ratePerKm}/km × {group.pricingBasis.distanceFee.distance}km
+                              </span>
+                            </div>
+                            <span className="text-gray-200 font-mono-code">
+                              ¥{group.pricingBasis.distanceFee.total}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-[11px]">
+                            <div className="flex items-center gap-1.5">
+                              <Circle className="w-3 h-3 text-gray-400" />
+                              <span className="text-gray-400">基础价</span>
+                            </div>
+                            <span className="text-gray-200 font-mono-code">¥{group.pricingBasis.basePrice}</span>
+                          </div>
+
+                          <div className="border-t border-space-blue-500 pt-2 flex items-center justify-between">
+                            <span className="text-xs text-gray-300 font-medium">合计金额</span>
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-[11px] text-gray-500 line-through font-mono-code">
+                                ¥{group.totalFare + group.savedCost}
+                              </span>
+                              <span className="text-base font-bold text-amber-accent-400 font-mono-code">
+                                ¥{group.totalFare}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-gradient-to-r from-amber-accent-500/10 via-amber-accent-500/5 to-transparent border border-amber-accent-500/30 rounded-lg p-3">
+                        <h4 className="text-xs font-semibold text-amber-accent-400 mb-2.5 flex items-center gap-1">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          调度决策结论
+                        </h4>
+                        <div className="space-y-2 text-[11px]">
+                          <div className="flex items-center gap-2">
+                            <User className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                            <span className="text-gray-400">推荐骑手：</span>
+                            <span className="text-gray-100 font-medium">{group.decision.recommendedRiderName}</span>
+                            <span className="text-gray-500">
+                              （信用{group.decision.recommendedRiderCredit} · 距离{group.decision.recommendedRiderDistance}km · {group.decision.canCarry ? '可承载' : '已满载'}）
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Send className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                            <span className="text-gray-400">建议派单时间：</span>
+                            <span className="text-success-400 font-medium">{group.decision.dispatchTime}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Zap className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                            <span className="text-gray-400">预计节省：</span>
+                            <span className="text-success-400 font-mono-code font-semibold">
+                              {group.decision.savedTimeMinutes}分钟 · ¥{group.decision.savedCostYuan}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-space-blue-700/30 rounded-lg p-3">
+                        <div className="flex items-center justify-between text-xs mb-2">
+                          <span className="text-gray-400">合并运费</span>
+                          <span className="text-amber-accent-400 font-bold font-mono-code">¥{group.totalFare}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-gray-400">原总价</span>
+                          <span className="text-gray-500 line-through font-mono-code">
+                            ¥{group.totalFare + group.savedCost}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="border-t border-space-blue-600 p-3">
+                    <button
+                      onClick={() => setDispatchOpen(true)}
+                      className="w-full py-2.5 bg-amber-accent-500 hover:bg-amber-accent-600 text-space-blue-900 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                    >
+                      <Bike className="w-4 h-4" />
+                      一键派单
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <DataTable
         columns={columns}
         data={filteredOrders}
@@ -684,46 +1574,100 @@ export default function Orders() {
               </div>
             )}
 
+            {selectedOrder.status === 'pending' && selectedOrder.estimated_delivery_at && (
+              <ETAPredictor
+                estimatedMinutes={Math.round(
+                  (new Date(selectedOrder.estimated_delivery_at).getTime() - new Date(selectedOrder.created_at).getTime()) / 60000
+                )}
+                historicalAverageMinutes={Math.round(
+                  (new Date(selectedOrder.estimated_delivery_at).getTime() - new Date(selectedOrder.created_at).getTime()) / 60000
+                ) - (selectedOrder.id === '10' ? 8 : selectedOrder.id === '13' ? 6 : 2)}
+                deliveryTime={new Date(selectedOrder.estimated_delivery_at).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
+                showHistory
+              />
+            )}
+
             <div>
-              <h3 className="text-sm font-semibold text-gray-100 mb-3 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                时间线
-              </h3>
-              <div className="relative">
-                <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-space-blue-600" />
-                <div className="space-y-4">
-                  {getTimeline(selectedOrder).map((event, idx) => {
-                    const Icon = event.icon;
-                    return (
-                      <div key={idx} className="flex items-start gap-3 relative">
-                        <div className={cn(
-                          'w-4 h-4 rounded-full flex items-center justify-center z-10',
-                          event.active
-                            ? 'bg-info-500 animate-pulse'
-                            : event.completed
-                            ? 'bg-space-blue-700 border-2'
-                            : 'bg-space-blue-600'
-                        )}>
-                          <Icon className={cn('w-2.5 h-2.5', event.color)} />
-                        </div>
-                        <div className="flex-1 pb-1">
-                          <div className="flex items-center justify-between">
-                            <span className={cn(
-                              'text-sm',
-                              event.active ? 'text-info-400 font-medium' : 'text-gray-200'
-                            )}>
-                              {event.status}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              {new Date(event.time).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
-                            </span>
+              <div className="flex items-center gap-1 mb-3 border-b border-space-blue-600">
+                <button
+                  onClick={() => setDetailTab('timeline')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors',
+                    detailTab === 'timeline'
+                      ? 'text-amber-accent-400 border-amber-accent-400'
+                      : 'text-gray-400 border-transparent hover:text-gray-200'
+                  )}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="w-4 h-4" />
+                    时间线
+                  </span>
+                </button>
+                <button
+                  onClick={() => setDetailTab('fare')}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors',
+                    detailTab === 'fare'
+                      ? 'text-amber-accent-400 border-amber-accent-400'
+                      : 'text-gray-400 border-transparent hover:text-gray-200'
+                  )}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4" />
+                    运费明细
+                  </span>
+                </button>
+              </div>
+
+              {detailTab === 'timeline' && (
+                <div className="relative">
+                  <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-space-blue-600" />
+                  <div className="space-y-4">
+                    {getTimeline(selectedOrder).map((event, idx) => {
+                      const Icon = event.icon;
+                      return (
+                        <div key={idx} className="flex items-start gap-3 relative">
+                          <div className={cn(
+                            'w-4 h-4 rounded-full flex items-center justify-center z-10',
+                            event.active
+                              ? 'bg-info-500 animate-pulse'
+                              : event.completed
+                              ? 'bg-space-blue-700 border-2'
+                              : 'bg-space-blue-600'
+                          )}>
+                            <Icon className={cn('w-2.5 h-2.5', event.color)} />
+                          </div>
+                          <div className="flex-1 pb-1">
+                            <div className="flex items-center justify-between">
+                              <span className={cn(
+                                'text-sm',
+                                event.active ? 'text-info-400 font-medium' : 'text-gray-200'
+                              )}>
+                                {event.status}
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                {new Date(event.time).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {detailTab === 'fare' && (
+                <FareBreakdown
+                  basePrice={8}
+                  distancePrice={Math.max(0, Math.round((selectedOrder.distance_km || 0) * 2.5))}
+                  peakSurcharge={Math.round(selectedOrder.estimated_price * 0.2)}
+                  weatherMultiplier={selectedOrder.id === '10' ? 1.15 : 1}
+                  goodsSurcharge={selectedOrder.goods_type === '生鲜' ? 3 : selectedOrder.goods_type === '医药' ? 2 : 0}
+                  totalAmount={selectedOrder.estimated_price}
+                  compact={false}
+                />
+              )}
             </div>
           </div>
         )}

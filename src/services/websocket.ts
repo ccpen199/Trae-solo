@@ -43,7 +43,7 @@ class WebSocketService {
   }
 
   connect(url?: string): Socket {
-    if (this.socket?.connected) {
+    if (this.socket) {
       return this.socket;
     }
 

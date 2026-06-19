@@ -24,6 +24,7 @@ const navItems: NavItem[] = [
   { key: 'abnormal-orders', label: '异常订单', icon: 'AlertTriangle', path: '/abnormal-orders', badge: 5 },
   { key: 'riders', label: '骑手管理', icon: 'Users', path: '/riders' },
   { key: 'rider-credit', label: '信用分体系', icon: 'Award', path: '/rider-credit' },
+  { key: 'heatmap', label: '运力热力图', icon: 'Map', path: '/heatmap' },
   { key: 'waybills', label: '运单中心', icon: 'FileText', path: '/waybills' },
   { key: 'compensation', label: '赔付管理', icon: 'Receipt', path: '/compensation' },
   { key: 'pricing', label: '定价配置', icon: 'Settings', path: '/pricing' },
