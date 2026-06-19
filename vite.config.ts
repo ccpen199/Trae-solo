@@ -7,8 +7,8 @@ import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const host = env.HOST || '127.0.0.1'
-  const frontendPort = Number(env.FRONTEND_PORT || 49153)
-  const backendPort = Number(env.BACKEND_PORT || env.PORT || 59153)
+  const frontendPort = Number(env.FRONTEND_PORT || 5173)
+  const backendPort = Number(env.BACKEND_PORT || env.PORT || 3001)
 
   return {
     plugins: [
