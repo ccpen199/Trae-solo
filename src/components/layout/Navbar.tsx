@@ -16,22 +16,33 @@ import {
   Heart,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { Badge } from '@/components/ui/Badge'
 import { useAppStore } from '@/store/useAppStore'
 import type { AppRole } from '@/store/useAppStore'
+import { hrApi } from '@/lib/api'
 
 const jobseekerNavItems = [
   { to: '/', label: '首页', icon: Compass, end: true },
   { to: '/jobs', label: '职位', icon: Briefcase },
   { to: '/encyclopedia', label: '职业百科', icon: BookOpen },
-  { to: '/diagnosis', label: '能力诊断', icon: Network },
+  { to: '/competency-graph', label: '能力图谱', icon: Network },
   { to: '/profile', label: '我的主页', icon: User },
 ]
 
-const hrNavItems = [
+interface HRNavItem {
+  to: string
+  label: string
+  icon: React.ComponentType<{ className?: string }>
+  end?: boolean
+  badgeKey?: 'talentPool' | 'warnings'
+}
+
+const hrNavItems: HRNavItem[] = [
   { to: '/', label: '首页', icon: Compass, end: true },
   { to: '/jobs', label: '职位', icon: Briefcase },
-  { to: '/hr/talent-pool', label: '人才池', icon: Users },
-  { to: '/hr/warnings', label: '预警中心', icon: AlertTriangle },
+  { to: '/encyclopedia', label: '能力图谱', icon: Network },
+  { to: '/hr/talent-pool', label: '人才池', icon: Users, badgeKey: 'talentPool' },
+  { to: '/hr/warnings', label: '预警中心', icon: AlertTriangle, badgeKey: 'warnings' },
   { to: '/hr/dashboard', label: '控制台', icon: LayoutDashboard },
 ]
 
@@ -42,6 +53,8 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = React.useState(false)
   const [userMenuOpen, setUserMenuOpen] = React.useState(false)
   const userMenuRef = React.useRef<HTMLDivElement>(null)
+  const [badgeCounts, setBadgeCounts] = React.useState({ talentPool: 0, warnings: 0 })
+  const [hasUnreadWarnings, setHasUnreadWarnings] = React.useState(false)
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
@@ -58,6 +71,28 @@ const Navbar: React.FC = () => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  React.useEffect(() => {
+    if (role !== 'hr') return
+    const loadBadgeCounts = async () => {
+      try {
+        const [talentRes, warningRes] = await Promise.all([
+          hrApi.getHrTalentPool({ page: 1, pageSize: 1 }),
+          hrApi.getHrWarnings({ page: 1, pageSize: 50 }),
+        ])
+        setBadgeCounts({
+          talentPool: talentRes?.total ?? 0,
+          warnings: warningRes?.total ?? 0,
+        })
+        const unread = (warningRes?.data ?? []).filter((w: any) => w.status !== 'resolved').length
+        setHasUnreadWarnings(unread > 0)
+      } catch (e) {
+        setBadgeCounts({ talentPool: 328, warnings: 10 })
+        setHasUnreadWarnings(true)
+      }
+    }
+    loadBadgeCounts()
+  }, [role])
 
   const navItems = role === 'hr' ? hrNavItems : jobseekerNavItems
 
@@ -106,8 +141,12 @@ const Navbar: React.FC = () => {
         </NavLink>
 
         <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
-          {navItems.map((item) => {
+          {navItems.map((item: any) => {
             const Icon = item.icon
+            const badgeKey = (item as HRNavItem).badgeKey
+            const showBadge = role === 'hr' && badgeKey
+            const badgeCount = showBadge ? badgeCounts[badgeKey as 'talentPool' | 'warnings'] : 0
+            const isWarnings = badgeKey === 'warnings'
             return (
               <NavLink
                 key={item.to}
@@ -127,6 +166,16 @@ const Navbar: React.FC = () => {
                   <>
                     <Icon className="w-4 h-4" />
                     {item.label}
+                    {showBadge && badgeCount > 0 && (
+                      <Badge
+                        variant={isWarnings && hasUnreadWarnings ? 'destructive' : 'indigo'}
+                        size="sm"
+                        withDot={isWarnings && hasUnreadWarnings}
+                        className="ml-0.5"
+                      >
+                        {badgeCount > 99 ? '99+' : badgeCount}
+                      </Badge>
+                    )}
                     <span
                       className={cn(
                         'absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-300 ease-out',
@@ -215,12 +264,12 @@ const Navbar: React.FC = () => {
                       <button
                         onClick={() => {
                           setUserMenuOpen(false)
-                          navigate('/diagnosis')
+                          navigate('/competency-graph')
                         }}
                         className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
                       >
                         <Network className="w-4 h-4 text-slate-400" />
-                        能力诊断
+                        能力图谱
                       </button>
                       <button
                         onClick={() => {
@@ -253,6 +302,11 @@ const Navbar: React.FC = () => {
                       >
                         <Users className="w-4 h-4 text-slate-400" />
                         人才池
+                        {badgeCounts.talentPool > 0 && (
+                          <span className="ml-auto text-xs bg-space-indigo-100 text-space-indigo-700 px-2 py-0.5 rounded-full">
+                            {badgeCounts.talentPool}
+                          </span>
+                        )}
                       </button>
                       <button
                         onClick={() => {
@@ -263,6 +317,14 @@ const Navbar: React.FC = () => {
                       >
                         <AlertTriangle className="w-4 h-4 text-slate-400" />
                         预警中心
+                        {badgeCounts.warnings > 0 && (
+                          <span className={cn(
+                            'ml-auto text-xs px-2 py-0.5 rounded-full',
+                            hasUnreadWarnings ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'
+                          )}>
+                            {badgeCounts.warnings}
+                          </span>
+                        )}
                       </button>
                     </>
                   )}

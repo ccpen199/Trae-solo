@@ -11,6 +11,7 @@ import Jobs from '@/pages/Jobs'
 import JobDetail from '@/pages/JobDetail'
 import Encyclopedia from '@/pages/Encyclopedia'
 import EncyclopediaDetail from '@/pages/EncyclopediaDetail'
+import CompetencyGraph from '@/pages/CompetencyGraph'
 import HRDashboard from '@/pages/HRDashboard'
 import HRTalentPool from '@/pages/HRTalentPool'
 import HRTalentDetail from '@/pages/HRTalentDetail'
@@ -68,6 +69,7 @@ export default function App() {
           <Route path="/jobs/:id" element={<JobDetail />} />
           <Route path="/encyclopedia" element={<Encyclopedia />} />
           <Route path="/encyclopedia/:jobId" element={<EncyclopediaDetail />} />
+          <Route path="/competency-graph" element={<CompetencyGraph />} />
           <Route path="/profile" element={<Profile />} />
 
           <Route path="/hr" element={<HRLayout />}>

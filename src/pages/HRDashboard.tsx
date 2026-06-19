@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   Users,
   Clock,
@@ -17,6 +18,13 @@ import {
   TrendingDown,
   Sparkles,
   Bell,
+  Briefcase,
+  Upload,
+  AlertTriangle,
+  Flame,
+  Info,
+  SkipForward,
+  Eye,
 } from 'lucide-react';
 import {
   PieChart,
@@ -243,8 +251,22 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+const WARNING_SEVERITY_CONFIG = {
+  critical: { icon: Flame, label: 'Critical', bar: 'bg-gradient-to-b from-red-500 to-red-400', badge: 'bg-red-50 text-red-700 border-red-200', iconBg: 'bg-gradient-to-br from-red-500 to-red-600 text-white', border: 'border-red-400/80' },
+  warning: { icon: AlertTriangle, label: 'Warning', bar: 'bg-gradient-to-b from-amber-gold-500 to-amber-gold-400', badge: 'bg-amber-gold-50 text-amber-gold-700 border-amber-gold-200', iconBg: 'bg-gradient-to-br from-amber-gold-500 to-orange-500 text-white', border: 'border-amber-gold-400/70' },
+  info: { icon: Info, label: 'Info', bar: 'bg-gradient-to-b from-space-indigo-500 to-space-indigo-400', badge: 'bg-space-indigo-50 text-space-indigo-700 border-space-indigo-200', iconBg: 'bg-gradient-to-br from-space-indigo-500 to-blue-500 text-white', border: 'border-space-indigo-400/60' },
+};
+
+const mockLatestWarnings = [
+  { id: 'w1', jobTitle: '高级前端工程师', severity: 'critical' as const, message: '近7天投递量下降45%，竞品薪资上调12%', detectedAt: '2026-06-17T09:30:00Z' },
+  { id: 'w2', jobTitle: '后端开发工程师（Java）', severity: 'critical' as const, message: '5年+Java微服务经验候选人供给环比下降38%', detectedAt: '2026-06-16T14:15:00Z' },
+  { id: 'w3', jobTitle: '资深产品经理（B端）', severity: 'warning' as const, message: '该岗位已招聘52天，远超平均周期28天', detectedAt: '2026-06-15T11:00:00Z' },
+];
+
 const HRDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<DashboardData>(mockDashboardData);
+  const [schedule, setSchedule] = useState(mockDashboardData.todaySchedule);
 
   useEffect(() => {
     const loadData = async () => {
@@ -260,7 +282,28 @@ const HRDashboard: React.FC = () => {
 
   const now = new Date();
   const hour = now.getHours();
-  const greeting = hour < 12 ? '早安' : hour < 18 ? '午安' : '晚上好';
+  const greeting = hour < 12 ? '早上好' : hour < 18 ? '午安' : '晚上好';
+
+  const handleCompleteSchedule = async (id: string) => {
+    try {
+      await hrApi.createFollowUp({
+        talentId: id,
+        scheduledAt: new Date().toISOString(),
+        type: 'check-in',
+        note: '日程已完成',
+      });
+    } catch {
+    }
+    setSchedule((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, status: 'completed' as const } : s))
+    );
+  };
+
+  const handleSkipSchedule = (id: string) => {
+    setSchedule((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, status: 'overdue' as const } : s))
+    );
+  };
 
   const customTooltip = ({ active, payload }: { active?: boolean; payload?: { name: string; value: number }[] }) => {
     if (active && payload && payload.length) {
@@ -298,7 +341,7 @@ const HRDashboard: React.FC = () => {
       <motion.div variants={itemVariants} className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-heading font-bold gradient-text">
-            {greeting}，{data.welcomeName} 👋
+            {greeting}，招聘专员 👋
           </h1>
           <p className="text-slate-500 mt-1">
             今天是{now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
@@ -327,10 +370,20 @@ const HRDashboard: React.FC = () => {
               </span>
             </div>
           </div>
-          <Button variant="primary" size="md">
-            <Sparkles className="w-4 h-4" />
-            智能推荐
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="md">
+              <Briefcase className="w-4 h-4" />
+              发布职位
+            </Button>
+            <Button variant="outline" size="md">
+              <Upload className="w-4 h-4" />
+              批量导入
+            </Button>
+            <Button variant="primary" size="md" onClick={() => navigate('/hr/warnings')}>
+              <Bell className="w-4 h-4" />
+              查看预警
+            </Button>
+          </div>
         </div>
       </motion.div>
 
@@ -529,7 +582,7 @@ const HRDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {data.todaySchedule.map((item) => {
+              {schedule.map((item) => {
                 const TypeIcon = FOLLOW_UP_TYPE_ICON[item.type];
                 return (
                   <motion.div
@@ -580,14 +633,25 @@ const HRDashboard: React.FC = () => {
                       </div>
                     </div>
                     {item.status !== 'completed' ? (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="shrink-0"
-                      >
-                        <CheckCircle2 className="w-4 h-4" />
-                        完成
-                      </Button>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleSkipSchedule(item.id)}
+                          className="text-slate-500 hover:text-slate-700"
+                        >
+                          <SkipForward className="w-4 h-4" />
+                          跳过
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleCompleteSchedule(item.id)}
+                        >
+                          <CheckCircle2 className="w-4 h-4" />
+                          完成
+                        </Button>
+                      </div>
                     ) : (
                       <Badge variant="success" withDot>已完成</Badge>
                     )}
@@ -689,6 +753,77 @@ const HRDashboard: React.FC = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <Card variant="glass">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>最新预警</CardTitle>
+                <CardDescription>实时监控招聘风险，及时采取应对措施</CardDescription>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/hr/warnings')}>
+                查看全部
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-4">
+              {mockLatestWarnings.map((warning, idx) => {
+                const sevCfg = WARNING_SEVERITY_CONFIG[warning.severity];
+                const SevIcon = sevCfg.icon;
+                const dateStr = new Date(warning.detectedAt).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+                return (
+                  <motion.div
+                    key={warning.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    whileHover={{ y: -2 }}
+                    className={cn(
+                      'relative p-5 rounded-2xl border-l-8 border bg-gradient-to-r shadow-sm hover:shadow-lg transition-all overflow-hidden',
+                      sevCfg.border,
+                      warning.severity === 'critical' ? 'from-red-50/60 via-white to-white' :
+                      warning.severity === 'warning' ? 'from-amber-gold-50/50 via-white to-white' :
+                      'from-space-indigo-50/40 via-white to-white'
+                    )}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center shadow-md shrink-0', sevCfg.iconBg)}>
+                        <SevIcon className={cn('w-5 h-5', warning.severity === 'critical' && 'animate-pulse')} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-heading font-bold text-slate-800 truncate">{warning.jobTitle}</h4>
+                          <Badge className={cn(sevCfg.badge)} size="sm">
+                            {sevCfg.label}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-slate-600 leading-relaxed line-clamp-2 mb-3">
+                          {warning.message}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-slate-400">{dateStr} 检测</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => navigate('/hr/warnings')}
+                            className={cn('text-xs', warning.severity === 'critical' ? 'text-red-600 hover:bg-red-50' : warning.severity === 'warning' ? 'text-amber-gold-600 hover:bg-amber-gold-50' : 'text-space-indigo-600 hover:bg-space-indigo-50')}
+                          >
+                            <Eye className="w-3.5 h-3.5 mr-1" />
+                            查看详情
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </CardContent>
         </Card>

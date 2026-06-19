@@ -11,12 +11,14 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
+import { useAppStore } from '@/store/useAppStore'
+import { hrApi } from '@/lib/api'
 
 interface HRMenuGroup {
   to: string
   label: string
   icon: React.ComponentType<{ className?: string }>
-  badge?: string
+  badgeKey?: 'talentPool' | 'warnings'
 }
 
 const menuItems: HRMenuGroup[] = [
@@ -29,18 +31,51 @@ const menuItems: HRMenuGroup[] = [
     to: '/hr/talent-pool',
     label: '人才池',
     icon: Users,
-    badge: '128',
+    badgeKey: 'talentPool',
   },
   {
     to: '/hr/warnings',
     label: '风险预警',
     icon: AlertTriangle,
-    badge: '7',
+    badgeKey: 'warnings',
   },
 ]
 
 const HRLayout: React.FC = () => {
   const navigate = useNavigate()
+  const { user, logout } = useAppStore()
+  const [badgeCounts, setBadgeCounts] = React.useState({ talentPool: 0, warnings: 0 })
+  const [hasUnreadWarnings, setHasUnreadWarnings] = React.useState(false)
+
+  React.useEffect(() => {
+    const loadBadgeCounts = async () => {
+      try {
+        const [talentRes, warningRes] = await Promise.all([
+          hrApi.getHrTalentPool({ page: 1, pageSize: 1 }),
+          hrApi.getHrWarnings({ page: 1, pageSize: 50 }),
+        ])
+        setBadgeCounts({
+          talentPool: talentRes?.total ?? 0,
+          warnings: warningRes?.total ?? 0,
+        })
+        const unread = (warningRes?.data ?? []).filter((w: any) => w.status !== 'resolved').length
+        setHasUnreadWarnings(unread > 0)
+      } catch (e) {
+        setBadgeCounts({ talentPool: 328, warnings: 10 })
+        setHasUnreadWarnings(true)
+      }
+    }
+    loadBadgeCounts()
+  }, [])
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
+
+  const getInitial = (name: string) => {
+    return name ? name.charAt(0).toUpperCase() : 'U'
+  }
 
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-slate-50 via-space-indigo-50/30 to-lavender-50/40">
@@ -63,12 +98,14 @@ const HRLayout: React.FC = () => {
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           <div className="px-3 pb-2 pt-1">
-            <span className="text-[10px font-semibold text-slate-400 uppercase tracking-wider">
+            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
               主菜单
             </span>
           </div>
           {menuItems.map((item) => {
             const Icon = item.icon
+            const badgeCount = item.badgeKey ? badgeCounts[item.badgeKey] : 0
+            const isWarningBadge = item.badgeKey === 'warnings' && hasUnreadWarnings
             return (
               <NavLink
                 key={item.to}
@@ -93,13 +130,15 @@ const HRLayout: React.FC = () => {
                       )}
                     />
                     <span className="flex-1">{item.label}</span>
-                    {item.badge && (
+                    {item.badgeKey && badgeCount > 0 && (
                       <Badge
-                        variant={isActive ? 'growth' : 'info'}
+                        variant={isWarningBadge ? 'destructive' : isActive ? 'growth' : 'info'}
+                        size="sm"
+                        withDot={isWarningBadge}
                       >
-                          {item.badge}
-                        </Badge>
-                      )}
+                        {badgeCount > 99 ? '99+' : badgeCount}
+                      </Badge>
+                    )}
                     {isActive && (
                       <ChevronRight className="w-4 h-4 text-emerald-500 shrink-0" />
                     )}
@@ -121,15 +160,17 @@ const HRLayout: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-lavender-400 to-emerald-400 flex items-center justify-center text-white font-semibold">
-                  <User className="w-5 h-5" />
+                  {user.profile ? getInitial(user.profile.name) : <User className="w-5 h-5" />}
                 </div>
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-slate-800 truncate">
-                  招聘专员
+                  {user.profile?.name || '招聘专员'}
                 </div>
-                <div className="text-xs text-slate-500 truncate">hr@company.com</div>
+                <div className="text-xs text-slate-500 truncate">
+                  {user.profile?.email || 'hr@company.com'}
+                </div>
               </div>
             </div>
           </div>
@@ -142,7 +183,10 @@ const HRLayout: React.FC = () => {
               <Settings className="w-3.5 h-3.5" />
               设置
             </button>
-            <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors">
+            <button
+              onClick={handleLogout}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors"
+            >
               <LogOut className="w-3.5 h-3.5" />
               退出
             </button>

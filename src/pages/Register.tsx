@@ -138,7 +138,7 @@ export default function Register() {
 
     try {
       const role = roleTab;
-      const registerData = {
+      const registerData: any = {
         ...data,
         role,
       };
@@ -185,8 +185,8 @@ export default function Register() {
     rightAction?: React.ReactNode;
   }) => (
     <Controller
-      name={name}
-      control={control}
+      name={name as any}
+      control={control as any}
       render={({ field }) => (
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -202,7 +202,7 @@ export default function Register() {
               placeholder={placeholder}
               className={cn(
                 'w-full h-12 pl-11 pr-4 rounded-xl border bg-white/80 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400/40',
-                errors[name as keyof typeof errors]
+                (errors as any)[name]
                   ? 'border-rose-300 focus:border-rose-400 focus:ring-rose-400/30'
                   : 'border-slate-200 focus:border-emerald-400'
               )}
@@ -214,9 +214,9 @@ export default function Register() {
               </div>
             )}
           </div>
-          {errors[name as keyof typeof errors] && (
+          {(errors as any)[name] && (
             <p className="mt-1.5 text-xs text-rose-600">
-              {(errors[name as keyof typeof errors] as { message?: string })?.message}
+              {(errors as any)[name]?.message}
             </p>
           )}
         </div>
@@ -238,8 +238,8 @@ export default function Register() {
     placeholder?: string;
   }) => (
     <Controller
-      name={name}
-      control={control}
+      name={name as any}
+      control={control as any}
       render={({ field }) => (
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -255,7 +255,7 @@ export default function Register() {
               placeholder={placeholder}
               className={cn(
                 'w-full h-12 pl-11 pr-11 rounded-xl border bg-white/80 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400/40',
-                errors[name as keyof typeof errors]
+                (errors as any)[name]
                   ? 'border-rose-300 focus:border-rose-400 focus:ring-rose-400/30'
                   : 'border-slate-200 focus:border-emerald-400'
               )}
@@ -268,9 +268,9 @@ export default function Register() {
               {showValue ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
             </button>
           </div>
-          {errors[name as keyof typeof errors] && (
+          {(errors as any)[name] && (
             <p className="mt-1.5 text-xs text-rose-600">
-              {(errors[name as keyof typeof errors] as { message?: string })?.message}
+              {(errors as any)[name]?.message}
             </p>
           )}
         </div>
@@ -514,7 +514,7 @@ export default function Register() {
                           <Controller
                             key={size.value}
                             name="companySize"
-                            control={control}
+                            control={control as any}
                             render={({ field }) => {
                               const selected = field.value === size.value;
                               return (
@@ -543,9 +543,9 @@ export default function Register() {
                           />
                         ))}
                       </div>
-                      {errors.companySize && (
+                      {(errors as any).companySize && (
                         <p className="mt-1.5 text-xs text-rose-600">
-                          {(errors.companySize as { message?: string })?.message}
+                          {(errors as any).companySize?.message}
                         </p>
                       )}
                     </div>
@@ -569,7 +569,7 @@ export default function Register() {
 
               <Controller
                 name="agreeTerms"
-                control={control}
+                control={control as any}
                 render={({ field }) => (
                   <div className="pt-1">
                     <label className="flex items-start gap-2.5 cursor-pointer">

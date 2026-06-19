@@ -23,12 +23,15 @@ import {
   Clock,
   CheckCircle2,
   Users,
-  BookOpen,
   Sparkles,
+  Mic,
+  BarChart3,
+  PanelLeftClose,
+  PanelLeft,
 } from 'lucide-react';
 import { encyclopediaApi } from '@/lib/api';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent } from '@/components/ui/Card';
+import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import type { EncyclopediaJobCard, InterviewCard, CertificationCard } from '@shared/types';
 
@@ -100,6 +103,22 @@ const INDUSTRY_DATA: IndustryNode[] = [
         jobs: [
           { id: 'job-pm', name: '产品经理' },
           { id: 'job-ui', name: 'UI设计师' },
+        ],
+      },
+      {
+        id: 'cat-marketing',
+        name: '运营市场',
+        jobs: [
+          { id: 'job-co', name: '内容运营' },
+          { id: 'job-uo', name: '用户运营' },
+        ],
+      },
+      {
+        id: 'cat-function',
+        name: '职能支持',
+        jobs: [
+          { id: 'job-hr', name: '人力资源' },
+          { id: 'job-fa', name: '财务分析' },
         ],
       },
     ],
@@ -178,8 +197,8 @@ const INDUSTRY_DATA: IndustryNode[] = [
         id: 'cat-ops',
         name: '运营管理',
         jobs: [
-          { id: 'job-co', name: '品类运营' },
-          { id: 'job-po', name: '私域运营' },
+          { id: 'job-po', name: '品类运营' },
+          { id: 'job-priv', name: '私域运营' },
         ],
       },
     ],
@@ -223,8 +242,17 @@ const HOT_TAGS = [
   '前端工程师',
   'UI设计师',
   '数据分析师',
-  '运营',
   'Java工程师',
+  '运营',
+  '算法工程师',
+];
+
+const ROLE_TABS = [
+  { id: 'all', name: '全部岗位', filter: null },
+  { id: 'cat-dev', name: '技术研发', filter: 'cat-dev' },
+  { id: 'cat-product', name: '产品设计', filter: 'cat-product' },
+  { id: 'cat-marketing', name: '运营市场', filter: 'cat-marketing' },
+  { id: 'cat-function', name: '职能支持', filter: 'cat-function' },
 ];
 
 const MOCK_JOBS: EncyclopediaJobCard[] = [
@@ -378,6 +406,30 @@ const MOCK_INTERVIEWS: InterviewCard[] = [
     quote: 'AI工具解放了生产力，设计师更该关注创意和用户体验本身。',
     tags: ['AI影响', '职业转型'],
   },
+  {
+    id: 'int-5',
+    jobId: 'job-ds',
+    jobName: '数据分析师',
+    intervieweeName: '刘数',
+    avatar: '刘',
+    yearsOfExperience: 5,
+    currentLevel: '高级',
+    city: '广州',
+    quote: '数据不是冰冷的数字，而是业务的脉搏，要学会和数据对话。',
+    tags: ['学习方法', '工具推荐'],
+  },
+  {
+    id: 'int-6',
+    jobId: 'job-be',
+    jobName: '后端工程师',
+    intervieweeName: '赵架构',
+    avatar: '赵',
+    yearsOfExperience: 7,
+    currentLevel: '架构师',
+    city: '成都',
+    quote: '分布式系统没有银弹，架构设计永远是trade-off的艺术。',
+    tags: ['技术深度', '架构设计'],
+  },
 ];
 
 const MOCK_CERTS: CertificationCard[] = [
@@ -441,6 +493,26 @@ const MOCK_CERTS: CertificationCard[] = [
     relevance: 85,
     relatedJobs: ['运维工程师', '后端工程师'],
   },
+  {
+    id: 'cert-7',
+    name: 'Google UX Design Professional',
+    issuer: 'Google',
+    difficulty: 'intermediate',
+    estimatedHours: 180,
+    passRate: 80,
+    relevance: 82,
+    relatedJobs: ['UI设计师', '产品经理'],
+  },
+  {
+    id: 'cert-8',
+    name: 'TensorFlow Developer Certificate',
+    issuer: 'Google',
+    difficulty: 'intermediate',
+    estimatedHours: 90,
+    passRate: 70,
+    relevance: 86,
+    relatedJobs: ['算法工程师', '数据科学家'],
+  },
 ];
 
 const FEATURED_BANNERS = [
@@ -451,6 +523,7 @@ const FEATURED_BANNERS = [
     tag: '🔥 最受欢迎',
     viewCount: '28,456',
     gradient: 'linear-gradient(135deg, #10B981 0%, #059669 30%, #8B5CF6 70%, #7C3AED 100%)',
+    videoDuration: '12:35',
   },
   {
     jobId: 'job-fe',
@@ -459,6 +532,7 @@ const FEATURED_BANNERS = [
     tag: '💻 技术热门',
     viewCount: '35,128',
     gradient: 'linear-gradient(135deg, #3A5FA8 0%, #1E40AF 30%, #06B6D4 70%, #0891B2 100%)',
+    videoDuration: '15:42',
   },
   {
     jobId: 'job-algo',
@@ -467,7 +541,26 @@ const FEATURED_BANNERS = [
     tag: '🤖 AI风口',
     viewCount: '42,891',
     gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 30%, #EF4444 70%, #DC2626 100%)',
+    videoDuration: '18:20',
   },
+];
+
+const WORKFLOW_VIDEOS = [
+  { jobId: 'job-fe', jobName: '前端工程师', duration: '08:42', gradient: 'from-emerald-500 to-teal-600' },
+  { jobId: 'job-pm', jobName: '产品经理', duration: '10:15', gradient: 'from-lavender-500 to-purple-600' },
+  { jobId: 'job-ui', jobName: 'UI设计师', duration: '07:58', gradient: 'from-amber-gold-500 to-orange-500' },
+  { jobId: 'job-algo', jobName: '算法工程师', duration: '12:30', gradient: 'from-space-indigo-500 to-blue-600' },
+  { jobId: 'job-ds', jobName: '数据分析师', duration: '09:22', gradient: 'from-rose-500 to-pink-600' },
+  { jobId: 'job-be', jobName: '后端工程师', duration: '11:05', gradient: 'from-cyan-500 to-sky-600' },
+];
+
+const LADDER_JOBS = [
+  { jobId: 'job-fe', jobName: '前端工程师', months: 9, gradient: 'from-emerald-500 to-teal-600' },
+  { jobId: 'job-pm', jobName: '产品经理', months: 8, gradient: 'from-lavender-500 to-purple-600' },
+  { jobId: 'job-ui', jobName: 'UI设计师', months: 7, gradient: 'from-amber-gold-500 to-orange-500' },
+  { jobId: 'job-algo', jobName: '算法工程师', months: 15, gradient: 'from-space-indigo-500 to-blue-600' },
+  { jobId: 'job-be', jobName: '后端工程师', months: 11, gradient: 'from-cyan-500 to-sky-600' },
+  { jobId: 'job-ds', jobName: '数据分析师', months: 10, gradient: 'from-rose-500 to-pink-600' },
 ];
 
 const avatarColors = [
@@ -519,13 +612,15 @@ export default function Encyclopedia() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [expandedIndustries, setExpandedIndustries] = useState<Set<string>>(new Set(['ind-internet']));
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['cat-dev', 'cat-product']));
-  const [selectedIndustry, setSelectedIndustry] = useState<string>('ind-internet');
+  const [selectedIndustry, setSelectedIndustry] = useState<string>('all');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [activeRoleTab, setActiveRoleTab] = useState<string>('all');
   const [jobs, setJobs] = useState<EncyclopediaJobCard[]>(MOCK_JOBS);
   const [interviews, setInterviews] = useState<InterviewCard[]>(MOCK_INTERVIEWS);
   const [certs, setCerts] = useState<CertificationCard[]>(MOCK_CERTS);
   const [isLoading, setIsLoading] = useState(false);
   const [bannerIndex, setBannerIndex] = useState(0);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const treeFilter = searchKeyword.trim().toLowerCase();
 
@@ -574,15 +669,19 @@ export default function Encyclopedia() {
     return () => clearInterval(timer);
   }, []);
 
-  const currentIndustry = INDUSTRY_DATA.find((i) => i.id === selectedIndustry);
   const currentJobs = useMemo(() => {
     const kw = searchKeyword.trim().toLowerCase();
     let result = jobs;
     if (selectedJobId) {
       result = result.filter((j) => j.id === selectedJobId);
-    } else if (currentIndustry) {
-      const indJobs = currentIndustry.categories.flatMap((c) => c.jobs.map((j) => j.id));
-      result = result.filter((j) => indJobs.includes(j.id));
+    }
+    if (activeRoleTab !== 'all') {
+      const allCategories = INDUSTRY_DATA.flatMap((i) => i.categories);
+      const cat = allCategories.find((c) => c.id === activeRoleTab);
+      if (cat) {
+        const jobIds = cat.jobs.map((j) => j.id);
+        result = result.filter((j) => jobIds.includes(j.id) || j.category === cat.name);
+      }
     }
     if (kw) {
       result = result.filter(
@@ -590,7 +689,7 @@ export default function Encyclopedia() {
       );
     }
     return result;
-  }, [jobs, selectedJobId, currentIndustry, searchKeyword]);
+  }, [jobs, selectedJobId, activeRoleTab, searchKeyword]);
 
   const toggleIndustry = (id: string) => {
     setSelectedIndustry(id);
@@ -612,9 +711,9 @@ export default function Encyclopedia() {
     });
   };
 
-  const selectJob = (id: string, name: string) => {
-    setSelectedJobId(id);
-    setSearchKeyword(name);
+  const selectJob = (id: string, anchor?: string) => {
+    const hash = anchor ? `#${anchor}` : '';
+    navigate(`/encyclopedia/${id}${hash}`);
   };
 
   const filteredTree = useMemo(() => {
@@ -635,10 +734,6 @@ export default function Encyclopedia() {
     }).filter((ind) => ind.categories.length > 0 || ind.name.toLowerCase().includes(treeFilter));
   }, [treeFilter]);
 
-  const totalJobsInIndustry = currentIndustry
-    ? currentIndustry.categories.reduce((s, c) => s + c.jobs.length, 0)
-    : 0;
-
   return (
     <div className="min-h-screen pt-20 pb-16">
       <div className="absolute inset-0 overflow-hidden pointer-events-none top-0">
@@ -647,7 +742,7 @@ export default function Encyclopedia() {
         <div className="absolute bottom-40 left-10 w-80 h-80 rounded-full bg-space-indigo-200/20 blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative">
+      <div className="max-w-[1400px] mx-auto px-6 relative">
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="mb-10">
           <motion.div variants={fadeInUp}>
             <Badge variant="emerald" size="md" withDot className="mb-4">
@@ -662,9 +757,9 @@ export default function Encyclopedia() {
             300+岗位全景透视 · 一线从业者深度访谈 · 科学入行路径规划
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="relative max-w-3xl">
+          <motion.div variants={fadeInUp} className="relative max-w-4xl">
             <div className="relative">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-400" />
               <input
                 type="text"
                 value={searchKeyword}
@@ -672,15 +767,15 @@ export default function Encyclopedia() {
                   setSearchKeyword(e.target.value);
                   if (!e.target.value) setSelectedJobId(null);
                 }}
-                placeholder="搜索你想了解的职业，如：产品经理"
-                className="w-full pl-14 pr-4 py-4 rounded-2xl bg-white/80 backdrop-blur-xl border-2 border-slate-200/80 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 placeholder:text-slate-400 font-medium text-base transition-all shadow-lg shadow-slate-200/40"
+                placeholder="搜索你想了解的职业岗位：前端工程师"
+                className="w-full pl-16 pr-6 py-5 rounded-2xl bg-white/80 backdrop-blur-xl border-2 border-slate-200/80 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 placeholder:text-slate-400 font-medium text-lg transition-all shadow-lg shadow-slate-200/40"
               />
             </div>
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mt-4">
+          <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mt-5">
             <span className="text-sm text-slate-500 mr-1 flex items-center gap-1">
-              <TrendingUp className="w-3.5 h-3.5" /> 热门搜索：
+              <TrendingUp className="w-4 h-4" /> 热门搜索：
             </span>
             {HOT_TAGS.map((tag, i) => (
               <button
@@ -689,144 +784,205 @@ export default function Encyclopedia() {
                   setSearchKeyword(tag);
                   setSelectedJobId(null);
                 }}
-                className="px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-emerald-100 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 transition-all duration-200 hover:scale-105"
+                className="px-4 py-1.5 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-emerald-100 hover:text-emerald-700 border border-slate-200 hover:border-emerald-200 transition-all duration-200 hover:scale-105"
                 style={{ animationDelay: `${i * 30}ms` }}
               >
                 {tag}
               </button>
             ))}
           </motion.div>
+
+          <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mt-6">
+            {ROLE_TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  setActiveRoleTab(tab.id);
+                  setSelectedJobId(null);
+                }}
+                className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  activeRoleTab === tab.id
+                    ? 'bg-gradient-to-r from-emerald-500 via-emerald-400 to-lavender-500 text-white shadow-lg shadow-emerald-500/25'
+                    : 'bg-white/60 text-slate-600 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200'
+                }`}
+              >
+                {tab.name}
+              </button>
+            ))}
+          </motion.div>
         </motion.div>
 
-        <div className="flex gap-8 items-start">
+        <div className="flex gap-6 items-start">
           <motion.aside
             variants={fadeIn}
             initial="hidden"
             animate="show"
             transition={{ delay: 0.2 }}
-            className="w-72 flex-shrink-0 sticky top-20"
+            className={`flex-shrink-0 sticky top-20 transition-all duration-300 ${
+              sidebarCollapsed ? 'w-14' : 'w-[260px]'
+            }`}
           >
-            <Card variant="glass" className="p-4 max-h-[calc(100vh-7rem)] overflow-y-auto">
-              <div className="flex items-center justify-between mb-4 px-2">
-                <h3 className="font-heading font-bold text-slate-900 flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-emerald-600" />
-                  行业目录
-                </h3>
-                <Badge variant="indigo" size="sm">
-                  8大行业
-                </Badge>
+            <Card variant="glass" className="p-3 max-h-[calc(100vh-7rem)] overflow-y-auto relative">
+              <div className="flex items-center justify-between mb-3 px-2">
+                {!sidebarCollapsed && (
+                  <h3 className="font-heading font-bold text-slate-900 flex items-center gap-2">
+                    <Filter className="w-4 h-4 text-emerald-600" />
+                    行业目录
+                  </h3>
+                )}
+                <button
+                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-emerald-100 flex items-center justify-center text-slate-500 hover:text-emerald-600 transition-colors ml-auto"
+                >
+                  {sidebarCollapsed ? (
+                    <PanelLeft className="w-4 h-4" />
+                  ) : (
+                    <PanelLeftClose className="w-4 h-4" />
+                  )}
+                </button>
               </div>
 
-              <div className="space-y-1">
-                {filteredTree.map((ind) => {
-                  const IndIcon = ind.icon;
-                  const industryExpanded = expandedIndustries.has(ind.id);
-                  const isIndustrySelected = selectedIndustry === ind.id;
-                  return (
-                    <div key={ind.id}>
-                      <button
-                        onClick={() => toggleIndustry(ind.id)}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
-                          isIndustrySelected
-                            ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/60 border border-emerald-200'
-                            : 'hover:bg-slate-100/80'
-                        }`}
-                      >
-                        <div
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
-                            isIndustrySelected
-                              ? 'bg-gradient-to-br from-emerald-500 to-emerald-400 text-white shadow-md shadow-emerald-200'
-                              : 'bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600'
-                          }`}
-                        >
-                          <IndIcon className="w-4 h-4" />
-                        </div>
-                        <span
-                          className={`flex-1 text-left text-sm font-semibold ${
-                            isIndustrySelected ? 'text-emerald-700' : 'text-slate-700'
-                          }`}
-                        >
-                          {ind.name}
-                        </span>
-                        <span className="text-xs text-slate-400">
-                          {ind.categories.reduce((s, c) => s + c.jobs.length, 0)}
-                        </span>
-                        {industryExpanded ? (
-                          <ChevronDown className="w-4 h-4 text-slate-400" />
-                        ) : (
-                          <ChevronRight className="w-4 h-4 text-slate-400" />
-                        )}
-                      </button>
-
-                      <AnimatePresence initial={false}>
-                        {industryExpanded && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25, ease: 'easeOut' }}
-                            className="overflow-hidden ml-3 border-l-2 border-emerald-100 pl-3 my-1"
-                          >
-                            {ind.categories.map((cat) => {
-                              const catExpanded = expandedCategories.has(cat.id);
-                              return (
-                                <div key={cat.id} className="mb-0.5">
-                                  <button
-                                    onClick={() => toggleCategory(cat.id)}
-                                    className="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-slate-100/60 text-left transition-colors"
-                                  >
-                                    {catExpanded ? (
-                                      <ChevronDown className="w-3 h-3 text-slate-400" />
-                                    ) : (
-                                      <ChevronRight className="w-3 h-3 text-slate-400" />
-                                    )}
-                                    <span className="text-xs font-medium text-slate-600">
-                                      {cat.name}
-                                    </span>
-                                    <span className="text-[10px] text-slate-400 ml-auto">
-                                      {cat.jobs.length}岗
-                                    </span>
-                                  </button>
-
-                                  <AnimatePresence initial={false}>
-                                    {catExpanded && (
-                                      <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2, ease: 'easeOut' }}
-                                        className="overflow-hidden ml-5 space-y-0.5 py-0.5"
-                                      >
-                                        {cat.jobs.map((job) => (
-                                          <button
-                                            key={job.id}
-                                            onClick={() => selectJob(job.id, job.name)}
-                                            className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-all duration-150 ${
-                                              selectedJobId === job.id
-                                                ? 'bg-gradient-to-r from-emerald-500 to-emerald-400 text-white font-semibold shadow-sm'
-                                                : 'text-slate-500 hover:text-emerald-700 hover:bg-emerald-50/60'
-                                            }`}
-                                          >
-                                            {job.name}
-                                          </button>
-                                        ))}
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
-                                </div>
-                              );
-                            })}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+              {!sidebarCollapsed && (
+                <div className="space-y-1">
+                  <button
+                    onClick={() => {
+                      setSelectedIndustry('all');
+                      setSelectedJobId(null);
+                    }}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
+                      selectedIndustry === 'all'
+                        ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/60 border border-emerald-200'
+                        : 'hover:bg-slate-100/80'
+                    }`}
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                        selectedIndustry === 'all'
+                          ? 'bg-gradient-to-br from-emerald-500 to-lavender-500 text-white shadow-md'
+                          : 'bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600'
+                      }`}
+                    >
+                      <Sparkles className="w-4 h-4" />
                     </div>
-                  );
-                })}
-              </div>
+                    <span
+                      className={`flex-1 text-left text-sm font-semibold ${
+                        selectedIndustry === 'all' ? 'text-emerald-700' : 'text-slate-700'
+                      }`}
+                    >
+                      全部行业
+                    </span>
+                  </button>
+
+                  {filteredTree.map((ind) => {
+                    const IndIcon = ind.icon;
+                    const industryExpanded = expandedIndustries.has(ind.id);
+                    const isIndustrySelected = selectedIndustry === ind.id;
+                    return (
+                      <div key={ind.id}>
+                        <button
+                          onClick={() => toggleIndustry(ind.id)}
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
+                            isIndustrySelected
+                              ? 'bg-gradient-to-r from-emerald-50 to-emerald-100/60 border border-emerald-200'
+                              : 'hover:bg-slate-100/80'
+                          }`}
+                        >
+                          <div
+                            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                              isIndustrySelected
+                                ? 'bg-gradient-to-br from-emerald-500 to-emerald-400 text-white shadow-md shadow-emerald-200'
+                                : 'bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600'
+                            }`}
+                          >
+                            <IndIcon className="w-4 h-4" />
+                          </div>
+                          <span
+                            className={`flex-1 text-left text-sm font-semibold ${
+                              isIndustrySelected ? 'text-emerald-700' : 'text-slate-700'
+                            }`}
+                          >
+                            {ind.name}
+                          </span>
+                          <span className="text-xs text-slate-400">
+                            {ind.categories.reduce((s, c) => s + c.jobs.length, 0)}
+                          </span>
+                          {industryExpanded ? (
+                            <ChevronDown className="w-4 h-4 text-slate-400" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4 text-slate-400" />
+                          )}
+                        </button>
+
+                        <AnimatePresence initial={false}>
+                          {industryExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.25, ease: 'easeOut' }}
+                              className="overflow-hidden ml-3 border-l-2 border-emerald-100 pl-3 my-1"
+                            >
+                              {ind.categories.map((cat) => {
+                                const catExpanded = expandedCategories.has(cat.id);
+                                return (
+                                  <div key={cat.id} className="mb-0.5">
+                                    <button
+                                      onClick={() => toggleCategory(cat.id)}
+                                      className="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-slate-100/60 text-left transition-colors"
+                                    >
+                                      {catExpanded ? (
+                                        <ChevronDown className="w-3 h-3 text-slate-400" />
+                                      ) : (
+                                        <ChevronRight className="w-3 h-3 text-slate-400" />
+                                      )}
+                                      <span className="text-xs font-medium text-slate-600">
+                                        {cat.name}
+                                      </span>
+                                      <span className="text-[10px] text-slate-400 ml-auto">
+                                        {cat.jobs.length}岗
+                                      </span>
+                                    </button>
+
+                                    <AnimatePresence initial={false}>
+                                      {catExpanded && (
+                                        <motion.div
+                                          initial={{ height: 0, opacity: 0 }}
+                                          animate={{ height: 'auto', opacity: 1 }}
+                                          exit={{ height: 0, opacity: 0 }}
+                                          transition={{ duration: 0.2, ease: 'easeOut' }}
+                                          className="overflow-hidden ml-5 space-y-0.5 py-0.5"
+                                        >
+                                          {cat.jobs.map((job) => (
+                                            <button
+                                              key={job.id}
+                                              onClick={() => selectJob(job.id)}
+                                              className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-all duration-150 ${
+                                                selectedJobId === job.id
+                                                  ? 'bg-gradient-to-r from-emerald-500 to-emerald-400 text-white font-semibold shadow-sm'
+                                                  : 'text-slate-500 hover:text-emerald-700 hover:bg-emerald-50/60'
+                                              }`}
+                                            >
+                                              {job.name}
+                                            </button>
+                                          ))}
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </Card>
           </motion.aside>
 
-          <main className="flex-1 min-w-0 space-y-12">
+          <main className="flex-1 min-w-0 space-y-14">
             <motion.section
               variants={staggerContainer}
               initial="hidden"
@@ -847,14 +1003,13 @@ export default function Encyclopedia() {
               </motion.div>
 
               <motion.div variants={fadeInUp} className="relative overflow-hidden rounded-3xl">
-                <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(-${bannerIndex * 100}%)` }}>
+                <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${bannerIndex * 100}%)` }}>
                   {FEATURED_BANNERS.map((banner, i) => (
                     <div
                       key={i}
-                      className="w-full flex-shrink-0 relative h-64 lg:h-80 rounded-3xl overflow-hidden"
-                      style={{
-                        background: banner.gradient,
-                      }}
+                      className="w-full flex-shrink-0 relative h-64 lg:h-80 rounded-3xl overflow-hidden cursor-pointer group"
+                      style={{ background: banner.gradient }}
+                      onClick={() => selectJob(banner.jobId)}
                     >
                       <div className="absolute inset-0 opacity-30">
                         <svg className="w-full h-full" viewBox="0 0 1200 320">
@@ -869,7 +1024,7 @@ export default function Encyclopedia() {
                       <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
                       <div className="absolute -left-10 bottom-0 w-64 h-64 rounded-full bg-white/10 blur-3xl" />
 
-                      <div className="relative z-10 h-full flex items-center px-10 lg:px-16">
+                      <div className="relative z-10 h-full grid lg:grid-cols-2 gap-6 items-center px-10 lg:px-16">
                         <div className="max-w-xl">
                           <Badge variant="default" className="bg-white/20 text-white border-white/30 backdrop-blur-sm mb-4">
                             {banner.tag}
@@ -884,15 +1039,55 @@ export default function Encyclopedia() {
                             <Button
                               size="lg"
                               variant="secondary"
-                              className="!bg-white !text-slate-900 hover:!bg-white/90 shadow-xl"
-                              onClick={() => navigate(`/encyclopedia/${banner.jobId}`)}
+                              className="!bg-white !text-slate-900 hover:!bg-white/90 shadow-xl group-hover:scale-105 transition-transform"
                               rightIcon={<ArrowRight className="w-5 h-5" />}
                             >
-                              立即探索
+                              立即查看
                             </Button>
                             <div className="flex items-center gap-2 text-white/70 text-sm">
                               <Users className="w-4 h-4" />
                               <span>{banner.viewCount}+ 人已查看</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="hidden lg:flex items-center justify-center">
+                          <div className="relative">
+                            <motion.div
+                              className="absolute inset-0 rounded-3xl bg-white/20 backdrop-blur-sm"
+                              animate={{
+                                scale: [1, 1.05, 1],
+                                opacity: [0.5, 0.8, 0.5],
+                              }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                              }}
+                            />
+                            <div className="relative w-48 h-32 rounded-2xl bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-md border-2 border-white/40 flex items-center justify-center shadow-2xl">
+                              <div className="relative">
+                                <motion.div
+                                  className="absolute inset-0 rounded-full bg-white/30"
+                                  animate={{
+                                    scale: [1, 1.4, 1],
+                                    opacity: [0.6, 0, 0.6],
+                                  }}
+                                  transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                  }}
+                                />
+                                <div className="w-16 h-16 rounded-full bg-white/30 backdrop-blur flex items-center justify-center">
+                                  <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                                </div>
+                              </div>
+                              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                                <div className="h-1 bg-white/40 rounded-full flex-1 mr-2">
+                                  <div className="h-full w-1/3 bg-white rounded-full" />
+                                </div>
+                                <span className="text-xs text-white/90 font-mono">{banner.videoDuration}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -914,192 +1109,24 @@ export default function Encyclopedia() {
                 </div>
 
                 <button
-                  onClick={() => setBannerIndex((prev) => (prev === 0 ? FEATURED_BANNERS.length - 1 : prev - 1))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setBannerIndex((prev) => (prev === 0 ? FEATURED_BANNERS.length - 1 : prev - 1));
+                  }}
                   className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors z-20"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => setBannerIndex((prev) => (prev === FEATURED_BANNERS.length - 1 ? 0 : prev + 1))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setBannerIndex((prev) => (prev === FEATURED_BANNERS.length - 1 ? 0 : prev + 1));
+                  }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors z-20"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </motion.div>
-            </motion.section>
-
-            <motion.section variants={staggerContainer} initial="hidden" animate="show">
-              <motion.div variants={fadeInUp} className="mb-6">
-                <div className="flex items-start justify-between flex-wrap gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      {currentIndustry && (
-                        <>
-                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-lavender-500 flex items-center justify-center shadow-lg shadow-emerald-200/50">
-                            {(() => {
-                              const IndIcon = currentIndustry.icon;
-                              return <IndIcon className="w-6 h-6 text-white" />;
-                            })()}
-                          </div>
-                          <div>
-                            <h2 className="font-heading text-3xl font-bold tracking-tight text-slate-900">
-                              {currentIndustry.name}
-                            </h2>
-                            <p className="text-sm text-slate-500 mt-0.5">
-                              {currentIndustry.description}
-                            </p>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <div className="text-3xl font-bold gradient-text">{totalJobsInIndustry}</div>
-                      <div className="text-xs text-slate-500">在岗位数</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {isLoading ? (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {[...Array(6)].map((_, i) => (
-                    <Card key={i} variant="glass" className="p-6 h-56 animate-pulse">
-                      <div className="h-5 bg-slate-200 rounded w-2/3 mb-4" />
-                      <div className="h-4 bg-slate-100 rounded w-full mb-2" />
-                      <div className="h-4 bg-slate-100 rounded w-5/6 mb-6" />
-                      <div className="h-6 bg-slate-200 rounded w-1/2 mb-4" />
-                      <div className="h-9 bg-slate-100 rounded-xl w-full mt-auto" />
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <motion.div
-                  variants={staggerContainer}
-                  initial="hidden"
-                  animate="show"
-                  className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
-                >
-                  {currentJobs.length === 0 ? (
-                    <div className="col-span-full py-20 text-center">
-                      <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-                        <Search className="w-7 h-7 text-slate-400" />
-                      </div>
-                      <p className="text-slate-500 mb-2">未找到匹配的岗位</p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSearchKeyword('');
-                          setSelectedJobId(null);
-                        }}
-                      >
-                        清除筛选
-                      </Button>
-                    </div>
-                  ) : (
-                    currentJobs.map((job, idx) => (
-                      <motion.div
-                        key={job.id}
-                        variants={scaleIn}
-                        transition={{ delay: idx * 0.05 }}
-                      >
-                        <Card
-                          variant="glass"
-                          hoverable
-                          className="h-full p-6 group flex flex-col relative overflow-hidden"
-                          onClick={() => navigate(`/encyclopedia/${job.id}`)}
-                        >
-                          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-emerald-200/30 to-lavender-200/30 blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500" />
-
-                          <div className="relative z-10 flex items-start justify-between mb-4">
-                            <div>
-                              <h3 className="font-heading text-xl font-bold text-slate-900 mb-1.5 group-hover:text-emerald-600 transition-colors">
-                                {job.name}
-                              </h3>
-                              <Badge variant="indigo" size="sm">
-                                {job.industry} · {job.category}
-                              </Badge>
-                            </div>
-                          </div>
-
-                          <p className="relative z-10 text-sm text-slate-500 leading-relaxed mb-4 line-clamp-2 min-h-[2.5rem]">
-                            {job.overview}
-                          </p>
-
-                          <div className="relative z-10 mb-4">
-                            <div className="text-xs text-slate-400 mb-1.5">平均月薪</div>
-                            <div className="text-3xl font-bold tracking-tight">
-                              <span className="bg-gradient-to-r from-emerald-600 via-lavender-600 to-space-indigo-600 bg-clip-text text-transparent">
-                                ¥{(job.avgSalary / 1000).toFixed(1)}K
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="relative z-10 grid grid-cols-2 gap-3 mb-4 pb-4 border-b border-slate-100">
-                            <div>
-                              <div className="text-[11px] text-slate-400 mb-1">入行难度</div>
-                              <div className="flex items-center gap-1">
-                                <DifficultyStars level={job.entryDifficulty} />
-                              </div>
-                              <div className="text-[11px] text-slate-500 mt-0.5">
-                                {difficultyText(job.entryDifficulty)}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="text-[11px] text-slate-400 mb-1">3年需求增长</div>
-                              <div className="flex items-center gap-1">
-                                <TrendingUp className="w-4 h-4 text-emerald-500" />
-                                <span className="text-lg font-bold text-emerald-600">
-                                  +{job.demandGrowth}%
-                                </span>
-                              </div>
-                              <div className="text-[11px] text-slate-500 mt-0.5">市场热度↑</div>
-                            </div>
-                          </div>
-
-                          <div className="relative z-10 flex items-center justify-between mb-4">
-                            <div className="flex items-center gap-1">
-                              <div className="flex -space-x-2">
-                                {job.avatarUrls.slice(0, 3).map((ch, i) => (
-                                  <div
-                                    key={i}
-                                    className="w-8 h-8 rounded-full ring-2 ring-white bg-gradient-to-br from-emerald-400 to-space-indigo-500 flex items-center justify-center text-white text-xs font-bold shadow-sm"
-                                  >
-                                    {ch.charAt(0)}
-                                  </div>
-                                ))}
-                              </div>
-                              {job.avatarUrls.length > 3 && (
-                                <div className="w-8 h-8 rounded-full ring-2 ring-white bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500 ml-1">
-                                  +{job.avatarUrls.length - 3}
-                                </div>
-                              )}
-                              <span className="text-[11px] text-slate-400 ml-2">
-                                <Users className="w-3 h-3 inline mr-0.5" />
-                                从业者
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="relative z-10 mt-auto">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              fullWidth
-                              rightIcon={<ArrowRight className="w-4 h-4" />}
-                              className="group-hover:!border-emerald-400 group-hover:!bg-emerald-50 group-hover:!text-emerald-600"
-                            >
-                              查看详情
-                            </Button>
-                          </div>
-                        </Card>
-                      </motion.div>
-                    ))
-                  )}
-                </motion.div>
-              )}
             </motion.section>
 
             <motion.section
@@ -1108,16 +1135,119 @@ export default function Encyclopedia() {
               whileInView="show"
               viewport={{ once: true, margin: '-100px' }}
             >
-              <motion.div variants={fadeInUp} className="mb-6 flex items-end justify-between">
+              <motion.div variants={fadeInUp} className="mb-6 flex items-end justify-between flex-wrap gap-4">
+                <div>
+                  <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
+                  <Badge variant="indigo" size="md" withDot className="mb-3">
+                    <Video className="w-3.5 h-3.5 mr-1" />
+                    真实工作流视频
+                  </Badge>
+                  <h2 className="font-heading text-2xl font-bold tracking-tight">
+                    一线从业者<span className="gradient-text">真实工作流</span>记录
+                  </h2>
+                  <p className="text-slate-600 mt-2">
+                    沉浸式了解这个岗位一天的真实工作节奏和任务内容
+                  </p>
+                </div>
+              </motion.div>
+
+              <div className="relative">
+                <motion.div
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="flex gap-5 overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory"
+                  style={{ scrollbarWidth: 'thin' }}
+                >
+                  {WORKFLOW_VIDEOS.map((v, i) => (
+                    <motion.div
+                      key={v.jobId}
+                      variants={scaleIn}
+                      transition={{ delay: i * 0.06 }}
+                      className="flex-shrink-0 w-[260px] snap-start"
+                    >
+                      <Card
+                        variant="default"
+                        hoverable
+                        className="h-full overflow-hidden group"
+                        onClick={() => selectJob(v.jobId, 'workflow')}
+                      >
+                        <div className={`relative h-40 bg-gradient-to-br ${v.gradient} overflow-hidden`}>
+                          <div className="absolute inset-0 opacity-30">
+                            <svg className="w-full h-full" viewBox="0 0 260 160">
+                              <defs>
+                                <pattern id={`wfGrid${i}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                                </pattern>
+                              </defs>
+                              <rect width="100%" height="100%" fill={`url(#wfGrid${i})`} />
+                            </svg>
+                          </div>
+                          <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <motion.div
+                              whileHover={{ scale: 1.15 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="relative"
+                            >
+                              <motion.div
+                                className="absolute inset-0 rounded-full bg-white/30"
+                                animate={{
+                                  scale: [1, 1.3, 1],
+                                  opacity: [0.5, 0, 0.5],
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: 'easeInOut',
+                                }}
+                              />
+                              <div className="w-14 h-14 rounded-full bg-white/25 backdrop-blur-md border-2 border-white/50 flex items-center justify-center shadow-xl relative z-10">
+                                <Play className="w-6 h-6 text-white ml-0.5" fill="white" />
+                              </div>
+                            </motion.div>
+                          </div>
+                          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur text-white text-xs font-medium">
+                            <Clock className="w-3 h-3" />
+                            {v.duration}
+                          </div>
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-heading font-bold text-base text-slate-900 mb-1 group-hover:text-emerald-600 transition-colors">
+                            {v.jobName}
+                          </h4>
+                          <p className="text-xs text-slate-500 flex items-center gap-1">
+                            <Video className="w-3 h-3" />
+                            真实工作流视频记录
+                          </p>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.section>
+
+            <motion.section
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-100px' }}
+            >
+              <motion.div variants={fadeInUp} className="mb-6 flex items-end justify-between flex-wrap gap-4">
                 <div>
                   <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
                   <Badge variant="purple" size="md" withDot className="mb-3">
-                    <QuoteIcon />
-                    真实分享
+                    <Mic className="w-3.5 h-3.5 mr-1" />
+                    从业者深度访谈
                   </Badge>
                   <h2 className="font-heading text-2xl font-bold tracking-tight">
                     来自一线从业者的<span className="gradient-text">真实声音</span>
                   </h2>
+                  <p className="text-slate-600 mt-2">
+                    倾听从业者讲述最真实的职场经验、成长路径与行业洞察
+                  </p>
                 </div>
               </motion.div>
 
@@ -1136,11 +1266,12 @@ export default function Encyclopedia() {
                       variants={scaleIn}
                       transition={{ delay: i * 0.08 }}
                       className="flex-shrink-0 w-[320px] snap-start"
+                      onClick={() => selectJob(iv.jobId, 'interviews')}
                     >
                       <Card
                         variant="gradient"
                         hoverable
-                        className="h-full p-6 relative overflow-hidden group"
+                        className="h-full p-6 relative overflow-hidden group cursor-pointer"
                       >
                         <div className="absolute -top-4 -right-4 w-32 h-32 rounded-full bg-gradient-to-br from-lavender-200/50 to-emerald-200/50 blur-2xl opacity-60" />
 
@@ -1234,6 +1365,91 @@ export default function Encyclopedia() {
               <motion.div variants={fadeInUp} className="mb-6">
                 <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
                 <Badge variant="gold" size="md" withDot className="mb-3">
+                  <BarChart3 className="w-3.5 h-3.5 mr-1" />
+                  入行门槛阶梯图
+                </Badge>
+                <h2 className="font-heading text-2xl font-bold tracking-tight">
+                  科学规划<span className="gradient-text">入行路径</span>
+                </h2>
+                <p className="text-slate-600 mt-2">
+                  从零基础到成功入职，每个岗位的入行周期与阶段拆解
+                </p>
+              </motion.div>
+
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+              >
+                {LADDER_JOBS.map((lj, i) => {
+                  const job = MOCK_JOBS.find((j) => j.id === lj.jobId);
+                  return (
+                    <motion.div key={lj.jobId} variants={scaleIn} transition={{ delay: i * 0.07 }}>
+                      <Card
+                        variant="default"
+                        hoverable
+                        glowOnHover
+                        className="h-full p-6 group cursor-pointer overflow-hidden"
+                        onClick={() => selectJob(lj.jobId, 'ladder')}
+                      >
+                        <div className="flex items-start justify-between mb-5">
+                          <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${lj.gradient} flex items-center justify-center shadow-lg`}>
+                            <BarChart3 className="w-7 h-7 text-white" />
+                          </div>
+                          <Badge variant="gold" size="sm">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {lj.months}个月
+                          </Badge>
+                        </div>
+
+                        <h4 className="font-heading font-bold text-xl text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                          {lj.jobName}
+                        </h4>
+                        {job && (
+                          <p className="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">
+                            {job.overview}
+                          </p>
+                        )}
+
+                        <div className="space-y-2 pt-4 border-t border-slate-100">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-500">入门难度</span>
+                            {job && <DifficultyStars level={job.entryDifficulty} />}
+                          </div>
+                          <div className="relative pt-1">
+                            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                              <motion.div
+                                className={`h-full bg-gradient-to-r ${lj.gradient} rounded-full`}
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${Math.min(100, (lj.months / 18) * 100)}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, delay: 0.2 + i * 0.1, ease: 'easeOut' }}
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between text-[11px] text-slate-400">
+                            <span>5阶阶梯</span>
+                            <span className="font-semibold text-slate-600">约{lj.months}个月入行</span>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </motion.section>
+
+            <motion.section
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-100px' }}
+            >
+              <motion.div variants={fadeInUp} className="mb-6">
+                <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
+                <Badge variant="gold" size="md" withDot className="mb-3">
                   <Award className="w-3.5 h-3.5 mr-1" />
                   认证推荐
                 </Badge>
@@ -1250,81 +1466,107 @@ export default function Encyclopedia() {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true }}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+                className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
               >
-                {certs.map((cert, i) => (
-                  <motion.div key={cert.id} variants={scaleIn} transition={{ delay: i * 0.06 }}>
-                    <Card variant="default" glowOnHover hoverable className="h-full p-6 group">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-gold-100 to-amber-gold-50 border border-amber-gold-200 flex items-center justify-center">
-                          <Award className="w-6 h-6 text-amber-gold-600" />
+                {certs.slice(0, 8).map((cert, i) => {
+                  const bgColors = [
+                    'from-emerald-100 to-emerald-50',
+                    'from-lavender-100 to-lavender-50',
+                    'from-space-indigo-100 to-space-indigo-50',
+                    'from-amber-gold-100 to-amber-gold-50',
+                    'from-rose-100 to-rose-50',
+                    'from-teal-100 to-teal-50',
+                    'from-sky-100 to-sky-50',
+                    'from-orange-100 to-orange-50',
+                  ];
+                  const borderColors = [
+                    'border-emerald-200',
+                    'border-lavender-200',
+                    'border-space-indigo-200',
+                    'border-amber-gold-200',
+                    'border-rose-200',
+                    'border-teal-200',
+                    'border-sky-200',
+                    'border-orange-200',
+                  ];
+                  const iconColors = [
+                    'text-emerald-600',
+                    'text-lavender-600',
+                    'text-space-indigo-600',
+                    'text-amber-gold-600',
+                    'text-rose-600',
+                    'text-teal-600',
+                    'text-sky-600',
+                    'text-orange-600',
+                  ];
+                  return (
+                    <motion.div key={cert.id} variants={scaleIn} transition={{ delay: i * 0.06 }}>
+                      <Card variant="default" glowOnHover hoverable className="h-full p-5 group flex flex-col">
+                        <div
+                          className={`w-12 h-12 rounded-xl bg-gradient-to-br ${bgColors[i % 8]} border ${borderColors[i % 8]} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <Award className={`w-6 h-6 ${iconColors[i % 8]}`} />
                         </div>
-                        {diffBadge(cert.difficulty)}
-                      </div>
 
-                      <h3 className="font-heading font-bold text-slate-900 mb-1.5 leading-snug">
-                        {cert.name}
-                      </h3>
-                      <p className="text-sm text-slate-500 mb-4">{cert.issuer}</p>
+                        <div className="mb-4 flex-1">
+                          <h5 className="font-heading font-bold text-sm text-slate-900 mb-1 leading-snug line-clamp-2">
+                            {cert.name}
+                          </h5>
+                          <p className="text-xs text-slate-500">{cert.issuer}</p>
+                        </div>
 
-                      <div className="grid grid-cols-3 gap-2 mb-4 py-3 border-y border-slate-100">
-                        <div className="text-center">
-                          <div className="flex items-center justify-center gap-1 text-slate-700 font-bold">
-                            <Clock className="w-3.5 h-3.5 text-slate-400" />
-                            {cert.estimatedHours}h
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-slate-500">难度</span>
+                            {diffBadge(cert.difficulty)}
                           </div>
-                          <div className="text-[10px] text-slate-400 mt-0.5">学时</div>
-                        </div>
-                        <div className="text-center border-x border-slate-100">
-                          <div className="text-slate-700 font-bold">{cert.passRate}%</div>
-                          <div className="text-[10px] text-slate-400 mt-0.5">通过率</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="flex items-center justify-center gap-1 text-slate-700 font-bold">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                            {cert.relevance}%
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-slate-500">学时</span>
+                            <span className="font-bold text-slate-700">
+                              <Clock className="w-3 h-3 text-slate-400 inline mr-0.5" />
+                              {cert.estimatedHours}h
+                            </span>
                           </div>
-                          <div className="text-[10px] text-slate-400 mt-0.5">相关度</div>
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-slate-500">相关度</span>
+                            <span className="font-bold text-emerald-600">{cert.relevance}%</span>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="mb-3">
-                        <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1.5">
-                          <span>岗位相关度</span>
-                          <span className="font-semibold">{cert.relevance}%</span>
+                        <div className="mb-4">
+                          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <motion.div
+                              className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 transition-all duration-700"
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${cert.relevance}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.8, delay: 0.1 + i * 0.05, ease: 'easeOut' }}
+                            />
+                          </div>
                         </div>
-                        <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                          <motion.div
-                            className="h-full bg-gradient-to-r from-emerald-400 to-lavender-500 rounded-full"
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${cert.relevance}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2 + i * 0.05, ease: 'easeOut' }}
-                          />
+
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {cert.relatedJobs.slice(0, 2).map((j) => (
+                            <Badge key={j} variant="info" size="sm">
+                              {j}
+                            </Badge>
+                          ))}
                         </div>
-                      </div>
 
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {cert.relatedJobs.slice(0, 2).map((j) => (
-                          <Badge key={j} variant="emerald" size="sm">
-                            {j}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        fullWidth
-                        onClick={() => navigate('/onboarding')}
-                        rightIcon={<ArrowRight className="w-4 h-4" />}
-                        className="group-hover:!border-emerald-400 group-hover:!bg-emerald-50 group-hover:!text-emerald-600"
-                      >
-                        开始学习
-                      </Button>
-                    </Card>
-                  </motion.div>
-                ))}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          fullWidth
+                          onClick={() => navigate('/onboarding')}
+                          rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
+                          className="group-hover:!border-emerald-400 group-hover:!bg-emerald-50 group-hover:!text-emerald-600 !text-xs"
+                        >
+                          开始学习
+                        </Button>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             </motion.section>
           </main>
