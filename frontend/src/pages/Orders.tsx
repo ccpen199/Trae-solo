@@ -12,6 +12,8 @@ import {
   Modal,
   Descriptions,
   message,
+  Collapse,
+  Divider,
 } from 'antd';
 import {
   SearchOutlined,
@@ -37,6 +39,7 @@ function Orders() {
   });
   const [detailModal, setDetailModal] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<any>(null);
+  const [allData, setAllData] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
@@ -52,6 +55,17 @@ function Orders() {
       const result: any = await orderApi.getList(params);
       setData(result.list || []);
       setTotal(result.total || 0);
+
+      if (!filters.platform) {
+        try {
+          const allResult: any = await orderApi.getList({ pageSize: 100, status: filters.status || undefined });
+          setAllData(allResult.list || []);
+        } catch {
+          setAllData(result.list || []);
+        }
+      } else {
+        setAllData([]);
+      }
     } catch (e) {
       message.error('加载订单数据失败');
     }
@@ -224,6 +238,103 @@ function Orders() {
 
   return (
     <div>
+      {allData.length > 0 && (
+        <Collapse
+          defaultActiveKey={[]}
+          style={{ marginBottom: 16 }}
+          items={[
+            {
+              key: 'platform',
+              label: (
+                <Space>
+                  <span style={{ fontWeight: 500 }}>平台订单隔离视图</span>
+                  <Tag color="blue">自营 {allData.filter((d) => d.platform === 'self').length} 单</Tag>
+                  <Tag color="orange">美团 {allData.filter((d) => d.platform === 'meituan').length} 单</Tag>
+                  <Tag color="geekblue">饿了么 {allData.filter((d) => d.platform === 'eleme').length} 单</Tag>
+                </Space>
+              ),
+              children: (
+                <Row gutter={16}>
+                  {[
+                    { key: 'self', label: '自营平台', color: '#1677ff', borderColor: '#91caff', bgColor: '#f0f5ff' },
+                    { key: 'meituan', label: '美团', color: '#ff6600', borderColor: '#ffcf8b', bgColor: '#fff7e6' },
+                    { key: 'eleme', label: '饿了么', color: '#0086ff', borderColor: '#87d8ff', bgColor: '#e6f7ff' },
+                  ].map((platform) => {
+                    const platformOrders = allData.filter((d) => d.platform === platform.key);
+                    return (
+                      <Col span={8} key={platform.key}>
+                        <Card
+                          size="small"
+                          title={
+                            <Space>
+                              <div style={{ width: 4, height: 20, background: platform.color, borderRadius: 2 }} />
+                              <span style={{ color: platform.color, fontWeight: 600 }}>{platform.label}</span>
+                              <Tag>{platformOrders.length} 单</Tag>
+                            </Space>
+                          }
+                          style={{ borderColor: platform.borderColor, background: platform.bgColor }}
+                          headStyle={{ borderBottomColor: platform.borderColor }}
+                        >
+                          {platformOrders.length === 0 ? (
+                            <div style={{ color: '#999', textAlign: 'center', padding: 12 }}>暂无订单</div>
+                          ) : (
+                            <div style={{ fontSize: 13 }}>
+                              {platformOrders.slice(0, 5).map((o) => (
+                                <div
+                                  key={o.id}
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    padding: '4px 0',
+                                    borderBottom: '1px dashed #eee',
+                                  }}
+                                >
+                                  <Space size="small">
+                                    {getStatusTag(o.status)}
+                                    <span>{o.merchant_name}</span>
+                                  </Space>
+                                  <span style={{ color: platform.color }}>¥{o.total_amount.toFixed(0)}</span>
+                                </div>
+                              ))}
+                              {platformOrders.length > 5 && (
+                                <div style={{ textAlign: 'center', color: '#999', paddingTop: 4 }}>
+                                  还有 {platformOrders.length - 5} 单...
+                                </div>
+                              )}
+                              <Divider style={{ margin: '8px 0' }} />
+                              <Row gutter={8}>
+                                <Col span={8}>
+                                  <div style={{ color: '#999', fontSize: 11 }}>待派单</div>
+                                  <div style={{ fontWeight: 500 }}>
+                                    {platformOrders.filter((o) => o.status === 'pending').length}
+                                  </div>
+                                </Col>
+                                <Col span={8}>
+                                  <div style={{ color: '#999', fontSize: 11 }}>配送中</div>
+                                  <div style={{ fontWeight: 500 }}>
+                                    {platformOrders.filter((o) => ['assigned', 'picking', 'delivering'].includes(o.status)).length}
+                                  </div>
+                                </Col>
+                                <Col span={8}>
+                                  <div style={{ color: '#999', fontSize: 11 }}>已完成</div>
+                                  <div style={{ fontWeight: 500 }}>
+                                    {platformOrders.filter((o) => o.status === 'delivered').length}
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          )}
+                        </Card>
+                      </Col>
+                    );
+                  })}
+                </Row>
+              ),
+            },
+          ]}
+        />
+      )}
+
       <Card>
         <Row gutter={16} style={{ marginBottom: 16 }}>
           <Col span={6}>
@@ -292,81 +403,167 @@ function Orders() {
       </Card>
 
       <Modal
-        title="订单详情"
+        title="订单详情 — 派单复核视图"
         open={detailModal}
         onCancel={() => setDetailModal(false)}
         footer={<Button onClick={() => setDetailModal(false)}>关闭</Button>}
-        width={700}
+        width={780}
       >
         {currentOrder && (
-          <Descriptions column={2} bordered size="small">
-            <Descriptions.Item label="订单号" span={2}>
-              {currentOrder.order_no}
-            </Descriptions.Item>
-            <Descriptions.Item label="平台">
-              {getPlatformTag(currentOrder.platform)}
-            </Descriptions.Item>
-            <Descriptions.Item label="状态">
-              {getStatusTag(currentOrder.status)}
-            </Descriptions.Item>
-            <Descriptions.Item label="商家" span={2}>
-              {currentOrder.merchant_name}
-            </Descriptions.Item>
-            <Descriptions.Item label="商家地址" span={2}>
-              {currentOrder.merchant_address}
-            </Descriptions.Item>
-            <Descriptions.Item label="收件人">
-              {currentOrder.recipient_name}
-            </Descriptions.Item>
-            <Descriptions.Item label="联系电话">
-              {currentOrder.recipient_phone}
-            </Descriptions.Item>
-            <Descriptions.Item label="收件地址" span={2}>
-              {currentOrder.recipient_address}
-            </Descriptions.Item>
-            <Descriptions.Item label="物品名称">
-              {currentOrder.goods_name}
-            </Descriptions.Item>
-            <Descriptions.Item label="物品类型">
-              <Tag>{getGoodsTypeText(currentOrder.goods_type)}</Tag>
-            </Descriptions.Item>
-            <Descriptions.Item label="重量">
-              {currentOrder.weight}kg
-            </Descriptions.Item>
-            <Descriptions.Item label="体积">
-              {currentOrder.volume}m³
-            </Descriptions.Item>
-            <Descriptions.Item label="配送费">
-              ¥{currentOrder.delivery_fee.toFixed(2)}
-            </Descriptions.Item>
-            <Descriptions.Item label="小费">
-              ¥{currentOrder.tip_amount.toFixed(2)}
-            </Descriptions.Item>
-            <Descriptions.Item label="合计">
-              <span style={{ color: '#f5222d', fontWeight: 'bold' }}>
-                ¥{currentOrder.total_amount.toFixed(2)}
-              </span>
-            </Descriptions.Item>
-            <Descriptions.Item label="预计距离">
-              {currentOrder.estimated_distance.toFixed(2)}km
-            </Descriptions.Item>
-            <Descriptions.Item label="预计时长">
-              {currentOrder.estimated_duration}分钟
-            </Descriptions.Item>
-            <Descriptions.Item label="创建时间">
-              {dayjs.unix(currentOrder.created_at).format('YYYY-MM-DD HH:mm:ss')}
-            </Descriptions.Item>
-            <Descriptions.Item label="送达时间">
-              {currentOrder.delivered_at
-                ? dayjs.unix(currentOrder.delivered_at).format('YYYY-MM-DD HH:mm:ss')
-                : '-'}
-            </Descriptions.Item>
-            {currentOrder.is_special && (
-              <Descriptions.Item label="特殊说明" span={2}>
-                <Tag color="red">特殊物品</Tag> {currentOrder.special_note}
+          <div>
+            <Descriptions
+              column={2}
+              bordered
+              size="small"
+              title="基础信息"
+              style={{ marginBottom: 12 }}
+            >
+              <Descriptions.Item label="订单号" span={2}>
+                {currentOrder.order_no}
               </Descriptions.Item>
-            )}
-          </Descriptions>
+              <Descriptions.Item label="平台">
+                {getPlatformTag(currentOrder.platform)}
+              </Descriptions.Item>
+              <Descriptions.Item label="状态">
+                {getStatusTag(currentOrder.status)}
+              </Descriptions.Item>
+              <Descriptions.Item label="创建时间">
+                {dayjs.unix(currentOrder.created_at).format('YYYY-MM-DD HH:mm:ss')}
+              </Descriptions.Item>
+              <Descriptions.Item label="送达时间">
+                {currentOrder.delivered_at
+                  ? dayjs.unix(currentOrder.delivered_at).format('YYYY-MM-DD HH:mm:ss')
+                  : '-'}
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions
+              column={2}
+              bordered
+              size="small"
+              title="取货 / 送达时间窗"
+              style={{ marginBottom: 12 }}
+            >
+              <Descriptions.Item label="取货时间窗" span={2}>
+                {currentOrder.pickup_time_start && currentOrder.pickup_time_end ? (
+                  <Space>
+                    <Tag color="blue">
+                      {dayjs.unix(currentOrder.pickup_time_start).format('HH:mm')}
+                    </Tag>
+                    <span>至</span>
+                    <Tag color="blue">
+                      {dayjs.unix(currentOrder.pickup_time_end).format('HH:mm')}
+                    </Tag>
+                    <span style={{ color: '#999', fontSize: 12 }}>
+                      (窗口 {Math.round((currentOrder.pickup_time_end - currentOrder.pickup_time_start) / 60)} 分钟)
+                    </span>
+                  </Space>
+                ) : (
+                  <span style={{ color: '#999' }}>未设置</span>
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item label="送达时间窗" span={2}>
+                {currentOrder.delivery_time_start && currentOrder.delivery_time_end ? (
+                  <Space>
+                    <Tag color="green">
+                      {dayjs.unix(currentOrder.delivery_time_start).format('HH:mm')}
+                    </Tag>
+                    <span>至</span>
+                    <Tag color="green">
+                      {dayjs.unix(currentOrder.delivery_time_end).format('HH:mm')}
+                    </Tag>
+                    <span style={{ color: '#999', fontSize: 12 }}>
+                      (窗口 {Math.round((currentOrder.delivery_time_end - currentOrder.delivery_time_start) / 60)} 分钟)
+                    </span>
+                  </Space>
+                ) : (
+                  <span style={{ color: '#999' }}>未设置</span>
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item label="预计距离">
+                {currentOrder.estimated_distance.toFixed(2)}km
+              </Descriptions.Item>
+              <Descriptions.Item label="预计时长">
+                {currentOrder.estimated_duration}分钟
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions
+              column={2}
+              bordered
+              size="small"
+              title="收寄信息"
+              style={{ marginBottom: 12 }}
+            >
+              <Descriptions.Item label="商家" span={2}>
+                {currentOrder.merchant_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="商家地址" span={2}>
+                {currentOrder.merchant_address}
+              </Descriptions.Item>
+              <Descriptions.Item label="收件人">
+                {currentOrder.recipient_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="联系电话">
+                {currentOrder.recipient_phone?.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}
+              </Descriptions.Item>
+              <Descriptions.Item label="收件地址" span={2}>
+                {currentOrder.recipient_address}
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions
+              column={2}
+              bordered
+              size="small"
+              title="物品与特殊标识"
+              style={{ marginBottom: 12 }}
+            >
+              <Descriptions.Item label="物品名称">
+                {currentOrder.goods_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="物品类型">
+                <Tag color={currentOrder.goods_type === 'normal' ? 'default' : currentOrder.goods_type === 'fragile' ? 'red' : currentOrder.goods_type === 'cold' ? 'blue' : currentOrder.goods_type === 'perishable' ? 'orange' : 'purple'}>
+                  {getGoodsTypeText(currentOrder.goods_type)}
+                </Tag>
+              </Descriptions.Item>
+              <Descriptions.Item label="重量">
+                {currentOrder.weight}kg
+              </Descriptions.Item>
+              <Descriptions.Item label="体积">
+                {currentOrder.volume}m³
+              </Descriptions.Item>
+              <Descriptions.Item label="特殊物品标识" span={2}>
+                {currentOrder.is_special ? (
+                  <Space>
+                    <Tag color="red">⚠ 特殊物品</Tag>
+                    <span>{currentOrder.special_note || '需特殊处理'}</span>
+                  </Space>
+                ) : (
+                  <Tag>普通物品</Tag>
+                )}
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions
+              column={2}
+              bordered
+              size="small"
+              title="费用明细"
+            >
+              <Descriptions.Item label="配送费">
+                ¥{currentOrder.delivery_fee.toFixed(2)}
+              </Descriptions.Item>
+              <Descriptions.Item label="小费">
+                ¥{currentOrder.tip_amount.toFixed(2)}
+              </Descriptions.Item>
+              <Descriptions.Item label="合计" span={2}>
+                <span style={{ color: '#f5222d', fontWeight: 'bold' }}>
+                  ¥{currentOrder.total_amount.toFixed(2)}
+                </span>
+              </Descriptions.Item>
+            </Descriptions>
+          </div>
         )}
       </Modal>
     </div>

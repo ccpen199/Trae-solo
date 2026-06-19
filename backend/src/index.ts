@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs';
 import http from 'http';
+import path from 'path';
 import { Server as SocketIOServer } from 'socket.io';
 import { getDb } from './db';
 import { reportRiderLocation, getRiderById } from './services/riderService';
@@ -15,6 +17,23 @@ import healthRouter from './routes/health';
 import predictionRouter from './routes/prediction';
 import creditRouter from './routes/credit';
 
+function loadEnvFile(filePath: string) {
+  if (!fs.existsSync(filePath)) return;
+
+  for (const line of fs.readFileSync(filePath, 'utf8').split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+
+    const [key, ...valueParts] = trimmed.split('=');
+    if (!process.env[key]) {
+      process.env[key] = valueParts.join('=').replace(/^['"]|['"]$/g, '');
+    }
+  }
+}
+
+loadEnvFile(path.resolve(__dirname, '..', '..', '.env'));
+loadEnvFile(path.resolve(__dirname, '..', '.env'));
+
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
@@ -24,7 +43,8 @@ const io = new SocketIOServer(server, {
   },
 });
 
-const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || process.env.BACKEND_HOST || '127.0.0.1';
+const PORT = Number(process.env.PORT || process.env.BACKEND_PORT || 59245);
 
 app.use(cors());
 app.use(express.json());
@@ -98,10 +118,10 @@ setInterval(() => {
 
 getDb();
 
-server.listen(PORT, () => {
-  console.log(`Delivery dispatch server running on port ${PORT}`);
-  console.log(`API: http://localhost:${PORT}/api`);
-  console.log(`Socket.IO: ws://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`Delivery dispatch server running on ${HOST}:${PORT}`);
+  console.log(`API: http://${HOST}:${PORT}/api`);
+  console.log(`Socket.IO: ws://${HOST}:${PORT}`);
 });
 
 export { io };

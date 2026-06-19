@@ -1,0 +1,2349 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-19T12:58:08.053Z",
+  "order": "may-89245",
+  "roundIndex": 2,
+  "captureId": "may-89245-service-repair",
+  "url": "http://127.0.0.1:49245/",
+  "initialUrl": "http://127.0.0.1:49245/",
+  "finalUrl": "http://127.0.0.1:49245/",
+  "status": 200,
+  "title": "同城即时配送运力调度中台",
+  "initialTitle": "同城即时配送运力调度中台",
+  "navigationError": "",
+  "screenshotPath": "browser-check/may-89245-service-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.png"
+  ],
+  "issueTextPreview": "service repair: previous frontend and backend connection refused",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49245/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49245/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:数据大盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关 闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:骑士管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关 闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49245/",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "数据大盘"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理数据大盘管理员 | 同城配送调度中心今日订单30待派单1配送中1今日已完成28在线骑士11/ 15在线率: 73.0%忙碌: 3人拒单率0.0%近1小时数据统计事故率3.57%近30天丢件/服务投诉平均履约率91.0%待处理申诉: 2件24小时订单与运力趋势实时更新多平台订单分布",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49245/",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.png",
+          "elementCount": 197,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:数据大盘",
+        "url": "http://127.0.0.1:49245/",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "数据大盘"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理数据大盘管理员 | 同城配送调度中心今日订单30待派单1配送中1今日已完成28在线骑士11/ 15在线率: 73.0%忙碌: 3人拒单率0.0%近1小时数据统计事故率3.57%近30天丢件/服务投诉平均履约率91.0%待处理申诉: 2件24小时订单与运力趋势实时更新多平台订单分布",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-02-导航-数据大盘",
+          "label": "导航:数据大盘",
+          "finalUrl": "http://127.0.0.1:49245/",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.png",
+          "elementCount": 197,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情",
+          "申诉",
+          "派单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "平台",
+              "状态",
+              "商家",
+              "收件人",
+              "物品",
+              "配送费",
+              "预计时长",
+              "创建时间",
+              "操作",
+              "订单号",
+              "平台"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 DD17818199670029 饿了么 已完成 星巴克(悠唐店) 客户30 海鲜大餐 ¥9.00 85分钟 2026-06-19 00:49:31 详情 申诉 DD17818217670028 美团 已完成 必胜客(国贸店) 客户29 生日蛋糕 ¥8.00 83分钟 2026-06-19 01:28:27 详情 申诉 DD17818235670027 自营 已派单 鲜果时间 客户28 披萨9寸 ¥19.00 92分钟 2026-06-19 01:"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理订单管理管理员 | 同城配送调度中心订单状态平台来源搜索订单号平台状态商家收件人物品配送费预计时长创建时间操作订单号平台状态商家收件人物品配送费预计时长创建时间操作DD17818199670029饿了么已完成星巴克(悠唐店)客户30海鲜大餐¥9.0085分钟2026-06-19 00:49:31详情申诉DD17818217670028美团已完成必胜客(国贸店)客户29生日蛋糕¥8.0083分钟2026-06-19 01:28:27详情申诉DD17818235670027自营已派单鲜果时间客户28披萨9寸¥19.0092分钟2026-06-19 01:55:30详情DD17818253670026自营待派单川味小馆客户27奶茶两杯¥18.0031分钟2026-06-19 02:19:54详情派单DD17818271670025自营已完成麦香居快餐店客户26水果拼盘¥7.0089分钟2026-06-19 02:55:32详情申诉DD17818289670024饿了么已完成星巴克(悠唐店)客户25宫保鸡丁套餐¥17.0064分钟2026-06-19 03:25:55详情申诉DD17818307670023美团已完成必胜客(国贸店)客户24海鲜大餐¥21.0036分钟2026-06-19 03:53:08详情申诉DD17818325670022自营已完成鲜果时间客户23生日蛋糕¥22.0094分钟2026-06-19 04:23:52详情申诉DD17818343670021自营已完成川味小馆客户22披萨9寸¥12.0032分钟2026-06-19 04:56:10详情申诉DD17818361670020自营已完成麦香居快餐店客户21奶茶两杯¥21.0038分钟2026-06-19 05:25:22详情申诉共 30 条12310 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1099,
+          "scrollWidth": 1568,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-03-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:49245/orders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.png",
+          "elementCount": 472,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "开始日期",
+            "结束日期",
+            "搜索",
+            "详情",
+            "申诉",
+            "派单",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "平台",
+              "状态",
+              "商家",
+              "收件人",
+              "物品",
+              "配送费",
+              "预计时长",
+              "创建时间",
+              "操作",
+              "订单号",
+              "平台"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 DD17818199670029 饿了么 已完成 星巴克(悠唐店) 客户30 海鲜大餐 ¥9.00 85分钟 2026-06-19 00:49:31 详情 申诉 DD17818217670028 美团 已完成 必胜客(国贸店) 客户29 生日蛋糕 ¥8.00 83分钟 2026-06-19 01:28:27 详情 申诉 DD17818235670027 自营 已派单 鲜果时间 客户28 披萨9寸 ¥19.00 92分钟 2026-06-19 01:"
+          },
+          {
+            "headers": [
+              "订单号",
+              "平台",
+              "状态",
+              "商家",
+              "商家地址",
+              "收件人",
+              "联系电话",
+              "收件地址",
+              "物品名称",
+              "物品类型",
+              "重量",
+              "体积"
+            ],
+            "rowCount": 12,
+            "hasEmptyText": false,
+            "textPreview": "订单号 DD17818199670029 平台 饿了么 状态 已完成 商家 星巴克(悠唐店) 商家地址 朝阳区朝阳门外大街12号 收件人 客户30 联系电话 13900000029 收件地址 朝阳区客户地址30号 物品名称 海鲜大餐 物品类型 冷藏 重量 3kg 体积 1.5m³ 配送费 ¥9.00 小费 ¥0.00 合计 ¥9.00 预计距离 7.04km 预计时长 85分钟 创建时间 2026-06-19 00:49:31 送达时间 2026-06-19 01:30:07"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理订单管理管理员 | 同城配送调度中心订单状态平台来源搜索订单号平台状态商家收件人物品配送费预计时长创建时间操作订单号平台状态商家收件人物品配送费预计时长创建时间操作DD17818199670029饿了么已完成星巴克(悠唐店)客户30海鲜大餐¥9.0085分钟2026-06-19 00:49:31详情申诉DD17818217670028美团已完成必胜客(国贸店)客户29生日蛋糕¥8.0083分钟2026-06-19 01:28:27详情申诉DD17818235670027自营已派单鲜果时间客户28披萨9寸¥19.0092分钟2026-06-19 01:55:30详情DD17818253670026自营待派单川味小馆客户27奶茶两杯¥18.0031分钟2026-06-19 02:19:54详情派单DD17818271670025自营已完成麦香居快餐店客户26水果拼盘¥7.0089分钟2026-06-19 02:55:32详情申诉DD17818289670024饿了么已完成星巴克(悠唐店)客户25宫保鸡丁套餐¥17.0064分钟2026-06-19 03:25:55详情申诉DD17818307670023美团已完成必胜客(国贸店)客户24海鲜大餐¥21.0036分钟2026-06-19 03:53:08详情申诉DD17818325670022自营已完成鲜果时间客户23生日蛋糕¥22.0094分钟2026-06-19 04:23:52详情申诉DD17818343670021自营已完成川味小馆客户22披萨9寸¥12.0032分钟2026-06-19 04:56:10详情申诉DD17818361670020自营已完成麦香居快餐店客户21奶茶两杯¥21.0038分钟2026-06-19 05:25:22详情申诉共 30 条12310 条/页 订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:49:31送达时间2026-06-19 01:30:07关 闭",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1099,
+          "scrollWidth": 1600,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-04-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49245/orders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.png",
+          "elementCount": 589,
+          "interactiveCount": 47,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "开始日期",
+            "结束日期",
+            "搜索",
+            "详情",
+            "申诉",
+            "派单",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "订单详情 订单号 DD17818199670029 平台 饿了么 状态 已完成 商家 星巴克(悠唐店) 商家地址 朝阳区朝阳门外大街12号 收件人 客户30 联系电话 13900000029 收件地址 朝阳区客户地址30号 物品名称 海鲜大餐 物品类型 冷藏 重量 3kg 体积 1.5m³ 配送费 ¥9.00 小费 ¥0.00 合计 ¥9.00 预计距离 7",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关 闭",
+        "url": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情",
+          "申诉",
+          "派单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "平台",
+              "状态",
+              "商家",
+              "收件人",
+              "物品",
+              "配送费",
+              "预计时长",
+              "创建时间",
+              "操作",
+              "订单号",
+              "平台"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 DD17818199670029 饿了么 已完成 星巴克(悠唐店) 客户30 海鲜大餐 ¥9.00 85分钟 2026-06-19 00:49:31 详情 申诉 DD17818217670028 美团 已完成 必胜客(国贸店) 客户29 生日蛋糕 ¥8.00 83分钟 2026-06-19 01:28:27 详情 申诉 DD17818235670027 自营 已派单 鲜果时间 客户28 披萨9寸 ¥19.00 92分钟 2026-06-19 01:"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理订单管理管理员 | 同城配送调度中心订单状态平台来源搜索订单号平台状态商家收件人物品配送费预计时长创建时间操作订单号平台状态商家收件人物品配送费预计时长创建时间操作DD17818199670029饿了么已完成星巴克(悠唐店)客户30海鲜大餐¥9.0085分钟2026-06-19 00:49:31详情申诉DD17818217670028美团已完成必胜客(国贸店)客户29生日蛋糕¥8.0083分钟2026-06-19 01:28:27详情申诉DD17818235670027自营已派单鲜果时间客户28披萨9寸¥19.0092分钟2026-06-19 01:55:30详情DD17818253670026自营待派单川味小馆客户27奶茶两杯¥18.0031分钟2026-06-19 02:19:54详情派单DD17818271670025自营已完成麦香居快餐店客户26水果拼盘¥7.0089分钟2026-06-19 02:55:32详情申诉DD17818289670024饿了么已完成星巴克(悠唐店)客户25宫保鸡丁套餐¥17.0064分钟2026-06-19 03:25:55详情申诉DD17818307670023美团已完成必胜客(国贸店)客户24海鲜大餐¥21.0036分钟2026-06-19 03:53:08详情申诉DD17818325670022自营已完成鲜果时间客户23生日蛋糕¥22.0094分钟2026-06-19 04:23:52详情申诉DD17818343670021自营已完成川味小馆客户22披萨9寸¥12.0032分钟2026-06-19 04:56:10详情申诉DD17818361670020自营已完成麦香居快餐店客户21奶茶两杯¥21.0038分钟2026-06-19 05:25:22详情申诉共 30 条12310 条/页 订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:49:31送达时间2026-06-19 01:30:07关 闭",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1099,
+          "scrollWidth": 1632,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-05-二层操作-详情-关-闭",
+          "label": "二层操作:详情->关 闭",
+          "finalUrl": "http://127.0.0.1:49245/orders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.png",
+          "elementCount": 590,
+          "interactiveCount": 47,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "开始日期",
+            "结束日期",
+            "搜索",
+            "详情",
+            "申诉",
+            "派单",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:4",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索",
+        "url": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情",
+          "申诉",
+          "派单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "平台",
+              "状态",
+              "商家",
+              "收件人",
+              "物品",
+              "配送费",
+              "预计时长",
+              "创建时间",
+              "操作",
+              "订单号",
+              "平台"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 订单号 平台 状态 商家 收件人 物品 配送费 预计时长 创建时间 操作 DD17818199670029 饿了么 已完成 星巴克(悠唐店) 客户30 海鲜大餐 ¥9.00 85分钟 2026-06-19 00:49:31 详情 申诉 DD17818217670028 美团 已完成 必胜客(国贸店) 客户29 生日蛋糕 ¥8.00 83分钟 2026-06-19 01:28:27 详情 申诉 DD17818235670027 自营 已派单 鲜果时间 客户28 披萨9寸 ¥19.00 92分钟 2026-06-19 01:"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理订单管理管理员 | 同城配送调度中心订单状态平台来源搜索订单号平台状态商家收件人物品配送费预计时长创建时间操作订单号平台状态商家收件人物品配送费预计时长创建时间操作DD17818199670029饿了么已完成星巴克(悠唐店)客户30海鲜大餐¥9.0085分钟2026-06-19 00:49:31详情申诉DD17818217670028美团已完成必胜客(国贸店)客户29生日蛋糕¥8.0083分钟2026-06-19 01:28:27详情申诉DD17818235670027自营已派单鲜果时间客户28披萨9寸¥19.0092分钟2026-06-19 01:55:30详情DD17818253670026自营待派单川味小馆客户27奶茶两杯¥18.0031分钟2026-06-19 02:19:54详情派单DD17818271670025自营已完成麦香居快餐店客户26水果拼盘¥7.0089分钟2026-06-19 02:55:32详情申诉DD17818289670024饿了么已完成星巴克(悠唐店)客户25宫保鸡丁套餐¥17.0064分钟2026-06-19 03:25:55详情申诉DD17818307670023美团已完成必胜客(国贸店)客户24海鲜大餐¥21.0036分钟2026-06-19 03:53:08详情申诉DD17818325670022自营已完成鲜果时间客户23生日蛋糕¥22.0094分钟2026-06-19 04:23:52详情申诉DD17818343670021自营已完成川味小馆客户22披萨9寸¥12.0032分钟2026-06-19 04:56:10详情申诉DD17818361670020自营已完成麦香居快餐店客户21奶茶两杯¥21.0038分钟2026-06-19 05:25:22详情申诉共 30 条12310 条/页 订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:49:31送达时间2026-06-19 01:30:07关 闭",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1099,
+          "scrollWidth": 1664,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-06-操作-搜索",
+          "label": "操作:搜索",
+          "finalUrl": "http://127.0.0.1:49245/orders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.png",
+          "elementCount": 592,
+          "interactiveCount": 47,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "开始日期",
+            "结束日期",
+            "搜索",
+            "详情",
+            "申诉",
+            "派单",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:4",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "导航:骑士管理",
+        "url": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "骑士管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "手机号",
+              "类型",
+              "状态",
+              "信用分",
+              "电量",
+              "履约率",
+              "接单意愿",
+              "最后上线",
+              "操作",
+              "ID"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 15 郭浩 13810001918 兼职 忙碌 97% 97 68% 68% 94.6% 103% 06-19 15:29 详情 14 朱杰 13810001781 兼职 在线 98% 98 62% 62% 96.4% 76% 06-19 15:29 详情 13 马超 13810001644 全职 在线 85% 85 55% 55% 89.7% 117% 06-19 15:29 详情 12 孙鹏 13810001507 全职 离线 82"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理骑士管理管理员 | 同城配送调度中心骑士状态骑士类型搜索ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作15郭浩13810001918兼职忙碌97%9768%68%94.6%103%06-19 15:29详情14朱杰13810001781兼职在线98%9862%62%96.4%76%06-19 15:29详情13马超13810001644全职在线85%8555%55%89.7%117%06-19 15:29详情12孙鹏13810001507全职离线82%8247%47%93.7%120%06-18 15:29详情11徐辉13810001370全职休息78%7845%45%86.0%115%06-19 15:29详情10吴斌13810001233兼职在线97%9781%81%88.4%86%06-19 15:29详情9周勇13810001096兼职忙碌91%9187%87%91.4%81%06-19 15:29详情8黄涛13810000959全职在线70%7046%46%87.0%109%06-19 15:29详情7赵刚13810000822全职在线77%7777%77%86.3%75%06-19 15:29详情6杨超13810000685全职离线72%7265%65%94.1%98%06-18 15:29详情共 15 名骑士1210 条/页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1099,
+          "scrollWidth": 1696,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-07-导航-骑士管理",
+          "label": "导航:骑士管理",
+          "finalUrl": "http://127.0.0.1:49245/riders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.png",
+          "elementCount": 596,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "搜索",
+            "详情",
+            "1",
+            "2",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "骑士管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "手机号",
+              "类型",
+              "状态",
+              "信用分",
+              "电量",
+              "履约率",
+              "接单意愿",
+              "最后上线",
+              "操作",
+              "ID"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 15 郭浩 13810001918 兼职 忙碌 97% 97 68% 68% 94.6% 103% 06-19 15:29 详情 14 朱杰 13810001781 兼职 在线 98% 98 62% 62% 96.4% 76% 06-19 15:29 详情 13 马超 13810001644 全职 在线 85% 85 55% 55% 89.7% 117% 06-19 15:29 详情 12 孙鹏 13810001507 全职 离线 82"
+          },
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "手机号",
+              "类型",
+              "状态",
+              "车辆类型",
+              "信用分",
+              "电量",
+              "履约率",
+              "接单意愿系数",
+              "注册时间",
+              "当前位置"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 15 姓名 郭浩 手机号 13810001918 类型 兼职 状态 忙碌 车辆类型 电动车 信用分 97% 97 S级 - 金牌骑士 电量 68% 履约率 94.6% 接单意愿系数 103% 注册时间 2026-05-21 当前位置 39.920462 , 116.430076"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理骑士管理管理员 | 同城配送调度中心骑士状态骑士类型搜索ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作15郭浩13810001918兼职忙碌97%9768%68%94.6%103%06-19 15:29详情14朱杰13810001781兼职在线98%9862%62%96.4%76%06-19 15:29详情13马超13810001644全职在线85%8555%55%89.7%117%06-19 15:29详情12孙鹏13810001507全职离线82%8247%47%93.7%120%06-18 15:29详情11徐辉13810001370全职休息78%7845%45%86.0%115%06-19 15:29详情10吴斌13810001233兼职在线97%9781%81%88.4%86%06-19 15:29详情9周勇13810001096兼职忙碌91%9187%87%91.4%81%06-19 15:29详情8黄涛13810000959全职在线70%7046%46%87.0%109%06-19 15:29详情7赵刚13810000822全职在线77%7777%77%86.3%75%06-19 15:29详情6杨超13810000685全职离线72%7265%65%94.1%98%06-18 15:29详情共 15 名骑士1210 条/页 骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1099,
+          "scrollWidth": 1728,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-08-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49245/riders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.png",
+          "elementCount": 714,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "搜索",
+            "详情",
+            "1",
+            "2",
+            "下一页",
+            "页码",
+            "骑士详情 ID 15 姓名 郭浩 手机号 13810001918 类型 兼职 状态 忙碌 车辆类型 电动车 信用分 97% 97 S级 - 金牌骑士 电量 68% 履约率 94.6% 接单意愿系数 103% 注册时间 2026-05-21 当前位置 39.920462 , 116.430076 S级 - 金牌骑士 - 权益 优先派单 高额奖励 保险补贴 专属",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关 闭",
+        "url": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "骑士管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "手机号",
+              "类型",
+              "状态",
+              "信用分",
+              "电量",
+              "履约率",
+              "接单意愿",
+              "最后上线",
+              "操作",
+              "ID"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 15 郭浩 13810001918 兼职 忙碌 97% 97 68% 68% 94.6% 103% 06-19 15:29 详情 14 朱杰 13810001781 兼职 在线 98% 98 62% 62% 96.4% 76% 06-19 15:29 详情 13 马超 13810001644 全职 在线 85% 85 55% 55% 89.7% 117% 06-19 15:29 详情 12 孙鹏 13810001507 全职 离线 82"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理骑士管理管理员 | 同城配送调度中心骑士状态骑士类型搜索ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作15郭浩13810001918兼职忙碌97%9768%68%94.6%103%06-19 15:29详情14朱杰13810001781兼职在线98%9862%62%96.4%76%06-19 15:29详情13马超13810001644全职在线85%8555%55%89.7%117%06-19 15:29详情12孙鹏13810001507全职离线82%8247%47%93.7%120%06-18 15:29详情11徐辉13810001370全职休息78%7845%45%86.0%115%06-19 15:29详情10吴斌13810001233兼职在线97%9781%81%88.4%86%06-19 15:29详情9周勇13810001096兼职忙碌91%9187%87%91.4%81%06-19 15:29详情8黄涛13810000959全职在线70%7046%46%87.0%109%06-19 15:29详情7赵刚13810000822全职在线77%7777%77%86.3%75%06-19 15:29详情6杨超13810000685全职离线72%7265%65%94.1%98%06-18 15:29详情共 15 名骑士1210 条/页 骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1099,
+          "scrollWidth": 1760,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-09-二层操作-详情-关-闭",
+          "label": "二层操作:详情->关 闭",
+          "finalUrl": "http://127.0.0.1:49245/riders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.png",
+          "elementCount": 715,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "搜索",
+            "详情",
+            "1",
+            "2",
+            "下一页",
+            "页码",
+            "骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索",
+        "url": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "headings": [
+          "骑士管理"
+        ],
+        "navLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "骑士管理",
+          "team",
+          "收入明细",
+          "dollar",
+          "申诉工单",
+          "file-text",
+          "运力健康度",
+          "heart",
+          "单量预测",
+          "rise",
+          "信用分管理",
+          "star"
+        ],
+        "buttons": [
+          "搜索",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "手机号",
+              "类型",
+              "状态",
+              "信用分",
+              "电量",
+              "履约率",
+              "接单意愿",
+              "最后上线",
+              "操作",
+              "ID"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 ID 姓名 手机号 类型 状态 信用分 电量 履约率 接单意愿 最后上线 操作 15 郭浩 13810001918 兼职 忙碌 97% 97 68% 68% 94.6% 103% 06-19 15:29 详情 14 朱杰 13810001781 兼职 在线 98% 98 62% 62% 96.4% 76% 06-19 15:29 详情 13 马超 13810001644 全职 在线 85% 85 55% 55% 89.7% 117% 06-19 15:29 详情 12 孙鹏 13810001507 全职 离线 82"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台数据大盘订单管理骑士管理收入明细申诉工单运力健康度单量预测信用分管理骑士管理管理员 | 同城配送调度中心骑士状态骑士类型搜索ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作ID姓名手机号类型状态信用分电量履约率接单意愿最后上线操作15郭浩13810001918兼职忙碌97%9768%68%94.6%103%06-19 15:29详情14朱杰13810001781兼职在线98%9862%62%96.4%76%06-19 15:29详情13马超13810001644全职在线85%8555%55%89.7%117%06-19 15:29详情12孙鹏13810001507全职离线82%8247%47%93.7%120%06-18 15:29详情11徐辉13810001370全职休息78%7845%45%86.0%115%06-19 15:29详情10吴斌13810001233兼职在线97%9781%81%88.4%86%06-19 15:29详情9周勇13810001096兼职忙碌91%9187%87%91.4%81%06-19 15:29详情8黄涛13810000959全职在线70%7046%46%87.0%109%06-19 15:29详情7赵刚13810000822全职在线77%7777%77%86.3%75%06-19 15:29详情6杨超13810000685全职离线72%7265%65%94.1%98%06-18 15:29详情共 15 名骑士1210 条/页 骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1099,
+          "scrollWidth": 1792,
+          "scrollHeight": 1099,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89245-service-repair-structure-10-操作-搜索",
+          "label": "操作:搜索",
+          "finalUrl": "http://127.0.0.1:49245/riders",
+          "title": "同城即时配送运力调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.png",
+          "elementCount": 715,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+            "数据大盘",
+            "订单管理",
+            "骑士管理",
+            "收入明细",
+            "申诉工单",
+            "运力健康度",
+            "单量预测",
+            "信用分管理",
+            "搜索",
+            "详情",
+            "1",
+            "2",
+            "下一页",
+            "页码",
+            "骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "订单管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "详情->关 闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "搜索",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "骑士管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "骑士管理",
+        "label": "详情->关 闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "骑士管理",
+        "label": "搜索",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49245/",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.png",
+        "elementCount": 197,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-02-导航-数据大盘",
+        "label": "导航:数据大盘",
+        "finalUrl": "http://127.0.0.1:49245/",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.png",
+        "elementCount": 197,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-03-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.png",
+        "elementCount": 472,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-04-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.png",
+        "elementCount": 589,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "订单详情 订单号 DD17818199670029 平台 饿了么 状态 已完成 商家 星巴克(悠唐店) 商家地址 朝阳区朝阳门外大街12号 收件人 客户30 联系电话 13900000029 收件地址 朝阳区客户地址30号 物品名称 海鲜大餐 物品类型 冷藏 重量 3kg 体积 1.5m³ 配送费 ¥9.00 小费 ¥0.00 合计 ¥9.00 预计距离 7",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-05-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.png",
+        "elementCount": 590,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:4",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-06-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.png",
+        "elementCount": 592,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:4",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-07-导航-骑士管理",
+        "label": "导航:骑士管理",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.png",
+        "elementCount": 596,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.png",
+        "elementCount": 714,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "骑士详情 ID 15 姓名 郭浩 手机号 13810001918 类型 兼职 状态 忙碌 车辆类型 电动车 信用分 97% 97 S级 - 金牌骑士 电量 68% 履约率 94.6% 接单意愿系数 103% 注册时间 2026-05-21 当前位置 39.920462 , 116.430076 S级 - 金牌骑士 - 权益 优先派单 高额奖励 保险补贴 专属",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-09-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.png",
+        "elementCount": 715,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-10-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.png",
+        "elementCount": 715,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+          "Close",
+          "关 闭"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49245/",
+    "representativeScreenshotLabel": "数据大盘"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 10,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49245/",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-01-首屏.png",
+        "elementCount": 197,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-02-导航-数据大盘",
+        "label": "导航:数据大盘",
+        "finalUrl": "http://127.0.0.1:49245/",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-02-导航-数据大盘.png",
+        "elementCount": 197,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-03-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-03-导航-订单管理.png",
+        "elementCount": 472,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-04-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-04-操作-详情.png",
+        "elementCount": 589,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "订单详情 订单号 DD17818199670029 平台 饿了么 状态 已完成 商家 星巴克(悠唐店) 商家地址 朝阳区朝阳门外大街12号 收件人 客户30 联系电话 13900000029 收件地址 朝阳区客户地址30号 物品名称 海鲜大餐 物品类型 冷藏 重量 3kg 体积 1.5m³ 配送费 ¥9.00 小费 ¥0.00 合计 ¥9.00 预计距离 7",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-05-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-05-二层操作-详情-关-闭.png",
+        "elementCount": 590,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:4",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-06-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49245/orders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-06-操作-搜索.png",
+        "elementCount": 592,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "开始日期",
+          "结束日期",
+          "搜索",
+          "详情",
+          "申诉",
+          "派单",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "订单详情订单号DD17818199670029平台饿了么状态已完成商家星巴克(悠唐店)商家地址朝阳区朝阳门外大街12号收件人客户30联系电话13900000029收件地址朝阳区客户地址30号物品名称海鲜大餐物品类型冷藏重量3kg体积1.5m³配送费¥9.00小费¥0.00合计¥9.00预计距离7.04km预计时长85分钟创建时间2026-06-19 00:4",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-07-导航-骑士管理",
+        "label": "导航:骑士管理",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-07-导航-骑士管理.png",
+        "elementCount": 596,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-08-操作-详情.png",
+        "elementCount": 714,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "骑士详情 ID 15 姓名 郭浩 手机号 13810001918 类型 兼职 状态 忙碌 车辆类型 电动车 信用分 97% 97 S级 - 金牌骑士 电量 68% 履约率 94.6% 接单意愿系数 103% 注册时间 2026-05-21 当前位置 39.920462 , 116.430076 S级 - 金牌骑士 - 权益 优先派单 高额奖励 保险补贴 专属",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-09-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-09-二层操作-详情-关-闭.png",
+        "elementCount": 715,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89245-service-repair-structure-10-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49245/riders",
+        "title": "同城即时配送运力调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89245/browser-check/may-89245-service-repair-structure-10-操作-搜索.png",
+        "elementCount": 715,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "数据大盘 订单管理 骑士管理 收入明细 申诉工单 运力健康度 单量预测 信用分管理",
+          "数据大盘",
+          "订单管理",
+          "骑士管理",
+          "收入明细",
+          "申诉工单",
+          "运力健康度",
+          "单量预测",
+          "信用分管理",
+          "搜索",
+          "详情",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "骑士详情ID15姓名郭浩手机号13810001918类型兼职状态忙碌车辆类型电动车信用分97%97S级 - 金牌骑士电量68%履约率94.6%接单意愿系数103%注册时间2026-05-21当前位置39.920462, 116.430076S级 - 金牌骑士 - 权益优先派单高额奖励保险补贴专属客服关 闭",
+          "Close",
+          "关 闭"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1824,
+    "height": 1099,
+    "scrollWidth": 1792,
+    "scrollHeight": 1099
+  },
+  "initialBodyTextPreview": "🚚\n配送调度中台\n数据大盘\n订单管理\n骑士管理\n收入明细\n申诉工单\n运力健康度\n单量预测\n信用分管理\n数据大盘\n管理员 | 同城配送调度中心\n今日订单\n30\n待派单\n1\n配送中\n1\n今日已完成\n28\n在线骑士\n11/ 15\n在线率: 73.0%忙碌: 3人\n拒单率\n0.0%\n近1小时数据统计\n事故率\n3.57%\n近30天丢件/服务投诉\n平均履约率\n91.0%\n待处理申诉: 2件\n24小时订单与运力趋势\n实时更新\n多平台订单分布",
+  "bodyTextPreview": "🚚\n配送调度中台\n数据大盘\n订单管理\n骑士管理\n收入明细\n申诉工单\n运力健康度\n单量预测\n信用分管理\n数据大盘\n管理员 | 同城配送调度中心\n今日订单\n30\n待派单\n1\n配送中\n1\n今日已完成\n28\n在线骑士\n11/ 15\n在线率: 73.0%忙碌: 3人\n拒单率\n0.0%\n近1小时数据统计\n事故率\n3.57%\n近30天丢件/服务投诉\n平均履约率\n91.0%\n待处理申诉: 2件\n24小时订单与运力趋势\n实时更新\n多平台订单分布",
+  "apiBase": "http://127.0.0.1:59245",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/trend?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/trend?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/trend?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders/30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/riders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/riders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/riders/15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/credit/rider/15/level"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/riders/15/track?hours=2"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/riders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/trend?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/orders/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49245/api/health-monitor/trend?hours=24"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"status\":\"ok\",\"timestamp\":1781873884}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/health-monitor/realtime",
+      "path": "/api/health-monitor/realtime",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"timestamp\":1781873884,\"today_orders\":30,\"pending_orders\":1,\"delivering_orders\":1,\"today_delivered\":28,\"pending_complaints\":2}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/health-monitor/summary",
+      "path": "/api/health-monitor/summary",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"online_rate\":0.73,\"rejection_rate\":0,\"accident_rate\":0.0357,\"avg_fulfillment_rate\":0.91,\"total_rider_count\":15,\"online_rider_count\":11,\"busy_rider_count\":3}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/orders/platform-stats",
+      "path": "/api/orders/platform-stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"self\":18,\"meituan\":6,\"eleme\":6}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/health-monitor/trend?hours=24",
+      "path": "/api/health-monitor/trend?hours=24",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":[{\"time\":\"12:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"13:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"14:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"15:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"16:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"17:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"18:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"19:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"20:58\",\"online_count\":11,\"order_count\":0},{\"time\":\"21:58\",\"online"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/orders?page=1&pageSize=10",
+      "path": "/api/orders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":30,\"order_no\":\"DD17818199670029\",\"platform\":\"eleme\",\"merchant_id\":null,\"merchant_name\":\"星巴克(悠唐店)\",\"merchant_address\":\"朝阳区朝阳门外大街12号\",\"merchant_lat\":39.9234,\"merchant_lng\":116.4321,\"recipient_name\":\"客户30\",\"recipient_phone\":\"13900000029\",\"recipient_address\":\"朝阳区客户地址30号\",\"recipient_lat\":39.92813337518679,\"recipient_lng\":116.42956755256039,\"goods_type\":\"cold\",\"goods_name\":\"海鲜大餐\",\"weight\":3,\"volume\":1.5,\"is_special\":0,\"special_note\":null,\"pickup_time_start\":1781819971,\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/orders/30",
+      "path": "/api/orders/30",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":30,\"order_no\":\"DD17818199670029\",\"platform\":\"eleme\",\"merchant_id\":null,\"merchant_name\":\"星巴克(悠唐店)\",\"merchant_address\":\"朝阳区朝阳门外大街12号\",\"merchant_lat\":39.9234,\"merchant_lng\":116.4321,\"recipient_name\":\"客户30\",\"recipient_phone\":\"13900000029\",\"recipient_address\":\"朝阳区客户地址30号\",\"recipient_lat\":39.92813337518679,\"recipient_lng\":116.42956755256039,\"goods_type\":\"cold\",\"goods_name\":\"海鲜大餐\",\"weight\":3,\"volume\":1.5,\"is_special\":0,\"special_note\":null,\"pickup_time_start\":1781819971,\"pickup_ti"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/riders?page=1&pageSize=10",
+      "path": "/api/riders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":15,\"name\":\"郭浩\",\"phone\":\"13810001918\",\"type\":\"parttime\",\"status\":\"busy\",\"credit_score\":97,\"battery\":68,\"vehicle_type\":\"electric\",\"willingness_coefficient\":1.034880187992905,\"fulfillment_rate\":0.9455232065398255,\"current_lat\":39.92046164055518,\"current_lng\":116.43007613059298,\"last_online_at\":1781872167,\"created_at\":1779366567,\"updated_at\":1781872167},{\"id\":14,\"name\":\"朱杰\",\"phone\":\"13810001781\",\"type\":\"parttime\",\"status\":\"online\",\"credit_score\":98,\"battery\":62,\"vehic"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/riders/15",
+      "path": "/api/riders/15",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":15,\"name\":\"郭浩\",\"phone\":\"13810001918\",\"type\":\"parttime\",\"status\":\"busy\",\"credit_score\":97,\"battery\":68,\"vehicle_type\":\"electric\",\"willingness_coefficient\":1.034880187992905,\"fulfillment_rate\":0.9455232065398255,\"current_lat\":39.92046164055518,\"current_lng\":116.43007613059298,\"last_online_at\":1781872167,\"created_at\":1779366567,\"updated_at\":1781872167}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/credit/rider/15/level",
+      "path": "/api/credit/rider/15/level",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"score\":97,\"level\":{\"level\":\"S级 - 金牌骑士\",\"color\":\"#FFD700\",\"benefits\":[\"优先派单\",\"高额奖励\",\"保险补贴\",\"专属客服\"]}}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/riders/15/track?hours=2",
+      "path": "/api/riders/15/track?hours=2",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":[]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/dashboard</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59245/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49245/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49245/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49245/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b206222c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49245/node_modules/.vite/deps/react-router-dom.js?v=b206222c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49245/node_modules/.vite/deps/react-router-dom.js?v=b206222c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49245/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49245/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49245/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49245/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b206222c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49245/node_modules/.vite/deps/react-router-dom.js?v=b206222c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49245/node_modules/.vite/deps/react-router-dom.js?v=b206222c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

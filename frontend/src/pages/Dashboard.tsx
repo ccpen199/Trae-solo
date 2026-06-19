@@ -35,7 +35,7 @@ function Dashboard() {
       setRealtime(rt);
       setHealthSummary(hs);
       setPlatformStats(ps);
-      setTrendData(trend as any[]);
+      setTrendData(trend as unknown as any[]);
     } catch (e) {
       console.error('加载数据失败', e);
     }

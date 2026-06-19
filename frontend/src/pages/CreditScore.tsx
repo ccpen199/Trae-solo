@@ -358,7 +358,7 @@ function CreditScore() {
                     </Space>
                     <Space wrap>
                       {item.benefits.map((b, i) => (
-                        <Tag key={i} size="small">
+                        <Tag key={i}>
                           {b}
                         </Tag>
                       ))}
