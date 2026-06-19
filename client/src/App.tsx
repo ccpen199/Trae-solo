@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Sidebar } from "./components/layout/Sidebar"
 import { Header } from "./components/layout/Header"
 import { Dashboard } from "./pages/Dashboard"
@@ -8,7 +8,34 @@ import { Settlement } from "./pages/Settlement"
 import { Analytics } from "./pages/Analytics"
 import { AnnotationEditor } from "./components/annotation/AnnotationEditor"
 import { useAppStore } from "./store/useAppStore"
-import type { Task, AnnotationData } from "./types"
+import type { Task, AnnotationData, UserRole } from "./types"
+import {
+  LayoutDashboard,
+  FolderKanban,
+  CheckSquare,
+  DollarSign,
+  BarChart3,
+  Users,
+  FileText,
+  Zap,
+  TrendingUp,
+  Target,
+  Activity,
+  Clock,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  Plus,
+  Filter,
+  ChevronRight,
+  Search,
+} from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./components/ui/Card"
+import { Badge } from "./components/ui/Badge"
+import { Button } from "./components/ui/Button"
+import { Progress } from "./components/ui/Progress"
+import { formatCurrency, formatDate, formatNumber, calculateJaccard } from "./lib/utils"
+import { mockDailyStats } from "./data/mockData"
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard")
@@ -16,6 +43,22 @@ function App() {
   const [currentAnnotationTask, setCurrentAnnotationTask] = useState<Task | null>(null)
   const taskUnits = useAppStore((state) => state.taskUnits)
   const submitAnnotation = useAppStore((state) => state.submitAnnotation)
+  const currentRole = useAppStore((state) => state.currentRole)
+  const currentUser = useAppStore((state) => state.currentUser)
+  const annotators = useAppStore((state) => state.annotators)
+  const tasks = useAppStore((state) => state.tasks)
+  const disputes = useAppStore((state) => state.disputes)
+  const projectStats = useAppStore((state) => state.projectStats)
+
+  useEffect(() => {
+    const defaultTabs: Record<UserRole, string> = {
+      publisher: "dashboard",
+      annotator: "dashboard",
+      reviewer: "dashboard",
+      admin: "dashboard",
+    }
+    setActiveTab(defaultTabs[currentRole])
+  }, [currentRole])
 
   const handleStartAnnotation = (task: Task) => {
     setCurrentAnnotationTask(task)
@@ -32,31 +75,62 @@ function App() {
   }
 
   const getPageTitle = () => {
-    const titles: Record<string, string> = {
-      dashboard: "总览",
-      tasks: "任务管理",
-      "my-tasks": "我的任务",
-      quality: "质量控制",
+    const publisherTitles: Record<string, string> = {
+      dashboard: "发布方工作台",
+      tasks: "项目管理",
+      quality: "质量控制中心",
       settlement: "结算中心",
       analytics: "数据分析",
       annotators: "标注员管理",
-      skills: "技能认证",
+    }
+    const annotatorTitles: Record<string, string> = {
+      dashboard: "标注员工作台",
+      tasks: "任务大厅",
+      "my-tasks": "我的任务",
+      skills: "技能认证中心",
+      settlement: "我的收入",
+    }
+    const reviewerTitles: Record<string, string> = {
+      dashboard: "审核员工作台",
       "review-tasks": "待审核任务",
       disputes: "争议仲裁",
+      analytics: "质检统计",
+    }
+    const adminTitles: Record<string, string> = {
+      dashboard: "管理面板",
       users: "用户管理",
+      tasks: "任务管理",
       settings: "系统设置",
     }
-    return titles[activeTab] || "总览"
+    const titlesByRole: Record<UserRole, Record<string, string>> = {
+      publisher: publisherTitles,
+      annotator: annotatorTitles,
+      reviewer: reviewerTitles,
+      admin: adminTitles,
+    }
+    return titlesByRole[currentRole]?.[activeTab] || "工作台"
   }
 
   const renderContent = () => {
+    if (activeTab === "dashboard") {
+      if (currentRole === "publisher") {
+        return <PublisherDashboard onCreateProject={() => setActiveTab("tasks")} />
+      } else if (currentRole === "annotator") {
+        return <AnnotatorDashboard onBrowseTasks={() => setActiveTab("tasks")} />
+      } else if (currentRole === "reviewer") {
+        return <ReviewerDashboard onReviewTasks={() => setActiveTab("review-tasks")} />
+      }
+      return <Dashboard />
+    }
+
+    if (activeTab === "tasks") {
+      return <Tasks key={`${currentRole}-tasks`} onStartAnnotation={handleStartAnnotation} />
+    }
+
     switch (activeTab) {
-      case "dashboard":
-        return <Dashboard />
-      case "tasks":
       case "my-tasks":
       case "review-tasks":
-        return <Tasks onStartAnnotation={handleStartAnnotation} />
+        return <Tasks key={`${currentRole}-${activeTab}`} onStartAnnotation={handleStartAnnotation} />
       case "quality":
       case "disputes":
         return <QualityControl />
