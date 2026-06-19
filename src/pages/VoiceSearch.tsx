@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Mic, MicOff, Search, Brain, MapPin, Tag } from 'lucide-react'
+import { Mic, MicOff, Search, Brain, MapPin, Tag, MessageCircleQuestion } from 'lucide-react'
 import { api } from '@/utils/api'
 import { CATEGORIES } from '@/types'
 import type { Post } from '@/types'
 import PostCard from '@/components/PostCard'
+import { EmptyState, SkeletonCard } from '@/components/StateFeedback'
 
 const EXAMPLE_PHRASES = ['找朝阳区合租', '北京求职程序员', '上海二手iPhone']
 
@@ -36,6 +37,7 @@ export default function VoiceSearch() {
   const [typing, setTyping] = useState(false)
   const [intent, setIntent] = useState<{ category: string; region: string; keyword: string } | null>(null)
   const [results, setResults] = useState<Post[]>([])
+  const [resultsLoading, setResultsLoading] = useState(false)
   const [textInput, setTextInput] = useState('')
   const timerRef = useRef<ReturnType<typeof setInterval>>()
   const phraseRef = useRef(0)
@@ -84,12 +86,15 @@ export default function VoiceSearch() {
   }, [timer, recording])
 
   const loadResults = async (category: string, district: string) => {
+    setResultsLoading(true)
     try {
       const catKey = CATEGORIES.find((c) => c.label === category)?.key
       const data = await api.posts.list({ category: catKey, district })
       setResults(data.posts)
     } catch {
       setResults(MOCK_POSTS)
+    } finally {
+      setResultsLoading(false)
     }
   }
 
@@ -187,17 +192,29 @@ export default function VoiceSearch() {
         </div>
       )}
 
-      {results.length > 0 && (
+      {(intent || resultsLoading || results.length > 0) && (
         <div className="mt-8">
           <h2 className="text-sm font-semibold text-navy-800 mb-4">
             搜索结果
-            <span className="ml-2 text-slate-400 font-normal">({results.length}条)</span>
+            {!resultsLoading && <span className="ml-2 text-slate-400 font-normal">({results.length}条)</span>}
           </h2>
-          <div className="grid grid-cols-2 gap-4">
-            {results.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
+          {resultsLoading ? (
+            <div className="grid grid-cols-2 gap-4">
+              {Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)}
+            </div>
+          ) : results.length === 0 ? (
+            <EmptyState
+              icon={<MessageCircleQuestion className="w-16 h-16 text-slate-300 mb-2" />}
+              title="没有找到匹配的结果"
+              description="尝试调整语音描述或使用文字搜索输入更精确的关键词"
+            />
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {results.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          )}
         </div>
       )}
 

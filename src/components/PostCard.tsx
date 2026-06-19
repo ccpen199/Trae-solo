@@ -7,6 +7,7 @@ import type { Post } from '@/types'
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime()
   const minutes = Math.floor(diff / 60000)
+  if (minutes < 1) return '刚刚'
   if (minutes < 60) return `${minutes}分钟前`
   const hours = Math.floor(minutes / 60)
   if (hours < 24) return `${hours}小时前`
@@ -17,7 +18,7 @@ function timeAgo(dateStr: string): string {
 }
 
 function formatPrice(price?: number): string {
-  if (price === undefined || price === null) return '面议'
+  if (price === undefined || price === null || price === 0) return '面议'
   if (price >= 10000) return `${(price / 10000).toFixed(1)}万`
   return `¥${price.toLocaleString()}`
 }
@@ -32,13 +33,13 @@ export default function PostCard({ post }: { post: Post }) {
     <div
       onClick={() => navigate(`/list/${post.id}`)}
       className={cn(
-        'card rounded-xl overflow-hidden cursor-pointer transition-all duration-200',
+        'card relative rounded-xl overflow-hidden cursor-pointer transition-all duration-200',
         post.isTop && 'border-t-2 border-t-accent-500'
       )}
       style={{ borderLeftColor: categoryColor, borderLeftWidth: '3px' }}
     >
       {post.isTop && (
-        <span className="absolute top-2 left-2 badge bg-accent-500 text-white text-xs z-10">
+        <span className="absolute top-2 left-2 z-10 badge bg-accent-500 text-white">
           置顶
         </span>
       )}
@@ -49,21 +50,25 @@ export default function PostCard({ post }: { post: Post }) {
             src={primaryImage.url}
             alt={post.title}
             className="w-full h-40 object-cover"
+            onError={(e) => {
+              ;(e.currentTarget as HTMLImageElement).style.display = 'none'
+              const placeholder = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement
+              if (placeholder) placeholder.style.display = 'flex'
+            }}
           />
-        ) : (
-          <div
-            className="w-full h-40 flex items-center justify-center"
-            style={{ backgroundColor: `${categoryColor}20` }}
-          >
-            <span className="text-2xl font-bold" style={{ color: categoryColor }}>
-              {categoryInfo?.label?.[0] || '信'}
-            </span>
-          </div>
-        )}
+        ) : null}
+        <div
+          className={cn('w-full h-40 items-center justify-center', primaryImage ? 'hidden' : 'flex')}
+          style={{ backgroundColor: `${categoryColor}20` }}
+        >
+          <span className="text-2xl font-bold" style={{ color: categoryColor }}>
+            {categoryInfo?.label?.[0] || '信'}
+          </span>
+        </div>
       </div>
 
       <div className="p-3">
-        <h3 className="text-sm font-medium text-slate-800 line-clamp-2 mb-2">
+        <h3 className="text-sm font-medium text-slate-800 line-clamp-2 mb-2 min-h-[2.5rem]">
           {post.title}
         </h3>
 
@@ -79,7 +84,7 @@ export default function PostCard({ post }: { post: Post }) {
         <div className="flex items-center justify-between text-xs text-slate-400">
           <span className="flex items-center gap-0.5">
             <MapPin className="w-3 h-3" />
-            {post.district}
+            {post.district || post.city || '未定位'}
           </span>
           <span className="flex items-center gap-0.5">
             <Clock className="w-3 h-3" />

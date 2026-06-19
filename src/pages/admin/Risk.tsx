@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { ShieldAlert, Plus, Trash2 } from 'lucide-react'
+import { ShieldAlert, Plus, Trash2, ShieldX } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import { api } from '@/utils/api'
+import { EmptyState, SkeletonList } from '@/components/StateFeedback'
 import type { SensitiveWord } from '@/types'
 
 const WORD_CATEGORIES = ['全部', '政治', '欺诈', '色情', '暴力']
@@ -41,6 +42,7 @@ export default function Risk() {
   const [newWord, setNewWord] = useState('')
   const [newCategory, setNewCategory] = useState('欺诈')
   const [filterCat, setFilterCat] = useState('全部')
+  const [wordsLoading, setWordsLoading] = useState(true)
 
   useEffect(() => {
     api.risk.stats().then(d => { setDistribution(d.distribution); setHighRiskCount(d.highRiskCount) }).catch(() => {
@@ -50,7 +52,8 @@ export default function Risk() {
       ])
       setHighRiskCount(425)
     })
-    api.risk.words().then(d => setWords(d.words)).catch(() => {
+    setWordsLoading(true)
+    api.risk.words().then(d => { setWords(d.words); setWordsLoading(false) }).catch(() => {
       setWords([
         { id: '1', word: '代开发票', category: '欺诈', hitCount: 342 },
         { id: '2', word: '色情服务', category: '色情', hitCount: 128 },
@@ -58,6 +61,7 @@ export default function Risk() {
         { id: '4', word: '政治敏感', category: '政治', hitCount: 56 },
         { id: '5', word: '虚假投资', category: '欺诈', hitCount: 219 },
       ])
+      setWordsLoading(false)
     })
   }, [])
 
@@ -131,19 +135,30 @@ export default function Risk() {
             <button key={c} className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${filterCat === c ? 'bg-navy-800 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`} onClick={() => setFilterCat(c)}>{c}</button>
           ))}
         </div>
-        <table className="w-full text-sm">
-          <thead><tr className="border-b text-slate-500"><th className="text-left py-2">敏感词</th><th className="text-left py-2">分类</th><th className="text-left py-2">命中次数</th><th className="text-left py-2">操作</th></tr></thead>
-          <tbody>
-            {filteredWords.map(w => (
-              <tr key={w.id} className="border-b last:border-0">
-                <td className="py-2 font-medium">{w.word}</td>
-                <td className="py-2"><span className={`badge ${w.category === '欺诈' ? 'badge-warning' : w.category === '色情' ? 'badge-danger' : w.category === '暴力' ? 'badge-danger' : 'badge-info'}`}>{w.category}</span></td>
-                <td className="py-2">{w.hitCount}</td>
-                <td className="py-2"><button className="text-red-500 hover:text-red-700" onClick={() => handleDeleteWord(w.id)}><Trash2 className="w-4 h-4" /></button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {wordsLoading ? (
+          <SkeletonList count={5} />
+        ) : filteredWords.length === 0 ? (
+          <EmptyState
+            icon={<ShieldX className="w-10 h-10 text-slate-300 mb-1" />}
+            title="暂无敏感词"
+            description="当前分类下没有敏感词，点击右上角添加"
+            className="py-8"
+          />
+        ) : (
+          <table className="w-full text-sm">
+            <thead><tr className="border-b text-slate-500"><th className="text-left py-2">敏感词</th><th className="text-left py-2">分类</th><th className="text-left py-2">命中次数</th><th className="text-left py-2">操作</th></tr></thead>
+            <tbody>
+              {filteredWords.map(w => (
+                <tr key={w.id} className="border-b last:border-0">
+                  <td className="py-2 font-medium">{w.word}</td>
+                  <td className="py-2"><span className={`badge ${w.category === '欺诈' ? 'badge-warning' : w.category === '色情' ? 'badge-danger' : w.category === '暴力' ? 'badge-danger' : 'badge-info'}`}>{w.category}</span></td>
+                  <td className="py-2">{w.hitCount}</td>
+                  <td className="py-2"><button className="text-red-500 hover:text-red-700" onClick={() => handleDeleteWord(w.id)}><Trash2 className="w-4 h-4" /></button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       <div className="card p-4">

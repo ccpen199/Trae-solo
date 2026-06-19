@@ -4,7 +4,7 @@ import {
   Upload, Check, ChevronRight, Eye, Send, Image,
   Sparkles, ArrowLeft, Briefcase, Home, Users, Building2,
   Package, Car, Wrench, GraduationCap, Heart, HeartHandshake,
-  TrendingUp, MoreHorizontal,
+  TrendingUp, MoreHorizontal, AlertCircle, Loader2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -37,6 +37,8 @@ export default function Publish() {
   const [districts, setDistricts] = useState<GeoRegion[]>([])
   const [location, setLocation] = useState({ province: '', city: '', district: '' })
   const [flashFields, setFlashFields] = useState<Set<string>>(new Set())
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   useEffect(() => {
     if (category && CATEGORIES.some(c => c.key === category)) {
@@ -82,6 +84,8 @@ export default function Publish() {
 
   const handleSubmit = async () => {
     if (!selectedCategory || !agreementChecked) return
+    setSubmitting(true)
+    setSubmitError('')
     try {
       await api.posts.create({
         category: selectedCategory,
@@ -93,7 +97,11 @@ export default function Publish() {
         district: location.district,
       })
       navigate('/list')
-    } catch { alert('发布失败，请稍后重试') }
+    } catch {
+      setSubmitError('发布失败，请检查网络或稍后重试')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const selectedCat = CATEGORIES.find(c => c.key === selectedCategory)
@@ -276,11 +284,21 @@ export default function Publish() {
             <span className="text-sm text-slate-600">我已阅读并同意《信息发布协议》</span>
           </label>
 
+          {submitError && (
+            <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              {submitError}
+            </div>
+          )}
+
           <div className="flex justify-between pt-4">
-            <button onClick={() => setStep(2)} className="btn-outline flex items-center gap-1.5"><ArrowLeft className="w-4 h-4" />上一步</button>
-            <button onClick={handleSubmit} disabled={!agreementChecked}
-              className={cn('btn-accent flex items-center gap-1.5', !agreementChecked && 'opacity-50 cursor-not-allowed')}>
-              <Send className="w-4 h-4" />提交发布
+            <button onClick={() => setStep(2)} className="btn-outline flex items-center gap-1.5" disabled={submitting}>
+              <ArrowLeft className="w-4 h-4" />上一步
+            </button>
+            <button onClick={handleSubmit} disabled={!agreementChecked || submitting}
+              className={cn('btn-accent flex items-center gap-1.5', (!agreementChecked || submitting) && 'opacity-50 cursor-not-allowed')}>
+              {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+              {submitting ? '提交中...' : '提交发布'}
             </button>
           </div>
         </div>

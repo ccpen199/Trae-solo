@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Map as MapIcon, ChevronRight, ChevronDown, Search } from 'lucide-react'
+import { Map as MapIcon, ChevronRight, ChevronDown, Search, MapPin } from 'lucide-react'
 import { api } from '@/utils/api'
+import { EmptyState, SkeletonList } from '@/components/StateFeedback'
 import type { GeoRegion } from '@/types'
 
 interface TreeNode {
@@ -65,9 +66,11 @@ export default function Geo() {
   const [selectedCode, setSelectedCode] = useState<string | null>(null)
   const [regionStats, setRegionStats] = useState<{ postCount: number; topCategories: { category: string; count: number }[] } | null>(null)
   const [selectedName, setSelectedName] = useState('')
+  const [treeLoading, setTreeLoading] = useState(true)
 
   useEffect(() => {
-    api.geo.regions().then(data => setTree(buildTree(data))).catch(() => setTree(buildTree(mockRegions)))
+    setTreeLoading(true)
+    api.geo.regions().then(data => { setTree(buildTree(data)); setTreeLoading(false) }).catch(() => { setTree(buildTree(mockRegions)); setTreeLoading(false) })
     api.geo.heatmap().then(setHeatmapData).catch(() => setHeatmapData(mockHeatmap))
   }, [])
 
@@ -133,7 +136,18 @@ export default function Geo() {
           </div>
           <h2 className="font-semibold text-navy-800 mb-2">行政区划</h2>
           <div className="max-h-96 overflow-y-auto">
-            {filterTree(tree).map(n => renderNode(n))}
+            {treeLoading ? (
+              <SkeletonList count={6} />
+            ) : filterTree(tree).length === 0 ? (
+              <EmptyState
+                icon={<MapPin className="w-10 h-10 text-slate-300 mb-1" />}
+                title="无匹配地区"
+                description="没有找到符合搜索条件的行政区划"
+                className="py-6"
+              />
+            ) : (
+              filterTree(tree).map(n => renderNode(n))
+            )}
           </div>
         </div>
 

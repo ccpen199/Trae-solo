@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { ClipboardCheck } from 'lucide-react'
+import { ClipboardCheck, ClipboardList } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { api } from '@/utils/api'
+import { EmptyState, SkeletonList } from '@/components/StateFeedback'
 import type { AuditRecord } from '@/types'
 
 const STAGES = [
@@ -33,15 +34,22 @@ export default function Audit() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [comment, setComment] = useState('')
   const [chartData, setChartData] = useState(mockChart)
+  const [queueLoading, setQueueLoading] = useState(true)
+  const [queue, setQueue] = useState<QueueItem[]>([])
 
   useEffect(() => {
     api.audit.stats().then(d => setStats({ pending: d.pending, reviewing: d.total - d.approved - d.rejected - d.pending, approved: d.approved, rejected: d.rejected })).catch(() => {
       setStats({ pending: 128, reviewing: 56, approved: 1842, rejected: 324 })
     })
+    setQueueLoading(true)
+    setTimeout(() => {
+      setQueue(mockQueue)
+      setQueueLoading(false)
+    }, 600)
     setChartData(mockChart)
   }, [])
 
-  const selectedItem = mockQueue.find(q => q.id === selectedId)
+  const selectedItem = queue.find(q => q.id === selectedId)
 
   const statCards = [
     { label: '待初审', count: stats.pending, color: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -85,18 +93,29 @@ export default function Audit() {
       <div className="flex gap-6">
         <div className="w-1/2 card p-4 max-h-96 overflow-y-auto">
           <h3 className="font-semibold text-navy-800 mb-3">审核队列</h3>
-          <div className="space-y-2">
-            {mockQueue.map(item => (
-              <div key={item.id} className={`p-3 rounded-lg border cursor-pointer transition-colors ${selectedId === item.id ? 'bg-navy-50 border-navy-300' : 'border-slate-200 hover:border-slate-300'}`} onClick={() => setSelectedId(item.id)}>
-                <p className="text-sm font-medium truncate">{item.title}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="badge badge-info">{item.category}</span>
-                  <span className="text-xs text-slate-500">{item.region}</span>
-                  <span className={`text-xs font-bold ml-auto ${riskColor(item.riskScore)}`}>{item.riskScore}分</span>
+          {queueLoading ? (
+            <SkeletonList count={4} />
+          ) : queue.length === 0 ? (
+            <EmptyState
+              icon={<ClipboardList className="w-10 h-10 text-slate-300 mb-1" />}
+              title="暂无待审核内容"
+              description="当前阶段所有内容已处理完毕"
+              className="py-8"
+            />
+          ) : (
+            <div className="space-y-2">
+              {queue.map(item => (
+                <div key={item.id} className={`p-3 rounded-lg border cursor-pointer transition-colors ${selectedId === item.id ? 'bg-navy-50 border-navy-300' : 'border-slate-200 hover:border-slate-300'}`} onClick={() => setSelectedId(item.id)}>
+                  <p className="text-sm font-medium truncate">{item.title}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="badge badge-info">{item.category}</span>
+                    <span className="text-xs text-slate-500">{item.region}</span>
+                    <span className={`text-xs font-bold ml-auto ${riskColor(item.riskScore)}`}>{item.riskScore}分</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="w-1/2 card p-4">
@@ -127,7 +146,12 @@ export default function Audit() {
               </div>
             </div>
           ) : (
-            <p className="text-slate-400 text-sm">请从左侧选择待审核帖子</p>
+            <EmptyState
+              icon={<ClipboardCheck className="w-10 h-10 text-slate-300 mb-1" />}
+              title="未选择内容"
+              description="请从左侧审核队列中选择一条帖子进行审核"
+              className="py-8"
+            />
           )}
         </div>
       </div>

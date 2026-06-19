@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { BarChart3, Eye, Phone, ShoppingCart, Percent, TrendingUp, TrendingDown } from 'lucide-react'
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from 'recharts'
 import { api } from '@/utils/api'
+import { SkeletonCard } from '@/components/StateFeedback'
 import { CATEGORIES, type FunnelData, type TimeSeriesPoint } from '@/types'
 
 interface KpiItem { label: string; value: string; trend: number; icon: React.ReactNode }
@@ -18,18 +19,24 @@ export default function Traffic() {
   const [leadsTrend, setLeadsTrend] = useState<TimeSeriesPoint[]>([])
   const [funnel, setFunnel] = useState<FunnelData>({ views: 0, clicks: 0, leads: 0, conversions: 0 })
   const [categoryData, setCategoryData] = useState<{ category: string; count: number; color: string }[]>([])
+  const [statsLoading, setStatsLoading] = useState(true)
 
   useEffect(() => {
-    api.stats.traffic().then(d => { setViewsTrend(d.viewsTrend); setLeadsTrend(d.leadsTrend) }).catch(() => {
+    setStatsLoading(true)
+    let pending = 2
+    const done = () => { pending--; if (pending === 0) setStatsLoading(false) }
+    api.stats.traffic().then(d => { setViewsTrend(d.viewsTrend); setLeadsTrend(d.leadsTrend); done() }).catch(() => {
       const days = Array.from({ length: 14 }, (_, i) => {
         const d = new Date(); d.setDate(d.getDate() - 13 + i)
         return d.toISOString().slice(5, 10)
       })
       setViewsTrend(days.map(d => ({ date: d, value: Math.floor(Math.random() * 5000 + 8000) })))
       setLeadsTrend(days.map(d => ({ date: d, value: Math.floor(Math.random() * 300 + 400) })))
+      done()
     })
-    api.stats.funnel().then(setFunnel).catch(() => {
+    api.stats.funnel().then(d => { setFunnel(d); done() }).catch(() => {
       setFunnel({ views: 125600, clicks: 43200, leads: 3840, conversions: 876 })
+      done()
     })
     setCategoryData(CATEGORIES.slice(0, 8).map(c => ({ category: c.label, count: Math.floor(Math.random() * 2000 + 200), color: c.color })))
   }, [])
@@ -53,19 +60,23 @@ export default function Traffic() {
       </div>
 
       <div className="grid grid-cols-4 gap-4 mb-6">
-        {kpis.map(k => (
-          <div key={k.label} className="card p-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-slate-500">{k.label}</span>
-              {k.icon}
+        {statsLoading ? (
+          Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+        ) : (
+          kpis.map(k => (
+            <div key={k.label} className="card p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-slate-500">{k.label}</span>
+                {k.icon}
+              </div>
+              <div className="text-2xl font-bold text-navy-800">{k.value}</div>
+              <div className={`flex items-center gap-1 text-xs mt-1 ${k.trend >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                {k.trend >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                {k.trend >= 0 ? '+' : ''}{k.trend}%
+              </div>
             </div>
-            <div className="text-2xl font-bold text-navy-800">{k.value}</div>
-            <div className={`flex items-center gap-1 text-xs mt-1 ${k.trend >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
-              {k.trend >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-              {k.trend >= 0 ? '+' : ''}{k.trend}%
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       <div className="card p-4 mb-6">

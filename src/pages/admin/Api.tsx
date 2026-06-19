@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Key, Plus, Trash2, Copy, ChevronDown, ChevronRight } from 'lucide-react'
+import { Key, Plus, Trash2, Copy, ChevronDown, ChevronRight, KeyRound } from 'lucide-react'
 import { api } from '@/utils/api'
+import { EmptyState, SkeletonList } from '@/components/StateFeedback'
 import type { ApiKey } from '@/types'
 
 const PERM_OPTIONS = ['posts', 'geo', 'stats'] as const
@@ -22,14 +23,17 @@ export default function Api() {
   const [byOrg, setByOrg] = useState<{ org: string; calls: number }[]>([])
   const [expandedDocs, setExpandedDocs] = useState<Set<string>>(new Set())
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
+  const [keysLoading, setKeysLoading] = useState(true)
 
   useEffect(() => {
-    api.open.keys().then(setKeys).catch(() => {
+    setKeysLoading(true)
+    api.open.keys().then(d => { setKeys(d); setKeysLoading(false) }).catch(() => {
       setKeys([
         { id: '1', name: '融媒体数据接口', key: 'sk-a3f8d2e1b9c04f6e8d7a2b5c6f0e1d3a', org: '北京融媒体中心', permissions: ['posts', 'geo'], callCount: 12845, status: 'active' },
         { id: '2', name: '政务数据平台', key: 'sk-b7c9e4f2a1d03b5c8e7f6a4d2c0b9e1f', org: '上海数据局', permissions: ['posts', 'stats'], callCount: 8432, status: 'active' },
         { id: '3', name: '监测预警系统', key: 'sk-c1d3e5f7a9b0c2d4e6f8a0b2c4d6e8f0', org: '深圳网信办', permissions: ['posts', 'geo', 'stats'], callCount: 32156, status: 'suspended' },
       ])
+      setKeysLoading(false)
     })
     api.open.stats().then(d => { setTotalCalls(d.totalCalls); setByOrg(d.byOrg) }).catch(() => {
       setTotalCalls(53433)
@@ -102,27 +106,38 @@ export default function Api() {
             <button className="btn-primary text-sm" onClick={handleCreate}>提交</button>
           </div>
         )}
-        <table className="w-full text-sm">
-          <thead><tr className="border-b text-slate-500"><th className="text-left py-2">名称</th><th className="text-left py-2">机构</th><th className="text-left py-2">密钥</th><th className="text-left py-2">权限</th><th className="text-left py-2">调用次数</th><th className="text-left py-2">状态</th><th className="text-left py-2">操作</th></tr></thead>
-          <tbody>
-            {keys.map(k => (
-              <tr key={k.id} className="border-b last:border-0">
-                <td className="py-2 font-medium">{k.name}</td>
-                <td className="py-2 text-slate-600">{k.org}</td>
-                <td className="py-2"><span className="font-mono text-xs">{maskKey(k.key)}</span><button className="ml-1 text-slate-400 hover:text-navy-800" onClick={() => copyKey(k.key, k.id)}><Copy className="w-3.5 h-3.5" /></button>{copiedKey === k.id && <span className="text-xs text-emerald-500 ml-1">已复制</span>}</td>
-                <td className="py-2">{k.permissions.map(p => <span key={p} className="badge badge-info mr-1">{PERM_LABEL[p]}</span>)}</td>
-                <td className="py-2">{k.callCount.toLocaleString()}</td>
-                <td className="py-2"><span className={`badge ${k.status === 'active' ? 'badge-success' : 'badge-danger'}`}>{k.status === 'active' ? '启用' : '停用'}</span></td>
-                <td className="py-2">
-                  <div className="flex gap-1">
-                    <button className="btn-outline text-xs px-2 py-1" onClick={() => toggleSuspend(k.id)}>{k.status === 'active' ? '停用' : '启用'}</button>
-                    <button className="text-red-500 hover:text-red-700" onClick={() => handleDelete(k.id)}><Trash2 className="w-4 h-4" /></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {keysLoading ? (
+          <SkeletonList count={4} />
+        ) : keys.length === 0 ? (
+          <EmptyState
+            icon={<KeyRound className="w-10 h-10 text-slate-300 mb-1" />}
+            title="暂无API密钥"
+            description="点击右上角创建按钮，为合作机构生成API密钥"
+            className="py-8"
+          />
+        ) : (
+          <table className="w-full text-sm">
+            <thead><tr className="border-b text-slate-500"><th className="text-left py-2">名称</th><th className="text-left py-2">机构</th><th className="text-left py-2">密钥</th><th className="text-left py-2">权限</th><th className="text-left py-2">调用次数</th><th className="text-left py-2">状态</th><th className="text-left py-2">操作</th></tr></thead>
+            <tbody>
+              {keys.map(k => (
+                <tr key={k.id} className="border-b last:border-0">
+                  <td className="py-2 font-medium">{k.name}</td>
+                  <td className="py-2 text-slate-600">{k.org}</td>
+                  <td className="py-2"><span className="font-mono text-xs">{maskKey(k.key)}</span><button className="ml-1 text-slate-400 hover:text-navy-800" onClick={() => copyKey(k.key, k.id)}><Copy className="w-3.5 h-3.5" /></button>{copiedKey === k.id && <span className="text-xs text-emerald-500 ml-1">已复制</span>}</td>
+                  <td className="py-2">{k.permissions.map(p => <span key={p} className="badge badge-info mr-1">{PERM_LABEL[p]}</span>)}</td>
+                  <td className="py-2">{k.callCount.toLocaleString()}</td>
+                  <td className="py-2"><span className={`badge ${k.status === 'active' ? 'badge-success' : 'badge-danger'}`}>{k.status === 'active' ? '启用' : '停用'}</span></td>
+                  <td className="py-2">
+                    <div className="flex gap-1">
+                      <button className="btn-outline text-xs px-2 py-1" onClick={() => toggleSuspend(k.id)}>{k.status === 'active' ? '停用' : '启用'}</button>
+                      <button className="text-red-500 hover:text-red-700" onClick={() => handleDelete(k.id)}><Trash2 className="w-4 h-4" /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       <div className="card p-4 mb-6">

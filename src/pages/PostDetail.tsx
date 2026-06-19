@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import { ArrowLeft, Eye, MessageCircle, MapPin, Clock, Phone, ShieldCheck, Star, Flag } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { ArrowLeft, Eye, MessageCircle, MapPin, Clock, Phone, ShieldCheck, Star, Flag, FileQuestion } from 'lucide-react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import PostCard from '@/components/PostCard'
+import { ErrorState, EmptyState, SkeletonCard } from '@/components/StateFeedback'
 import { api } from '@/utils/api'
 import { CATEGORIES } from '@/types'
 import type { Post, Merchant } from '@/types'
@@ -29,10 +30,12 @@ export default function PostDetail() {
   const [mainImage, setMainImage] = useState(0)
   const [phoneRevealed, setPhoneRevealed] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     if (!id) return
     setLoading(true)
+    setError(false)
     api.posts.get(id).then((data) => {
       setPost(data)
       if (data.authorType === 'merchant' && data.authorId) {
@@ -41,11 +44,19 @@ export default function PostDetail() {
       api.posts.list({ category: data.category, limit: 8 }).then((r) => {
         setRelated(r.posts.filter((p) => p.id !== data.id).slice(0, 4))
       }).catch(() => {})
-    }).catch(() => {}).finally(() => setLoading(false))
+    }).catch(() => setError(true)).finally(() => setLoading(false))
   }, [id])
 
-  if (loading) return <div className="max-w-5xl mx-auto px-4 py-8"><div className="animate-pulse space-y-4"><div className="h-6 bg-slate-200 rounded w-1/3" /><div className="h-80 bg-slate-200 rounded-xl" /></div></div>
-  if (!post) return <div className="max-w-5xl mx-auto px-4 py-8 text-center text-slate-400">信息不存在或已删除</div>
+  useEffect(() => { loadData() }, [loadData])
+
+  if (loading) return <div className="max-w-5xl mx-auto px-4 py-8"><SkeletonCard /><div className="mt-4"><SkeletonCard /></div></div>
+  if (error) return <div className="max-w-5xl mx-auto px-4 py-16"><ErrorState onRetry={loadData} /></div>
+  if (!post) return <div className="max-w-5xl mx-auto px-4 py-16"><EmptyState
+    icon={<FileQuestion className="w-16 h-16 text-slate-300 mb-2" />}
+    title="信息不存在"
+    description="该信息可能已被删除或您访问的链接无效"
+    action={<Link to="/" className="btn-accent text-sm">返回首页</Link>}
+  /></div>
 
   const catInfo = CATEGORIES.find((c) => c.key === post.category)
   const images = post.images || []

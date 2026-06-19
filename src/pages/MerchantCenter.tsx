@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
-import { FileCheck, DollarSign, Star, ShieldCheck, Upload, MessageSquare } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import { FileCheck, DollarSign, Star, ShieldCheck, Upload, MessageSquare, Store, RefreshCw } from 'lucide-react'
 import { api } from '@/utils/api'
+import { EmptyState, ErrorState, SkeletonList } from '@/components/StateFeedback'
 import type { Merchant, Review } from '@/types'
 
 const MOCK_MERCHANTS: Merchant[] = [
@@ -37,10 +38,19 @@ export default function MerchantCenter() {
   const [formData, setFormData] = useState({ name: '', licenseNo: '' })
   const [verifyTime, setVerifyTime] = useState('')
   const [depositTime, setDepositTime] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-  useEffect(() => {
-    api.merchants.list().then(setMerchants).catch(() => setMerchants(MOCK_MERCHANTS))
+  const loadMerchants = useCallback(() => {
+    setLoading(true)
+    setError(false)
+    api.merchants.list().then(setMerchants).catch(() => {
+      setError(true)
+      setMerchants(MOCK_MERCHANTS)
+    }).finally(() => setLoading(false))
   }, [])
+
+  useEffect(() => { loadMerchants() }, [loadMerchants])
 
   const handleVerify = async () => {
     if (!formData.name || !formData.licenseNo) return
@@ -181,7 +191,7 @@ export default function MerchantCenter() {
             <button
               onClick={handleVerify}
               disabled={verifying || !formData.name || !formData.licenseNo}
-              className="btn btn-primary"
+              className="btn-primary"
             >
               {verifying ? '核验中...' : '提交核验'}
             </button>
@@ -203,14 +213,33 @@ export default function MerchantCenter() {
             <p className="text-xs text-slate-400 mb-4">
               保证金由第三方托管，保障交易安全。缴纳后将在商家页面展示托管标识。
             </p>
-            <button onClick={handleDeposit} className="btn btn-primary">缴纳保证金</button>
+            <button onClick={handleDeposit} className="btn-primary">缴纳保证金</button>
           </div>
         )}
       </div>
 
       <div className="mt-8">
-        <h2 className="font-semibold text-navy-800 mb-4">认证商家</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-navy-800">认证商家</h2>
+          {error && (
+            <button onClick={loadMerchants} className="flex items-center gap-1 text-xs text-slate-500 hover:text-navy-800">
+              <RefreshCw className="w-3.5 h-3.5" />
+              刷新
+            </button>
+          )}
+        </div>
+        {loading ? (
+          <SkeletonList count={4} />
+        ) : error && merchants.length === 0 ? (
+          <ErrorState onRetry={loadMerchants} />
+        ) : merchants.length === 0 ? (
+          <EmptyState
+            icon={<Store className="w-16 h-16 text-slate-300 mb-2" />}
+            title="暂无认证商家"
+            description="完成商家认证后，您的企业将出现在此列表中"
+          />
+        ) : (
+          <div className="grid grid-cols-2 gap-4">
           {merchants.map((m) => (
             <div key={m.id}>
               <div
@@ -270,6 +299,7 @@ export default function MerchantCenter() {
             </div>
           ))}
         </div>
+        )}
       </div>
     </div>
   )

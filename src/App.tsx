@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import VoiceSearchModal from "@/components/VoiceSearchModal";
 import Home from "@/pages/Home";
@@ -8,6 +8,7 @@ import Publish from "@/pages/Publish";
 import VoiceSearch from "@/pages/VoiceSearch";
 import MerchantCenter from "@/pages/MerchantCenter";
 import AdminLayout from "@/components/AdminLayout";
+import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminRisk from "@/pages/admin/Risk";
 import AdminTraffic from "@/pages/admin/Traffic";
 import AdminAudit from "@/pages/admin/Audit";
@@ -29,12 +30,15 @@ export default function App() {
           <Route path="/voice-search" element={<VoiceSearch />} />
           <Route path="/merchant" element={<MerchantCenter />} />
           <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
             <Route path="risk" element={<AdminRisk />} />
             <Route path="traffic" element={<AdminTraffic />} />
             <Route path="audit" element={<AdminAudit />} />
             <Route path="geo" element={<AdminGeo />} />
             <Route path="api" element={<AdminApi />} />
+            <Route path="*" element={<Navigate to="/admin" replace />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>

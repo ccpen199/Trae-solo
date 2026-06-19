@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Filter, Grid3X3, List, Map, X, MapPin, Clock, Tag } from 'lucide-react'
-import { useSearchParams } from 'react-router-dom'
+import { Filter, Grid3X3, List, Map, X, MapPin, Clock, Tag, SearchX } from 'lucide-react'
+import { useSearchParams, Link } from 'react-router-dom'
 import PostCard from '@/components/PostCard'
+import { EmptyState, ErrorState, SkeletonCard } from '@/components/StateFeedback'
 import { api } from '@/utils/api'
 import { CATEGORIES } from '@/types'
 import type { Post, GeoRegion } from '@/types'
@@ -32,6 +33,7 @@ export default function PostList() {
   const [posts, setPosts] = useState<Post[]>([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'list' | 'map'>('grid')
   const [sort, setSort] = useState('latest')
   const [page, setPage] = useState(1)
@@ -72,8 +74,9 @@ export default function PostList() {
     else setDistricts([])
   }, [city, cities])
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     setLoading(true)
+    setError(false)
     api.posts.list({
       category: category || undefined,
       province: province || undefined,
@@ -89,8 +92,10 @@ export default function PostList() {
     }).then((data) => {
       setPosts(data.posts)
       setTotal(data.total)
-    }).catch(() => {}).finally(() => setLoading(false))
-  }, [category, province, city, district, minPrice, maxPrice, timeRange, merchantOnly, sort, page])
+    }).catch(() => setError(true)).finally(() => setLoading(false))
+  }, [category, province, city, district, minPrice, maxPrice, timeRange, merchantOnly, sort, page, limit])
+
+  useEffect(() => { loadData() }, [loadData])
 
   const resetFilters = () => {
     setSearchParams({})
@@ -157,16 +162,7 @@ export default function PostList() {
     </div>
   )
 
-  const SkeletonCard = () => (
-    <div className="rounded-xl overflow-hidden animate-pulse">
-      <div className="bg-slate-200 h-40" />
-      <div className="p-3 space-y-2">
-        <div className="bg-slate-200 h-4 rounded w-3/4" />
-        <div className="bg-slate-200 h-5 rounded w-1/2" />
-        <div className="bg-slate-200 h-3 rounded w-2/3" />
-      </div>
-    </div>
-  )
+  const retryLoad = () => loadData()
 
   return (
     <div className="flex gap-6 max-w-7xl mx-auto px-4 py-6">
@@ -213,10 +209,24 @@ export default function PostList() {
           </div>
         </div>
 
-        {loading ? (
+        {error ? (
+          <ErrorState onRetry={retryLoad} />
+        ) : loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
+        ) : posts.length === 0 ? (
+          <EmptyState
+            icon={<SearchX className="w-16 h-16 text-slate-300 mb-2" />}
+            title="未找到相关信息"
+            description="当前筛选条件下没有匹配的内容，试试调整筛选条件或查看其他分类"
+            action={
+              <div className="flex gap-2">
+                <button onClick={resetFilters} className="btn-outline text-sm">清除筛选</button>
+                <Link to="/publish" className="btn-accent text-sm">发布新信息</Link>
+              </div>
+            }
+          />
         ) : viewMode === 'grid' ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {posts.map((p) => <PostCard key={p.id} post={p} />)}
