@@ -1,40 +1,62 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>may-89229 Service Console</title>
+    <title>邮政政务便民服务协同平台</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Local full-stack repair</p>
-          <h1>may-89229 Service Console</h1>
-          <p class="summary">Frontend, backend, and SQLite are running inside this project path.</p>
-        </div>
-        <div class="status-pill" id="connectionStatus">Checking API</div>
-      </section>
-
-      <section class="grid" id="metricGrid" aria-label="Service metrics"></section>
-
-      <section class="panel">
-        <div class="panel-head">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="logo">
+          <span class="logo-icon">📮</span>
           <div>
-            <p class="eyebrow">Runtime</p>
-            <h2>Repair workflow</h2>
+            <h1>政务便民</h1>
+            <p>协同服务平台</p>
           </div>
-          <button id="refreshButton" type="button">Refresh</button>
         </div>
-        <div class="table" id="workItems"></div>
-      </section>
 
-      <section class="panel compact">
-        <h2>API response</h2>
-        <pre id="apiPayload">Loading...</pre>
-      </section>
-    </main>
+        <div class="role-switcher">
+          <label>当前角色</label>
+          <select id="roleSelect">
+            <option value="applicant">👤 申请人</option>
+            <option value="courier">🚚 邮政揽收员</option>
+            <option value="auditor">📋 审批机关</option>
+            <option value="operator">🏢 地市运营</option>
+            <option value="thirdparty">🔌 第三方服务</option>
+          </select>
+        </div>
+
+        <nav class="nav" id="navMenu"></nav>
+
+        <div class="user-card" id="userCard"></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb" id="breadcrumb">工作台</div>
+          <div class="top-actions">
+            <span class="city-tag">📍 广东省 · 21地市</span>
+            <span class="security-tag">🔒 敏感字段已脱敏</span>
+          </div>
+        </header>
+
+        <div class="content-area" id="contentArea"></div>
+      </main>
+    </div>
+
+    <div class="modal" id="modal" style="display:none;">
+      <div class="modal-overlay" onclick="closeModal()"></div>
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 id="modalTitle">标题</h3>
+          <button class="close-btn" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
     <script src="./app.js"></script>
   </body>
 </html>
