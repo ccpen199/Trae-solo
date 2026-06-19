@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Package,
@@ -18,6 +18,16 @@ import {
   X,
   AlertCircle,
   Loader2,
+  Store,
+  Bike,
+  Sparkles,
+  ChevronRight,
+  ShieldAlert,
+  UserCheck,
+  Gift,
+  FileCheck,
+  Siren,
+  Flame,
 } from 'lucide-react';
 import { StatCard } from '@/components/ui/StatCard';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -121,11 +131,11 @@ const mockRecentOrders: Order[] = [
 ];
 
 const mockRiderPositions = [
-  { id: 'r1', name: '李骑手', lat: 39.9342, lng: 116.3674, status: 'delivering', eta: 8 },
-  { id: 'r2', name: '赵骑手', lat: 39.9192, lng: 116.3874, status: 'picked_up', eta: 15 },
-  { id: 'r3', name: '孙骑手', lat: 39.9892, lng: 116.4174, status: 'in_transit', eta: 22 },
-  { id: 'r4', name: '周骑手', lat: 39.8842, lng: 116.4274, status: 'online', eta: 0 },
-  { id: 'r5', name: '吴骑手', lat: 39.9542, lng: 116.4474, status: 'busy', eta: 12 },
+  { id: 'r1', name: '李骑手', lat: 39.9342, lng: 116.3674, status: 'delivering', eta: 8, creditScore: 92, onTimeRate: 98.5, currentOrders: 2 },
+  { id: 'r2', name: '赵骑手', lat: 39.9192, lng: 116.3874, status: 'picked_up', eta: 15, creditScore: 88, onTimeRate: 96.2, currentOrders: 3 },
+  { id: 'r3', name: '孙骑手', lat: 39.9892, lng: 116.4174, status: 'in_transit', eta: 22, creditScore: 95, onTimeRate: 99.1, currentOrders: 1 },
+  { id: 'r4', name: '周骑手', lat: 39.8842, lng: 116.4274, status: 'online', eta: 0, creditScore: 90, onTimeRate: 97.8, currentOrders: 0 },
+  { id: 'r5', name: '吴骑手', lat: 39.9542, lng: 116.4474, status: 'busy', eta: 12, creditScore: 86, onTimeRate: 95.0, currentOrders: 4 },
 ];
 
 const trend7Days = [
@@ -265,6 +275,28 @@ export default function Dashboard() {
     }
   }, [fetchMetrics, status.loading, status.error]);
 
+  const alertTrackSteps: Record<string, Array<{ label: string; className: string; icon?: JSX.Element }>> = {
+    a1: [
+      { label: '熔断已触发', className: 'bg-danger-500/15 text-danger-400 border-danger-500/30', icon: <Siren className="w-3 h-3 flex-shrink-0" /> },
+      { label: '人工张调度介入', className: 'bg-info-500/15 text-info-400 border-info-500/30', icon: <UserCheck className="w-3 h-3 flex-shrink-0" /> },
+      { label: '补偿券¥15已发', className: 'bg-success-500/15 text-success-400 border-success-500/30', icon: <Gift className="w-3 h-3 flex-shrink-0" /> },
+      { label: '运单WB2024061105', className: 'bg-amber-accent-500/15 text-amber-accent-400 border-amber-accent-500/30', icon: <FileCheck className="w-3 h-3 flex-shrink-0" /> },
+      { label: '商家已推送', className: 'bg-success-500/15 text-success-400 border-success-500/30', icon: <CheckCircle2 className="w-3 h-3 flex-shrink-0" /> },
+    ],
+    a2: [
+      { label: 'ETA偏差3min', className: 'bg-warning-500/15 text-warning-400 border-warning-500/30', icon: <TrendingDown className="w-3 h-3 flex-shrink-0" /> },
+      { label: '已通知骑手', className: 'bg-info-500/15 text-info-400 border-info-500/30', icon: <Bell className="w-3 h-3 flex-shrink-0" /> },
+      { label: '超时赔付¥8', className: 'bg-success-500/15 text-success-400 border-success-500/30', icon: <Gift className="w-3 h-3 flex-shrink-0" /> },
+      { label: '状态已推送', className: 'bg-success-500/15 text-success-400 border-success-500/30', icon: <CheckCircle2 className="w-3 h-3 flex-shrink-0" /> },
+    ],
+    a3: [
+      { label: '超时5min', className: 'bg-danger-500/15 text-danger-400 border-danger-500/30', icon: <AlertTriangle className="w-3 h-3 flex-shrink-0" /> },
+      { label: '自动调度2候选骑手', className: 'bg-info-500/15 text-info-400 border-info-500/30', icon: <Zap className="w-3 h-3 flex-shrink-0" /> },
+      { label: '超时券¥10', className: 'bg-success-500/15 text-success-400 border-success-500/30', icon: <Gift className="w-3 h-3 flex-shrink-0" /> },
+      { label: '已推送3方', className: 'bg-success-500/15 text-success-400 border-success-500/30', icon: <CheckCircle2 className="w-3 h-3 flex-shrink-0" /> },
+    ],
+  };
+
   const handleAlertClick = (alert: OrderAlertType) => {
     markAlertRead(alert.id);
     navigate('/abnormal-orders');
@@ -360,6 +392,37 @@ export default function Dashboard() {
   };
 
   const connectionConfig = getConnectionStatusConfig();
+
+  const mockTopMerchants = [
+    { name: '老王川菜馆', orders: 28, ratio: 35 },
+    { name: '粤式茶餐厅', orders: 22, ratio: 27 },
+    { name: '日式拉面屋', orders: 15, ratio: 19 },
+  ];
+
+  const mockTopRiders = [
+    { name: '李骑手', score: 98, badge: '金牌', status: '配送中' },
+    { name: '赵骑手', score: 95, badge: '银牌', status: '空闲' },
+    { name: '孙骑手', score: 92, badge: '银牌', status: '配送中' },
+  ];
+
+  const mockAggregateGroups = [
+    {
+      id: 'A',
+      path: ['P1', 'P2', 'D1', 'D2'],
+      ordersCount: 3,
+      distance: '同区3公里内',
+      rider: { name: '李骑手', score: 98 },
+      savings: 12,
+    },
+    {
+      id: 'B',
+      path: ['P3', 'P4', 'D3', 'D4'],
+      ordersCount: 2,
+      distance: '同区2.5公里内',
+      rider: { name: '赵骑手', score: 95 },
+      savings: 8,
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -463,6 +526,344 @@ export default function Dashboard() {
         />
       </div>
 
+      <div className="space-y-6">
+        <div className="bg-space-blue-800 border border-space-blue-600 rounded-xl p-5 shadow-card">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-semibold text-gray-100">三方协同状态看板</h2>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-amber-accent-500/20 border border-amber-accent-500/40 flex items-center justify-center">
+                  <Store className="w-4 h-4 text-amber-accent-400" />
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-info-500/20 border border-info-500/40 flex items-center justify-center">
+                  <Bike className="w-4 h-4 text-info-400" />
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-success-500/20 border border-success-500/40 flex items-center justify-center">
+                  <User className="w-4 h-4 text-success-400" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-space-blue-700/50 border border-amber-accent-500/30 rounded-lg p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <Store className="w-5 h-5 text-amber-accent-400" />
+                <span className="font-semibold text-amber-accent-400">商家端</span>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-gray-400">活跃商家</p>
+                  <div className="flex items-baseline gap-1 mt-0.5">
+                    <span className="text-xl font-bold text-gray-100 font-mono-code">25</span>
+                    <span className="text-sm text-gray-500">/30 家</span>
+                  </div>
+                </div>
+                <span className="px-2 py-1 bg-amber-accent-500/20 text-amber-accent-400 text-xs font-medium rounded-full border border-amber-accent-500/30">
+                  83%
+                </span>
+              </div>
+
+              <div>
+                <p className="text-xs text-gray-400 mb-2">今日发单 TOP3</p>
+                <div className="space-y-2">
+                  {mockTopMerchants.map((merchant, idx) => (
+                    <div key={idx} className="space-y-1">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-gray-200 truncate">{merchant.name}</span>
+                        <span className="text-amber-accent-400 font-mono-code">{merchant.orders}单</span>
+                      </div>
+                      <div className="h-1.5 bg-space-blue-900 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-amber-accent-500 to-amber-accent-400 rounded-full transition-all duration-500"
+                          style={{ width: `${merchant.ratio}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400">ERP对接</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="px-1.5 py-0.5 bg-success-500/15 text-success-400 rounded text-[10px] border border-success-500/30">
+                    22已连
+                  </span>
+                  <span className="px-1.5 py-0.5 bg-danger-500/15 text-danger-400 rounded text-[10px] border border-danger-500/30">
+                    3异常
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate('/abnormal-orders')}
+                className="w-full flex items-center justify-between text-xs px-3 py-2 bg-danger-500/10 hover:bg-danger-500/20 border border-danger-500/30 rounded-md transition-colors group"
+              >
+                <span className="flex items-center gap-1.5 text-danger-400">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  异常熔断：2单待处理
+                </span>
+                <ChevronRight className="w-3.5 h-3.5 text-danger-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </div>
+
+            <div className="bg-space-blue-700/50 border border-info-500/30 rounded-lg p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <Bike className="w-5 h-5 text-info-400" />
+                <span className="font-semibold text-info-400">骑手端</span>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-gray-400">在线骑手</p>
+                  <div className="flex items-baseline gap-1 mt-0.5">
+                    <span className="text-xl font-bold text-gray-100 font-mono-code">12</span>
+                    <span className="text-sm text-gray-500">/15人</span>
+                  </div>
+                </div>
+                <span className="px-2 py-1 bg-info-500/20 text-info-400 text-xs font-medium rounded-full border border-info-500/30">
+                  80%
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 text-xs">
+                <div className="bg-info-500/10 border border-info-500/20 rounded-md p-2 text-center">
+                  <p className="text-lg font-bold text-info-400 font-mono-code">8</p>
+                  <p className="text-gray-400 mt-0.5">配送中</p>
+                </div>
+                <div className="bg-success-500/10 border border-success-500/20 rounded-md p-2 text-center">
+                  <p className="text-lg font-bold text-success-400 font-mono-code">4</p>
+                  <p className="text-gray-400 mt-0.5">空闲</p>
+                </div>
+                <div className="bg-gray-500/10 border border-gray-500/20 rounded-md p-2 text-center">
+                  <p className="text-lg font-bold text-gray-400 font-mono-code">3</p>
+                  <p className="text-gray-400 mt-0.5">休息</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs text-gray-400 mb-2">信用分层 TOP3</p>
+                <div className="space-y-2">
+                  {mockTopRiders.map((rider, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-xs p-2 bg-space-blue-800/60 rounded-md">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-200">{rider.name}</span>
+                        <span className={cn(
+                          'px-1.5 py-0.5 rounded text-[10px] font-medium',
+                          rider.badge === '金牌'
+                            ? 'bg-amber-accent-500/20 text-amber-accent-400 border border-amber-accent-500/30'
+                            : 'bg-info-500/20 text-info-400 border border-info-500/30'
+                        )}>
+                          {rider.badge}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-info-400 font-mono-code font-semibold">{rider.score}分</span>
+                        <span className={cn(
+                          'px-1.5 py-0.5 rounded text-[10px]',
+                          rider.status === '配送中'
+                            ? 'bg-info-500/15 text-info-400 border border-info-500/20'
+                            : 'bg-success-500/15 text-success-400 border border-success-500/20'
+                        )}>
+                          {rider.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate('/riders')}
+                className="w-full flex items-center justify-between text-xs px-3 py-2 bg-danger-500/10 hover:bg-danger-500/20 border border-danger-500/30 rounded-md transition-colors group"
+              >
+                <span className="flex items-center gap-1.5 text-danger-400">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  偏差预警：2人超时＞5分钟
+                </span>
+                <ChevronRight className="w-3.5 h-3.5 text-danger-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </div>
+
+            <div className="bg-space-blue-700/50 border border-success-500/30 rounded-lg p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <User className="w-5 h-5 text-success-400" />
+                <span className="font-semibold text-success-400">客户端</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs text-gray-400">活跃下单</p>
+                  <p className="text-xl font-bold text-gray-100 font-mono-code mt-0.5">156<span className="text-sm text-gray-500 ml-0.5">人</span></p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400">客户满意度</p>
+                  <div className="flex items-baseline gap-1 mt-0.5">
+                    <span className="text-xl font-bold text-success-400 font-mono-code">4.8</span>
+                    <span className="text-sm text-gray-500">/5</span>
+                  </div>
+                  <p className="text-[10px] text-success-400 mt-0.5">96% 五星</p>
+                </div>
+              </div>
+
+              <div className="h-px bg-space-blue-600/50" />
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-gray-400">待评价</p>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <span className="text-lg font-bold text-warning-400 font-mono-code">12</span>
+                    <span className="text-xs text-gray-500">单</span>
+                  </div>
+                </div>
+                <div className="w-12 h-12 rounded-full bg-warning-500/15 border-2 border-warning-500/40 flex items-center justify-center">
+                  <span className="text-warning-400 font-bold font-mono-code text-sm">12</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-2.5 bg-success-500/10 border border-success-500/25 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-success-500/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-4 h-4 text-success-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400">赔付触达</p>
+                    <p className="text-sm font-semibold text-success-400">3单已补偿</p>
+                  </div>
+                </div>
+                <span className="px-2 py-1 bg-success-500/20 text-success-400 text-[10px] font-medium rounded-full border border-success-500/30">
+                  已完成
+                </span>
+              </div>
+
+              <div className="pt-1">
+                <div className="flex items-center justify-between text-xs text-gray-400 mb-1.5">
+                  <span>满意度分布</span>
+                  <span>本周</span>
+                </div>
+                <div className="flex items-center gap-1 h-2">
+                  <div className="flex-1 h-full bg-success-500 rounded-l-full" style={{ width: '96%' }} />
+                  <div className="h-full bg-warning-500" style={{ width: '3%' }} />
+                  <div className="h-full bg-danger-500 rounded-r-full" style={{ width: '1%' }} />
+                </div>
+                <div className="flex justify-between mt-1 text-[10px] text-gray-500">
+                  <span className="text-success-400">★★★★★</span>
+                  <span className="text-warning-400">★★★★</span>
+                  <span className="text-danger-400">★★★及以下</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-space-blue-800 border border-space-blue-600 rounded-xl p-5 shadow-card">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-accent-500/30 to-amber-accent-600/30 border border-amber-accent-500/50 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-amber-accent-400" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-gray-100">智能聚合调度 · 实时推荐</h2>
+                <p className="text-xs text-gray-400 mt-0.5">AI 路径优化 · 同区合单 · 成本下降</p>
+              </div>
+            </div>
+            <button
+              onClick={() => navigate('/orders')}
+              className="flex items-center gap-1 px-3 py-1.5 text-xs text-amber-accent-400 hover:text-amber-accent-300 bg-amber-accent-500/10 hover:bg-amber-accent-500/20 border border-amber-accent-500/30 rounded-md transition-all group"
+            >
+              查看详情
+              <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {mockAggregateGroups.map((group) => (
+              <div
+                key={group.id}
+                className="bg-space-blue-700/60 border border-space-blue-500/60 rounded-lg p-4 space-y-4 hover:border-amber-accent-500/40 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-7 h-7 rounded-md bg-gradient-to-br from-space-blue-600 to-space-blue-500 flex items-center justify-center text-sm font-bold text-amber-accent-400 border border-space-blue-400/50">
+                      {group.id}
+                    </span>
+                    <span className="text-xs text-gray-400">合单组 · {group.ordersCount}单 · {group.distance}</span>
+                  </div>
+                  <span className="px-2 py-0.5 bg-success-500/15 text-success-400 text-[10px] rounded-full border border-success-500/30">
+                    可聚合
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {group.path.map((point, idx) => (
+                    <div key={idx} className="flex items-center gap-1.5">
+                      <span className={cn(
+                        'px-2 py-1 rounded text-[10px] font-semibold font-mono-code border',
+                        point.startsWith('P')
+                          ? 'bg-amber-accent-500/20 text-amber-accent-400 border-amber-accent-500/40'
+                          : 'bg-success-500/20 text-success-400 border-success-500/40'
+                      )}>
+                        {point.startsWith('P') ? `取${point.slice(1)}` : `送${point.slice(1)}`}
+                      </span>
+                      {idx < group.path.length - 1 && (
+                        <div className="w-3 h-px bg-gradient-to-r from-amber-accent-500/60 to-success-500/60" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between p-2.5 bg-space-blue-800/80 rounded-md border border-space-blue-600/50">
+                  <div className="flex items-center gap-2.5">
+                    <div className="relative">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-info-500 to-info-600 flex items-center justify-center border-2 border-info-400/60">
+                        <Bike className="w-4.5 h-4.5 text-white" />
+                      </div>
+                      <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-amber-accent-500 flex items-center justify-center border-2 border-space-blue-800">
+                        <span className="text-[8px] font-bold text-white">★</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-medium text-gray-100">{group.rider.name}</span>
+                        <span className="px-1.5 py-0.5 bg-amber-accent-500/15 text-amber-accent-400 text-[10px] rounded border border-amber-accent-500/30 flex items-center gap-0.5">
+                          <span className="text-[9px]">★</span>
+                          {group.rider.score}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-gray-400 mt-0.5">推荐骑手 · 信用优秀</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-gray-400">运费节省</p>
+                    <p className="text-base font-bold text-amber-accent-400 font-mono-code">¥{group.savings}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-1">
+                  <button
+                    onClick={() => showToast('success', `合单组${group.id}已派单给${group.rider.name}`)}
+                    className="px-3 py-1.5 bg-gradient-to-r from-amber-accent-500 to-amber-accent-600 hover:from-amber-accent-600 hover:to-amber-accent-700 text-white text-xs font-medium rounded-md border border-amber-accent-500/50 shadow-amber-glow-sm transition-all active:scale-95"
+                  >
+                    一键派单
+                  </button>
+                  <button
+                    onClick={() => navigate('/orders')}
+                    className="flex items-center gap-0.5 text-xs text-info-400 hover:text-info-300 transition-colors group"
+                  >
+                    展开详情
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-3 bg-space-blue-800 border border-space-blue-600 rounded-xl p-5 shadow-card">
           <div className="flex items-center justify-between mb-4">
@@ -548,6 +949,43 @@ export default function Dashboard() {
               </svg>
             </div>
 
+            <div className="absolute top-3 left-3 bg-space-blue-800/95 border border-space-blue-500 rounded-lg p-3 shadow-xl z-20 w-[190px]">
+              <div className="flex items-center gap-1.5 mb-2">
+                <TrendingDown className="w-3.5 h-3.5 text-amber-accent-400" />
+                <span className="text-xs font-semibold text-gray-100">ETA偏差预警</span>
+              </div>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-[10px]">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-danger-500" />
+                    <span className="text-danger-400 font-medium">2单偏差&gt;5分钟</span>
+                  </span>
+                </div>
+                <div className="pl-3 text-[10px] text-gray-400 space-y-0.5 mb-1.5">
+                  <div>DD202406110032 · +7min</div>
+                  <div>DD202406110041 · +6min</div>
+                </div>
+                <div className="flex items-center justify-between text-[10px]">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-warning-500" />
+                    <span className="text-warning-400 font-medium">1单偏差2-5分钟</span>
+                  </span>
+                </div>
+                <div className="pl-3 text-[10px] text-gray-400 mb-1.5">
+                  <div>DD202406110018 · +3min</div>
+                </div>
+                <div className="flex items-center justify-between text-[10px]">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-success-500" />
+                    <span className="text-success-400 font-medium">10单正常时效</span>
+                  </span>
+                </div>
+                <div className="pl-3 text-[10px] text-gray-400">
+                  <div>DD202406110001...0010 · ±0min</div>
+                </div>
+              </div>
+            </div>
+
             {recentOrders.slice(0, 3).map((order, idx) => (
               <svg key={`route-${order.id}`} className="absolute inset-0 w-full h-full pointer-events-none">
                 <defs>
@@ -566,6 +1004,42 @@ export default function Dashboard() {
                 />
               </svg>
             ))}
+
+            {riderPositions
+              .filter((r) => r.status !== 'offline' && r.eta > 0)
+              .map((rider, _i) => {
+                const fullIdx = riderPositions.indexOf(rider);
+                const riderPts = [
+                  { x: 25, y: 35 },
+                  { x: 40, y: 45 },
+                  { x: 65, y: 28 },
+                  { x: 15, y: 65 },
+                  { x: 75, y: 55 },
+                ];
+                const deliveryPts = [
+                  { x: 12, y: 20 },
+                  { x: 85, y: 75 },
+                  { x: 48, y: 15 },
+                  { x: 30, y: 80 },
+                ];
+                const from = riderPts[fullIdx % riderPts.length];
+                const to = deliveryPts[fullIdx % deliveryPts.length];
+                return (
+                  <svg key={`trail-${rider.id}`} className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                    <line
+                      x1={`${from.x}%`}
+                      y1={`${from.y}%`}
+                      x2={`${to.x}%`}
+                      y2={`${to.y}%`}
+                      stroke="#9CA3AF"
+                      strokeWidth="1.5"
+                      strokeOpacity="0.5"
+                      strokeDasharray="4 5"
+                      style={{ animation: 'dasharray 1.5s linear infinite' }}
+                    />
+                  </svg>
+                );
+              })}
 
             {riderPositions.map((rider, idx) => {
               const positions = [
@@ -599,9 +1073,17 @@ export default function Dashboard() {
                   </div>
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-10">
                     <div className="bg-space-blue-700 border border-space-blue-500 rounded-lg px-3 py-2 text-xs shadow-xl">
-                      <div className="text-gray-100 font-medium">{rider.name}</div>
-                      <div className="text-gray-400">
+                      <div className="text-gray-100 font-medium mb-0.5">{rider.name}</div>
+                      <div className="text-gray-400 mb-1">
                         {rider.eta > 0 ? `ETA: ${rider.eta}分钟` : '空闲'}
+                      </div>
+                      <div className="flex items-center gap-1 text-success-400 font-medium">
+                        <ShieldAlert className="w-3 h-3" />
+                        <span>信用分：{rider.creditScore} / 准时率：{rider.onTimeRate}%</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-info-400 font-medium mt-0.5">
+                        <Package className="w-3 h-3" />
+                        <span>当前承载：配送{rider.currentOrders}单</span>
                       </div>
                     </div>
                   </div>
@@ -651,6 +1133,25 @@ export default function Dashboard() {
                   <span className="w-4 h-0.5 bg-info-500/50" />
                   配送路线
                 </span>
+              </div>
+            </div>
+
+            <div className="absolute bottom-3 right-3 bg-space-blue-800/90 border border-space-blue-600 rounded-lg p-2.5 shadow-lg z-10">
+              <div className="flex items-center gap-1 mb-1.5">
+                <Flame className="w-3 h-3 text-amber-accent-400" />
+                <span className="text-[10px] font-semibold text-gray-200">运力热力</span>
+              </div>
+              <div className="grid grid-cols-3 gap-1 mb-1.5">
+                {[0.2, 0.35, 0.3, 0.5, 0.9, 0.7, 0.4, 0.6, 0.25].map((op, i) => (
+                  <div
+                    key={i}
+                    className="w-3 h-3 rounded-full bg-amber-accent-500"
+                    style={{ opacity: op }}
+                  />
+                ))}
+              </div>
+              <div className="text-[9px] text-amber-accent-400/80 leading-tight">
+                CBD区最密（3单/km²）
               </div>
             </div>
           </div>
@@ -882,6 +1383,26 @@ export default function Dashboard() {
                 )}
               </div>
               <p className="text-sm text-gray-200 mb-2">{alert.message}</p>
+              {alertTrackSteps[alert.id] && (
+                <div className="mb-2.5">
+                  <div className="flex flex-wrap items-center gap-1">
+                    {alertTrackSteps[alert.id].map((step, sIdx) => (
+                      <React.Fragment key={`${alert.id}-step-${sIdx}`}>
+                        {sIdx > 0 && (
+                          <ChevronRight className="w-3 h-3 text-gray-500 flex-shrink-0 mx-0.5" />
+                        )}
+                        <span className={cn(
+                          'inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[10px] font-medium leading-tight',
+                          step.className
+                        )}>
+                          {step.icon}
+                          <span className="truncate max-w-[80px]">{step.label}</span>
+                        </span>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span className="font-mono-code">{alert.orderId}</span>
                 <span>
