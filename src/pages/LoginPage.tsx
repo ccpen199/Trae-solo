@@ -14,6 +14,14 @@ import {
   Eye,
   EyeOff,
   Shield,
+  Heart,
+  GraduationCap,
+  CreditCard,
+  Users,
+  FileText,
+  FileCheck,
+  Clock,
+  Tag,
 } from 'lucide-react'
 import { useAppStore } from '@/stores/appStore'
 import { cn } from '@/lib/utils'
@@ -427,6 +435,115 @@ export default function LoginPage() {
                         下一步 · 进入生物识别
                       </button>
                     </form>
+
+                    <motion.div
+                      key={role}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-8 max-w-md"
+                    >
+                      <p className="text-sm font-medium text-gov-text-secondary mb-3">可办理业务预览</p>
+
+                      {role === 'personal' && (
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <Shield className="w-5 h-5 text-gov-blue mb-2" />
+                            <p className="text-sm font-medium text-gov-text mb-1">五险一金查询</p>
+                            <p className="text-xs text-gov-text-secondary">缴费明细、账户余额、转移进度</p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <Heart className="w-5 h-5 text-gov-blue mb-2" />
+                            <p className="text-sm font-medium text-gov-text mb-1">医保就医记录</p>
+                            <p className="text-xs text-gov-text-secondary">定点医院、药品目录、报销追溯</p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <GraduationCap className="w-5 h-5 text-gov-blue mb-2" />
+                            <p className="text-sm font-medium text-gov-text mb-1">人事考试报名</p>
+                            <p className="text-xs text-gov-text-secondary">考试报名、准考证打印</p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <CreditCard className="w-5 h-5 text-gov-blue mb-2" />
+                            <p className="text-sm font-medium text-gov-text mb-1">电子社保卡</p>
+                            <p className="text-xs text-gov-text-secondary">申领、NFC闪付、动态二维码</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {role === 'enterprise' && (
+                        <div className="space-y-3">
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <div className="flex items-start gap-3">
+                              <Users className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium text-gov-text mb-1">员工参保增减员</p>
+                                <p className="text-xs text-gov-text-secondary">批量申报、导入导出</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <div className="flex items-start gap-3">
+                              <FileText className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium text-gov-text mb-1">失业金申领预审</p>
+                                <p className="text-xs text-gov-text-secondary">材料核对、预审意见</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <div className="flex items-start gap-3">
+                              <FileCheck className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium text-gov-text mb-1">电子合同存证</p>
+                                <p className="text-xs text-gov-text-secondary">劳动关系、区块链存证</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-blue/5 border border-gov-blue/20">
+                            <p className="text-xs text-gov-text-secondary">
+                              💡 法人授权后可办理上述业务，需完成人脸识别二次核验
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {role === 'admin' && (
+                        <div className="space-y-3">
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <div className="flex items-start gap-3">
+                              <Clock className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium text-gov-text mb-1">超时预警督办</p>
+                                <p className="text-xs text-gov-text-secondary">业务超时、自动预警、督办跟踪</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <div className="flex items-start gap-3">
+                              <Tag className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium text-gov-text mb-1">政策智能标签</p>
+                                <p className="text-xs text-gov-text-secondary">人群/场景/时效打标</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gov-bg-light border border-gov-border/50 hover:border-gov-blue/30 hover:bg-gov-blue/5 transition-all">
+                            <div className="flex items-start gap-3">
+                              <ShieldCheck className="w-5 h-5 text-gov-blue shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm font-medium text-gov-text mb-1">实名认证审核</p>
+                                <p className="text-xs text-gov-text-secondary">生物识别、公安比对、审计追溯</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-amber-50 border border-amber-200">
+                            <p className="text-xs text-amber-700">
+                              ⚠️ 管理员所有操作将生成审计日志，全程可追溯
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
                   </motion.div>
                 )}
 

@@ -1,7 +1,9 @@
-import { Upload, Download, Send, Eye, Trash2 } from 'lucide-react'
+import { Upload, Download, Send, Eye, Trash2, Building2, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { employeeDeclarations } from '@/mocks/data'
 import StatusBadge from '@/components/ui/StatusBadge'
+import { useAppStore } from '@/stores/appStore'
+import { cn } from '@/lib/utils'
 
 function maskIdNumber(id: string): string {
   if (id.length <= 10) return id
@@ -16,9 +18,70 @@ const statusCounts = {
 }
 
 export default function InsuranceDeclarationPage() {
+  const userInfo = useAppStore((s) => s.userInfo)
+  const isLoggedIn = useAppStore((s) => s.isLoggedIn)
+  const currentRole = useAppStore((s) => s.currentRole)
+  const isEnterpriseAuth = isLoggedIn && currentRole === 'enterprise' && userInfo
+
   return (
     <div className="space-y-6">
       <h1 className="gov-section-title">参保增减员申报</h1>
+
+      {isEnterpriseAuth ? (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={cn(
+            'rounded-lg border border-gov-blue/20 py-3 px-4',
+            'bg-gradient-to-r from-emerald-50/80 via-gov-blue/5 to-gov-blue/10',
+            'flex items-center justify-between text-sm'
+          )}>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-gov-blue" />
+                <span className="font-medium text-gov-text">江苏信达科技有限公司</span>
+              </div>
+              <span className="text-gov-text-secondary">●</span>
+              <span className="font-mono text-gov-text-secondary">9132**********3X</span>
+              <span className="text-gov-text-secondary">●</span>
+              <span className="gov-badge-green">已授权</span>
+              <span className="text-gov-text-secondary">●</span>
+              <span className="text-gov-text-secondary">
+                经办人: <span className="text-gov-text font-medium">{userInfo?.name}</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 text-emerald-700">
+                <ShieldCheck className="w-4 h-4" />
+                <span className="font-medium">法人授权有效</span>
+              </div>
+              <span className="text-gov-text-secondary">|</span>
+              <span className="text-gov-text-secondary">有效期至 2026-12-31</span>
+              <span className="text-gov-text-secondary">|</span>
+              <button className="text-gov-blue hover:text-gov-blue/80 text-sm">
+                查看授权范围
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className={cn(
+            'rounded-lg border border-amber-200 py-3 px-4',
+            'bg-gradient-to-r from-amber-50/80 to-amber-50',
+            'flex items-center gap-3 text-sm'
+          )}>
+            <Building2 className="w-4 h-4 text-amber-600" />
+            <span className="text-amber-700">请先企业认证后再办理业务</span>
+          </div>
+        </motion.div>
+      )}
 
       <div className="flex items-center gap-3">
         <button className="gov-btn-secondary flex items-center gap-2">
