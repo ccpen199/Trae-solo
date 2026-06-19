@@ -1,6 +1,598 @@
 @use '@/styles/variables.scss' as *;
-.container { min-height: 100vh; padding: 0 $page-padding; padding-top: $spacing-xl; padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.card { background: $color-bg-card; border-radius: $radius-xl; padding: $spacing-xl * 2; box-shadow: $shadow-card; display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
-.icon { font-size: 120rpx; margin-bottom: $spacing-xl; }
-.title { font-size: $font-size-xxl; font-weight: $font-weight-semibold; color: $color-text-primary; margin-bottom: $spacing-md; }
-.desc { font-size: $font-size-md; color: $color-text-secondary; line-height: 1.6; }
+
+.container {
+  min-height: 100vh;
+  padding: 0 $page-padding;
+  padding-top: $spacing-md;
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
+  background: $color-bg-page;
+}
+
+.header {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.titleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: 1.4;
+  padding-right: $spacing-md;
+}
+
+.statusTag {
+  flex-shrink: 0;
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+  font-size: 22rpx;
+  font-weight: $font-weight-medium;
+  margin-top: 4rpx;
+}
+
+.statusActive {
+  background: $color-success-light;
+  color: $color-success;
+}
+
+.statusUpcoming {
+  background: $color-warning-light;
+  color: $color-warning;
+}
+
+.statusExpired {
+  background: $color-bg-disabled;
+  color: $color-text-tertiary;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xs;
+}
+
+.metaItem {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  line-height: 1.5;
+}
+
+.summaryCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.summaryHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+}
+
+.summaryIcon {
+  margin-right: $spacing-xs;
+  font-size: $font-size-lg;
+}
+
+.summaryTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.summaryText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+  margin-bottom: $spacing-md;
+}
+
+.keywordRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.keywordTag {
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+  background: $color-info-light;
+  color: $color-primary;
+  font-size: 22rpx;
+}
+
+.matchCard {
+  background: linear-gradient(135deg, rgba($color-success, 0.06) 0%, rgba($color-primary, 0.06) 100%);
+  border: 1rpx solid $color-border-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.matchHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+}
+
+.matchIcon {
+  margin-right: $spacing-xs;
+  font-size: $font-size-lg;
+}
+
+.matchTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  flex: 1;
+}
+
+.matchScore {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-success;
+}
+
+.matchBar {
+  height: 12rpx;
+  background: $color-bg-disabled;
+  border-radius: $radius-round;
+  margin-bottom: $spacing-md;
+  overflow: hidden;
+}
+
+.matchBarInner {
+  height: 100%;
+  background: linear-gradient(90deg, $color-success, $color-primary-light);
+  border-radius: $radius-round;
+  transition: width $transition-slow;
+}
+
+.matchReasons {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.matchReason {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.matchCheck {
+  color: $color-success;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-sm;
+  margin-right: $spacing-xs;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+}
+
+.matchReasonText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.5;
+}
+
+.tabBar {
+  display: flex;
+  flex-direction: row;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  overflow: hidden;
+}
+
+.tabItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md 0;
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  position: relative;
+  transition: color $transition-fast;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.tabActive {
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.tabIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 6rpx;
+  background: $color-primary;
+  border-radius: $radius-round;
+}
+
+.tabContent {
+  min-height: 200rpx;
+}
+
+.fulltextSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.chapterCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.chapterHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.chapterIndex {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: $radius-round;
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  font-size: 22rpx;
+  font-weight: $font-weight-bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.chapterTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.chapterContent {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+  white-space: pre-wrap;
+}
+
+.interpretSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.clauseCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.clauseHeader {
+  margin-bottom: $spacing-sm;
+}
+
+.clauseTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+}
+
+.clauseContent {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+  margin-bottom: $spacing-md;
+}
+
+.interpretBtn {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  background: $color-info-light;
+  color: $color-primary;
+  padding: 0 $spacing-md;
+  height: 64rpx;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  width: fit-content;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.97);
+  }
+}
+
+.interpretBox {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFF4D6 100%);
+  border-left: 6rpx solid $color-warning;
+  border-radius: $radius-sm;
+  padding: $spacing-md;
+  margin-top: $spacing-md;
+}
+
+.interpretText {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: $line-height-loose;
+}
+
+.servicesSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.serviceCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  transition: all $transition-fast;
+
+  &:active {
+    transform: scale(0.99);
+    background: $color-bg-hover;
+  }
+}
+
+.serviceIcon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  flex-shrink: 0;
+  margin-right: $spacing-md;
+}
+
+.serviceInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.serviceName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.serviceDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  line-height: 1.4;
+  display: block;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis-multi(2);
+}
+
+.serviceMeta {
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-md;
+}
+
+.serviceMetaItem {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+}
+
+.serviceArrow {
+  font-size: 40rpx;
+  color: $color-text-disabled;
+  margin-left: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl * 2 0;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.faqSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.faqCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.faqQuestion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.faqQIcon {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: $radius-xs;
+  background: $color-error-light;
+  color: $color-error;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: $font-weight-bold;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.faqQText {
+  flex: 1;
+  min-width: 0;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  line-height: 1.4;
+  padding-right: $spacing-sm;
+}
+
+.faqArrow {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+  transition: transform $transition-fast;
+}
+
+.faqArrowOpen {
+  transform: rotate(180deg);
+}
+
+.faqAnswer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.faqAIcon {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: $radius-xs;
+  background: $color-success-light;
+  color: $color-success;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: $font-weight-bold;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.faqAText {
+  flex: 1;
+  min-width: 0;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: $color-bg-card;
+  padding: $spacing-sm $page-padding;
+  padding-bottom: calc($spacing-sm + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.08);
+  z-index: 100;
+}
+
+.bottomAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xs $spacing-lg;
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.bottomActionIcon {
+  font-size: 40rpx;
+  margin-bottom: 2rpx;
+}
+
+.bottomActionText {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+}
+
+.bottomPrimaryBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  margin-left: $spacing-md;
+  box-shadow: 0 4rpx 16rpx rgba($color-primary, 0.3);
+
+  &:active {
+    transform: scale(0.97);
+    opacity: 0.95;
+  }
+}
+
+.bottomPrimaryText {
+  color: $color-text-white;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}

@@ -129,13 +129,21 @@ export interface QAMessage {
   related?: { policyIds: string[]; serviceIds: string[] };
 }
 
+export type FontScale = 'standard' | 'large' | 'extra-large';
+export type ColorFilter = 'none' | 'red-green' | 'blue-yellow';
+
 export interface AccessibilityConfig {
   enabled: boolean;
   highContrast: boolean;
   largeFont: boolean;
+  fontScale: FontScale;
+  colorFilter: ColorFilter;
   voiceNavigation: boolean;
   speakRate: number;
   autoReadContent: boolean;
+  operationConfirm: boolean;
+  largeButton: boolean;
+  reduceAnimation: boolean;
 }
 
 export interface AppState {

@@ -1,6 +1,347 @@
 @use '@/styles/variables.scss' as *;
-.container { min-height: 100vh; padding: 0 $page-padding; padding-top: $spacing-xl; padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.card { background: $color-bg-card; border-radius: $radius-xl; padding: $spacing-xl * 2; box-shadow: $shadow-card; display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
-.icon { font-size: 120rpx; margin-bottom: $spacing-xl; }
-.title { font-size: $font-size-xxl; font-weight: $font-weight-semibold; color: $color-text-primary; margin-bottom: $spacing-md; }
-.desc { font-size: $font-size-md; color: $color-text-secondary; line-height: 1.6; }
+
+.container {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pageTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl $page-padding $spacing-lg;
+}
+
+.pageTitleIcon {
+  font-size: 48rpx;
+  margin-right: $spacing-sm;
+}
+
+.pageTitleText {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.elderCard {
+  margin: 0 $page-padding $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.elderHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.elderIcon {
+  font-size: 56rpx;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.elderInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.elderTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.elderDesc {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  line-height: $line-height-normal;
+}
+
+.elderSwitch {
+  width: 128rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.25);
+  position: relative;
+  flex-shrink: 0;
+  margin-left: $spacing-md;
+  transition: background $transition-base;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  &.elderSwitchOn {
+    background: $color-success;
+  }
+}
+
+.elderSwitchDot {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
+  transition: all $transition-base;
+
+  .elderSwitchOn & {
+    left: 70rpx;
+  }
+}
+
+.elderSwitchLabel {
+  font-size: 20rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  position: relative;
+  z-index: 1;
+
+  .elderSwitchOn & {
+    margin-left: -28rpx;
+  }
+}
+
+.section {
+  margin: 0 $page-padding $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: $spacing-lg $spacing-lg $spacing-sm;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.sectionIcon {
+  font-size: $font-size-lg;
+  margin-right: $spacing-sm;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionBody {
+  padding: $spacing-sm $spacing-lg $spacing-lg;
+}
+
+.settingRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.settingInfo {
+  flex: 1;
+  min-width: 0;
+  margin-right: $spacing-md;
+}
+
+.settingName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.settingDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  display: block;
+  line-height: $line-height-normal;
+}
+
+.toggle {
+  width: 88rpx;
+  height: 52rpx;
+  border-radius: $radius-round;
+  background: $color-border;
+  position: relative;
+  flex-shrink: 0;
+  transition: background $transition-base;
+
+  &.toggleOn {
+    background: $color-success;
+  }
+}
+
+.toggleDot {
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
+  transition: all $transition-base;
+
+  .toggleOn & {
+    left: 40rpx;
+  }
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-md;
+  padding: $spacing-sm 0 $spacing-md;
+}
+
+.radioItem {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md $spacing-sm;
+  border-radius: $radius-md;
+  border: 2rpx solid $color-border;
+  background: $color-bg-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &.radioItemActive {
+    border-color: $color-primary;
+    background: $color-info-light;
+  }
+}
+
+.radioCircle {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: $radius-round;
+  border: 3rpx solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-xs;
+  flex-shrink: 0;
+  transition: all $transition-base;
+
+  &.radioCircleActive {
+    border-color: $color-primary;
+  }
+}
+
+.radioDot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: $radius-round;
+  background: $color-primary;
+}
+
+.radioLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+  transition: color $transition-fast;
+
+  &.radioLabelActive {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.rateGroup {
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-sm;
+  padding: $spacing-sm 0 $spacing-md;
+}
+
+.rateItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72rpx;
+  border-radius: $radius-md;
+  border: 2rpx solid $color-border;
+  background: $color-bg-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &.rateItemActive {
+    border-color: $color-primary;
+    background: $color-info-light;
+  }
+}
+
+.rateLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+  transition: color $transition-fast;
+
+  &.rateLabelActive {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.complianceFooter {
+  margin: $spacing-lg $page-padding $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.complianceIcon {
+  font-size: 36rpx;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.complianceText {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  line-height: $line-height-loose;
+}
+
+.bottomSpace {
+  height: calc(40rpx + env(safe-area-inset-bottom));
+}

@@ -9,9 +9,14 @@ const defaultA11y: AccessibilityConfig = {
   enabled: false,
   highContrast: false,
   largeFont: false,
+  fontScale: 'standard',
+  colorFilter: 'none',
   voiceNavigation: false,
   speakRate: 1.0,
-  autoReadContent: false
+  autoReadContent: false,
+  operationConfirm: false,
+  largeButton: false,
+  reduceAnimation: false
 };
 
 interface AppStoreState extends AppState {
