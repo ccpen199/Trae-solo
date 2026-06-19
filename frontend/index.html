@@ -1,12 +1,40 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>家政从业者赋能工作台</title>
+    <title>may-89231 Service Console</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Local full-stack repair</p>
+          <h1>may-89231 Service Console</h1>
+          <p class="summary">Frontend, backend, and SQLite are running inside this project path.</p>
+        </div>
+        <div class="status-pill" id="connectionStatus">Checking API</div>
+      </section>
+
+      <section class="grid" id="metricGrid" aria-label="Service metrics"></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Runtime</p>
+            <h2>Repair workflow</h2>
+          </div>
+          <button id="refreshButton" type="button">Refresh</button>
+        </div>
+        <div class="table" id="workItems"></div>
+      </section>
+
+      <section class="panel compact">
+        <h2>API response</h2>
+        <pre id="apiPayload">Loading...</pre>
+      </section>
+    </main>
+    <script src="./app.js"></script>
   </body>
 </html>

@@ -1,0 +1,10 @@
+{
+  "name": "may-89231",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "bash scripts/start.sh",
+    "start:backend": "python3 backend/server.py",
+    "start:frontend": "python3 scripts/frontend_server.py"
+  }
+}
