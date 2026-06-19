@@ -1,6 +1,8 @@
-import { mockDonors } from '../../data/mockData';
-import { Building2, DollarSign, Award, Search, Plus, ExternalLink, X, Upload, ChevronDown, ChevronUp, Users, TrendingUp } from 'lucide-react';
+import type { FC } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { mockDonors } from '../../data/mockData';
+import { Building2, DollarSign, Award, Search, Plus, ExternalLink, X, Upload, ChevronDown, ChevronUp, Users, TrendingUp, GraduationCap, MessageCircle } from 'lucide-react';
 
 const industryOptions = ['互联网', '通信技术', '金融', '教育', '医疗', '制造业', '公益组织', '其他'];
 
@@ -62,7 +64,8 @@ const mockDonationTrends: Record<string, { month: string; amount: number }[]> = 
   ],
 };
 
-const Donors = () => {
+const Donors: FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [expandedDonorId, setExpandedDonorId] = useState<string | null>(null);
@@ -144,24 +147,71 @@ const Donors = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="relative">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="搜索捐赠方名称、行业..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
+      <div className="bg-gradient-to-r from-pink-50 to-rose-50 border-2 border-pink-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center flex-shrink-0">
+              <Building2 className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-pink-900">捐赠方入驻管理</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-pink-100 text-pink-700 text-xs font-medium rounded-full">1. 邀请入驻</span>
+                <span className="text-pink-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">2. 发布资助项目</span>
+                <span className="text-pink-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">3. 学生申请</span>
+                <span className="text-pink-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">4. 匿名故事沉淀</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/scholarship/projects')} className="flex items-center gap-1.5 px-4 py-2.5 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors shadow-sm">
+              <GraduationCap className="w-4 h-4" />
+              发布资助项目
+            </button>
+            <button onClick={() => navigate('/scholarship/stories')} className="flex items-center gap-1.5 px-4 py-2.5 bg-yellow-600 text-white text-sm font-medium rounded-lg hover:bg-yellow-700 transition-colors shadow-sm">
+              <MessageCircle className="w-4 h-4" />
+              查看励志故事
+            </button>
+          </div>
         </div>
-        <button
-          onClick={() => setShowInviteModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          邀请捐赠方
-        </button>
+      </div>
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="搜索捐赠方名称、行业..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <button
+              onClick={() => navigate('/scholarship/projects')}
+              className="px-4 py-2.5 bg-purple-50 text-purple-700 border border-purple-200 text-sm font-medium rounded-lg hover:bg-purple-100 transition-colors"
+            >
+              资助项目
+            </button>
+            <button
+              onClick={() => navigate('/scholarship/stories')}
+              className="px-4 py-2.5 bg-yellow-50 text-yellow-700 border border-yellow-200 text-sm font-medium rounded-lg hover:bg-yellow-100 transition-colors"
+            >
+              励志故事
+            </button>
+          </div>
+          <button
+            onClick={() => setShowInviteModal(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            邀请捐赠方
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4">

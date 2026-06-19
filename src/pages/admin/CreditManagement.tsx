@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Team } from '../../types';
 import type { LucideIcon } from 'lucide-react';
 import { mockStudents } from '../../data/mockData';
@@ -21,6 +22,7 @@ import {
   BookOpen,
   FileText,
   Users,
+  Building2,
   ThumbsUp,
   ThumbsDown,
   AlertCircle,
@@ -42,6 +44,7 @@ const creditProgressMap: Record<
 };
 
 const CreditManagement = () => {
+  const navigate = useNavigate();
   const { teams, updateTeam, checkIns, logs } = useApp();
   const [activeTab, setActiveTab] = useState<TabKey>('team');
   const [searchTerm, setSearchTerm] = useState('');
@@ -189,6 +192,40 @@ const CreditManagement = () => {
 
   return (
     <div className="space-y-6">
+      <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
+              <Award className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-red-900">学分认定工作台</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">团队申报</span>
+                <span className="text-red-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">打卡+日志</span>
+                <span className="text-red-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">时长确认</span>
+                <span className="text-red-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-red-200 text-red-800 text-xs font-bold rounded-full ring-2 ring-red-400">审核认定</span>
+                <span className="text-red-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-200 text-green-800 text-xs font-medium rounded-full">第二课堂成绩单</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/sanxiaxiang/teams')} className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+              <Users className="w-4 h-4" />
+              团队申报
+            </button>
+            <button onClick={() => navigate('/admin/departments')} className="flex items-center gap-1.5 px-4 py-2.5 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors shadow-sm">
+              <Building2 className="w-4 h-4" />
+              院系管理
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-6 text-white">
         <div className="flex items-center justify-between">
           <div>

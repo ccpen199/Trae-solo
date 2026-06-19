@@ -20,6 +20,8 @@ import {
   BookOpen,
   MessageSquare,
   User,
+  MapPin,
+  FileText,
 } from 'lucide-react';
 
 const statusMap: Record<
@@ -206,63 +208,104 @@ const TeamList = () => {
 
   return (
     <div className="space-y-6">
-      {/* URL参数过滤提示条 */}
+      {/* URL参数过滤提示条 - 强化醒目版本 */}
       {hasUrlFilter && (
-        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg flex items-center justify-between">
-          <span>
-            当前展示「{urlParams.dept || urlParams.base}」的所有团队，共 {filteredTeams.length} 支
+        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-300 text-blue-900 px-5 py-4 rounded-xl flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+              <Filter className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-base font-bold text-blue-900">
+                📍 数据来源追溯：「{urlParams.dept || urlParams.base}」
+              </p>
+              <p className="text-sm text-blue-700 mt-0.5">
+                共筛选出 <span className="font-bold">{filteredTeams.length}</span> 支团队
+                <span className="mx-2 text-blue-400">|</span>
+                可直接查看学籍、成员、打卡、日志证据链
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/sanxiaxiang/checkin')}
+              className="flex items-center gap-1.5 px-3 py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              查看打卡记录
+            </button>
+            <button
+              onClick={() => navigate('/sanxiaxiang/logs')}
+              className="flex items-center gap-1.5 px-3 py-2 bg-orange-600 text-white text-xs font-medium rounded-lg hover:bg-orange-700 transition-colors shadow-sm"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              查看实践日志
+            </button>
             <button
               onClick={() => navigate('/sanxiaxiang/teams')}
-              className="ml-2 text-blue-600 hover:text-blue-800 underline font-medium"
+              className="flex items-center gap-1.5 px-3 py-2 bg-gray-200 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-300 transition-colors"
             >
+              <X className="w-3.5 h-3.5" />
               清除筛选
             </button>
-          </span>
-          <button
-            onClick={() => navigate('/sanxiaxiang/teams')}
-            className="text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          </div>
         </div>
       )}
 
-      {/* 顶部操作栏 */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="搜索团队名称、项目、负责人..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+      {/* 顶部操作栏 - 强化版本 */}
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="搜索团队名称、项目、负责人..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-72 h-11 pl-9 pr-4 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white transition-all"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-gray-400" />
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="h-11 px-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white transition-all"
+              >
+                <option value="all">全部状态</option>
+                {Object.entries(statusMap).map(([k, v]) => (
+                  <option key={k} value={k}>
+                    {v.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/sanxiaxiang/checkin')}
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-green-50 text-green-700 text-sm font-medium rounded-lg hover:bg-green-100 transition-colors border border-green-200"
             >
-              <option value="all">全部状态</option>
-              {Object.entries(statusMap).map(([k, v]) => (
-                <option key={k} value={k}>
-                  {v.label}
-                </option>
-              ))}
-            </select>
+              <MapPin className="w-4 h-4" />
+              行程打卡
+            </button>
+            <button
+              onClick={() => navigate('/sanxiaxiang/logs')}
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-orange-50 text-orange-700 text-sm font-medium rounded-lg hover:bg-orange-100 transition-colors border border-orange-200"
+            >
+              <FileText className="w-4 h-4" />
+              实践日志
+            </button>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg"
+            >
+              <Plus className="w-4 h-4" />
+              新建团队申报
+            </button>
           </div>
         </div>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-        >
-          <Plus className="w-4 h-4" />
-          新建团队
-        </button>
       </div>
 
       {/* 状态概览卡片 */}

@@ -87,6 +87,38 @@ const DepartmentManagement = () => {
         </div>
       )}
 
+      <div className="bg-gradient-to-r from-gray-50 to-slate-50 border-2 border-gray-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center flex-shrink-0">
+              <Building2 className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">院系数据管理</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">团队申报</span>
+                <span className="text-gray-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">指导老师审核</span>
+                <span className="text-gray-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">院系审核</span>
+                <span className="text-gray-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">学分认定</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/sanxiaxiang/teams')} className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+              <Users className="w-4 h-4" />
+              团队申报
+            </button>
+            <button onClick={() => navigate('/admin/credits')} className="flex items-center gap-1.5 px-4 py-2.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors shadow-sm">
+              <Award className="w-4 h-4" />
+              学分认定
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* 展开的院系详情面板 */}
       {expandedDept && reviewStats && (
         <div className="bg-white rounded-xl shadow-sm border border-blue-200 overflow-hidden">

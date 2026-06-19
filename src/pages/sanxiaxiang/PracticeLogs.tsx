@@ -11,13 +11,14 @@ import {
   Search,
   Filter,
   Eye,
-  Plus,
   BookOpen,
   X,
   Loader2,
   CheckCircle,
   AlertCircle,
   ArrowRight,
+  Users,
+  MapPin,
 } from 'lucide-react';
 
 const keywordMappings: { pattern: RegExp; keyword: string }[] = [
@@ -221,62 +222,104 @@ const PracticeLogs = () => {
 
   return (
     <div className="space-y-6">
-      {/* URL参数过滤提示条 */}
+      {/* URL参数过滤提示条 - 强化醒目版本 */}
       {hasUrlFilter && (
-        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg flex items-center justify-between">
-          <span>
-            当前展示「{filterLabel}」的实践日志，共 {filteredLogs.length} 篇
+        <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-300 text-orange-900 px-5 py-4 rounded-xl flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-base font-bold text-orange-900">
+                📍 数据来源追溯：「{filterLabel}」
+              </p>
+              <p className="text-sm text-orange-700 mt-0.5">
+                共筛选出 <span className="font-bold">{filteredLogs.length}</span> 篇实践日志
+                <span className="mx-2 text-orange-400">|</span>
+                支持AI摘要生成 + 服务关键词自动沉淀至团队成果
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/sanxiaxiang/teams')}
+              className="flex items-center gap-1.5 px-3 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            >
+              <Users className="w-3.5 h-3.5" />
+              查看团队信息
+            </button>
+            <button
+              onClick={() => navigate('/sanxiaxiang/checkin')}
+              className="flex items-center gap-1.5 px-3 py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              查看打卡记录
+            </button>
             <button
               onClick={() => navigate('/sanxiaxiang/logs')}
-              className="ml-2 text-blue-600 hover:text-blue-800 underline font-medium"
+              className="flex items-center gap-1.5 px-3 py-2 bg-gray-200 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-300 transition-colors"
             >
+              <X className="w-3.5 h-3.5" />
               清除筛选
             </button>
-          </span>
-          <button
-            onClick={() => navigate('/sanxiaxiang/logs')}
-            className="text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          </div>
         </div>
       )}
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="搜索日志内容、团队、作者..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+      {/* 顶部操作栏 - 强化版本 */}
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="搜索日志内容、团队、作者、关键词..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-72 h-11 pl-9 pr-4 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent focus:bg-white transition-all"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-gray-400" />
+              <select
+                value={selectedTeam}
+                onChange={(e) => setSelectedTeam(e.target.value)}
+                className="h-11 px-3 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent focus:bg-white transition-all"
+              >
+                <option value="all">全部团队</option>
+                {teams.map((team) => (
+                  <option key={team.id} value={team.id}>
+                    {team.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <select
-              value={selectedTeam}
-              onChange={(e) => setSelectedTeam(e.target.value)}
-              className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/sanxiaxiang/teams')}
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-50 text-blue-700 text-sm font-medium rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
             >
-              <option value="all">全部团队</option>
-              {teams.map((team) => (
-                <option key={team.id} value={team.id}>
-                  {team.name}
-                </option>
-              ))}
-            </select>
+              <Users className="w-4 h-4" />
+              团队申报
+            </button>
+            <button
+              onClick={() => navigate('/sanxiaxiang/checkin')}
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-green-50 text-green-700 text-sm font-medium rounded-lg hover:bg-green-100 transition-colors border border-green-200"
+            >
+              <MapPin className="w-4 h-4" />
+              行程打卡
+            </button>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-lg"
+            >
+              <Sparkles className="w-4 h-4" />
+              AI撰写实践日志
+            </button>
           </div>
         </div>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-        >
-          <Plus className="w-4 h-4" />
-          撰写日志
-        </button>
       </div>
 
       <div className="grid grid-cols-4 gap-4">

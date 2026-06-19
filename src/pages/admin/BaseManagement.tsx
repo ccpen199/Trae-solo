@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { PracticeBase, CheckInRecord } from '../../types';
 import { mockBases, mockCheckIns, mockStats } from '../../data/mockData';
 import {
@@ -23,6 +24,7 @@ import {
   ChevronUp,
   CalendarRange,
   Users,
+  Award,
   TrendingUp,
 } from 'lucide-react';
 import {
@@ -90,6 +92,7 @@ const mockReviews: Review[] = [
 ];
 
 const BaseManagement = () => {
+  const navigate = useNavigate();
   const [bases, setBases] = useState<PracticeBase[]>(mockBases);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
@@ -257,6 +260,38 @@ const BaseManagement = () => {
           <span className="text-sm font-medium">{toast.message}</span>
         </div>
       )}
+
+      <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center flex-shrink-0">
+              <Building2 className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-emerald-900">实践基地管理</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-200 text-emerald-800 text-xs font-bold rounded-full ring-2 ring-emerald-400">1. 基地入驻</span>
+                <span className="text-emerald-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">2. 发布岗位</span>
+                <span className="text-emerald-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">3. 打卡复查</span>
+                <span className="text-emerald-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">4. 满意度评价</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/sanxiaxiang/checkin')} className="flex items-center gap-1.5 px-4 py-2.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors shadow-sm">
+              <MapPin className="w-4 h-4" />
+              打卡记录
+            </button>
+            <button onClick={() => navigate('/admin/credits')} className="flex items-center gap-1.5 px-4 py-2.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors shadow-sm">
+              <Award className="w-4 h-4" />
+              学分认定
+            </button>
+          </div>
+        </div>
+      </div>
 
       {showAddBaseModal && (
         <div className={modalOverlayClass}>

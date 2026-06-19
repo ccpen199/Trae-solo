@@ -1,7 +1,9 @@
 import type { ScholarshipStory } from '../../types';
+import type { FC } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { mockScholarshipStories, mockScholarships } from '../../data/mockData';
-import { Heart, MessageCircle, Filter, Search, User, Plus, X, Share2, Send } from 'lucide-react';
+import { Heart, MessageCircle, Filter, Search, User, Plus, X, Share2, Send, Building2, GraduationCap } from 'lucide-react';
 
 interface Comment {
   id: string;
@@ -28,7 +30,8 @@ const mockComments: Record<string, Comment[]> = {
   ],
 };
 
-const ScholarshipStories = () => {
+const ScholarshipStories: FC = () => {
+  const navigate = useNavigate();
   const [selectedScholarship, setSelectedScholarship] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
@@ -158,41 +161,86 @@ const ScholarshipStories = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="搜索故事内容、昵称..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+      <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-yellow-600 flex items-center justify-center flex-shrink-0">
+              <MessageCircle className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-yellow-900">受助学生匿名故事</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-pink-100 text-pink-700 text-xs font-medium rounded-full">捐赠方入驻</span>
+                <span className="text-yellow-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">发布资助项目</span>
+                <span className="text-yellow-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">学生申请</span>
+                <span className="text-yellow-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-yellow-200 text-yellow-800 text-xs font-bold rounded-full ring-2 ring-yellow-400">4. 故事沉淀</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <select
-              value={selectedScholarship}
-              onChange={(e) => setSelectedScholarship(e.target.value)}
-              className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">全部奖学金</option>
-              {mockScholarships.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/scholarship/donors')} className="flex items-center gap-1.5 px-4 py-2.5 bg-pink-600 text-white text-sm font-medium rounded-lg hover:bg-pink-700 transition-colors shadow-sm">
+              <Building2 className="w-4 h-4" />
+              捐赠方入驻
+            </button>
+            <button onClick={() => navigate('/scholarship/projects')} className="flex items-center gap-1.5 px-4 py-2.5 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors shadow-sm">
+              <GraduationCap className="w-4 h-4" />
+              资助项目
+            </button>
           </div>
         </div>
-        <button
-          onClick={() => setShowShareModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          分享我的故事
-        </button>
+      </div>
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="搜索故事内容、昵称..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-gray-400" />
+              <select
+                value={selectedScholarship}
+                onChange={(e) => setSelectedScholarship(e.target.value)}
+                className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="all">全部奖学金</option>
+                {mockScholarships.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              onClick={() => navigate('/scholarship/donors')}
+              className="px-4 py-2.5 bg-pink-50 text-pink-700 border border-pink-200 text-sm font-medium rounded-lg hover:bg-pink-100 transition-colors"
+            >
+              捐赠方入驻
+            </button>
+            <button
+              onClick={() => navigate('/scholarship/projects')}
+              className="px-4 py-2.5 bg-purple-50 text-purple-700 border border-purple-200 text-sm font-medium rounded-lg hover:bg-purple-100 transition-colors"
+            >
+              资助项目
+            </button>
+          </div>
+          <button
+            onClick={() => setShowShareModal(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            分享我的故事
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4">

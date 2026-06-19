@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { mockNews } from '../data/mockData';
 import {
@@ -49,7 +50,7 @@ interface ToastState {
   type: 'success' | 'info';
 }
 
-const News = () => {
+const News: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubject, setSelectedSubject] = useState<string[]>(['计算机类']);
   const [searchTerm, setSearchTerm] = useState('');
@@ -281,6 +282,40 @@ const News = () => {
         </div>
       )}
 
+      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 border-2 border-cyan-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-cyan-600 flex items-center justify-center flex-shrink-0">
+              <Newspaper className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-cyan-900">学科资讯引擎</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-cyan-200 text-cyan-800 text-xs font-bold rounded-full ring-2 ring-cyan-400">1. 设置学科偏好</span>
+                <span className="text-cyan-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">2. 智能推送资讯</span>
+                <span className="text-cyan-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">3. 标签云筛选</span>
+                <span className="text-cyan-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">4. 阅读沉淀</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                const prefBtn = document.getElementById('preference-settings-btn');
+                if (prefBtn) prefBtn.click();
+              }}
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-cyan-600 text-white text-sm font-medium rounded-lg hover:bg-cyan-700 transition-colors shadow-sm"
+            >
+              <Settings className="w-4 h-4" />
+              设置学科偏好
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 flex-1">
           <div className="relative flex-1 max-w-md">
@@ -300,7 +335,7 @@ const News = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <Tag className="w-4 h-4 text-gray-500" />
@@ -308,9 +343,9 @@ const News = () => {
           </div>
           <button
             onClick={handleOpenPreferenceModal}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
           >
-            <Settings className="w-3.5 h-3.5" />
+            <Settings className="w-4 h-4" />
             设置偏好
           </button>
         </div>
@@ -351,23 +386,25 @@ const News = () => {
             })}
           </div>
         </div>
-      </div>
 
-      <div className="flex gap-4 overflow-x-auto pb-2">
-        {categoryTags.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setSelectedCategory(cat.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
-              selectedCategory === cat.id
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
-            }`}
-          >
-            <span>{cat.icon}</span>
-            <span className="text-sm font-medium">{cat.name}</span>
-          </button>
-        ))}
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="flex gap-4 overflow-x-auto pb-1">
+            {categoryTags.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
+                  selectedCategory === cat.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
+                }`}
+              >
+                <span>{cat.icon}</span>
+                <span className="text-sm font-medium">{cat.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-5 gap-6">

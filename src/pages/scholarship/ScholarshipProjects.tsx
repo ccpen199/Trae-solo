@@ -1,5 +1,7 @@
 import type { Scholarship } from '../../types';
+import type { FC } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { mockScholarships, mockDonors } from '../../data/mockData';
 import {
   GraduationCap,
@@ -13,6 +15,7 @@ import {
   X,
   Building2,
   UserCheck,
+  MessageCircle,
 } from 'lucide-react';
 
 const mockApplicantCounts: Record<string, number> = {
@@ -21,7 +24,8 @@ const mockApplicantCounts: Record<string, number> = {
   '3': 234,
 };
 
-const ScholarshipProjects = () => {
+const ScholarshipProjects: FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [showPublishModal, setShowPublishModal] = useState(false);
@@ -103,38 +107,83 @@ const ScholarshipProjects = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="搜索奖学金项目、捐赠方..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-purple-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
+              <GraduationCap className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-purple-900">资助项目管理</h3>
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-pink-100 text-pink-700 text-xs font-medium rounded-full">捐赠方入驻</span>
+                <span className="text-purple-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-200 text-purple-800 text-xs font-bold rounded-full ring-2 ring-purple-400">2. 发布项目</span>
+                <span className="text-purple-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">3. 学生申请</span>
+                <span className="text-purple-300">→</span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">4. 资助发放</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-gray-400" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">全部状态</option>
-              <option value="ongoing">进行中</option>
-              <option value="closed">已结束</option>
-            </select>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/scholarship/donors')} className="flex items-center gap-1.5 px-4 py-2.5 bg-pink-600 text-white text-sm font-medium rounded-lg hover:bg-pink-700 transition-colors shadow-sm">
+              <Building2 className="w-4 h-4" />
+              捐赠方入驻
+            </button>
+            <button onClick={() => navigate('/scholarship/stories')} className="flex items-center gap-1.5 px-4 py-2.5 bg-yellow-600 text-white text-sm font-medium rounded-lg hover:bg-yellow-700 transition-colors shadow-sm">
+              <MessageCircle className="w-4 h-4" />
+              励志故事
+            </button>
           </div>
         </div>
-        <button
-          onClick={() => setShowPublishModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          发布新项目
-        </button>
+      </div>
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="搜索奖学金项目、捐赠方..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-gray-400" />
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="all">全部状态</option>
+                <option value="ongoing">进行中</option>
+                <option value="closed">已结束</option>
+              </select>
+            </div>
+            <button
+              onClick={() => navigate('/scholarship/donors')}
+              className="px-4 py-2.5 bg-pink-50 text-pink-700 border border-pink-200 text-sm font-medium rounded-lg hover:bg-pink-100 transition-colors"
+            >
+              捐赠方入驻
+            </button>
+            <button
+              onClick={() => navigate('/scholarship/stories')}
+              className="px-4 py-2.5 bg-yellow-50 text-yellow-700 border border-yellow-200 text-sm font-medium rounded-lg hover:bg-yellow-100 transition-colors"
+            >
+              励志故事
+            </button>
+          </div>
+          <button
+            onClick={() => setShowPublishModal(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            发布新项目
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 gap-4">
