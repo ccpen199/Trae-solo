@@ -243,7 +243,7 @@ function seed() {
   `);
 
   const completedSessions = db.prepare(`
-    SELECT s.id, s.station_id, s.amount, st.operator_id, s.created_at
+    SELECT s.id, s.user_id, s.station_id, s.amount, st.operator_id, s.created_at
     FROM charging_sessions s
     JOIN charging_stations st ON s.station_id = st.id
     WHERE s.status != 'charging'
