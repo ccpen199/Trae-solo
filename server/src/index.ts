@@ -26,6 +26,10 @@ app.get('/health', (req, res) => {
   res.json(success({ status: 'ok', timestamp: new Date().toISOString() }));
 });
 
+app.get('/api/health', (req, res) => {
+  res.json(success({ status: 'ok', timestamp: new Date().toISOString() }));
+});
+
 app.use('/api/user', userRoutes);
 app.use('/api/task', taskRoutes);
 app.use('/api/coin', coinRoutes);
@@ -38,11 +42,11 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   res.status(500).json({ code: -1, message: '服务器内部错误' });
 });
 
-app.listen(config.port, () => {
-  console.log(`Growth Platform Server running on port ${config.port}`);
-  console.log(`Health check: http://localhost:${config.port}/health`);
-  console.log(`Admin API: http://localhost:${config.port}/api/admin`);
-  console.log(`User API: http://localhost:${config.port}/api/user`);
+app.listen(config.port, config.host, () => {
+  console.log(`Growth Platform Server running on http://${config.host}:${config.port}`);
+  console.log(`Health check: http://${config.host}:${config.port}/api/health`);
+  console.log(`Admin API: http://${config.host}:${config.port}/api/admin`);
+  console.log(`User API: http://${config.host}:${config.port}/api/user`);
 });
 
 export default app;

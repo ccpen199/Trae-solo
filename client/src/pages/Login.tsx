@@ -1,20 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store/userStore';
+import { useToast } from '../components/ToastProvider';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const login = useUserStore((s) => s.login);
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = async () => {
+    const name = nickname.trim();
+    if (!name) {
+      setError('请输入昵称');
+      return;
+    }
+    if (name.length < 1 || name.length > 20) {
+      setError('昵称长度需在1-20个字符之间');
+      return;
+    }
+
     setLoading(true);
+    setError('');
     try {
-      await login({ nickname: nickname || '新用户' });
-      navigate('/');
+      await login({ nickname: name });
+      toast.show(`欢迎回来，${name}！`, 2000);
+      navigate('/', { replace: true });
     } catch (e: any) {
-      alert(e.message);
+      const msg = e?.message || '登录失败，请重试';
+      setError(msg);
+      toast.show(msg, 2500);
     } finally {
       setLoading(false);
     }
@@ -22,24 +39,42 @@ const Login: React.FC = () => {
 
   const handleWechatLogin = async () => {
     setLoading(true);
+    setError('');
+
     try {
+      toast.show('正在拉起微信授权...', 2000);
+
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
       const openid = 'wx_' + Math.random().toString(36).substr(2, 16);
+      const wxNickname = '微信用户_' + Math.random().toString(36).substr(2, 4);
+
       await login({
         openid,
-        nickname: '微信用户_' + Math.random().toString(36).substr(2, 4),
+        nickname: wxNickname,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${openid}`,
       });
-      navigate('/');
+
+      toast.show(`微信授权成功，欢迎 ${wxNickname}`, 2000);
+      navigate('/', { replace: true });
     } catch (e: any) {
-      alert(e.message);
+      const msg = e?.message || '微信登录失败，请重试';
+      setError(msg);
+      toast.show(msg, 2500);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !loading) {
+      handleLogin();
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-100 via-orange-50 to-white px-6 pt-24">
-      <div className="text-center mb-12">
+    <div className="min-h-screen bg-gradient-to-b from-orange-100 via-orange-50 to-white px-6 pt-20">
+      <div className="text-center mb-10">
         <div className="text-7xl mb-4 bounce-in">🪙</div>
         <h1 className="text-4xl font-bold text-gradient mb-2">赚赚</h1>
         <p className="text-gray-500">走路赚钱 · 任务赚钱 · 看视频赚钱</p>
@@ -50,16 +85,35 @@ const Login: React.FC = () => {
           <label className="text-sm text-gray-500 mb-2 block">输入昵称(游客登录)</label>
           <input
             value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
+            onChange={(e) => {
+              setNickname(e.target.value);
+              if (error) setError('');
+            }}
+            onKeyDown={handleKeyDown}
             placeholder="请输入昵称"
-            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-primary mb-4"
+            disabled={loading}
+            className={`w-full px-4 py-3 rounded-xl bg-gray-50 border ${
+              error ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-primary'
+            } focus:outline-none mb-2 transition-colors`}
           />
+          {error && (
+            <div className="text-red-500 text-xs mb-3 flex items-center gap-1">
+              <span>⚠️</span> {error}
+            </div>
+          )}
           <button
             onClick={handleLogin}
             disabled={loading}
-            className="btn-primary w-full text-center"
+            className={`btn-primary w-full text-center ${loading ? 'opacity-60' : ''}`}
           >
-            {loading ? '登录中...' : '开始赚钱'}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                登录中...
+              </span>
+            ) : (
+              '开始赚钱'
+            )}
           </button>
         </div>
 
@@ -72,15 +126,27 @@ const Login: React.FC = () => {
         <button
           onClick={handleWechatLogin}
           disabled={loading}
-          className="w-full bg-[#07C160] text-white font-semibold rounded-full py-3.5 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+          className={`w-full bg-[#07C160] text-white font-semibold rounded-full py-3.5 flex items-center justify-center gap-2 active:scale-95 transition-transform ${
+            loading ? 'opacity-60 pointer-events-none' : ''
+          }`}
         >
-          <span className="text-xl">💬</span>
-          微信一键登录
+          {loading ? (
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              授权中...
+            </span>
+          ) : (
+            <>
+              <span className="text-xl">💬</span>
+              微信一键登录
+            </>
+          )}
         </button>
       </div>
 
-      <div className="mt-16 text-center text-xs text-gray-400">
+      <div className="mt-12 text-center text-xs text-gray-400 space-y-1">
         <p>登录即代表同意《用户协议》和《隐私政策》</p>
+        <p className="text-gray-300">游客账号仅限本设备使用</p>
       </div>
     </div>
   );

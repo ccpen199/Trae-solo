@@ -151,7 +151,7 @@ const Home: React.FC = () => {
             </div>
             <button
               onClick={handleClaimSteps}
-              disabled={steps.is_claimed || steps.rewardCoins <= 0}
+              disabled={Boolean(steps.is_claimed || steps.rewardCoins <= 0)}
               className={`px-5 py-2 rounded-full text-sm font-semibold ${steps.is_claimed || steps.rewardCoins <= 0 ? 'bg-gray-100 text-gray-400' : 'bg-primary text-white active:scale-95'} transition-transform`}
             >
               {steps.is_claimed ? '已领取' : steps.rewardCoins > 0 ? '领取金币' : '加油走路'}

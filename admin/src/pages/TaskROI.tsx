@@ -36,7 +36,7 @@ const TaskROI: React.FC = () => {
     { title: '完成次数', dataIndex: 'completionCount', render: (v: number) => v.toLocaleString(), sorter: (a: any, b: any) => a.completionCount - b.completionCount },
     { title: '参与用户数', dataIndex: 'uniqueUsers', render: (v: number) => v.toLocaleString(), sorter: (a: any, b: any) => a.uniqueUsers - b.uniqueUsers },
     { title: '发放金币', dataIndex: 'totalCoins', render: (v: number) => <span style={{ color: '#f5222d' }}>{v.toLocaleString()}</span> },
-    { title: '消耗成本(元)', dataIndex: 'cost', render: (v: number) => `¥${parseFloat(v).toFixed(2)}` },
+    { title: '消耗成本(元)', dataIndex: 'cost', render: (v: number) => `¥${Number(v).toFixed(2)}` },
     { title: 'CPA单客成本', dataIndex: 'cpa', render: (v: string) => <span style={{ color: v && parseFloat(v) > 0.1 ? '#f5222d' : '#52c41a', fontWeight: 600 }}>¥{v}</span> },
   ];
 
