@@ -13,10 +13,16 @@ import {
   Calculator,
   Filter,
   ArrowUpDown,
+  History,
+  Clock,
+  User,
+  Zap,
+  X,
+  FileText,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { mockPricingRules } from '@/data/mockData';
-import type { Category, PricingRule } from '../../../shared/types';
+import { useStore } from '@/store/useStore';
+import type { Category, PricingRule, PricingChangeRecord } from '../../../shared/types';
 
 type TabKey = Category | 'all';
 
@@ -40,6 +46,8 @@ const fieldLabelMap: Record<string, string> = {
   brand: '品牌',
   model: '型号',
   quantity: '数量',
+  material: '材质',
+  isbn: 'ISBN',
 };
 
 const operatorLabelMap: Record<string, string> = {
@@ -54,18 +62,34 @@ const operatorLabelMap: Record<string, string> = {
 
 export default function PricingList() {
   const navigate = useNavigate();
+  const pricingRules = useStore((s) => s.pricingRules);
+  const updatePricingRule = useStore((s) => s.updatePricingRule);
+  const deletePricingRule = useStore((s) => s.deletePricingRule);
   const [activeTab, setActiveTab] = useState<TabKey>('all');
-  const [rules, setRules] = useState<PricingRule[]>(mockPricingRules);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [historyRule, setHistoryRule] = useState<PricingRule | null>(null);
 
-  const filteredRules = rules.filter((r) => {
+  const filteredRules = pricingRules.filter((r) => {
     if (activeTab === 'all') return true;
     return r.category === activeTab;
   });
 
   const toggleRule = (id: string) => {
-    setRules((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, enabled: !r.enabled } : r))
-    );
+    const rule = pricingRules.find((r) => r.id === id);
+    if (rule) {
+      updatePricingRule(id, { enabled: !rule.enabled });
+    }
+  };
+
+  const handleDeleteRule = (id: string) => {
+    if (window.confirm('确定要删除这条定价规则吗？')) {
+      deletePricingRule(id);
+    }
+  };
+
+  const openHistory = (rule: PricingRule) => {
+    setHistoryRule(rule);
+    setShowHistoryModal(true);
   };
 
   const getFormulaDesc = (rule: PricingRule) => {
@@ -78,6 +102,12 @@ export default function PricingList() {
       parts.push(multiplierDesc);
     }
     return parts.join('，');
+  };
+
+  const formatChangeValue = (val: unknown): string => {
+    if (val === null || val === undefined) return '-';
+    if (typeof val === 'object') return JSON.stringify(val);
+    return String(val);
   };
 
   return (
@@ -99,7 +129,7 @@ export default function PricingList() {
       <div className="card p-1.5 mb-6 inline-flex">
         {tabs.map(({ key, label, icon: Icon }) => {
           const isActive = activeTab === key;
-          const count = key === 'all' ? rules.length : rules.filter((r) => r.category === key).length;
+          const count = key === 'all' ? pricingRules.length : pricingRules.filter((r) => r.category === key).length;
           return (
             <button
               key={key}
@@ -221,6 +251,21 @@ export default function PricingList() {
                       </div>
                     </div>
                   </div>
+
+                  <div className="grid grid-cols-3 gap-2 pt-1">
+                    <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+                      <Clock className="w-3.5 h-3.5 text-neutral-400" />
+                      <span className="truncate">{rule.lastModifiedAt?.split(' ')[0] || '-'}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+                      <User className="w-3.5 h-3.5 text-neutral-400" />
+                      <span className="truncate">{rule.lastModifiedBy?.split('-')[1] || '-'}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+                      <Zap className="w-3.5 h-3.5 text-amber-500" />
+                      <span>{rule.triggerCount ?? 0}次</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2 pt-4 border-t border-neutral-100">
@@ -231,14 +276,88 @@ export default function PricingList() {
                     <Edit2 className="w-4 h-4" />
                     编辑
                   </button>
-                  <button className="btn-secondary !py-2 !px-3 text-sm gap-1.5 text-red-500 hover:!text-red-500 hover:!border-red-300 hover:!bg-red-50">
+                  <button
+                    onClick={() => openHistory(rule)}
+                    className="btn-secondary !py-2 !px-3 text-sm gap-1.5 text-blue-600 hover:!text-blue-600 hover:!border-blue-300 hover:!bg-blue-50"
+                  >
+                    <History className="w-4 h-4" />
+                    变更
+                  </button>
+                  <button
+                    onClick={() => handleDeleteRule(rule.id)}
+                    className="btn-secondary !py-2 !px-3 text-sm gap-1.5 text-red-500 hover:!text-red-500 hover:!border-red-300 hover:!bg-red-50"
+                  >
                     <Trash2 className="w-4 h-4" />
-                    删除
                   </button>
                 </div>
               </div>
             );
           })}
+        </div>
+      )}
+
+      {showHistoryModal && historyRule && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl mx-4 animate-slide-up max-h-[85vh] overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-neutral-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-bold text-neutral-800">规则变更记录</h3>
+                <p className="text-sm text-neutral-500 mt-0.5">{historyRule.name}</p>
+              </div>
+              <button
+                onClick={() => setShowHistoryModal(false)}
+                className="p-2 rounded-xl hover:bg-neutral-100 transition-colors"
+              >
+                <X className="w-5 h-5 text-neutral-500" />
+              </button>
+            </div>
+            <div className="p-5 overflow-y-auto flex-1">
+              {!historyRule.changeHistory || historyRule.changeHistory.length === 0 ? (
+                <div className="py-12 text-center">
+                  <History className="w-12 h-12 text-neutral-200 mx-auto mb-3" />
+                  <p className="text-neutral-400">暂无变更记录</p>
+                </div>
+              ) : (
+                <div className="relative pl-6">
+                  <div className="absolute left-2.5 top-2 bottom-2 w-0.5 bg-neutral-200" />
+                  {historyRule.changeHistory.map((record: PricingChangeRecord, idx: number) => (
+                    <div key={record.id} className="relative mb-6 last:mb-0">
+                      <div className="absolute -left-[22px] top-1.5 w-4 h-4 rounded-full bg-eco-500 border-4 border-white shadow-sm" />
+                      <div className="card p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <User className="w-4 h-4 text-neutral-400" />
+                            <span className="font-medium text-neutral-800 text-sm">{record.changedBy}</span>
+                          </div>
+                          <span className="text-xs text-neutral-400">{record.changedAt}</span>
+                        </div>
+                        <div className="space-y-2 mb-3">
+                          {Object.entries(record.after).map(([key]) => {
+                            const beforeVal = (record.before as Record<string, unknown>)[key];
+                            const afterVal = (record.after as Record<string, unknown>)[key];
+                            return (
+                              <div key={key} className="bg-neutral-50 rounded-lg p-3">
+                                <p className="text-xs font-medium text-neutral-600 mb-1.5">{key}</p>
+                                <div className="flex items-center gap-2 text-xs">
+                                  <span className="line-through text-red-500 bg-red-50 px-2 py-1 rounded">{formatChangeValue(beforeVal)}</span>
+                                  <ArrowUpDown className="w-3 h-3 text-neutral-400" />
+                                  <span className="text-eco-700 bg-eco-50 px-2 py-1 rounded font-medium">{formatChangeValue(afterVal)}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="flex items-start gap-2 pt-2 border-t border-neutral-100">
+                          <FileText className="w-4 h-4 text-neutral-400 mt-0.5 shrink-0" />
+                          <p className="text-sm text-neutral-600">{record.reason}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

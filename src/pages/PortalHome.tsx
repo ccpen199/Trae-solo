@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useStore } from "@/store/useStore";
 import {
   Shirt,
   BookOpen,
@@ -17,41 +18,6 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
-
-const stats = [
-  {
-    icon: Recycle,
-    label: "累计回收",
-    value: "12,847",
-    unit: "吨",
-    color: "text-eco-600",
-    bg: "bg-eco-50",
-  },
-  {
-    icon: Users,
-    label: "服务用户",
-    value: "386,291",
-    unit: "人",
-    color: "text-accent-blue",
-    bg: "bg-blue-50",
-  },
-  {
-    icon: Heart,
-    label: "公益捐赠",
-    value: "2,156",
-    unit: "次",
-    color: "text-accent-orange",
-    bg: "bg-orange-50",
-  },
-  {
-    icon: TrendingUp,
-    label: "减少碳排放",
-    value: "45,368",
-    unit: "吨",
-    color: "text-teal-600",
-    bg: "bg-teal-50",
-  },
-];
 
 const categories = [
   {
@@ -138,6 +104,42 @@ function AnimatedNumber({ value }: { value: string }) {
 
 export default function PortalHome() {
   const navigate = useNavigate();
+  const overview = useStore((s) => s.analytics.overview);
+
+  const stats = [
+    {
+      icon: Recycle,
+      label: "累计回收",
+      value: Math.round(overview.totalRecycledKg).toLocaleString(),
+      unit: "吨",
+      color: "text-eco-600",
+      bg: "bg-eco-50",
+    },
+    {
+      icon: Users,
+      label: "服务用户",
+      value: overview.totalUsers.toLocaleString(),
+      unit: "人",
+      color: "text-accent-blue",
+      bg: "bg-blue-50",
+    },
+    {
+      icon: Heart,
+      label: "公益捐赠",
+      value: Math.round(overview.totalDonation).toLocaleString(),
+      unit: "次",
+      color: "text-accent-orange",
+      bg: "bg-orange-50",
+    },
+    {
+      icon: TrendingUp,
+      label: "减少碳排放",
+      value: Math.round(overview.totalCarbonSavedKg).toLocaleString(),
+      unit: "吨",
+      color: "text-teal-600",
+      bg: "bg-teal-50",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-eco-50/30">

@@ -13,10 +13,11 @@ import {
   Clock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useStore } from "@/store/useStore";
 
 const categories = [
   {
-    key: "clothes",
+    key: "clothing" as const,
     label: "衣服",
     icon: Shirt,
     gradient: "from-emerald-400 to-eco-500",
@@ -38,10 +39,23 @@ const categories = [
   },
 ];
 
-const recentOrders = [
-  { id: "RC20260615001", status: "质检中", category: "衣服", price: 45, time: "2小时前" },
-  { id: "RC20260614003", status: "已打款", category: "手机", price: 1280, time: "昨天" },
-];
+const statusLabelMap: Record<string, string> = {
+  pending: "待接单",
+  assigned: "已接单",
+  picked: "已取件",
+  inspecting: "质检中",
+  priced: "已估价",
+  confirmed: "已确认",
+  paid: "已打款",
+  completed: "已完成",
+  cancelled: "已取消",
+};
+
+const categoryLabelMap: Record<string, string> = {
+  clothing: "衣服",
+  books: "图书",
+  phones: "手机",
+};
 
 function AnimatedNumber({ value, suffix = "", duration = 1500 }: { value: number; suffix?: string; duration?: number }) {
   const [display, setDisplay] = useState(0);
@@ -70,11 +84,12 @@ function AnimatedNumber({ value, suffix = "", duration = 1500 }: { value: number
 
 export default function Home() {
   const navigate = useNavigate();
-  const [category, setCategory] = useState("clothes");
+  const { currentUser, orders } = useStore();
+  const [category, setCategory] = useState("clothing");
   const [condition, setCondition] = useState(7);
 
   const estimatedPrice = (() => {
-    const base: Record<string, number> = { clothes: 3, books: 2, phones: 800 };
+    const base: Record<string, number> = { clothing: 3, books: 2, phones: 800 };
     return (base[category] * condition).toFixed(category === "phones" ? 0 : 2);
   })();
 
@@ -90,7 +105,7 @@ export default function Home() {
             <div className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1.5">
               <Leaf className="w-4 h-4 text-eco-100" />
               <span className="text-white text-sm font-medium">
-                累计减碳 <AnimatedNumber value={128.6} suffix=" kg" />
+                累计减碳 <AnimatedNumber value={currentUser?.carbonSavedKg ?? 0} suffix=" kg" />
               </span>
             </div>
             <div className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1.5">
@@ -204,7 +219,7 @@ export default function Home() {
           </button>
         </div>
         <div className="space-y-3">
-          {recentOrders.map((order) => (
+          {orders.slice(0, 2).map((order) => (
             <div
               key={order.id}
               onClick={() => navigate(`/user/orders/${order.id}`)}
@@ -212,23 +227,23 @@ export default function Home() {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-neutral-500">#{order.id}</p>
-                  <p className="mt-1 font-semibold text-neutral-800">{order.category}回收</p>
+                  <p className="text-sm text-neutral-500">#{order.orderNo}</p>
+                  <p className="mt-1 font-semibold text-neutral-800">{categoryLabelMap[order.category] ?? order.category}回收</p>
                 </div>
                 <div className="text-right">
                   <span
                     className={cn(
                       "badge",
-                      order.status === "已打款" ? "bg-eco-100 text-eco-700" : "bg-amber-100 text-amber-700"
+                      (order.status === "paid" || order.status === "completed") ? "bg-eco-100 text-eco-700" : "bg-amber-100 text-amber-700"
                     )}
                   >
-                    {order.status}
+                    {statusLabelMap[order.status] ?? order.status}
                   </span>
-                  <p className="mt-1.5 text-eco-600 font-bold">¥{order.price}</p>
+                  <p className="mt-1.5 text-eco-600 font-bold">¥{order.estimatedPrice}</p>
                 </div>
               </div>
               <div className="mt-3 pt-3 border-t border-neutral-100 flex justify-between text-xs text-neutral-400">
-                <span>{order.time}</span>
+                <span>{order.createdAt}</span>
                 <span className="flex items-center text-eco-600">查看详情 <ChevronRight className="w-3.5 h-3.5" /></span>
               </div>
             </div>
@@ -248,7 +263,7 @@ export default function Home() {
                 <Package className="w-6 h-6 text-eco-600" />
               </div>
               <p className="text-neutral-800 text-2xl font-bold">
-                <AnimatedNumber value={86.5} suffix=" kg" />
+                <AnimatedNumber value={currentUser?.totalRecycledKg ?? 0} suffix=" kg" />
               </p>
               <p className="text-xs text-neutral-500 mt-1">累计回收</p>
             </div>
@@ -257,7 +272,7 @@ export default function Home() {
                 <Leaf className="w-6 h-6 text-emerald-600" />
               </div>
               <p className="text-neutral-800 text-2xl font-bold">
-                <AnimatedNumber value={128.6} suffix=" kg" />
+                <AnimatedNumber value={currentUser?.carbonSavedKg ?? 0} suffix=" kg" />
               </p>
               <p className="text-xs text-neutral-500 mt-1">累计减碳</p>
             </div>
@@ -266,7 +281,7 @@ export default function Home() {
                 <HeartHandshake className="w-6 h-6 text-rose-500" />
               </div>
               <p className="text-neutral-800 text-2xl font-bold">
-                <AnimatedNumber value={12} />
+                <AnimatedNumber value={currentUser?.donationCount ?? 0} />
               </p>
               <p className="text-xs text-neutral-500 mt-1">捐赠次数</p>
             </div>

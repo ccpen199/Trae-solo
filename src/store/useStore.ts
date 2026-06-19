@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { AppStore } from '../../shared/types';
+import type { AppStore, DonationFlow } from '../../shared/types';
 import {
   mockUser,
   mockOrders,
@@ -154,8 +154,122 @@ export const useStore = create<AppStore>((set) => ({
 
   setAnalytics: (data) => set({ analytics: data }),
 
+  addRecycledKg: (kg) =>
+    set((state) => {
+      if (!state.analytics) return state;
+      const carbonSaved = kg * 1.5;
+      const newRecycledKg = state.analytics.overview.totalRecycledKg + kg;
+      const newCarbonSaved = state.analytics.overview.totalCarbonSavedKg + carbonSaved;
+      return {
+        analytics: {
+          ...state.analytics,
+          overview: {
+            ...state.analytics.overview,
+            totalRecycledKg: newRecycledKg,
+            totalCarbonSavedKg: newCarbonSaved,
+          },
+        },
+        currentUser: state.currentUser
+          ? {
+              ...state.currentUser,
+              totalRecycledKg: state.currentUser.totalRecycledKg + kg,
+              carbonSavedKg: state.currentUser.carbonSavedKg + carbonSaved,
+            }
+          : state.currentUser,
+      };
+    }),
+
+  addDonation: (amount, flowId, flow) =>
+    set((state) => {
+      if (!state.analytics) return state;
+      const newFlow: DonationFlow = {
+        id: flowId,
+        amount,
+        ...flow,
+      };
+      const newTotalDonation = state.analytics.overview.totalDonation + amount;
+      const existingDist = state.analytics.donation.distribution;
+      const matchedIdx = existingDist.findIndex((d) => d.name === flow.projectName);
+      let newDist = [...existingDist];
+      if (matchedIdx >= 0) {
+        newDist[matchedIdx] = {
+          ...newDist[matchedIdx],
+          value: newDist[matchedIdx].value + amount,
+        };
+      }
+      return {
+        donationFlows: [...state.donationFlows, newFlow],
+        analytics: {
+          ...state.analytics,
+          overview: {
+            ...state.analytics.overview,
+            totalDonation: newTotalDonation,
+          },
+          donation: {
+            ...state.analytics.donation,
+            totalDonation: newTotalDonation,
+            distribution: newDist,
+          },
+        },
+        currentUser: state.currentUser
+          ? {
+              ...state.currentUser,
+              donationCount: state.currentUser.donationCount + 1,
+            }
+          : state.currentUser,
+      };
+    }),
+
+  addUser: () =>
+    set((state) => {
+      if (!state.analytics) return state;
+      const newTotalUsers = state.analytics.overview.totalUsers + 1;
+      const newUserTotal = state.analytics.user.totalUsers + 1;
+      return {
+        analytics: {
+          ...state.analytics,
+          overview: {
+            ...state.analytics.overview,
+            totalUsers: newTotalUsers,
+          },
+          user: {
+            ...state.analytics.user,
+            totalUsers: newUserTotal,
+          },
+        },
+      };
+    }),
+
   setNavigation: (nav) =>
     set((state) => ({
       navigation: { ...state.navigation, ...nav },
     })),
 }));
+
+export type {
+  UserFrequencyItem,
+  UserActivityTrendItem,
+  RepurchaseData,
+  UserAnalytics,
+  CategoryVolumeItem,
+  CategoryPriceItem,
+  PhoneBrandRankItem,
+  BookCategoryItem,
+  ClothingMaterialItem,
+  CategoryStats,
+  CategoryAnalytics,
+  DonationCategory,
+  DonationDistributionItem,
+  BeneficiaryOrg,
+  DonationTraceNode,
+  DonationTraceItem,
+  DonationAnalytics,
+  RegionRankItem,
+  ChannelSourceItem,
+  QualityEfficiencyItem,
+  PayoutTimingItem,
+  CourierRatingItem,
+  OperationAnalytics,
+  AnalyticsOverview,
+  AnalyticsData,
+} from '../../shared/types';

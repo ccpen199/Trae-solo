@@ -25,13 +25,13 @@ export type LogisticsStatus = 'created' | 'picked' | 'transit' | 'delivered';
 
 export type ProcessorStatus = 'pending' | 'reviewing' | 'approved' | 'rejected';
 
-export type ReviewStatus = 'pending' | 'approved' | 'rejected';
+export type ReviewStatus = 'pending' | 'reviewing' | 'approved' | 'rejected';
 
 export type PricingOperator = 'eq' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'between';
 
 export type PricingFormulaType = 'fixed' | 'per_kg' | 'per_item' | 'percentage';
 
-export type PricingField = 'weight' | 'condition' | 'brand' | 'model' | 'quantity';
+export type PricingField = 'weight' | 'condition' | 'brand' | 'model' | 'quantity' | 'material' | 'isbn';
 
 export interface User {
   id: string;
@@ -147,6 +147,15 @@ export interface PricingFormula {
   multipliers: { field: string; factor: number }[];
 }
 
+export interface PricingChangeRecord {
+  id: string;
+  changedAt: string;
+  changedBy: string;
+  before: Partial<PricingRule>;
+  after: Partial<PricingRule>;
+  reason: string;
+}
+
 export interface PricingRule {
   id: string;
   name: string;
@@ -155,6 +164,10 @@ export interface PricingRule {
   enabled: boolean;
   conditions: PricingCondition[];
   formula: PricingFormula;
+  lastModifiedAt?: string;
+  lastModifiedBy?: string;
+  triggerCount?: number;
+  changeHistory?: PricingChangeRecord[];
 }
 
 export interface AccountInfo {
@@ -164,10 +177,20 @@ export interface AccountInfo {
   bankName?: string;
 }
 
+export interface PayoutTimelineEvent {
+  id: string;
+  time: string;
+  status: PayoutStatus;
+  description: string;
+  operator?: string;
+  evidenceUrl?: string;
+}
+
 export interface Payout {
   id: string;
   orderId: string;
   userId: string;
+  userName?: string;
   amount: number;
   method: PayoutMethod;
   status: PayoutStatus;
@@ -176,6 +199,15 @@ export interface Payout {
   createdAt: string;
   paidAt?: string;
   remark?: string;
+  operator?: string;
+  evidenceUrl?: string;
+  donationAmount?: number;
+  donationBeneficiary?: string;
+  donationProject?: string;
+  donationCertificateNo?: string;
+  failReason?: string;
+  retryCount?: number;
+  timeline?: PayoutTimelineEvent[];
 }
 
 export interface Courier {
@@ -212,6 +244,19 @@ export interface ReviewRecord {
   reviewer: string;
   comment: string;
   createdAt: string;
+  attachments?: string[];
+}
+
+export type ProcessorLogType = 'contract' | 'level_change' | 'processing_record' | 'penalty';
+
+export interface ProcessorOperationLog {
+  id: string;
+  type: ProcessorLogType;
+  time: string;
+  operator: string;
+  description: string;
+  details?: string;
+  attachmentUrl?: string;
 }
 
 export interface Processor {
@@ -227,6 +272,20 @@ export interface Processor {
   rating: number;
   reviewHistory: ReviewRecord[];
   address?: string;
+  operationLogs?: ProcessorOperationLog[];
+}
+
+export type TraceStage = 'received' | 'sorting' | 'processing' | 'recycled' | 'donated';
+
+export interface TraceFlowEvent {
+  id: string;
+  stage: TraceStage;
+  stageName: string;
+  time: string;
+  location: string;
+  operator: string;
+  description: string;
+  certificateUrl?: string;
 }
 
 export interface MaterialTrace {
@@ -238,6 +297,7 @@ export interface MaterialTrace {
   status: string;
   receivedAt: string;
   processNote?: string;
+  flowEvents?: TraceFlowEvent[];
 }
 
 export interface DonationFlow {
@@ -246,25 +306,186 @@ export interface DonationFlow {
   amount: number;
   beneficiary: string;
   projectName: string;
+  beneficiaryCount?: number;
   certificateUrl?: string;
   donatedAt: string;
   description: string;
 }
 
+export interface UserFrequencyItem {
+  range: string;
+  count: number;
+  percentage: number;
+}
+
+export interface UserActivityTrendItem {
+  date: string;
+  activeUsers: number;
+  newUsers: number;
+}
+
+export interface RepurchaseData {
+  name: string;
+  value: number;
+}
+
+export interface UserAnalytics {
+  totalUsers: number;
+  monthlyActiveUsers: number;
+  avgRecycleFrequency: number;
+  repurchaseRate: number;
+  userGrowthRate: number;
+  frequencyDistribution: UserFrequencyItem[];
+  activityTrend: UserActivityTrendItem[];
+  repurchaseDistribution: RepurchaseData[];
+}
+
+export interface CategoryVolumeItem {
+  month: string;
+  clothing: number;
+  books: number;
+  phones: number;
+}
+
+export interface CategoryPriceItem {
+  month: string;
+  clothing: number;
+  books: number;
+  phones: number;
+}
+
+export interface PhoneBrandRankItem {
+  brand: string;
+  count: number;
+}
+
+export interface BookCategoryItem {
+  name: string;
+  value: number;
+}
+
+export interface ClothingMaterialItem {
+  name: string;
+  value: number;
+}
+
+export interface CategoryStats {
+  clothingKg: number;
+  booksKg: number;
+  phonesCount: number;
+  clothingAmount: number;
+  booksAmount: number;
+  phonesAmount: number;
+  clothingAvgPrice: number;
+  booksAvgPrice: number;
+  phonesAvgPrice: number;
+}
+
+export interface CategoryAnalytics {
+  monthlyVolume: CategoryVolumeItem[];
+  priceTrend: CategoryPriceItem[];
+  phoneBrandRank: PhoneBrandRankItem[];
+  bookCategoryDistribution: BookCategoryItem[];
+  clothingMaterialDistribution: ClothingMaterialItem[];
+  stats: CategoryStats;
+}
+
+export type DonationCategory = '乡村教育' | '环保再生' | '扶贫帮困' | '其他公益';
+
+export interface DonationDistributionItem {
+  name: DonationCategory;
+  value: number;
+}
+
+export interface BeneficiaryOrg {
+  id: string;
+  name: string;
+  amount: number;
+  beneficiaryCount: number;
+  projectDescription: string;
+  certificateUrl: string;
+}
+
+export interface DonationTraceNode {
+  stage: string;
+  time: string;
+  description: string;
+  operator: string;
+}
+
+export interface DonationTraceItem {
+  id: string;
+  orderNo: string;
+  itemName: string;
+  amount: number;
+  beneficiary: string;
+  nodes: DonationTraceNode[];
+}
+
+export interface DonationAnalytics {
+  totalDonation: number;
+  distribution: DonationDistributionItem[];
+  beneficiaryOrgs: BeneficiaryOrg[];
+  traces: DonationTraceItem[];
+}
+
+export interface RegionRankItem {
+  region: string;
+  count: number;
+}
+
+export interface ChannelSourceItem {
+  name: string;
+  value: number;
+}
+
+export interface QualityEfficiencyItem {
+  date: string;
+  completed: number;
+  avgDurationMinutes: number;
+}
+
+export interface PayoutTimingItem {
+  timing: string;
+  count: number;
+}
+
+export interface CourierRatingItem {
+  rating: string;
+  count: number;
+}
+
+export interface OperationAnalytics {
+  regionTop10: RegionRankItem[];
+  channelSources: ChannelSourceItem[];
+  qualityEfficiencyTrend: QualityEfficiencyItem[];
+  payoutTimingDistribution: PayoutTimingItem[];
+  courierRatingDistribution: CourierRatingItem[];
+}
+
+export interface AnalyticsOverview {
+  totalOrders: number;
+  totalRecycledKg: number;
+  totalPayout: number;
+  totalDonation: number;
+  totalCarbonSavedKg: number;
+  totalUsers: number;
+  activeUsers: number;
+  pendingQualityOrders: number;
+  pendingPayouts: number;
+}
+
 export interface AnalyticsData {
-  overview: {
-    totalOrders: number;
-    totalRecycledKg: number;
-    totalPayout: number;
-    activeUsers: number;
-    pendingQualityOrders: number;
-    pendingPayouts: number;
-  };
+  overview: AnalyticsOverview;
   orderTrend: { date: string; count: number; kg: number }[];
   categoryDistribution: { category: string; count: number; percentage: number }[];
   userFrequency: { range: string; count: number }[];
   regionDistribution: { region: string; count: number }[];
   statusDistribution: { status: string; count: number }[];
+  user: UserAnalytics;
+  category: CategoryAnalytics;
+  donation: DonationAnalytics;
+  operation: OperationAnalytics;
 }
 
 export interface EstimateRequest {
@@ -357,5 +578,8 @@ export interface AppStore {
   updateProcessor: (id: string, updates: Partial<Processor>) => void;
 
   setAnalytics: (data: AnalyticsData | null) => void;
+  addRecycledKg: (kg: number) => void;
+  addDonation: (amount: number, flowId: string, flow: Omit<DonationFlow, 'id' | 'amount'>) => void;
+  addUser: () => void;
   setNavigation: (nav: Partial<NavigationState>) => void;
 }
