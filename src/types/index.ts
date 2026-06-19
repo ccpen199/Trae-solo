@@ -1,13 +1,11 @@
-export type ServiceDomain =
-  | "livelihood"
-  | "government"
-  | "medical"
-  | "traffic"
-  | "education"
-  | "lifestyle";
-
 export type AuthLevel = "L1" | "L2" | "L3";
+
 export type UserType = "citizen" | "enterprise" | "admin";
+
+export type ServiceDomain = "livelihood" | "government" | "medical" | "traffic" | "education" | "lifestyle";
+
+export type CertificateStatus = "valid" | "expiring" | "expired" | "revoked";
+
 export type CaseStatus =
   | "draft"
   | "submitted"
@@ -17,16 +15,13 @@ export type CaseStatus =
   | "approved"
   | "rejected"
   | "completed";
-export type CertificateStatus = "valid" | "expiring" | "expired" | "revoked";
-export type TimelineStatus = "pending" | "processing" | "completed" | "rejected";
-export type MaterialFormat = "pdf" | "image" | "doc";
 
 export interface User {
   id: string;
   realName: string;
+  name?: string;
   idCardMasked: string;
   phoneMasked: string;
-  avatar?: string;
   authLevel: AuthLevel;
   userType: UserType;
   departmentId?: string;
@@ -37,21 +32,19 @@ export interface Department {
   id: string;
   name: string;
   code: string;
-  parentId?: string;
   contactPhone: string;
   serviceCount: number;
 }
 
-export interface MaterialTemplate {
+export interface ServiceMaterial {
   id: string;
   name: string;
   required: boolean;
-  format: MaterialFormat;
-  description: string;
-  sampleUrl?: string;
+  format: "image" | "pdf" | "doc";
+  description?: string;
 }
 
-export interface ProcessStep {
+export interface ServiceProcessStep {
   id: string;
   name: string;
   description: string;
@@ -59,52 +52,31 @@ export interface ProcessStep {
   department: string;
 }
 
-export interface ServiceItem {
+export interface UploadedMaterial {
   id: string;
+  templateId?: string;
   name: string;
-  category: ServiceDomain;
-  categoryName: string;
-  subCategory: string;
-  department: string;
-  departmentId: string;
-  description: string;
-  handlingTime: string;
-  fee?: string;
-  materials: MaterialTemplate[];
-  processSteps: ProcessStep[];
-  onlineAvailable: boolean;
-  appointmentAvailable: boolean;
-  status: "online" | "offline" | "maintenance";
-  viewCount: number;
-  applyCount: number;
-  satisfactionRate: number;
+  fileName?: string;
+  uploadTime?: string;
+  fileSize?: number;
 }
 
 export interface CaseTimelineNode {
   nodeId: string;
   nodeName: string;
-  status: TimelineStatus;
+  status: "pending" | "processing" | "completed" | "rejected";
   handler?: string;
   handlerDept?: string;
   handleTime?: string;
   remark?: string;
 }
 
-export interface UploadedMaterial {
-  id: string;
-  templateId: string;
-  name: string;
-  fileName: string;
-  uploadTime: string;
-  fileSize: number;
-}
-
 export interface CaseResult {
-  type: "certificate" | "approval" | "rejection";
+  type: "approval" | "certificate" | "rejection" | "notice";
   title: string;
+  remark?: string;
   downloadUrl?: string;
   certificateId?: string;
-  remark?: string;
 }
 
 export interface ApplicationCase {
@@ -122,7 +94,49 @@ export interface ApplicationCase {
   estimatedFinishTime?: string;
   finishTime?: string;
   result?: CaseResult;
-  formData?: Record<string, string>;
+  formData?: Record<string, any>;
+}
+
+export interface ServiceItem {
+  id: string;
+  name: string;
+  category: ServiceDomain;
+  categoryName: string;
+  subCategory: string;
+  department: string;
+  departmentId: string;
+  description: string;
+  handlingTime: string;
+  fee: string;
+  materials: ServiceMaterial[];
+  processSteps: ServiceProcessStep[];
+  onlineAvailable: boolean;
+  appointmentAvailable: boolean;
+  status: "online" | "maintenance" | "offline";
+  viewCount: number;
+  applyCount: number;
+  satisfactionRate: number;
+  authLevel: AuthLevel;
+  userType: UserType[];
+  district: string[];
+}
+
+export interface CertCategory {
+  code: string;
+  name: string;
+  group: string;
+  count: number;
+  description: string;
+  requiredAuthLevel: AuthLevel;
+  canDelegate: boolean;
+}
+
+export interface CertificatePermission {
+  scope: "private" | "government" | "public";
+  description: string;
+  allowedDepts?: string[];
+  requireConsent: boolean;
+  expireHours?: number;
 }
 
 export interface CertUsageRecord {
@@ -131,50 +145,32 @@ export interface CertUsageRecord {
   verifier: string;
   verifierDept: string;
   purpose: string;
-  authMethod?: "face" | "sms" | "password" | "sso";
-  result?: "success" | "failed" | "denied";
-  ip?: string;
-  scope?: "read" | "verify" | "download";
-}
-
-export interface CertCategory {
-  code: string;
-  name: string;
-  group: "identity" | "family" | "housing" | "social" | "education" | "medical" | "traffic" | "business" | "finance" | "other";
-  count: number;
-  description: string;
-  requiredAuthLevel: AuthLevel;
-  canDelegate: boolean;
-}
-
-export interface CertPermissionScope {
-  scope: "private" | "government" | "public";
-  description: string;
-  allowedDepts: string[];
-  requireConsent: boolean;
-  expireHours?: number;
+  authMethod: "face" | "sms" | "sso" | "password";
+  result: "success" | "denied";
+  ip: string;
+  scope: "verify" | "read" | "download";
 }
 
 export interface Certificate {
   id: string;
   type: string;
   typeCode: string;
+  categoryCode: string;
   certNo: string;
   holderName: string;
   issueDate: string;
   expireDate: string;
   issueAuthority: string;
+  issuerCode?: string;
   status: CertificateStatus;
-  fields: Record<string, string>;
-  usageHistory: CertUsageRecord[];
   color: string;
-  categoryCode?: string;
-  authLevel?: AuthLevel;
-  permission?: CertPermissionScope;
-  delegateCount?: number;
+  authLevel: AuthLevel;
+  permission: CertificatePermission;
   verificationCount?: number;
   lastVerifiedAt?: string;
-  issuerCode?: string;
+  delegateCount?: number;
+  fields: Record<string, string>;
+  usageHistory?: CertUsageRecord[];
 }
 
 export interface AuditLog {
@@ -224,11 +220,7 @@ export interface StatsOverview {
     avgTime: number;
     satisfaction: number;
   }[];
-  weeklyTrend: {
-    date: string;
-    cases: number;
-    completed: number;
-  }[];
+  weeklyTrend: { date: string; cases: number; completed: number }[];
   serviceDomainStats: {
     domain: ServiceDomain;
     domainName: string;

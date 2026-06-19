@@ -22,15 +22,21 @@ import {
   ScanFace,
   KeyRound,
   Eye,
+  CheckCircle2,
+  Lock,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAppStore } from "@/store";
 import { mockUser, mockCases, mockCertificates } from "@/data/mockData";
+import type { AuthLevel } from "@/types";
+import { cn } from "@/lib/utils";
 
 export default function Profile() {
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useAppStore((s) => s.user) || mockUser;
   const clearUser = useAppStore((s) => s.clearUser);
+  const upgradeTo = (location.state as any)?.upgradeTo as AuthLevel | undefined;
 
   const authLevelConfig = {
     L1: { text: "L1 基础认证", color: "bg-gray-100 text-gray-600", description: "手机号验证" },
@@ -150,31 +156,111 @@ export default function Profile() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+          {/* 身份升级引导 */}
+          {upgradeTo && (
+            <div className="lg:col-span-2 card p-5 border-2 border-rose-200 bg-gradient-to-r from-rose-50 to-amber-50">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center shrink-0">
+                  <Shield className="w-6 h-6 text-rose-600" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <h3 className="font-semibold text-rose-800">需要升级认证等级</h3>
+                    <span className="badge-danger">当前 {user.authLevel}</span>
+                    <span className="text-xs text-ink-lighter">目标</span>
+                    <span className="badge-primary">{authLevelConfig[upgradeTo].text}</span>
+                  </div>
+                  <p className="text-sm text-rose-700/80 mb-3">
+                    您访问的服务需要 {authLevelConfig[upgradeTo].text}（{authLevelConfig[upgradeTo].description}），请完成升级后即可继续办理。
+                  </p>
+                  <div className="flex gap-2 flex-wrap">
+                    {upgradeTo === "L2" && (
+                      <button className="btn-primary !py-2">
+                        <IdCard className="w-4 h-4" /> 完成身份证实名核验
+                      </button>
+                    )}
+                    {upgradeTo === "L3" && (
+                      <>
+                        <button className="btn-primary !py-2">
+                          <ScanFace className="w-4 h-4" /> 启动公安人脸实人认证
+                        </button>
+                        <button className="btn-secondary !py-2">
+                          <Fingerprint className="w-4 h-4" /> 指纹辅助核验
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-rose-600/70 mt-3 flex items-center gap-1">
+                    <Lock className="w-3 h-3" />
+                    以上核验全程采用国密SM2+SM4加密，仅用于政务服务身份确认，不存储生物特征原图。
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="card p-5">
             <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
               <Fingerprint className="w-4 h-4 text-gov-600" /> 身份认证状态
+              {upgradeTo && <span className="badge-warning animate-pulse text-[10px] ml-1">需升级</span>}
             </h3>
             <div className="space-y-2">
               {[
-                { level: "L1", label: "手机号验证", icon: Phone, status: "done" },
-                { level: "L2", label: "身份证实名核验", icon: IdCard, status: "done" },
-                { level: "L3", label: "公安人脸实人认证", icon: ScanFace, status: user.authLevel === "L3" ? "done" : "pending" },
+                { level: "L1", label: "手机号验证", icon: Phone, status: "done" as const, desc: "短信验证码 · 5秒完成" },
+                { level: "L2", label: "身份证实名核验", icon: IdCard, status: "done" as const, desc: "OCR+公安人口库 · 权威比对" },
+                {
+                  level: "L3",
+                  label: "公安人脸实人认证",
+                  icon: ScanFace,
+                  status: user.authLevel === "L3" ? "done" as const : (upgradeTo === "L3" ? "highlight" as const : "pending" as const),
+                  desc: "活体检测+人脸比对 · 匹配度99.6%",
+                },
               ].map((auth) => {
                 const AuthIcon = auth.icon;
                 return (
-                  <div key={auth.level} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${auth.status === "done" ? "bg-success-100" : "bg-gray-100"}`}>
-                      <AuthIcon className={`w-4 h-4 ${auth.status === "done" ? "text-success-600" : "text-gray-400"}`} />
+                  <div
+                    key={auth.level}
+                    className={cn(
+                      "flex items-center gap-3 p-3 rounded-lg transition-all",
+                      auth.status === "done" ? "bg-success-50/50 border border-success-100" :
+                      auth.status === "highlight" ? "bg-amber-50 border-2 border-amber-300 ring-2 ring-amber-100 animate-pulse-soft" :
+                      "bg-gray-50 border border-gray-100"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-9 h-9 rounded-lg flex items-center justify-center",
+                      auth.status === "done" ? "bg-success-100" :
+                      auth.status === "highlight" ? "bg-amber-200" : "bg-gray-100"
+                    )}>
+                      <AuthIcon className={cn(
+                        "w-4.5 h-4.5",
+                        auth.status === "done" ? "text-success-600" :
+                        auth.status === "highlight" ? "text-amber-700" : "text-gray-400"
+                      )} />
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${auth.status === "done" ? "bg-success-100 text-success-700" : "bg-gray-100 text-gray-500"}`}>{auth.level}</span>
-                        <span className="text-sm text-gray-800">{auth.label}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={cn(
+                          "text-xs font-bold px-1.5 py-0.5 rounded",
+                          auth.status === "done" ? "bg-success-100 text-success-700" :
+                          auth.status === "highlight" ? "bg-amber-200 text-amber-800" : "bg-gray-100 text-gray-500"
+                        )}>{auth.level}</span>
+                        <span className="text-sm font-medium text-gray-800">{auth.label}</span>
+                        {auth.status === "highlight" && <span className="badge-warning text-[10px]">点击立即升级</span>}
                       </div>
+                      <p className="text-[11px] text-gray-500 mt-0.5">{auth.desc}</p>
                     </div>
-                    <span className={`text-xs font-medium ${auth.status === "done" ? "text-success-600" : "text-gray-400"}`}>
-                      {auth.status === "done" ? "已通过" : "未认证"}
-                    </span>
+                    {auth.status === "done" ? (
+                      <span className="text-xs font-medium text-success-600 flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> 已通过
+                      </span>
+                    ) : auth.status === "highlight" ? (
+                      <button className="btn-primary !py-1 !px-3 !text-xs">
+                        <ScanFace className="w-3 h-3" /> 立即认证
+                      </button>
+                    ) : (
+                      <span className="text-xs font-medium text-gray-400">未认证</span>
+                    )}
                   </div>
                 );
               })}
@@ -182,7 +268,7 @@ export default function Profile() {
             <div className="mt-3 p-2.5 rounded-lg bg-gov-50 border border-gov-100">
               <div className="flex items-center gap-2 text-xs text-gov-700">
                 <KeyRound className="w-3.5 h-3.5" />
-                <span>SSO单点登录 · CAS/OAuth2.0 · 已接入3个委办局系统</span>
+                <span>SSO单点登录 · CAS/OAuth2.0 · 已接入3个委办局系统 · 跨系统会话有效期 2小时</span>
               </div>
             </div>
           </div>

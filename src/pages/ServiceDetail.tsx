@@ -22,6 +22,13 @@ import {
   CalendarCheck,
   Send,
   X,
+  Shield,
+  ShieldCheck,
+  ShieldAlert,
+  Users,
+  MapPin,
+  AlertTriangle,
+  Lock,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { serviceDomains, statusTextMap } from "@/data/mockData";
@@ -98,9 +105,19 @@ export default function ServiceDetail() {
   const domain = serviceDomains.find((d) => d.code === service.category);
   const isOffline = service.status !== "online";
 
+  const userAuthLevel = user?.authLevel || "L1";
+  const levels: ("L1" | "L2" | "L3")[] = ["L1", "L2", "L3"];
+  const canAccess = !isLoggedIn || levels.indexOf(userAuthLevel) >= levels.indexOf(service.authLevel as "L1"|"L2"|"L3");
+  const needUpgrade = isLoggedIn && !canAccess;
+
   const handleApply = () => {
     if (!isLoggedIn) {
       navigate("/login", { state: { redirect: `/services/${service.id}?tab=apply` } });
+    } else if (needUpgrade) {
+      setActiveTab("intro");
+      setSearchParams({ tab: "intro" });
+      alert(`该服务需要${service.authLevel}认证，请先升级您的身份认证等级。`);
+      navigate("/profile", { state: { upgradeTo: service.authLevel } });
     } else {
       setActiveTab("apply");
       setSearchParams({ tab: "apply" });
@@ -122,6 +139,32 @@ export default function ServiceDetail() {
           <div className="lg:col-span-2 space-y-6">
             {/* 服务头部信息 */}
             <div className="card p-6">
+              {/* 身份等级权限提示 */}
+              {needUpgrade && (
+                <div className="mb-5 p-4 rounded-xl border-2 border-rose-200 bg-gradient-to-r from-rose-50 to-amber-50 flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center shrink-0">
+                    <ShieldAlert className="w-5 h-5 text-rose-600" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <h4 className="font-semibold text-rose-800">认证等级不足</h4>
+                      <span className="badge-danger">当前{userAuthLevel}</span>
+                      <span className="text-xs text-ink-lighter">需要</span>
+                      <span className="badge-primary">{service.authLevel}</span>
+                    </div>
+                    <p className="text-sm text-rose-700/80 mb-2">
+                      该服务需{service.authLevel === "L2" ? "身份证实名" : "公安人脸实人"}认证，请先升级后办理，以保障您的身份安全和业务合规。
+                    </p>
+                    <button
+                      onClick={() => navigate("/profile", { state: { upgradeTo: service.authLevel } })}
+                      className="btn-primary !py-1.5 !px-3 !text-xs"
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5" /> 立即升级认证等级
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-start gap-4">
                 <div
                   className={cn(
@@ -147,6 +190,33 @@ export default function ServiceDetail() {
                       <span className="badge-primary">支持预约</span>
                     )}
                     {service.fee === "免费" && <span className="badge-gray">免费办理</span>}
+
+                    {/* 身份等级+用户类型+区县标签 */}
+                    {service.authLevel === "L1" && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-gray-50 text-gray-600 border border-gray-200 flex items-center gap-1">
+                        <Shield className="w-3 h-3" /> L1基础级
+                      </span>
+                    )}
+                    {service.authLevel === "L2" && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-violet-50 text-violet-600 border border-violet-200 flex items-center gap-1">
+                        <Shield className="w-3 h-3" /> L2实名认证
+                      </span>
+                    )}
+                    {service.authLevel === "L3" && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-rose-50 text-rose-600 border border-rose-200 flex items-center gap-1">
+                        <Shield className="w-3 h-3" /> L3公安人脸
+                      </span>
+                    )}
+                    {service.userType.includes("citizen") && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-gov-50 text-gov-600 border border-gov-200 flex items-center gap-1">
+                        <Users className="w-3 h-3" /> 市民可办
+                      </span>
+                    )}
+                    {service.userType.includes("enterprise") && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-200 flex items-center gap-1">
+                        <Building className="w-3 h-3" /> 企业可办
+                      </span>
+                    )}
                   </div>
                   <h1 className="font-serif text-2xl font-bold text-ink mb-3">{service.name}</h1>
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-light">
@@ -155,6 +225,9 @@ export default function ServiceDetail() {
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-4 h-4" /> 承诺期限：{service.handlingTime}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4" /> 服务范围：{service.district.join("、")}
                     </span>
                     <span className="flex items-center gap-1 text-warning-600">
                       <Star className="w-4 h-4 fill-current" /> 好评率 {service.satisfactionRate.toFixed(1)}%
@@ -166,19 +239,46 @@ export default function ServiceDetail() {
                 </div>
               </div>
 
+              {/* 跨系统接入反馈 */}
+              <div className="mt-5 p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-gov-50 border border-emerald-200">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-semibold text-emerald-800">跨系统单点登录承接正常</h4>
+                      <span className="badge-success text-[10px]">SSO已连通</span>
+                      <span className="badge-primary text-[10px]">国密SM2加密</span>
+                    </div>
+                    <p className="text-xs text-emerald-700/80">
+                      已对接：江苏省政务服务网、苏服办App、苏州政务云平台；
+                      身份链路：公安人口库 ↔ 市数据局 ↔ 本平台，全程审计留痕。
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex flex-wrap gap-3 mt-6 pt-6 border-t border-ink-border">
                 <button
                   onClick={handleApply}
-                  disabled={isOffline}
-                  className="btn-primary !px-6 !py-2.5"
+                  disabled={isOffline || needUpgrade}
+                  className={cn(
+                    "btn-primary !px-6 !py-2.5",
+                    (isOffline || needUpgrade) && "opacity-50 cursor-not-allowed"
+                  )}
                 >
                   <FileCheck className="w-4 h-4" /> 立即办理
+                  {needUpgrade && <span className="ml-1 text-[10px]">（需{service.authLevel}）</span>}
                 </button>
                 {service.appointmentAvailable && (
                   <button
                     onClick={() => handleTabChange("appointment")}
-                    disabled={isOffline}
-                    className={cn("btn-secondary !px-6 !py-2.5", isOffline && "opacity-50 cursor-not-allowed")}
+                    disabled={isOffline || needUpgrade}
+                    className={cn(
+                      "btn-secondary !px-6 !py-2.5",
+                      (isOffline || needUpgrade) && "opacity-50 cursor-not-allowed"
+                    )}
                   >
                     <Calendar className="w-4 h-4" /> 预约办理
                   </button>

@@ -22,10 +22,17 @@ import {
   Route,
   Bell,
   MessageSquare,
+  Users,
+  Building2,
+  Shield,
+  MapPin,
+  ChevronDown,
+  X,
+  Eye,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { serviceDomains, mockDepartments, statusTextMap } from "@/data/mockData";
-import type { ServiceDomain } from "@/types";
+import type { ServiceDomain, AuthLevel, UserType } from "@/types";
 import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -46,23 +53,34 @@ const lifecycleQuickActions = [
   { key: "evaluate", label: "评价", icon: MessageSquare },
 ];
 
+const districts = [
+  "全市通办", "昆山开发区", "昆山高新区", "花桥经济开发区",
+  "张浦镇", "周市镇", "陆家镇", "巴城镇",
+  "千灯镇", "淀山湖镇", "周庄镇", "锦溪镇",
+];
+
 export default function Services() {
   const services = useAppStore((s) => s.services);
   const selectedDomain = useAppStore((s) => s.selectedDomain);
   const searchKeyword = useAppStore((s) => s.searchKeyword);
-  const userTypeFilter = useAppStore((s) => s.userTypeFilter);
+  const user = useAppStore((s) => s.user);
+  const isLoggedIn = useAppStore((s) => s.isLoggedIn);
   const setSelectedDomain = useAppStore((s) => s.setSelectedDomain);
   const setSearchKeyword = useAppStore((s) => s.setSearchKeyword);
 
   const [selectedDept, setSelectedDept] = useState<string>("all");
-  const [onlineOnly, setOnlineOnly] = useState(false);
+  const [selectedUserType, setSelectedUserType] = useState<UserType | "all">("all");
+  const [selectedAuthLevel, setSelectedAuthLevel] = useState<AuthLevel | "all">("all");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<"all" | "online" | "maintenance">("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState<"apply" | "rating" | "time">("apply");
   const [displayCount, setDisplayCount] = useState(20);
+  const [showAdvancedFilter, setShowAdvancedFilter] = useState(true);
 
   useEffect(() => {
     setDisplayCount(20);
-  }, [selectedDomain, searchKeyword, userTypeFilter, selectedDept, onlineOnly, sortBy]);
+  }, [selectedDomain, searchKeyword, selectedUserType, selectedAuthLevel, selectedDept, selectedDistrict, statusFilter, sortBy]);
 
   const filtered = useMemo(() => {
     let list = services.filter((s) => {
@@ -73,25 +91,27 @@ export default function Services() {
         s.description.includes(searchKeyword) ||
         s.department.includes(searchKeyword) ||
         s.subCategory.includes(searchKeyword);
+      const deptMatch = selectedDept === "all" || s.departmentId === selectedDept;
       const userTypeMatch =
-        !userTypeFilter ||
-        (userTypeFilter === "citizen" && s.category !== "government") ||
-        (userTypeFilter === "enterprise" && (s.category === "government" || s.category === "lifestyle"));
-      return domainMatch && kwMatch && userTypeMatch;
+        selectedUserType === "all" || s.userType.includes(selectedUserType);
+      const authLevelMatch =
+        selectedAuthLevel === "all" ||
+        (selectedAuthLevel === "L1" && s.authLevel === "L1") ||
+        (selectedAuthLevel === "L2" && s.authLevel !== "L3") ||
+        (selectedAuthLevel === "L3" && s.authLevel === "L3");
+      const districtMatch =
+        selectedDistrict === "all" || s.district.includes(selectedDistrict);
+      const statusMatch =
+        statusFilter === "all" || s.status === statusFilter;
+      return domainMatch && kwMatch && deptMatch && userTypeMatch && authLevelMatch && districtMatch && statusMatch;
     });
-    if (selectedDept !== "all") {
-      list = list.filter((s) => s.departmentId === selectedDept);
-    }
-    if (onlineOnly) {
-      list = list.filter((s) => s.onlineAvailable);
-    }
     list = [...list].sort((a, b) => {
       if (sortBy === "apply") return b.applyCount - a.applyCount;
       if (sortBy === "rating") return b.satisfactionRate - a.satisfactionRate;
       return a.handlingTime.localeCompare(b.handlingTime);
     });
     return list;
-  }, [services, selectedDomain, searchKeyword, userTypeFilter, selectedDept, onlineOnly, sortBy]);
+  }, [services, selectedDomain, searchKeyword, selectedDept, selectedUserType, selectedAuthLevel, selectedDistrict, statusFilter, sortBy]);
 
   const displayedList = filtered.slice(0, displayCount);
   const hasMore = displayCount < filtered.length;
@@ -102,8 +122,40 @@ export default function Services() {
     const online = services.filter((s) => s.onlineAvailable).length;
     const filteredTotal = filtered.length;
     const filteredOnline = filtered.filter((s) => s.onlineAvailable).length;
-    return { total, online, filteredTotal, filteredOnline, depts: mockDepartments.length };
+    const citizenCount = services.filter((s) => s.userType.includes("citizen")).length;
+    const enterpriseCount = services.filter((s) => s.userType.includes("enterprise")).length;
+    return { total, online, filteredTotal, filteredOnline, citizenCount, enterpriseCount, depts: mockDepartments.length };
   }, [services, filtered]);
+
+  const authLevelStats = useMemo(() => ({
+    L1: services.filter((s) => s.authLevel === "L1").length,
+    L2: services.filter((s) => s.authLevel === "L2").length,
+    L3: services.filter((s) => s.authLevel === "L3").length,
+  }), [services]);
+
+  const userCanAccess = (svc: { authLevel: AuthLevel }) => {
+    if (!isLoggedIn || !user) return svc.authLevel === "L1";
+    const levels: AuthLevel[] = ["L1", "L2", "L3"];
+    return levels.indexOf(user.authLevel) >= levels.indexOf(svc.authLevel);
+  };
+
+  const activeFilterCount = [
+    selectedDept !== "all",
+    selectedUserType !== "all",
+    selectedAuthLevel !== "all",
+    selectedDistrict !== "all",
+    statusFilter !== "all",
+  ].filter(Boolean).length;
+
+  const clearAllFilters = () => {
+    setSelectedDept("all");
+    setSelectedUserType("all");
+    setSelectedAuthLevel("all");
+    setSelectedDistrict("all");
+    setStatusFilter("all");
+    setSelectedDomain("all");
+    setSearchKeyword("");
+  };
 
   return (
     <div className="min-h-screen py-8">
@@ -171,22 +223,36 @@ export default function Services() {
           {/* 左侧分类 */}
           <aside className="lg:col-span-1">
             <div className="card p-5 sticky top-20">
-              <h3 className="font-serif text-lg font-semibold text-ink mb-4 flex items-center gap-2">
-                <Filter className="w-5 h-5 text-gov-600" />
-                服务分类
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-serif text-lg font-semibold text-ink flex items-center gap-2">
+                  <Filter className="w-5 h-5 text-gov-600" />
+                  分类检索
+                </h3>
+                {activeFilterCount > 0 && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-xs text-gov-600 hover:text-gov-700 flex items-center gap-0.5"
+                  >
+                    <X className="w-3 h-3" /> 清除
+                  </button>
+                )}
+              </div>
 
-              <div className="space-y-1 mb-6">
+              {/* 服务域 */}
+              <div className="space-y-1 mb-5">
+                <h4 className="text-xs font-medium text-ink-light mb-2 flex items-center gap-1.5">
+                  <Grid3X3 className="w-3.5 h-3.5" /> 服务域
+                </h4>
                 <button
                   onClick={() => setSelectedDomain("all")}
                   className={cn(
-                    "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all",
+                    "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all text-sm",
                     selectedDomain === "all"
                       ? "bg-gov-50 text-gov-700 font-medium"
                       : "text-ink hover:bg-ink-bg"
                   )}
                 >
-                  <Grid3X3 className="w-5 h-5" />
+                  <Grid3X3 className="w-4 h-4" />
                   全部服务
                   <span className="ml-auto text-xs text-ink-light">{services.length}</span>
                 </button>
@@ -198,14 +264,14 @@ export default function Services() {
                       key={domain.code}
                       onClick={() => setSelectedDomain(domain.code as ServiceDomain)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all",
+                        "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all text-sm",
                         selectedDomain === domain.code
                           ? "bg-gov-50 text-gov-700 font-medium"
                           : "text-ink hover:bg-ink-bg"
                       )}
                     >
-                      <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", domain.bgColor)}>
-                        {IconComp && <IconComp className={cn("w-4 h-4", domain.textColor)} />}
+                      <div className={cn("w-7 h-7 rounded-md flex items-center justify-center", domain.bgColor)}>
+                        {IconComp && <IconComp className={cn("w-3.5 h-3.5", domain.textColor)} />}
                       </div>
                       {domain.name}
                       <span className="ml-auto text-xs text-ink-light">{count}</span>
@@ -214,30 +280,131 @@ export default function Services() {
                 })}
               </div>
 
-              <div className="border-t border-ink-border pt-4">
-                <h4 className="text-sm font-medium text-ink mb-3">办理部门</h4>
+              {/* 服务对象 */}
+              <div className="border-t border-ink-border pt-4 mb-4">
+                <h4 className="text-xs font-medium text-ink-light mb-2 flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5" /> 服务对象
+                </h4>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {[
+                    { k: "all", label: "全部" },
+                    { k: "citizen", label: "市民" },
+                    { k: "enterprise", label: "企业" },
+                  ].map((t) => (
+                    <button
+                      key={t.k}
+                      onClick={() => setSelectedUserType(t.k as UserType | "all")}
+                      className={cn(
+                        "px-2 py-1.5 rounded-md text-xs font-medium transition-colors",
+                        selectedUserType === t.k
+                          ? "bg-gov-600 text-white"
+                          : "bg-ink-bg text-ink hover:bg-gov-50 hover:text-gov-600"
+                      )}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 身份等级 */}
+              <div className="border-t border-ink-border pt-4 mb-4">
+                <h4 className="text-xs font-medium text-ink-light mb-2 flex items-center gap-1.5">
+                  <Shield className="w-3.5 h-3.5" /> 身份认证等级
+                </h4>
+                <div className="space-y-1.5">
+                  {[
+                    { k: "all" as const, label: "全部等级", desc: "" },
+                    { k: "L1" as const, label: "L1 基础认证", desc: `${authLevelStats.L1}项 · 手机号即可`, color: "text-gray-600" },
+                    { k: "L2" as const, label: "L2 实名认证", desc: `${authLevelStats.L2}项 · 身份证核验`, color: "text-violet-600" },
+                    { k: "L3" as const, label: "L3 实人认证", desc: `${authLevelStats.L3}项 · 公安人脸比对`, color: "text-rose-600" },
+                  ].map((a) => (
+                    <button
+                      key={a.k}
+                      onClick={() => setSelectedAuthLevel(a.k)}
+                      className={cn(
+                        "w-full flex items-center gap-2 px-2.5 py-2 rounded-md text-left transition-colors",
+                        selectedAuthLevel === a.k
+                          ? "bg-gov-50 ring-1 ring-gov-200"
+                          : "hover:bg-ink-bg"
+                      )}
+                    >
+                      <Shield className={cn("w-4 h-4 shrink-0", a.color || "text-ink-light")} />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-ink">{a.label}</div>
+                        {a.desc && <div className="text-[10px] text-ink-light">{a.desc}</div>}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 办理部门 */}
+              <div className="border-t border-ink-border pt-4 mb-4">
+                <h4 className="text-xs font-medium text-ink-light mb-2 flex items-center gap-1.5">
+                  <Building2 className="w-3.5 h-3.5" /> 办理部门
+                </h4>
                 <select
                   value={selectedDept}
                   onChange={(e) => setSelectedDept(e.target.value)}
-                  className="input"
+                  className="input !py-2 !text-sm w-full"
                 >
-                  <option value="all">全部部门</option>
+                  <option value="all">全部部门（{mockDepartments.length}个）</option>
                   {mockDepartments.map((d) => (
                     <option key={d.id} value={d.id}>
                       {d.name}
                     </option>
                   ))}
                 </select>
+              </div>
 
-                <label className="flex items-center gap-2 mt-4 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={onlineOnly}
-                    onChange={(e) => setOnlineOnly(e.target.checked)}
-                    className="w-4 h-4 text-gov-600 rounded border-ink-border focus:ring-gov-400"
-                  />
-                  <span className="text-sm text-ink">仅显示可在线办理</span>
-                </label>
+              {/* 区县范围 */}
+              <div className="border-t border-ink-border pt-4 mb-4">
+                <h4 className="text-xs font-medium text-ink-light mb-2 flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" /> 服务范围
+                </h4>
+                <select
+                  value={selectedDistrict}
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  className="input !py-2 !text-sm w-full"
+                >
+                  <option value="all">全部区县</option>
+                  {districts.map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 服务状态 */}
+              <div className="border-t border-ink-border pt-4">
+                <h4 className="text-xs font-medium text-ink-light mb-2 flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5" /> 服务状态
+                </h4>
+                <div className="space-y-1.5">
+                  {[
+                    { k: "all" as const, label: "全部服务", count: services.length },
+                    { k: "online" as const, label: "正常服务", count: stats.online },
+                    { k: "maintenance" as const, label: "维护中", count: services.filter((s) => s.status === "maintenance").length },
+                  ].map((s) => (
+                    <button
+                      key={s.k}
+                      onClick={() => setStatusFilter(s.k)}
+                      className={cn(
+                        "w-full flex items-center gap-2 px-2.5 py-2 rounded-md text-left text-sm transition-colors",
+                        statusFilter === s.k
+                          ? "bg-gov-50 text-gov-700 font-medium"
+                          : "text-ink hover:bg-ink-bg"
+                      )}
+                    >
+                      <span className={cn(
+                        "w-2 h-2 rounded-full",
+                        s.k === "online" ? "bg-success-500" : s.k === "maintenance" ? "bg-warning-500" : "bg-ink-lighter"
+                      )} />
+                      {s.label}
+                      <span className="ml-auto text-xs text-ink-light">{s.count}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </aside>
@@ -289,8 +456,36 @@ export default function Services() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-ink-light mt-3">
+              <p className="text-sm text-ink-light mt-3 flex items-center gap-2 flex-wrap">
                 共找到 <span className="text-gov-600 font-medium">{filtered.length}</span> 项服务
+                {selectedUserType !== "all" && (
+                  <span className="badge-primary text-[10px]">
+                    {selectedUserType === "citizen" ? "市民" : "企业"}服务
+                    <button onClick={() => setSelectedUserType("all")} className="ml-1 hover:text-white">×</button>
+                  </span>
+                )}
+                {selectedAuthLevel !== "all" && (
+                  <span className="badge-danger text-[10px]">
+                    {selectedAuthLevel}认证要求
+                    <button onClick={() => setSelectedAuthLevel("all")} className="ml-1 hover:text-white">×</button>
+                  </span>
+                )}
+                {selectedDistrict !== "all" && (
+                  <span className="badge-success text-[10px]">
+                    {selectedDistrict}
+                    <button onClick={() => setSelectedDistrict("all")} className="ml-1 hover:text-white">×</button>
+                  </span>
+                )}
+                {statusFilter !== "all" && (
+                  <span className="badge-gray text-[10px]">
+                    {statusFilter === "online" ? "正常服务" : "维护中"}
+                    <button onClick={() => setStatusFilter("all")} className="ml-1 hover:text-white">×</button>
+                  </span>
+                )}
+                <span className="text-ink-lighter">|</span>
+                <span>市民可办 <b className="text-gov-700">{stats.citizenCount}</b> 项</span>
+                <span className="text-ink-lighter">·</span>
+                <span>企业可办 <b className="text-amber-600">{stats.enterpriseCount}</b> 项</span>
               </p>
             </div>
 
@@ -336,7 +531,34 @@ export default function Services() {
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs text-ink-light mt-1 flex items-center gap-1">
+                            <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                              {svc.authLevel === "L1" && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-50 text-gray-600 border border-gray-200 flex items-center gap-0.5">
+                                  <Shield className="w-2.5 h-2.5" /> L1基础
+                                </span>
+                              )}
+                              {svc.authLevel === "L2" && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-50 text-violet-600 border border-violet-200 flex items-center gap-0.5">
+                                  <Shield className="w-2.5 h-2.5" /> L2实名
+                                </span>
+                              )}
+                              {svc.authLevel === "L3" && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-600 border border-rose-200 flex items-center gap-0.5">
+                                  <Shield className="w-2.5 h-2.5" /> L3实人
+                                </span>
+                              )}
+                              {svc.userType.includes("citizen") && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-gov-50 text-gov-600 border border-gov-200">
+                                  市民可办
+                                </span>
+                              )}
+                              {svc.userType.includes("enterprise") && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-200">
+                                  企业可办
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-ink-light mt-1.5 flex items-center gap-1">
                               <Building className="w-3 h-3" /> {svc.department}
                             </p>
                           </div>
@@ -455,14 +677,18 @@ export default function Services() {
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors">
                               {svc.name}
                             </h3>
-                            {svc.onlineAvailable && <span className="badge-success text-[10px]">在线办</span>}
+                            {svc.authLevel === "L1" && <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-50 text-gray-600 border border-gray-200">L1</span>}
+                            {svc.authLevel === "L2" && <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-50 text-violet-600 border border-violet-200">L2</span>}
+                            {svc.authLevel === "L3" && <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-600 border border-rose-200">L3</span>}
+                            {svc.onlineAvailable && svc.status === "online" && <span className="badge-success text-[10px]">在线办</span>}
+                            {!userCanAccess(svc) && <span className="badge-danger text-[10px]">需升级认证</span>}
                           </div>
                           <p className="text-xs text-ink-light mt-0.5">
-                            {svc.department} · {svc.subCategory} · {svc.handlingTime}
+                            {svc.department} · {svc.subCategory} · {svc.handlingTime} · {svc.district.slice(0, 2).join("、")}
                           </p>
                         </div>
                       </Link>

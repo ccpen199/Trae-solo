@@ -233,6 +233,9 @@ const serviceNames: Record<ServiceDomain, string[]> = {
 };
 
 function generateServices(): ServiceItem[] {
+  const districts = [
+    "全市通办", "昆山开发区", "昆山高新区", "花桥经济开发区", "张浦镇", "周市镇", "陆家镇", "巴城镇", "千灯镇", "淀山湖镇", "周庄镇", "锦溪镇",
+  ];
   const services: ServiceItem[] = [];
   let id = 1;
   (Object.keys(domainMap) as ServiceDomain[]).forEach((domain) => {
@@ -246,6 +249,18 @@ function generateServices(): ServiceItem[] {
       } else {
         deptId = depts[idx % depts.length];
       }
+      const authRand = idx % 10;
+      const authLevel: "L1" | "L2" | "L3" =
+        authRand < 4 ? "L1" : authRand < 8 ? "L2" : "L3";
+      const userTypes: ("citizen" | "enterprise" | "admin")[] =
+        domain === "government"
+          ? (idx % 3 === 0 ? ["enterprise"] : idx % 3 === 1 ? ["citizen", "enterprise"] : ["citizen"])
+          : domain === "lifestyle"
+          ? (idx % 2 === 0 ? ["citizen"] : ["citizen", "enterprise"])
+          : ["citizen"];
+      const district = idx % 12 === 0
+        ? ["全市通办"]
+        : ["全市通办", districts[(idx * 3) % (districts.length - 1) + 1], districts[(idx * 5 + 2) % (districts.length - 1) + 1]];
       services.push({
         id: `s${String(id).padStart(4, "0")}`,
         name,
@@ -276,6 +291,9 @@ function generateServices(): ServiceItem[] {
         viewCount: 1000 + Math.floor(Math.random() * 50000),
         applyCount: 100 + Math.floor(Math.random() * 10000),
         satisfactionRate: 92 + Math.random() * 7,
+        authLevel,
+        userType: userTypes,
+        district,
       });
       id++;
     });
