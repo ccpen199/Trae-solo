@@ -83,12 +83,6 @@ function getLifecycleStatus(caseItem: { status: string; timeline: { status: stri
   });
 }
 
-const roleTabs: { key: UserType | "all"; label: string; icon: React.ComponentType<{ className?: string }>; desc: string }[] = [
-  { key: "citizen", label: "市民服务", icon: User, desc: "自然人可办事项 298 项" },
-  { key: "enterprise", label: "企业服务", icon: Building2, desc: "企业可办事项 182 项" },
-  { key: "all", label: "全部服务", icon: Globe2, desc: "全量 480 项服务" },
-];
-
 const permissionBadge: Record<string, { cls: string; label: string }> = {
   L1: { cls: "bg-gray-100 text-gray-600 border-gray-200", label: "L1 基础" },
   L2: { cls: "bg-warning-100 text-warning-700 border-warning-200", label: "L2 实名" },
@@ -192,6 +186,92 @@ export default function Home() {
 
   const displayedServices = filteredServices.slice(0, displayCount);
 
+  const citizenCount = services.filter((s) => s.category !== "government").length;
+  const enterpriseCount = services.filter((s) => s.category === "government" || s.category === "lifestyle").length;
+  const onlineCount = services.filter((s) => s.onlineAvailable).length;
+  const totalCertCount = certificateCategories.reduce((s, c) => s + c.count, 0);
+
+  const roleTabs = useMemo(() => [
+    { key: "citizen" as const, label: "市民服务", icon: User, desc: `自然人可办事项 ${citizenCount} 项` },
+    { key: "enterprise" as const, label: "企业服务", icon: Building2, desc: `企业可办事项 ${enterpriseCount} 项` },
+    { key: "all" as const, label: "全部服务", icon: Globe2, desc: `全量 ${services.length} 项服务` },
+  ], [services.length, citizenCount, enterpriseCount]);
+
+  const quickEntries = useMemo(() => [
+    {
+      name: "407类证照库",
+      icon: Layers,
+      color: "from-gov-500 to-gov-700",
+      bg: "bg-gov-50",
+      path: "/certificates?tab=catalog",
+      permission: "市民/企业可用",
+      permissionColor: "bg-gov-50 text-gov-600 border-gov-200",
+      stat1: { label: "证照目录", value: totalCertCount.toString(), unit: "类" },
+      stat2: { label: "已持有", value: mockCertificates.length.toString(), unit: "张" },
+      hint: "身份证/驾驶证/不动产权证等全覆盖",
+    },
+    {
+      name: "扫码亮证",
+      icon: QrCode,
+      color: "from-violet-500 to-purple-600",
+      bg: "bg-violet-50",
+      path: "/certificates",
+      permission: "实名认证可用",
+      permissionColor: "bg-violet-50 text-violet-600 border-violet-200",
+      stat1: { label: "今日亮证", value: "1,286", unit: "次" },
+      stat2: { label: "SM4签名", value: "100%", unit: "" },
+      hint: "一码通行·国密加密·时效可控",
+    },
+    {
+      name: "在线核验",
+      icon: ScanLine,
+      color: "from-emerald-500 to-teal-600",
+      bg: "bg-emerald-50",
+      path: "/certificates?tab=catalog",
+      permission: "政务部门可用",
+      permissionColor: "bg-emerald-50 text-emerald-600 border-emerald-200",
+      stat1: { label: "累计核验", value: "18,942", unit: "次" },
+      stat2: { label: "成功率", value: "99.92%", unit: "" },
+      hint: "公安人口库对接·身份核验可信",
+    },
+    {
+      name: "访问审计",
+      icon: KeyRound,
+      color: "from-rose-500 to-red-600",
+      bg: "bg-rose-50",
+      path: "/admin?tab=audit",
+      permission: "监管人员专用",
+      permissionColor: "bg-rose-50 text-rose-600 border-rose-200",
+      stat1: { label: "今日操作", value: "4,512", unit: "条" },
+      stat2: { label: "异常拦截", value: "2", unit: "次" },
+      hint: "全链路留痕·可追溯·可审计",
+    },
+    {
+      name: "服务可用性监控",
+      icon: Server,
+      color: "from-amber-500 to-orange-600",
+      bg: "bg-amber-50",
+      path: "/admin?tab=monitor",
+      permission: "监管人员专用",
+      permissionColor: "bg-amber-50 text-amber-600 border-amber-200",
+      stat1: { label: "在线服务", value: onlineCount.toString(), unit: "项" },
+      stat2: { label: "可用性", value: "99.97%", unit: "" },
+      hint: "API网关实时监控·告警闭环",
+    },
+    {
+      name: "热力图复盘",
+      icon: MapPin,
+      color: "from-cyan-500 to-blue-600",
+      bg: "bg-cyan-50",
+      path: "/admin?tab=heatmap",
+      permission: "监管人员专用",
+      permissionColor: "bg-cyan-50 text-cyan-600 border-cyan-200",
+      stat1: { label: "今日访问", value: "28,450", unit: "次" },
+      stat2: { label: "覆盖区域", value: "12", unit: "区县" },
+      hint: "政务服务行为数据可视化复盘",
+    },
+  ], [totalCertCount, onlineCount]);
+
   const handleDomainClick = (code: ServiceDomain) => {
     setSelectedDomain(code);
     setSearchKeyword("");
@@ -210,23 +290,6 @@ export default function Home() {
     setSelectedRole(role === "all" ? null : role);
     setDisplayCount(12);
   };
-
-  const demoCase = mockCases[0] || {
-    id: "demo",
-    serviceName: "身份证补办",
-    caseNo: "KS2026061800001",
-    status: "processing",
-    currentNode: "材料初审中",
-    applyTime: "2026-06-17 09:23:41",
-    timeline: [
-      { nodeId: "n1", nodeName: "在线申报", status: "completed" },
-      { nodeId: "n2", nodeName: "材料初审", status: "active" },
-      { nodeId: "n3", nodeName: "业务审核", status: "pending" },
-      { nodeId: "n4", nodeName: "结果送达", status: "pending" },
-    ],
-  };
-
-  const totalCertCount = certificateCategories.reduce((s, c) => s + c.count, 0);
 
   return (
     <div className="min-h-screen">
@@ -588,71 +651,81 @@ export default function Home() {
               </div>
 
               {!isLoggedIn ? (
-                <div className="space-y-4">
-                  {/* 未登录状态展示示例数据 */}
-                  <div className="p-4 rounded-lg border border-dashed border-gray-200 bg-gray-50/50">
-                    <div className="flex items-center gap-2 mb-3">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
                       <Eye className="w-4 h-4 text-ink-light" />
-                      <span className="text-xs text-ink-light">以下为演示数据，登录后查看您的真实办件</span>
+                      <span className="text-xs text-ink-light">以下为示例办件，登录后查看您的真实办件</span>
                     </div>
-                    <Link to={`/cases/${demoCase.id}`} className="block">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h3 className="font-medium text-ink flex items-center gap-2">
-                            {demoCase.serviceName}
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-warning-100 text-warning-700">演示</span>
-                          </h3>
-                          <p className="text-xs text-ink-light mt-1">
-                            办件编号：{demoCase.caseNo} · 提交于 {demoCase.applyTime.split(" ")[0]}
-                          </p>
-                        </div>
-                        <span className="badge-warning text-xs">办理中</span>
-                      </div>
-
-                      <div className="flex items-center gap-0 mt-2">
-                        {getLifecycleStatus(demoCase).map((step, si) => {
-                          const StepIcon = step.icon;
-                          return (
-                            <div key={step.key} className="flex items-center">
-                              <div
-                                className={cn(
-                                  "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
-                                  step.state === "done" && "bg-success-50 text-success-700",
-                                  step.state === "active" && "bg-gov-50 text-gov-700 ring-1 ring-gov-200",
-                                  step.state === "pending" && "bg-gray-50 text-gray-400",
-                                  step.state === "failed" && "bg-danger-50 text-danger-600"
-                                )}
-                              >
-                                {step.state === "done" ? (
-                                  <CheckCircle2 className="w-2.5 h-2.5" />
-                                ) : step.state === "active" ? (
-                                  <Circle className="w-2.5 h-2.5 fill-current" />
-                                ) : (
-                                  <Circle className="w-2.5 h-2.5" />
-                                )}
-                                {step.label}
-                              </div>
-                              {si < 5 && (
-                                <div className={cn(
-                                  "w-2 h-px mx-0.5",
-                                  step.state === "done" ? "bg-success-400" : "bg-gray-200"
-                                )} />
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <p className="text-xs text-ink-light mt-2 flex items-center gap-1">
-                        <Clock className="w-3 h-3" /> 当前节点：{demoCase.currentNode}
-                      </p>
-                    </Link>
+                    <span className="text-[10px] text-ink-lighter">共 {mockCases.length} 条示例</span>
                   </div>
+                  {mockCases.slice(0, 3).map((c) => {
+                    const statusInfo = statusTextMap[c.status];
+                    return (
+                      <div
+                        key={c.id}
+                        className="p-4 rounded-lg border border-dashed border-gray-200 bg-gray-50/50 hover:border-gov-200 hover:bg-gov-50/30 transition-all cursor-pointer"
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="font-medium text-ink flex items-center gap-2">
+                              {c.serviceName}
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">示例</span>
+                            </h3>
+                            <p className="text-xs text-ink-light mt-1">
+                              办件编号：{c.caseNo} · 提交于 {c.applyTime.split(" ")[0]}
+                            </p>
+                          </div>
+                          <span className={cn("shrink-0 text-xs", statusInfo.badge)}>
+                            {statusInfo.text}
+                          </span>
+                        </div>
 
-                  <div className="text-center">
+                        <div className="flex items-center gap-0">
+                          {getLifecycleStatus(c).map((step, si) => {
+                            const StepIcon = step.icon;
+                            return (
+                              <div key={step.key} className="flex items-center">
+                                <div
+                                  className={cn(
+                                    "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
+                                    step.state === "done" && "bg-success-50 text-success-700",
+                                    step.state === "active" && "bg-gov-50 text-gov-700 ring-1 ring-gov-200",
+                                    step.state === "pending" && "bg-gray-50 text-gray-400",
+                                    step.state === "failed" && "bg-danger-50 text-danger-600"
+                                  )}
+                                >
+                                  {step.state === "done" ? (
+                                    <CheckCircle2 className="w-2.5 h-2.5" />
+                                  ) : step.state === "active" ? (
+                                    <Circle className="w-2.5 h-2.5 fill-current" />
+                                  ) : (
+                                    <Circle className="w-2.5 h-2.5" />
+                                  )}
+                                  {step.label}
+                                </div>
+                                {si < 5 && (
+                                  <div className={cn(
+                                    "w-2 h-px mx-0.5",
+                                    step.state === "done" ? "bg-success-400" : "bg-gray-200"
+                                  )} />
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        <p className="text-xs text-ink-light mt-2 flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> 当前节点：{c.currentNode}
+                        </p>
+                      </div>
+                    );
+                  })}
+
+                  <div className="text-center pt-2">
                     <Link to="/login" className="btn-primary inline-flex items-center gap-2">
                       <LogOut className="w-4 h-4 rotate-180" />
-                      立即登录查看我的办件
+                      立即登录查看我的真实办件
                     </Link>
                   </div>
                 </div>
@@ -798,7 +871,7 @@ export default function Home() {
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-bold text-success-600">正常</p>
-                    <p className="text-[10px] text-ink-light">480项服务在线</p>
+                    <p className="text-[10px] text-ink-light">{onlineCount}项服务在线</p>
                   </div>
                 </div>
               </div>

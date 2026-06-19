@@ -258,50 +258,52 @@ export default function Services() {
                 <p className="text-ink-light">没有找到匹配的服务，请尝试其他筛选条件</p>
               </div>
             ) : viewMode === "grid" ? (
-              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {filtered.map((svc) => {
+              <>
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {displayedList.map((svc) => {
                   const domain = serviceDomains.find((d) => d.code === svc.category);
                   const statusInfo = statusTextMap[svc.status === "online" ? "completed" : "draft"];
                   return (
-                    <Link
+                    <div
                       key={svc.id}
-                      to={`/services/${svc.id}`}
                       className="card-hover p-5 flex flex-col group"
                     >
-                      <div className="flex items-start gap-3 mb-3">
-                        <div
-                          className={cn(
-                            "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br",
-                            domain?.color || "from-gov-500 to-gov-700"
-                          )}
-                        >
-                          {domain && iconMap[domain.icon] && (
-                            (() => {
-                              const Ic = iconMap[domain.icon];
-                              return <Ic className="w-6 h-6 text-white" />;
-                            })()
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2">
-                            <h3 className="font-semibold text-ink group-hover:text-gov-700 transition-colors line-clamp-2">
-                              {svc.name}
-                            </h3>
-                            {svc.status !== "online" && (
-                              <span className={cn("shrink-0", statusInfo.badge)}>
-                                {svc.status === "maintenance" ? "维护中" : "已下线"}
-                              </span>
+                      <Link to={`/services/${svc.id}`} className="flex-1">
+                        <div className="flex items-start gap-3 mb-3">
+                          <div
+                            className={cn(
+                              "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br",
+                              domain?.color || "from-gov-500 to-gov-700"
+                            )}
+                          >
+                            {domain && iconMap[domain.icon] && (
+                              (() => {
+                                const Ic = iconMap[domain.icon];
+                                return <Ic className="w-6 h-6 text-white" />;
+                              })()
                             )}
                           </div>
-                          <p className="text-xs text-ink-light mt-1 flex items-center gap-1">
-                            <Building className="w-3 h-3" /> {svc.department}
-                          </p>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <h3 className="font-semibold text-ink group-hover:text-gov-700 transition-colors line-clamp-2">
+                                {svc.name}
+                              </h3>
+                              {svc.status !== "online" && (
+                                <span className={cn("shrink-0", statusInfo.badge)}>
+                                  {svc.status === "maintenance" ? "维护中" : "已下线"}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-ink-light mt-1 flex items-center gap-1">
+                              <Building className="w-3 h-3" /> {svc.department}
+                            </p>
+                          </div>
                         </div>
-                      </div>
 
-                      <p className="text-sm text-ink-light line-clamp-2 mb-4 flex-1">
-                        {svc.description}
-                      </p>
+                        <p className="text-sm text-ink-light line-clamp-2 mb-3">
+                          {svc.description}
+                        </p>
+                      </Link>
 
                       <div className="flex items-center justify-between text-xs text-ink-light pt-3 border-t border-ink-border">
                         <span className="flex items-center gap-1">
@@ -317,7 +319,7 @@ export default function Services() {
                         </span>
                       </div>
 
-                      <div className="flex gap-2 mt-3">
+                      <div className="flex gap-2 mt-3 mb-3">
                         {svc.onlineAvailable && (
                           <span className="badge-success">在线办理</span>
                         )}
@@ -326,56 +328,127 @@ export default function Services() {
                         )}
                         {svc.fee === "免费" && <span className="badge-gray">免费</span>}
                       </div>
-                    </Link>
+
+                      <div className="grid grid-cols-6 gap-1 pt-3 border-t border-dashed border-gray-200">
+                        {lifecycleQuickActions.map((action, ai) => {
+                          const StepIcon = action.icon;
+                          const disabled = !svc.onlineAvailable && (action.key === "track" || action.key === "push" || action.key === "evaluate");
+                          return (
+                            <button
+                              key={action.key}
+                              className={cn(
+                                "flex flex-col items-center gap-1 py-2 rounded-md transition-colors",
+                                ai < 3
+                                  ? "text-gov-600 hover:bg-gov-50"
+                                  : "text-ink-lighter hover:bg-ink-bg cursor-not-allowed"
+                              )}
+                              title={action.label}
+                              disabled={ai >= 3}
+                            >
+                              <StepIcon className="w-4 h-4" />
+                              <span className="text-[10px] font-medium">{action.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   );
                 })}
               </div>
+
+              {hasMore && (
+                <div className="text-center mt-6">
+                  <button
+                    onClick={() => setDisplayCount((c) => c + 20)}
+                    className="btn-secondary inline-flex items-center gap-2"
+                  >
+                    加载更多
+                    <ChevronRight className="w-4 h-4" />
+                    <span className="text-xs text-ink-light">
+                      （已加载 {displayCount} / 共 {filtered.length} 项，剩余 {remaining} 项）
+                    </span>
+                  </button>
+                </div>
+              )}
+              </>
             ) : (
+              <>
               <div className="card divide-y divide-ink-border">
-                {filtered.map((svc) => {
+                {displayedList.map((svc) => {
                   const domain = serviceDomains.find((d) => d.code === svc.category);
                   return (
-                    <Link
+                    <div
                       key={svc.id}
-                      to={`/services/${svc.id}`}
                       className="flex items-center gap-4 p-4 hover:bg-gov-50/50 transition-colors group"
                     >
-                      <div
-                        className={cn(
-                          "w-11 h-11 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br",
-                          domain?.color || "from-gov-500 to-gov-700"
-                        )}
-                      >
-                        {domain && iconMap[domain.icon] && (
-                          (() => {
-                            const Ic = iconMap[domain.icon];
-                            return <Ic className="w-5 h-5 text-white" />;
-                          })()
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors">
-                            {svc.name}
-                          </h3>
-                          {svc.onlineAvailable && <span className="badge-success text-[10px]">在线办</span>}
+                      <Link to={`/services/${svc.id}`} className="flex items-center gap-4 flex-1 min-w-0">
+                        <div
+                          className={cn(
+                            "w-11 h-11 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br",
+                            domain?.color || "from-gov-500 to-gov-700"
+                          )}
+                        >
+                          {domain && iconMap[domain.icon] && (
+                            (() => {
+                              const Ic = iconMap[domain.icon];
+                              return <Ic className="w-5 h-5 text-white" />;
+                            })()
+                          )}
                         </div>
-                        <p className="text-xs text-ink-light mt-0.5">
-                          {svc.department} · {svc.subCategory} · {svc.handlingTime}
-                        </p>
-                      </div>
-                      <div className="hidden sm:flex items-center gap-6 text-sm text-ink-light">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors">
+                              {svc.name}
+                            </h3>
+                            {svc.onlineAvailable && <span className="badge-success text-[10px]">在线办</span>}
+                          </div>
+                          <p className="text-xs text-ink-light mt-0.5">
+                            {svc.department} · {svc.subCategory} · {svc.handlingTime}
+                          </p>
+                        </div>
+                      </Link>
+                      <div className="hidden sm:flex items-center gap-6 text-sm text-ink-light shrink-0">
                         <span>{svc.applyCount.toLocaleString()}人办理</span>
                         <span className="text-warning-600 flex items-center gap-1">
                           <Star className="w-3 h-3 fill-current" />
                           {svc.satisfactionRate.toFixed(1)}%
                         </span>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-ink-lighter group-hover:text-gov-600 group-hover:translate-x-1 transition-all" />
-                    </Link>
+                      <div className="hidden md:flex items-center gap-1 shrink-0">
+                        {lifecycleQuickActions.slice(0, 3).map((action) => {
+                          const StepIcon = action.icon;
+                          return (
+                            <button
+                              key={action.key}
+                              className="w-9 h-9 rounded-md flex items-center justify-center text-ink-light hover:text-gov-600 hover:bg-gov-50 transition-colors"
+                              title={action.label}
+                            >
+                              <StepIcon className="w-4 h-4" />
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-ink-lighter group-hover:text-gov-600 group-hover:translate-x-1 transition-all shrink-0" />
+                    </div>
                   );
                 })}
               </div>
+
+              {hasMore && (
+                <div className="text-center mt-6">
+                  <button
+                    onClick={() => setDisplayCount((c) => c + 20)}
+                    className="btn-secondary inline-flex items-center gap-2"
+                  >
+                    加载更多
+                    <ChevronRight className="w-4 h-4" />
+                    <span className="text-xs text-ink-light">
+                      （已加载 {displayCount} / 共 {filtered.length} 项，剩余 {remaining} 项）
+                    </span>
+                  </button>
+                </div>
+              )}
+              </>
             )}
           </main>
         </div>
