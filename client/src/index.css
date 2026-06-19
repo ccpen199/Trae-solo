@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  background: #f5f5f7;
+  color: #1a1a1a;
+  overscroll-behavior: none;
+}
+
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}
+
+.card {
+  @apply bg-white rounded-2xl shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-primary to-orange-500 text-white font-semibold rounded-full py-3 px-6 active:scale-95 transition-transform;
+}
+
+.btn-ghost {
+  @apply bg-gray-100 text-gray-700 font-medium rounded-full py-3 px-6 active:scale-95 transition-transform;
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent;
+}
+
+.bounce-in {
+  animation: bounceIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
