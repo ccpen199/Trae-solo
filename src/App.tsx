@@ -36,6 +36,7 @@ import {
   Gavel,
   RefreshCw,
   Download,
+  TrendingUp,
 } from 'lucide-react';
 import type { Metric, Product, TimelineItem, TraceBatch } from '../shared/types';
 
@@ -172,6 +173,7 @@ function useCachedApi<T>(path: string, fallback: T) {
     return cached ?? fallback;
   });
   const [loading, setLoading] = useState(() => readCache<T>(path) === null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -182,41 +184,50 @@ function useCachedApi<T>(path: string, fallback: T) {
     }
 
     let active = true;
-    setLoading(true);
-    apiGet<T>(path)
-      .then((payload) => {
-        if (active) {
-          setData(payload);
-          setError('');
-          writeCache(path, payload);
-        }
-      })
-      .catch((err: Error) => {
-        if (active) {
-          setError(err.message);
-          if (cached !== null) {
-            setData(cached);
+    const needRefresh = cached === null || Date.now() - (JSON.parse(sessionStorage.getItem(`agcache:${path}`) || '{"ts":0}').ts) >= CACHE_TTL;
+    
+    if (needRefresh) {
+      if (cached !== null) {
+        setIsRefreshing(true);
+      } else {
+        setLoading(true);
+      }
+      apiGet<T>(path)
+        .then((payload) => {
+          if (active) {
+            setData(payload);
+            setError('');
+            writeCache(path, payload);
           }
-        }
-      })
-      .finally(() => {
-        if (active) {
-          setLoading(false);
-        }
-      });
+        })
+        .catch((err: Error) => {
+          if (active) {
+            setError(err.message);
+            if (cached !== null) {
+              setData(cached);
+            }
+          }
+        })
+        .finally(() => {
+          if (active) {
+            setLoading(false);
+            setIsRefreshing(false);
+          }
+        });
+    }
 
     return () => {
       active = false;
     };
   }, [path]);
 
-  return { data, loading, error };
+  return { data, loading, error, isRefreshing };
 }
 
 function useModal() {
   const [open, setOpen] = useState(false);
   const openModal = useCallback(() => setOpen(true), []);
-  const closeModal = useCallback(() => setOpen(false), []);
+  const closeModal = useCallback((_e?: React.MouseEvent) => setOpen(false), []);
   return { open, openModal, closeModal };
 }
 
@@ -229,17 +240,21 @@ interface MatchResult {
   price: string;
   seller: string;
   matchScore: number;
+  matchReason: string[];
+  respondedAt?: string;
 }
 
 interface AppState {
   orders: OrderRow[];
   contracts: ContractRow[];
   matchResults: MatchResult[];
+  matchResponses: Array<{ demandId: string; matchId: string; price: string; respondedAt: string }>;
   addOrder: (order: Omit<OrderRow, 'id' | 'createdAt'>) => OrderRow;
   addContract: (contract: Omit<ContractRow, 'id' | 'signedAt'>) => ContractRow;
   updateOrder: (id: string, patch: Partial<OrderRow>) => void;
   updateContract: (id: string, patch: Partial<ContractRow>) => void;
   setMatchResults: (results: MatchResult[]) => void;
+  addMatchResponse: (response: { demandId: string; matchId: string; price: string }) => void;
 }
 
 const AppContext = React.createContext<AppState | null>(null);
@@ -265,9 +280,11 @@ function App() {
   const [orders, setOrders] = useState<OrderRow[]>(() => loadLocal('ag_orders'));
   const [contracts, setContracts] = useState<ContractRow[]>(() => loadLocal('ag_contracts'));
   const [matchResults, setMatchResults] = useState<MatchResult[]>([]);
+  const [matchResponses, setMatchResponses] = useState<Array<{ demandId: string; matchId: string; price: string; respondedAt: string }>>(() => loadLocal('ag_match_responses'));
 
   useEffect(() => { saveLocal('ag_orders', orders); }, [orders]);
   useEffect(() => { saveLocal('ag_contracts', contracts); }, [contracts]);
+  useEffect(() => { saveLocal('ag_match_responses', matchResponses); }, [matchResponses]);
 
   const addOrder = useCallback((order: Omit<OrderRow, 'id' | 'createdAt'>): OrderRow => {
     const newOrder: OrderRow = {
@@ -313,15 +330,25 @@ function App() {
     });
   }, []);
 
+  const addMatchResponse = useCallback((response: { demandId: string; matchId: string; price: string }) => {
+    setMatchResponses((prev) => {
+      const next = [{ ...response, respondedAt: new Date().toLocaleString('zh-CN') }, ...prev];
+      saveLocal('ag_match_responses', next);
+      return next;
+    });
+  }, []);
+
   const appState: AppState = {
     orders,
     contracts,
     matchResults,
+    matchResponses,
     addOrder,
     addContract,
     updateOrder,
     updateContract,
     setMatchResults,
+    addMatchResponse,
   };
 
   return (
@@ -420,7 +447,7 @@ function Topbar() {
 }
 
 function Dashboard() {
-  const { data, loading, error } = useCachedApi<DashboardData>('/api/dashboard', {
+  const { data, loading, error, isRefreshing } = useCachedApi<DashboardData>('/api/dashboard', {
     metrics: [],
     qualityTrend: [],
     alerts: [],
@@ -469,7 +496,7 @@ function Dashboard() {
         <section className="quality-panel">
           <div className="panel-head">
             <div>
-              <p className="eyebrow">质量趋势</p>
+              <p className="eyebrow">质量趋势 {isRefreshing && <span className="pill small blue">刷新中</span>}</p>
               <h3>{latestTrend ? `${latestTrend.passRate}%` : '--'}</h3>
             </div>
             <BarChart3 size={24} />
@@ -482,6 +509,11 @@ function Dashboard() {
                   <small>{item.month}</small>
                 </div>
               ))
+            ) : loading ? (
+              <div className="empty-state">
+                <BarChart3 size={32} />
+                <p>数据加载中...</p>
+              </div>
             ) : (
               <div className="empty-state">
                 <BarChart3 size={32} />
@@ -490,8 +522,18 @@ function Dashboard() {
             )}
           </div>
           <div className="risk-row">
-            <span>抽检样本 {latestTrend?.sampling ?? '--'}</span>
-            <strong>风险事件 {latestTrend?.risk ?? '--'}</strong>
+            <span>抽检样本 <strong>{latestTrend?.sampling ?? '--'}</strong> 批</span>
+            <strong>风险事件 {latestTrend?.risk ?? '--'} 起</strong>
+          </div>
+          <div className="report-actions">
+            <button className="action-btn outline small" onClick={() => navigate('/regulatory')}>
+              <FileCheck size={14} />
+              查看质量报表
+            </button>
+            <button className="action-btn outline small" onClick={() => navigate('/regulatory/reports')}>
+              <TrendingUp size={14} />
+              趋势分析报告
+            </button>
           </div>
         </section>
       </div>
@@ -760,7 +802,7 @@ function TracePage() {
 
 function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
   const { data, loading, error } = useApi<{ products: Product[] }>(`/api/products?channel=${channel}`, { products: [] });
-  const { addOrder, addContract, matchResults, setMatchResults } = useAppState();
+  const { addOrder, addContract, matchResults, setMatchResults, addMatchResponse, matchResponses } = useAppState();
   const navigate = useNavigate();
   const shopModal = useModal();
   const orderModal = useModal();
@@ -795,14 +837,32 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
 
   function handleMatchDemand(demand: typeof demandItems[0]) {
     setSelectedDemand(demand);
-    const keyword = demand.name.replace(/采购|长期求购|紧急采购|求购/g, '');
+    const keyword = demand.name.replace(/采购|长期求购|紧急采购|求购/g, '').trim();
     const matched = data.products
       .map((p) => {
-        let score = 50;
-        if (p.category === demand.category) score += 30;
-        if (p.origin.includes(demand.region) || demand.region === '全国' || demand.region === '东北' && p.origin.includes('黑龙江')) score += 15;
-        if (p.name.includes(keyword) || keyword.includes(p.category)) score += 10;
-        if (p.specification === demand.spec) score += 5;
+        const reasons: string[] = [];
+        let score = 72;
+        if (p.category === demand.category) {
+          score += 15;
+          reasons.push(`品类匹配：${demand.category}`);
+        } else if (keyword.includes(p.category) || p.name.includes(keyword)) {
+          score += 8;
+          reasons.push(`品类相关：${p.category}`);
+        }
+        if (p.origin.includes(demand.region) || demand.region === '全国') {
+          score += 6;
+          reasons.push(`地域匹配：${p.origin}`);
+        } else if (demand.region === '东北' && (p.origin.includes('黑龙江') || p.origin.includes('吉林') || p.origin.includes('辽宁'))) {
+          score += 6;
+          reasons.push(`地域匹配：${p.origin}`);
+        }
+        if (p.specification === demand.spec) {
+          score += 7;
+          reasons.push(`规格匹配：${demand.spec}`);
+        }
+        if (reasons.length === 0) {
+          reasons.push('系统智能推荐');
+        }
         return {
           id: p.id,
           name: p.name,
@@ -811,7 +871,8 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
           spec: p.specification,
           price: currency(p.channel === 'b2b' ? p.wholesalePrice : p.price),
           seller: p.seller,
-          matchScore: Math.min(score, 99),
+          matchScore: Math.min(score, 98),
+          matchReason: reasons,
         };
       })
       .sort((a, b) => b.matchScore - a.matchScore)
@@ -862,6 +923,13 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
 
   function handleSelectMatch(match: MatchResult) {
     const matchedProduct = data.products.find((p) => p.id === match.id);
+    if (matchedProduct && selectedDemand) {
+      addMatchResponse({
+        demandId: selectedDemand.id,
+        matchId: match.id,
+        price: match.price,
+      });
+    }
     if (matchedProduct) {
       setSelectedProduct(matchedProduct);
       setOrderQty(matchedProduct.moq);
@@ -927,10 +995,21 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 <button className="action-btn blue" onClick={() => {
                   const matched = data.products
                     .map((p) => {
-                      let score = 50;
-                      if (p.category === item.category) score += 30;
-                      if (p.origin.includes(item.region)) score += 15;
-                      if (p.specification === item.spec) score += 5;
+                      const reasons: string[] = [];
+                      let score = 72;
+                      if (p.category === item.category) {
+                        score += 15;
+                        reasons.push(`品类匹配：${item.category}`);
+                      }
+                      if (p.origin.includes(item.region)) {
+                        score += 6;
+                        reasons.push(`地域匹配：${p.origin}`);
+                      }
+                      if (p.specification === item.spec) {
+                        score += 7;
+                        reasons.push(`规格匹配：${item.spec}`);
+                      }
+                      if (reasons.length === 0) reasons.push('系统智能推荐');
                       return {
                         id: p.id,
                         name: p.name,
@@ -939,7 +1018,8 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                         spec: p.specification,
                         price: currency(p.channel === 'b2b' ? p.wholesalePrice : p.price),
                         seller: p.seller,
-                        matchScore: Math.min(score, 99),
+                        matchScore: Math.min(score, 98),
+                        matchReason: reasons,
                       };
                     })
                     .sort((a, b) => b.matchScore - a.matchScore)
@@ -1108,31 +1188,42 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
       )}
 
       {matchModal.open && (
-        <Modal title="智能撮合结果" onClose={matchModal.closeModal}>
+        <Modal title="智能撮合结果" onClose={(e) => { e?.stopPropagation?.(); matchModal.closeModal(); }}>
           <div className="modal-form">
             <div className="form-group">
-              <label>按品类、地域、规格智能匹配</label>
+              <label>按品类、地域、规格智能匹配 · 共 {matchResults.length} 个候选</label>
               {matchResults.length > 0 ? (
                 <div className="stack-list">
-                  {matchResults.map((match) => (
-                    <article key={match.id} className="supply-row">
-                      <div className="supply-info">
-                        <div className="supply-badge">匹配度 {match.matchScore}%</div>
-                        <div>
-                          <strong>{match.name}</strong>
-                          <p>{match.category} · {match.region} · {match.spec}</p>
-                          <span>供应商：{match.seller}</span>
+                  {matchResults.map((match, idx) => {
+                    const isResponded = matchResponses.some((r) => r.matchId === match.id);
+                    return (
+                      <article key={match.id} className="supply-row">
+                        <div className="supply-info">
+                          <div className="supply-badge">匹配度 {match.matchScore}%</div>
+                          <div>
+                            <strong>{match.name}</strong>
+                            <p>{match.category} · {match.region} · {match.spec}</p>
+                            <span>供应商：{match.seller}</span>
+                            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 6 }}>
+                              {match.matchReason.map((r, i) => (
+                                <span key={i} className="pill small blue">{r}</span>
+                              ))}
+                              {isResponded && (
+                                <span className="pill small green">已响应报价</span>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="supply-actions">
-                        <strong>{match.price}</strong>
-                        <button className="action-btn green" onClick={() => handleSelectMatch(match)}>
-                          <Handshake size={14} />
-                          选择下单
-                        </button>
-                      </div>
-                    </article>
-                  ))}
+                        <div className="supply-actions">
+                          <strong>{match.price}</strong>
+                          <button className={`action-btn ${isResponded ? 'slate' : 'green'}`} onClick={() => handleSelectMatch(match)} disabled={isResponded}>
+                            <Handshake size={14} />
+                            {isResponded ? '已响应' : '选择下单'}
+                          </button>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="empty-state" style={{ padding: 24 }}>
@@ -1141,6 +1232,27 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 </div>
               )}
             </div>
+            {matchResponses.length > 0 && selectedDemand && (
+              <div className="form-group">
+                <label>报价响应记录 · 共 {matchResponses.filter((r) => r.demandId === selectedDemand.id).length} 条</label>
+                <div className="stack-list">
+                  {matchResponses.filter((r) => r.demandId === selectedDemand.id).map((resp, i) => {
+                    const match = matchResults.find((m) => m.id === resp.matchId);
+                    return (
+                      <article key={i} className="supply-row">
+                        <div className="supply-info">
+                          <div className="supply-badge">{resp.respondedAt}</div>
+                          <div>
+                            <strong>{match?.name || '已响应'}</strong>
+                            <p>报价 {resp.price} · 等待采购方确认</p>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <button className="action-btn outline full" onClick={(e) => { e.stopPropagation(); matchModal.closeModal(); }}>
               关闭
             </button>
@@ -1366,6 +1478,88 @@ function OrdersPage() {
           <PackageCheck size={24} />
         </div>
       </div>
+
+      <div className="content-grid three">
+        <section className="section-panel nested">
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">信用保证金</p>
+              <h3>监管状态</h3>
+            </div>
+            <Lock size={20} />
+          </div>
+          <div className="shop-stats">
+            <div className="shop-stat-card">
+              <p>已缴纳</p>
+              <h4>¥5,000</h4>
+              <span className="pill green small">正常</span>
+            </div>
+            <div className="shop-stat-card">
+              <p>当前冻结</p>
+              <h4>{currency(localOrders.filter((o) => o.status === '保证金已冻结').reduce((s, o) => s + o.amount * 0.3, 0))}</h4>
+              <span className="pill amber small">订单担保</span>
+            </div>
+            <div className="shop-stat-card">
+              <p>可用额度</p>
+              <h4>{currency(5000 - localOrders.filter((o) => o.status === '保证金已冻结').reduce((s, o) => s + o.amount * 0.3, 0))}</h4>
+              <span className="pill blue small">可继续交易</span>
+            </div>
+          </div>
+        </section>
+        <section className="section-panel nested">
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">担保支付</p>
+              <h3>资金托管</h3>
+            </div>
+            <Wallet size={20} />
+          </div>
+          <div className="shop-stats">
+            <div className="shop-stat-card">
+              <p>托管中</p>
+              <h4>{currency(localOrders.filter((o) => o.status === '担保支付中').reduce((s, o) => s + o.amount, 0))}</h4>
+              <span className="pill blue small">待签收</span>
+            </div>
+            <div className="shop-stat-card">
+              <p>待放款</p>
+              <h4>{currency(localOrders.filter((o) => o.status === '已验收').reduce((s, o) => s + o.amount, 0))}</h4>
+              <span className="pill green small">可操作</span>
+            </div>
+            <div className="shop-stat-card">
+              <p>已完成</p>
+              <h4>{currency(localOrders.filter((o) => o.status === '已结算').reduce((s, o) => s + o.amount, 0))}</h4>
+              <span className="pill slate small">已结清</span>
+            </div>
+          </div>
+        </section>
+        <section className="section-panel nested">
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">流转状态</p>
+              <h3>业务进度</h3>
+            </div>
+            <TrendingUp size={20} />
+          </div>
+          <div className="shop-stats">
+            <div className="shop-stat-card">
+              <p>待签署合同</p>
+              <h4>{localOrders.filter((o) => o.status === '合同签署中').length + localOrders.filter((o) => o.status === '保证金已冻结').length}</h4>
+              <span className="pill amber small">待处理</span>
+            </div>
+            <div className="shop-stat-card">
+              <p>待签收</p>
+              <h4>{localOrders.filter((o) => o.status === '担保支付中').length}</h4>
+              <span className="pill blue small">运输中</span>
+            </div>
+            <div className="shop-stat-card">
+              <p>待放款</p>
+              <h4>{localOrders.filter((o) => o.status === '已验收').length}</h4>
+              <span className="pill green small">可确认</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
       <StatusLine loading={loading} error={error} />
       <div className="stack-list">
         {allOrders.map((order) => {
@@ -1835,13 +2029,13 @@ function ProfilePage() {
   );
 }
 
-function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
+function Modal({ title, onClose, children }: { title: string; onClose: (e?: React.MouseEvent) => void; children: React.ReactNode }) {
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={(e) => { e.stopPropagation(); onClose(e); }}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>{title}</h3>
-          <button className="modal-close" onClick={onClose}>
+          <button className="modal-close" onClick={(e) => { e.stopPropagation(); onClose(e); }}>
             <X size={18} />
           </button>
         </div>

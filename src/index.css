@@ -638,6 +638,8 @@ code {
   position: relative;
   display: grid;
   gap: 14px;
+  max-height: none;
+  overflow: visible;
 }
 
 .timeline-item {
@@ -645,6 +647,8 @@ code {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr);
   gap: 12px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .timeline-item:not(:last-child)::before {
