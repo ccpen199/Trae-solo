@@ -3,153 +3,102 @@
 @tailwind utilities;
 
 :root {
-  --primary-50: #E8F3FF;
-  --primary-100: #BEDAFF;
-  --primary-200: #94C2FF;
-  --primary-300: #6AA9FF;
-  --primary-400: #408FFF;
-  --primary-500: #165DFF;
-  --primary-600: #0E42D2;
-  --primary-700: #0A2BA6;
-  --primary-800: #061B79;
-  --primary-900: #03104D;
-
-  --success-500: #00B42A;
-  --warning-500: #FF7D00;
-  --danger-500: #F53F3F;
-
-  --bg-page: #F7F8FA;
-  --bg-card: #FFFFFF;
-  --bg-hover: #F2F3F5;
-
-  --text-primary: #1D2129;
-  --text-secondary: #4E5969;
-  --text-tertiary: #86909C;
-  --text-disabled: #C9CDD4;
-
-  --border-color: #E5E6EB;
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Source Han Sans CN', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-primary);
-  background-color: var(--bg-page);
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #1E293B;
+  background-color: #F4F7FA;
 }
 
-#root {
-  min-height: 100vh;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #F2F3F5;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #C9CDD4;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #86909C;
+@layer base {
+  * {
+    @apply border-gov-border;
+  }
+  body {
+    @apply bg-gov-bg-light text-gov-text font-sans;
+  }
 }
 
 @layer components {
-  .btn-primary {
-    @apply px-4 py-2 bg-primary-500 text-white rounded-lg font-medium
-           hover:bg-primary-600 active:bg-primary-700
-           transition-all duration-200 ease-out
-           focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2
-           disabled:opacity-50 disabled:cursor-not-allowed;
+  .gov-card {
+    @apply bg-gov-card rounded-lg border border-gov-border shadow-gov transition-all duration-300;
   }
+  .gov-card:hover {
+    @apply shadow-gov-hover -translate-y-0.5;
+  }
+  .gov-btn-primary {
+    @apply bg-gov-blue text-white px-6 py-2.5 rounded-lg font-medium shadow-gov
+           hover:bg-gov-blue-light transition-all duration-200 active:scale-[0.98];
+  }
+  .gov-btn-secondary {
+    @apply border border-gov-blue text-gov-blue px-6 py-2.5 rounded-lg font-medium
+           hover:bg-gov-blue hover:text-white transition-all duration-200 active:scale-[0.98];
+  }
+  .gov-btn-danger {
+    @apply bg-gov-red text-white px-6 py-2.5 rounded-lg font-medium
+           hover:bg-gov-red-light transition-all duration-200 active:scale-[0.98];
+  }
+  .gov-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .gov-badge-blue {
+    @apply gov-badge bg-gov-blue/10 text-gov-blue;
+  }
+  .gov-badge-green {
+    @apply gov-badge bg-emerald-100 text-emerald-700;
+  }
+  .gov-badge-red {
+    @apply gov-badge bg-gov-red/10 text-gov-red;
+  }
+  .gov-badge-gold {
+    @apply gov-badge bg-gov-gold/10 text-amber-700;
+  }
+  .gov-badge-gray {
+    @apply gov-badge bg-gray-100 text-gray-600;
+  }
+  .gov-section-title {
+    @apply font-serif text-xl font-semibold text-gov-blue border-l-4 border-gov-gold pl-3;
+  }
+  .gov-table {
+    @apply w-full text-sm;
+  }
+  .gov-table th {
+    @apply bg-gov-bg px-4 py-3 text-left font-medium text-gov-text-secondary border-b border-gov-border;
+  }
+  .gov-table td {
+    @apply px-4 py-3 border-b border-gov-border/50;
+  }
+  .gov-table tr:hover td {
+    @apply bg-gov-bg-light;
+  }
+}
 
-  .btn-secondary {
-    @apply px-4 py-2 bg-white text-primary-500 border border-primary-500 rounded-lg font-medium
-           hover:bg-primary-50 active:bg-primary-100
-           transition-all duration-200 ease-out
-           focus:outline-none focus:ring-2 focus:ring-primary-200 focus:ring-offset-2
-           disabled:opacity-50 disabled:cursor-not-allowed;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
+}
 
-  .btn-ghost {
-    @apply px-4 py-2 text-neutral-400 hover:text-primary-500 hover:bg-neutral-50 rounded-lg font-medium
-           transition-all duration-200 ease-out
-           focus:outline-none focus:ring-2 focus:ring-neutral-100;
-  }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
 
-  .card {
-    @apply bg-white rounded-xl shadow-card border border-neutral-100
-           transition-all duration-200 ease-out;
-  }
-
-  .card-hover {
-    @apply hover:shadow-card-hover hover:-translate-y-0.5;
-  }
-
-  .input-base {
-    @apply w-full px-3 py-2 text-sm text-neutral-600 bg-white border border-neutral-200 rounded-lg
-           placeholder:text-neutral-300
-           focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100
-           transition-all duration-200;
-  }
-
-  .badge {
-    @apply inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full;
-  }
-
-  .badge-primary {
-    @apply badge bg-primary-50 text-primary-500;
-  }
-
-  .badge-success {
-    @apply badge bg-success-500/10 text-success-500;
-  }
-
-  .badge-warning {
-    @apply badge bg-warning-500/10 text-warning-500;
-  }
-
-  .badge-danger {
-    @apply badge bg-danger-500/10 text-danger-500;
-  }
-
-  .badge-default {
-    @apply badge bg-neutral-100 text-neutral-400;
-  }
-
-  .section-title {
-    @apply text-lg font-semibold text-neutral-600 mb-4;
-  }
-
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent;
-  }
-
-  .gradient-bg {
-    @apply bg-gradient-to-br from-primary-500 to-primary-600;
-  }
-
-  .glass-effect {
-    @apply backdrop-blur-md bg-white/70 border border-white/20;
-  }
+@keyframes particle {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
+  50% { opacity: 0.6; transform: translateY(-40px) scale(1); }
 }
