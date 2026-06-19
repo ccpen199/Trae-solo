@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import type React from 'react';
+import React from 'react';
 import { NavLink, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AlertTriangle,
@@ -152,20 +152,20 @@ const CACHE_TTL = 30_000;
 function useCachedApi<T>(path: string, fallback: T) {
   const [data, setData] = useState<T>(() => {
     const cached = cacheRef[path];
-    if (cached && Date.now() - cached.ts < CACHE_TTL) {
+    if (cached && cached.data) {
       return cached.data as T;
     }
     return fallback;
   });
   const [loading, setLoading] = useState(() => {
     const cached = cacheRef[path];
-    return !(cached && Date.now() - cached.ts < CACHE_TTL);
+    return !(cached && cached.data && Date.now() - cached.ts < CACHE_TTL);
   });
   const [error, setError] = useState('');
 
   useEffect(() => {
     const cached = cacheRef[path];
-    if (cached && Date.now() - cached.ts < CACHE_TTL) {
+    if (cached && cached.data && Date.now() - cached.ts < CACHE_TTL) {
       setData(cached.data as T);
       setLoading(false);
       return;
@@ -184,6 +184,9 @@ function useCachedApi<T>(path: string, fallback: T) {
       .catch((err: Error) => {
         if (active) {
           setError(err.message);
+          if (cached && cached.data) {
+            setData(cached.data as T);
+          }
         }
       })
       .finally(() => {
@@ -207,31 +210,94 @@ function useModal() {
   return { open, openModal, closeModal };
 }
 
+interface MatchResult {
+  id: string;
+  name: string;
+  category: string;
+  region: string;
+  spec: string;
+  price: string;
+  seller: string;
+  matchScore: number;
+}
+
+interface AppState {
+  orders: OrderRow[];
+  contracts: ContractRow[];
+  matchResults: MatchResult[];
+  addOrder: (order: Omit<OrderRow, 'id' | 'createdAt'>) => OrderRow;
+  addContract: (contract: Omit<ContractRow, 'id' | 'signedAt'>) => ContractRow;
+  setMatchResults: (results: MatchResult[]) => void;
+}
+
+const AppContext = React.createContext<AppState | null>(null);
+
+function useAppState() {
+  const ctx = React.useContext(AppContext);
+  if (!ctx) throw new Error('useAppState must be used within AppProvider');
+  return ctx;
+}
+
 function App() {
+  const [orders, setOrders] = useState<OrderRow[]>([]);
+  const [contracts, setContracts] = useState<ContractRow[]>([]);
+  const [matchResults, setMatchResults] = useState<MatchResult[]>([]);
+
+  const addOrder = useCallback((order: Omit<OrderRow, 'id' | 'createdAt'>): OrderRow => {
+    const newOrder: OrderRow = {
+      ...order,
+      id: `od-${Date.now()}`,
+      createdAt: new Date().toLocaleString('zh-CN'),
+    };
+    setOrders((prev) => [newOrder, ...prev]);
+    return newOrder;
+  }, []);
+
+  const addContract = useCallback((contract: Omit<ContractRow, 'id' | 'signedAt'>): ContractRow => {
+    const newContract: ContractRow = {
+      ...contract,
+      id: `ct-${Date.now()}`,
+      signedAt: new Date().toLocaleDateString('zh-CN'),
+    };
+    setContracts((prev) => [newContract, ...prev]);
+    return newContract;
+  }, []);
+
+  const appState: AppState = {
+    orders,
+    contracts,
+    matchResults,
+    addOrder,
+    addContract,
+    setMatchResults,
+  };
+
   return (
-    <div className="app-shell">
-      <Sidebar />
-      <main className="main-panel">
-        <Topbar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/trace" element={<TracePage />} />
-          <Route path="/trace/:code" element={<TracePage />} />
-          <Route path="/market/b2b" element={<MarketPage channel="b2b" />} />
-          <Route path="/market/b2c" element={<MarketPage channel="b2c" />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/contracts" element={<ContractsPage />} />
-          <Route path="/agtech/qa" element={<AgtechPage />} />
-          <Route path="/agtech/pest" element={<PestPage />} />
-          <Route path="/agtech/weather" element={<WeatherPage />} />
-          <Route path="/regulatory" element={<RegulatoryPage />} />
-          <Route path="/regulatory/reports" element={<RegulatoryPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="*" element={<Dashboard />} />
-        </Routes>
-      </main>
-    </div>
+    <AppContext.Provider value={appState}>
+      <div className="app-shell">
+        <Sidebar />
+        <main className="main-panel">
+          <Topbar />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/trace" element={<TracePage />} />
+            <Route path="/trace/:code" element={<TracePage />} />
+            <Route path="/market/b2b" element={<MarketPage channel="b2b" />} />
+            <Route path="/market/b2c" element={<MarketPage channel="b2c" />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/contracts" element={<ContractsPage />} />
+            <Route path="/agtech/qa" element={<AgtechPage />} />
+            <Route path="/agtech/pest" element={<PestPage />} />
+            <Route path="/agtech/weather" element={<WeatherPage />} />
+            <Route path="/regulatory" element={<RegulatoryPage />} />
+            <Route path="/regulatory/reports" element={<RegulatoryPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="*" element={<Dashboard />} />
+          </Routes>
+        </main>
+      </div>
+    </AppContext.Provider>
   );
 }
 
@@ -310,7 +376,8 @@ function Dashboard() {
   const { data: productsData } = useCachedApi<{ products: Product[] }>('/api/products', { products: [] });
   const navigate = useNavigate();
   const [traceCode, setTraceCode] = useState(DEFAULT_TRACE_CODE);
-  const latestTrend = data.qualityTrend[data.qualityTrend.length - 1];
+  const hasTrendData = data.qualityTrend.length > 0;
+  const latestTrend = hasTrendData ? data.qualityTrend[data.qualityTrend.length - 1] : null;
 
   return (
     <section className="page-space">
@@ -351,17 +418,24 @@ function Dashboard() {
           <div className="panel-head">
             <div>
               <p className="eyebrow">质量趋势</p>
-              <h3>{latestTrend ? `${latestTrend.passRate}%` : loading ? '...' : '--'}</h3>
+              <h3>{latestTrend ? `${latestTrend.passRate}%` : '--'}</h3>
             </div>
             <BarChart3 size={24} />
           </div>
           <div className="trend-chart">
-            {data.qualityTrend.map((item) => (
-              <div key={item.month} className="trend-item">
-                <span style={{ height: `${Math.max(16, (item.passRate - 96) * 28)}px` }} />
-                <small>{item.month}</small>
+            {hasTrendData ? (
+              data.qualityTrend.map((item) => (
+                <div key={item.month} className="trend-item">
+                  <span style={{ height: `${Math.max(16, (item.passRate - 96) * 28)}px` }} />
+                  <small>{item.month}</small>
+                </div>
+              ))
+            ) : (
+              <div className="empty-state">
+                <BarChart3 size={32} />
+                <p>暂无质量趋势数据</p>
               </div>
-            ))}
+            )}
           </div>
           <div className="risk-row">
             <span>抽检样本 {latestTrend?.sampling ?? '--'}</span>
@@ -370,7 +444,8 @@ function Dashboard() {
         </section>
       </div>
 
-      <StatusLine loading={loading} error={error} />
+      {loading && <StatusLine loading={loading} error={error} />}
+      {error && <StatusLine loading={false} error={error} />}
 
       <div className="metrics-grid">
         {data.metrics.map((metric) => (
@@ -388,16 +463,23 @@ function Dashboard() {
             <CloudSun size={22} />
           </div>
           <div className="stack-list">
-            {data.alerts.map((alert) => (
-              <article className="alert-row" key={alert.id}>
-                <div className={`alert-level ${alert.level}`}>{alert.level}</div>
-                <div>
-                  <strong>{alert.region} · {alert.alertType}</strong>
-                  <p>{alert.suggestion}</p>
-                  <span>{alert.startsAt}</span>
-                </div>
-              </article>
-            ))}
+            {data.alerts.length > 0 ? (
+              data.alerts.map((alert) => (
+                <article className="alert-row" key={alert.id}>
+                  <div className={`alert-level ${alert.level}`}>{alert.level}</div>
+                  <div>
+                    <strong>{alert.region} · {alert.alertType}</strong>
+                    <p>{alert.suggestion}</p>
+                    <span>{alert.startsAt}</span>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div className="empty-state">
+                <CloudSun size={32} />
+                <p>暂无预警信息</p>
+              </div>
+            )}
           </div>
           <NavLink to="/agtech/weather" className="view-all-link">
             查看全部预警 <ArrowRight size={16} />
@@ -413,16 +495,23 @@ function Dashboard() {
             <Store size={22} />
           </div>
           <div className="product-mini-list">
-            {productsData.products.slice(0, 4).map((product) => (
-              <article key={product.id} className="mini-product">
-                <img src={product.imageUrl} alt={product.name} />
-                <div>
-                  <strong>{product.name}</strong>
-                  <span>{product.origin} · {product.specification}</span>
-                </div>
-                <b>{currency(product.price)}</b>
-              </article>
-            ))}
+            {productsData.products.length > 0 ? (
+              productsData.products.slice(0, 4).map((product) => (
+                <article key={product.id} className="mini-product">
+                  <img src={product.imageUrl} alt={product.name} />
+                  <div>
+                    <strong>{product.name}</strong>
+                    <span>{product.origin} · {product.specification}</span>
+                  </div>
+                  <b>{currency(product.price)}</b>
+                </article>
+              ))
+            ) : (
+              <div className="empty-state">
+                <Store size={32} />
+                <p>暂无商品数据</p>
+              </div>
+            )}
           </div>
           <NavLink to="/market/b2b" className="view-all-link">
             进入交易市场 <ArrowRight size={16} />
@@ -448,7 +537,7 @@ function TracePage() {
   const initialCode = searchParams.get('code') || DEFAULT_TRACE_CODE;
   const [code, setCode] = useState(initialCode);
   const [activeCode, setActiveCode] = useState(initialCode);
-  const { data, loading, error } = useApi<TraceResult>(`/api/trace/${encodeURIComponent(activeCode)}`, {
+  const { data, loading, error, refresh } = useApi<TraceResult>(`/api/trace/${encodeURIComponent(activeCode)}`, {
     batch: {
       id: '',
       traceCode: activeCode,
@@ -467,6 +556,14 @@ function TracePage() {
     timeline: [],
   });
 
+  useEffect(() => {
+    const urlCode = searchParams.get('code');
+    if (urlCode && urlCode !== activeCode) {
+      setCode(urlCode);
+      setActiveCode(urlCode);
+    }
+  }, [searchParams, activeCode]);
+
   const stageColors: Record<string, string> = {
     '种植建档': 'green',
     '农事操作': 'green',
@@ -477,6 +574,9 @@ function TracePage() {
     '入市销售': 'green',
     '监管复查': 'blue',
   };
+
+  const fullChainStages = ['种植建档', '农事操作', '加工包装', '冷链物流', '到货入库', '入市销售', '监管复查'];
+  const completedStages = data.timeline.map((t) => t.stage);
 
   return (
     <section className="page-space">
@@ -492,7 +592,8 @@ function TracePage() {
           className="trace-search compact"
           onSubmit={(event) => {
             event.preventDefault();
-            setActiveCode(code.trim() || DEFAULT_TRACE_CODE);
+            const newCode = code.trim() || DEFAULT_TRACE_CODE;
+            setActiveCode(newCode);
           }}
         >
           <ScanSearch size={20} />
@@ -538,14 +639,23 @@ function TracePage() {
               </div>
             </dl>
             <div className="chain-progress">
-              <p className="eyebrow">全链路进度</p>
+              <p className="eyebrow">全链路进度 · {completedStages.length}/{fullChainStages.length} 环节</p>
               <div className="chain-bar">
-                {['种植', '加工', '物流', '入库', '入市', '监管'].map((stage, i) => {
-                  const reached = i < data.timeline.length;
+                {fullChainStages.map((stage, i) => {
+                  const reached = completedStages.includes(stage);
+                  const labelMap: Record<string, string> = {
+                    '种植建档': '种植',
+                    '农事操作': '农事',
+                    '加工包装': '加工',
+                    '冷链物流': '物流',
+                    '到货入库': '入库',
+                    '入市销售': '入市',
+                    '监管复查': '监管',
+                  };
                   return (
                     <div key={stage} className={`chain-node ${reached ? 'reached' : ''}`}>
                       <span className="chain-dot" />
-                      <small>{stage}</small>
+                      <small>{labelMap[stage] || stage}</small>
                     </div>
                   );
                 })}
@@ -561,9 +671,15 @@ function TracePage() {
             <div className="section-title">
               <div>
                 <p className="eyebrow">Full Chain</p>
-                <h2>全链路时间线</h2>
+                <h2>全链路时间线 · {data.timeline.length} 条记录</h2>
               </div>
-              <Truck size={23} />
+              <div className="title-actions">
+                <button className="action-btn outline small" onClick={refresh}>
+                  <RefreshCw size={14} />
+                  刷新
+                </button>
+                <Truck size={23} />
+              </div>
             </div>
             <div className="timeline">
               {data.timeline.map((item) => (
@@ -591,11 +707,19 @@ function TracePage() {
 
 function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
   const { data, loading, error } = useApi<{ products: Product[] }>(`/api/products?channel=${channel}`, { products: [] });
+  const { addOrder, addContract, matchResults, setMatchResults } = useAppState();
+  const navigate = useNavigate();
   const shopModal = useModal();
   const orderModal = useModal();
+  const matchModal = useModal();
+  const successModal = useModal();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [orderQty, setOrderQty] = useState(1);
+  const [paymentMode, setPaymentMode] = useState<'escrow' | 'deposit'>('escrow');
   const [supplyTab, setSupplyTab] = useState<'products' | 'supply' | 'demand'>('products');
+  const [selectedDemand, setSelectedDemand] = useState<typeof demandItems[0] | null>(null);
+  const [lastOrderId, setLastOrderId] = useState('');
+  const [lastContractId, setLastContractId] = useState('');
 
   const supplyItems = [
     { id: 's-1', name: '批量有机稻花香', category: '粮油', region: '黑龙江', spec: '25kg/袋', qty: '50吨', price: '¥48/kg', seller: '黑龙江禾源农业合作社' },
@@ -612,7 +736,78 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
   function handleOrder(product: Product) {
     setSelectedProduct(product);
     setOrderQty(product.moq);
+    setPaymentMode('escrow');
     orderModal.openModal();
+  }
+
+  function handleMatchDemand(demand: typeof demandItems[0]) {
+    setSelectedDemand(demand);
+    const matched = data.products
+      .filter((p) => p.category === demand.category || p.name.includes(demand.name.replace('采购', '').replace('长期求购', '').replace('紧急采购', '')))
+      .map((p) => ({
+        id: p.id,
+        name: p.name,
+        category: p.category,
+        region: p.origin,
+        spec: p.specification,
+        price: currency(p.wholesalePrice),
+        seller: p.seller,
+        matchScore: Math.floor(Math.random() * 25) + 75,
+      }))
+      .sort((a, b) => b.matchScore - a.matchScore)
+      .slice(0, 3);
+    setMatchResults(matched);
+    matchModal.openModal();
+  }
+
+  function handleConfirmOrder() {
+    if (!selectedProduct) return;
+    const unitPrice = selectedProduct.channel === 'b2b' ? selectedProduct.wholesalePrice : selectedProduct.price;
+    const amount = orderQty * unitPrice;
+    const orderStatus = paymentMode === 'escrow' ? '担保支付中' : '保证金已冻结';
+    const progress = paymentMode === 'escrow' ? 30 : 20;
+
+    const newOrder = addOrder({
+      buyer: '当前采购商',
+      seller: selectedProduct.seller,
+      amount,
+      status: orderStatus,
+      progress,
+      logistics: '待安排发货',
+    });
+
+    const newContract = addContract({
+      title: `${selectedProduct.name} 采购合同`,
+      counterparty: selectedProduct.seller,
+      amount,
+      status: '待乙方签署',
+      blockchainHash: `0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 8)}`,
+    });
+
+    setLastOrderId(newOrder.id);
+    setLastContractId(newContract.id);
+    orderModal.closeModal();
+    successModal.openModal();
+  }
+
+  function handleGoToOrders() {
+    successModal.closeModal();
+    navigate('/orders');
+  }
+
+  function handleGoToContracts() {
+    successModal.closeModal();
+    navigate('/contracts');
+  }
+
+  function handleSelectMatch(match: MatchResult) {
+    const matchedProduct = data.products.find((p) => p.id === match.id);
+    if (matchedProduct) {
+      setSelectedProduct(matchedProduct);
+      setOrderQty(matchedProduct.moq);
+      matchModal.closeModal();
+      orderModal.openModal();
+    }
   }
 
   return (
@@ -663,7 +858,24 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
               </div>
               <div className="supply-actions">
                 <strong>{item.price}</strong>
-                <button className="action-btn blue" onClick={() => { setSelectedProduct(null); orderModal.openModal(); }}>
+                <button className="action-btn blue" onClick={() => {
+                  const matched = data.products
+                    .filter((p) => p.category === item.category)
+                    .map((p) => ({
+                      id: p.id,
+                      name: p.name,
+                      category: p.category,
+                      region: p.origin,
+                      spec: p.specification,
+                      price: currency(p.wholesalePrice),
+                      seller: p.seller,
+                      matchScore: Math.floor(Math.random() * 25) + 75,
+                    }))
+                    .sort((a, b) => b.matchScore - a.matchScore)
+                    .slice(0, 3);
+                  setMatchResults(matched);
+                  matchModal.openModal();
+                }}>
                   <Handshake size={14} />
                   供需撮合
                 </button>
@@ -687,7 +899,7 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
               </div>
               <div className="supply-actions">
                 <strong>预算 {item.budget}</strong>
-                <button className="action-btn green" onClick={() => { setSelectedProduct(null); orderModal.openModal(); }}>
+                <button className="action-btn green" onClick={() => handleMatchDemand(item)}>
                   <Handshake size={14} />
                   响应需求
                 </button>
@@ -730,8 +942,18 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 <span>免佣金入驻，仅需缴纳信用保证金 ¥5,000（可退）</span>
               </div>
             </div>
-            <button className="action-btn green full" onClick={shopModal.closeModal}>
-              确认开店
+            <button className="action-btn green full" onClick={() => {
+              addContract({
+                title: '平台入驻服务协议',
+                counterparty: '农品链平台',
+                amount: 5000,
+                status: '保证金待缴纳',
+                blockchainHash: `0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 8)}`,
+              });
+              shopModal.closeModal();
+              navigate('/contracts');
+            }}>
+              确认开店并缴纳保证金
             </button>
           </div>
         </Modal>
@@ -752,7 +974,7 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 </div>
                 <div className="form-group">
                   <label>采购数量（最低 {selectedProduct.moq}）</label>
-                  <input type="number" value={orderQty} min={selectedProduct.moq} onChange={(e) => setOrderQty(Number(e.target.value))} />
+                  <input type="number" value={orderQty} min={selectedProduct.moq} onChange={(e) => setOrderQty(Math.max(selectedProduct.moq, Number(e.target.value)))} />
                 </div>
                 <div className="order-summary">
                   <div className="summary-row">
@@ -770,22 +992,33 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 </div>
               </>
             )}
+            {selectedDemand && !selectedProduct && (
+              <div className="order-product-info">
+                <div>
+                  <strong>{selectedDemand.name}</strong>
+                  <span>{selectedDemand.category} · {selectedDemand.spec}</span>
+                  <b>预算 {selectedDemand.budget}</b>
+                </div>
+              </div>
+            )}
             <div className="form-group">
               <label>支付方式</label>
               <div className="payment-options">
-                <div className="payment-option selected">
+                <div className={`payment-option ${paymentMode === 'escrow' ? 'selected' : ''}`} onClick={() => setPaymentMode('escrow')}>
                   <Wallet size={18} />
                   <div>
                     <strong>货款担保支付</strong>
                     <span>平台担保，验收后放款</span>
                   </div>
+                  {paymentMode === 'escrow' && <CheckCircle2 size={18} className="text-green" />}
                 </div>
-                <div className="payment-option">
+                <div className={`payment-option ${paymentMode === 'deposit' ? 'selected' : ''}`} onClick={() => setPaymentMode('deposit')}>
                   <Lock size={18} />
                   <div>
                     <strong>保证金+分期</strong>
                     <span>先付30%，到货付尾款</span>
                   </div>
+                  {paymentMode === 'deposit' && <CheckCircle2 size={18} className="text-green" />}
                 </div>
               </div>
             </div>
@@ -796,9 +1029,75 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 <span>下单后自动生成采购合同，双方在线签署</span>
               </div>
             </div>
-            <button className="action-btn green full" onClick={orderModal.closeModal}>
+            <button className="action-btn green full" onClick={handleConfirmOrder}>
               确认下单并签署合同
             </button>
+          </div>
+        </Modal>
+      )}
+
+      {matchModal.open && (
+        <Modal title="智能撮合结果" onClose={matchModal.closeModal}>
+          <div className="modal-form">
+            <div className="form-group">
+              <label>按品类、地域、规格智能匹配</label>
+              <div className="stack-list">
+                {matchResults.map((match) => (
+                  <article key={match.id} className="supply-row">
+                    <div className="supply-info">
+                      <div className="supply-badge">匹配度 {match.matchScore}%</div>
+                      <div>
+                        <strong>{match.name}</strong>
+                        <p>{match.category} · {match.region} · {match.spec}</p>
+                        <span>供应商：{match.seller}</span>
+                      </div>
+                    </div>
+                    <div className="supply-actions">
+                      <strong>{match.price}</strong>
+                      <button className="action-btn green" onClick={() => handleSelectMatch(match)}>
+                        <Handshake size={14} />
+                        选择下单
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <button className="action-btn outline full" onClick={matchModal.closeModal}>
+              关闭
+            </button>
+          </div>
+        </Modal>
+      )}
+
+      {successModal.open && (
+        <Modal title="下单成功" onClose={successModal.closeModal}>
+          <div className="modal-form">
+            <div className="upload-result success">
+              <CheckCircle2 size={48} className="text-green" />
+              <h3>交易已发起</h3>
+              <p>订单和电子合同已生成，等待对方签署</p>
+            </div>
+            <div className="summary-row">
+              <span>订单编号</span>
+              <strong>{lastOrderId}</strong>
+            </div>
+            <div className="summary-row">
+              <span>合同编号</span>
+              <strong>{lastContractId}</strong>
+            </div>
+            <div className="summary-row">
+              <span>状态</span>
+              <span className="status-tag amber">待乙方签署 · 担保支付中</span>
+            </div>
+            <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
+              <button className="action-btn blue full" onClick={handleGoToOrders}>
+                查看订单
+              </button>
+              <button className="action-btn green full" onClick={handleGoToContracts}>
+                查看合同
+              </button>
+            </div>
           </div>
         </Modal>
       )}
@@ -939,7 +1238,9 @@ function ShopPage() {
 }
 
 function OrdersPage() {
-  const { data, loading, error, refresh } = useApi<{ orders: OrderRow[] }>('/api/orders', { orders: [] });
+  const { data: apiData, loading, error, refresh } = useApi<{ orders: OrderRow[] }>('/api/orders', { orders: [] });
+  const { orders: localOrders } = useAppState();
+  const allOrders = [...localOrders, ...apiData.orders];
 
   const statusActions: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
     '担保支付中': { label: '确认放款', icon: <Wallet size={14} />, color: 'green' },
@@ -955,7 +1256,7 @@ function OrdersPage() {
       <div className="section-title floating">
         <div>
           <p className="eyebrow">Order Hub</p>
-          <h2>订单中心</h2>
+          <h2>订单中心 · {allOrders.length} 笔</h2>
         </div>
         <div className="title-actions">
           <button className="action-btn outline" onClick={refresh}>
@@ -967,14 +1268,14 @@ function OrdersPage() {
       </div>
       <StatusLine loading={loading} error={error} />
       <div className="stack-list">
-        {data.orders.map((order) => {
+        {allOrders.map((order) => {
           const action = statusActions[order.status];
           return (
             <article key={order.id} className="order-row">
               <div>
                 <strong>{order.buyer}</strong>
                 <p>{order.seller} · {order.logistics}</p>
-                <span>{order.createdAt}</span>
+                <span>{order.createdAt} · {order.id}</span>
               </div>
               <div className="order-status">
                 <b>{currency(order.amount)}</b>
@@ -996,7 +1297,9 @@ function OrdersPage() {
 }
 
 function ContractsPage() {
-  const { data, loading, error, refresh } = useApi<{ contracts: ContractRow[] }>('/api/contracts', { contracts: [] });
+  const { data: apiData, loading, error, refresh } = useApi<{ contracts: ContractRow[] }>('/api/contracts', { contracts: [] });
+  const { contracts: localContracts } = useAppState();
+  const allContracts = [...localContracts, ...apiData.contracts];
 
   const statusActions: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
     '双方已签署': { label: '查看存证', icon: <Eye size={14} />, color: 'slate' },
@@ -1010,10 +1313,12 @@ function ContractsPage() {
       <div className="section-title floating">
         <div>
           <p className="eyebrow">Contract</p>
-          <h2>电子合同</h2>
+          <h2>电子合同 · {allContracts.length} 份</h2>
         </div>
         <div className="title-actions">
-          <button className="action-btn green" onClick={refresh}>
+          <button className="action-btn green" onClick={() => {
+            localContracts.find((c) => c.status === '待乙方签署') || refresh();
+          }}>
             <FileSignature size={16} />
             新建合同
           </button>
@@ -1022,7 +1327,7 @@ function ContractsPage() {
       </div>
       <StatusLine loading={loading} error={error} />
       <div className="content-grid two">
-        {data.contracts.map((contract) => {
+        {allContracts.map((contract) => {
           const action = statusActions[contract.status];
           return (
             <article className="section-panel nested" key={contract.id}>
@@ -1036,7 +1341,7 @@ function ContractsPage() {
                 )}
               </div>
               <h3>{contract.title}</h3>
-              <p>{contract.counterparty} · {contract.signedAt}</p>
+              <p>{contract.counterparty} · {contract.signedAt} · {contract.id}</p>
               <div className="contract-amount">
                 <strong>{currency(contract.amount)}</strong>
               </div>

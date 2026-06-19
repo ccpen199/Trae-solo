@@ -1923,3 +1923,46 @@ code {
     justify-content: center;
   }
 }
+
+.text-green {
+  color: #0f8f67;
+}
+
+.text-blue {
+  color: #1e40af;
+}
+
+.text-amber {
+  color: #c47a09;
+}
+
+.payment-option {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-option:hover {
+  border-color: #0f8f67;
+  background: #f0faf5;
+}
+
+.payment-option.selected {
+  border-color: #0f8f67;
+  background: #f0faf5;
+  box-shadow: 0 0 0 2px rgba(15, 143, 103, 0.2);
+}
+
+.upload-result.success {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.upload-result.success h3 {
+  margin: 12px 0 4px;
+  color: #10251f;
+}
+
+.upload-result.success p {
+  color: #66766f;
+  margin: 0;
+}
