@@ -1,0 +1,23 @@
+{
+  "name": "recycle-b2b-platform",
+  "version": "1.0.0",
+  "description": "再生资源B2B撮合交易平台",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "start": "concurrently \"npm:start:backend\" \"npm:start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
