@@ -1,257 +1,207 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Plus, Users, Calendar, Check, X, Eye, Filter } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { mockTeams } from '@/mock/teams';
-import { TeamStatus } from '@/constants/enums';
-import { useAuthStore } from '@/store/useAuthStore';
-import { formatDate } from '@/utils/date';
-import { cn } from '@/lib/utils';
+import { mockTeams } from '../../data/mockData';
+import { Plus, Search, Filter, Eye, Edit, Trash2, Users } from 'lucide-react';
 
-const allStatuses = [
-  { key: 'all', label: '全部' },
-  ...Object.entries(TeamStatus).map(([key, val]) => ({ key, label: val.label })),
-];
+const TeamList = () => {
+  const teams = mockTeams;
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
 
-export default function TeamList() {
-  const { user } = useAuthStore();
-  const isAdmin = user?.role === 'school_admin' || user?.role === 'department_admin';
-  const [activeStatus, setActiveStatus] = useState('all');
-  const [teams, setTeams] = useState(mockTeams);
-  const [showRejectModal, setShowRejectModal] = useState<string | null>(null);
-  const [rejectReason, setRejectReason] = useState('');
-
-  const filtered = activeStatus === 'all'
-    ? teams
-    : teams.filter((t) => t.status === activeStatus);
-
-  const pendingCount = teams.filter((t) => t.status === 'pending').length;
-
-  const handleApprove = (teamId: string) => {
-    setTeams((prev) =>
-      prev.map((t) => (t.id === teamId ? { ...t, status: 'approved' as const } : t))
-    );
+  const statusMap: Record<string, { label: string; color: string }> = {
+    pending: { label: '待审核', color: 'bg-yellow-100 text-yellow-700' },
+    approved: { label: '已通过', color: 'bg-green-100 text-green-700' },
+    rejected: { label: '已拒绝', color: 'bg-red-100 text-red-700' },
+    ongoing: { label: '进行中', color: 'bg-blue-100 text-blue-700' },
+    completed: { label: '已完成', color: 'bg-gray-100 text-gray-700' },
   };
 
-  const handleReject = (teamId: string) => {
-    setTeams((prev) =>
-      prev.map((t) => (t.id === teamId ? { ...t, status: 'rejected' as const } : t))
-    );
-    setShowRejectModal(null);
-    setRejectReason('');
-  };
-
-  const captainName = (team: typeof mockTeams[0]) => {
-    const captain = team.members.find((m) => m.role === 'leader');
-    return captain ? captain.name : '待指定';
-  };
+  const filteredTeams = teams.filter((team) => {
+    const matchesSearch =
+      team.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      team.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      team.leaderName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || team.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-7xl mx-auto">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-surface-900">三下乡团队</h1>
-          <p className="text-surface-500 text-sm mt-1">
-            {isAdmin ? '管理全校三下乡实践团队申报' : '查看和创建实践团队'}
-          </p>
-        </div>
-        {!isAdmin ? (
-          <Link to="/sanxiaxiang/teams/create" className="btn-primary flex items-center gap-2">
-            <Plus className="w-4 h-4" />
-            创建团队
-          </Link>
-        ) : (
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="搜索团队名称、项目、负责人..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-72 h-10 pl-9 pr-4 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
           <div className="flex items-center gap-2">
-            <span className="status-badge bg-danger-50 text-danger-600 font-medium">
-              待审核 {pendingCount}
-            </span>
-          </div>
-        )}
-      </div>
-
-      {isAdmin && (
-        <div className="grid grid-cols-4 gap-3">
-          <div className="card p-4">
-            <p className="text-xs text-surface-500">团队总数</p>
-            <p className="text-2xl font-bold font-mono text-surface-800 mt-1">{teams.length}</p>
-          </div>
-          <div className="card p-4">
-            <p className="text-xs text-surface-500">待审核</p>
-            <p className="text-2xl font-bold font-mono text-amber-600 mt-1">{pendingCount}</p>
-          </div>
-          <div className="card p-4">
-            <p className="text-xs text-surface-500">已通过</p>
-            <p className="text-2xl font-bold font-mono text-success-600 mt-1">
-              {teams.filter((t) => t.status === 'approved' || t.status === 'ongoing').length}
-            </p>
-          </div>
-          <div className="card p-4">
-            <p className="text-xs text-surface-500">总参与人数</p>
-            <p className="text-2xl font-bold font-mono text-primary-600 mt-1">
-              {teams.reduce((acc, t) => acc + t.members.length, 0)}
-            </p>
-          </div>
-        </div>
-      )}
-
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          {allStatuses.map((tab) => {
-            const count = tab.key === 'all'
-              ? teams.length
-              : teams.filter((t) => t.status === tab.key).length;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveStatus(tab.key)}
-                className={cn(
-                  'px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all flex items-center gap-1.5',
-                  activeStatus === tab.key
-                    ? 'bg-primary-600 text-white shadow-md shadow-primary-600/20'
-                    : 'bg-surface-100 text-surface-600 hover:bg-surface-200'
-                )}
-              >
-                <Filter className="w-3.5 h-3.5" />
-                {tab.label}
-                <span className={cn(
-                  'px-1.5 py-0.5 rounded-full text-[10px] font-bold',
-                  activeStatus === tab.key ? 'bg-white/20' : 'bg-surface-200'
-                )}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((team) => (
-            <motion.div
-              key={team.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.25 }}
-              className="card card-hover p-5 space-y-4"
+            <Filter className="w-4 h-4 text-gray-400" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="h-10 px-3 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-semibold text-surface-900 leading-snug">{team.name}</h3>
-                <span className={cn(
-                  'status-badge shrink-0',
-                  TeamStatus[team.status as keyof typeof TeamStatus]?.color
-                )}>
-                  {TeamStatus[team.status as keyof typeof TeamStatus]?.label}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                <span className="status-badge bg-primary-100 text-primary-700">
-                  {team.theme}
-                </span>
-                <span className="text-xs text-surface-500 flex items-center gap-1">
-                  <Users className="w-3 h-3" />
-                  {team.members.length} 人
-                </span>
-              </div>
-
-              <div className="space-y-1.5 text-xs text-surface-500">
-                <p className="flex items-center gap-1.5">
-                  <span className="w-14 text-surface-400">队长：</span>
-                  <span className="text-surface-700">{captainName(team)}</span>
-                </p>
-                <p className="flex items-center gap-1.5">
-                  <Calendar className="w-3 h-3" />
-                  <span>{formatDate(team.startDate)} - {formatDate(team.endDate)}</span>
-                </p>
-              </div>
-
-              {isAdmin && team.status === 'pending' ? (
-                <div className="flex gap-2 pt-2 border-t border-surface-100">
-                  <button
-                    onClick={() => handleApprove(team.id)}
-                    className="flex-1 py-2 rounded-lg bg-success-500 hover:bg-success-600 text-white text-sm font-medium flex items-center justify-center gap-1 transition-colors"
-                  >
-                    <Check className="w-4 h-4" />
-                    通过
-                  </button>
-                  <button
-                    onClick={() => setShowRejectModal(team.id)}
-                    className="flex-1 py-2 rounded-lg bg-danger-500 hover:bg-danger-600 text-white text-sm font-medium flex items-center justify-center gap-1 transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                    驳回
-                  </button>
-                </div>
-              ) : (
-                <div className="pt-2 border-t border-surface-100">
-                  <Link
-                    to={`/sanxiaxiang/teams/${team.id}`}
-                    className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center justify-center gap-1"
-                  >
-                    <Eye className="w-4 h-4" />
-                    查看详情
-                  </Link>
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </AnimatePresence>
+              <option value="all">全部状态</option>
+              <option value="pending">待审核</option>
+              <option value="approved">已通过</option>
+              <option value="ongoing">进行中</option>
+              <option value="completed">已完成</option>
+              <option value="rejected">已拒绝</option>
+            </select>
+          </div>
+        </div>
+        <button className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <Plus className="w-4 h-4" />
+          新建团队
+        </button>
       </div>
 
-      {filtered.length === 0 && (
-        <div className="text-center py-20 text-surface-400">
-          <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
-          <p>暂无团队</p>
-        </div>
-      )}
-
-      <AnimatePresence>
-        {showRejectModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-            onClick={() => setShowRejectModal(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
+      <div className="grid grid-cols-4 gap-4">
+        {Object.entries(statusMap).map(([key, val]) => {
+          const count = teams.filter((t) => t.status === key).length;
+          return (
+            <div
+              key={key}
+              className={`p-4 rounded-xl border ${
+                statusFilter === key
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-100 bg-white'
+              } cursor-pointer transition-colors`}
+              onClick={() => setStatusFilter(statusFilter === key ? 'all' : key)}
             >
-              <h3 className="text-lg font-bold text-surface-800 mb-2">驳回团队申请</h3>
-              <p className="text-sm text-surface-500 mb-4">请填写驳回理由，团队将收到通知</p>
-              <textarea
-                value={rejectReason}
-                onChange={(e) => setRejectReason(e.target.value)}
-                placeholder="请输入驳回原因..."
-                rows={4}
-                className="w-full px-3 py-2.5 rounded-lg border border-surface-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
-              />
-              <div className="flex gap-3 mt-5">
-                <button
-                  onClick={() => setShowRejectModal(null)}
-                  className="flex-1 py-2.5 rounded-lg border border-surface-200 text-surface-600 text-sm font-medium hover:bg-surface-50"
-                >
-                  取消
-                </button>
-                <button
-                  onClick={() => handleReject(showRejectModal)}
-                  disabled={!rejectReason.trim()}
-                  className="flex-1 py-2.5 rounded-lg bg-danger-500 hover:bg-danger-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium"
-                >
-                  确认驳回
-                </button>
+              <div className="flex items-center justify-between">
+                <span className={`text-xs px-2 py-1 rounded-full ${val.color}`}>
+                  {val.label}
+                </span>
+                <span className="text-2xl font-bold text-gray-800">{count}</span>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <p className="text-xs text-gray-500 mt-2">个团队</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <table className="w-full">
+          <thead className="bg-gray-50 border-b border-gray-100">
+            <tr>
+              <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">
+                团队信息
+              </th>
+              <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">
+                负责人
+              </th>
+              <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">
+                实践地点
+              </th>
+              <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">
+                时间
+              </th>
+              <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">
+                状态
+              </th>
+              <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">
+                打卡/日志
+              </th>
+              <th className="text-right px-6 py-4 text-sm font-medium text-gray-500">
+                操作
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {filteredTeams.map((team) => (
+              <tr key={team.id} className="hover:bg-gray-50 transition-colors">
+                <td className="px-6 py-4">
+                  <div>
+                    <p className="text-sm font-medium text-gray-800">
+                      {team.name}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {team.projectName}
+                    </p>
+                    <div className="flex items-center gap-1 mt-2">
+                      <Users className="w-3 h-3 text-gray-400" />
+                      <span className="text-xs text-gray-400">
+                        {team.members.length}人
+                      </span>
+                      <span className="text-xs text-gray-300 mx-1">|</span>
+                      <span className="text-xs text-gray-400">
+                        {team.department}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-medium">
+                        {team.leaderName.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700">{team.leaderName}</p>
+                      <p className="text-xs text-gray-400">队长</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <span className="text-sm text-gray-600">{team.location}</span>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="text-sm">
+                    <p className="text-gray-600">{team.startDate}</p>
+                    <p className="text-gray-400 text-xs">至 {team.endDate}</p>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <span
+                    className={`text-xs px-2.5 py-1 rounded-full ${
+                      statusMap[team.status].color
+                    }`}
+                  >
+                    {statusMap[team.status].label}
+                  </span>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-700">
+                        {team.checkInCount}
+                      </p>
+                      <p className="text-xs text-gray-400">打卡</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-700">
+                        {team.logCount}
+                      </p>
+                      <p className="text-xs text-gray-400">日志</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center justify-end gap-2">
+                    <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors">
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-}
+};
+
+export default TeamList;

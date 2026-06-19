@@ -1,296 +1,35 @@
-import { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Menu,
-  Search,
-  Bell,
-  ChevronRight,
-  User,
-  Settings,
-  LogOut,
-  Shield,
-  GraduationCap,
-  Building2,
-  Heart,
-  Crown,
-} from 'lucide-react';
-import { useAuthStore } from '@/store/useAuthStore';
-import { UserRole } from '@/constants/enums';
-import { cn } from '@/lib/utils';
+import { Bell, Search, ChevronDown } from 'lucide-react';
 
-const breadcrumbMap: Record<string, string> = {
-  '': '首页',
-  sanxiaxiang: '三下乡专项',
-  teams: '团队管理',
-  checkin: '轨迹打卡',
-  journals: '日志管理',
-  scholarship: '奖学金',
-  projects: '资助项目',
-  stories: '受助故事',
-  news: '资讯引擎',
-  activities: '实践活动',
-  bases: '实践基地',
-  credits: '学分认证',
-  apply: '申请认证',
-  dashboard: '数据看板',
-  settings: '系统设置',
-};
-
-interface HeaderProps {
-  onMenuToggle: () => void;
-}
-
-export default function Header({ onMenuToggle }: HeaderProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
-  const [searchFocused, setSearchFocused] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const notifRef = useRef<HTMLDivElement>(null);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-
-  const pathSegments = location.pathname.split('/').filter(Boolean);
-
-  const breadcrumbs = pathSegments.map((segment, index) => ({
-    label: breadcrumbMap[segment] || segment,
-    path: '/' + pathSegments.slice(0, index + 1).join('/'),
-  }));
-
-  if (breadcrumbs.length === 0) {
-    breadcrumbs.unshift({ label: '首页', path: '/' });
-  }
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
-        setShowNotifications(false);
-      }
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setShowUserMenu(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login', { replace: true });
-  };
-
-  const notifications = [
-    { id: 1, title: '团队审核通过', desc: '你的"科技助农"团队已通过审核', time: '5分钟前', read: false },
-    { id: 2, title: '新的打卡提醒', desc: '今日尚未进行轨迹打卡', time: '1小时前', read: false },
-    { id: 3, title: '奖学金申请截止', desc: '赵科技助学金将于3天后截止', time: '2小时前', read: true },
-  ];
-
-  const unreadCount = notifications.filter((n) => !n.read).length;
-
+const Header = ({ title }: { title: string }) => {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-surface-200 bg-white px-4 md:px-6">
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onMenuToggle}
-          className="rounded-lg p-2 text-surface-500 hover:bg-surface-100 md:hidden"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+      <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
 
-        <nav className="flex items-center gap-1 text-sm">
-          {breadcrumbs.map((crumb, index) => (
-            <span key={crumb.path} className="flex items-center gap-1">
-              {index > 0 && <ChevronRight className="h-3.5 w-3.5 text-surface-400" />}
-              {index === breadcrumbs.length - 1 ? (
-                <span className="font-medium text-surface-800">{crumb.label}</span>
-              ) : (
-                <button
-                  onClick={() => navigate(crumb.path)}
-                  className="text-surface-500 hover:text-primary-600"
-                >
-                  {crumb.label}
-                </button>
-              )}
-            </span>
-          ))}
-        </nav>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <div
-          className={cn(
-            'flex items-center rounded-full border bg-surface-50 transition-all duration-300',
-            searchFocused ? 'w-64 border-primary-300 ring-2 ring-primary-100' : 'w-44 border-surface-200'
-          )}
-        >
-          <Search className="ml-3 h-4 w-4 text-surface-400" />
+      <div className="flex items-center gap-4">
+        <div className="relative">
+          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="搜索..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-            className="flex-1 bg-transparent px-2 py-1.5 text-sm outline-none placeholder:text-surface-400"
+            placeholder="搜索活动、学生、基地..."
+            className="w-72 h-9 pl-9 pr-4 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
-        <div ref={notifRef} className="relative">
-          <button
-            onClick={() => {
-              setShowNotifications(!showNotifications);
-              setShowUserMenu(false);
-            }}
-            className="relative rounded-lg p-2 text-surface-500 hover:bg-surface-100"
-          >
-            <Bell className="h-5 w-5" />
-            {unreadCount > 0 && (
-              <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-danger-500 text-[10px] font-bold text-white">
-                {unreadCount}
-              </span>
-            )}
-          </button>
+        <button className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+          <Bell className="w-5 h-5" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
 
-          <AnimatePresence>
-            {showNotifications && (
-              <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                transition={{ duration: 0.15 }}
-                className="absolute right-0 top-full mt-2 w-80 rounded-xl border border-surface-200 bg-white shadow-elevated"
-              >
-                <div className="border-b border-surface-100 px-4 py-3">
-                  <h3 className="text-sm font-semibold text-surface-800">通知</h3>
-                </div>
-                <div className="max-h-64 overflow-y-auto">
-                  {notifications.map((notif) => (
-                    <div
-                      key={notif.id}
-                      className={cn(
-                        'flex gap-3 px-4 py-3 transition-colors hover:bg-surface-50',
-                        !notif.read && 'bg-primary-50/50'
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          'mt-1.5 h-2 w-2 shrink-0 rounded-full',
-                          notif.read ? 'bg-surface-300' : 'bg-primary-500'
-                        )}
-                      />
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-surface-800">{notif.title}</p>
-                        <p className="truncate text-xs text-surface-500">{notif.desc}</p>
-                        <p className="mt-0.5 text-xs text-surface-400">{notif.time}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="border-t border-surface-100 px-4 py-2">
-                  <button className="text-xs font-medium text-primary-600 hover:text-primary-700">
-                    查看全部通知
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <div ref={userMenuRef} className="relative">
-          <button
-            onClick={() => {
-              setShowUserMenu(!showUserMenu);
-              setShowNotifications(false);
-            }}
-            className="flex items-center gap-2.5 rounded-xl px-2.5 py-1.5 hover:bg-surface-50 transition-colors border border-surface-200"
-          >
-            <div className="relative">
-              <img
-                src={user?.avatar || ''}
-                alt={user?.name || ''}
-                className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
-              />
-              <div className={cn(
-                'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[8px] ring-2 ring-white',
-                user?.role === 'school_admin' && 'bg-danger-500 text-white',
-                user?.role === 'department_admin' && 'bg-accent-500 text-white',
-                user?.role === 'student' && 'bg-primary-500 text-white',
-                user?.role === 'base' && 'bg-success-500 text-white',
-                user?.role === 'donor' && 'bg-purple-500 text-white',
-              )}>
-                {user?.role === 'school_admin' && <Crown className="w-2.5 h-2.5" />}
-                {user?.role === 'department_admin' && <Shield className="w-2.5 h-2.5" />}
-                {user?.role === 'student' && <GraduationCap className="w-2.5 h-2.5" />}
-                {user?.role === 'base' && <Building2 className="w-2.5 h-2.5" />}
-                {user?.role === 'donor' && <Heart className="w-2.5 h-2.5" />}
-              </div>
-            </div>
-            <div className="hidden md:block text-left">
-              <span className="text-sm font-semibold text-surface-800 leading-tight block">
-                {user?.name}
-              </span>
-              <span className={cn(
-                'text-[10px] font-medium leading-tight inline-block mt-0.5',
-                user?.role === 'school_admin' && 'text-danger-600',
-                user?.role === 'department_admin' && 'text-accent-600',
-                user?.role === 'student' && 'text-primary-600',
-                user?.role === 'base' && 'text-success-600',
-                user?.role === 'donor' && 'text-purple-600',
-              )}>
-                {UserRole[user?.role as keyof typeof UserRole]?.label || '访客'}
-              </span>
-            </div>
-          </button>
-
-          <AnimatePresence>
-            {showUserMenu && (
-              <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                transition={{ duration: 0.15 }}
-                className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-surface-200 bg-white shadow-elevated"
-              >
-                <div className="border-b border-surface-100 px-4 py-3">
-                  <p className="text-sm font-medium text-surface-800">{user?.name}</p>
-                  <p className="text-xs text-surface-500">{user?.email}</p>
-                </div>
-                <div className="p-1">
-                  <button
-                    onClick={() => {
-                      setShowUserMenu(false);
-                      navigate('/settings');
-                    }}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-surface-700 hover:bg-surface-100"
-                  >
-                    <User className="h-4 w-4" />
-                    个人资料
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowUserMenu(false);
-                      navigate('/settings');
-                    }}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-surface-700 hover:bg-surface-100"
-                  >
-                    <Settings className="h-4 w-4" />
-                    系统设置
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-danger-600 hover:bg-danger-50"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    退出登录
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-3 py-1.5 rounded-lg transition-colors">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center">
+            <span className="text-white text-sm font-medium">管</span>
+          </div>
+          <span className="text-sm font-medium text-gray-700">校团委</span>
+          <ChevronDown className="w-4 h-4 text-gray-400" />
         </div>
       </div>
     </header>
   );
-}
+};
+
+export default Header;
