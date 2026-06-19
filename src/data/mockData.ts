@@ -44,6 +44,12 @@ export const mockDepartments: Department[] = [
   { id: "d008", name: "市住房和城乡建设局", code: "ZJJ", contactPhone: "0512-57300008", serviceCount: 61 },
   { id: "d009", name: "市市场监督管理局", code: "SCJ", contactPhone: "0512-57300009", serviceCount: 53 },
   { id: "d010", name: "市税务局", code: "SWJ", contactPhone: "0512-57300010", serviceCount: 47 },
+  { id: "d011", name: "市自然资源和规划局", code: "ZRJ", contactPhone: "0512-57300011", serviceCount: 52 },
+  { id: "d012", name: "市生态环境局", code: "HBJ", contactPhone: "0512-57300012", serviceCount: 35 },
+  { id: "d013", name: "市农业农村局", code: "NYJ", contactPhone: "0512-57300013", serviceCount: 28 },
+  { id: "d014", name: "市水务局", code: "SWUJ", contactPhone: "0512-57300014", serviceCount: 24 },
+  { id: "d015", name: "市商务局", code: "SWU2J", contactPhone: "0512-57300015", serviceCount: 30 },
+  { id: "d016", name: "市文化广电和旅游局", code: "WLJ", contactPhone: "0512-57300016", serviceCount: 26 },
 ];
 
 const domainMap: Record<ServiceDomain, { name: string; sub: string[] }> = {
@@ -57,11 +63,57 @@ const domainMap: Record<ServiceDomain, { name: string; sub: string[] }> = {
 
 const deptByDomain: Record<ServiceDomain, string[]> = {
   livelihood: ["d006", "d007", "d008"],
-  government: ["d001", "d009", "d010"],
+  government: ["d001", "d009", "d010", "d011", "d008", "d004", "d003", "d005", "d012", "d013", "d014", "d015", "d016"],
   medical: ["d003"],
   traffic: ["d004", "d001"],
   education: ["d005"],
   lifestyle: ["d007", "d008"],
+};
+
+const govServiceDeptMap: Record<string, string> = {
+  "身份证补办": "d001", "身份证首次申领": "d001", "临时身份证办理": "d001",
+  "户籍迁移": "d001", "居住证签注": "d001", "户口簿补办": "d001", "户口登记项目变更": "d001",
+  "出生登记": "d001", "死亡注销": "d001", "迁出登记": "d001", "迁入登记": "d001", "分户立户": "d001",
+  "公章刻制备案": "d001", "公章刻制审批": "d001", "保安服务许可": "d001",
+  "旅馆业特种许可": "d001", "网吧经营许可": "d001", "印刷经营许可": "d001",
+
+  "营业执照办理": "d009", "企业设立登记": "d009", "企业变更登记": "d009", "企业注销登记": "d009",
+  "个体工商户注册": "d009", "农民专业合作社登记": "d009",
+  "食品经营许可证": "d009", "餐饮服务许可": "d009", "药品经营许可": "d009",
+  "医疗器械经营许可": "d009", "化妆品生产许可": "d009", "特种设备使用登记": "d009",
+  "民非单位登记": "d009", "社会组织评估": "d009", "基金会设立审批": "d009",
+  "慈善信托备案": "d009", "志愿者注册": "d009",
+  "典当行设立审批": "d009", "拍卖企业设立审批": "d009",
+  "劳务派遣许可": "d009", "人力资源服务许可": "d009",
+  "出版物零售许可": "d009",
+
+  "进出口经营权": "d010", "外商投资备案": "d010", "跨境电商备案": "d010",
+  "对外贸易经营者备案": "d010", "加工贸易审批": "d010",
+
+  "不动产权证办理": "d011", "不动产抵押登记": "d011", "不动产变更登记": "d011",
+  "不动产注销登记": "d011", "不动产查封登记": "d011", "不动产预告登记": "d011",
+  "林木采伐许可": "d011", "采矿权审批": "d011",
+
+  "建筑工程施工许可": "d008", "商品房预售许可": "d008", "房屋租赁备案": "d008",
+  "物业资质审批": "d008", "房地产估价机构备案": "d008", "测绘资质审批": "d008",
+  "建筑工程规划许可": "d008", "施工图审查": "d008", "竣工验收备案": "d008",
+  "消防设计审查": "d008", "消防验收": "d008",
+
+  "道路运输经营许可": "d004", "客运经营许可": "d004", "货运经营许可": "d004",
+  "驾校经营许可": "d004", "港口经营许可": "d004", "水路运输许可": "d004",
+
+  "医疗机构执业许可": "d003", "诊所设立审批": "d003", "中医诊所备案": "d003",
+  "药店开设审批": "d003", "母婴保健服务许可": "d003", "放射诊疗许可": "d003",
+
+  "民办学校设立审批": "d005", "培训机构审批": "d005", "校车使用许可": "d005",
+  "幼儿园设立审批": "d005", "留学中介资质": "d005",
+
+  "环评审批": "d012", "排污许可": "d012", "危险废物经营许可": "d012",
+  "辐射安全许可": "d012", "建设项目环保验收": "d012",
+
+  "取水许可": "d014", "河道采砂许可": "d014", "水域滩涂养殖证": "d014",
+
+  "宗教活动场所登记": "d007",
 };
 
 const serviceNames: Record<ServiceDomain, string[]> = {
@@ -188,14 +240,20 @@ function generateServices(): ServiceItem[] {
     const depts = deptByDomain[domain];
     names.forEach((name, idx) => {
       const subIdx = idx % domainMap[domain].sub.length;
+      let deptId: string;
+      if (domain === "government" && govServiceDeptMap[name]) {
+        deptId = govServiceDeptMap[name];
+      } else {
+        deptId = depts[idx % depts.length];
+      }
       services.push({
         id: `s${String(id).padStart(4, "0")}`,
         name,
         category: domain,
         categoryName: domainMap[domain].name,
         subCategory: domainMap[domain].sub[subIdx],
-        department: mockDepartments.find((d) => d.id === depts[idx % depts.length])!.name,
-        departmentId: depts[idx % depts.length],
+        department: mockDepartments.find((d) => d.id === deptId)!.name,
+        departmentId: deptId,
         description: `${name}服务，为昆山市民提供便捷的在线办理渠道。支持全程网办、快递送达，无需跑腿。`,
         handlingTime: `${1 + (idx % 7)}个工作日`,
         fee: idx % 3 === 0 ? "免费" : `${10 + idx * 5}元`,
@@ -209,7 +267,7 @@ function generateServices(): ServiceItem[] {
         processSteps: [
           { id: `p${id}1`, name: "在线申报", description: "填写申请信息并上传材料", estimatedDays: 0, department: "申请人" },
           { id: `p${id}2`, name: "材料初审", description: "窗口人员对提交材料进行初审", estimatedDays: 1, department: "受理部门" },
-          { id: `p${id}3`, name: "业务审核", description: "业务科室进行实质性审查", estimatedDays: 2 + (idx % 3), department: mockDepartments.find((d) => d.id === depts[idx % depts.length])!.name },
+          { id: `p${id}3`, name: "业务审核", description: "业务科室进行实质性审查", estimatedDays: 2 + (idx % 3), department: mockDepartments.find((d) => d.id === deptId)!.name },
           { id: `p${id}4`, name: "结果送达", description: "通过电子证照或邮寄方式送达", estimatedDays: 1, department: "受理部门" },
         ],
         onlineAvailable: true,

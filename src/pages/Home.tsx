@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   HeartHandshake,
@@ -163,6 +163,10 @@ export default function Home() {
   const [activeDomain, setActiveDomain] = useState<ServiceDomain | "all">("all");
   const [displayCount, setDisplayCount] = useState(12);
   const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    setDisplayCount(12);
+  }, [activeDomain, activeRole, keyword]);
 
   const hotServices = [...services]
     .sort((a, b) => b.applyCount - a.applyCount)
@@ -595,7 +599,9 @@ export default function Home() {
                       className="btn-secondary inline-flex items-center gap-1"
                     >
                       加载更多 <ChevronRight className="w-4 h-4" />
-                      <span className="text-xs text-ink-light ml-1">（还有 {filteredServices.length - displayCount} 项）</span>
+                      <span className="text-xs text-ink-light ml-1">
+                        （已加载 {Math.min(displayCount, filteredServices.length)} / 共 {filteredServices.length} 项，剩余 {filteredServices.length - displayCount} 项）
+                      </span>
                     </button>
                   </div>
                 )}
