@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth';
 import { ROLE_LABELS, ROLE_COLORS, VERIFICATION_STATUS } from '../../lib/constants';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 export default function MainLayout({ children }: { children?: React.ReactNode }) {
   const { user, enterprise, logout, unreadCount, fetchUnreadCount } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const [active, setActive] = useState<string>('');
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function MainLayout({ children }: { children?: React.ReactNode })
     const t = setInterval(fetchUnreadCount, 60000);
     setActive(location.pathname);
     return () => clearInterval(t);
-  }, []);
+  }, [location.pathname, fetchUnreadCount]);
 
   const isAdmin = user?.role === 'admin';
   const isCarrier = user?.role === 'carrier';
