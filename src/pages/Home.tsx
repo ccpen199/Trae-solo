@@ -177,15 +177,17 @@ export default function Home() {
   );
 
   const filteredServices = useMemo(() => {
-    return services.filter((s) => {
-      const domainMatch = activeDomain === "all" || s.category === activeDomain;
-      const roleMatch =
-        activeRole === "all" ||
-        (activeRole === "citizen" && s.category !== "government") ||
-        (activeRole === "enterprise" && s.category === "government");
-      const kwMatch = !keyword || s.name.includes(keyword) || s.department.includes(keyword);
-      return domainMatch && roleMatch && kwMatch;
-    });
+    return services
+      .filter((s) => {
+        const domainMatch = activeDomain === "all" || s.category === activeDomain;
+        const roleMatch =
+          activeRole === "all" ||
+          (activeRole === "citizen" && s.category !== "government") ||
+          (activeRole === "enterprise" && s.category === "government");
+        const kwMatch = !keyword || s.name.includes(keyword) || s.department.includes(keyword);
+        return domainMatch && roleMatch && kwMatch;
+      })
+      .sort((a, b) => b.applyCount - a.applyCount);
   }, [services, activeDomain, activeRole, keyword]);
 
   const displayedServices = filteredServices.slice(0, displayCount);
@@ -828,20 +830,28 @@ export default function Home() {
                     <Link
                       key={entry.name}
                       to={entry.path}
-                      className="group p-4 rounded-xl border border-ink-border hover:border-gov-200 hover:shadow-lg transition-all bg-white"
+                      className="group p-4 rounded-xl border border-ink-border hover:border-gov-200 hover:shadow-lg transition-all bg-white flex flex-col"
                       style={{ animationDelay: `${idx * 30}ms` }}
                     >
-                      <div className="flex items-center gap-2 mb-2.5">
-                        <div className={cn(
-                          "w-9 h-9 rounded-lg bg-gradient-to-br flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform",
-                          entry.color
-                        )}>
-                          <Icon className="w-4.5 h-4.5 text-white" />
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className={cn(
+                            "w-9 h-9 rounded-lg bg-gradient-to-br flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform",
+                            entry.color
+                          )}>
+                            <Icon className="w-4.5 h-4.5 text-white" />
+                          </div>
+                          <span className="text-sm font-semibold text-ink group-hover:text-gov-700 transition-colors">
+                            {entry.name}
+                          </span>
                         </div>
-                        <span className="text-sm font-semibold text-ink group-hover:text-gov-700 transition-colors">
-                          {entry.name}
-                        </span>
                       </div>
+                      <span className={cn(
+                        "text-[10px] px-1.5 py-0.5 rounded border font-medium mb-2 w-fit",
+                        entry.permissionColor
+                      )}>
+                        {entry.permission}
+                      </span>
                       <div className="flex items-center gap-2 mb-2">
                         <div className="flex-1 text-center py-1.5 rounded bg-gray-50">
                           <div className="text-base font-bold text-gray-800 leading-none">
@@ -856,9 +866,14 @@ export default function Home() {
                           <div className="text-[10px] text-gray-500 mt-0.5">{entry.stat2.label}</div>
                         </div>
                       </div>
-                      <p className="text-[10px] text-gray-500 leading-tight border-t border-gray-100 pt-2">
-                        {entry.hint}
-                      </p>
+                      <div className="flex items-center justify-between border-t border-gray-100 pt-2 mt-auto">
+                        <p className="text-[10px] text-gray-500 leading-tight flex-1">
+                          {entry.hint}
+                        </p>
+                        <span className="text-[10px] text-gov-600 font-medium flex items-center gap-0.5 shrink-0 ml-2">
+                          查看明细 <ChevronRight className="w-3 h-3" />
+                        </span>
+                      </div>
                     </Link>
                   );
                 })}

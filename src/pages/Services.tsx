@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
@@ -60,6 +60,10 @@ export default function Services() {
   const [sortBy, setSortBy] = useState<"apply" | "rating" | "time">("apply");
   const [displayCount, setDisplayCount] = useState(20);
 
+  useEffect(() => {
+    setDisplayCount(20);
+  }, [selectedDomain, searchKeyword, userTypeFilter, selectedDept, onlineOnly, sortBy]);
+
   const filtered = useMemo(() => {
     let list = services.filter((s) => {
       const domainMatch = selectedDomain === "all" || s.category === selectedDomain;
@@ -96,8 +100,10 @@ export default function Services() {
   const stats = useMemo(() => {
     const total = services.length;
     const online = services.filter((s) => s.onlineAvailable).length;
-    return { total, online, depts: mockDepartments.length };
-  }, [services]);
+    const filteredTotal = filtered.length;
+    const filteredOnline = filtered.filter((s) => s.onlineAvailable).length;
+    return { total, online, filteredTotal, filteredOnline, depts: mockDepartments.length };
+  }, [services, filtered]);
 
   return (
     <div className="min-h-screen py-8">
@@ -105,10 +111,43 @@ export default function Services() {
         {/* 顶部统计 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {[
-            { label: "服务事项总数", value: stats.total, icon: Grid3X3, color: "from-gov-500 to-gov-700" },
-            { label: "可在线办理", value: stats.online, icon: FileCheck, color: "from-success-500 to-success-700" },
-            { label: "进驻部门", value: stats.depts, icon: Building, color: "from-violet-500 to-violet-700" },
-            { label: "本月办件量", value: "38,472", icon: TrendingUp, color: "from-amber-500 to-amber-700" },
+            {
+              label: "服务事项总数",
+              value:
+                selectedDomain === "all"
+                  ? stats.total
+                  : `${stats.filteredTotal}/${stats.total}`,
+              icon: Grid3X3,
+              color: "from-gov-500 to-gov-700",
+              sub:
+                selectedDomain !== "all"
+                  ? `当前${serviceDomains.find((d) => d.code === selectedDomain)?.name || ""}`
+                  : "全量接入",
+            },
+            {
+              label: "可在线办理",
+              value:
+                selectedDomain === "all"
+                  ? stats.online
+                  : `${stats.filteredOnline}/${stats.filteredTotal}`,
+              icon: FileCheck,
+              color: "from-success-500 to-success-700",
+              sub: selectedDomain !== "all" ? "当前可办/总数" : "全平台",
+            },
+            {
+              label: "进驻部门",
+              value: stats.depts,
+              icon: Building,
+              color: "from-violet-500 to-violet-700",
+              sub: "协同治理",
+            },
+            {
+              label: "本月办件量",
+              value: "38,472",
+              icon: TrendingUp,
+              color: "from-amber-500 to-amber-700",
+              sub: "持续上涨",
+            },
           ].map((s) => (
             <div
               key={s.label}
@@ -119,7 +158,10 @@ export default function Services() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-ink">{s.value}</p>
-                <p className="text-xs text-ink-light">{s.label}</p>
+                <p className="text-xs text-ink-light">
+                  {s.label}
+                  <span className="text-[10px] text-ink-lighter ml-1">({s.sub})</span>
+                </p>
               </div>
             </div>
           ))}
@@ -320,34 +362,51 @@ export default function Services() {
                       </div>
 
                       <div className="flex gap-2 mt-3 mb-3">
-                        {svc.onlineAvailable && (
+                        {svc.status === "maintenance" && (
+                          <span className="text-[10px] px-2 py-1 rounded bg-amber-50 text-amber-600 border border-amber-200">维护中·暂停服务</span>
+                        )}
+                        {svc.status === "offline" && (
+                          <span className="text-[10px] px-2 py-1 rounded bg-red-50 text-red-600 border border-red-200">已下线</span>
+                        )}
+                        {svc.onlineAvailable && svc.status === "online" && (
                           <span className="badge-success">在线办理</span>
                         )}
-                        {svc.appointmentAvailable && (
+                        {svc.appointmentAvailable && svc.status === "online" && (
                           <span className="badge-primary">可预约</span>
                         )}
                         {svc.fee === "免费" && <span className="badge-gray">免费</span>}
                       </div>
 
                       <div className="grid grid-cols-6 gap-1 pt-3 border-t border-dashed border-gray-200">
-                        {lifecycleQuickActions.map((action, ai) => {
+                        {lifecycleQuickActions.map((action) => {
                           const StepIcon = action.icon;
-                          const disabled = !svc.onlineAvailable && (action.key === "track" || action.key === "push" || action.key === "evaluate");
+                          const isOffline = svc.status === "maintenance" || svc.status === "offline";
+                          const isDisabled = isOffline || (!svc.onlineAvailable && ["track", "push", "evaluate"].includes(action.key));
+                          const tabMap: Record<string, string> = {
+                            appointment: "appointment",
+                            apply: "apply",
+                            upload: "materials",
+                            track: "progress",
+                            push: "result",
+                            evaluate: "evaluate",
+                          };
+                          const linkTo = isDisabled ? "#" : `/services/${svc.id}?tab=${tabMap[action.key]}`;
                           return (
-                            <button
+                            <Link
                               key={action.key}
+                              to={linkTo}
                               className={cn(
                                 "flex flex-col items-center gap-1 py-2 rounded-md transition-colors",
-                                ai < 3
-                                  ? "text-gov-600 hover:bg-gov-50"
-                                  : "text-ink-lighter hover:bg-ink-bg cursor-not-allowed"
+                                isDisabled
+                                  ? "text-gray-300 cursor-not-allowed pointer-events-none"
+                                  : "text-gov-600 hover:bg-gov-50"
                               )}
-                              title={action.label}
-                              disabled={ai >= 3}
+                              title={isOffline ? "服务维护中，暂不可用" : action.label}
+                              onClick={(e) => isDisabled && e.preventDefault()}
                             >
                               <StepIcon className="w-4 h-4" />
                               <span className="text-[10px] font-medium">{action.label}</span>
-                            </button>
+                            </Link>
                           );
                         })}
                       </div>
@@ -415,16 +474,31 @@ export default function Services() {
                         </span>
                       </div>
                       <div className="hidden md:flex items-center gap-1 shrink-0">
-                        {lifecycleQuickActions.slice(0, 3).map((action) => {
+                        {lifecycleQuickActions.slice(0, 4).map((action) => {
                           const StepIcon = action.icon;
+                          const isOffline = svc.status === "maintenance" || svc.status === "offline";
+                          const isDisabled = isOffline;
+                          const tabMap: Record<string, string> = {
+                            appointment: "appointment",
+                            apply: "apply",
+                            upload: "materials",
+                            track: "progress",
+                          };
                           return (
-                            <button
+                            <Link
                               key={action.key}
-                              className="w-9 h-9 rounded-md flex items-center justify-center text-ink-light hover:text-gov-600 hover:bg-gov-50 transition-colors"
-                              title={action.label}
+                              to={isDisabled ? "#" : `/services/${svc.id}?tab=${tabMap[action.key]}`}
+                              className={cn(
+                                "w-9 h-9 rounded-md flex items-center justify-center transition-colors",
+                                isDisabled
+                                  ? "text-gray-300 pointer-events-none"
+                                  : "text-ink-light hover:text-gov-600 hover:bg-gov-50"
+                              )}
+                              title={isOffline ? "维护中" : action.label}
+                              onClick={(e) => isDisabled && e.preventDefault()}
                             >
                               <StepIcon className="w-4 h-4" />
-                            </button>
+                            </Link>
                           );
                         })}
                       </div>
