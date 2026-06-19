@@ -70,10 +70,6 @@ const MainLayout: React.FC = () => {
     : '/';
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
-    if (key === '/admin') {
-      window.location.href = '/admin';
-      return;
-    }
     navigate(key);
   };
 
