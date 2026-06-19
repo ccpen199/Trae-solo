@@ -7,6 +7,7 @@ import { QualityControl } from "./pages/QualityControl"
 import { Settlement } from "./pages/Settlement"
 import { Analytics } from "./pages/Analytics"
 import { AnnotationEditor } from "./components/annotation/AnnotationEditor"
+import { CreateTaskDialog } from "./components/tasks/CreateTaskDialog"
 import { useAppStore } from "./store/useAppStore"
 import type { Task, AnnotationData, UserRole } from "./types"
 import {
@@ -40,6 +41,7 @@ import { mockDailyStats } from "./data/mockData"
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard")
   const [isAnnotating, setIsAnnotating] = useState(false)
+  const [createTaskOpen, setCreateTaskOpen] = useState(false)
   const [currentAnnotationTask, setCurrentAnnotationTask] = useState<Task | null>(null)
   const taskUnits = useAppStore((state) => state.taskUnits)
   const submitAnnotation = useAppStore((state) => state.submitAnnotation)
@@ -113,14 +115,12 @@ function App() {
 
   const renderContent = () => {
     if (activeTab === "dashboard") {
-      if (currentRole === "publisher") {
-        return <PublisherDashboard onCreateProject={() => setActiveTab("tasks")} onNavigate={setActiveTab} />
-      } else if (currentRole === "annotator") {
-        return <AnnotatorDashboard onBrowseTasks={() => setActiveTab("tasks")} onNavigate={setActiveTab} />
-      } else if (currentRole === "reviewer") {
-        return <ReviewerDashboard onReviewTasks={() => setActiveTab("review-tasks")} onNavigate={setActiveTab} />
-      }
-      return <Dashboard />
+      return (
+        <Dashboard
+          onCreateProject={() => setCreateTaskOpen(true)}
+          onNavigate={setActiveTab}
+        />
+      )
     }
 
     if (activeTab === "tasks") {
@@ -171,17 +171,28 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-background">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header title={getPageTitle()} />
-        <main className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-          <div className="max-w-7xl mx-auto">
-            {renderContent()}
-          </div>
-        </main>
+    <>
+      <div className="flex h-screen bg-background">
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Header title={getPageTitle()} />
+          <main className="flex-1 overflow-y-auto p-6 scrollbar-thin">
+            <div className="max-w-7xl mx-auto">
+              {renderContent()}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+
+      <CreateTaskDialog
+        open={createTaskOpen}
+        onOpenChange={setCreateTaskOpen}
+        onTaskCreated={(taskId) => {
+          setCreateTaskOpen(false)
+          setActiveTab("tasks")
+        }}
+      />
+    </>
   )
 }
 
