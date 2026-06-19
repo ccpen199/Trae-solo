@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+.env
+.env.local
+.env.development.local
+.env.production.local
+*.log
+.DS_Store
+.vscode
+.idea
+coverage
+tmp
+temp
+.cache
+*.local
+weapp_dist

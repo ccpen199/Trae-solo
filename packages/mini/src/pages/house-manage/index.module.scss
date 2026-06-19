@@ -1,0 +1,101 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding: $page-padding;
+  padding-bottom: 160rpx;
+}
+
+.houseList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.houseCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.houseHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.houseName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.verifiedTag {
+  font-size: $font-size-xs;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+  font-weight: $font-weight-medium;
+}
+
+.verified {
+  background: #ECFDF5;
+  color: $color-success;
+}
+
+.unverified {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.houseDetail {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  padding: $spacing-md;
+  background: #F8FAFC;
+  border-radius: $radius-md;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-size: $font-size-sm;
+}
+
+.detailLabel {
+  color: $color-text-tertiary;
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.detailValue {
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.addBtn {
+  @include button-reset;
+  height: $button-height-lg;
+  background: $color-bg-card;
+  border: 2rpx dashed $color-border;
+  border-radius: $radius-lg;
+  color: $color-text-tertiary;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  margin-top: $spacing-md;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.addIcon {
+  font-size: 32rpx;
+  margin-right: $spacing-sm;
+}

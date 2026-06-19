@@ -1,0 +1,172 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 160rpx;
+}
+
+.typeSelector {
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding;
+  margin-bottom: $spacing-md;
+}
+
+.typeTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-md;
+}
+
+.typeOptions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.typeOption {
+  @include button-reset;
+  flex: 1;
+  height: 80rpx;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  border: 2rpx solid transparent;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.typeOptionActive {
+  background: #ECFDF5;
+  color: $color-primary;
+  border-color: $color-primary;
+}
+
+.form {
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding;
+}
+
+.formRow {
+  margin-bottom: $spacing-lg;
+}
+
+.formLabel {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.required::before {
+  content: '*';
+  color: $color-error;
+  margin-right: $spacing-xs;
+}
+
+.formInput {
+  width: 100%;
+  height: 88rpx;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: 0 $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  border: 2rpx solid $color-border;
+  transition: border-color $transition-base;
+}
+
+.formInputFocus {
+  border-color: $color-primary;
+}
+
+.formTextarea {
+  width: 100%;
+  min-height: 240rpx;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  border: 2rpx solid $color-border;
+  line-height: $line-height-loose;
+}
+
+.prioritySelector {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.priorityOption {
+  @include button-reset;
+  flex: 1;
+  height: 72rpx;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  border: 2rpx solid transparent;
+}
+
+.priorityActive {
+  border-color: $color-primary;
+  color: $color-primary;
+  background: #ECFDF5;
+}
+
+.imageUpload {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.uploadItem {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-md;
+  background: $color-bg-page;
+  border: 2rpx dashed $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: $color-text-tertiary;
+  transition: all $transition-base;
+
+  &:active {
+    border-color: $color-primary;
+  }
+}
+
+.bottomBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.btnPrimary {
+  @include button-reset;
+  width: 100%;
+  height: $button-height-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  color: $color-text-white;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+
+  &:active {
+    opacity: 0.9;
+  }
+}

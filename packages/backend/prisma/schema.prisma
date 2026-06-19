@@ -1,0 +1,480 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  RESIDENT
+  PROPERTY_STAFF
+  PROPERTY_ADMIN
+  COMMITTEE_MEMBER
+  COMMITTEE_CHAIR
+  SERVICE_PROVIDER
+  SUPER_ADMIN
+}
+
+enum TicketType {
+  REPAIR
+  COMPLAINT
+  SUGGESTION
+}
+
+enum TicketStatus {
+  PENDING
+  ASSIGNED
+  PROCESSING
+  COMPLETED
+  CLOSED
+  CANCELLED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum AccessDeviceType {
+  BLUETOOTH
+  NFC
+  QRCODE
+  FACE
+}
+
+enum AccessAuthType {
+  PERMANENT
+  TEMPORARY
+  ONCE
+}
+
+enum ServiceStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  SUSPENDED
+  OFFLINE
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  REFUND_REQUESTED
+  REFUNDED
+  CANCELLED
+}
+
+enum CommissionStatus {
+  PENDING
+  SETTLED
+  PAID
+}
+
+enum AlertLevel {
+  INFO
+  WARNING
+  ERROR
+  CRITICAL
+}
+
+model Community {
+  id          String    @id @default(uuid())
+  name        String
+  address     String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  buildings   Building[]
+  devices     AccessDevice[]
+  tickets     Ticket[]
+  users       UserCommunity[]
+}
+
+model Building {
+  id          String    @id @default(uuid())
+  communityId String
+  name        String
+  floorCount  Int       @default(1)
+  unitCount   Int       @default(1)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  community   Community @relation(fields: [communityId], references: [id])
+  units       Unit[]
+  devices     AccessDevice[]
+}
+
+model Unit {
+  id          String    @id @default(uuid())
+  buildingId  String
+  name        String
+  floor       Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  building    Building  @relation(fields: [buildingId], references: [id])
+  houses      House[]
+}
+
+model House {
+  id          String    @id @default(uuid())
+  unitId      String
+  roomNumber  String
+  area        Decimal?  @db.Decimal(10, 2)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  unit        Unit      @relation(fields: [unitId], references: [id])
+  users       UserHouse[]
+}
+
+model User {
+  id              String    @id @default(uuid())
+  phone           String    @unique
+  password        String?
+  nickname        String?
+  avatar          String?
+  realName        String?
+  idCard          String?
+  wxOpenId        String?   @unique
+  role            Role      @default(RESIDENT)
+  status          Int       @default(1)
+  lastLoginAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  communities     UserCommunity[]
+  houses          UserHouse[]
+  accessAuths     AccessAuth[]
+  accessLogs      AccessLog[]    @relation("AccessLogUser")
+  createdTickets  Ticket[]       @relation("TicketCreator")
+  handledTickets  Ticket[]       @relation("TicketHandler")
+  ticketComments  TicketComment[]
+  serviceOrders   ServiceOrder[] @relation("ServiceOrderUser")
+  provider        ServiceProvider?
+  alerts          Alert[]
+  ratings         TicketRating[]
+}
+
+model UserCommunity {
+  id          String    @id @default(uuid())
+  userId      String
+  communityId String
+  roleInCommunity Role @default(RESIDENT)
+  joinedAt    DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+  community   Community @relation(fields: [communityId], references: [id])
+
+  @@unique([userId, communityId])
+}
+
+model UserHouse {
+  id          String    @id @default(uuid())
+  userId      String
+  houseId     String
+  relationship String   @default("OWNER")
+  isVerified  Boolean   @default(false)
+  verifiedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+  house       House     @relation(fields: [houseId], references: [id])
+
+  @@unique([userId, houseId])
+}
+
+model AccessDevice {
+  id          String    @id @default(uuid())
+  name        String
+  type        AccessDeviceType
+  communityId String?
+  buildingId  String?
+  location    String
+  macAddress  String?
+  isOnline    Boolean   @default(true)
+  lastHeartbeat DateTime?
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  community   Community? @relation(fields: [communityId], references: [id])
+  building    Building?  @relation(fields: [buildingId], references: [id])
+  auths       AccessAuth[]
+  logs        AccessLog[]
+  alerts      Alert[]
+}
+
+model AccessAuth {
+  id          String    @id @default(uuid())
+  userId      String
+  deviceId    String
+  authType    AccessAuthType
+  qrCodeToken String?   @unique
+  startTime   DateTime?
+  endTime     DateTime?
+  maxUses     Int?
+  usedCount   Int       @default(0)
+  grantedBy   String?
+  createdAt   DateTime  @default(now())
+  expiresAt   DateTime?
+
+  user        User      @relation(fields: [userId], references: [id])
+  device      AccessDevice @relation(fields: [deviceId], references: [id])
+  logs        AccessLog[]
+}
+
+model AccessLog {
+  id          String    @id @default(uuid())
+  deviceId    String
+  userId      String?
+  authId      String?
+  accessType  String
+  accessResult Boolean
+  failReason  String?
+  accessedAt  DateTime  @default(now())
+  extra       Json?
+
+  device      AccessDevice @relation(fields: [deviceId], references: [id])
+  user        User?      @relation("AccessLogUser", fields: [userId], references: [id])
+  auth        AccessAuth? @relation(fields: [authId], references: [id])
+}
+
+model Ticket {
+  id            String    @id @default(uuid())
+  type          TicketType
+  title         String
+  content       String
+  images        Json?
+  status        TicketStatus @default(PENDING)
+  priority      TicketPriority @default(MEDIUM)
+  creatorId     String
+  handlerId     String?
+  communityId   String
+  houseId       String?
+  location      String?
+  contactName   String?
+  contactPhone  String?
+  assignedAt    DateTime?
+  startedAt     DateTime?
+  completedAt   DateTime?
+  closedAt      DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  creator       User      @relation("TicketCreator", fields: [creatorId], references: [id])
+  handler       User?     @relation("TicketHandler", fields: [handlerId], references: [id])
+  community     Community @relation(fields: [communityId], references: [id])
+  house         House?    @relation(fields: [houseId], references: [id])
+  comments      TicketComment[]
+  logs          TicketLog[]
+  rating        TicketRating?
+  tags          TicketTag[]
+}
+
+model TicketComment {
+  id          String    @id @default(uuid())
+  ticketId    String
+  userId      String
+  content     String
+  images      Json?
+  isInternal  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  ticket      Ticket    @relation(fields: [ticketId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model TicketLog {
+  id          String    @id @default(uuid())
+  ticketId    String
+  action      String
+  oldStatus   TicketStatus?
+  newStatus   TicketStatus?
+  operatorId  String?
+  remark      String?
+  createdAt   DateTime  @default(now())
+
+  ticket      Ticket    @relation(fields: [ticketId], references: [id])
+}
+
+model TicketRating {
+  id          String    @id @default(uuid())
+  ticketId    String    @unique
+  userId      String
+  score       Int
+  content     String?
+  createdAt   DateTime  @default(now())
+
+  ticket      Ticket    @relation(fields: [ticketId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model TicketTag {
+  id          String    @id @default(uuid())
+  ticketId    String
+  tag         String
+
+  ticket      Ticket    @relation(fields: [ticketId], references: [id])
+}
+
+model ServiceCategory {
+  id          String    @id @default(uuid())
+  name        String
+  icon        String?
+  sort        Int       @default(0)
+  parentId    String?
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  parent      ServiceCategory? @relation("CategoryParent", fields: [parentId], references: [id])
+  children    ServiceCategory[] @relation("CategoryParent")
+  services    ServiceItem[]
+}
+
+model ServiceProvider {
+  id          String    @id @default(uuid())
+  userId      String    @unique
+  name        String
+  logo        String?
+  description String?
+  contactName String
+  contactPhone String
+  businessLicense String?
+  idCardFront String?
+  idCardBack  String?
+  status      ServiceStatus @default(PENDING_REVIEW)
+  commissionRate Decimal @db.Decimal(5, 2) @default("10.00")
+  reviewComment String?
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id])
+  services    ServiceItem[]
+  orders      ServiceOrder[]
+  settlements CommissionSettlement[]
+}
+
+model ServiceItem {
+  id              String    @id @default(uuid())
+  providerId      String
+  categoryId      String
+  name            String
+  description     String
+  images          Json?
+  price           Decimal   @db.Decimal(10, 2)
+  originalPrice   Decimal?  @db.Decimal(10, 2)
+  unit            String
+  stock           Int?
+  sales           Int       @default(0)
+  rating          Decimal   @db.Decimal(2, 1) @default("5.0")
+  ratingCount     Int       @default(0)
+  status          ServiceStatus @default(PENDING_REVIEW)
+  sort            Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  provider        ServiceProvider @relation(fields: [providerId], references: [id])
+  category        ServiceCategory @relation(fields: [categoryId], references: [id])
+  orders          ServiceOrderItem[]
+}
+
+model ServiceOrder {
+  id              String    @id @default(uuid())
+  orderNo         String    @unique
+  userId          String
+  providerId      String
+  totalAmount     Decimal   @db.Decimal(10, 2)
+  discountAmount  Decimal   @db.Decimal(10, 2) @default("0.00")
+  payAmount       Decimal   @db.Decimal(10, 2)
+  commissionAmount Decimal  @db.Decimal(10, 2) @default("0.00")
+  status          OrderStatus @default(PENDING_PAYMENT)
+  contactName     String
+  contactPhone    String
+  address         String
+  appointmentTime DateTime?
+  remark          String?
+  paidAt          DateTime?
+  acceptedAt      DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User      @relation("ServiceOrderUser", fields: [userId], references: [id])
+  provider        ServiceProvider @relation(fields: [providerId], references: [id])
+  items           ServiceOrderItem[]
+  rating          ServiceOrderRating?
+  settlement      CommissionSettlement?
+}
+
+model ServiceOrderItem {
+  id          String    @id @default(uuid())
+  orderId     String
+  serviceId   String
+  serviceName String
+  quantity    Int
+  unitPrice   Decimal   @db.Decimal(10, 2)
+  subtotal    Decimal   @db.Decimal(10, 2)
+
+  order       ServiceOrder @relation(fields: [orderId], references: [id])
+  service     ServiceItem  @relation(fields: [serviceId], references: [id])
+}
+
+model ServiceOrderRating {
+  id          String    @id @default(uuid())
+  orderId     String    @unique
+  userId      String
+  score       Int
+  content     String?
+  images      Json?
+  createdAt   DateTime  @default(now())
+
+  order       ServiceOrder @relation(fields: [orderId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model CommissionSettlement {
+  id              String    @id @default(uuid())
+  providerId      String
+  orderId         String    @unique
+  orderAmount     Decimal   @db.Decimal(10, 2)
+  commissionRate  Decimal   @db.Decimal(5, 2)
+  commissionAmount Decimal  @db.Decimal(10, 2)
+  providerEarning  Decimal  @db.Decimal(10, 2)
+  status          CommissionStatus @default(PENDING)
+  settledAt       DateTime?
+  paidAt          DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  provider        ServiceProvider @relation(fields: [providerId], references: [id])
+  order           ServiceOrder    @relation(fields: [orderId], references: [id])
+}
+
+model Alert {
+  id          String    @id @default(uuid())
+  type        String
+  level       AlertLevel @default(WARNING)
+  title       String
+  content     String
+  deviceId    String?
+  userId      String?
+  isRead      Boolean   @default(false)
+  readAt      DateTime?
+  extra       Json?
+  createdAt   DateTime  @default(now())
+
+  device      AccessDevice? @relation(fields: [deviceId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
+}

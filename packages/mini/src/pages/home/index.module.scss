@@ -1,0 +1,204 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  background: linear-gradient(180deg, $color-primary 0%, $color-primary-light 100%);
+  padding: 0 $page-padding $spacing-xl;
+  border-radius: 0 0 32rpx 32rpx;
+  color: $color-text-white;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-lg 0;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex: 1;
+  min-width: 0;
+}
+
+.locationIcon {
+  font-size: 32rpx;
+}
+
+.locationText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  @include text-ellipsis;
+  max-width: 400rpx;
+}
+
+.locationAddr {
+  font-size: $font-size-xs;
+  opacity: 0.85;
+  margin-top: 4rpx;
+}
+
+.bellIcon {
+  font-size: 40rpx;
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 28rpx;
+  height: 28rpx;
+  padding: 0 8rpx;
+  background: $color-error;
+  border-radius: $radius-round;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-white;
+}
+
+.accessCard {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  border: 1rpx solid rgba(255, 255, 255, 0.25);
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.accessIcon {
+  width: 120rpx;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64rpx;
+}
+
+.accessInfo {
+  flex: 1;
+}
+
+.accessTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.accessDesc {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: $spacing-xs;
+}
+
+.accessArrow {
+  font-size: 36rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.content {
+  padding: 0 $page-padding;
+  margin-top: -32rpx;
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.section {
+  margin-top: $spacing-md;
+}
+
+.noticeCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.noticeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+  transition: opacity $transition-base;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.noticeTag {
+  flex-shrink: 0;
+  font-size: $font-size-xs;
+  padding: 6rpx 16rpx;
+  border-radius: $radius-sm;
+  font-weight: $font-weight-medium;
+
+  &.NOTICE {
+    background: #DBEAFE;
+    color: #2563EB;
+  }
+  &.ACTIVITY {
+    background: #FEF3C7;
+    color: #D97706;
+  }
+  &.WARNING {
+    background: #FEE2E2;
+    color: #DC2626;
+  }
+}
+
+.noticeContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.noticeTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  @include text-ellipsis;
+}
+
+.noticeTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.servicePreview {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
