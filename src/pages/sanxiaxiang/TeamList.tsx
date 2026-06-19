@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Team } from '../../types';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { mockStudents, mockAdvisors } from '../../data/mockData';
 import { useApp } from '../../context/AppContext';
 import {
@@ -71,11 +72,23 @@ const creditProgressMap: Record<
 
 const TeamList = () => {
   const { teams, addTeam } = useApp();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState<Team | null>(null);
+
+  const urlParams = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return {
+      dept: params.get('dept'),
+      base: params.get('base'),
+    };
+  }, [location.search]);
+
+  const hasUrlFilter = urlParams.dept || urlParams.base;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -97,7 +110,9 @@ const TeamList = () => {
       team.projectName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       team.leaderName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || team.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesDept = !urlParams.dept || team.department === urlParams.dept;
+    const matchesBase = !urlParams.base || team.location.includes(urlParams.base);
+    return matchesSearch && matchesStatus && matchesDept && matchesBase;
   });
 
   const leaderStudent = formData.leaderId
@@ -191,6 +206,27 @@ const TeamList = () => {
 
   return (
     <div className="space-y-6">
+      {/* URL参数过滤提示条 */}
+      {hasUrlFilter && (
+        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg flex items-center justify-between">
+          <span>
+            当前展示「{urlParams.dept || urlParams.base}」的所有团队，共 {filteredTeams.length} 支
+            <button
+              onClick={() => navigate('/sanxiaxiang/teams')}
+              className="ml-2 text-blue-600 hover:text-blue-800 underline font-medium"
+            >
+              清除筛选
+            </button>
+          </span>
+          <button
+            onClick={() => navigate('/sanxiaxiang/teams')}
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
+
       {/* 顶部操作栏 */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">

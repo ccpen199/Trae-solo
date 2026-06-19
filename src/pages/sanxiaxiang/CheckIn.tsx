@@ -1,6 +1,7 @@
 import { useState, useRef, useMemo } from 'react';
 import type { ChangeEvent } from 'react';
 import type { CheckInRecord, Team } from '../../types';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import {
   MapPin,
@@ -91,9 +92,29 @@ const formatNow = (): string => {
 
 const CheckIn = () => {
   const { teams, checkIns, addCheckIn } = useApp();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const urlParams = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return {
+      base: params.get('base'),
+      teamId: params.get('teamId'),
+    };
+  }, [location.search]);
+
+  const hasUrlFilter = urlParams.base || urlParams.teamId;
+
+  const filterLabel = useMemo(() => {
+    if (urlParams.teamId) {
+      const team = teams.find((t) => t.id === urlParams.teamId);
+      return team?.name || urlParams.teamId;
+    }
+    return urlParams.base || '';
+  }, [urlParams.teamId, urlParams.base, teams]);
 
   const [formTeamId, setFormTeamId] = useState<string>('');
   const [selectedLocationIdx, setSelectedLocationIdx] = useState<number | null>(null);
@@ -121,9 +142,11 @@ const CheckIn = () => {
       const matchesSearch =
         checkIn.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
         checkIn.teamName.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesTeam && matchesSearch;
+      const matchesUrlTeam = !urlParams.teamId || checkIn.teamId === urlParams.teamId;
+      const matchesUrlBase = !urlParams.base || checkIn.location.includes(urlParams.base);
+      return matchesTeam && matchesSearch && matchesUrlTeam && matchesUrlBase;
     });
-  }, [checkIns, selectedTeam, searchTerm]);
+  }, [checkIns, selectedTeam, searchTerm, urlParams.teamId, urlParams.base]);
 
   const selectedTeamObj = useMemo<Team | undefined>(() => {
     return activeTeams.find((t) => t.id === formTeamId);
@@ -257,6 +280,27 @@ const CheckIn = () => {
 
   return (
     <div className="space-y-6">
+      {/* URL参数过滤提示条 */}
+      {hasUrlFilter && (
+        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg flex items-center justify-between">
+          <span>
+            当前展示「{filterLabel}」的打卡记录，共 {filteredCheckIns.length} 条
+            <button
+              onClick={() => navigate('/sanxiaxiang/checkin')}
+              className="ml-2 text-blue-600 hover:text-blue-800 underline font-medium"
+            >
+              清除筛选
+            </button>
+          </span>
+          <button
+            onClick={() => navigate('/sanxiaxiang/checkin')}
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="relative">

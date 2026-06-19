@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { PracticeLog, Team } from '../../types';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import {
   FileText,
@@ -34,12 +35,31 @@ const keywordMappings: { pattern: RegExp; keyword: string }[] = [
 
 const PracticeLogs = () => {
   const { logs, teams, addLog } = useApp();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [selectedLog, setSelectedLog] = useState<string | null>(
     logs[0]?.id || null
   );
   const [selectedTeam, setSelectedTeam] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+
+  const urlParams = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return {
+      teamId: params.get('teamId'),
+    };
+  }, [location.search]);
+
+  const hasUrlFilter = !!urlParams.teamId;
+
+  const filterLabel = useMemo(() => {
+    if (urlParams.teamId) {
+      const team = teams.find((t) => t.id === urlParams.teamId);
+      return team?.name || urlParams.teamId;
+    }
+    return '';
+  }, [urlParams.teamId, teams]);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showReadModal, setShowReadModal] = useState<PracticeLog | null>(null);
@@ -69,9 +89,10 @@ const PracticeLogs = () => {
         log.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
         log.teamName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         log.author.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesTeam && matchesSearch;
+      const matchesUrlTeam = !urlParams.teamId || log.teamId === urlParams.teamId;
+      return matchesTeam && matchesSearch && matchesUrlTeam;
     });
-  }, [logs, selectedTeam, searchTerm]);
+  }, [logs, selectedTeam, searchTerm, urlParams.teamId]);
 
   const activeLog = useMemo(
     () => logs.find((log) => log.id === selectedLog) || null,
@@ -200,6 +221,27 @@ const PracticeLogs = () => {
 
   return (
     <div className="space-y-6">
+      {/* URL参数过滤提示条 */}
+      {hasUrlFilter && (
+        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg flex items-center justify-between">
+          <span>
+            当前展示「{filterLabel}」的实践日志，共 {filteredLogs.length} 篇
+            <button
+              onClick={() => navigate('/sanxiaxiang/logs')}
+              className="ml-2 text-blue-600 hover:text-blue-800 underline font-medium"
+            >
+              清除筛选
+            </button>
+          </span>
+          <button
+            onClick={() => navigate('/sanxiaxiang/logs')}
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="relative">
