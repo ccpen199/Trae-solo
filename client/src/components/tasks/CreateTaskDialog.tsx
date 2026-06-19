@@ -48,6 +48,14 @@ export function CreateTaskDialog({ open, onOpenChange, onTaskCreated }: CreateTa
     reviewThreshold: "0.7",
     autoApprove: true,
     reviewerAssignment: "auto",
+    timestampPrecision: "ms",
+    emotionLabeling: "3-class",
+    segmentationType: "instance",
+    exportFormat: "coco",
+    medicalType: "ct",
+    medicalAnnotation: "lesion",
+    frameRate: "5",
+    actionType: "detection",
   })
 
   const taskTypes = [
@@ -90,6 +98,16 @@ export function CreateTaskDialog({ open, onOpenChange, onTaskCreated }: CreateTa
         adversarialEnabled: formData.adversarialEnabled,
         adversarialRatio: parseFloat(formData.adversarialRatio) || 0.05,
         reviewThreshold: parseFloat(formData.reviewThreshold) || 0.7,
+      },
+      taskConfig: {
+        timestampPrecision: formData.timestampPrecision,
+        emotionLabeling: formData.emotionLabeling,
+        segmentationType: formData.segmentationType,
+        exportFormat: formData.exportFormat,
+        medicalType: formData.medicalType,
+        medicalAnnotation: formData.medicalAnnotation,
+        frameRate: formData.frameRate,
+        actionType: formData.actionType,
       },
     }
     
@@ -264,6 +282,169 @@ export function CreateTaskDialog({ open, onOpenChange, onTaskCreated }: CreateTa
                 ))}
               </div>
             </div>
+
+            {taskType === "audio_transcription" && (
+              <div className="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 space-y-4">
+                <div className="flex items-center gap-2">
+                  <Mic className="w-5 h-5 text-indigo-600" />
+                  <h4 className="font-medium text-indigo-700 dark:text-indigo-400">语音标注配置</h4>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>时间戳精度</Label>
+                    <Select
+                      value={formData.timestampPrecision || "ms"}
+                      onValueChange={(v) => setFormData({ ...formData, timestampPrecision: v })}
+                    >
+                      <SelectItem value="ms">毫秒级 (1ms)</SelectItem>
+                      <SelectItem value="10ms">10毫秒级</SelectItem>
+                      <SelectItem value="100ms">100毫秒级</SelectItem>
+                      <SelectItem value="s">秒级 (1s)</SelectItem>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>情感标注</Label>
+                    <Select
+                      value={formData.emotionLabeling || "3-class"}
+                      onValueChange={(v) => setFormData({ ...formData, emotionLabeling: v })}
+                    >
+                      <SelectItem value="3-class">三分类 (正向/中性/负向)</SelectItem>
+                      <SelectItem value="6-class">六分类 (Ekman)</SelectItem>
+                      <SelectItem value="valence">效价-唤醒度</SelectItem>
+                      <SelectItem value="none">无需情感标注</SelectItem>
+                    </Select>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg border">
+                  <FileText className="w-4 h-4 text-indigo-500" />
+                  <span className="text-xs text-muted-foreground">交付格式：JSON + SRT + WebVTT 时间戳对齐</span>
+                </div>
+              </div>
+            )}
+
+            {taskType === "image_segmentation" && (
+              <div className="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 space-y-4">
+                <div className="flex items-center gap-2">
+                  <Image className="w-5 h-5 text-emerald-600" />
+                  <h4 className="font-medium text-emerald-700 dark:text-emerald-400">图像分割配置</h4>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>标注类型</Label>
+                    <Select
+                      value={formData.segmentationType || "instance"}
+                      onValueChange={(v) => setFormData({ ...formData, segmentationType: v })}
+                    >
+                      <SelectItem value="instance">实例分割</SelectItem>
+                      <SelectItem value="semantic">语义分割</SelectItem>
+                      <SelectItem value="bbox">边界框 (BBox)</SelectItem>
+                      <SelectItem value="keypoints">关键点检测</SelectItem>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>导出格式</Label>
+                    <Select
+                      value={formData.exportFormat || "coco"}
+                      onValueChange={(v) => setFormData({ ...formData, exportFormat: v })}
+                    >
+                      <SelectItem value="coco">COCO 格式</SelectItem>
+                      <SelectItem value="pascal">Pascal VOC</SelectItem>
+                      <SelectItem value="yolo">YOLO 格式</SelectItem>
+                      <SelectItem value="mask">Mask R-CNN</SelectItem>
+                    </Select>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg border">
+                  <FileText className="w-4 h-4 text-emerald-500" />
+                  <span className="text-xs text-muted-foreground">交付格式：COCO JSON + PNG Mask + 分类标签映射</span>
+                </div>
+              </div>
+            )}
+
+            {taskType === "medical_ct" && (
+              <div className="p-4 rounded-lg bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 space-y-4">
+                <div className="flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-rose-600" />
+                  <h4 className="font-medium text-rose-700 dark:text-rose-400">医疗影像配置</h4>
+                  <Badge className="bg-rose-500 text-xs ml-auto">医师资质</Badge>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>影像类型</Label>
+                    <Select
+                      value={formData.medicalType || "ct"}
+                      onValueChange={(v) => setFormData({ ...formData, medicalType: v })}
+                    >
+                      <SelectItem value="ct">CT 断层扫描</SelectItem>
+                      <SelectItem value="mri">MRI 磁共振</SelectItem>
+                      <SelectItem value="xray">X 光片</SelectItem>
+                      <SelectItem value="ultrasound">超声影像</SelectItem>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>标注类型</Label>
+                    <Select
+                      value={formData.medicalAnnotation || "lesion"}
+                      onValueChange={(v) => setFormData({ ...formData, medicalAnnotation: v })}
+                    >
+                      <SelectItem value="lesion">病灶框选</SelectItem>
+                      <SelectItem value="organ">器官分割</SelectItem>
+                      <SelectItem value="measurement">尺寸测量</SelectItem>
+                      <SelectItem value="report">诊断报告</SelectItem>
+                    </Select>
+                  </div>
+                </div>
+                <div className="p-3 bg-white dark:bg-slate-800 rounded-lg border space-y-2">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-rose-500" />
+                    <span className="text-xs text-muted-foreground">交付格式：DICOM-RT Structure Set + JSON 标注 + NIfTI 掩码</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-rose-500" />
+                    <span className="text-xs text-rose-600 dark:text-rose-400 font-medium">要求：放射科执业医师资质或Lv.3医疗认证</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {taskType === "video_action" && (
+              <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 space-y-4">
+                <div className="flex items-center gap-2">
+                  <Video className="w-5 h-5 text-amber-600" />
+                  <h4 className="font-medium text-amber-700 dark:text-amber-400">视频标注配置</h4>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>采样帧率</Label>
+                    <Select
+                      value={formData.frameRate || "5"}
+                      onValueChange={(v) => setFormData({ ...formData, frameRate: v })}
+                    >
+                      <SelectItem value="1">每1秒一帧</SelectItem>
+                      <SelectItem value="5">每5秒一帧</SelectItem>
+                      <SelectItem value="10">每10秒一帧</SelectItem>
+                      <SelectItem value="all">全部帧标注</SelectItem>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>动作类型</Label>
+                    <Select
+                      value={formData.actionType || "detection"}
+                      onValueChange={(v) => setFormData({ ...formData, actionType: v })}
+                    >
+                      <SelectItem value="detection">动作检测</SelectItem>
+                      <SelectItem value="classification">动作分类</SelectItem>
+                      <SelectItem value="tracking">目标跟踪</SelectItem>
+                      <SelectItem value="caption">视频描述</SelectItem>
+                    </Select>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg border">
+                  <FileText className="w-4 h-4 text-amber-500" />
+                  <span className="text-xs text-muted-foreground">交付格式：帧序列 JSON + 时间轴 SRT + 视频轨迹 CSV</span>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label>项目名称</Label>
