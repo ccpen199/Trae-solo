@@ -1,38 +1,296 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>may-89232 Service Console</title>
+    <title>可信评价中枢 · may-89232 Service Console</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="shell">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Local full-stack repair</p>
-          <h1>may-89232 Service Console</h1>
-          <p class="summary">Frontend, backend, and SQLite are running inside this project path.</p>
-        </div>
-        <div class="status-pill" id="connectionStatus">Checking API</div>
-      </section>
-
-      <section class="grid" id="metricGrid" aria-label="Service metrics"></section>
-
-      <section class="panel">
-        <div class="panel-head">
+      <header class="topbar">
+        <div class="brand">
+          <span class="logo-mark">◆</span>
           <div>
-            <p class="eyebrow">Runtime</p>
-            <h2>Repair workflow</h2>
+            <p class="eyebrow">可信评价中枢</p>
+            <h1>may-89232 Service Console</h1>
           </div>
-          <button id="refreshButton" type="button">Refresh</button>
         </div>
-        <div class="table" id="workItems"></div>
+        <div class="top-actions">
+          <div class="status-pill" id="connectionStatus">连接中</div>
+          <button id="refreshButton" type="button" class="btn-ghost">⟳ 刷新数据</button>
+        </div>
+      </header>
+
+      <nav class="tabs" role="tablist" id="mainTabs">
+        <button role="tab" class="tab active" data-tab="overview">📊 首页概览</button>
+        <button role="tab" class="tab" data-tab="eval">🔍 评测单元</button>
+        <button role="tab" class="tab" data-tab="ops">⚙️ 运营管理</button>
+        <button role="tab" class="tab" data-tab="trust">🛡️ 可信中枢</button>
+      </nav>
+
+      <!-- 首页概览 -->
+      <section class="tab-panel active" id="tab-overview">
+        <div class="grid grid-4" id="overviewMetrics" aria-label="关键指标"></div>
+
+        <div class="layout-2col">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">业务分布</p>
+                <h2>四大评测类目</h2>
+              </div>
+            </div>
+            <div id="evalByCategory" class="cat-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">运营看板</p>
+                <h2>今日排期</h2>
+              </div>
+            </div>
+            <div id="todaySchedule" class="schedule-list"></div>
+          </div>
+        </div>
+
+        <div class="layout-2col">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">待处理</p>
+                <h2>审核与申诉</h2>
+              </div>
+              <button class="btn-link" data-jump="ops">去处理 →</button>
+            </div>
+            <div id="opsOverview" class="ops-overview"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">最新发布</p>
+                <h2>深度评测报告</h2>
+              </div>
+              <button class="btn-link" data-jump="eval">查看全部 →</button>
+            </div>
+            <div id="latestReports" class="report-list"></div>
+          </div>
+        </div>
       </section>
 
-      <section class="panel compact">
-        <h2>API response</h2>
-        <pre id="apiPayload">Loading...</pre>
+      <!-- 评测单元 -->
+      <section class="tab-panel" id="tab-eval">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">消费 / 教育 / 医美 / 旅游</p>
+              <h2>评测检索与城市榜单</h2>
+            </div>
+          </div>
+          <div class="eval-toolbar">
+            <div class="seg" id="evalCategorySeg">
+              <button class="seg-btn active" data-cat="">全部</button>
+              <button class="seg-btn" data-cat="消费品">消费品</button>
+              <button class="seg-btn" data-cat="教育机构">教育机构</button>
+              <button class="seg-btn" data-cat="医美服务">医美服务</button>
+              <button class="seg-btn" data-cat="旅游景点">旅游景点</button>
+            </div>
+            <div class="search-box">
+              <input type="text" id="evalKeyword" placeholder="🔍 搜索机构名或标签关键词..." />
+            </div>
+          </div>
+
+          <div class="eval-view-switch">
+            <button class="view-btn active" data-view="units">评测单元</button>
+            <button class="view-btn" data-view="ranking">城市榜单</button>
+            <button class="view-btn" data-view="reports">报告深读</button>
+          </div>
+
+          <div id="evalUnitsView" class="view-pane active"></div>
+          <div id="evalRankingView" class="view-pane"></div>
+          <div id="evalReportsView" class="view-pane"></div>
+        </div>
+
+        <!-- 报告深读模态 -->
+        <div class="modal-mask" id="reportModal">
+          <div class="modal">
+            <div class="modal-head">
+              <div>
+                <p class="eyebrow" id="modalBreadcrumb"></p>
+                <h2 id="modalTitle">报告详情</h2>
+              </div>
+              <button class="btn-ghost" id="closeModal">关闭 ✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">加载中...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 运营管理 -->
+      <section class="tab-panel" id="tab-ops">
+        <nav class="sub-tabs" id="opsTabs">
+          <button class="sub-tab active" data-sub="reviewers">评测员资质审核</button>
+          <button class="sub-tab" data-sub="quality">历史报告质量评分</button>
+          <button class="sub-tab" data-sub="brands">品牌入驻申请</button>
+          <button class="sub-tab" data-sub="opinion">舆情看板</button>
+          <button class="sub-tab" data-sub="appeals">申诉响应通道</button>
+        </nav>
+
+        <div class="sub-panel active" id="sub-reviewers">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">人员管理</p><h2>评测员资质审核</h2></div>
+              <div class="seg seg-sm">
+                <button class="seg-btn active" data-rv-status="">全部</button>
+                <button class="seg-btn" data-rv-status="pending">待审核</button>
+                <button class="seg-btn" data-rv-status="reviewing">审核中</button>
+                <button class="seg-btn" data-rv-status="approved">已通过</button>
+                <button class="seg-btn" data-rv-status="rejected">已驳回</button>
+              </div>
+            </div>
+            <div id="reviewersList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-quality">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">质量控制</p><h2>历史报告质量评分</h2></div>
+            </div>
+            <div id="qualityList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-brands">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">品牌合作</p><h2>品牌入驻申请</h2></div>
+              <div class="seg seg-sm">
+                <button class="seg-btn active" data-br-status="">全部</button>
+                <button class="seg-btn" data-br-status="pending">待受理</button>
+                <button class="seg-btn" data-br-status="reviewing">审核中</button>
+                <button class="seg-btn" data-br-status="approved">已入驻</button>
+                <button class="seg-btn" data-br-status="rejected">已驳回</button>
+              </div>
+            </div>
+            <div id="brandsList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-opinion">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">品牌声誉</p><h2>舆情监测看板</h2></div>
+              <div class="seg seg-sm">
+                <button class="seg-btn active" data-sentiment="">全部</button>
+                <button class="seg-btn" data-sentiment="positive">正面</button>
+                <button class="seg-btn" data-sentiment="neutral">中性</button>
+                <button class="seg-btn" data-sentiment="negative">负面</button>
+              </div>
+            </div>
+            <div id="opinionList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-appeals">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">争议处理</p><h2>申诉响应通道</h2></div>
+              <div class="seg seg-sm">
+                <button class="seg-btn active" data-ap-status="">全部</button>
+                <button class="seg-btn" data-ap-status="pending">待响应</button>
+                <button class="seg-btn" data-ap-status="reviewing">处理中</button>
+                <button class="seg-btn" data-ap-status="resolved">已处理</button>
+              </div>
+            </div>
+            <div id="appealsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 可信中枢 -->
+      <section class="tab-panel" id="tab-trust">
+        <nav class="sub-tabs" id="trustTabs">
+          <button class="sub-tab active" data-sub="trace">报告溯源</button>
+          <button class="sub-tab" data-sub="weights">动态权重</button>
+          <button class="sub-tab" data-sub="matrix">竞品对比矩阵</button>
+          <button class="sub-tab" data-sub="flows">审核复查流</button>
+          <button class="sub-tab" data-sub="schedule">排期统计</button>
+        </nav>
+
+        <div class="sub-panel active" id="sub-trace">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">数据可信</p><h2>报告数据溯源 · 采集时间与来源</h2></div>
+              <select id="traceReportSelect" class="select"></select>
+            </div>
+            <div id="traceInfo" class="trace-info"></div>
+            <div id="traceList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-weights">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">评分方法论</p><h2>动态权重配置</h2></div>
+              <select id="weightCategory" class="select">
+                <option value="">全部类目</option>
+                <option value="消费品">消费品</option>
+                <option value="教育机构">教育机构</option>
+                <option value="医美服务">医美服务</option>
+                <option value="旅游景点">旅游景点</option>
+              </select>
+            </div>
+            <div id="weightsList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-matrix">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">横向对比</p><h2>竞品对比矩阵</h2></div>
+              <select id="matrixCategory" class="select">
+                <option value="">全部类目</option>
+                <option value="消费品">消费品</option>
+                <option value="教育机构">教育机构</option>
+                <option value="医美服务">医美服务</option>
+                <option value="旅游景点">旅游景点</option>
+              </select>
+            </div>
+            <div id="matrixList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-flows">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">流程审计</p><h2>审核复查流</h2></div>
+              <div class="seg seg-sm">
+                <button class="seg-btn active" data-fl-status="">全部</button>
+                <button class="seg-btn" data-fl-status="pending">进行中</button>
+                <button class="seg-btn" data-fl-status="approved">已完成</button>
+              </div>
+            </div>
+            <div id="flowsList"></div>
+          </div>
+        </div>
+
+        <div class="sub-panel" id="sub-schedule">
+          <div class="panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">产研协作</p><h2>排期统计</h2></div>
+              <select id="scheduleCategory" class="select">
+                <option value="">全部类目</option>
+                <option value="消费品">消费品</option>
+                <option value="教育机构">教育机构</option>
+                <option value="医美服务">医美服务</option>
+                <option value="旅游景点">旅游景点</option>
+              </select>
+            </div>
+            <div id="scheduleSummary" class="schedule-summary"></div>
+            <div id="scheduleList"></div>
+          </div>
+        </div>
       </section>
     </main>
     <script src="./app.js"></script>
