@@ -62,7 +62,7 @@ export default function Customers() {
       !keyword ||
       c.name.includes(keyword) ||
       c.phone.includes(keyword)
-    const matchTag = filterTag === '全部' || c.tag === filterTag
+    const matchTag = filterTag === '全部' || c.tag === filterTag || (filterTag === '待跟进' && c.status === 'pending')
     return matchKw && matchTag
   })
 

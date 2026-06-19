@@ -432,7 +432,14 @@ export default function Products() {
               return (
                 <div
                   key={item.label}
-                  onClick={() => openModal('performance_detail', { type: 'revenue' })}
+                  onClick={() =>
+                    openModal('inventory_detail', {
+                      productName: '国珍松花粉片（升级版）',
+                      sku: 'GZ-SHF-001-180',
+                      image: '🌰',
+                      totalStock: 256,
+                    })
+                  }
                   className="bg-white rounded-2xl p-5 border border-slate-200 flex items-center gap-4 cursor-pointer hover:shadow-lg transition"
                 >
                   <div
@@ -475,7 +482,14 @@ export default function Products() {
                   {products.map((p) => (
                     <tr
                       key={p.id}
-                      onClick={() => openModal('performance_detail', { type: 'revenue' })}
+                      onClick={() =>
+                        openModal('inventory_detail', {
+                          productName: p.name,
+                          sku: p.sku,
+                          image: p.image,
+                          totalStock: p.stock,
+                        })
+                      }
                       className="hover:bg-slate-50 transition cursor-pointer"
                     >
                       <td className="py-4 px-6">
@@ -545,7 +559,14 @@ export default function Products() {
             {promotions.map((promo) => (
               <div
                 key={promo.id}
-                onClick={() => addToast({ type: 'info', title: '活动详情', description: `正在加载「${promo.name}」的活动数据...` })}
+                onClick={() =>
+                  openModal('promotion_detail', {
+                    id: promo.id,
+                    name: promo.name,
+                    period: promo.period,
+                    status: promo.status,
+                  })
+                }
                 className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-lg transition cursor-pointer"
               >
                 <div className="flex items-start justify-between">
@@ -626,7 +647,18 @@ export default function Products() {
               return (
                 <div
                   key={step.step}
-                  onClick={() => addToast({ type: 'info', title: '批次详情', description: '正在查询该批次的完整溯源链路...' })}
+                  onClick={() =>
+                    openModal('batch_detail', {
+                      productName: '国珍松花粉片（升级版）',
+                      sku: 'GZ-SHF-001-180',
+                      spec: '0.5g × 180 片',
+                      batch: '20260315-A',
+                      productionDate: '2026-03-15',
+                      expiryDate: '2028-03-14',
+                      reportNo: 'QC-20260315-8829',
+                      chainHash: '0x7f3a8c2e9b4d1f6a...8e291c4b7d3a5f6e',
+                    })
+                  }
                   className="relative pb-8 last:pb-0 cursor-pointer"
                 >
                   <div

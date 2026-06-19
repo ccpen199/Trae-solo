@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Modal from './Modal'
-import { useBusinessStore, Customer, Appointment } from '@/store/business'
+import AccountModal from './AccountModal'
+import { useBusinessStore, Customer, Appointment, QrScanRecord, Task } from '@/store/business'
 import { useAuthStore } from '@/store/auth'
 import {
   User,
@@ -25,10 +26,38 @@ import {
   DollarSign,
   Award,
   ArrowUpRight,
+  Factory,
+  Truck,
+  Eye,
+  Layers,
+  Database,
+  History,
+  Zap,
+  Gift,
+  Percent,
+  ArrowRightLeft,
+  BarChart2,
+  ShieldCheck,
+  Hash,
+  ArrowRight,
+  Barcode,
+  QrCode,
+  Share2,
+  UserCheck,
+  Smartphone,
+  CheckCircle2,
+  XCircle,
+  Link2,
+  Globe,
+  Target,
+  Flag,
+  MessageSquare,
+  Send,
+  ClipboardList,
 } from 'lucide-react'
 
 export default function BusinessModals() {
-  const { modal, closeModal, addCustomer, updateCustomer, addToast, updateAppointmentStatus, addServiceRecord } = useBusinessStore()
+  const { modal, closeModal, addCustomer, updateCustomer, addToast, updateAppointmentStatus, addServiceRecord, addTask, updateTask, completeTask, addTaskFollowUp, addAppointment, openModal, customers, appointments } = useBusinessStore()
   const { user } = useAuthStore()
 
   const handleClose = () => closeModal()
@@ -605,6 +634,988 @@ export default function BusinessModals() {
         </div>
       </Modal>
     )
+  }
+
+  /* ============ 批次溯源详情 ============ */
+  if (modal.type === 'batch_detail' && modal.data) {
+    const data = modal.data as Record<string, unknown>
+    const productName = (data.productName as string) || '国珍松花粉片（升级版）'
+    const sku = (data.sku as string) || 'GZ-SHF-001-180'
+    const spec = (data.spec as string) || '0.5g × 180 片'
+    const batchNo = (data.batch as string) || '20260315-A'
+    const productionDate = (data.productionDate as string) || '2026-03-15'
+    const expiryDate = (data.expiryDate as string) || '2028-03-14'
+    const reportNo = (data.reportNo as string) || 'QC-20260315-8829'
+    const chainHash = (data.chainHash as string) || '0x7f3a8c2e9b4d1f6a...8e291c4b7d3a5f6e'
+
+    const traceChain = [
+      { step: 1, name: '原料采购', time: '2026-03-01 08:30', location: '云南香格里拉松花粉基地', operator: '张建国', hash: '0xa1b2c3...4d5e6f', icon: MapPin, status: 'done' },
+      { step: 2, name: '工厂生产', time: '2026-03-10 14:20', location: '烟台生产基地 A3 车间', operator: '李明华', hash: '0x2c3d4e...7f8a9b', icon: Factory, status: 'done' },
+      { step: 3, name: '质检入库', time: '2026-03-12 09:15', location: '国家级检测实验室', operator: '王晓燕', hash: '0x5e6f7a...0b1c2d', icon: ShieldCheck, status: 'done' },
+      { step: 4, name: '大区仓', time: '2026-03-15 16:45', location: '华东区域分拨中心', operator: '赵德伟', hash: '0x8a9b0c...3d4e5f', icon: Database, status: 'done' },
+      { step: 5, name: '生活馆', time: '2026-03-18 10:00', location: '上海浦东生活馆', operator: '陈雅婷', hash: '0xb0c1d2...6e7f8a', icon: Building2, status: 'done' },
+      { step: 6, name: '直销员/客户', time: '2026-03-20 15:30', location: '客户签收', operator: '刘志强', hash: '0xd2e3f4...9a0b1c', icon: User, status: 'current' },
+    ]
+
+    return (
+      <Modal open onClose={handleClose} title="批次溯源详情" subtitle={`${productName} · 区块链存证`} size="lg">
+        <div className="space-y-6">
+          <div className="p-5 bg-gradient-to-r from-violet-50 to-sky-50 rounded-2xl border border-violet-100">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-3xl shadow-lg">
+                🌰
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-slate-800">{productName}</h3>
+                <div className="mt-1 grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+                  <div className="text-slate-600 flex items-center gap-1">
+                    <Barcode className="w-3.5 h-3.5" /> <span className="font-mono">{sku}</span>
+                  </div>
+                  <div className="text-slate-600 flex items-center gap-1">
+                    <Layers className="w-3.5 h-3.5" /> {spec}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="bg-white rounded-xl p-3">
+                <div className="text-[11px] text-slate-500">批次号</div>
+                <div className="font-mono font-bold text-slate-800 mt-0.5">{batchNo}</div>
+              </div>
+              <div className="bg-white rounded-xl p-3">
+                <div className="text-[11px] text-slate-500">生产日期</div>
+                <div className="font-medium text-slate-800 mt-0.5">{productionDate}</div>
+              </div>
+              <div className="bg-white rounded-xl p-3">
+                <div className="text-[11px] text-slate-500">到期日期</div>
+                <div className="font-medium text-slate-800 mt-0.5">{expiryDate}</div>
+              </div>
+              <div className="bg-white rounded-xl p-3">
+                <div className="text-[11px] text-slate-500">质检报告</div>
+                <div className="font-mono font-medium text-slate-800 mt-0.5">{reportNo}</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-4 flex items-center gap-1.5">
+              <History className="w-4 h-4 text-violet-600" /> 溯源链路时间线
+            </div>
+            <div className="relative pl-8">
+              <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-emerald-500 via-sky-500 to-slate-200" />
+              {traceChain.map((step) => {
+                const Icon = step.icon
+                return (
+                  <div key={step.step} className="relative pb-6 last:pb-0">
+                    <div
+                      className={`absolute -left-8 w-6 h-6 rounded-full flex items-center justify-center border-4 border-white ${
+                        step.status === 'current'
+                          ? 'bg-gradient-to-br from-amber-400 to-orange-500 ring-4 ring-amber-100 animate-pulse'
+                          : step.status === 'done'
+                          ? 'bg-gradient-to-br from-emerald-500 to-teal-600'
+                          : 'bg-slate-300'
+                      }`}
+                    >
+                      <Icon className="w-3 h-3 text-white" />
+                    </div>
+                    <div
+                      className={`ml-4 p-4 rounded-xl border transition ${
+                        step.status === 'current'
+                          ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200 shadow-md'
+                          : 'bg-slate-50 border-slate-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-slate-800">
+                            {step.step}. {step.name}
+                          </span>
+                          {step.status === 'current' && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-amber-500 text-white rounded-full">
+                              当前节点
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-sm text-slate-500 flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" /> {step.time}
+                        </span>
+                      </div>
+                      <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="text-slate-600 flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                          {step.location}
+                        </div>
+                        <div className="text-slate-600 flex items-center gap-1">
+                          <User className="w-3.5 h-3.5 text-slate-400" />
+                          操作人：{step.operator}
+                        </div>
+                      </div>
+                      <div className="mt-2 flex items-center gap-1 text-xs text-violet-600 font-mono bg-violet-50 px-2 py-1 rounded-md inline-flex">
+                        <Hash className="w-3 h-3" />
+                        上链哈希：{step.hash}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="p-5 bg-gradient-to-br from-slate-50 to-violet-50/30 rounded-2xl border border-slate-200">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <div className="text-sm text-slate-500 flex items-center gap-1">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  区块链存证哈希
+                </div>
+                <div className="font-mono text-base font-bold text-slate-800 mt-1 break-all">
+                  {chainHash}
+                </div>
+                <div className="text-xs text-slate-500 mt-2">
+                  国家市场监督管理总局区块链存证 · 不可篡改
+                </div>
+              </div>
+              <button
+                onClick={() =>
+                  addToast({
+                    type: 'success',
+                    title: '存证证书',
+                    description: '正在从区块链节点加载并验证存证证书...',
+                  })
+                }
+                className="px-5 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-medium rounded-xl flex items-center gap-2 hover:shadow-lg transition"
+              >
+                <Eye className="w-4 h-4" />
+                查看存证证书
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
+  /* ============ 分布式库存明细 ============ */
+  if (modal.type === 'inventory_detail' && modal.data) {
+    const data = modal.data as Record<string, unknown>
+    const productName = (data.productName as string) || '国珍松花粉片（升级版）'
+    const sku = (data.sku as string) || 'GZ-SHF-001-180'
+    const image = (data.image as string) || '🌰'
+    const totalStock = (data.totalStock as number) || 256
+
+    const storeInventories = [
+      { id: 'S001', name: '浦东旗舰店', stock: 58, inTransit: 12, safetyStock: 20, status: 'normal', lastUpdate: '2026-06-19 08:30' },
+      { id: 'S002', name: '徐汇体验店', stock: 42, inTransit: 8, safetyStock: 15, status: 'normal', lastUpdate: '2026-06-19 09:15' },
+      { id: 'S003', name: '长宁服务中心', stock: 8, inTransit: 20, safetyStock: 15, status: 'warning', lastUpdate: '2026-06-18 16:45' },
+      { id: 'S004', name: '闵行生活馆', stock: 36, inTransit: 5, safetyStock: 15, status: 'normal', lastUpdate: '2026-06-19 07:50' },
+      { id: 'S005', name: '静安体验中心', stock: 24, inTransit: 0, safetyStock: 15, status: 'normal', lastUpdate: '2026-06-18 20:10' },
+    ]
+
+    const stockFlows = [
+      { id: 1, type: 'in', store: '浦东旗舰店', quantity: 30, time: '2026-06-19 08:30', operator: '陈雅婷', remark: '华东分仓调拨入库' },
+      { id: 2, type: 'out', store: '徐汇体验店', quantity: 12, time: '2026-06-18 19:20', operator: '李明', remark: '客户订单出库' },
+      { id: 3, type: 'in', store: '长宁服务中心', quantity: 20, time: '2026-06-18 16:45', operator: '王芳', remark: '紧急调拨入库（在途）' },
+      { id: 4, type: 'out', store: '闵行生活馆', quantity: 8, time: '2026-06-18 14:30', operator: '张伟', remark: '直销员提货' },
+      { id: 5, type: 'in', store: '静安体验中心', quantity: 25, time: '2026-06-17 10:15', operator: '刘洋', remark: '定期补货入库' },
+      { id: 6, type: 'out', store: '浦东旗舰店', quantity: 15, time: '2026-06-17 15:40', operator: '陈雅婷', remark: '活动促销出库' },
+      { id: 7, type: 'in', store: '徐汇体验店', quantity: 40, time: '2026-06-16 09:00', operator: '李明', remark: '月度计划补货' },
+      { id: 8, type: 'out', store: '长宁服务中心', quantity: 10, time: '2026-06-15 11:20', operator: '王芳', remark: 'VIP 客户提货' },
+      { id: 9, type: 'in', store: '闵行生活馆', quantity: 30, time: '2026-06-14 14:50', operator: '张伟', remark: '分仓调拨入库' },
+      { id: 10, type: 'out', store: '静安体验中心', quantity: 6, time: '2026-06-13 16:30', operator: '刘洋', remark: '散客零售出库' },
+    ]
+
+    const handleStoreClick = (store: typeof storeInventories[0]) => {
+      addToast({
+        type: 'info',
+        title: '门店库存调拨',
+        description: `正在为「${store.name}」生成库存调拨申请单...`,
+      })
+    }
+
+    return (
+      <Modal open onClose={handleClose} title="分布式库存明细" subtitle={`${productName} · 实时同步`} size="lg">
+        <div className="space-y-6">
+          <div className="flex items-start gap-4 p-5 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl border border-emerald-100">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-3xl shadow-lg">
+              {image}
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-slate-800">{productName}</h3>
+              <div className="text-sm text-slate-500 mt-0.5 flex items-center gap-1">
+                <Barcode className="w-3.5 h-3.5" /> <span className="font-mono">{sku}</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-bold text-emerald-600">{totalStock}</div>
+              <div className="text-xs text-slate-500">总库存（件）</div>
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+              <Building2 className="w-4 h-4 text-emerald-600" /> 各门店库存
+            </div>
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200">
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-slate-600">生活馆</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-slate-600">现货</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-slate-600">在途</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-slate-600">安全库存</th>
+                    <th className="text-center py-3 px-4 text-sm font-semibold text-slate-600">预警状态</th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-slate-600">最后更新</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {storeInventories.map((store) => (
+                    <tr
+                      key={store.id}
+                      onClick={() => handleStoreClick(store)}
+                      className="hover:bg-emerald-50/50 transition cursor-pointer"
+                    >
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-slate-400" />
+                          <span className="font-medium text-slate-800">{store.name}</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-slate-300 ml-auto" />
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-center font-semibold text-slate-800">{store.stock}</td>
+                      <td className="py-3 px-4 text-center text-sky-600 font-medium">{store.inTransit}</td>
+                      <td className="py-3 px-4 text-center text-slate-600">{store.safetyStock}</td>
+                      <td className="py-3 px-4 text-center">
+                        {store.status === 'warning' ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-amber-50 text-amber-700 rounded-full border border-amber-200">
+                            <AlertTriangle className="w-3 h-3" />
+                            库存预警
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">
+                            <CheckCircle className="w-3 h-3" />
+                            正常
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-3 px-4 text-slate-500 text-sm">{store.lastUpdate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+              <History className="w-4 h-4 text-emerald-600" /> 出入库流水（最近 10 条）
+            </div>
+            <div className="relative pl-8">
+              <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-emerald-500 to-slate-200" />
+              {stockFlows.map((flow) => (
+                <div key={flow.id} className="relative pb-4 last:pb-0">
+                  <div
+                    className={`absolute -left-8 w-6 h-6 rounded-full flex items-center justify-center border-4 border-white ${
+                      flow.type === 'in'
+                        ? 'bg-gradient-to-br from-emerald-500 to-teal-600'
+                        : 'bg-gradient-to-br from-rose-500 to-pink-600'
+                    }`}
+                  >
+                    {flow.type === 'in' ? (
+                      <Package className="w-3 h-3 text-white" />
+                    ) : (
+                      <ArrowRightLeft className="w-3 h-3 text-white" />
+                    )}
+                  </div>
+                  <div className="ml-4 p-3 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                            flow.type === 'in'
+                              ? 'bg-emerald-100 text-emerald-700'
+                              : 'bg-rose-100 text-rose-700'
+                          }`}
+                        >
+                          {flow.type === 'in' ? '入库' : '出库'} {flow.quantity} 件
+                        </span>
+                        <span className="font-medium text-slate-800">{flow.store}</span>
+                      </div>
+                      <span className="text-xs text-slate-500 flex items-center gap-1">
+                        <Clock className="w-3 h-3" /> {flow.time}
+                      </span>
+                    </div>
+                    <div className="mt-1.5 text-xs text-slate-600">
+                      <span className="text-slate-400">操作人：</span>{flow.operator}
+                      <span className="text-slate-300 mx-1.5">·</span>
+                      {flow.remark}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
+ /* ============ 展业码溯源详情 ============ */
+  if (modal.type === 'qr_detail' && modal.data) {
+    const record = modal.data as QrScanRecord
+
+    const traceSteps = [
+      { step: 1, name: '展业码生成', time: '2026-03-01 10:00', operator: '系统自动', detail: '李明专属展业码 DS001-LM8888 生成', icon: QrCode, status: 'done' },
+      { step: 2, name: '分享传播', time: record.scanTime.slice(0, 10) + ' ' + String(Number(record.scanTime.slice(11, 13)) - 1).padStart(2, '0') + record.scanTime.slice(13), operator: '李明', detail: `通过「${record.channel}」渠道分享`, icon: Share2, status: 'done' },
+      { step: 3, name: '客户扫码', time: record.scanTime, operator: record.customerName || '匿名客户', detail: `扫码地点：${record.viewerLocation || '未知'}`, icon: Smartphone, status: 'done' },
+      { step: 4, name: '合规风控检测', time: record.scanTime, operator: 'AI 风控系统', detail: record.compliancePassed ? '地理围栏、话术检测、敏感词三项均通过' : (record.riskNote || '存在合规风险，待人工复核'), icon: ShieldCheck, status: record.compliancePassed ? 'done' : 'warning' },
+      { step: 5, name: '客户绑定/注册', time: record.registered ? record.scanTime : '待处理', operator: record.registered ? (record.customerName || '系统') : '待操作', detail: record.registered ? `已绑定客户：${record.customerName || '已注册'}` : '未绑定客户，可在扫码记录中操作', icon: UserCheck, status: record.registered ? 'done' : 'pending' },
+      { step: 6, name: '消费转化', time: record.registered ? '2026-06-20 14:30' : '—', operator: record.customerName || '—', detail: record.registered ? '产生首单消费：国珍松花粉片 x2，金额 ¥596' : '暂无消费记录', icon: ShoppingBag, status: record.registered ? 'done' : 'pending' },
+    ]
+
+    return (
+      <Modal open onClose={handleClose} title="展业码溯源详情" subtitle={`扫码记录 ${record.id} · 完整链路`} size="lg">
+        <div className="space-y-6">
+          <div className="p-5 bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 rounded-2xl border border-emerald-100">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg flex-shrink-0">
+                <QrCode className="w-7 h-7 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-bold text-slate-800">展业码溯源链路</h3>
+                <div className="text-sm text-slate-500 mt-1 flex items-center gap-1">
+                  <Link2 className="w-3.5 h-3.5" /> 编号 {record.id} · 李明专属展业码
+                </div>
+              </div>
+              <div className="text-right">
+                <div
+                  onClick={() =>
+                    addToast({
+                      type: record.compliancePassed ? 'success' : 'warning',
+                      title: '合规状态',
+                      description: record.compliancePassed
+                        ? '本次扫码已通过全部合规检测，可正常使用'
+                        : `合规检测未通过：${record.riskNote || '存在风险，请联系风控部门'}`,
+                    })
+                  }
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-pointer transition ${
+                    record.compliancePassed
+                      ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                      : 'bg-red-100 text-red-700 hover:bg-red-200'
+                  }`}
+                >
+                  {record.compliancePassed ? (
+                    <CheckCircle2 className="w-4 h-4" />
+                  ) : (
+                    <XCircle className="w-4 h-4" />
+                  )}
+                  <span className="text-sm font-medium">
+                    {record.compliancePassed ? '合规通过' : '合规异常'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div
+                onClick={() => addToast({ type: 'info', title: '扫码时间', description: `客户扫码时间：${record.scanTime}` })}
+                className="bg-white rounded-xl p-3 cursor-pointer hover:shadow-sm transition border border-slate-100"
+              >
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> 扫码时间
+                </div>
+                <div className="font-bold text-slate-800 mt-0.5 text-sm">{record.scanTime}</div>
+              </div>
+              <div
+                onClick={() => addToast({ type: 'info', title: '扫码地点', description: `客户扫码时的地理位置：${record.viewerLocation || '未知'}` })}
+                className="bg-white rounded-xl p-3 cursor-pointer hover:shadow-sm transition border border-slate-100"
+              >
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <MapPin className="w-3 h-3" /> 扫码地点
+                </div>
+                <div className="font-bold text-slate-800 mt-0.5 text-sm">{record.viewerLocation || '未知'}</div>
+              </div>
+              <div
+                onClick={() => addToast({ type: 'info', title: '传播渠道', description: `展业码通过「${record.channel}」渠道触达客户` })}
+                className="bg-white rounded-xl p-3 cursor-pointer hover:shadow-sm transition border border-slate-100"
+              >
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <Globe className="w-3 h-3" /> 传播渠道
+                </div>
+                <div className="font-bold text-slate-800 mt-0.5 text-sm">{record.channel}</div>
+              </div>
+              <div
+                onClick={() =>
+                  addToast({
+                    type: record.registered ? 'success' : 'info',
+                    title: '客户状态',
+                    description: record.registered
+                      ? `已绑定客户：${record.customerName}（${record.customerId || '已注册'}）`
+                      : '该扫码记录尚未绑定客户，可前往扫码记录 Tab 进行绑定',
+                  })
+                }
+                className="bg-white rounded-xl p-3 cursor-pointer hover:shadow-sm transition border border-slate-100"
+              >
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <UserCheck className="w-3 h-3" /> 绑定客户
+                </div>
+                <div className={`font-bold mt-0.5 text-sm ${record.registered ? 'text-emerald-600' : 'text-amber-600'}`}>
+                  {record.registered ? (record.customerName || '已注册') : '未绑定'}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-4 flex items-center gap-1.5">
+              <History className="w-4 h-4 text-emerald-600" /> 完整溯源链路
+            </div>
+            <div className="relative pl-8">
+              <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-emerald-500 via-teal-500 via-sky-500 to-slate-200" />
+              {traceSteps.map((step) => {
+                const Icon = step.icon
+                return (
+                  <div
+                    key={step.step}
+                    onClick={() =>
+                      addToast({
+                        type: step.status === 'warning' ? 'warning' : step.status === 'pending' ? 'info' : 'success',
+                        title: `${step.name}`,
+                        description: `${step.time}\n操作人：${step.operator}\n${step.detail}`,
+                      })
+                    }
+                    className="relative pb-6 last:pb-0 cursor-pointer group"
+                  >
+                    <div
+                      className={`absolute -left-8 w-6 h-6 rounded-full flex items-center justify-center border-4 border-white transition ${
+                        step.status === 'warning'
+                          ? 'bg-gradient-to-br from-amber-400 to-orange-500 ring-4 ring-amber-100 group-hover:ring-amber-200'
+                          : step.status === 'done'
+                          ? 'bg-gradient-to-br from-emerald-500 to-teal-600 group-hover:scale-110'
+                          : 'bg-slate-300 group-hover:bg-slate-400'
+                      }`}
+                    >
+                      <Icon className="w-3 h-3 text-white" />
+                    </div>
+                    <div
+                      className={`ml-4 p-4 rounded-xl border transition ${
+                        step.status === 'warning'
+                          ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200 shadow-sm hover:shadow-md'
+                          : step.status === 'pending'
+                          ? 'bg-slate-50 border-slate-200 border-dashed hover:bg-slate-100'
+                          : 'bg-white border-slate-200 hover:border-emerald-200 hover:shadow-sm'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-slate-800">
+                            {step.step}. {step.name}
+                          </span>
+                          {step.status === 'warning' && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-amber-500 text-white rounded-full flex items-center gap-1">
+                              <AlertTriangle className="w-3 h-3" />
+                              待复核
+                            </span>
+                          )}
+                          {step.status === 'pending' && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-slate-400 text-white rounded-full">
+                              待处理
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-xs text-slate-500 flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" /> {step.time}
+                        </span>
+                      </div>
+                      <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="text-slate-600 flex items-center gap-1">
+                          <User className="w-3.5 h-3.5 text-slate-400" />
+                          操作人：{step.operator}
+                        </div>
+                        <div className="text-slate-600">{step.detail}</div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {record.riskNote && (
+            <div
+              onClick={() =>
+                addToast({
+                  type: 'warning',
+                  title: '风险详情',
+                  description: record.riskNote + '\n\n建议：请联系合规风控部门进行人工复核，确认后可解除风险标记。',
+                })
+              }
+              className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200 cursor-pointer hover:shadow-sm transition"
+            >
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <div className="font-semibold text-amber-800">风控提示</div>
+                  <p className="text-sm text-amber-700 mt-0.5">{record.riskNote}</p>
+                  <div className="text-xs text-amber-600 mt-2 flex items-center gap-1">
+                    点击查看风险详情与申诉渠道
+                    <ArrowUpRight className="w-3 h-3" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => {
+                addToast({ type: 'success', title: '操作成功', description: '溯源链路已导出为 PDF 报告' })
+                handleClose()
+              }}
+              className="flex-1 py-3 font-medium bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:shadow-lg transition flex items-center justify-center gap-2"
+            >
+              <FileText className="w-4 h-4" /> 导出溯源报告
+            </button>
+            {!record.registered && (
+              <button
+                onClick={() => {
+                  addToast({ type: 'info', title: '跳转中', description: '正在跳转至扫码记录 Tab 进行客户绑定...' })
+                  handleClose()
+                }}
+                className="flex-1 py-3 font-medium bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition flex items-center justify-center gap-2"
+              >
+                <UserCheck className="w-4 h-4" /> 绑定客户
+              </button>
+            )}
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
+  /* ============ 促销规则明细 ============ */
+  if (modal.type === 'promotion_detail' && modal.data) {
+    const data = modal.data as Record<string, unknown>
+    const promoName = (data.name as string) || '618 年中大促'
+    const promoId = (data.id as string) || 'PRO001'
+    const period = (data.period as string) || '2026-06-01 至 2026-06-20'
+    const status = (data.status as string) || 'active'
+
+    const statusLabel: Record<string, string> = {
+      active: '进行中',
+      pending: '未开始',
+      ended: '已结束',
+    }
+    const statusColor: Record<string, string> = {
+      active: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      pending: 'bg-sky-50 text-sky-700 border-sky-200',
+      ended: 'bg-slate-50 text-slate-600 border-slate-200',
+    }
+
+    const rules = [
+      { id: 1, name: '满 500 减 50', desc: '订单金额满 500 元立减 50 元，可叠加', icon: DollarSign, type: '满减' },
+      { id: 2, name: '满件折扣', desc: '满 2 件 9 折 / 满 3 件 8.5 折', icon: Percent, type: '折扣' },
+      { id: 3, name: '赠品策略', desc: '单笔订单满 800 元赠送竹康宁体验装', icon: Gift, type: '赠品' },
+      { id: 4, name: '分销佣金加成', desc: '促销期间直销员佣金 +5%', icon: TrendingUp, type: '佣金' },
+    ]
+
+    const applicableProducts = [
+      { id: 'P001', name: '国珍松花粉片（升级版）', sku: 'GZ-SHF-001-180', price: 398, image: '🌰' },
+      { id: 'P002', name: '国珍松花钙奶粉', sku: 'GZ-SHG-002-20', price: 238, image: '🥛' },
+      { id: 'P005', name: '国珍玛咖压片糖果', sku: 'GZ-MK-005-120', price: 328, image: '💪' },
+      { id: 'P006', name: '国珍冷榨亚麻籽油', sku: 'GZ-YMZ-006-250', price: 198, image: '🫒' },
+    ]
+
+    const realtimeData = [
+      { label: '参与人数', value: '3,286', icon: Users, color: 'from-sky-500 to-blue-600' },
+      { label: 'GMV', value: '¥862,400', icon: DollarSign, color: 'from-emerald-500 to-teal-600' },
+      { label: 'ROI', value: '4.2x', icon: BarChart2, color: 'from-violet-500 to-purple-600' },
+    ]
+
+    return (
+      <Modal open onClose={handleClose} title="促销规则明细" subtitle={`${promoName} · 实时数据`} size="lg">
+        <div className="space-y-6">
+          <div className="p-5 bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl border border-rose-100">
+            <div className="flex items-start justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg">
+                  <Zap className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-800">{promoName}</h3>
+                  <div className="text-xs text-slate-500 mt-0.5 font-mono">{promoId}</div>
+                </div>
+              </div>
+              <span
+                className={`px-3 py-1 text-xs font-medium rounded-full border ${statusColor[status] || statusColor.active}`}
+              >
+                {statusLabel[status] || '进行中'}
+              </span>
+            </div>
+            <div className="mt-4 flex items-center gap-1 text-sm text-slate-600">
+              <Clock className="w-4 h-4 text-slate-400" />
+              活动时间：{period}
+            </div>
+          </div>
+
+          <div className="grid gap-3 grid-cols-3">
+            {realtimeData.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.label} className="p-4 bg-white rounded-2xl border border-slate-200">
+                  <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-2`}>
+                    <Icon className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="text-xl font-bold text-slate-800">{item.value}</div>
+                  <div className="text-xs text-slate-500 mt-0.5">{item.label}</div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+              <Zap className="w-4 h-4 text-rose-600" /> 规则引擎
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              {rules.map((rule) => {
+                const Icon = rule.icon
+                return (
+                  <div
+                    key={rule.id}
+                    className="p-4 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-200 hover:border-rose-300 transition cursor-pointer"
+                    onClick={() =>
+                      addToast({
+                        type: 'info',
+                        title: '规则详情',
+                        description: `正在查看「${rule.name}」的详细配置与命中逻辑...`,
+                      })
+                    }
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-slate-800">{rule.name}</span>
+                          <span className="px-2 py-0.5 text-[10px] font-medium bg-rose-100 text-rose-700 rounded-full">
+                            {rule.type}
+                          </span>
+                        </div>
+                        <div className="text-sm text-slate-500 mt-0.5">{rule.desc}</div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+              <Package className="w-4 h-4 text-rose-600" /> 适用商品
+            </div>
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+              {applicableProducts.map((p, i) => (
+                <div
+                  key={p.id}
+                  onClick={() =>
+                    addToast({
+                      type: 'info',
+                      title: '商品详情',
+                      description: `正在打开「${p.name}」的产品详情页...`,
+                    })
+                  }
+                  className={`flex items-center gap-3 p-3 hover:bg-rose-50/50 transition cursor-pointer ${
+                    i !== applicableProducts.length - 1 ? 'border-b border-slate-100' : ''
+                  }`}
+                >
+                  <span className="text-2xl">{p.image}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-slate-800 truncate">{p.name}</div>
+                    <div className="text-xs text-slate-500 font-mono">{p.sku}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-bold text-rose-600">¥{p.price}</div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-slate-300" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-3 grid-cols-2">
+            <button
+              onClick={() =>
+                addToast({
+                  type: 'success',
+                  title: '数据导出',
+                  description: '活动参与明细报表正在生成，稍后可在消息中心下载...',
+                })
+              }
+              className="py-3 text-sm font-medium bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition flex items-center justify-center gap-1.5"
+            >
+              <BarChart3 className="w-4 h-4" /> 导出数据
+            </button>
+            <button
+              onClick={() =>
+                addToast({
+                  type: 'info',
+                  title: '活动分享',
+                  description: '正在生成活动专属推广海报与链接...',
+                })
+              }
+              className="py-3 text-sm font-medium bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-xl hover:shadow-lg transition flex items-center justify-center gap-1.5"
+            >
+              <Zap className="w-4 h-4" /> 立即推广
+            </button>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
+  /* ============ 任务详情 ============ */
+  if (modal.type === 'task_detail' && modal.data) {
+    const task = modal.data as Task
+    const [followUpText, setFollowUpText] = useState('')
+
+    const priorityLabels: Record<string, { label: string; color: string }> = {
+      high: { label: '高', color: 'bg-red-100 text-red-700 border-red-200' },
+      medium: { label: '中', color: 'bg-amber-100 text-amber-700 border-amber-200' },
+      low: { label: '低', color: 'bg-slate-100 text-slate-600 border-slate-200' },
+    }
+
+    const statusLabels: Record<string, { label: string; color: string }> = {
+      todo: { label: '待处理', color: 'bg-slate-100 text-slate-600' },
+      doing: { label: '进行中', color: 'bg-sky-100 text-sky-700' },
+      done: { label: '已完成', color: 'bg-emerald-100 text-emerald-700' },
+      cancelled: { label: '已取消', color: 'bg-slate-100 text-slate-500' },
+    }
+
+    const typeLabels: Record<string, string> = {
+      follow_up: '客户跟进',
+      appointment: '预约服务',
+      service_review: '服务回访',
+      training: '培训学习',
+      other: '其他事项',
+    }
+
+    const priorityInfo = priorityLabels[task.priority] || priorityLabels.low
+    const statusInfo = statusLabels[task.status] || statusLabels.todo
+
+    const relatedCustomer = task.customerId ? customers.find((c) => c.id === task.customerId) : null
+    const relatedAppointment = task.appointmentId ? appointments.find((a) => a.id === task.appointmentId) : null
+
+    const handleAddFollowUp = () => {
+      if (!followUpText.trim()) return
+      addTaskFollowUp(task.id, followUpText.trim())
+      addToast({ type: 'success', title: '跟进记录已添加', description: '任务跟进记录已同步保存' })
+      setFollowUpText('')
+    }
+
+    const handleCreateAppointment = () => {
+      if (!relatedCustomer) return
+      const tomorrow = new Date()
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      const dateStr = tomorrow.toISOString().slice(0, 10)
+      addAppointment({
+        customer: relatedCustomer.name,
+        customerId: relatedCustomer.id,
+        phone: relatedCustomer.phone,
+        service: '生活馆体验服务',
+        store: '浦东旗舰店',
+        date: dateStr,
+        time: '10:00',
+        status: 'pending',
+        avatar: relatedCustomer.avatar,
+        taskId: task.id,
+      })
+      addToast({
+        type: 'success',
+        title: '预约已创建',
+        description: `已为 ${relatedCustomer.name} 创建预约并关联至该任务`,
+      })
+    }
+
+    const handleComplete = () => {
+      completeTask(task.id)
+      addToast({ type: 'success', title: '任务已完成', description: task.title })
+      handleClose()
+    }
+
+    const handleCancel = () => {
+      updateTask(task.id, { status: 'cancelled' })
+      addToast({ type: 'info', title: '任务已取消', description: task.title })
+      handleClose()
+    }
+
+    return (
+      <Modal open onClose={handleClose} title="任务详情" subtitle={`任务编号 ${task.id}`} size="lg">
+        <div className="space-y-5">
+          {/* 顶部：标题、优先级、状态 */}
+          <div className="flex items-start justify-between gap-4 p-4 bg-gradient-to-r from-violet-50 to-sky-50 rounded-xl border border-violet-100">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-xl font-bold text-slate-800">{task.title}</h3>
+                <span className={`px-2.5 py-0.5 text-xs font-medium rounded-md border ${priorityInfo.color}`}>
+                  <Flag className="w-3 h-3 inline mr-1" />
+                  {priorityInfo.label}优先级
+                </span>
+                <span className={`px-2.5 py-0.5 text-xs font-medium rounded-full ${statusInfo.color}`}>
+                  {statusInfo.label}
+                </span>
+              </div>
+            </div>
+            <Target className="w-8 h-8 text-violet-500 flex-shrink-0" />
+          </div>
+
+          {/* 信息区 */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+              <Clock className="w-5 h-5 text-sky-500 mt-0.5" />
+              <div>
+                <div className="text-xs text-slate-500">截止时间</div>
+                <div className="font-medium text-slate-800 mt-0.5">{task.deadline}</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+              <ClipboardList className="w-5 h-5 text-violet-500 mt-0.5" />
+              <div>
+                <div className="text-xs text-slate-500">任务类型</div>
+                <div className="font-medium text-slate-800 mt-0.5">{typeLabels[task.type] || '其他事项'}</div>
+              </div>
+            </div>
+            {relatedCustomer && (
+              <button
+                onClick={() => {
+                  openModal('customer_detail', relatedCustomer)
+                }}
+                className="flex items-start gap-3 p-3 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition text-left"
+              >
+                <User className="w-5 h-5 text-emerald-500 mt-0.5" />
+                <div>
+                  <div className="text-xs text-emerald-600">关联客户（点击查看）</div>
+                  <div className="font-medium text-slate-800 mt-0.5">{relatedCustomer.name}</div>
+                </div>
+              </button>
+            )}
+            {relatedAppointment && (
+              <button
+                onClick={() => {
+                  openModal('appointment_detail', relatedAppointment)
+                }}
+                className="flex items-start gap-3 p-3 bg-amber-50 rounded-xl hover:bg-amber-100 transition text-left"
+              >
+                <Calendar className="w-5 h-5 text-amber-500 mt-0.5" />
+                <div>
+                  <div className="text-xs text-amber-600">关联预约（点击查看）</div>
+                  <div className="font-medium text-slate-800 mt-0.5">
+                    {relatedAppointment.date} {relatedAppointment.time}
+                  </div>
+                </div>
+              </button>
+            )}
+          </div>
+
+          {/* 描述区 */}
+          {task.description && (
+            <div className="p-4 bg-white rounded-xl border border-slate-200">
+              <div className="text-sm font-medium text-slate-700 mb-2 flex items-center gap-1">
+                <FileText className="w-4 h-4 text-slate-500" /> 任务描述
+              </div>
+              <p className="text-sm text-slate-600 leading-relaxed">{task.description}</p>
+            </div>
+          )}
+
+          {/* 新增跟进记录输入框 */}
+          <div className="space-y-3">
+            <div className="text-sm font-bold text-slate-700 flex items-center gap-1.5">
+              <MessageSquare className="w-4 h-4 text-emerald-600" /> 添加跟进记录
+            </div>
+            <div className="flex gap-2">
+              <textarea
+                value={followUpText}
+                onChange={(e) => setFollowUpText(e.target.value)}
+                placeholder="记录本次跟进内容、客户反馈、下次计划..."
+                className="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-[80px]"
+              />
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={handleAddFollowUp}
+                disabled={!followUpText.trim()}
+                className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-lg hover:shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+              >
+                <Send className="w-4 h-4" /> 提交跟进
+              </button>
+            </div>
+          </div>
+
+          {/* 跟进记录时间线 */}
+          <div>
+            <div className="text-sm font-bold text-slate-700 mb-4 flex items-center gap-1.5">
+              <History className="w-4 h-4 text-violet-600" /> 跟进记录时间线
+            </div>
+            {task.followUpRecords && task.followUpRecords.length > 0 ? (
+              <div className="relative pl-8">
+                <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-violet-500 via-sky-500 to-slate-200" />
+                {task.followUpRecords.map((record, idx) => (
+                  <div key={idx} className="relative pb-5 last:pb-0">
+                    <div className="absolute -left-8 w-6 h-6 rounded-full flex items-center justify-center border-4 border-white bg-gradient-to-br from-violet-500 to-sky-500">
+                      <MessageSquare className="w-3 h-3 text-white" />
+                    </div>
+                    <div className="ml-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-xs text-slate-500 flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {record.time}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-700">{record.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="py-8 text-center text-slate-400">
+                <MessageSquare className="w-10 h-10 mx-auto mb-2 opacity-40" />
+                <p className="text-sm">暂无跟进记录</p>
+              </div>
+            )}
+          </div>
+
+          {/* 底部操作区 */}
+          {task.status !== 'done' && task.status !== 'cancelled' && (
+            <div className="pt-4 border-t border-slate-200 grid gap-2 grid-cols-2 md:grid-cols-3">
+              {task.customerId && !task.appointmentId && (
+                <button
+                  onClick={handleCreateAppointment}
+                  className="py-3 font-medium bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl hover:shadow-lg transition flex items-center justify-center gap-1.5"
+                >
+                  <Calendar className="w-4 h-4" /> 为该客户预约服务
+                </button>
+              )}
+              <button
+                onClick={handleComplete}
+                className="py-3 font-medium bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:shadow-lg transition flex items-center justify-center gap-1.5"
+              >
+                <CheckCircle className="w-4 h-4" /> 标记完成
+              </button>
+              <button
+                onClick={handleCancel}
+                className="py-3 font-medium bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition flex items-center justify-center gap-1.5"
+              >
+                <XCircle className="w-4 h-4" /> 取消任务
+              </button>
+            </div>
+          )}
+        </div>
+      </Modal>
+    )
+  }
+
+  if (modal.type === 'account_settings') {
+    return <AccountModal onClose={handleClose} />
   }
 
   return null

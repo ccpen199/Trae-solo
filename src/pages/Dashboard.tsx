@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/store/auth'
 import { useNavigate } from 'react-router-dom'
-import { useBusinessStore } from '@/store/business'
+import { useBusinessStore, Task } from '@/store/business'
 import {
   TrendingUp,
   Users,
@@ -27,13 +27,11 @@ import {
   Plus,
   RefreshCw,
 } from 'lucide-react'
-import { useState } from 'react'
 
 export default function Dashboard() {
   const { user } = useAuthStore()
   const navigate = useNavigate()
-  const { customers, appointments, addToast, openModal } = useBusinessStore()
-  const [taskDone, setTaskDone] = useState<Record<string, boolean>>({ T003: true })
+  const { customers, appointments, addToast, openModal, tasks, completeTask, addTask } = useBusinessStore()
 
   const stats = [
     {
@@ -108,13 +106,6 @@ export default function Dashboard() {
       path: '/stores',
       toast: { title: '生活馆预约', desc: '选择门店和时间快速预约', type: 'info' as const },
     },
-  ]
-
-  const todayTasks = [
-    { id: 'T001', title: '跟进陈雅婷的蛋白粉复购', priority: 'high', time: '14:00', customerId: 'C001' },
-    { id: 'T002', title: '参加总部新品培训直播', priority: 'high', time: '19:30' },
-    { id: 'T003', title: '整理本周新增客户资料', priority: 'medium', time: '今天内' },
-    { id: 'T004', title: '预约生活馆体验服务', priority: 'low', time: '本周' },
   ]
 
   const teamMembers = [
@@ -195,16 +186,26 @@ export default function Dashboard() {
     }
   }
 
-  const handleTaskToggle = (taskId: string) => {
-    const newDone = !taskDone[taskId]
-    setTaskDone({ ...taskDone, [taskId]: newDone })
-    const task = todayTasks.find((t) => t.id === taskId)
-    if (task) {
-      addToast({
-        type: newDone ? 'success' : 'info',
-        title: newDone ? '任务已完成' : '任务已恢复',
-        description: task.title,
-      })
+  const handleCreateTask = () => {
+    const title = prompt('请输入任务标题')
+    if (!title) return
+    addTask({
+      title,
+      priority: 'medium',
+      deadline: '今天内',
+      status: 'todo',
+      type: 'other',
+    })
+    addToast({ type: 'success', title: '任务已创建', description: title })
+  }
+
+  const handleTaskComplete = (task: Task, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (task.status === 'done') {
+      addToast({ type: 'info', title: '任务已恢复', description: task.title })
+    } else {
+      completeTask(task.id)
+      addToast({ type: 'success', title: '任务已完成', description: task.title })
     }
   }
 
@@ -435,9 +436,7 @@ export default function Dashboard() {
                 今日待办
               </h2>
               <button
-                onClick={() => {
-                  addToast({ type: 'info', title: '新建任务', description: '请输入任务内容和截止时间' })
-                }}
+                onClick={handleCreateTask}
                 className="text-sm text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1"
               >
                 <Plus className="w-4 h-4" />
@@ -445,53 +444,44 @@ export default function Dashboard() {
               </button>
             </div>
             <div className="space-y-2">
-              {todayTasks.map((task) => {
-                const done = taskDone[task.id]
-                return (
-                  <div
-                    key={task.id}
-                    className={`flex items-center gap-4 p-3.5 rounded-xl border transition group cursor-pointer ${
-                      done ? 'bg-slate-50 border-slate-100 opacity-70' : 'bg-white border-slate-200 hover:border-violet-200 hover:shadow-sm'
-                    }`}
-                    onClick={() => handleTaskToggle(task.id)}
-                  >
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleTaskToggle(task.id)
-                      }}
-                      className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition flex-shrink-0 ${
-                        done
-                          ? 'bg-emerald-500 border-emerald-500'
-                          : 'border-slate-300 hover:border-emerald-500 group-hover:scale-110'
+              {tasks
+                .filter((t) => t.status !== 'cancelled')
+                .map((task) => {
+                  const done = task.status === 'done'
+                  return (
+                    <div
+                      key={task.id}
+                      className={`flex items-center gap-4 p-3.5 rounded-xl border transition group cursor-pointer ${
+                        done ? 'bg-slate-50 border-slate-100 opacity-70' : 'bg-white border-slate-200 hover:border-violet-200 hover:shadow-sm'
                       }`}
+                      onClick={() => {
+                        openModal('task_detail', task)
+                      }}
                     >
-                      {done && <Check className="w-3 h-3 text-white" />}
-                    </button>
-                    <div className="flex-1 min-w-0" onClick={(e) => {
-                      e.stopPropagation()
-                      if (task.customerId) {
-                        const cust = customers.find(c => c.id === task.customerId)
-                        if (cust) {
-                          openModal('customer_detail', cust)
-                        }
-                      } else {
-                        addToast({ type: 'info', title: task.title, description: `截止时间：${task.time}` })
-                      }
-                    }}>
-                      <div className={`font-medium ${done ? 'text-slate-500 line-through' : 'text-slate-800'}`}>
-                        {task.title}
+                      <button
+                        onClick={(e) => handleTaskComplete(task, e)}
+                        className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition flex-shrink-0 ${
+                          done
+                            ? 'bg-emerald-500 border-emerald-500'
+                            : 'border-slate-300 hover:border-emerald-500 group-hover:scale-110'
+                        }`}
+                      >
+                        {done && <Check className="w-3 h-3 text-white" />}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <div className={`font-medium ${done ? 'text-slate-500 line-through' : 'text-slate-800'}`}>
+                          {task.title}
+                        </div>
+                        <div className="text-xs text-slate-500 mt-0.5">截止时间 · {task.deadline}</div>
                       </div>
-                      <div className="text-xs text-slate-500 mt-0.5">截止时间 · {task.time}</div>
+                      <span
+                        className={`text-[11px] font-medium px-2.5 py-1 rounded-md border ${getPriorityColor(task.priority)}`}
+                      >
+                        {task.priority === 'high' ? '高优' : task.priority === 'medium' ? '中优' : '低优'}
+                      </span>
                     </div>
-                    <span
-                      className={`text-[11px] font-medium px-2.5 py-1 rounded-md border ${getPriorityColor(task.priority)}`}
-                    >
-                      {task.priority === 'high' ? '高优' : task.priority === 'medium' ? '中优' : '低优'}
-                    </span>
-                  </div>
-                )
-              })}
+                  )
+                })}
             </div>
           </div>
         </div>

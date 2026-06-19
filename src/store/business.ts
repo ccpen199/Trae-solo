@@ -19,6 +19,7 @@ export interface Customer {
   source: string
   notes?: string
   followUpDate?: string
+  introducerId?: string
 }
 
 export interface Appointment {
@@ -33,6 +34,7 @@ export interface Appointment {
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled'
   note?: string
   avatar: string
+  taskId?: string
 }
 
 export interface ServiceRecord {
@@ -47,6 +49,8 @@ export interface ServiceRecord {
   products: string[]
   hash: string
   status: 'chained' | 'pending'
+  appointmentId?: string
+  taskId?: string
 }
 
 export interface Toast {
@@ -58,7 +62,18 @@ export interface Toast {
 }
 
 export interface ModalState {
-  type: 'customer_detail' | 'add_customer' | 'appointment_detail' | 'performance_detail' | 'qr_detail' | null
+  type:
+    | 'customer_detail'
+    | 'add_customer'
+    | 'appointment_detail'
+    | 'performance_detail'
+    | 'qr_detail'
+    | 'account_settings'
+    | 'batch_detail'
+    | 'inventory_detail'
+    | 'promotion_detail'
+    | 'task_detail'
+    | null
   data?: unknown
 }
 
@@ -71,6 +86,35 @@ interface ShareTrack {
   clicks: number
   conversions: number
   channel: string
+  convertedCustomerIds?: string[]
+}
+
+export interface Task {
+  id: string
+  title: string
+  priority: 'high' | 'medium' | 'low'
+  deadline: string
+  status: 'todo' | 'doing' | 'done' | 'cancelled'
+  customerId?: string
+  appointmentId?: string
+  createdAt: string
+  updatedAt: string
+  description?: string
+  type: 'follow_up' | 'appointment' | 'service_review' | 'training' | 'other'
+  followUpRecords?: { time: string; content: string }[]
+}
+
+export interface QrScanRecord {
+  id: string
+  scanTime: string
+  viewerIp?: string
+  viewerLocation?: string
+  channel: string
+  customerId?: string
+  customerName?: string
+  registered: boolean
+  compliancePassed: boolean
+  riskNote?: string
 }
 
 interface BusinessState {
@@ -78,6 +122,8 @@ interface BusinessState {
   appointments: Appointment[]
   serviceRecords: ServiceRecord[]
   shareTracks: ShareTrack[]
+  tasks: Task[]
+  qrScanRecords: QrScanRecord[]
   toasts: Toast[]
   modal: ModalState
   currentViewRole: UserRole | null
@@ -87,17 +133,26 @@ interface BusinessState {
   openModal: (type: ModalState['type'], data?: unknown) => void
   closeModal: () => void
 
-  addCustomer: (customer: Omit<Customer, 'id'>) => void
+  addCustomer: (customer: Omit<Customer, 'id'>) => Customer
   updateCustomer: (id: string, patch: Partial<Customer>) => void
+
   setCurrentViewRole: (role: UserRole | null) => void
 
-  addAppointment: (apt: Omit<Appointment, 'id'>) => void
+  addAppointment: (apt: Omit<Appointment, 'id'>) => Appointment
   updateAppointmentStatus: (id: string, status: Appointment['status']) => void
 
   addShareTrack: (track: Omit<ShareTrack, 'id' | 'shareTime'>) => void
   incrementShareViews: (id: string) => void
 
-  addServiceRecord: (record: Omit<ServiceRecord, 'id' | 'hash' | 'status'>) => void
+  addServiceRecord: (record: Omit<ServiceRecord, 'id' | 'hash' | 'status'>) => ServiceRecord
+
+  addTask: (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => Task
+  updateTask: (id: string, patch: Partial<Task>) => void
+  addTaskFollowUp: (taskId: string, content: string) => void
+  completeTask: (id: string) => void
+
+  addQrScanRecord: (record: Omit<QrScanRecord, 'id'>) => void
+  bindScanToCustomer: (scanId: string, customerId: string, customerName: string) => void
 }
 
 const initialCustomers: Customer[] = [
@@ -122,13 +177,32 @@ const initialServiceRecords: ServiceRecord[] = [
   { id: 'SR002', customer: '刘志强', avatar: '刘', service: '心脑血管养护方案', store: '浦东旗舰店', date: '2026-06-10', duration: '120 分钟', consultant: '李明（资深营养师）', products: ['国珍竹康宁片 x2', '国珍鱼油软胶囊 x1'], hash: '0x7c2b4e8f...91d4', status: 'chained' },
 ]
 
+const now = new Date().toLocaleString('zh-CN')
+
+const initialTasks: Task[] = [
+  { id: 'T001', title: '跟进陈雅婷的蛋白粉复购', priority: 'high', deadline: '今日 14:00', status: 'todo', customerId: 'C001', createdAt: now, updatedAt: now, type: 'follow_up', description: '客户上月购买的蛋白粉即将用完，电话跟进复购意向', followUpRecords: [{ time: '2026-06-17 10:20', content: '已发送产品使用关怀微信，客户回复周末会考虑' }] },
+  { id: 'T002', title: '参加总部新品培训直播', priority: 'high', deadline: '今日 19:30', status: 'todo', createdAt: now, updatedAt: now, type: 'training', description: '新品松花粉升级版产品知识培训' },
+  { id: 'T003', title: '整理本周新增客户资料', priority: 'medium', deadline: '今天内', status: 'done', createdAt: now, updatedAt: now, type: 'other', followUpRecords: [{ time: '2026-06-19 09:00', content: '6 位客户资料已录入 CRM，标注跟进时间' }] },
+  { id: 'T004', title: '为赵海涛预约生活馆体验', priority: 'low', deadline: '本周', status: 'todo', customerId: 'C006', createdAt: now, updatedAt: now, type: 'appointment', description: '赵海涛表示下周有空到店体验体质检测服务' },
+]
+
+const initialQrScanRecords: QrScanRecord[] = [
+  { id: 'QR001', scanTime: '2026-06-19 08:32', viewerLocation: '上海市浦东新区', channel: '微信朋友圈', customerId: 'C004', customerName: '王俊杰', registered: true, compliancePassed: true },
+  { id: 'QR002', scanTime: '2026-06-18 20:15', viewerLocation: '上海市徐汇区', channel: '微信好友', registered: false, compliancePassed: true },
+  { id: 'QR003', scanTime: '2026-06-18 15:44', viewerLocation: '上海市长宁区', channel: '线下海报', customerId: 'C003', customerName: '张秀兰', registered: true, compliancePassed: true },
+  { id: 'QR004', scanTime: '2026-06-17 11:08', viewerLocation: '北京市朝阳区', channel: '微信群转发', registered: false, compliancePassed: false, riskNote: '跨区域展业疑似风险，已进入地理围栏复核' },
+  { id: 'QR005', scanTime: '2026-06-17 09:22', viewerLocation: '上海市静安区', channel: '名片二维码', customerId: 'C005', customerName: '李美华', registered: true, compliancePassed: true },
+]
+
 export const useBusinessStore = create<BusinessState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       customers: initialCustomers,
       appointments: initialAppointments,
       serviceRecords: initialServiceRecords,
       shareTracks: [],
+      tasks: initialTasks,
+      qrScanRecords: initialQrScanRecords,
       toasts: [],
       modal: { type: null, data: undefined },
       currentViewRole: null,
@@ -147,27 +221,29 @@ export const useBusinessStore = create<BusinessState>()(
       openModal: (type, data) => set({ modal: { type, data } }),
       closeModal: () => set({ modal: { type: null, data: undefined } }),
 
-      addCustomer: (customer) =>
-        set((state) => ({
-          customers: [
-            { ...customer, id: 'C' + String(state.customers.length + 1).padStart(3, '0') },
-            ...state.customers,
-          ],
-        })),
+      addCustomer: (customer) => {
+        const id = 'C' + String(get().customers.length + 1).padStart(3, '0')
+        const record = { ...customer, id }
+        set((state) => ({ customers: [record, ...state.customers] }))
+        return record
+      },
       updateCustomer: (id, patch) =>
         set((state) => ({
-          customers: state.customers.map((c) => (c.id === id ? { ...c, ...patch } : c)),
+          customers: state.customers.map((c) => (c.id === id ? { ...c, ...patch, lastContact: '刚刚' } : c)),
         })),
 
       setCurrentViewRole: (role) => set({ currentViewRole: role }),
 
-      addAppointment: (apt) =>
-        set((state) => ({
-          appointments: [
-            { ...apt, id: 'AP' + String(state.appointments.length + 1).padStart(3, '0') },
-            ...state.appointments,
-          ],
-        })),
+      addAppointment: (apt) => {
+        const id = 'AP' + String(get().appointments.length + 1).padStart(3, '0')
+        const record = { ...apt, id }
+        set((state) => ({ appointments: [record, ...state.appointments] }))
+        if (apt.taskId) {
+          get().updateTask(apt.taskId, { status: 'doing', appointmentId: id, updatedAt: new Date().toLocaleString('zh-CN') })
+          get().addTaskFollowUp(apt.taskId, `已为客户预约 ${apt.store} ${apt.service}，时间 ${apt.date} ${apt.time}`)
+        }
+        return record
+      },
       updateAppointmentStatus: (id, status) =>
         set((state) => ({
           appointments: state.appointments.map((a) => (a.id === id ? { ...a, status } : a)),
@@ -185,17 +261,57 @@ export const useBusinessStore = create<BusinessState>()(
           shareTracks: state.shareTracks.map((s) => (s.id === id ? { ...s, views: s.views + 1 } : s)),
         })),
 
-      addServiceRecord: (record) =>
+      addServiceRecord: (record) => {
+        const id = 'SR' + String(get().serviceRecords.length + 1).padStart(3, '0')
+        const serviceRecord = {
+          ...record,
+          id,
+          hash: '0x' + Math.random().toString(16).slice(2, 10) + '...' + Math.random().toString(16).slice(2, 6),
+          status: 'pending' as const,
+        }
+        set((state) => ({ serviceRecords: [serviceRecord, ...state.serviceRecords] }))
+        return serviceRecord
+      },
+
+      addTask: (task) => {
+        const id = 'T' + String(get().tasks.length + 1).padStart(3, '0')
+        const ts = new Date().toLocaleString('zh-CN')
+        const record = { ...task, id, createdAt: ts, updatedAt: ts }
+        set((state) => ({ tasks: [record, ...state.tasks] }))
+        return record
+      },
+      updateTask: (id, patch) =>
         set((state) => ({
-          serviceRecords: [
-            {
-              ...record,
-              id: 'SR' + String(state.serviceRecords.length + 1).padStart(3, '0'),
-              hash: '0x' + Math.random().toString(16).slice(2, 10) + '...' + Math.random().toString(16).slice(2, 6),
-              status: 'pending',
-            },
-            ...state.serviceRecords,
+          tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...patch, updatedAt: new Date().toLocaleString('zh-CN') } : t)),
+        })),
+      addTaskFollowUp: (id, content) => {
+        const record = { time: new Date().toLocaleString('zh-CN'), content }
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === id
+              ? { ...t, followUpRecords: [...(t.followUpRecords || []), record], updatedAt: record.time }
+              : t
+          ),
+        }))
+      },
+      completeTask: (id) => {
+        set((state) => ({
+          tasks: state.tasks.map((t) => (t.id === id ? { ...t, status: 'done', updatedAt: new Date().toLocaleString('zh-CN') } : t)),
+        }))
+      },
+
+      addQrScanRecord: (record) =>
+        set((state) => ({
+          qrScanRecords: [
+            { ...record, id: 'QR' + String(state.qrScanRecords.length + 1).padStart(3, '0') },
+            ...state.qrScanRecords,
           ],
+        })),
+      bindScanToCustomer: (scanId, customerId, customerName) =>
+        set((state) => ({
+          qrScanRecords: state.qrScanRecords.map((s) =>
+            s.id === scanId ? { ...s, customerId, customerName, registered: true } : s
+          ),
         })),
     }),
     {
@@ -205,6 +321,8 @@ export const useBusinessStore = create<BusinessState>()(
         appointments: state.appointments,
         serviceRecords: state.serviceRecords,
         shareTracks: state.shareTracks,
+        tasks: state.tasks,
+        qrScanRecords: state.qrScanRecords,
         currentViewRole: state.currentViewRole,
       }),
     }

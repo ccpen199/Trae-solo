@@ -24,7 +24,7 @@ import {
 
 export default function MainLayout() {
   const { user, logout } = useAuthStore()
-  const { addToast } = useBusinessStore()
+  const { addToast, openModal } = useBusinessStore()
   const navigate = useNavigate()
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -264,7 +264,7 @@ export default function MainLayout() {
                     <button
                       onClick={() => {
                         setUserMenuOpen(false)
-                        addToast({ type: 'info', title: '个人资料', description: '正在加载个人信息...' })
+                        openModal('account_settings', { initialTab: 'profile' })
                       }}
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition"
                     >
@@ -284,7 +284,7 @@ export default function MainLayout() {
                     <button
                       onClick={() => {
                         setUserMenuOpen(false)
-                        addToast({ type: 'info', title: '账号设置', description: '正在加载设置页面...' })
+                        openModal('account_settings', { initialTab: 'security' })
                       }}
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition"
                     >
