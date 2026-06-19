@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, SearchBar, Tabs, Card, Tag, Space, Dialog, Toast } from 'antd-mobile'
-import { LocationOutline, StarOutline, SetOutline, ClockCircleOutline, CollectMoneyOutline, MessageOutline } from 'antd-mobile-icons'
+import { LocationOutline, StarOutline, SetOutline, ClockCircleOutline, CollectMoneyOutline, MessageOutline, RightOutline, UserOutline } from 'antd-mobile-icons'
 import { highways, cities, stations as stationsData, operatorColors, protocolColors } from '../../mock/stations'
 import './index.css'
 
@@ -11,6 +11,19 @@ function Home() {
   const [selectedHighway, setSelectedHighway] = useState('G1')
   const [selectedCity, setSelectedCity] = useState('北京')
   const [selectedDistrict, setSelectedDistrict] = useState('')
+  const [selectedOperator, setSelectedOperator] = useState<string>('')
+  const [selectedProtocol, setSelectedProtocol] = useState<string>('')
+  const [selectedAbnormal, setSelectedAbnormal] = useState<string>('')
+  const [searchKeyword, setSearchKeyword] = useState('')
+
+  const operators = ['国网电动', '特来电', '星星充电', '小桔充电', '云快充']
+  const protocols = ['国网协议', '第三方API', 'GB/T 27930']
+  const abnormalTypes = [
+    { key: 'fault', label: '有故障', color: '#ff3141' },
+    { key: 'offline', label: '有离线', color: '#666' },
+    { key: 'inspection', label: '巡检异常', color: '#ff8f1f' },
+    { key: 'pending', label: '未处理工单', color: '#722ed1' },
+  ]
 
   const totalFaults = useMemo(() => stationsData.reduce((s, st) => s + st.guns.fault, 0), [])
   const totalOfflines = useMemo(() => stationsData.reduce((s, st) => s + st.guns.offline, 0), [])
@@ -21,6 +34,8 @@ function Home() {
   const todayOrders = 326
   const pendingOrders = 12
   const todayFixed = 28
+
+  const totalDistricts = cities.reduce((s, c) => s + c.districts.length, 0)
 
   const currentCity = cities.find(c => c.name === selectedCity)
 
@@ -61,17 +76,46 @@ function Home() {
     return { total, gunsSum, idleSum, faultSum, districtCounts, maxCount, coveredDistricts: districtCounts.filter(d => d.count > 0).length }
   }, [cityStations, currentCity])
 
-  const filteredStations = stationsData.filter(s => {
-    if (activeTab === 'all') return true
-    if (activeTab === 'highway') return s.type === 'highway' && s.highway === selectedHighway
-    if (activeTab === 'city') {
-      if (!s.city) return false
-      if (s.city !== selectedCity) return false
-      if (selectedDistrict && s.district !== selectedDistrict) return false
+  const filteredStations = useMemo(() => {
+    return stationsData.filter(s => {
+      if (activeTab === 'highway' && (s.type !== 'highway' || s.highway !== selectedHighway)) return false
+      if (activeTab === 'city') {
+        if (s.type !== 'city') return false
+        if (s.city !== selectedCity) return false
+        if (selectedDistrict && s.district !== selectedDistrict) return false
+      }
+      if (selectedOperator && s.operator !== selectedOperator) return false
+      if (selectedProtocol && s.protocol !== selectedProtocol) return false
+      if (selectedAbnormal === 'fault' && s.guns.fault === 0) return false
+      if (selectedAbnormal === 'offline' && s.guns.offline === 0) return false
+      if (selectedAbnormal === 'inspection' && s.inspectionStatus !== '有异常') return false
+      if (selectedAbnormal === 'pending' && s.guns.fault === 0 && s.guns.offline === 0 && s.inspectionStatus !== '有异常') return false
+      if (searchKeyword && !s.name.includes(searchKeyword) && !s.address.includes(searchKeyword)) return false
       return true
+    })
+  }, [activeTab, selectedHighway, selectedCity, selectedDistrict, selectedOperator, selectedProtocol, selectedAbnormal, searchKeyword])
+
+  const handleAlertClick = (type: string) => {
+    setActiveTab('all')
+    setSelectedOperator('')
+    setSelectedProtocol('')
+    if (type === 'fault') {
+      setSelectedAbnormal('fault')
+      Toast.show('已筛选有故障的站点')
+    } else if (type === 'offline') {
+      setSelectedAbnormal('offline')
+      Toast.show('已筛选有离线桩的站点')
+    } else if (type === 'inspection') {
+      setSelectedAbnormal('inspection')
+      Toast.show('已筛选巡检异常的站点')
+    } else if (type === 'pending') {
+      setSelectedAbnormal('pending')
+      Toast.show('已筛选有未处理工单的站点')
+    } else {
+      setSelectedAbnormal('')
+      Toast.show('已筛选今日已修复的站点')
     }
-    return true
-  })
+  }
 
   const showInspectionDetail = (station: typeof stationsData[0]) => {
     Dialog.show({
@@ -81,6 +125,14 @@ function Home() {
           <div className="inspection-dialog-item">
             <ClockCircleOutline />
             <span>上次巡检：{station.lastInspectionTime}</span>
+          </div>
+          <div className="inspection-dialog-item">
+            <SetOutline />
+            <span>巡检单号：INSP202606180023</span>
+          </div>
+          <div className="inspection-dialog-item">
+            <MessageOutline />
+            <span>巡检员：巡检组-刘师傅</span>
           </div>
           <div className="inspection-dialog-title">异常项：</div>
           {station.inspectionItems.length > 0 ? (
@@ -93,20 +145,122 @@ function Home() {
           ) : (
             <div className="inspection-dialog-empty">暂无异常详情</div>
           )}
+          <div className="inspection-dialog-title">处理建议：</div>
+          <div className="inspection-dialog-anomaly">
+            <span className="anomaly-dot suggestion" />
+            建议48小时内安排场站驻场更换磨损部件，关联工单已自动创建
+          </div>
         </div>
       ),
       closeOnAction: true,
       actions: [
         [
           {
+            key: 'view',
+            text: '查看处理工单',
+            primary: true,
+            onClick: () => {
+              navigate(`/station/${station.id}`)
+            },
+          },
+          {
             key: 'ok',
             text: '我知道了',
-            danger: false,
           },
         ],
       ],
     })
   }
+
+  const showNetworkMap = () => {
+    Dialog.show({
+      title: '十横十纵两环 线路覆盖图',
+      content: (
+        <div className="network-map-dialog">
+          <div className="network-map-legend">
+            <div className="legend-item"><span className="legend-dot h" />横线</div>
+            <div className="legend-item"><span className="legend-dot v" />纵线</div>
+            <div className="legend-item"><span className="legend-dot r" />环线</div>
+          </div>
+          <div className="network-map">
+            <div className="map-row">
+              <div className="map-line h-line h1"></div>
+              <div className="map-label">G10 绥满</div>
+            </div>
+            <div className="map-row">
+              <div className="map-line h-line h2"></div>
+              <div className="map-label">G20 青银</div>
+            </div>
+            <div className="map-row">
+              <div className="map-line h-line h3"></div>
+              <div className="map-label">G30 连霍</div>
+            </div>
+            <div className="map-row">
+              <div className="map-line h-line h4"></div>
+              <div className="map-label">G40 沪陕</div>
+            </div>
+            <div className="map-row">
+              <div className="map-line h-line h5"></div>
+              <div className="map-label">G50 沪渝</div>
+            </div>
+            <div className="map-row">
+              <div className="map-vlines">
+                <div className="map-line v-line v1"></div>
+                <div className="map-line v-line v2"></div>
+                <div className="map-line v-line v3"></div>
+                <div className="map-line v-line v4"></div>
+                <div className="map-line v-line v5"></div>
+              </div>
+              <div className="v-labels">
+                <span>G1</span><span>G2</span><span>G4</span><span>G5</span><span>G6</span>
+              </div>
+            </div>
+            <div className="map-row ring-row">
+              <div className="map-ring">
+                <div className="ring-outer"></div>
+                <div className="ring-inner"></div>
+              </div>
+              <div className="ring-labels">
+                <div>北京六环</div>
+                <div>上海外环</div>
+                <div>广州绕城</div>
+              </div>
+            </div>
+          </div>
+          <div className="network-summary">
+            <div className="summary-row">
+              <span>十横：</span><span>G10/G12/G16/G18/G20/G22/G30/G36/G40/G50</span>
+            </div>
+            <div className="summary-row">
+              <span>十纵：</span><span>G1/G2/G3/G4/G5/G6/G7/G11/G15/G35</span>
+            </div>
+            <div className="summary-row">
+              <span>两环：</span><span>北京六环、上海外环 / 广州绕城</span>
+            </div>
+            <div className="summary-row">
+              <span>覆盖：</span><span>{highways.length}条高速干线 / {cities.length}大城市 / {totalDistricts}城区 / {totalStations}个充电站</span>
+            </div>
+          </div>
+        </div>
+      ),
+      closeOnAction: true,
+      actions: [[{ key: 'ok', text: '我知道了', primary: true }]],
+    })
+  }
+
+  const goToRoute = () => navigate('/route')
+  const goToV2G = () => navigate('/v2g')
+  const goToCharging = () => navigate('/charging')
+  const goToCommunity = () => navigate('/community')
+
+  const clearFilters = () => {
+    setSelectedOperator('')
+    setSelectedProtocol('')
+    setSelectedAbnormal('')
+    setSearchKeyword('')
+  }
+
+  const hasActiveFilters = selectedOperator || selectedProtocol || selectedAbnormal
 
   return (
     <div className="home-page">
@@ -118,7 +272,32 @@ function Home() {
       </NavBar>
 
       <div className="search-section">
-        <SearchBar placeholder="搜索充电站/地址" />
+        <SearchBar
+          placeholder="搜索充电站/地址"
+          value={searchKeyword}
+          onChange={setSearchKeyword}
+        />
+      </div>
+
+      <div className="quick-entry-section">
+        <div className="quick-entry-grid">
+          <div className="quick-entry-item" onClick={goToRoute}>
+            <div className="quick-entry-icon route">🛣️</div>
+            <div className="quick-entry-label">跨城补能</div>
+          </div>
+          <div className="quick-entry-item" onClick={goToCharging}>
+            <div className="quick-entry-icon charging">⚡</div>
+            <div className="quick-entry-label">实时充电</div>
+          </div>
+          <div className="quick-entry-item" onClick={goToV2G}>
+            <div className="quick-entry-icon v2g">🔋</div>
+            <div className="quick-entry-label">V2G认证</div>
+          </div>
+          <div className="quick-entry-item" onClick={goToCommunity}>
+            <div className="quick-entry-icon community">💬</div>
+            <div className="quick-entry-label">车友社区</div>
+          </div>
+        </div>
       </div>
 
       <div className="overview-card">
@@ -140,21 +319,17 @@ function Home() {
             <div className="overview-label">今日订单</div>
           </div>
         </div>
-        <div className="overview-footer">
-          十横十纵两环覆盖 12条高速干线 / 3大城市 / 9城区
+        <div className="overview-footer" onClick={showNetworkMap}>
+          <span className="map-icon">🗺️</span>
+          <span>十横十纵两环覆盖 {highways.length}条高速干线 / {cities.length}大城市 / {totalDistricts}城区</span>
+          <RightOutline className="footer-arrow" />
         </div>
       </div>
-
-      <Tabs activeKey={activeTab} onChange={key => setActiveTab(key)} className="scene-tabs">
-        <Tabs.Tab title="全部" key="all" />
-        <Tabs.Tab title="高速网络" key="highway" />
-        <Tabs.Tab title="城市公共桩" key="city" />
-      </Tabs>
 
       <div className="alert-scroll">
         <div
           className="alert-card alert-danger"
-          onClick={() => Toast.show('查看告警详情')}
+          onClick={() => handleAlertClick('fault')}
         >
           <div className="alert-icon">🔴</div>
           <div className="alert-info">
@@ -164,7 +339,7 @@ function Home() {
         </div>
         <div
           className="alert-card alert-offline"
-          onClick={() => Toast.show('查看告警详情')}
+          onClick={() => handleAlertClick('offline')}
         >
           <div className="alert-icon">⚫</div>
           <div className="alert-info">
@@ -174,7 +349,7 @@ function Home() {
         </div>
         <div
           className="alert-card alert-warning"
-          onClick={() => Toast.show('查看告警详情')}
+          onClick={() => handleAlertClick('inspection')}
         >
           <div className="alert-icon">🟡</div>
           <div className="alert-info">
@@ -184,7 +359,7 @@ function Home() {
         </div>
         <div
           className="alert-card alert-pending"
-          onClick={() => Toast.show('查看告警详情')}
+          onClick={() => handleAlertClick('pending')}
         >
           <div className="alert-icon">📋</div>
           <div className="alert-info">
@@ -194,7 +369,7 @@ function Home() {
         </div>
         <div
           className="alert-card alert-fixed"
-          onClick={() => Toast.show('查看告警详情')}
+          onClick={() => handleAlertClick('fixed')}
         >
           <div className="alert-icon">🔧</div>
           <div className="alert-info">
@@ -204,6 +379,12 @@ function Home() {
         </div>
       </div>
 
+      <Tabs activeKey={activeTab} onChange={key => { setActiveTab(key); clearFilters() }} className="scene-tabs">
+        <Tabs.Tab title="全部" key="all" />
+        <Tabs.Tab title="高速网络" key="highway" />
+        <Tabs.Tab title="城市公共桩" key="city" />
+      </Tabs>
+
       {activeTab === 'highway' && (
         <div className="highway-selector">
           <div className="highway-label">十横十纵两环</div>
@@ -212,7 +393,7 @@ function Home() {
               <div
                 key={hw.code}
                 className={selectedHighway === hw.code ? 'highway-tag active' : 'highway-tag'}
-                onClick={() => setSelectedHighway(hw.code)}
+                onClick={() => { setSelectedHighway(hw.code); clearFilters() }}
               >
                 <span className="hw-code">{hw.code}</span>
                 <span className="hw-name">{hw.name}</span>
@@ -228,6 +409,10 @@ function Home() {
             <div className="summary-title">
               <span className="summary-icon">🛣️</span>
               <span>{selectedHighway} {highways.find(h => h.code === selectedHighway)?.name}</span>
+            </div>
+            <div className="summary-route-btn" onClick={goToRoute}>
+              <SetOutline />
+              <span>跨城补能规划</span>
             </div>
           </div>
           <div className="summary-stats">
@@ -287,7 +472,7 @@ function Home() {
               <div
                 key={c.name}
                 className={selectedCity === c.name ? 'city-tag active' : 'city-tag'}
-                onClick={() => { setSelectedCity(c.name); setSelectedDistrict('') }}
+                onClick={() => { setSelectedCity(c.name); setSelectedDistrict(''); clearFilters() }}
               >
                 {c.name}
               </div>
@@ -361,6 +546,78 @@ function Home() {
         </div>
       )}
 
+      <div className="filter-section">
+        <div className="filter-row">
+          <div className="filter-label">运营商：</div>
+          <div className="filter-tags">
+            <div
+              className={!selectedOperator ? 'filter-tag active' : 'filter-tag'}
+              onClick={() => setSelectedOperator('')}
+            >
+              全部
+            </div>
+            {operators.map(op => (
+              <div
+                key={op}
+                className={selectedOperator === op ? 'filter-tag active' : 'filter-tag'}
+                style={{ borderColor: operatorColors[op], color: selectedOperator === op ? '#fff' : operatorColors[op] }}
+                onClick={() => setSelectedOperator(selectedOperator === op ? '' : op)}
+              >
+                {op}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="filter-row">
+          <div className="filter-label">接入协议：</div>
+          <div className="filter-tags">
+            <div
+              className={!selectedProtocol ? 'filter-tag active' : 'filter-tag'}
+              onClick={() => setSelectedProtocol('')}
+            >
+              全部
+            </div>
+            {protocols.map(p => (
+              <div
+                key={p}
+                className={selectedProtocol === p ? 'filter-tag active' : 'filter-tag'}
+                style={{ borderColor: protocolColors[p], color: selectedProtocol === p ? '#fff' : protocolColors[p] }}
+                onClick={() => setSelectedProtocol(selectedProtocol === p ? '' : p)}
+              >
+                {p}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="filter-row">
+          <div className="filter-label">异常等级：</div>
+          <div className="filter-tags">
+            <div
+              className={!selectedAbnormal ? 'filter-tag active' : 'filter-tag'}
+              onClick={() => setSelectedAbnormal('')}
+            >
+              全部
+            </div>
+            {abnormalTypes.map(at => (
+              <div
+                key={at.key}
+                className={selectedAbnormal === at.key ? 'filter-tag active' : 'filter-tag'}
+                style={{ borderColor: at.color, color: selectedAbnormal === at.key ? '#fff' : at.color }}
+                onClick={() => setSelectedAbnormal(selectedAbnormal === at.key ? '' : at.key)}
+              >
+                {at.label}
+              </div>
+            ))}
+          </div>
+        </div>
+        {hasActiveFilters && (
+          <div className="filter-clear-row">
+            <span className="filter-result">筛选结果：{filteredStations.length}个站点</span>
+            <span className="filter-clear" onClick={clearFilters}>清除筛选</span>
+          </div>
+        )}
+      </div>
+
       <div className="stations-section">
         <div className="section-header">
           <h3>
@@ -373,111 +630,132 @@ function Home() {
           <span className="station-count">{filteredStations.length}个站点</span>
         </div>
 
-        <Space direction="vertical" block>
-          {filteredStations.map(station => (
-            <Card
-              key={station.id}
-              className="station-card"
-              onClick={() => navigate(`/station/${station.id}`)}
-            >
-              <div className="station-header">
-                <span className="station-name">{station.name}</span>
-                <Tag
-                  color={operatorColors[station.operator]}
-                  className="operator-tag"
-                >
-                  {station.operator}
-                </Tag>
-              </div>
-
-              <div className="station-tags">
-                <Tag
-                  fill="outline"
-                  style={{
-                    color: protocolColors[station.protocol],
-                    borderColor: protocolColors[station.protocol],
-                  }}
-                >
-                  {station.protocol}
-                </Tag>
-                {station.inspectionStatus === '有异常' && (
+        {filteredStations.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">🔍</div>
+            <div className="empty-text">没有找到符合筛选条件的站点</div>
+            <div className="empty-btn" onClick={clearFilters}>清除筛选条件</div>
+          </div>
+        ) : (
+          <Space direction="vertical" block>
+            {filteredStations.map(station => (
+              <Card
+                key={station.id}
+                className="station-card"
+                onClick={() => navigate(`/station/${station.id}`)}
+              >
+                <div className="station-header">
+                  <span className="station-name">{station.name}</span>
                   <Tag
-                    color="danger"
-                    className="inspection-tag"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      showInspectionDetail(station)
+                    color={operatorColors[station.operator]}
+                    className="operator-tag"
+                  >
+                    {station.operator}
+                  </Tag>
+                </div>
+
+                <div className="station-tags">
+                  <Tag
+                    fill="outline"
+                    style={{
+                      color: protocolColors[station.protocol],
+                      borderColor: protocolColors[station.protocol],
                     }}
                   >
-                    巡检异常
+                    {station.protocol}
                   </Tag>
-                )}
-              </div>
+                  {station.type === 'highway' && (
+                    <Tag color="default" fill="outline" className="type-tag">
+                      🛣️ {station.highway}
+                    </Tag>
+                  )}
+                  {station.type === 'city' && (
+                    <Tag color="default" fill="outline" className="type-tag">
+                      🏙️ {station.district}
+                    </Tag>
+                  )}
+                  {station.inspectionStatus === '有异常' && (
+                    <Tag
+                      color="danger"
+                      className="inspection-tag"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        showInspectionDetail(station)
+                      }}
+                    >
+                      巡检异常
+                    </Tag>
+                  )}
+                </div>
 
-              <div className="station-meta">
-                <span className="meta-item">
-                  <LocationOutline /> {station.distance}
-                </span>
-                <span className="meta-item">
-                  <StarOutline /> {station.rating}
-                </span>
-                <span className="meta-item">
-                  <ClockCircleOutline /> {station.businessHours}
-                </span>
-              </div>
-
-              <div className="gun-status">
-                <span className="gun-idle">🟢 空闲{station.guns.idle}</span>
-                <span className="gun-charging">🔵 充电中{station.guns.charging}</span>
-                <span className="gun-fault">🔴 故障{station.guns.fault}</span>
-                <span className="gun-offline">⚫ 离线{station.guns.offline}</span>
-              </div>
-
-              <div className="occupancy-section">
-                <div className="occupancy-header">
-                  <span className="occupancy-label">实时占用率</span>
-                  <span className="occupancy-value" style={{ color: getOccupancyColor(station.occupancyRate) }}>
-                    {station.occupancyRate}%
+                <div className="station-meta">
+                  <span className="meta-item">
+                    <LocationOutline /> {station.distance}
+                  </span>
+                  <span className="meta-item">
+                    <StarOutline /> {station.rating}
+                  </span>
+                  <span className="meta-item">
+                    <ClockCircleOutline /> {station.businessHours}
                   </span>
                 </div>
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{
-                      width: `${station.occupancyRate}%`,
-                      background: getOccupancyColor(station.occupancyRate),
+
+                <div className="gun-status">
+                  <span className="gun-idle">🟢 空闲{station.guns.idle}</span>
+                  <span className="gun-charging">🔵 充电中{station.guns.charging}</span>
+                  <span className="gun-fault">🔴 故障{station.guns.fault}</span>
+                  <span className="gun-offline">⚫ 离线{station.guns.offline}</span>
+                </div>
+
+                <div className="occupancy-section">
+                  <div className="occupancy-header">
+                    <span className="occupancy-label">实时占用率</span>
+                    <span className="occupancy-value" style={{ color: getOccupancyColor(station.occupancyRate) }}>
+                      {station.occupancyRate}%
+                    </span>
+                  </div>
+                  <div className="progress-bar">
+                    <div
+                      className="progress-fill"
+                      style={{
+                        width: `${station.occupancyRate}%`,
+                        background: getOccupancyColor(station.occupancyRate),
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {(station.guns.fault > 0 || station.guns.offline > 0 || station.inspectionStatus === '有异常') && (
+                  <div className="alert-processing">
+                    <MessageOutline />
+                    <span>
+                      告警处理中 {station.guns.fault + station.guns.offline + (station.inspectionStatus === '有异常' ? 1 : 0)}项
+                    </span>
+                  </div>
+                )}
+
+                <div className="station-footer">
+                  <div className="station-price">
+                    <span>电费 ¥{station.electricityPrice}/度</span>
+                    <span className="price-divider">|</span>
+                    <span>服务费 ¥{station.servicePrice}/度</span>
+                  </div>
+                  <span
+                    className="work-order-link"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      navigate(`/station/${station.id}`)
                     }}
-                  />
+                  >
+                    <SetOutline />
+                    查看处理工单
+                    <RightOutline className="wo-arrow" />
+                  </span>
                 </div>
-              </div>
-
-              {(station.guns.fault > 0 || station.guns.offline > 0) && (
-                <div className="alert-processing">
-                  <MessageOutline />
-                  <span>告警处理中 {station.guns.fault + station.guns.offline}项</span>
-                </div>
-              )}
-
-              <div className="station-footer">
-                <div className="station-price">
-                  <span>电费 ¥{station.electricityPrice}/度</span>
-                  <span className="price-divider">|</span>
-                  <span>服务费 ¥{station.servicePrice}/度</span>
-                </div>
-                <span
-                  className="work-order-link"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    Toast.show(`处理工单 #WO${station.id.toUpperCase()}`)
-                  }}
-                >
-                  <SetOutline />
-                  查看处理工单
-                </span>
-              </div>
-            </Card>
-          ))}
-        </Space>
+              </Card>
+            ))}
+          </Space>
+        )}
       </div>
     </div>
   )

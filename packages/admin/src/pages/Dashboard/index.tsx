@@ -126,16 +126,23 @@ const getHeatmapOption = () => ({
       return s ? `${s.name}<br/>总桩数: ${s.totalPiles}<br/>在线: ${s.onlinePiles}<br/>故障: ${s.faultPiles}` : ''
     }
   },
-  geo: {
-    map: 'china',
-    roam: false,
-    zoom: 1.2,
-    itemStyle: { areaColor: '#f3f3f3', borderColor: '#999' },
-    emphasis: { itemStyle: { areaColor: '#e0e0e0' } }
+  grid: { left: 40, right: 80, top: 70, bottom: 40 },
+  xAxis: {
+    type: 'value',
+    name: '经度',
+    min: 105,
+    max: 122,
+    splitLine: { lineStyle: { type: 'dashed', color: '#e8e8e8' } }
+  },
+  yAxis: {
+    type: 'value',
+    name: '纬度',
+    min: 23,
+    max: 42,
+    splitLine: { lineStyle: { type: 'dashed', color: '#e8e8e8' } }
   },
   series: [{
     type: 'scatter',
-    coordinateSystem: 'geo',
     data: highwayStations.map((s) => ({
       name: s.name,
       value: [s.lng, s.lat, s.onlinePiles],

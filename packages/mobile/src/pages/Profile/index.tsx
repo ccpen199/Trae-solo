@@ -22,6 +22,14 @@ function Profile() {
     { icon: <SetOutline />, label: '设置', path: '/settings' }
   ]
 
+  const businessItems = [
+    { icon: <span style={{ fontSize: 18 }}>🔋</span>, label: 'VIN+车牌认证', path: '/v2g', desc: '即插即充无感认证' },
+    { icon: <span style={{ fontSize: 18 }}>⚡</span>, label: 'V2G充放电策略', path: '/v2g', desc: '削峰填谷收益' },
+    { icon: <span style={{ fontSize: 18 }}>🛣️</span>, label: 'AI路径规划', path: '/route', desc: '多目的地+电价排序' },
+    { icon: <span style={{ fontSize: 18 }}>💬</span>, label: '车友社区', path: '/community', desc: '经验分享互助' },
+    { icon: <span style={{ fontSize: 18 }}>📊</span>, label: '运营后台', path: 'http://localhost:5174', desc: '分账收益管理' },
+  ]
+
   const handleLogout = () => {
     navigate('/login')
   }
