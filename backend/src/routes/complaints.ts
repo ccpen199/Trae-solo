@@ -4,6 +4,7 @@ import {
   getComplaintList,
   getComplaintById,
   handleComplaint,
+  getComplaintStats,
 } from '../services/complaintService';
 
 const router = Router();
@@ -18,6 +19,11 @@ router.get('/', (req, res) => {
     pageSize: pageSize ? parseInt(pageSize as string) : undefined,
   });
   res.json({ code: 0, data: result });
+});
+
+router.get('/stats', (req, res) => {
+  const stats = getComplaintStats();
+  res.json({ code: 0, data: stats });
 });
 
 router.get('/:id', (req, res) => {

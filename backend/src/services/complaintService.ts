@@ -148,6 +148,21 @@ export function handleComplaint(
   }
 }
 
+export function getComplaintStats(): { pending: number; reviewing: number; resolved: number; closed: number; total: number } {
+  const db = getDb();
+  const rows = db.prepare(
+    `SELECT status, COUNT(*) as count FROM complaints GROUP BY status`
+  ).all() as Array<{ status: string; count: number }>;
+  const stats = { pending: 0, reviewing: 0, resolved: 0, closed: 0, total: 0 };
+  for (const row of rows) {
+    if (row.status in stats) {
+      (stats as any)[row.status] = row.count;
+    }
+    stats.total += row.count;
+  }
+  return stats;
+}
+
 export function autoTriggerComplaint(
   orderId: number,
   type: ComplaintType,

@@ -58,6 +58,7 @@ export const incomeApi = {
 
 export const complaintApi = {
   getList: (params?: any) => api.get('/complaints', { params }),
+  getStats: () => api.get('/complaints/stats'),
   getDetail: (id: number) => api.get(`/complaints/${id}`),
   create: (data: any) => api.post('/complaints', data),
   handle: (id: number, data: any) => api.post(`/complaints/${id}/handle`, data),

@@ -41,9 +41,21 @@ function Complaints() {
   const [currentComplaint, setCurrentComplaint] = useState<any>(null);
   const [form] = Form.useForm();
 
+  const [statsData, setStatsData] = useState<any>(null);
+
   useEffect(() => {
     loadData();
+    loadStats();
   }, [page, pageSize, filters]);
+
+  const loadStats = async () => {
+    try {
+      const result: any = await complaintApi.getStats();
+      setStatsData(result);
+    } catch {
+      console.error('加载申诉统计失败');
+    }
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -92,6 +104,7 @@ function Complaints() {
       message.success('申诉处理完成');
       setHandleModal(false);
       loadData();
+      loadStats();
     } catch (e: any) {
       if (e.errorFields) return;
       message.error('处理失败');
@@ -224,9 +237,9 @@ function Complaints() {
   ];
 
   const stats = [
-    { label: '待处理', value: data.filter((d) => d.status === 'pending').length, color: 'red' },
-    { label: '处理中', value: data.filter((d) => d.status === 'reviewing').length, color: 'blue' },
-    { label: '已解决', value: data.filter((d) => d.status === 'resolved').length, color: 'green' },
+    { label: '待处理', value: statsData?.pending || 0, color: 'red' },
+    { label: '处理中', value: statsData?.reviewing || 0, color: 'blue' },
+    { label: '已解决', value: statsData?.resolved || 0, color: 'green' },
   ];
 
   return (

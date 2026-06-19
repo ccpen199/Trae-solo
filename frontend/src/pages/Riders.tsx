@@ -265,7 +265,7 @@ function Riders() {
         markPoint: {
           data: trackData
             .filter((d: any, i: number) => i === 0 || i === trackData.length - 1)
-            .map((d: any) => ({
+            .map((d: any, i: number) => ({
               coord: [dayjs.unix(d.timestamp).format('HH:mm:ss'), d.speed],
               value: i === 0 ? '起点' : '终点',
             })),
