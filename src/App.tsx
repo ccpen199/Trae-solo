@@ -36,8 +36,27 @@ import {
   Gavel,
   RefreshCw,
   Download,
+  Gift,
+  Ticket,
+  Coins,
+  Train,
+  IdCard,
+  Building2,
+  TrendingDown,
+  CalendarDays,
+  Plane,
+  Hotel,
+  HeartHandshake,
+  Sparkles,
+  Target,
+  Users,
 } from 'lucide-react';
-import type { Metric, Product, TimelineItem, TraceBatch } from '../shared/types';
+import type {
+  Metric, Product, TimelineItem, TraceBatch,
+  UnionMember, UnionOrg, WelfareBudget, WelfareCoupon,
+  PointsAccount, PointsRecord, UnionCard, SupplierAssessment,
+  MemberBenefit, TravelBooking, LegalConsult, FunnelAnalysis
+} from '../shared/types';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
 const DEFAULT_TRACE_CODE = 'TRC-2026-RICE-89141';
@@ -307,10 +326,13 @@ function Sidebar() {
     { to: '/trace', label: '溯源', icon: ScanSearch },
     { to: '/market/b2b', label: 'B2B', icon: Boxes },
     { to: '/market/b2c', label: 'B2C', icon: ShoppingBasket },
-    { to: '/shop', label: '店铺', icon: Store },
+    { to: '/union/welfare', label: '福利', icon: Gift },
+    { to: '/union/coupons', label: '电子券', icon: Ticket },
+    { to: '/union/points', label: '积分', icon: Coins },
+    { to: '/union/travel', label: '出行', icon: Train },
+    { to: '/union/legal', label: '法律', icon: Gavel },
     { to: '/orders', label: '订单', icon: PackageCheck },
     { to: '/contracts', label: '合同', icon: FileSignature },
-    { to: '/agtech/qa', label: '农技', icon: Sprout },
     { to: '/regulatory', label: '监管', icon: ShieldCheck },
   ];
 
@@ -318,11 +340,11 @@ function Sidebar() {
     <aside className="sidebar">
       <div className="brand-block">
         <div className="brand-mark">
-          <Leaf size={24} />
+          <BadgeCheck size={24} />
         </div>
         <div>
-          <strong>农品链</strong>
-          <span>可信溯源交易平台</span>
+          <strong>工会普惠</strong>
+          <span>职工服务运营平台</span>
         </div>
       </div>
       <nav className="nav-list" aria-label="主导航">
@@ -351,8 +373,8 @@ function Topbar() {
   return (
     <header className="topbar">
       <div>
-        <p className="eyebrow">生产 · 加工 · 物流 · 销售</p>
-        <h1>农产品全链条可信溯源与交易协同平台</h1>
+        <p className="eyebrow">入会 · 福利 · 服务 · 监管</p>
+        <h1>工会职工普惠服务运营平台</h1>
       </div>
       <div className="topbar-actions">
         <NavLink to="/trace" className="icon-button" title="溯源查询">
@@ -360,11 +382,19 @@ function Topbar() {
         </NavLink>
         <NavLink to="/profile" className="profile-chip">
           <UserRoundCheck size={18} />
-          <span>监管专员</span>
+          <span>工会管理员</span>
         </NavLink>
       </div>
     </header>
   );
+}
+
+interface UnionDashboardData {
+  memberCount: number;
+  orgCount: number;
+  welfareBudgetTotal: number;
+  couponUsageRate: { used: number; total: number };
+  activeSuppliers: number;
 }
 
 function Dashboard() {
@@ -373,20 +403,38 @@ function Dashboard() {
     qualityTrend: [],
     alerts: [],
   });
+  const { data: unionData } = useCachedApi<UnionDashboardData>('/api/union/dashboard', {
+    memberCount: 0,
+    orgCount: 0,
+    welfareBudgetTotal: 0,
+    couponUsageRate: { used: 0, total: 0 },
+    activeSuppliers: 0,
+  });
   const { data: productsData } = useCachedApi<{ products: Product[] }>('/api/products', { products: [] });
   const navigate = useNavigate();
   const [traceCode, setTraceCode] = useState(DEFAULT_TRACE_CODE);
   const hasTrendData = data.qualityTrend.length > 0;
   const latestTrend = hasTrendData ? data.qualityTrend[data.qualityTrend.length - 1] : null;
 
+  const unionMetrics = [
+    { id: 'u1', label: '工会会员', value: unionData.memberCount.toLocaleString('zh-CN'), delta: '+8.5%', tone: 'green' as const },
+    { id: 'u2', label: '工会组织', value: unionData.orgCount.toLocaleString('zh-CN'), delta: '+5.2%', tone: 'blue' as const },
+    { id: 'u3', label: '福利预算', value: `¥${(unionData.welfareBudgetTotal / 10000).toFixed(0)}万`, delta: '+12.3%', tone: 'amber' as const },
+    { id: 'u4', label: '活跃供应商', value: unionData.activeSuppliers.toString(), delta: 'A级+B级', tone: 'slate' as const },
+  ];
+
+  const couponUsagePercent = unionData.couponUsageRate.total > 0
+    ? Math.round((unionData.couponUsageRate.used / unionData.couponUsageRate.total) * 100)
+    : 0;
+
   return (
     <section className="page-space">
       <div className="dashboard-grid">
         <section className="command-panel">
           <div className="panel-copy">
-            <p className="eyebrow">今日监管概览</p>
-            <h2>区域质量、链上批次与订单协同集中监控</h2>
-            <p>已接入生产档案、检测报告、冷链温湿度和电子合同数据，当前批次可从扫码查询直达链上存证。</p>
+            <p className="eyebrow">今日运营概览</p>
+            <h2>工会会员服务、福利发放与供应商管理集中运营</h2>
+            <p>已接入会员身份核验、组织分级管理、福利预算审批、电子券核销、积分商城和供应商准入考核数据，全流程闭环管理。</p>
           </div>
           <form
             className="trace-search"
@@ -402,14 +450,14 @@ function Dashboard() {
               查询
             </button>
           </form>
-          <div className="media-strip" aria-label="农产品流通场景">
+          <div className="media-strip" aria-label="工会服务场景">
             <img
-              src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
-              alt="农田"
+              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80"
+              alt="工会服务"
             />
             <img
-              src="https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=1200&q=80"
-              alt="农产品分拣"
+              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+              alt="会员服务"
             />
           </div>
         </section>
@@ -417,29 +465,24 @@ function Dashboard() {
         <section className="quality-panel">
           <div className="panel-head">
             <div>
-              <p className="eyebrow">质量趋势</p>
-              <h3>{latestTrend ? `${latestTrend.passRate}%` : '--'}</h3>
+              <p className="eyebrow">电子券使用率</p>
+              <h3>{couponUsagePercent}%</h3>
             </div>
-            <BarChart3 size={24} />
+            <Ticket size={24} />
           </div>
           <div className="trend-chart">
-            {hasTrendData ? (
-              data.qualityTrend.map((item) => (
-                <div key={item.month} className="trend-item">
-                  <span style={{ height: `${Math.max(16, (item.passRate - 96) * 28)}px` }} />
-                  <small>{item.month}</small>
-                </div>
-              ))
-            ) : (
-              <div className="empty-state">
-                <BarChart3 size={32} />
-                <p>暂无质量趋势数据</p>
-              </div>
-            )}
+            <div className="trend-item">
+              <span style={{ height: `${Math.max(16, couponUsagePercent * 2.8)}px` }} />
+              <small>已使用</small>
+            </div>
+            <div className="trend-item">
+              <span style={{ height: `${Math.max(16, (100 - couponUsagePercent) * 2.8)}px` }} />
+              <small>未使用</small>
+            </div>
           </div>
           <div className="risk-row">
-            <span>抽检样本 {latestTrend?.sampling ?? '--'}</span>
-            <strong>风险事件 {latestTrend?.risk ?? '--'}</strong>
+            <span>已发券 {unionData.couponUsageRate.total} 张</span>
+            <strong>已核销 {unionData.couponUsageRate.used} 张</strong>
           </div>
         </section>
       </div>
@@ -448,7 +491,7 @@ function Dashboard() {
       {error && <StatusLine loading={false} error={error} />}
 
       <div className="metrics-grid">
-        {data.metrics.map((metric) => (
+        {unionMetrics.map((metric) => (
           <MetricCard key={metric.id} metric={metric} />
         ))}
       </div>
@@ -457,64 +500,86 @@ function Dashboard() {
         <section className="section-panel">
           <div className="section-title">
             <div>
-              <p className="eyebrow">气象与农事</p>
-              <h2>主动预警</h2>
+              <p className="eyebrow">会员服务</p>
+              <h2>热门权益推荐</h2>
             </div>
-            <CloudSun size={22} />
+            <Sparkles size={22} />
           </div>
           <div className="stack-list">
-            {data.alerts.length > 0 ? (
-              data.alerts.map((alert) => (
-                <article className="alert-row" key={alert.id}>
-                  <div className={`alert-level ${alert.level}`}>{alert.level}</div>
-                  <div>
-                    <strong>{alert.region} · {alert.alertType}</strong>
-                    <p>{alert.suggestion}</p>
-                    <span>{alert.startsAt}</span>
-                  </div>
-                </article>
-              ))
-            ) : (
-              <div className="empty-state">
-                <CloudSun size={32} />
-                <p>暂无预警信息</p>
+            <article className="alert-row">
+              <div className="alert-level green">推荐</div>
+              <div>
+                <strong>五常有机稻花香 · 会员专享</strong>
+                <p>溯源保真，工会补贴价 ¥168/5kg，可用积分抵扣</p>
+                <span>库存 500 份</span>
               </div>
-            )}
+            </article>
+            <article className="alert-row">
+              <div className="alert-level blue">推荐</div>
+              <div>
+                <strong>高铁票85折优惠</strong>
+                <p>全国高铁票会员专享折扣，不限线路</p>
+                <span>每月限2次</span>
+              </div>
+            </article>
+            <article className="alert-row">
+              <div className="alert-level amber">推荐</div>
+              <div>
+                <strong>免费法律咨询服务</strong>
+                <p>专业律师一对一咨询，覆盖劳动纠纷、合同纠纷等</p>
+                <span>不限次数</span>
+              </div>
+            </article>
           </div>
-          <NavLink to="/agtech/weather" className="view-all-link">
-            查看全部预警 <ArrowRight size={16} />
+          <NavLink to="/union/welfare" className="view-all-link">
+            查看全部权益 <ArrowRight size={16} />
           </NavLink>
         </section>
 
         <section className="section-panel">
           <div className="section-title">
             <div>
-              <p className="eyebrow">交易市场</p>
-              <h2>热销农品</h2>
+              <p className="eyebrow">供应商管理</p>
+              <h2>准入考核评级</h2>
             </div>
-            <Store size={22} />
+            <Target size={22} />
           </div>
           <div className="product-mini-list">
-            {productsData.products.length > 0 ? (
-              productsData.products.slice(0, 4).map((product) => (
-                <article key={product.id} className="mini-product">
-                  <img src={product.imageUrl} alt={product.name} />
-                  <div>
-                    <strong>{product.name}</strong>
-                    <span>{product.origin} · {product.specification}</span>
-                  </div>
-                  <b>{currency(product.price)}</b>
-                </article>
-              ))
-            ) : (
-              <div className="empty-state">
-                <Store size={32} />
-                <p>暂无商品数据</p>
+            <article className="mini-product">
+              <div className="supply-badge" style={{ background: '#10B981', color: '#fff' }}>A级</div>
+              <div>
+                <strong>黑龙江禾源农业合作社</strong>
+                <span>综合评分 94.5 · 优秀</span>
               </div>
-            )}
+              <b>准入</b>
+            </article>
+            <article className="mini-product">
+              <div className="supply-badge" style={{ background: '#10B981', color: '#fff' }}>A级</div>
+              <div>
+                <strong>杭州云栖茶业有限公司</strong>
+                <span>综合评分 91.9 · 优秀</span>
+              </div>
+              <b>准入</b>
+            </article>
+            <article className="mini-product">
+              <div className="supply-badge" style={{ background: '#F59E0B', color: '#fff' }}>B级</div>
+              <div>
+                <strong>山东寿光智农园区</strong>
+                <span>综合评分 87.4 · 合格</span>
+              </div>
+              <b>准入</b>
+            </article>
+            <article className="mini-product">
+              <div className="supply-badge" style={{ background: '#EF4444', color: '#fff' }}>D级</div>
+              <div>
+                <strong>某不合格供应商</strong>
+                <span>综合评分 54.8 · 淘汰</span>
+              </div>
+              <b>清退</b>
+            </article>
           </div>
           <NavLink to="/market/b2b" className="view-all-link">
-            进入交易市场 <ArrowRight size={16} />
+            查看全部供应商 <ArrowRight size={16} />
           </NavLink>
         </section>
       </div>
@@ -532,11 +597,23 @@ function MetricCard({ metric }: { metric: Metric }) {
   );
 }
 
+interface VerifyResult {
+  member: UnionMember | null;
+  orgHierarchy: UnionOrg[];
+  error?: string;
+}
+
 function TracePage() {
   const [searchParams] = useSearchParams();
   const initialCode = searchParams.get('code') || DEFAULT_TRACE_CODE;
   const [code, setCode] = useState(initialCode);
   const [activeCode, setActiveCode] = useState(initialCode);
+  const [idCard, setIdCard] = useState('230184198505120018');
+  const [employeeNo, setEmployeeNo] = useState('HLJ-2024-089141');
+  const [verifyResult, setVerifyResult] = useState<VerifyResult | null>(null);
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [verifyError, setVerifyError] = useState('');
+  const [syncStatus, setSyncStatus] = useState('');
   const { data, loading, error, refresh } = useApi<TraceResult>(`/api/trace/${encodeURIComponent(activeCode)}`, {
     batch: {
       id: '',
@@ -578,108 +655,325 @@ function TracePage() {
   const fullChainStages = ['种植建档', '农事操作', '加工包装', '冷链物流', '到货入库', '入市销售', '监管复查'];
   const completedStages = data.timeline.map((t) => t.stage);
 
+  async function handleVerify() {
+    setVerifyLoading(true);
+    setVerifyError('');
+    setSyncStatus('正在核验会员身份...');
+    try {
+      const response = await fetch(`${API_BASE}/api/union/members/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idCard, employeeNo }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        setVerifyError(result.message || '核验失败');
+        setVerifyResult(null);
+      } else {
+        setVerifyResult(result);
+        setSyncStatus('已同步全国总工会组织分级关系');
+      }
+    } catch (err) {
+      setVerifyError('网络错误，请稍后重试');
+      setVerifyResult(null);
+    } finally {
+      setVerifyLoading(false);
+    }
+  }
+
+  function maskIdCard(id: string) {
+    if (!id || id.length < 10) return id;
+    return id.slice(0, 6) + '********' + id.slice(-4);
+  }
+
+  function maskEmployeeNo(no: string) {
+    if (!no || no.length < 6) return no;
+    return no.slice(0, 3) + '***' + no.slice(-4);
+  }
+
   return (
     <section className="page-space">
-      <div className="section-panel">
-        <div className="section-title">
-          <div>
-            <p className="eyebrow">Traceability</p>
-            <h2>溯源查询</h2>
+      <div className="content-grid two">
+        <div className="section-panel">
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">Traceability</p>
+              <h2>溯源查询</h2>
+            </div>
+            <ShieldCheck size={24} />
           </div>
-          <ShieldCheck size={24} />
+          <form
+            className="trace-search compact"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const newCode = code.trim() || DEFAULT_TRACE_CODE;
+              setActiveCode(newCode);
+            }}
+          >
+            <ScanSearch size={20} />
+            <input value={code} onChange={(event) => setCode(event.target.value)} aria-label="溯源码" placeholder="输入溯源码查询..." />
+            <button type="submit">
+              <Search size={18} />
+              查询
+            </button>
+          </form>
+          <StatusLine loading={loading} error={error} />
         </div>
-        <form
-          className="trace-search compact"
-          onSubmit={(event) => {
-            event.preventDefault();
-            const newCode = code.trim() || DEFAULT_TRACE_CODE;
-            setActiveCode(newCode);
-          }}
-        >
-          <ScanSearch size={20} />
-          <input value={code} onChange={(event) => setCode(event.target.value)} aria-label="溯源码" placeholder="输入溯源码查询..." />
-          <button type="submit">
-            <Search size={18} />
-            查询
-          </button>
-        </form>
-        <StatusLine loading={loading} error={error} />
+
+        <div className="section-panel">
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">Member Verification</p>
+              <h2>会员身份核验</h2>
+            </div>
+            <IdCard size={24} />
+          </div>
+          <div className="modal-form">
+            <div className="form-group">
+              <label>身份证号</label>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  type="text"
+                  value={idCard}
+                  onChange={(e) => setIdCard(e.target.value)}
+                  placeholder="请输入18位身份证号"
+                  maxLength={18}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>单位工号</label>
+              <input
+                type="text"
+                value={employeeNo}
+                onChange={(e) => setEmployeeNo(e.target.value)}
+                placeholder="请输入工会单位工号"
+              />
+            </div>
+            <button
+              className="action-btn green full"
+              onClick={handleVerify}
+              disabled={verifyLoading || !idCard || !employeeNo}
+            >
+              {verifyLoading ? <RefreshCw size={14} className="spin" /> : <BadgeCheck size={14} />}
+              {verifyLoading ? '核验中...' : '核验身份并同步工会关系'}
+            </button>
+          </div>
+          {verifyError && (
+            <div style={{ marginTop: 12, padding: 12, background: '#FEF2F2', borderRadius: 8, color: '#DC2626', fontSize: 14 }}>
+              <AlertTriangle size={16} style={{ display: 'inline', marginRight: 6 }} />
+              {verifyError}
+            </div>
+          )}
+          {syncStatus && !verifyError && (
+            <div style={{ marginTop: 12, padding: 12, background: '#ECFDF5', borderRadius: 8, color: '#059669', fontSize: 14 }}>
+              <CheckCircle2 size={16} style={{ display: 'inline', marginRight: 6 }} />
+              {syncStatus}
+            </div>
+          )}
+        </div>
       </div>
 
-      {data.batch.productName && (
-        <div className="trace-layout">
-          <section className="section-panel trace-summary">
-            <div className="batch-badge">{data.batch.qualityResult}</div>
-            <h2>{data.batch.productName}</h2>
-            <p>{data.batch.producer}</p>
-            <dl className="detail-grid">
-              <div>
-                <dt>溯源码</dt>
-                <dd>{data.batch.traceCode}</dd>
+      {verifyResult?.member && (
+        <div className="section-panel" style={{ marginTop: 20 }}>
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">Member Info</p>
+              <h2>会员信息 & 组织分级关系</h2>
+            </div>
+            <Users size={22} />
+          </div>
+          <div className="content-grid two" style={{ gap: 24 }}>
+            <div>
+              <div className="shop-stats" style={{ gridTemplateColumns: 'repeat(2, 1fr)', marginBottom: 16 }}>
+                <div className="shop-stat-card">
+                  <BadgeCheck size={22} />
+                  <div>
+                    <strong>{verifyResult.member.name}</strong>
+                    <span>
+                      {verifyResult.member.membershipStatus} · {verifyResult.member.gender}
+                    </span>
+                  </div>
+                </div>
+                <div className="shop-stat-card">
+                  <Coins size={22} />
+                  <div>
+                    <strong>{verifyResult.member.memberPoints.toLocaleString()}</strong>
+                    <span>可用积分</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <dt>产地</dt>
-                <dd>{data.batch.origin}</dd>
-              </div>
-              <div>
-                <dt>规格</dt>
-                <dd>{data.batch.specification}</dd>
-              </div>
-              <div>
-                <dt>批次状态</dt>
-                <dd>{data.batch.status}</dd>
-              </div>
-              <div>
-                <dt>区块高度</dt>
-                <dd>{data.batch.blockHeight.toLocaleString('zh-CN')}</dd>
-              </div>
-              <div>
-                <dt>生产日期</dt>
-                <dd>{data.batch.productionDate}</dd>
-              </div>
-            </dl>
-            <div className="chain-progress">
-              <p className="eyebrow">全链路进度 · {completedStages.length}/{fullChainStages.length} 环节</p>
-              <div className="chain-bar">
-                {fullChainStages.map((stage, i) => {
-                  const reached = completedStages.includes(stage);
-                  const labelMap: Record<string, string> = {
-                    '种植建档': '种植',
-                    '农事操作': '农事',
-                    '加工包装': '加工',
-                    '冷链物流': '物流',
-                    '到货入库': '入库',
-                    '入市销售': '入市',
-                    '监管复查': '监管',
-                  };
-                  return (
-                    <div key={stage} className={`chain-node ${reached ? 'reached' : ''}`}>
-                      <span className="chain-dot" />
-                      <small>{labelMap[stage] || stage}</small>
+              <dl className="detail-grid">
+                <div>
+                  <dt>身份证号</dt>
+                  <dd>{maskIdCard(verifyResult.member.idCard)}</dd>
+                </div>
+                <div>
+                  <dt>单位工号</dt>
+                  <dd>{maskEmployeeNo(verifyResult.member.employeeNo)}</dd>
+                </div>
+                <div>
+                  <dt>所属工会</dt>
+                  <dd>{verifyResult.member.unionName}</dd>
+                </div>
+                <div>
+                  <dt>工会层级</dt>
+                  <dd>{verifyResult.member.unionLevel}</dd>
+                </div>
+                <div>
+                  <dt>入会时间</dt>
+                  <dd>{verifyResult.member.verifiedAt}</dd>
+                </div>
+                <div>
+                  <dt>福利账户余额</dt>
+                  <dd>{currency(verifyResult.member.welfareBalance)}</dd>
+                </div>
+              </dl>
+            </div>
+            <div>
+              <p className="eyebrow" style={{ marginBottom: 12 }}>全国工会组织分级关系（从基层到全国）</p>
+              <div className="stack-list">
+                {verifyResult.orgHierarchy.slice().reverse().map((org, idx) => (
+                  <article className="supply-row" key={org.id}>
+                    <div className="supply-info">
+                      <div className="supply-badge" style={{
+                        background: idx === 0 ? '#10B981' : idx === verifyResult.orgHierarchy.length - 1 ? '#1E40AF' : '#F59E0B',
+                        color: '#fff'
+                      }}>{org.level}</div>
+                      <div>
+                        <strong>{org.name}</strong>
+                        <p>会员 {org.memberCount.toLocaleString('zh-CN')} 人 · 管理员：{org.adminName}</p>
+                        <span>状态：{org.status}</span>
+                      </div>
                     </div>
-                  );
-                })}
+                    <div className="supply-actions">
+                      <ChevronRight size={20} />
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div style={{ marginTop: 16, padding: 12, background: '#EFF6FF', borderRadius: 8 }}>
+                <p style={{ fontSize: 13, color: '#1E40AF' }}>
+                  <Building2 size={14} style={{ display: 'inline', marginRight: 4 }} />
+                  已同步至全国总工会会员管理系统，数据实时联动
+                </p>
               </div>
             </div>
-            <div className="hash-box">
-              <span>链上哈希</span>
-              <code>{data.batch.blockchainHash}</code>
-            </div>
-          </section>
+          </div>
+        </div>
+      )}
 
-          <section className="section-panel">
+      {data.batch.productName && (
+        <>
+          <div className="section-panel" style={{ marginTop: 20 }}>
             <div className="section-title">
               <div>
-                <p className="eyebrow">Full Chain</p>
-                <h2>全链路时间线 · {data.timeline.length} 条记录</h2>
+                <p className="eyebrow">Batch Info</p>
+                <h2>批次信息 · {data.batch.productName}</h2>
               </div>
               <div className="title-actions">
                 <button className="action-btn outline small" onClick={refresh}>
                   <RefreshCw size={14} />
                   刷新
                 </button>
-                <Truck size={23} />
+                <Leaf size={23} />
               </div>
+            </div>
+            <div className="content-grid two" style={{ gap: 24 }}>
+              <div>
+                <div className="batch-badge" style={{ marginBottom: 12 }}>{data.batch.qualityResult}</div>
+                <h3 style={{ fontSize: 20, marginBottom: 4 }}>{data.batch.productName}</h3>
+                <p style={{ color: '#6B7280', marginBottom: 16 }}>{data.batch.producer}</p>
+                <dl className="detail-grid">
+                  <div>
+                    <dt>溯源码</dt>
+                    <dd>{data.batch.traceCode}</dd>
+                  </div>
+                  <div>
+                    <dt>产地</dt>
+                    <dd>{data.batch.origin}</dd>
+                  </div>
+                  <div>
+                    <dt>规格</dt>
+                    <dd>{data.batch.specification}</dd>
+                  </div>
+                  <div>
+                    <dt>批次状态</dt>
+                    <dd>{data.batch.status}</dd>
+                  </div>
+                  <div>
+                    <dt>区块高度</dt>
+                    <dd>{data.batch.blockHeight.toLocaleString('zh-CN')}</dd>
+                  </div>
+                  <div>
+                    <dt>生产日期</dt>
+                    <dd>{data.batch.productionDate}</dd>
+                  </div>
+                </dl>
+              </div>
+              <div>
+                <p className="eyebrow" style={{ marginBottom: 12 }}>会员专属权益</p>
+                <div className="stack-list">
+                  <article className="alert-row">
+                    <div className="alert-level green">专享</div>
+                    <div>
+                      <strong>工会补贴价</strong>
+                      <p>凭会员身份立减 ¥30，叠加积分最高可抵扣 20%</p>
+                    </div>
+                  </article>
+                  <article className="alert-row">
+                    <div className="alert-level blue">电子券</div>
+                    <div>
+                      <strong>支持农产品券核销</strong>
+                      <p>已绑定的 {verifyResult?.member?.name || '会员'} 农产品券可直接抵扣</p>
+                    </div>
+                  </article>
+                  <article className="alert-row">
+                    <div className="alert-level amber">工会卡</div>
+                    <div>
+                      <strong>工会卡支付立减</strong>
+                      <p>绑定的工商/建设/中国银行工会卡支付享 95 折</p>
+                    </div>
+                  </article>
+                </div>
+                <div className="chain-progress" style={{ marginTop: 16 }}>
+                  <p className="eyebrow">全链路进度 · {completedStages.length}/{fullChainStages.length} 环节</p>
+                  <div className="chain-bar">
+                    {fullChainStages.map((stage) => {
+                      const reached = completedStages.includes(stage);
+                      const labelMap: Record<string, string> = {
+                        '种植建档': '种植',
+                        '农事操作': '农事',
+                        '加工包装': '加工',
+                        '冷链物流': '物流',
+                        '到货入库': '入库',
+                        '入市销售': '入市',
+                        '监管复查': '监管',
+                      };
+                      return (
+                        <div key={stage} className={`chain-node ${reached ? 'reached' : ''}`}>
+                          <span className="chain-dot" />
+                          <small>{labelMap[stage] || stage}</small>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="hash-box" style={{ marginTop: 16 }}>
+                  <span>链上哈希</span>
+                  <code>{data.batch.blockchainHash}</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section className="section-panel" style={{ marginTop: 20 }}>
+            <div className="section-title">
+              <div>
+                <p className="eyebrow">Full Chain</p>
+                <h2>全链路时间线 · {data.timeline.length} 条记录</h2>
+              </div>
+              <Truck size={23} />
             </div>
             <div className="timeline">
               {data.timeline.map((item) => (
@@ -699,7 +993,7 @@ function TracePage() {
               ))}
             </div>
           </section>
-        </div>
+        </>
       )}
     </section>
   );
@@ -707,19 +1001,32 @@ function TracePage() {
 
 function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
   const { data, loading, error } = useApi<{ products: Product[] }>(`/api/products?channel=${channel}`, { products: [] });
+  const { data: budgetsData } = useCachedApi<{ budgets: WelfareBudget[] }>('/api/union/welfare/budgets', { budgets: [] });
+  const { data: couponsData } = useCachedApi<{ coupons: WelfareCoupon[] }>('/api/union/welfare/coupons?memberId=um-001', { coupons: [] });
+  const { data: pointsData } = useCachedApi<{ account: PointsAccount | null; records: PointsRecord[] }>('/api/union/points/account/um-001', { account: null, records: [] });
+  const { data: cardsData } = useCachedApi<{ cards: UnionCard[] }>('/api/union/cards?memberId=um-001', { cards: [] });
+  const { data: assessmentsData } = useCachedApi<{ assessments: SupplierAssessment[] }>('/api/union/supplier/assessments', { assessments: [] });
+  const { data: benefitsData } = useCachedApi<{ benefits: MemberBenefit[] }>('/api/union/benefits', { benefits: [] });
   const { addOrder, addContract, matchResults, setMatchResults } = useAppState();
   const navigate = useNavigate();
   const shopModal = useModal();
   const orderModal = useModal();
   const matchModal = useModal();
   const successModal = useModal();
+  const budgetModal = useModal();
+  const supplierModal = useModal();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [orderQty, setOrderQty] = useState(1);
-  const [paymentMode, setPaymentMode] = useState<'escrow' | 'deposit'>('escrow');
-  const [supplyTab, setSupplyTab] = useState<'products' | 'supply' | 'demand'>('products');
+  const [paymentMode, setPaymentMode] = useState<'welfare_budget' | 'coupon' | 'union_card' | 'points' | 'escrow'>('welfare_budget');
+  const [supplyTab, setSupplyTab] = useState<'products' | 'supply' | 'demand' | 'budget' | 'supplier' | 'benefits'>('products');
+  const [b2cTab, setB2cTab] = useState<'products' | 'benefits'>('products');
   const [selectedDemand, setSelectedDemand] = useState<typeof demandItems[0] | null>(null);
   const [lastOrderId, setLastOrderId] = useState('');
   const [lastContractId, setLastContractId] = useState('');
+  const [selectedBudget, setSelectedBudget] = useState<WelfareBudget | null>(null);
+  const [selectedCoupon, setSelectedCoupon] = useState<WelfareCoupon | null>(null);
+  const [usePoints, setUsePoints] = useState(false);
+  const [benefitCategory, setBenefitCategory] = useState<string>('all');
 
   const supplyItems = [
     { id: 's-1', name: '批量有机稻花香', category: '粮油', region: '黑龙江', spec: '25kg/袋', qty: '50吨', price: '¥48/kg', seller: '黑龙江禾源农业合作社' },
@@ -733,10 +1040,18 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
     { id: 'd-3', name: '紧急采购蓝莓', category: '水果', region: '东北', spec: '1.5kg/箱', qty: '5吨', budget: '¥60/kg', buyer: '广州百佳超市' },
   ];
 
+  const availableCoupons = couponsData.coupons.filter(c => c.status === '未使用' && (c.type === '农产品券' || c.type === '节日福利'));
+  const availableBudget = budgetsData.budgets.find(b => b.status === '已批准' || b.status === '已执行');
+  const filteredBenefits = benefitCategory === 'all'
+    ? benefitsData.benefits
+    : benefitsData.benefits.filter(b => b.category === benefitCategory);
+
   function handleOrder(product: Product) {
     setSelectedProduct(product);
     setOrderQty(product.moq);
-    setPaymentMode('escrow');
+    setPaymentMode('welfare_budget');
+    setUsePoints(false);
+    setSelectedCoupon(null);
     orderModal.openModal();
   }
 
@@ -744,16 +1059,21 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
     setSelectedDemand(demand);
     const matched = data.products
       .filter((p) => p.category === demand.category || p.name.includes(demand.name.replace('采购', '').replace('长期求购', '').replace('紧急采购', '')))
-      .map((p) => ({
-        id: p.id,
-        name: p.name,
-        category: p.category,
-        region: p.origin,
-        spec: p.specification,
-        price: currency(p.wholesalePrice),
-        seller: p.seller,
-        matchScore: Math.floor(Math.random() * 25) + 75,
-      }))
+      .map((p) => {
+        const assessment = assessmentsData.assessments.find(a => a.supplierName.includes(p.seller.slice(0, 4)));
+        return {
+          id: p.id,
+          name: p.name,
+          category: p.category,
+          region: p.origin,
+          spec: p.specification,
+          price: currency(p.wholesalePrice),
+          seller: p.seller,
+          matchScore: Math.floor(Math.random() * 25) + 75,
+          supplierLevel: assessment?.level || 'B',
+          supplierStatus: assessment?.status || '合格',
+        };
+      })
       .sort((a, b) => b.matchScore - a.matchScore)
       .slice(0, 3);
     setMatchResults(matched);
@@ -763,24 +1083,48 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
   function handleConfirmOrder() {
     if (!selectedProduct) return;
     const unitPrice = selectedProduct.channel === 'b2b' ? selectedProduct.wholesalePrice : selectedProduct.price;
-    const amount = orderQty * unitPrice;
-    const orderStatus = paymentMode === 'escrow' ? '担保支付中' : '保证金已冻结';
-    const progress = paymentMode === 'escrow' ? 30 : 20;
+    let amount = orderQty * unitPrice;
+
+    if (paymentMode === 'coupon' && selectedCoupon) {
+      amount = Math.max(0, amount - selectedCoupon.value);
+    }
+    if (usePoints && pointsData.account) {
+      const pointsDeduction = Math.min(pointsData.account.availablePoints * 0.01, amount * 0.2);
+      amount -= pointsDeduction;
+    }
+    if (paymentMode === 'union_card') {
+      amount = amount * 0.95;
+    }
+
+    const orderStatusMap: Record<string, string> = {
+      welfare_budget: '福利预算审批中',
+      coupon: '电子券核销中',
+      union_card: '工会卡支付处理中',
+      points: '积分抵扣确认中',
+      escrow: '担保支付中',
+    };
+    const progressMap: Record<string, number> = {
+      welfare_budget: 15,
+      coupon: 25,
+      union_card: 35,
+      points: 30,
+      escrow: 30,
+    };
 
     const newOrder = addOrder({
-      buyer: '当前采购商',
+      buyer: '黑龙江省总工会（工会福利采购）',
       seller: selectedProduct.seller,
       amount,
-      status: orderStatus,
-      progress,
-      logistics: '待安排发货',
+      status: orderStatusMap[paymentMode] || '担保支付中',
+      progress: progressMap[paymentMode] || 30,
+      logistics: '待福利预算审批通过后安排发货',
     });
 
     const newContract = addContract({
-      title: `${selectedProduct.name} 采购合同`,
+      title: `工会福利采购 - ${selectedProduct.name} 采购合同（含福利预算审批）`,
       counterparty: selectedProduct.seller,
       amount,
-      status: '待乙方签署',
+      status: paymentMode === 'welfare_budget' ? '待福利预算审批' : '待乙方签署',
       blockchainHash: `0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 8)}`,
     });
 
@@ -826,20 +1170,272 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
         </div>
       </div>
 
-      {channel === 'b2b' && (
+      {channel === 'b2b' ? (
         <div className="tab-bar">
           <button className={`tab-btn ${supplyTab === 'products' ? 'active' : ''}`} onClick={() => setSupplyTab('products')}>商品市场</button>
+          <button className={`tab-btn ${supplyTab === 'budget' ? 'active' : ''}`} onClick={() => setSupplyTab('budget')}>福利预算</button>
           <button className={`tab-btn ${supplyTab === 'supply' ? 'active' : ''}`} onClick={() => setSupplyTab('supply')}>供应大厅</button>
           <button className={`tab-btn ${supplyTab === 'demand' ? 'active' : ''}`} onClick={() => setSupplyTab('demand')}>采购需求</button>
+          <button className={`tab-btn ${supplyTab === 'supplier' ? 'active' : ''}`} onClick={() => setSupplyTab('supplier')}>供应商考核</button>
+        </div>
+      ) : (
+        <div className="tab-bar">
+          <button className={`tab-btn ${b2cTab === 'products' ? 'active' : ''}`} onClick={() => setB2cTab('products')}>商品购买</button>
+          <button className={`tab-btn ${b2cTab === 'benefits' ? 'active' : ''}`} onClick={() => setB2cTab('benefits')}>权益推荐</button>
         </div>
       )}
 
       <StatusLine loading={loading} error={error} />
 
-      {supplyTab === 'products' && (
+      {(channel === 'b2b' && supplyTab === 'products') || (channel === 'b2c' && b2cTab === 'products') ? (
         <div className="product-grid">
           {data.products.map((product) => (
             <MarketProductCard key={product.id} product={product} onOrder={handleOrder} />
+          ))}
+        </div>
+      ) : null}
+
+      {channel === 'b2b' && supplyTab === 'budget' && (
+        <div className="stack-list">
+          <div className="section-panel nested">
+            <div className="shop-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 20 }}>
+              <div className="shop-stat-card">
+                <Wallet size={22} />
+                <div>
+                  <strong>{budgetsData.budgets.length}</strong>
+                  <span>预算方案数</span>
+                </div>
+              </div>
+              <div className="shop-stat-card">
+                <Target size={22} />
+                <div>
+                  <strong>¥{budgetsData.budgets.reduce((s, b) => s + b.totalAmount, 0).toLocaleString('zh-CN')}</strong>
+                  <span>预算总额</span>
+                </div>
+              </div>
+              <div className="shop-stat-card">
+                <Coins size={22} />
+                <div>
+                  <strong>¥{budgetsData.budgets.reduce((s, b) => s + b.remainingAmount, 0).toLocaleString('zh-CN')}</strong>
+                  <span>剩余可用</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {budgetsData.budgets.map((budget) => {
+            const usagePercent = budget.totalAmount > 0 ? Math.round((budget.usedAmount / budget.totalAmount) * 100) : 0;
+            const statusColor = budget.status === '已执行' || budget.status === '已批准' ? 'green' : budget.status === '待审批' ? 'amber' : 'slate';
+            return (
+              <article key={budget.id} className="order-row">
+                <div>
+                  <strong>{budget.unionName}</strong>
+                  <p>{budget.year}年 Q{budget.quarter} · {budget.description}</p>
+                  <span>审批人：{budget.approver || '待指定'} · {budget.id}</span>
+                </div>
+                <div className="order-status">
+                  <b>{currency(budget.totalAmount)}</b>
+                  <span className={`status-tag ${statusColor}`}>{budget.status}</span>
+                  <progress max={100} value={usagePercent} />
+                  <small style={{ fontSize: 12, color: '#6B7280' }}>已用 {usagePercent}% · 剩余 {currency(budget.remainingAmount)}</small>
+                  {budget.status === '待审批' && (
+                    <button className="action-btn green small" onClick={() => {
+                      setSelectedBudget(budget);
+                      budgetModal.openModal();
+                    }}>
+                      <FileSignature size={14} />
+                      审批
+                    </button>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {channel === 'b2b' && supplyTab === 'supplier' && (
+        <div className="stack-list">
+          <div className="section-panel nested">
+            <h3 style={{ marginBottom: 16 }}>供应商准入考核标准</h3>
+            <div className="shop-stats" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+              <div className="shop-stat-card">
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#10B981', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>A</div>
+                <div>
+                  <strong>{assessmentsData.assessments.filter(a => a.level === 'A').length}</strong>
+                  <span>优秀供应商</span>
+                </div>
+              </div>
+              <div className="shop-stat-card">
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#F59E0B', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>B</div>
+                <div>
+                  <strong>{assessmentsData.assessments.filter(a => a.level === 'B').length}</strong>
+                  <span>合格供应商</span>
+                </div>
+              </div>
+              <div className="shop-stat-card">
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#6B7280', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>C</div>
+                <div>
+                  <strong>{assessmentsData.assessments.filter(a => a.level === 'C').length}</strong>
+                  <span>整改中</span>
+                </div>
+              </div>
+              <div className="shop-stat-card">
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#EF4444', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>D</div>
+                <div>
+                  <strong>{assessmentsData.assessments.filter(a => a.level === 'D').length}</strong>
+                  <span>已清退</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {assessmentsData.assessments.map((assess) => {
+            const levelColor = assess.level === 'A' ? 'green' : assess.level === 'B' ? 'amber' : assess.level === 'C' ? 'slate' : 'slate';
+            const statusBg = assess.status === '优秀' ? '#10B981' : assess.status === '合格' ? '#F59E0B' : assess.status === '整改' ? '#6B7280' : '#EF4444';
+            return (
+              <article key={assess.id} className="order-row">
+                <div>
+                  <strong>{assess.supplierName}</strong>
+                  <p>{assess.period} 考核周期 · 评审员：{assess.assessor}</p>
+                  <span>质量 {assess.qualityScore} · 价格 {assess.priceScore} · 交付 {assess.deliveryScore} · 服务 {assess.serviceScore}</span>
+                </div>
+                <div className="order-status">
+                  <b>综合 {assess.totalScore}分</b>
+                  <span className="status-tag" style={{ background: statusBg, color: '#fff' }}>{assess.level}级 · {assess.status}</span>
+                  <progress max={100} value={assess.totalScore} />
+                  <button className={`action-btn ${levelColor} small`} onClick={() => supplierModal.openModal()}>
+                    <Eye size={14} />
+                    查看详情
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {channel === 'b2c' && b2cTab === 'benefits' && (
+        <>
+          <div className="tab-bar" style={{ borderBottom: 'none', marginBottom: 16 }}>
+            {['all', '农产品', '出行', '医疗', '教育', '法律', '文娱'].map(cat => (
+              <button
+                key={cat}
+                className={`tab-btn ${benefitCategory === cat ? 'active' : ''}`}
+                onClick={() => setBenefitCategory(cat)}
+                style={{ borderRadius: 20, padding: '6px 16px' }}
+              >
+                {cat === 'all' ? '全部' : cat}
+              </button>
+            ))}
+          </div>
+          <div className="product-grid">
+            {filteredBenefits.map((benefit) => (
+              <article key={benefit.id} className="product-card">
+                <div className="product-image-wrapper">
+                  <img src={benefit.imageUrl} alt={benefit.name} loading="lazy" />
+                  <span className="channel-badge">{benefit.category}</span>
+                </div>
+                <div className="product-body">
+                  <div className="card-headline">
+                    <div>
+                      <span>{benefit.category}</span>
+                      <h3>{benefit.name}</h3>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.5 }}>{benefit.description}</p>
+                  <div className="price-row">
+                    <strong style={{ color: '#10B981' }}>{benefit.value}</strong>
+                    <span>库存 {benefit.stock}</span>
+                  </div>
+                  <div className="tag-row">
+                    <span style={{ background: '#FEF3C7', color: '#92400E' }}>
+                      {benefit.pointsRequired > 0 ? `${benefit.pointsRequired}积分兑换` : '免费领取'}
+                    </span>
+                    <span style={{ background: '#ECFDF5', color: '#059669' }}>会员专享</span>
+                  </div>
+                  <div className="card-actions">
+                    <button className="action-btn outline small" onClick={() => navigate('/orders')}>
+                      <Eye size={14} />
+                      详情
+                    </button>
+                    <button className="action-btn green small" onClick={() => navigate('/orders')}>
+                      {benefit.pointsRequired > 0 ? '积分兑换' : '立即领取'}
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </>
+      )}
+
+      {supplyTab === 'products' || supplyTab === 'supply' || supplyTab === 'demand' ? null : null}
+
+      {(supplyTab === 'supply' || (channel === 'b2b' && supplyTab === 'supply')) && (
+        <div className="stack-list">
+          {supplyItems.map((item) => (
+            <article key={item.id} className="supply-row">
+              <div className="supply-info">
+                <div className="supply-badge">供应</div>
+                <div>
+                  <strong>{item.name}</strong>
+                  <p>{item.category} · {item.region} · {item.spec} · 供应量 {item.qty}</p>
+                  <span>供应商：{item.seller}</span>
+                </div>
+              </div>
+              <div className="supply-actions">
+                <strong>{item.price}</strong>
+                <button className="action-btn blue" onClick={() => {
+                  const matched = data.products
+                    .filter((p) => p.category === item.category)
+                    .map((p) => {
+                      const assessment = assessmentsData.assessments.find(a => a.supplierName.includes(p.seller.slice(0, 4)));
+                      return {
+                        id: p.id,
+                        name: p.name,
+                        category: p.category,
+                        region: p.origin,
+                        spec: p.specification,
+                        price: currency(p.wholesalePrice),
+                        seller: p.seller,
+                        matchScore: Math.floor(Math.random() * 25) + 75,
+                        supplierLevel: assessment?.level || 'B',
+                        supplierStatus: assessment?.status || '合格',
+                      };
+                    })
+                    .sort((a, b) => b.matchScore - a.matchScore)
+                    .slice(0, 3);
+                  setMatchResults(matched);
+                  matchModal.openModal();
+                }}>
+                  <Handshake size={14} />
+                  供需撮合
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {(channel === 'b2b' && supplyTab === 'demand') && (
+        <div className="stack-list">
+          {demandItems.map((item) => (
+            <article key={item.id} className="supply-row">
+              <div className="supply-info">
+                <div className="supply-badge demand">采购</div>
+                <div>
+                  <strong>{item.name}</strong>
+                  <p>{item.category} · {item.region} · {item.spec} · 需求量 {item.qty}</p>
+                  <span>采购方：{item.buyer}</span>
+                </div>
+              </div>
+              <div className="supply-actions">
+                <strong>预算 {item.budget}</strong>
+                <button className="action-btn green" onClick={() => handleMatchDemand(item)}>
+                  <Handshake size={14} />
+                  响应需求
+                </button>
+              </div>
+            </article>
           ))}
         </div>
       )}

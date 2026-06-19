@@ -498,3 +498,114 @@ export function listProducts(channel?: string) {
 export function listRows(table: 'orders' | 'contracts' | 'questions' | 'weather_alerts') {
   return queryJson(`SELECT * FROM ${table} ORDER BY rowid DESC;`);
 }
+
+export function verifyUnionMember(idCard: string, employeeNo: string) {
+  const members = queryJson<UnionMember>(
+    `SELECT * FROM union_members WHERE idCard = '${idCard.replace(/'/g, "''")}' AND employeeNo = '${employeeNo.replace(/'/g, "''")}' LIMIT 1;`
+  );
+  return members[0] || null;
+}
+
+export function getUnionMemberById(id: string) {
+  const members = queryJson<UnionMember>(
+    `SELECT * FROM union_members WHERE id = '${id.replace(/'/g, "''")}' LIMIT 1;`
+  );
+  return members[0] || null;
+}
+
+export function listUnionMembers(unionLevel?: string) {
+  const where = unionLevel ? `WHERE unionLevel = '${unionLevel.replace(/'/g, "''")}'` : '';
+  return queryJson<UnionMember>(`SELECT * FROM union_members ${where} ORDER BY verifiedAt DESC;`);
+}
+
+export function getUnionOrgHierarchy(orgId: string) {
+  return queryJson<UnionOrg>(
+    `WITH RECURSIVE org_tree AS (
+      SELECT * FROM union_orgs WHERE id = '${orgId.replace(/'/g, "''")}'
+      UNION ALL
+      SELECT uo.* FROM union_orgs uo INNER JOIN org_tree ot ON uo.parentId = ot.id
+    )
+    SELECT * FROM org_tree ORDER BY level;`
+  );
+}
+
+export function listUnionOrgs() {
+  return queryJson<UnionOrg>('SELECT * FROM union_orgs ORDER BY level;');
+}
+
+export function listWelfareBudgets(status?: string) {
+  const where = status ? `WHERE status = '${status.replace(/'/g, "''")}'` : '';
+  return queryJson<WelfareBudget>(`SELECT * FROM welfare_budgets ${where} ORDER BY year DESC, quarter DESC;`);
+}
+
+export function listWelfareCoupons(memberId?: string, status?: string) {
+  let where = '';
+  const conditions: string[] = [];
+  if (memberId) conditions.push(`memberId = '${memberId.replace(/'/g, "''")}'`);
+  if (status) conditions.push(`status = '${status.replace(/'/g, "''")}'`);
+  if (conditions.length > 0) where = `WHERE ${conditions.join(' AND ')}`;
+  return queryJson<WelfareCoupon>(`SELECT * FROM welfare_coupons ${where} ORDER BY validFrom DESC;`);
+}
+
+export function getPointsAccount(memberId: string) {
+  const accounts = queryJson<PointsAccount>(
+    `SELECT * FROM points_accounts WHERE memberId = '${memberId.replace(/'/g, "''")}' LIMIT 1;`
+  );
+  return accounts[0] || null;
+}
+
+export function listPointsRecords(accountId: string) {
+  return queryJson<PointsRecord>(
+    `SELECT * FROM points_records WHERE accountId = '${accountId.replace(/'/g, "''")}' ORDER BY createdAt DESC LIMIT 50;`
+  );
+}
+
+export function listUnionCards(memberId?: string) {
+  const where = memberId ? `WHERE memberId = '${memberId.replace(/'/g, "''")}'` : '';
+  return queryJson<UnionCard>(`SELECT * FROM union_cards ${where} ORDER BY bindAt DESC;`);
+}
+
+export function listSupplierAssessments(supplierId?: string) {
+  const where = supplierId ? `WHERE supplierId = '${supplierId.replace(/'/g, "''")}'` : '';
+  return queryJson<SupplierAssessment>(`SELECT * FROM supplier_assessments ${where} ORDER BY assessedAt DESC;`);
+}
+
+export function listMemberBenefits(category?: string) {
+  const where = category ? `WHERE category = '${category.replace(/'/g, "''")}' AND status = '上架'` : `WHERE status = '上架'`;
+  return queryJson<MemberBenefit>(`SELECT * FROM member_benefits ${where} ORDER BY pointsRequired;`);
+}
+
+export function listTravelBookings(memberId?: string) {
+  const where = memberId ? `WHERE memberId = '${memberId.replace(/'/g, "''")}'` : '';
+  return queryJson<TravelBooking>(`SELECT * FROM travel_bookings ${where} ORDER BY bookedAt DESC;`);
+}
+
+export function listLegalConsults(memberId?: string) {
+  const where = memberId ? `WHERE memberId = '${memberId.replace(/'/g, "''")}'` : '';
+  return queryJson<LegalConsult>(`SELECT * FROM legal_consults ${where} ORDER BY createdAt DESC;`);
+}
+
+export function getFunnelAnalysis(): FunnelAnalysis[] {
+  return [
+    { stage: '会员注册', userCount: 128600, conversionRate: 100 },
+    { stage: '实名认证', userCount: 115200, conversionRate: 89.6 },
+    { stage: '工会入会', userCount: 98600, conversionRate: 76.7 },
+    { stage: '首次购买', userCount: 72800, conversionRate: 56.6 },
+    { stage: '复购用户', userCount: 45600, conversionRate: 35.5 },
+    { stage: '服务推荐转化', userCount: 28400, conversionRate: 22.1 },
+  ];
+}
+
+export function getUnionDashboard() {
+  return {
+    memberCount: queryJson<{ count: number }>('SELECT COUNT(*) as count FROM union_members;')[0].count,
+    orgCount: queryJson<{ count: number }>('SELECT COUNT(*) as count FROM union_orgs;')[0].count,
+    welfareBudgetTotal: queryJson<{ total: number }>('SELECT SUM(totalAmount) as total FROM welfare_budgets WHERE status = "已批准" OR status = "已执行";')[0].total || 0,
+    couponUsageRate: queryJson<{ used: number; total: number }>(
+      'SELECT (SELECT COUNT(*) FROM welfare_coupons WHERE status = "已使用") as used, COUNT(*) as total FROM welfare_coupons;'
+    )[0],
+    activeSuppliers: queryJson<{ count: number }>(
+      'SELECT COUNT(*) as count FROM supplier_assessments WHERE status IN ("优秀", "合格");'
+    )[0].count,
+  };
+}

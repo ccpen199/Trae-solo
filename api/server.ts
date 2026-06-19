@@ -11,6 +11,22 @@ import {
   listProducts,
   listRows,
   listTraceBatches,
+  verifyUnionMember,
+  getUnionMemberById,
+  listUnionMembers,
+  getUnionOrgHierarchy,
+  listUnionOrgs,
+  listWelfareBudgets,
+  listWelfareCoupons,
+  getPointsAccount,
+  listPointsRecords,
+  listUnionCards,
+  listSupplierAssessments,
+  listMemberBenefits,
+  listTravelBookings,
+  listLegalConsults,
+  getFunnelAnalysis,
+  getUnionDashboard,
 } from './db';
 
 dotenv.config();
@@ -96,6 +112,128 @@ app.get('/api/regulatory', (_req, res) => {
       { id: 'rp-2026-06', title: '2026年6月区域质量趋势分析', risk: '低', sampleCount: 1846, passRate: 98.7 },
       { id: 'rp-2026-q2', title: '2026年二季度农残抽检报告', risk: '中低', sampleCount: 5172, passRate: 98.4 },
     ],
+  });
+});
+
+app.get('/api/union/dashboard', (_req, res) => {
+  res.json(getUnionDashboard());
+});
+
+app.post('/api/union/members/verify', (req, res) => {
+  const { idCard, employeeNo } = req.body;
+  if (!idCard || !employeeNo) {
+    res.status(400).json({ error: 'MISSING_PARAMS', message: '身份证号和工号不能为空' });
+    return;
+  }
+  const member = verifyUnionMember(idCard, employeeNo);
+  if (!member) {
+    res.status(404).json({ error: 'VERIFICATION_FAILED', message: '会员信息核验失败，请检查身份证号和工号' });
+    return;
+  }
+  res.json({ member, orgHierarchy: getUnionOrgHierarchy(member.parentUnionId) });
+});
+
+app.get('/api/union/members', (req, res) => {
+  const level = req.query.level ? String(req.query.level) : undefined;
+  res.json({ members: listUnionMembers(level) });
+});
+
+app.get('/api/union/members/:id', (req, res) => {
+  const member = getUnionMemberById(req.params.id);
+  if (!member) {
+    res.status(404).json({ error: 'NOT_FOUND' });
+    return;
+  }
+  res.json(member);
+});
+
+app.get('/api/union/orgs', (_req, res) => {
+  res.json({ orgs: listUnionOrgs() });
+});
+
+app.get('/api/union/orgs/:id/hierarchy', (req, res) => {
+  res.json({ hierarchy: getUnionOrgHierarchy(req.params.id) });
+});
+
+app.get('/api/union/welfare/budgets', (req, res) => {
+  const status = req.query.status ? String(req.query.status) : undefined;
+  res.json({ budgets: listWelfareBudgets(status) });
+});
+
+app.get('/api/union/welfare/coupons', (req, res) => {
+  const memberId = req.query.memberId ? String(req.query.memberId) : undefined;
+  const status = req.query.status ? String(req.query.status) : undefined;
+  res.json({ coupons: listWelfareCoupons(memberId, status) });
+});
+
+app.get('/api/union/points/account/:memberId', (req, res) => {
+  const account = getPointsAccount(req.params.memberId);
+  if (!account) {
+    res.status(404).json({ error: 'NOT_FOUND' });
+    return;
+  }
+  res.json({ account, records: listPointsRecords(account.id) });
+});
+
+app.get('/api/union/cards', (req, res) => {
+  const memberId = req.query.memberId ? String(req.query.memberId) : undefined;
+  res.json({ cards: listUnionCards(memberId) });
+});
+
+app.get('/api/union/supplier/assessments', (req, res) => {
+  const supplierId = req.query.supplierId ? String(req.query.supplierId) : undefined;
+  res.json({ assessments: listSupplierAssessments(supplierId) });
+});
+
+app.get('/api/union/benefits', (req, res) => {
+  const category = req.query.category ? String(req.query.category) : undefined;
+  res.json({ benefits: listMemberBenefits(category) });
+});
+
+app.get('/api/union/travel/bookings', (req, res) => {
+  const memberId = req.query.memberId ? String(req.query.memberId) : undefined;
+  res.json({ bookings: listTravelBookings(memberId) });
+});
+
+app.get('/api/union/legal/consults', (req, res) => {
+  const memberId = req.query.memberId ? String(req.query.memberId) : undefined;
+  res.json({ consults: listLegalConsults(memberId) });
+});
+
+app.get('/api/union/analysis/funnel', (_req, res) => {
+  res.json({ funnel: getFunnelAnalysis() });
+});
+
+app.post('/api/union/legal/consults', (req, res) => {
+  const { memberId, memberName, category, title, content } = req.body;
+  res.json({
+    id: `lc-${Date.now()}`,
+    memberId,
+    memberName,
+    category,
+    title,
+    content,
+    lawyerName: '',
+    reply: '',
+    status: '待处理',
+    createdAt: new Date().toLocaleString('zh-CN'),
+    repliedAt: '',
+  });
+});
+
+app.post('/api/union/travel/bookings', (req, res) => {
+  const { memberId, memberName, type, travelDate, departure, destination, price } = req.body;
+  res.json({
+    id: `tb-${Date.now()}`,
+    memberId,
+    memberName,
+    type,
+    travelDate,
+    departure,
+    destination,
+    price,
+    status: '待支付',
+    bookedAt: new Date().toLocaleString('zh-CN'),
   });
 });
 
