@@ -117,7 +117,7 @@ const PolicyDetailPage: React.FC = () => {
         </View>
         <View className={styles.metaRow}>
           <Text className={styles.metaItem}>👁️ {policy.views.toLocaleString()}阅读</Text>
-          <Text className={styles.metaItem}>� 文号 {policy.code}</Text>
+          <Text className={styles.metaItem}>📄 文号 {policy.code}</Text>
         </View>
       </View>
 
