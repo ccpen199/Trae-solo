@@ -26,6 +26,16 @@ import {
 import { dashboardStats, articleTrendData, channelDistribution, departmentStats, sentimentDistribution, hotEvents } from '../data/mockData';
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:59263';
+
+type PlatformStatus = {
+  status: 'loading' | 'online' | 'offline';
+  message: string;
+  checkedAt?: string;
+  backendUrl?: string;
+  frontendUrl?: string;
+  sqliteLabel?: string;
+};
 
 function StatCard({ icon: Icon, title, value, unit, trend, trendValue, color }: {
   icon: any;
@@ -135,10 +145,59 @@ function LiveFeedItem({ item }: { item: any }) {
 
 export default function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [platformStatus, setPlatformStatus] = useState<PlatformStatus>({
+    status: 'loading',
+    message: '正在检查本地服务链路...',
+  });
   
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadPlatformStatus = async () => {
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/overview`, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const payload = await response.json();
+        if (cancelled) {
+          return;
+        }
+
+        setPlatformStatus({
+          status: 'online',
+          message: payload.message || '本地前后端服务在线',
+          checkedAt: payload.checkedAt,
+          backendUrl: payload.backendUrl,
+          frontendUrl: payload.frontendUrl,
+          sqliteLabel: payload.sqlite?.enabled ? '已启用' : '未使用',
+        });
+      } catch (error) {
+        if (cancelled) {
+          return;
+        }
+
+        setPlatformStatus({
+          status: 'offline',
+          message: error instanceof Error ? error.message : '后端服务不可用',
+          sqliteLabel: '未知',
+        });
+      }
+    };
+
+    loadPlatformStatus();
+    const timer = setInterval(loadPlatformStatus, 15000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
   }, []);
 
   const liveFeed = [
@@ -176,6 +235,50 @@ export default function Dashboard() {
             <div className="text-sm text-slate-400">
               {currentTime.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-6 rounded-xl border border-slate-700/50 bg-dark-100 p-4">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center gap-3">
+            <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${
+              platformStatus.status === 'online'
+                ? 'bg-emerald-500/15 text-emerald-400'
+                : platformStatus.status === 'offline'
+                  ? 'bg-red-500/15 text-red-400'
+                  : 'bg-sky-500/15 text-sky-400'
+            }`}>
+              <Radio className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-white">本地服务链路</span>
+                <span className={`rounded-full px-2 py-0.5 text-xs ${
+                  platformStatus.status === 'online'
+                    ? 'bg-emerald-500/15 text-emerald-300'
+                    : platformStatus.status === 'offline'
+                      ? 'bg-red-500/15 text-red-300'
+                      : 'bg-sky-500/15 text-sky-300'
+                }`}>
+                  {platformStatus.status === 'online' ? '在线' : platformStatus.status === 'offline' ? '异常' : '检查中'}
+                </span>
+              </div>
+              <p className="mt-1 text-sm text-slate-400">{platformStatus.message}</p>
+            </div>
+          </div>
+
+          <div className="grid gap-2 text-xs text-slate-400 lg:text-right">
+            <span>前端: {platformStatus.frontendUrl || '待确认'}</span>
+            <span>后端: {platformStatus.backendUrl || '待确认'}</span>
+            <span>SQLite: {platformStatus.sqliteLabel || '待确认'}</span>
+            <span>
+              最近检查:
+              {' '}
+              {platformStatus.checkedAt
+                ? new Date(platformStatus.checkedAt).toLocaleString('zh-CN')
+                : '未完成'}
+            </span>
           </div>
         </div>
       </div>

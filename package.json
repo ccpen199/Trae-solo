@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:frontend": "npm run build && node scripts/start-frontend.mjs",
+    "dev:backend": "node --env-file=.env backend/server.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
