@@ -156,11 +156,15 @@ function HeroSection() {
 
 function QuickServiceNav() {
   const navigate = useNavigate()
-  const { currentRole } = useAppStore()
+  const { isLoggedIn, currentRole } = useAppStore()
 
   function handleNavClick(item: ServiceItem) {
     if (item.role === 'public') {
       navigate(item.path)
+      return
+    }
+    if (!isLoggedIn) {
+      navigate(`/login?role=${item.role}`)
       return
     }
     if (currentRole === item.role) {

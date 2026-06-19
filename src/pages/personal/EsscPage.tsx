@@ -21,6 +21,8 @@ import {
   Settings,
   UserCheck,
   FileCheck,
+  ScanFace,
+  Loader2,
 } from 'lucide-react'
 
 const QR_SIZE = 21
@@ -76,7 +78,16 @@ interface QrRefreshRecord {
 interface NfcSettings {
   defaultChannel: 'medical' | 'financial'
   smallAmountFree: boolean
+  singleLimit: number
+  dailyLimit: number
   sensitivity: 'standard' | 'enhanced'
+}
+
+interface NfcSubmitResult {
+  traceNo: string
+  changeContent: string
+  effectiveTime: string
+  verifyMethod: string
 }
 
 function formatNow() {
@@ -85,8 +96,19 @@ function formatNow() {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
 }
 
+function formatDate() {
+  const d = new Date()
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`
+}
+
 const MOCK_DEVICE = 'iPhone 15 Pro'
 const MOCK_IP = '192.168.1.105 · 江苏南京'
+const MOCK_DEVICE_ID = '****-****-****-A2B3'
+const MOCK_BIND_TIME = '2026-01-15 10:05:42'
+
+const SINGLE_LIMIT_OPTIONS = [200, 500, 1000]
+const DAILY_LIMIT_OPTIONS = [500, 1000, 2000]
 
 export default function EsscPage() {
   const [countdown, setCountdown] = useState(60)
@@ -97,12 +119,23 @@ export default function EsscPage() {
   const [applyStep, setApplyStep] = useState(1)
 
   const [showNfcModal, setShowNfcModal] = useState(false)
+  const [nfcStep, setNfcStep] = useState(1)
   const [nfcSettings, setNfcSettings] = useState<NfcSettings>({
     defaultChannel: 'medical',
     smallAmountFree: true,
+    singleLimit: 500,
+    dailyLimit: 1000,
     sensitivity: 'standard',
   })
-  const [nfcLastSync, setNfcLastSync] = useState<string | null>(null)
+  const [nfcTempSettings, setNfcTempSettings] = useState<NfcSettings>({
+    defaultChannel: 'medical',
+    smallAmountFree: true,
+    singleLimit: 500,
+    dailyLimit: 1000,
+    sensitivity: 'standard',
+  })
+  const [nfcVerifyStage, setNfcVerifyStage] = useState<'idle' | 'verifying' | 'verified' | 'submitting' | 'success'>('idle')
+  const [nfcSubmitResult, setNfcSubmitResult] = useState<NfcSubmitResult | null>(null)
 
   const [showQrToast, setShowQrToast] = useState(false)
   const [qrToastStage, setQrToastStage] = useState<'detecting' | 'done'>('detecting')
@@ -170,6 +203,21 @@ export default function EsscPage() {
         ...prev,
       ].slice(0, 5))
 
+      setTraceRecords((prev) => {
+        const exists = prev.some((r) => r.id === 'qr-new')
+        if (exists) return prev
+        return [
+          {
+            id: 'qr-new',
+            type: '二维码刷新',
+            time: formatNow(),
+            status: 'passed',
+            detail: `设备：${MOCK_DEVICE} · 活体检测通过`,
+          },
+          ...prev,
+        ]
+      })
+
       setTimeout(() => {
         setRefreshing(false)
       }, 400)
@@ -214,9 +262,107 @@ export default function EsscPage() {
     })
   }
 
-  const handleNfcChange = <K extends keyof NfcSettings>(key: K, value: NfcSettings[K]) => {
-    setNfcSettings((prev) => ({ ...prev, [key]: value }))
-    setNfcLastSync(formatNow())
+  const handleNfcTempChange = <K extends keyof NfcSettings>(key: K, value: NfcSettings[K]) => {
+    setNfcTempSettings((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const handleOpenNfcModal = () => {
+    setNfcTempSettings(nfcSettings)
+    setNfcStep(1)
+    setNfcVerifyStage('idle')
+    setNfcSubmitResult(null)
+    setShowNfcModal(true)
+  }
+
+  const handleNfcNext = () => {
+    if (nfcStep < 3) {
+      setNfcStep(nfcStep + 1)
+    }
+  }
+
+  const handleNfcBack = () => {
+    if (nfcStep > 1) {
+      setNfcStep(nfcStep - 1)
+    }
+  }
+
+  const handleCloseNfcModal = () => {
+    setShowNfcModal(false)
+    setNfcStep(1)
+    setNfcVerifyStage('idle')
+    setNfcSubmitResult(null)
+  }
+
+  const handleStartVerify = () => {
+    setNfcVerifyStage('verifying')
+
+    setTimeout(() => {
+      setNfcVerifyStage('verified')
+
+      setTimeout(() => {
+        setNfcVerifyStage('submitting')
+
+        setTimeout(() => {
+          const traceNo = `ESSC-NFC-${formatDate()}-${Math.floor(Math.random() * 9000 + 1000)}`
+          const changeContent = generateChangeContent(nfcSettings, nfcTempSettings)
+
+          setNfcSubmitResult({
+            traceNo,
+            changeContent,
+            effectiveTime: '即时生效',
+            verifyMethod: '人脸识别',
+          })
+
+          setNfcSettings(nfcTempSettings)
+          setNfcVerifyStage('success')
+
+          setTraceRecords((prev) => [
+            {
+              id: `nfc-${Date.now()}`,
+              type: 'NFC闪付设置变更',
+              time: formatNow(),
+              status: 'passed',
+              detail: `流水号：${traceNo} · 设备：${MOCK_DEVICE}`,
+            },
+            ...prev,
+          ])
+        }, 800)
+      }, 600)
+    }, 1500)
+  }
+
+  const generateChangeContent = (oldSettings: NfcSettings, newSettings: NfcSettings): string => {
+    const changes: string[] = []
+
+    if (oldSettings.defaultChannel !== newSettings.defaultChannel) {
+      const oldName = oldSettings.defaultChannel === 'medical' ? '医保个人账户' : '金融账户'
+      const newName = newSettings.defaultChannel === 'medical' ? '医保个人账户' : '金融账户'
+      changes.push(`默认支付渠道 ${oldName} → ${newName}`)
+    }
+
+    if (oldSettings.smallAmountFree !== newSettings.smallAmountFree) {
+      changes.push(`小额免密支付 ${oldSettings.smallAmountFree ? '开启' : '关闭'} → ${newSettings.smallAmountFree ? '开启' : '关闭'}`)
+    }
+
+    if (oldSettings.singleLimit !== newSettings.singleLimit) {
+      changes.push(`小额免密单笔限额 ¥${oldSettings.singleLimit} → ¥${newSettings.singleLimit}`)
+    }
+
+    if (oldSettings.dailyLimit !== newSettings.dailyLimit) {
+      changes.push(`单日累计限额 ¥${oldSettings.dailyLimit} → ¥${newSettings.dailyLimit}`)
+    }
+
+    if (oldSettings.sensitivity !== newSettings.sensitivity) {
+      const oldName = oldSettings.sensitivity === 'standard' ? '标准' : '增强'
+      const newName = newSettings.sensitivity === 'standard' ? '标准' : '增强'
+      changes.push(`NFC感应灵敏度 ${oldName} → ${newName}`)
+    }
+
+    if (changes.length === 0) {
+      return '无变更'
+    }
+
+    return changes.join('、')
   }
 
   const overlayVariants = {
@@ -236,6 +382,12 @@ export default function EsscPage() {
     { id: 2, title: '风控提示', icon: ShieldAlert },
     { id: 3, title: '办理结果', icon: FileCheck },
     { id: 4, title: '可追溯记录', icon: History },
+  ]
+
+  const nfcSteps = [
+    { id: 1, title: '设备绑定' },
+    { id: 2, title: '设置调整' },
+    { id: 3, title: '本人复核' },
   ]
 
   return (
@@ -446,7 +598,7 @@ export default function EsscPage() {
           </button>
           <button
             className="gov-btn-secondary !py-3 text-sm"
-            onClick={() => setShowNfcModal(true)}
+            onClick={handleOpenNfcModal}
           >
             <Settings className="w-4 h-4 inline mr-1.5" />
             NFC闪付设置
@@ -802,10 +954,11 @@ export default function EsscPage() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={() => setShowNfcModal(false)}
+            onClick={handleCloseNfcModal}
           >
             <motion.div
-              className="bg-gov-card rounded-xl shadow-gov-lg w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
+              className="bg-white rounded-xl shadow-gov-lg w-full max-h-[90vh] overflow-hidden flex flex-col"
+              style={{ width: '520px' }}
               variants={modalVariants}
               onClick={(e) => e.stopPropagation()}
             >
@@ -815,214 +968,486 @@ export default function EsscPage() {
                   <h3 className="font-semibold">NFC闪付设置</h3>
                 </div>
                 <button
-                  onClick={() => setShowNfcModal(false)}
+                  onClick={handleCloseNfcModal}
                   className="p-1 rounded-lg hover:bg-white/10 transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="p-4 overflow-y-auto flex-1 space-y-4">
-                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
-                  <p className="text-xs font-medium text-amber-800 flex items-center gap-1.5">
-                    <ShieldAlert className="w-3.5 h-3.5" />
-                    风控提示 · 设备绑定
-                  </p>
-                  <p className="text-xs text-amber-700 mt-1">
-                    NFC闪付功能与当前设备 <span className="font-mono">{MOCK_DEVICE}</span> 绑定，
-                    换设备需重新验证身份。请勿将手机借予他人使用NFC支付。
-                  </p>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="p-4 border border-gov-border rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <p className="text-sm font-medium text-gov-text">默认支付渠道</p>
-                        <p className="text-xs text-gov-text-muted">选择NFC感应时优先使用的账户</p>
+              <div className="px-5 py-3 border-b border-gov-border bg-gov-bg-light">
+                <div className="flex items-center justify-center gap-2">
+                  {nfcSteps.map((step, idx) => {
+                    const isActive = step.id === nfcStep
+                    const isCompleted = step.id < nfcStep
+                    return (
+                      <div key={step.id} className="flex items-center">
+                        <div className="flex flex-col items-center">
+                          <div
+                            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 ${
+                              isCompleted
+                                ? 'bg-emerald-500 text-white'
+                                : isActive
+                                ? 'bg-gov-blue text-white ring-4 ring-gov-blue/20'
+                                : 'bg-gray-200 text-gray-400'
+                            }`}
+                          >
+                            {isCompleted ? (
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                            ) : (
+                              step.id
+                            )}
+                          </div>
+                          <span
+                            className={`text-[10px] mt-1 ${
+                              isActive ? 'text-gov-blue font-medium' : 'text-gov-text-muted'
+                            }`}
+                          >
+                            {step.title}
+                          </span>
+                        </div>
+                        {idx < nfcSteps.length - 1 && (
+                          <div
+                            className={`w-12 h-0.5 mx-2 mb-3 transition-colors ${
+                              isCompleted ? 'bg-emerald-400' : 'bg-gray-200'
+                            }`}
+                          />
+                        )}
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        className={`p-3 rounded-lg border text-left transition-all ${
-                          nfcSettings.defaultChannel === 'medical'
-                            ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
-                            : 'border-gov-border hover:border-gov-blue/50'
-                        }`}
-                        onClick={() => handleNfcChange('defaultChannel', 'medical')}
-                      >
-                        <p
-                          className={`text-sm font-medium ${
-                            nfcSettings.defaultChannel === 'medical'
-                              ? 'text-gov-blue'
-                              : 'text-gov-text'
-                          }`}
-                        >
-                          医保个人账户
-                        </p>
-                        <p className="text-[10px] text-gov-text-muted mt-0.5">
-                          用于定点医药机构消费
-                        </p>
-                      </button>
-                      <button
-                        className={`p-3 rounded-lg border text-left transition-all ${
-                          nfcSettings.defaultChannel === 'financial'
-                            ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
-                            : 'border-gov-border hover:border-gov-blue/50'
-                        }`}
-                        onClick={() => handleNfcChange('defaultChannel', 'financial')}
-                      >
-                        <p
-                          className={`text-sm font-medium ${
-                            nfcSettings.defaultChannel === 'financial'
-                              ? 'text-gov-blue'
-                              : 'text-gov-text'
-                          }`}
-                        >
-                          金融账户
-                        </p>
-                        <p className="text-[10px] text-gov-text-muted mt-0.5">
-                          支持银联闪付消费
-                        </p>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="p-4 border border-gov-border rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-gov-text">小额免密支付</p>
-                        <p className="text-xs text-gov-text-muted">
-                          单笔不超过 ¥500 时无需输入密码
-                        </p>
-                      </div>
-                      <button
-                        className={`relative w-11 h-6 rounded-full transition-colors ${
-                          nfcSettings.smallAmountFree ? 'bg-gov-blue' : 'bg-gray-300'
-                        }`}
-                        onClick={() =>
-                          handleNfcChange('smallAmountFree', !nfcSettings.smallAmountFree)
-                        }
-                      >
-                        <motion.span
-                          className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow"
-                          animate={{ x: nfcSettings.smallAmountFree ? 20 : 0 }}
-                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        />
-                      </button>
-                    </div>
-                    {nfcSettings.smallAmountFree && (
-                      <div className="mt-3 p-2 bg-emerald-50 rounded text-[11px] text-emerald-700 flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3 h-3" />
-                        已开启 · 单日累计限额 ¥1,000
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-4 border border-gov-border rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <p className="text-sm font-medium text-gov-text">NFC感应灵敏度</p>
-                        <p className="text-xs text-gov-text-muted">调节感应距离和响应速度</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        className={`p-2.5 rounded-lg border text-center transition-all ${
-                          nfcSettings.sensitivity === 'standard'
-                            ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
-                            : 'border-gov-border hover:border-gov-blue/50'
-                        }`}
-                        onClick={() => handleNfcChange('sensitivity', 'standard')}
-                      >
-                        <p
-                          className={`text-sm font-medium ${
-                            nfcSettings.sensitivity === 'standard'
-                              ? 'text-gov-blue'
-                              : 'text-gov-text'
-                          }`}
-                        >
-                          标准
-                        </p>
-                        <p className="text-[10px] text-gov-text-muted">
-                          感应距离 2-3cm，省电
-                        </p>
-                      </button>
-                      <button
-                        className={`p-2.5 rounded-lg border text-center transition-all ${
-                          nfcSettings.sensitivity === 'enhanced'
-                            ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
-                            : 'border-gov-border hover:border-gov-blue/50'
-                        }`}
-                        onClick={() => handleNfcChange('sensitivity', 'enhanced')}
-                      >
-                        <p
-                          className={`text-sm font-medium ${
-                            nfcSettings.sensitivity === 'enhanced'
-                              ? 'text-gov-blue'
-                              : 'text-gov-text'
-                          }`}
-                        >
-                          增强
-                        </p>
-                        <p className="text-[10px] text-gov-text-muted">
-                          感应距离 4-5cm，响应快
-                        </p>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {nfcLastSync && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-emerald-50 rounded-lg border border-emerald-200 flex items-center gap-2"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    <p className="text-xs text-emerald-700">
-                      设置变更已同步至金保工程核心库，实时生效
-                      <span className="block text-[10px] text-emerald-600 mt-0.5">
-                        同步时间：{nfcLastSync}
-                      </span>
-                    </p>
-                  </motion.div>
-                )}
-
-                <div className="pt-3 border-t border-gov-border">
-                  <p className="text-xs font-medium text-gov-text-secondary mb-2 flex items-center gap-1">
-                    <History className="w-3 h-3" />
-                    操作记录
-                  </p>
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs py-1.5 px-2 bg-gov-bg-light rounded">
-                      <span className="text-gov-text">NFC闪付开通</span>
-                      <span className="text-gov-text-muted font-mono">2026-01-15 10:05:42</span>
-                    </div>
-                    {nfcLastSync && (
-                      <div className="flex items-center justify-between text-xs py-1.5 px-2 bg-gov-bg-light rounded">
-                        <span className="text-gov-text">设置变更</span>
-                        <span className="text-gov-text-muted font-mono">{nfcLastSync}</span>
-                      </div>
-                    )}
-                    <div className="flex items-center justify-between text-xs py-1.5 px-2 bg-gov-bg-light rounded">
-                      <span className="text-gov-text">设备绑定</span>
-                      <span className="text-gov-text-muted">
-                        <Smartphone className="w-3 h-3 inline mr-1" />
-                        {MOCK_DEVICE}
-                      </span>
-                    </div>
-                  </div>
+                    )
+                  })}
                 </div>
               </div>
 
-              <div className="p-4 border-t border-gov-border bg-gov-bg-light flex justify-end">
-                <button
-                  className="gov-btn-primary !py-2 text-sm"
-                  onClick={() => setShowNfcModal(false)}
-                >
-                  关闭
-                </button>
+              <div className="p-5 overflow-y-auto flex-1">
+                <AnimatePresence mode="wait">
+                  {nfcStep === 1 && (
+                    <motion.div
+                      key="nfc-step1"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-4"
+                    >
+                      <div className="flex items-center gap-2 text-gov-blue mb-1">
+                        <Smartphone className="w-5 h-5" />
+                        <h4 className="font-semibold">Step 1：当前状态与设备绑定</h4>
+                      </div>
+
+                      <div className="p-4 border border-gov-border rounded-lg bg-gov-bg-light/50 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gov-text-secondary">当前绑定设备</span>
+                          <span className="text-sm font-medium text-gov-text flex items-center gap-1.5">
+                            <Smartphone className="w-4 h-4 text-emerald-600" />
+                            {MOCK_DEVICE}
+                          </span>
+                        </div>
+                        <div className="h-px bg-gov-border/50" />
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gov-text-secondary">设备识别码</span>
+                          <span className="text-sm font-mono text-gov-text">{MOCK_DEVICE_ID}</span>
+                        </div>
+                        <div className="h-px bg-gov-border/50" />
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gov-text-secondary">绑定时间</span>
+                          <span className="text-sm font-mono text-gov-text">{MOCK_BIND_TIME}</span>
+                        </div>
+                        <div className="h-px bg-gov-border/50" />
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gov-text-secondary">绑定状态</span>
+                          <span className="gov-badge-green">已绑定</span>
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                        <p className="text-xs font-medium text-amber-800 flex items-center gap-1.5 mb-1">
+                          <ShieldAlert className="w-3.5 h-3.5" />
+                          安全提示
+                        </p>
+                        <p className="text-xs text-amber-700">
+                          闪付设备仅限本人手机绑定，更换设备需重新实名认证。请勿将手机借予他人使用NFC支付功能。
+                        </p>
+                      </div>
+
+                      <button
+                        className="w-full text-sm text-gov-blue hover:text-gov-blue-dark transition-colors flex items-center justify-center gap-1"
+                        onClick={() => {}}
+                      >
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        更换绑定设备
+                      </button>
+                    </motion.div>
+                  )}
+
+                  {nfcStep === 2 && (
+                    <motion.div
+                      key="nfc-step2"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-4"
+                    >
+                      <div className="flex items-center gap-2 text-gov-blue mb-1">
+                        <Settings className="w-5 h-5" />
+                        <h4 className="font-semibold">Step 2：设置调整与限额确认</h4>
+                      </div>
+
+                      <div className="p-4 border border-gov-border rounded-lg">
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <p className="text-sm font-medium text-gov-text">默认支付渠道</p>
+                            <p className="text-xs text-gov-text-muted">选择NFC感应时优先使用的账户</p>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            className={`p-3 rounded-lg border text-left transition-all ${
+                              nfcTempSettings.defaultChannel === 'medical'
+                                ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
+                                : 'border-gov-border hover:border-gov-blue/50'
+                            }`}
+                            onClick={() => handleNfcTempChange('defaultChannel', 'medical')}
+                          >
+                            <p
+                              className={`text-sm font-medium ${
+                                nfcTempSettings.defaultChannel === 'medical'
+                                  ? 'text-gov-blue'
+                                  : 'text-gov-text'
+                              }`}
+                            >
+                              医保个人账户
+                            </p>
+                            <p className="text-[10px] text-gov-text-muted mt-0.5">
+                              用于定点医药机构消费
+                            </p>
+                          </button>
+                          <button
+                            className={`p-3 rounded-lg border text-left transition-all ${
+                              nfcTempSettings.defaultChannel === 'financial'
+                                ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
+                                : 'border-gov-border hover:border-gov-blue/50'
+                            }`}
+                            onClick={() => handleNfcTempChange('defaultChannel', 'financial')}
+                          >
+                            <p
+                              className={`text-sm font-medium ${
+                                nfcTempSettings.defaultChannel === 'financial'
+                                  ? 'text-gov-blue'
+                                  : 'text-gov-text'
+                              }`}
+                            >
+                              金融账户
+                            </p>
+                            <p className="text-[10px] text-gov-text-muted mt-0.5">
+                              支持银联闪付消费
+                            </p>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-4 border border-gov-border rounded-lg space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-gov-text">小额免密支付</p>
+                            <p className="text-xs text-gov-text-muted">
+                              低于设定金额时无需输入密码
+                            </p>
+                          </div>
+                          <button
+                            className={`relative w-11 h-6 rounded-full transition-colors ${
+                              nfcTempSettings.smallAmountFree ? 'bg-gov-blue' : 'bg-gray-300'
+                            }`}
+                            onClick={() =>
+                              handleNfcTempChange('smallAmountFree', !nfcTempSettings.smallAmountFree)
+                            }
+                          >
+                            <motion.span
+                              className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow"
+                              animate={{ x: nfcTempSettings.smallAmountFree ? 20 : 0 }}
+                              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                            />
+                          </button>
+                        </div>
+
+                        {nfcTempSettings.smallAmountFree && (
+                          <div className="space-y-3 pt-2">
+                            <div>
+                              <p className="text-xs font-medium text-gov-text-secondary mb-2">单笔限额</p>
+                              <div className="grid grid-cols-3 gap-2">
+                                {SINGLE_LIMIT_OPTIONS.map((limit) => (
+                                  <button
+                                    key={limit}
+                                    className={`py-2 rounded-lg border text-sm font-medium transition-all ${
+                                      nfcTempSettings.singleLimit === limit
+                                        ? 'border-gov-blue bg-gov-blue/5 text-gov-blue ring-2 ring-gov-blue/20'
+                                        : 'border-gov-border text-gov-text hover:border-gov-blue/50'
+                                    }`}
+                                    onClick={() => handleNfcTempChange('singleLimit', limit)}
+                                  >
+                                    ¥{limit}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div>
+                              <p className="text-xs font-medium text-gov-text-secondary mb-2">单日累计限额</p>
+                              <div className="grid grid-cols-3 gap-2">
+                                {DAILY_LIMIT_OPTIONS.map((limit) => (
+                                  <button
+                                    key={limit}
+                                    className={`py-2 rounded-lg border text-sm font-medium transition-all ${
+                                      nfcTempSettings.dailyLimit === limit
+                                        ? 'border-gov-blue bg-gov-blue/5 text-gov-blue ring-2 ring-gov-blue/20'
+                                        : 'border-gov-border text-gov-text hover:border-gov-blue/50'
+                                    }`}
+                                    onClick={() => handleNfcTempChange('dailyLimit', limit)}
+                                  >
+                                    ¥{limit}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-4 border border-gov-border rounded-lg">
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <p className="text-sm font-medium text-gov-text">NFC感应灵敏度</p>
+                            <p className="text-xs text-gov-text-muted">调节感应距离和响应速度</p>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            className={`p-2.5 rounded-lg border text-center transition-all ${
+                              nfcTempSettings.sensitivity === 'standard'
+                                ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
+                                : 'border-gov-border hover:border-gov-blue/50'
+                            }`}
+                            onClick={() => handleNfcTempChange('sensitivity', 'standard')}
+                          >
+                            <p
+                              className={`text-sm font-medium ${
+                                nfcTempSettings.sensitivity === 'standard'
+                                  ? 'text-gov-blue'
+                                  : 'text-gov-text'
+                              }`}
+                            >
+                              标准
+                            </p>
+                            <p className="text-[10px] text-gov-text-muted">
+                              感应距离 2-3cm，省电
+                            </p>
+                          </button>
+                          <button
+                            className={`p-2.5 rounded-lg border text-center transition-all ${
+                              nfcTempSettings.sensitivity === 'enhanced'
+                                ? 'border-gov-blue bg-gov-blue/5 ring-2 ring-gov-blue/20'
+                                : 'border-gov-border hover:border-gov-blue/50'
+                            }`}
+                            onClick={() => handleNfcTempChange('sensitivity', 'enhanced')}
+                          >
+                            <p
+                              className={`text-sm font-medium ${
+                                nfcTempSettings.sensitivity === 'enhanced'
+                                  ? 'text-gov-blue'
+                                  : 'text-gov-text'
+                              }`}
+                            >
+                              增强
+                            </p>
+                            <p className="text-[10px] text-gov-text-muted">
+                              感应距离 4-5cm，响应快
+                            </p>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                        <p className="text-xs font-medium text-amber-800 flex items-center gap-1.5 mb-1">
+                          <AlertTriangle className="w-3.5 h-3.5" />
+                          风控提示
+                        </p>
+                        <p className="text-xs text-amber-700">
+                          调高限额可能增加盗刷风险，请妥善保管设备。如遇手机丢失，请立即通过社保服务热线挂失NFC闪付功能。
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {nfcStep === 3 && (
+                    <motion.div
+                      key="nfc-step3"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-4"
+                    >
+                      <div className="flex items-center gap-2 text-gov-blue mb-1">
+                        <UserCheck className="w-5 h-5" />
+                        <h4 className="font-semibold">Step 3：本人复核与提交</h4>
+                      </div>
+
+                      {nfcVerifyStage === 'idle' && (
+                        <div className="space-y-4">
+                          <div className="p-4 bg-gov-blue/5 rounded-lg border border-gov-blue/20 text-center">
+                            <p className="text-sm text-gov-text mb-1">
+                              NFC闪付设置变更需进行本人活体检测复核
+                            </p>
+                            <p className="text-xs text-gov-text-secondary">
+                              请保持面部在镜头内，光线充足
+                            </p>
+                          </div>
+
+                          <div className="flex justify-center py-4">
+                            <div className="w-32 h-32 rounded-full border-4 border-gov-blue/30 flex items-center justify-center bg-gov-blue/5">
+                              <ScanFace className="w-16 h-16 text-gov-blue" />
+                            </div>
+                          </div>
+
+                          <button
+                            className="w-full gov-btn-primary !py-3 text-sm"
+                            onClick={handleStartVerify}
+                          >
+                            <ScanFace className="w-4 h-4 inline mr-1.5" />
+                            立即核验
+                          </button>
+                        </div>
+                      )}
+
+                      {nfcVerifyStage === 'verifying' && (
+                        <div className="space-y-4">
+                          <div className="flex justify-center py-6">
+                            <div className="relative w-36 h-36">
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                                className="absolute inset-0 rounded-full border-4 border-t-gov-blue border-r-gov-blue/30 border-b-gov-blue/10 border-l-gov-blue/30"
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <ScanFace className="w-14 h-14 text-gov-blue" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-center space-y-1">
+                            <p className="text-sm font-medium text-gov-text">活体检测中...</p>
+                            <p className="text-xs text-gov-text-muted">请保持面部在取景框内</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {nfcVerifyStage === 'verified' && (
+                        <div className="space-y-4">
+                          <div className="text-center py-4">
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                              className="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center mb-3"
+                            >
+                              <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+                            </motion.div>
+                            <p className="text-sm font-medium text-gov-text">本人核验通过</p>
+                            <p className="text-xs text-gov-text-muted mt-1">人脸匹配度 98.7%</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {nfcVerifyStage === 'submitting' && (
+                        <div className="space-y-4">
+                          <div className="text-center py-8">
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                              className="w-10 h-10 mx-auto mb-4"
+                            >
+                              <Loader2 className="w-10 h-10 text-gov-blue" />
+                            </motion.div>
+                            <p className="text-sm font-medium text-gov-text">提交中...</p>
+                            <p className="text-xs text-gov-text-muted mt-1">同步至金保工程核心库</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {nfcVerifyStage === 'success' && nfcSubmitResult && (
+                        <div className="space-y-4">
+                          <div className="text-center py-2">
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                              className="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center mb-3"
+                            >
+                              <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+                            </motion.div>
+                            <p className="text-base font-semibold text-gov-text">提交成功</p>
+                            <p className="text-xs text-gov-text-muted mt-1">设置已生效</p>
+                          </div>
+
+                          <div className="p-4 bg-gov-bg-light rounded-lg border border-gov-border space-y-2.5">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-gov-text-secondary">流水号</span>
+                              <span className="text-xs font-mono text-gov-blue">
+                                {nfcSubmitResult.traceNo}
+                              </span>
+                            </div>
+                            <div className="h-px bg-gov-border/50" />
+                            <div className="flex items-start justify-between gap-3">
+                              <span className="text-xs text-gov-text-secondary flex-shrink-0">变更内容</span>
+                              <span className="text-xs text-gov-text text-right">
+                                {nfcSubmitResult.changeContent}
+                              </span>
+                            </div>
+                            <div className="h-px bg-gov-border/50" />
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-gov-text-secondary">生效时间</span>
+                              <span className="text-xs text-gov-text">{nfcSubmitResult.effectiveTime}</span>
+                            </div>
+                            <div className="h-px bg-gov-border/50" />
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-gov-text-secondary">核验方式</span>
+                              <span className="text-xs text-gov-text flex items-center gap-1">
+                                <ScanFace className="w-3 h-3" />
+                                {nfcSubmitResult.verifyMethod}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="p-3 bg-gov-blue/5 rounded-lg border border-gov-blue/20">
+                            <p className="text-xs text-gov-text-secondary flex items-center gap-1">
+                              <ShieldCheck className="w-3.5 h-3.5 text-gov-blue" />
+                              本次操作已加密存证，操作记录已写入追溯系统
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="p-4 border-t border-gov-border bg-gov-bg-light flex justify-between">
+                {nfcStep > 1 && nfcVerifyStage === 'idle' ? (
+                  <button
+                    className="gov-btn-secondary !py-2 text-sm"
+                    onClick={handleNfcBack}
+                  >
+                    上一步
+                  </button>
+                ) : (
+                  <div />
+                )}
+                {nfcStep < 3 ? (
+                  <button className="gov-btn-primary !py-2 text-sm ml-auto" onClick={handleNfcNext}>
+                    下一步
+                  </button>
+                ) : nfcVerifyStage === 'success' ? (
+                  <button className="gov-btn-primary !py-2 text-sm ml-auto" onClick={handleCloseNfcModal}>
+                    完成
+                  </button>
+                ) : null}
               </div>
             </motion.div>
           </motion.div>

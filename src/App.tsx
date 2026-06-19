@@ -51,15 +51,19 @@ function ForbiddenPage({ requiredRole }: { requiredRole: string }) {
   )
 }
 
-function RoleGuard({
+function AuthGuard({
   children,
   requiredRole,
 }: {
   children: React.ReactNode
   requiredRole: 'personal' | 'enterprise' | 'admin'
 }) {
-  const { currentRole } = useAppStore()
+  const { isLoggedIn, currentRole } = useAppStore()
   const location = useLocation()
+
+  if (!isLoggedIn) {
+    return <Navigate to={`/login?role=${requiredRole}`} state={{ from: location.pathname }} replace />
+  }
 
   if (currentRole !== requiredRole) {
     return <ForbiddenPage requiredRole={requiredRole} />
@@ -73,19 +77,19 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout><HomePage /></Layout>} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/personal" element={<Layout><RoleGuard requiredRole="personal"><PersonalPage /></RoleGuard></Layout>} />
-        <Route path="/personal/social-insurance" element={<Layout><RoleGuard requiredRole="personal"><SocialInsurancePage /></RoleGuard></Layout>} />
-        <Route path="/personal/medical" element={<Layout><RoleGuard requiredRole="personal"><MedicalPage /></RoleGuard></Layout>} />
-        <Route path="/personal/exam" element={<Layout><RoleGuard requiredRole="personal"><ExamPage /></RoleGuard></Layout>} />
-        <Route path="/personal/essc" element={<Layout><RoleGuard requiredRole="personal"><EsscPage /></RoleGuard></Layout>} />
-        <Route path="/enterprise" element={<Layout><RoleGuard requiredRole="enterprise"><EnterprisePage /></RoleGuard></Layout>} />
-        <Route path="/enterprise/insurance-declaration" element={<Layout><RoleGuard requiredRole="enterprise"><InsuranceDeclarationPage /></RoleGuard></Layout>} />
-        <Route path="/enterprise/unemployment" element={<Layout><RoleGuard requiredRole="enterprise"><UnemploymentPage /></RoleGuard></Layout>} />
-        <Route path="/enterprise/e-contract" element={<Layout><RoleGuard requiredRole="enterprise"><EContractPage /></RoleGuard></Layout>} />
-        <Route path="/admin" element={<Layout><RoleGuard requiredRole="admin"><AdminPage /></RoleGuard></Layout>} />
-        <Route path="/admin/timeout-warning" element={<Layout><RoleGuard requiredRole="admin"><TimeoutWarningPage /></RoleGuard></Layout>} />
-        <Route path="/admin/policy-tags" element={<Layout><RoleGuard requiredRole="admin"><PolicyTagsPage /></RoleGuard></Layout>} />
-        <Route path="/admin/identity-audit" element={<Layout><RoleGuard requiredRole="admin"><IdentityAuditPage /></RoleGuard></Layout>} />
+        <Route path="/personal" element={<Layout><AuthGuard requiredRole="personal"><PersonalPage /></AuthGuard></Layout>} />
+        <Route path="/personal/social-insurance" element={<Layout><AuthGuard requiredRole="personal"><SocialInsurancePage /></AuthGuard></Layout>} />
+        <Route path="/personal/medical" element={<Layout><AuthGuard requiredRole="personal"><MedicalPage /></AuthGuard></Layout>} />
+        <Route path="/personal/exam" element={<Layout><AuthGuard requiredRole="personal"><ExamPage /></AuthGuard></Layout>} />
+        <Route path="/personal/essc" element={<Layout><AuthGuard requiredRole="personal"><EsscPage /></AuthGuard></Layout>} />
+        <Route path="/enterprise" element={<Layout><AuthGuard requiredRole="enterprise"><EnterprisePage /></AuthGuard></Layout>} />
+        <Route path="/enterprise/insurance-declaration" element={<Layout><AuthGuard requiredRole="enterprise"><InsuranceDeclarationPage /></AuthGuard></Layout>} />
+        <Route path="/enterprise/unemployment" element={<Layout><AuthGuard requiredRole="enterprise"><UnemploymentPage /></AuthGuard></Layout>} />
+        <Route path="/enterprise/e-contract" element={<Layout><AuthGuard requiredRole="enterprise"><EContractPage /></AuthGuard></Layout>} />
+        <Route path="/admin" element={<Layout><AuthGuard requiredRole="admin"><AdminPage /></AuthGuard></Layout>} />
+        <Route path="/admin/timeout-warning" element={<Layout><AuthGuard requiredRole="admin"><TimeoutWarningPage /></AuthGuard></Layout>} />
+        <Route path="/admin/policy-tags" element={<Layout><AuthGuard requiredRole="admin"><PolicyTagsPage /></AuthGuard></Layout>} />
+        <Route path="/admin/identity-audit" element={<Layout><AuthGuard requiredRole="admin"><IdentityAuditPage /></AuthGuard></Layout>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

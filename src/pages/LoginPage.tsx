@@ -71,7 +71,7 @@ const mockEnterpriseVerify = (creditCode: string): Promise<{ passed: boolean; co
 export default function LoginPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { setCurrentRole } = useAppStore()
+  const { login } = useAppStore()
   const [role, setRole] = useState<Role>('personal')
   const [step, setStep] = useState<LoginStep>('id')
 
@@ -160,7 +160,16 @@ export default function LoginPage() {
   }
 
   function handleCompleteLogin() {
-    setCurrentRole(role)
+    const name = role === 'enterprise' ? hrName : realName
+    const idNumberValue = role === 'enterprise' ? creditCode : idNumber
+    login({
+      name: name || '',
+      idNumber: idNumberValue || '',
+      role,
+      authMethod,
+      matchScore,
+      riskLevel: verifyResult?.riskLevel || 'low',
+    })
     const pathMap = { personal: '/personal', enterprise: '/enterprise', admin: '/admin' }
     navigate(pathMap[role])
   }

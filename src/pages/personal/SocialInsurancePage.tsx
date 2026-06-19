@@ -111,7 +111,11 @@ function deriveMonthlyRecords(
 ): MonthlyRecord[] {
   return records.map((record) => {
     if (accountType === 'injury' || accountType === 'maternity') {
-      return { ...record, personalAmount: 0 }
+      return {
+        ...record,
+        personalAmount: 0,
+        companyAmount: +(record.companyAmount * (164 / 2586)).toFixed(2),
+      }
     }
     if (accountType === 'housing') {
       return {
@@ -246,10 +250,16 @@ export default function SocialInsurancePage() {
                 )}
               </p>
               <p className="text-2xl font-mono font-bold text-gov-blue mt-1">
-                ¥
-                {displayAccountBalance.toLocaleString('zh-CN', {
-                  minimumFractionDigits: 2,
-                })}
+                {activeTab === 'injury' || activeTab === 'maternity' ? (
+                  <span className="text-gov-text-secondary">—</span>
+                ) : (
+                  <>
+                    ¥
+                    {displayAccountBalance.toLocaleString('zh-CN', {
+                      minimumFractionDigits: 2,
+                    })}
+                  </>
+                )}
               </p>
             </div>
             <div>
@@ -262,7 +272,11 @@ export default function SocialInsurancePage() {
                 )}
               </p>
               <p className="text-xl font-mono font-semibold text-gov-text mt-1">
-                ¥{displayPersonalMonthly.toFixed(2)}
+                {activeTab === 'injury' || activeTab === 'maternity' ? (
+                  <span className="text-gov-text-secondary">—</span>
+                ) : (
+                  <>¥{displayPersonalMonthly.toFixed(2)}</>
+                )}
               </p>
             </div>
             <div>
