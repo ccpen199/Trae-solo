@@ -1,8 +1,30 @@
-import type { CouponStatus, VerificationStatus, RiskLevel, RiskStatus, AlertLevel, SettlementStatus } from '@shared/types';
+import type {
+  CouponStatus,
+  VerificationStatus,
+  RiskLevel,
+  RiskStatus,
+  AlertLevel,
+  SettlementStatus,
+  ReplenishmentStatus,
+  ReconciliationStatus,
+  InventoryAlertLevel,
+  InventoryAlertStatus,
+} from '@shared/types';
 
 interface StatusBadgeProps {
   status: string;
-  type?: 'coupon' | 'verification' | 'risk' | 'riskStatus' | 'alert' | 'settlement' | 'merchant';
+  type?:
+    | 'coupon'
+    | 'verification'
+    | 'risk'
+    | 'riskStatus'
+    | 'alert'
+    | 'settlement'
+    | 'merchant'
+    | 'replenishment'
+    | 'reconciliation'
+    | 'inventoryAlertLevel'
+    | 'inventoryAlertStatus';
 }
 
 const statusConfig: Record<string, Record<string, { label: string; className: string }>> = {
@@ -43,6 +65,30 @@ const statusConfig: Record<string, Record<string, { label: string; className: st
     active: { label: '正常', className: 'bg-success-50 text-success-600' },
     inactive: { label: '停用', className: 'bg-gray-100 text-gray-500' },
     pending: { label: '待审核', className: 'bg-warning-50 text-warning-600' },
+  },
+  replenishment: {
+    pending: { label: '待审核', className: 'bg-warning-50 text-warning-600' },
+    approved: { label: '已批准', className: 'bg-primary-50 text-primary-600' },
+    completed: { label: '已完成', className: 'bg-success-50 text-success-600' },
+    cancelled: { label: '已取消', className: 'bg-gray-100 text-gray-500' },
+  },
+  reconciliation: {
+    reconciled: { label: '已对账', className: 'bg-success-50 text-success-600' },
+    pending: { label: '待对账', className: 'bg-warning-50 text-warning-600' },
+    reconciling: { label: '对账中', className: 'bg-primary-50 text-primary-600' },
+    abnormal: { label: '对账异常', className: 'bg-danger-50 text-danger-600' },
+  },
+  inventoryAlertLevel: {
+    normal: { label: '正常', className: 'bg-success-50 text-success-600' },
+    attention: { label: '关注', className: 'bg-primary-50 text-primary-600' },
+    warning: { label: '警告', className: 'bg-warning-50 text-warning-600' },
+    critical: { label: '严重', className: 'bg-danger-50 text-danger-600' },
+  },
+  inventoryAlertStatus: {
+    pending: { label: '待处理', className: 'bg-warning-50 text-warning-600' },
+    processing: { label: '处理中', className: 'bg-primary-50 text-primary-600' },
+    resolved: { label: '已解决', className: 'bg-success-50 text-success-600' },
+    ignored: { label: '已忽略', className: 'bg-gray-100 text-gray-500' },
   },
 };
 

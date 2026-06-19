@@ -1,5 +1,6 @@
 export type CouponType = 'fixed' | 'discount' | 'threshold';
 export type CouponStatus = 'draft' | 'active' | 'paused' | 'expired';
+export type PauseReason = 'system_maintenance' | 'risk_control' | 'inventory_adjustment' | 'policy_adjustment' | 'other';
 export type CouponInstanceStatus = 'available' | 'used' | 'expired' | 'frozen';
 export type DistributionStrategyType = 'targeted' | 'geofencing' | 'auto';
 export type TerminalType = 'pos' | 'miniapp' | 'citycode';
@@ -13,6 +14,13 @@ export type SettlementStatus = 'pending' | 'approved' | 'rejected' | 'transferre
 export type AlertType = 'inventory' | 'verification_rate' | 'risk' | 'system';
 export type AlertLevel = 'info' | 'warning' | 'critical';
 export type UserRole = 'admin' | 'merchant' | 'cashier' | 'risk_officer';
+
+export type ReplenishmentStatus = 'pending' | 'approved' | 'completed' | 'cancelled';
+export type ReconciliationStatus = 'reconciled' | 'pending' | 'reconciling' | 'abnormal';
+export type InventoryAlertType = 'low_stock' | 'expiring_soon' | 'abnormal_consumption';
+export type InventoryAlertLevel = 'normal' | 'attention' | 'warning' | 'critical';
+export type InventoryAlertStatus = 'pending' | 'processing' | 'resolved' | 'ignored';
+export type InventoryLogDetailType = 'receive_in' | 'verify_out' | 'adjust' | 'expire_loss' | 'system_adjust';
 
 export interface GeoLocation {
   latitude: number;
@@ -45,6 +53,21 @@ export interface DistributionStrategy {
   autoTriggerConditions?: AutoTriggerCondition;
 }
 
+export interface StatusChangeRecord {
+  id: string;
+  fromStatus: CouponStatus;
+  toStatus: CouponStatus;
+  reason: string;
+  remark?: string;
+  operatorId: string;
+  operatorName: string;
+  createdAt: Date;
+  approvalStatus?: 'pending' | 'approved' | 'rejected';
+  approverId?: string;
+  approverName?: string;
+  approvedAt?: Date;
+}
+
 export interface CouponActivity {
   id: string;
   name: string;
@@ -61,6 +84,15 @@ export interface CouponActivity {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  pauseReason?: PauseReason;
+  pausedAt?: Date;
+  pausedBy?: string;
+  pausedByName?: string;
+  pauseRemark?: string;
+  expectedResumeTime?: Date;
+  notifyMerchants?: boolean;
+  statusHistory?: StatusChangeRecord[];
+  resumePendingApproval?: boolean;
 }
 
 export interface CouponInstance {
@@ -301,4 +333,87 @@ export interface ProvincialPlatformConfig {
   cityCode: string;
   publicKey: string;
   enabled: boolean;
+}
+
+export interface VerificationSourceDistribution {
+  pos: number;
+  miniapp: number;
+  citycode: number;
+}
+
+export interface InventoryTrendData {
+  date: string;
+  quantity: number;
+  inQuantity: number;
+  outQuantity: number;
+}
+
+export interface ReplenishmentRecord {
+  id: string;
+  inventoryId: string;
+  batchNo: string;
+  quantity: number;
+  unitCost: number;
+  supplier: string;
+  operatorId: string;
+  operatorName: string;
+  operatorRole: UserRole;
+  status: ReplenishmentStatus;
+  approverId?: string;
+  approverName?: string;
+  approvedAt?: Date;
+  remark?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ReconciliationRecord {
+  id: string;
+  inventoryId: string;
+  batchNo: string;
+  periodStart: Date;
+  periodEnd: Date;
+  status: ReconciliationStatus;
+  expectedQuantity: number;
+  actualQuantity: number;
+  diffQuantity: number;
+  diffAmount: number;
+  lastReconciledAt?: Date;
+  reconciledBy?: string;
+  remark?: string;
+  createdAt: Date;
+}
+
+export interface InventoryAlert {
+  id: string;
+  inventoryId: string;
+  batchNo: string;
+  type: InventoryAlertType;
+  level: InventoryAlertLevel;
+  title: string;
+  message: string;
+  status: InventoryAlertStatus;
+  threshold?: number;
+  currentValue?: number;
+  handlerId?: string;
+  handlerName?: string;
+  handledAt?: Date;
+  handlerNotes?: string;
+  createdAt: Date;
+}
+
+export interface InventoryLog {
+  id: string;
+  inventoryId: string;
+  type: 'in' | 'out' | 'adjust';
+  detailType: InventoryLogDetailType;
+  quantity: number;
+  balance: number;
+  sourceTerminal?: TerminalType;
+  relatedOrderNo?: string;
+  operatorId: string;
+  operatorName: string;
+  operatorRole?: UserRole;
+  remark?: string;
+  createdAt: Date;
 }

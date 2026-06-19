@@ -26,6 +26,18 @@ import type {
   AlertType,
   AlertLevel,
   SettlementStatus,
+  ReplenishmentRecord,
+  ReplenishmentStatus,
+  ReconciliationRecord,
+  ReconciliationStatus,
+  InventoryAlert,
+  InventoryAlertType,
+  InventoryAlertLevel,
+  InventoryAlertStatus,
+  VerificationSourceDistribution,
+  InventoryTrendData,
+  InventoryLogDetailType,
+  UserRole,
 } from '@shared/types';
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
@@ -68,17 +80,112 @@ const mockInventory: Inventory[] = Array.from({ length: 15 }, (_, i) => ({
   activity: mockCoupons[i],
 }));
 
-const mockInventoryLogs: InventoryLog[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `log-${i + 1}`,
-  inventoryId: `inv-${(i % 15) + 1}`,
-  type: ['in', 'out', 'adjust'][i % 3] as 'in' | 'out' | 'adjust',
-  quantity: [100, 50, 200, -30, 150][i % 5],
-  balance: 500 + Math.floor(Math.random() * 1000),
-  operatorId: 'op-001',
-  operatorName: '管理员',
-  remark: ['入库操作', '出库操作', '库存调整', '盘点调整', '补货'][i % 5],
-  createdAt: dayjs().subtract(i, 'hour').toDate(),
-}));
+const mockInventoryLogs: InventoryLog[] = Array.from({ length: 50 }, (_, i) => {
+  const detailTypes: InventoryLogDetailType[] = ['receive_in', 'verify_out', 'adjust', 'expire_loss', 'system_adjust'];
+  const detailType = detailTypes[i % 5];
+  const type: 'in' | 'out' | 'adjust' = detailType === 'receive_in' ? 'in' : detailType === 'verify_out' || detailType === 'expire_loss' ? 'out' : 'adjust';
+  const terminals: TerminalType[] = ['pos', 'miniapp', 'citycode'];
+  const sourceTerminal = detailType === 'verify_out' ? terminals[i % 3] : undefined;
+  return {
+    id: `log-${i + 1}`,
+    inventoryId: `inv-${(i % 15) + 1}`,
+    type,
+    detailType,
+    quantity: [100, -50, 20, -30, 15][i % 5],
+    balance: 500 + Math.floor(Math.random() * 1000),
+    sourceTerminal,
+    relatedOrderNo: detailType === 'verify_out' ? `ORD${dayjs().format('YYYYMMDD')}${String(i + 1).padStart(8, '0')}` : undefined,
+    operatorId: 'op-001',
+    operatorName: ['管理员', '收银员小王', '商户管理员', '系统', '风控专员'][i % 5],
+    operatorRole: ['admin', 'cashier', 'merchant', 'admin', 'risk_officer'][i % 5] as UserRole,
+    remark: ['发放入库', '核销扣减', '调账', '过期损耗', '系统调整'][i % 5],
+    createdAt: dayjs().subtract(i, 'hour').toDate(),
+  };
+});
+
+const mockReplenishments: ReplenishmentRecord[] = Array.from({ length: 20 }, (_, i) => {
+  const statuses: ReplenishmentStatus[] = ['pending', 'approved', 'completed', 'cancelled'];
+  const status = statuses[i % 4];
+  return {
+    id: `repl-${i + 1}`,
+    inventoryId: `inv-${(i % 15) + 1}`,
+    batchNo: `BATCH-${String((i % 15) + 1).padStart(6, '0')}`,
+    quantity: [100, 200, 500, 300, 150][i % 5],
+    unitCost: [30, 50, 20, 100, 15][i % 5],
+    supplier: ['供应商A', '供应商B', '供应商C', '供应商D', '供应商E'][i % 5],
+    operatorId: 'op-001',
+    operatorName: ['商户管理员', '采购员小李', '库存管理员', '系统', '财务'][i % 5],
+    operatorRole: ['merchant', 'merchant', 'admin', 'admin', 'admin'][i % 5] as UserRole,
+    status,
+    approverId: status !== 'pending' ? 'app-001' : undefined,
+    approverName: status !== 'pending' ? '审批人王经理' : undefined,
+    approvedAt: status !== 'pending' ? dayjs().subtract(i, 'day').add(2, 'hour').toDate() : undefined,
+    remark: ['常规补货', '紧急补货', '活动备货', '调整库存', '季度补货'][i % 5],
+    createdAt: dayjs().subtract(i, 'day').toDate(),
+    updatedAt: dayjs().subtract(i, 'day').add(1, 'hour').toDate(),
+  };
+});
+
+const mockReconciliations: ReconciliationRecord[] = Array.from({ length: 15 }, (_, i) => {
+  const statuses: ReconciliationStatus[] = ['reconciled', 'pending', 'reconciling', 'abnormal'];
+  const status = statuses[i % 4];
+  const expected = 800 + Math.floor(Math.random() * 500);
+  const actual = expected + (status === 'abnormal' ? -Math.floor(Math.random() * 50) : Math.floor(Math.random() * 10) - 5);
+  return {
+    id: `recon-${i + 1}`,
+    inventoryId: `inv-${(i % 15) + 1}`,
+    batchNo: `BATCH-${String((i % 15) + 1).padStart(6, '0')}`,
+    periodStart: dayjs().subtract(i + 1, 'month').startOf('month').toDate(),
+    periodEnd: dayjs().subtract(i + 1, 'month').endOf('month').toDate(),
+    status,
+    expectedQuantity: expected,
+    actualQuantity: actual,
+    diffQuantity: actual - expected,
+    diffAmount: (actual - expected) * [30, 50, 20, 100, 15][i % 5],
+    lastReconciledAt: status === 'reconciled' ? dayjs().subtract(i, 'day').toDate() : undefined,
+    reconciledBy: status === 'reconciled' ? '财务专员' : undefined,
+    remark: status === 'abnormal' ? '存在差异，需进一步核查' : undefined,
+    createdAt: dayjs().subtract(i, 'day').toDate(),
+  };
+});
+
+const mockInventoryAlerts: InventoryAlert[] = Array.from({ length: 12 }, (_, i) => {
+  const types: InventoryAlertType[] = ['low_stock', 'expiring_soon', 'abnormal_consumption'];
+  const levels: InventoryAlertLevel[] = ['attention', 'warning', 'critical'];
+  const statuses: InventoryAlertStatus[] = ['pending', 'processing', 'resolved', 'ignored'];
+  const type = types[i % 3];
+  const level = levels[i % 3];
+  const status = statuses[i % 4];
+  return {
+    id: `inv-alert-${i + 1}`,
+    inventoryId: `inv-${(i % 15) + 1}`,
+    batchNo: `BATCH-${String((i % 15) + 1).padStart(6, '0')}`,
+    type,
+    level,
+    title: [
+      '库存不足预警',
+      '即将过期提醒',
+      '异常消耗预警',
+      '库存偏低通知',
+      '30天内过期',
+    ][i % 5],
+    message: [
+      '当前库存已低于安全阈值，请及时补货。',
+      '该批次优惠券将在7天内过期，请关注核销情况。',
+      '近7天消耗速度异常，远超正常水平，请核查。',
+      '库存已降至警戒线以下，建议安排补货。',
+      '库存批次即将过期，请尽快安排使用或促销。',
+    ][i % 5],
+    status,
+    threshold: type === 'low_stock' ? 100 : type === 'expiring_soon' ? 30 : undefined,
+    currentValue: type === 'low_stock' ? 50 + Math.floor(Math.random() * 50) : type === 'expiring_soon' ? 7 + Math.floor(Math.random() * 23) : 150 + Math.floor(Math.random() * 100),
+    handlerId: status !== 'pending' ? 'handler-001' : undefined,
+    handlerName: status !== 'pending' ? '库存管理员' : undefined,
+    handledAt: status !== 'pending' ? dayjs().subtract(i, 'day').toDate() : undefined,
+    handlerNotes: status !== 'pending' ? ['已安排补货', '已启动促销活动', '正常波动，已确认', '误报，已忽略'][i % 4] : undefined,
+    createdAt: dayjs().subtract(i, 'day').toDate(),
+  };
+});
 
 const mockVerificationRecords: VerificationRecord[] = Array.from({ length: 100 }, (_, i) => ({
   id: `ver-${i + 1}`,
@@ -321,13 +428,150 @@ export const mockInventoryService = {
         id: `log-${mockInventoryLogs.length + 1}`,
         inventoryId,
         type: 'adjust',
+        detailType: 'adjust',
         quantity,
         balance: inventory.availableQuantity,
         operatorId: 'op-001',
         operatorName: '管理员',
+        operatorRole: 'admin',
         remark: remark || '库存调整',
         createdAt: new Date(),
       });
+    }
+  },
+  getVerificationSourceDistribution: async (inventoryId: string): Promise<VerificationSourceDistribution> => {
+    await delay();
+    return {
+      pos: 350 + Math.floor(Math.random() * 200),
+      miniapp: 200 + Math.floor(Math.random() * 150),
+      citycode: 100 + Math.floor(Math.random() * 100),
+    };
+  },
+  getInventoryTrend: async (inventoryId: string, days: number = 7): Promise<InventoryTrendData[]> => {
+    await delay();
+    return Array.from({ length: days }, (_, i) => {
+      const date = dayjs().subtract(days - i, 'day');
+      const outQty = 30 + Math.floor(Math.random() * 50);
+      const inQty = i % 3 === 0 ? 100 + Math.floor(Math.random() * 100) : 0;
+      return {
+        date: date.format('MM-DD'),
+        quantity: 500 + i * 20 - outQty + inQty,
+        inQuantity: inQty,
+        outQuantity: outQty,
+      };
+    });
+  },
+  getReplenishmentRecords: async (params?: PaginationRequest & { inventoryId?: string; status?: string }): Promise<PaginationResponse<ReplenishmentRecord>> => {
+    await delay();
+    let data = [...mockReplenishments];
+    if (params?.inventoryId) {
+      data = data.filter((r) => r.inventoryId === params.inventoryId);
+    }
+    if (params?.status) {
+      data = data.filter((r) => r.status === params.status);
+    }
+    const page = params?.page || 1;
+    const pageSize = params?.pageSize || 10;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    return {
+      items: data.slice(start, end),
+      total: data.length,
+      page,
+      pageSize,
+    };
+  },
+  createReplenishment: async (data: Partial<ReplenishmentRecord>): Promise<ReplenishmentRecord> => {
+    await delay();
+    const record: ReplenishmentRecord = {
+      id: `repl-${mockReplenishments.length + 1}`,
+      inventoryId: data.inventoryId || '',
+      batchNo: data.batchNo || '',
+      quantity: data.quantity || 0,
+      unitCost: data.unitCost || 0,
+      supplier: data.supplier || '',
+      operatorId: 'op-001',
+      operatorName: '当前用户',
+      operatorRole: 'admin',
+      status: 'pending',
+      remark: data.remark,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    mockReplenishments.unshift(record);
+    return record;
+  },
+  approveReplenishment: async (id: string): Promise<void> => {
+    await delay();
+    const record = mockReplenishments.find((r) => r.id === id);
+    if (record) {
+      record.status = 'approved';
+      record.approverId = 'app-001';
+      record.approverName = '审批人王经理';
+      record.approvedAt = new Date();
+      record.updatedAt = new Date();
+    }
+  },
+  cancelReplenishment: async (id: string): Promise<void> => {
+    await delay();
+    const record = mockReplenishments.find((r) => r.id === id);
+    if (record) {
+      record.status = 'cancelled';
+      record.updatedAt = new Date();
+    }
+  },
+  getReconciliationRecords: async (params?: PaginationRequest & { inventoryId?: string; status?: string }): Promise<PaginationResponse<ReconciliationRecord>> => {
+    await delay();
+    let data = [...mockReconciliations];
+    if (params?.inventoryId) {
+      data = data.filter((r) => r.inventoryId === params.inventoryId);
+    }
+    if (params?.status) {
+      data = data.filter((r) => r.status === params.status);
+    }
+    const page = params?.page || 1;
+    const pageSize = params?.pageSize || 10;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    return {
+      items: data.slice(start, end),
+      total: data.length,
+      page,
+      pageSize,
+    };
+  },
+  getInventoryAlerts: async (params?: PaginationRequest & { inventoryId?: string; level?: string; status?: string }): Promise<PaginationResponse<InventoryAlert>> => {
+    await delay();
+    let data = [...mockInventoryAlerts];
+    if (params?.inventoryId) {
+      data = data.filter((a) => a.inventoryId === params.inventoryId);
+    }
+    if (params?.level) {
+      data = data.filter((a) => a.level === params.level);
+    }
+    if (params?.status) {
+      data = data.filter((a) => a.status === params.status);
+    }
+    const page = params?.page || 1;
+    const pageSize = params?.pageSize || 10;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    return {
+      items: data.slice(start, end),
+      total: data.length,
+      page,
+      pageSize,
+    };
+  },
+  handleInventoryAlert: async (id: string, status: InventoryAlertStatus, notes?: string): Promise<void> => {
+    await delay();
+    const alert = mockInventoryAlerts.find((a) => a.id === id);
+    if (alert) {
+      alert.status = status;
+      alert.handlerId = 'handler-001';
+      alert.handlerName = '库存管理员';
+      alert.handledAt = new Date();
+      alert.handlerNotes = notes;
     }
   },
 };
