@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-space-indigo-50: #E8EEF7;
+  --color-space-indigo-100: #C8D6EC;
+  --color-space-indigo-200: #94AED9;
+  --color-space-indigo-300: #6086C6;
+  --color-space-indigo-400: #3A5FA8;
+  --color-space-indigo-500: #1E3A5F;
+  --color-space-indigo-600: #18304E;
+  --color-space-indigo-700: #12253C;
+  --color-space-indigo-800: #0C1A2A;
+  --color-space-indigo-900: #060F18;
+
+  --color-emerald-50: #ECFDF5;
+  --color-emerald-100: #D1FAE5;
+  --color-emerald-200: #A7F3D0;
+  --color-emerald-300: #6EE7B7;
+  --color-emerald-400: #34D399;
+  --color-emerald-500: #10B981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065F46;
+  --color-emerald-900: #064E3B;
+
+  --color-amber-gold-50: #FFFBEB;
+  --color-amber-gold-100: #FEF3C7;
+  --color-amber-gold-200: #FDE68A;
+  --color-amber-gold-300: #FCD34D;
+  --color-amber-gold-400: #FBBF24;
+  --color-amber-gold-500: #F59E0B;
+  --color-amber-gold-600: #D97706;
+  --color-amber-gold-700: #B45309;
+  --color-amber-gold-800: #92400E;
+  --color-amber-gold-900: #78350F;
+
+  --color-lavender-50: #F5F3FF;
+  --color-lavender-100: #EDE9FE;
+  --color-lavender-200: #DDD6FE;
+  --color-lavender-300: #C4B5FD;
+  --color-lavender-400: #A78BFA;
+  --color-lavender-500: #8B5CF6;
+  --color-lavender-600: #7C3AED;
+  --color-lavender-700: #6D28D9;
+  --color-lavender-800: #5B21B6;
+  --color-lavender-900: #4C1D95;
+
+  --color-slate-50: #F8FAFC;
+  --color-slate-100: #F1F5F9;
+  --color-slate-200: #E2E8F0;
+  --color-slate-300: #CBD5E1;
+  --color-slate-400: #94A3B8;
+  --color-slate-500: #64748B;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1E293B;
+  --color-slate-900: #0F172A;
+  --color-slate-950: #020617;
+
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  html, body, #root {
+    min-height: 100vh;
+  }
+
+  body {
+    background: linear-gradient(135deg, var(--color-slate-50) 0%, var(--color-space-indigo-50) 50%, var(--color-lavender-50) 100%);
+    background-attachment: fixed;
+    color: var(--color-slate-800);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    color: var(--color-slate-900);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-slate-100);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-space-indigo-300), var(--color-lavender-400));
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-space-indigo-400), var(--color-lavender-500));
+  }
+
+  ::selection {
+    background: var(--color-lavender-200);
+    color: var(--color-slate-900);
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px rgba(30, 58, 95, 0.08);
+    border-radius: 1rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-space-indigo-500) 0%, var(--color-lavender-500) 50%, var(--color-emerald-500) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .badge-growth {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--color-emerald-100), var(--color-emerald-50));
+    color: var(--color-emerald-700);
+    border: 1px solid var(--color-emerald-200);
+  }
+
+  .badge-growth::before {
+    content: '';
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    background: var(--color-emerald-500);
+    box-shadow: 0 0 8px var(--color-emerald-400);
+  }
+
+  .glow-shadow {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.15),
+                0 8px 24px rgba(30, 58, 95, 0.08),
+                0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+}
