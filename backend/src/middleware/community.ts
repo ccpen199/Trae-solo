@@ -1,15 +1,16 @@
 import type { Request, Response, NextFunction } from 'express';
+import { isIP } from 'net';
 import { getDb } from '../database';
 import type { AuthenticatedRequest, Community } from '../types';
 
 export function extractSubdomain(req: Request, res: Response, next: NextFunction): void {
-  const host = req.headers.host || '';
+  const host = (req.headers.host || '').split(':')[0];
   const parts = host.split('.');
   const subdomain = parts.length >= 3 ? parts[0] : '';
 
   (req as AuthenticatedRequest).community = undefined;
 
-  if (subdomain && subdomain !== 'www' && subdomain !== 'api') {
+  if (host !== 'localhost' && !isIP(host) && subdomain && subdomain !== 'www' && subdomain !== 'api') {
     (req as any).__subdomain = subdomain;
   }
 

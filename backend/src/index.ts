@@ -15,13 +15,26 @@ import adminRoutes from './routes/admin';
 import type { AuthenticatedRequest } from './types';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT || 59242);
+const HOST = process.env.HOST || '127.0.0.1';
 
 app.use(cors());
 app.use(express.json());
 
 app.use(extractSubdomain);
 app.use(resolveCommunity);
+
+const healthHandler = (_req: express.Request, res: express.Response) => {
+  res.json({
+    success: true,
+    status: 'ok',
+    message: 'Neighborhood digital platform API is running',
+    timestamp: new Date().toISOString(),
+  });
+};
+
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/residents', residentsRoutes);
@@ -41,8 +54,8 @@ app.use((err: Error, req: express.Request, res: express.Response, _next: express
 
 initDatabase();
 
-app.listen(PORT, () => {
-  console.log(`Neighborhood platform server running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Neighborhood platform server running at http://${HOST}:${PORT}`);
 });
 
 export default app;
