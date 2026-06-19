@@ -13,6 +13,7 @@ import {
   Video,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Star,
   TrendingUp,
   Play,
@@ -22,6 +23,8 @@ import {
   Clock,
   CheckCircle2,
   Users,
+  BookOpen,
+  Sparkles,
 } from 'lucide-react';
 import { encyclopediaApi } from '@/lib/api';
 import { Button } from '@/components/ui/Button';
@@ -216,14 +219,12 @@ const INDUSTRY_DATA: IndustryNode[] = [
 ];
 
 const HOT_TAGS = [
-  '前端工程师',
   '产品经理',
-  'AI算法',
-  '数据科学家',
-  '转行',
-  '高薪',
+  '前端工程师',
   'UI设计师',
-  '投资分析',
+  '数据分析师',
+  '运营',
+  'Java工程师',
 ];
 
 const MOCK_JOBS: EncyclopediaJobCard[] = [
@@ -442,6 +443,33 @@ const MOCK_CERTS: CertificationCard[] = [
   },
 ];
 
+const FEATURED_BANNERS = [
+  {
+    jobId: 'job-pm',
+    title: '产品经理：从需求到落地的全链路能力',
+    description: '深入了解产品经理的日常工作、核心能力要求与职业发展路径，助你判断是否适合这个岗位',
+    tag: '🔥 最受欢迎',
+    viewCount: '28,456',
+    gradient: 'linear-gradient(135deg, #10B981 0%, #059669 30%, #8B5CF6 70%, #7C3AED 100%)',
+  },
+  {
+    jobId: 'job-fe',
+    title: '前端工程师：构建用户体验的技术艺术家',
+    description: '从HTML/CSS基础到现代框架，全面了解前端工程师的技能树与成长路径',
+    tag: '💻 技术热门',
+    viewCount: '35,128',
+    gradient: 'linear-gradient(135deg, #3A5FA8 0%, #1E40AF 30%, #06B6D4 70%, #0891B2 100%)',
+  },
+  {
+    jobId: 'job-algo',
+    title: '算法工程师：AI时代的核心筑梦者',
+    description: '探索算法工程师的真实工作内容、技术深度要求与行业发展前景',
+    tag: '🤖 AI风口',
+    viewCount: '42,891',
+    gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 30%, #EF4444 70%, #DC2626 100%)',
+  },
+];
+
 const avatarColors = [
   { bg: 'from-emerald-400 to-teal-500', ring: 'ring-emerald-200' },
   { bg: 'from-lavender-400 to-purple-500', ring: 'ring-lavender-200' },
@@ -494,9 +522,10 @@ export default function Encyclopedia() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('ind-internet');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [jobs, setJobs] = useState<EncyclopediaJobCard[]>(MOCK_JOBS);
-  const [interviews] = useState<InterviewCard[]>(MOCK_INTERVIEWS);
-  const [certs] = useState<CertificationCard[]>(MOCK_CERTS);
+  const [interviews, setInterviews] = useState<InterviewCard[]>(MOCK_INTERVIEWS);
+  const [certs, setCerts] = useState<CertificationCard[]>(MOCK_CERTS);
   const [isLoading, setIsLoading] = useState(false);
+  const [bannerIndex, setBannerIndex] = useState(0);
 
   const treeFilter = searchKeyword.trim().toLowerCase();
 
@@ -519,8 +548,30 @@ export default function Encyclopedia() {
   useEffect(() => {
     encyclopediaApi
       .getInterviews({ page: 1, pageSize: 10 })
-      .then(() => {})
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setInterviews(res.data as unknown as InterviewCard[]);
+        }
+      })
       .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    encyclopediaApi
+      .getCertifications({ page: 1, pageSize: 20 })
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setCerts(res.data as unknown as CertificationCard[]);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setBannerIndex((prev) => (prev === FEATURED_BANNERS.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
   }, []);
 
   const currentIndustry = INDUSTRY_DATA.find((i) => i.id === selectedIndustry);
@@ -621,7 +672,7 @@ export default function Encyclopedia() {
                   setSearchKeyword(e.target.value);
                   if (!e.target.value) setSelectedJobId(null);
                 }}
-                placeholder="搜索你想了解的职业，如：前端工程师、产品经理..."
+                placeholder="搜索你想了解的职业，如：产品经理"
                 className="w-full pl-14 pr-4 py-4 rounded-2xl bg-white/80 backdrop-blur-xl border-2 border-slate-200/80 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 outline-none text-slate-900 placeholder:text-slate-400 font-medium text-base transition-all shadow-lg shadow-slate-200/40"
               />
             </div>
@@ -775,7 +826,107 @@ export default function Encyclopedia() {
             </Card>
           </motion.aside>
 
-          <main className="flex-1 min-w-0 space-y-10">
+          <main className="flex-1 min-w-0 space-y-12">
+            <motion.section
+              variants={staggerContainer}
+              initial="hidden"
+              animate="show"
+              className="relative"
+            >
+              <motion.div variants={fadeInUp} className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge variant="gold" size="md" withDot>
+                    <Sparkles className="w-3.5 h-3.5 mr-1" />
+                    精选推荐
+                  </Badge>
+                </div>
+                <h2 className="font-heading text-2xl font-bold tracking-tight">
+                  <span className="gradient-text">热门岗位</span>深度解析
+                </h2>
+              </motion.div>
+
+              <motion.div variants={fadeInUp} className="relative overflow-hidden rounded-3xl">
+                <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(-${bannerIndex * 100}%)` }}>
+                  {FEATURED_BANNERS.map((banner, i) => (
+                    <div
+                      key={i}
+                      className="w-full flex-shrink-0 relative h-64 lg:h-80 rounded-3xl overflow-hidden"
+                      style={{
+                        background: banner.gradient,
+                      }}
+                    >
+                      <div className="absolute inset-0 opacity-30">
+                        <svg className="w-full h-full" viewBox="0 0 1200 320">
+                          <defs>
+                            <pattern id={`bannerGrid${i}`} width="50" height="50" patternUnits="userSpaceOnUse">
+                              <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill={`url(#bannerGrid${i})`} />
+                        </svg>
+                      </div>
+                      <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
+                      <div className="absolute -left-10 bottom-0 w-64 h-64 rounded-full bg-white/10 blur-3xl" />
+
+                      <div className="relative z-10 h-full flex items-center px-10 lg:px-16">
+                        <div className="max-w-xl">
+                          <Badge variant="default" className="bg-white/20 text-white border-white/30 backdrop-blur-sm mb-4">
+                            {banner.tag}
+                          </Badge>
+                          <h3 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-3">
+                            {banner.title}
+                          </h3>
+                          <p className="text-white/80 text-base mb-6 leading-relaxed">
+                            {banner.description}
+                          </p>
+                          <div className="flex items-center gap-4">
+                            <Button
+                              size="lg"
+                              variant="secondary"
+                              className="!bg-white !text-slate-900 hover:!bg-white/90 shadow-xl"
+                              onClick={() => navigate(`/encyclopedia/${banner.jobId}`)}
+                              rightIcon={<ArrowRight className="w-5 h-5" />}
+                            >
+                              立即探索
+                            </Button>
+                            <div className="flex items-center gap-2 text-white/70 text-sm">
+                              <Users className="w-4 h-4" />
+                              <span>{banner.viewCount}+ 人已查看</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                  {FEATURED_BANNERS.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setBannerIndex(i)}
+                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                        bannerIndex === i ? 'w-8 bg-white' : 'bg-white/50 hover:bg-white/70'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setBannerIndex((prev) => (prev === 0 ? FEATURED_BANNERS.length - 1 : prev - 1))}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors z-20"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setBannerIndex((prev) => (prev === FEATURED_BANNERS.length - 1 ? 0 : prev + 1))}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors z-20"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </motion.div>
+            </motion.section>
+
             <motion.section variants={staggerContainer} initial="hidden" animate="show">
               <motion.div variants={fadeInUp} className="mb-6">
                 <div className="flex items-start justify-between flex-wrap gap-4">
@@ -994,9 +1145,25 @@ export default function Encyclopedia() {
                         <div className="relative z-10">
                           <div className="flex items-start justify-between mb-4">
                             {getAvatar(iv.avatar, i, 'lg')}
-                            <button className="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-lavender-500 text-white flex items-center justify-center shadow-lg shadow-emerald-200/60 group-hover:scale-110 transition-transform">
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-lavender-500 text-white flex items-center justify-center shadow-lg shadow-emerald-200/60 relative"
+                            >
                               <Play className="w-4 h-4 ml-0.5" fill="white" />
-                            </button>
+                              <motion.div
+                                className="absolute inset-0 rounded-full border-2 border-emerald-400/50"
+                                animate={{
+                                  scale: [1, 1.3, 1],
+                                  opacity: [0.6, 0, 0.6],
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  ease: 'easeInOut',
+                                }}
+                              />
+                            </motion.button>
                           </div>
 
                           <div className="mb-3">
@@ -1004,6 +1171,34 @@ export default function Encyclopedia() {
                             <div className="text-sm text-slate-500">
                               {iv.jobName} · {iv.currentLevel} · {iv.yearsOfExperience}年
                               {iv.city && ` · ${iv.city}`}
+                            </div>
+                          </div>
+
+                          <div className="bg-white/60 rounded-xl p-3 mb-4 border border-white/60">
+                            <div className="flex items-end gap-0.5 h-8 mb-2">
+                              {[...Array(32)].map((_, bi) => {
+                                const h = 20 + Math.abs(Math.sin(bi * 0.6 + i * 2)) * 60;
+                                return (
+                                  <motion.div
+                                    key={bi}
+                                    className="flex-1 rounded-full bg-gradient-to-t from-emerald-400 to-lavender-500"
+                                    style={{ height: `${h}%` }}
+                                    animate={{
+                                      height: [`${h * 0.6}%`, `${h}%`, `${h * 0.7}%`],
+                                    }}
+                                    transition={{
+                                      duration: 1 + (bi % 5) * 0.2,
+                                      repeat: Infinity,
+                                      ease: 'easeInOut',
+                                      delay: bi * 0.03,
+                                    }}
+                                  />
+                                );
+                              })}
+                            </div>
+                            <div className="flex items-center justify-between text-[11px] text-slate-500">
+                              <span className="font-mono">02:45</span>
+                              <span className="text-emerald-600 font-medium">点击播放完整访谈</span>
                             </div>
                           </div>
 

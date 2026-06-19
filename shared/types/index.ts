@@ -355,6 +355,7 @@ export interface JobWarning {
 export interface LoginRequest {
   email: string;
   password: string;
+  role?: 'jobseeker' | 'hr';
 }
 
 export interface RegisterRequest {
@@ -362,6 +363,10 @@ export interface RegisterRequest {
   email: string;
   password: string;
   role: 'jobseeker' | 'hr';
+  companyName?: string;
+  position?: string;
+  companySize?: string;
+  phone?: string;
 }
 
 export interface AuthResponse {

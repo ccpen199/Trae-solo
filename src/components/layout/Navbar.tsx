@@ -8,15 +8,19 @@ import {
   User,
   LogIn,
   ChevronDown,
-  Settings,
   LogOut,
   Network,
+  Building2,
+  AlertTriangle,
+  LayoutDashboard,
+  Users,
+  Heart,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { useAppStore } from '@/store/useAppStore'
+import type { AppRole } from '@/store/useAppStore'
 
-type RoleTab = 'jobseeker' | 'hr'
-
-const navItems = [
+const jobseekerNavItems = [
   { to: '/', label: '首页', icon: Compass, end: true },
   { to: '/jobs', label: '职位', icon: Briefcase },
   { to: '/encyclopedia', label: '职业百科', icon: BookOpen },
@@ -24,12 +28,21 @@ const navItems = [
   { to: '/profile', label: '我的主页', icon: User },
 ]
 
+const hrNavItems = [
+  { to: '/', label: '首页', icon: Compass, end: true },
+  { to: '/jobs', label: '职位', icon: Briefcase },
+  { to: '/hr/talent-pool', label: '人才池', icon: Users },
+  { to: '/hr/warnings', label: '预警中心', icon: AlertTriangle },
+  { to: '/hr/dashboard', label: '控制台', icon: LayoutDashboard },
+]
+
 const Navbar: React.FC = () => {
+  const navigate = useNavigate()
+  const { user, role, switchRole, logout } = useAppStore()
+
   const [scrolled, setScrolled] = React.useState(false)
-  const [roleTab, setRoleTab] = React.useState<RoleTab>('jobseeker')
   const [userMenuOpen, setUserMenuOpen] = React.useState(false)
   const userMenuRef = React.useRef<HTMLDivElement>(null)
-  const navigate = useNavigate()
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
@@ -47,7 +60,26 @@ const Navbar: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const isLoggedIn = false
+  const navItems = role === 'hr' ? hrNavItems : jobseekerNavItems
+
+  const handleRoleSwitch = (newRole: AppRole) => {
+    switchRole(newRole)
+    if (newRole === 'hr') {
+      navigate('/hr/dashboard')
+    } else {
+      navigate('/')
+    }
+  }
+
+  const handleLogout = () => {
+    logout()
+    setUserMenuOpen(false)
+    navigate('/')
+  }
+
+  const getInitial = (name: string) => {
+    return name ? name.charAt(0).toUpperCase() : 'U'
+  }
 
   return (
     <header
@@ -74,7 +106,7 @@ const Navbar: React.FC = () => {
           </span>
         </NavLink>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
           {navItems.map((item) => {
             const Icon = item.icon
             return (
@@ -112,13 +144,10 @@ const Navbar: React.FC = () => {
         <div className="flex items-center gap-3">
           <div className="hidden lg:flex items-center bg-slate-100/80 rounded-full p-1">
             <button
-              onClick={() => {
-                setRoleTab('jobseeker')
-                navigate('/')
-              }}
+              onClick={() => handleRoleSwitch('jobseeker')}
               className={cn(
                 'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300',
-                roleTab === 'jobseeker'
+                role === 'jobseeker'
                   ? 'bg-white text-emerald-600 shadow-sm'
                   : 'text-slate-500 hover:text-slate-700',
               )}
@@ -126,13 +155,10 @@ const Navbar: React.FC = () => {
               求职者
             </button>
             <button
-              onClick={() => {
-                setRoleTab('hr')
-                navigate('/hr/dashboard')
-              }}
+              onClick={() => handleRoleSwitch('hr')}
               className={cn(
                 'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300',
-                roleTab === 'hr'
+                role === 'hr'
                   ? 'bg-gradient-to-r from-space-indigo-500 to-lavender-500 text-white shadow-sm'
                   : 'text-slate-500 hover:text-slate-700',
               )}
@@ -141,14 +167,14 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {isLoggedIn ? (
+          {user.isLoggedIn && user.profile ? (
             <div className="relative" ref={userMenuRef}>
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-white/60 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-lavender-400 to-emerald-400 flex items-center justify-center text-white font-semibold text-sm">
-                  U
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-lavender-400 to-emerald-400 flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                  {getInitial(user.profile.name)}
                 </div>
                 <ChevronDown
                   className={cn(
@@ -159,12 +185,94 @@ const Navbar: React.FC = () => {
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl bg-white/90 backdrop-blur-xl border border-white/60 shadow-xl shadow-slate-200/60 py-2 overflow-hidden animate-[fade-in-up_0.2s_ease-out]">
-                  <button className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors">
-                    <Settings className="w-4 h-4 text-slate-400" />
-                    账户设置
-                  </button>
-                  <button className="w-full px-4 py-2.5 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors">
+                <div className="absolute right-0 top-full mt-2 w-56 rounded-xl bg-white/90 backdrop-blur-xl border border-white/60 shadow-xl shadow-slate-200/60 py-2 overflow-hidden animate-[fade-in-up_0.2s_ease-out]">
+                  <div className="px-4 py-3 border-b border-slate-100">
+                    <p className="text-sm font-semibold text-slate-900">{user.profile.name}</p>
+                    <p className="text-xs text-slate-500 mt-0.5 truncate">{user.profile.email}</p>
+                    <div className="mt-2">
+                      <span className={cn(
+                        'text-[10px] px-2 py-0.5 rounded-full font-medium',
+                        role === 'hr'
+                          ? 'bg-space-indigo-100 text-space-indigo-700'
+                          : 'bg-emerald-100 text-emerald-700'
+                      )}>
+                        {role === 'hr' ? 'HR 用户' : '求职者'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {role === 'jobseeker' ? (
+                    <>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          navigate('/profile')
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
+                      >
+                        <User className="w-4 h-4 text-slate-400" />
+                        我的主页
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          navigate('/diagnosis')
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
+                      >
+                        <Network className="w-4 h-4 text-slate-400" />
+                        能力诊断
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
+                      >
+                        <Heart className="w-4 h-4 text-slate-400" />
+                        我的收藏
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          navigate('/hr/dashboard')
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-slate-400" />
+                        控制台
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          navigate('/hr/talent-pool')
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
+                      >
+                        <Users className="w-4 h-4 text-slate-400" />
+                        人才池
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          navigate('/hr/warnings')
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors"
+                      >
+                        <AlertTriangle className="w-4 h-4 text-slate-400" />
+                        预警中心
+                      </button>
+                    </>
+                  )}
+
+                  <div className="border-t border-slate-100 my-1" />
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-2.5 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors"
+                  >
                     <LogOut className="w-4 h-4" />
                     退出登录
                   </button>
@@ -172,7 +280,7 @@ const Navbar: React.FC = () => {
               )}
             </div>
           ) : (
-            <Button size="sm" onClick={() => navigate('/onboarding')}>
+            <Button size="sm" onClick={() => navigate('/login')}>
               <LogIn className="w-4 h-4" />
               登录
             </Button>

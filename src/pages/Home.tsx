@@ -28,6 +28,7 @@ import {
   Star,
   Quote,
   ChevronRight,
+  Video,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
@@ -421,6 +422,15 @@ const testimonials = [
   },
 ];
 
+const hotEncyclopediaJobs = [
+  { id: 'job-fe', name: '前端工程师', industry: '互联网', category: '技术研发', avgSalary: 25000, entryDifficulty: 3, avatarUrls: ['A', 'B', 'C', 'D', 'E'] },
+  { id: 'job-pm', name: '产品经理', industry: '互联网', category: '产品设计', avgSalary: 28000, entryDifficulty: 4, avatarUrls: ['M', 'N', 'O', 'P'] },
+  { id: 'job-algo', name: '算法工程师', industry: '互联网', category: '技术研发', avgSalary: 40000, entryDifficulty: 5, avatarUrls: ['I', 'J', 'K', 'L'] },
+  { id: 'job-ui', name: 'UI设计师', industry: '互联网', category: '产品设计', avgSalary: 20000, entryDifficulty: 3, avatarUrls: ['P', 'Q', 'R', 'S'] },
+  { id: 'job-ds', name: '数据科学家', industry: '互联网', category: '技术研发', avgSalary: 35000, entryDifficulty: 5, avatarUrls: ['T', 'U', 'V', 'W'] },
+  { id: 'job-ia', name: '投资分析师', industry: '金融', category: '投资分析', avgSalary: 35000, entryDifficulty: 5, avatarUrls: ['W', 'X', 'Y', 'Z'] },
+];
+
 const avatarColors = [
   { bg: 'from-emerald-400 to-teal-500', ring: 'ring-emerald-200' },
   { bg: 'from-lavender-400 to-purple-500', ring: 'ring-lavender-200' },
@@ -529,11 +539,12 @@ export default function Home() {
                   浏览职位机会
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="lg"
-                  leftIcon={<Play className="w-5 h-5" />}
+                  onClick={() => navigate('/encyclopedia')}
+                  leftIcon={<BookOpen className="w-5 h-5" />}
                 >
-                  观看演示
+                  探索职业百科
                 </Button>
               </motion.div>
 
@@ -623,7 +634,13 @@ export default function Home() {
           >
             {features.map((f, i) => (
               <motion.div key={i} variants={scaleIn} transition={{ delay: i * 0.08 }}>
-                <Card variant="default" glowOnHover hoverable className="p-8 h-full group">
+                <Card
+                  variant="default"
+                  glowOnHover
+                  hoverable
+                  className="p-8 h-full group"
+                  onClick={() => f.title === '职业百科' && navigate('/encyclopedia')}
+                >
                   <div
                     className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${f.gradient} flex items-center justify-center text-white shadow-lg mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}
                     style={{ boxShadow: '0 10px 30px -5px rgba(0,0,0,0.2)' }}
@@ -642,6 +659,161 @@ export default function Home() {
                 </Card>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Hot Encyclopedia Section */}
+      <section className="py-24 px-6 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-50/40 to-transparent" />
+        <div className="max-w-7xl mx-auto relative">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-100px' }}
+            className="text-center mb-16"
+          >
+            <motion.div variants={fadeInUp}>
+              <Badge variant="gold" size="md" withDot className="mb-4">
+                <BookOpen className="w-3.5 h-3.5 mr-1" />
+                职业百科
+              </Badge>
+            </motion.div>
+            <motion.h2 variants={fadeInUp} className="font-heading text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+              热门职业<span className="gradient-text">百科</span>
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-lg text-slate-600 max-w-2xl mx-auto">
+              300+岗位全景透视 · 一线从业者深度访谈 · 科学入行路径规划
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-100px' }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {hotEncyclopediaJobs.map((job, i) => (
+              <motion.div key={job.id} variants={scaleIn} transition={{ delay: i * 0.08 }}>
+                <Card
+                  variant="default"
+                  glowOnHover
+                  hoverable
+                  className="h-full overflow-hidden group cursor-pointer"
+                  onClick={() => navigate(`/encyclopedia/${job.id}`)}
+                >
+                  <div className="relative h-44 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+                    <div className="absolute inset-0 opacity-30">
+                      <svg className="w-full h-full" viewBox="0 0 400 180">
+                        <defs>
+                          <pattern id="hotJobGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(52,211,153,0.15)" strokeWidth="1" />
+                          </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#hotJobGrid)" />
+                      </svg>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="relative">
+                        <motion.div
+                          className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border-2 border-white/30 flex items-center justify-center"
+                          animate={{
+                            boxShadow: [
+                              '0 0 0 0 rgba(52, 211, 153, 0.4)',
+                              '0 0 0 15px rgba(52, 211, 153, 0)',
+                              '0 0 0 0 rgba(52, 211, 153, 0)',
+                            ],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }}
+                        >
+                          <Play className="w-6 h-6 text-white ml-1" fill="white" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                    <div className="absolute top-4 left-4">
+                      <Badge variant="default" className="bg-black/40 text-white border-white/20 backdrop-blur-sm">
+                        <Video className="w-3 h-3 mr-1" />
+                        真实记录
+                      </Badge>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <Badge variant="success" size="sm" withDot>
+                        热度 {i + 1}
+                      </Badge>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="font-heading text-xl font-bold text-white mb-1">
+                        {job.name}
+                      </h3>
+                      <div className="flex items-center gap-2 text-xs text-slate-300">
+                        <span>{job.industry}</span>
+                        <span>·</span>
+                        <span>{job.category}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <div className="text-xs text-slate-400 mb-1">平均月薪</div>
+                        <div className="text-2xl font-bold gradient-text">
+                          ¥{(job.avgSalary / 1000).toFixed(1)}K
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-slate-400 mb-1">入行难度</div>
+                        <div className="flex items-center gap-0.5">
+                          {[...Array(5)].map((_, si) => (
+                            <Star
+                              key={si}
+                              className={`w-4 h-4 ${si < job.entryDifficulty ? 'fill-amber-gold-400 text-amber-gold-400' : 'fill-slate-200 text-slate-200'}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-slate-500">
+                      <span className="flex items-center gap-1">
+                        <Users className="w-3.5 h-3.5 text-emerald-500" />
+                        {job.avatarUrls.length}+ 从业者访谈
+                      </span>
+                      <span className="flex items-center gap-1 text-emerald-600 font-medium group-hover:gap-2 transition-all">
+                        查看详情
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </span>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="text-center mt-10"
+          >
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => navigate('/encyclopedia')}
+              rightIcon={<ArrowRight className="w-5 h-5" />}
+            >
+              查看全部职业百科
+            </Button>
           </motion.div>
         </div>
       </section>

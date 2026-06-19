@@ -3,6 +3,8 @@ import { Navbar } from '@/components/layout/Navbar'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { HRLayout } from '@/components/layout/HRLayout'
 import Home from '@/pages/Home'
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
 import Onboarding from '@/pages/Onboarding'
 import Diagnosis from '@/pages/Diagnosis'
 import Jobs from '@/pages/Jobs'
@@ -58,6 +60,8 @@ export default function App() {
       <PageTransition>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/diagnosis" element={<Diagnosis />} />
           <Route path="/jobs" element={<Jobs />} />
