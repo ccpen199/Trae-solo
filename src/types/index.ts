@@ -97,6 +97,14 @@ export interface MatchResult {
   semanticScore: number
   networkScore: number
   regionScore: number
+  matchedSkills?: string[]
+  missingSkills?: string[]
+  matchedConstraintTypes?: string[]
+  sharedAlumniCount?: number
+  sharedCompanies?: number
+  talentExperience?: number
+  clusterName?: string
+  sameRegion?: boolean
 }
 
 export interface MatchDetail {

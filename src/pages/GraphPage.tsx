@@ -185,8 +185,8 @@ function SkillDetailPanel({ node, onClose }: { node: SkillNode; onClose: () => v
   useEffect(() => {
     fetchApi<any>(`/api/graph/skills/${node.id}/related`)
       .then((data) => {
-        setTalents(data?.talents_with_skill || [])
-        setJobs(data?.jobs_requiring_skill || [])
+        setTalents(data?.talentsWithSkill || data?.talents_with_skill || [])
+        setJobs(data?.jobsRequiringSkill || data?.jobs_requiring_skill || [])
       })
       .catch(() => {})
   }, [node.id])
@@ -232,7 +232,9 @@ function SkillDetailPanel({ node, onClose }: { node: SkillNode; onClose: () => v
             <span className="text-xs text-steel-400">拥有该技能的人才:</span>
             <div className="mt-1.5 space-y-1">
               {talents.slice(0, 5).map((t: any) => (
-                <div key={t.id} className="text-xs text-steel-200">{t.name} - {t.current_company} ({t.level})</div>
+                <div key={t.id} className="text-xs text-steel-200">
+                  {t.name || t.talent_name} - {t.currentCompany || t.current_company || t.company} ({t.level || ''})
+                </div>
               ))}
             </div>
           </div>
@@ -242,7 +244,9 @@ function SkillDetailPanel({ node, onClose }: { node: SkillNode; onClose: () => v
             <span className="text-xs text-steel-400">需要该技能的岗位:</span>
             <div className="mt-1.5 space-y-1">
               {jobs.slice(0, 5).map((j: any) => (
-                <div key={j.id} className="text-xs text-steel-200">{j.title} - {j.company}</div>
+                <div key={j.id} className="text-xs text-steel-200">
+                  {j.title || j.job_title} - {j.company || j.company_name}
+                </div>
               ))}
             </div>
           </div>

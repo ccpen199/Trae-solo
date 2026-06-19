@@ -1,26 +1,22 @@
 import { useEffect, useState, useRef } from 'react'
 
 export function CountUp({ end, duration = 1200, suffix = '' }: { end: number; duration?: number; suffix?: string }) {
-  const [count, setCount] = useState(0)
-  const mountedEnd = useRef(0)
+  const [count, setCount] = useState(Math.max(0, Math.floor(end || 0)))
+  const mountedEnd = useRef(Math.max(0, Math.floor(end || 0)))
   const rafId = useRef<number | null>(null)
 
   useEffect(() => {
-    if (end <= 0) {
-      setCount(0)
-      mountedEnd.current = 0
-      return
-    }
-    if (end === mountedEnd.current) return
+    const safeEnd = Math.max(0, Math.floor(end || 0))
+    if (safeEnd === mountedEnd.current) return
     if (rafId.current) cancelAnimationFrame(rafId.current)
 
     const startVal = mountedEnd.current || 0
     const startTime = performance.now()
-    const targetEnd = end
+    const targetEnd = safeEnd
     const animate = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
-      const next = Math.floor(startVal + (targetEnd - startVal) * eased)
+      const next = Math.max(0, Math.floor(startVal + (targetEnd - startVal) * eased))
       setCount(next)
       if (progress < 1) {
         rafId.current = requestAnimationFrame(animate)

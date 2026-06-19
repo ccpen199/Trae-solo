@@ -107,10 +107,20 @@ export default function JobCreate() {
     if (!title.trim()) e.title = '请输入职位名称'
     if (!company.trim()) e.company = '请输入公司名称'
     if (!location.trim()) e.location = '请输入工作地点'
-    if (parseInt(salaryMin) <= 0) e.salaryMin = '请输入有效薪资下限'
-    if (parseInt(salaryMax) <= parseInt(salaryMin)) e.salaryMax = '最高薪资需大于最低薪资'
+    const minSalary = parseInt(salaryMin) || 0
+    const maxSalary = parseInt(salaryMax) || 0
+    if (minSalary <= 0) e.salaryMin = '请输入有效薪资下限'
+    if (maxSalary <= minSalary) e.salaryMax = '最高薪资需大于最低薪资'
     setErrors(e)
     return { valid: Object.keys(e).length === 0, errors: e }
+  }
+
+  const clearFieldError = (field: string) => {
+    if (errors[field]) {
+      const next = { ...errors }
+      delete next[field]
+      setErrors(next)
+    }
   }
 
   const nextStep = () => {
@@ -119,7 +129,11 @@ export default function JobCreate() {
       const result = validateStep1()
       if (!result.valid) {
         const firstField = Object.keys(result.errors)[0]
-        if (firstField) document.querySelector<HTMLElement>(`[data-field="${firstField}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        if (firstField) {
+          setTimeout(() => {
+            document.querySelector<HTMLElement>(`[data-field="${firstField}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }, 50)
+        }
         return
       }
     }
@@ -270,14 +284,14 @@ export default function JobCreate() {
             <div className="grid grid-cols-2 gap-4">
               <div data-field="title">
                 <label className="text-sm text-steel-400 mb-1.5 block">职位名称 *</label>
-                <input value={title} onChange={e => setTitle(e.target.value)}
+                <input value={title} onChange={e => { setTitle(e.target.value); clearFieldError('title') }}
                   className={`input-dark w-full ${errors.title ? 'border-red-500 focus:border-red-400 focus:ring-red-500/20' : ''}`}
                   placeholder="如: 整车架构高级工程师" />
                 {errors.title && <p className="text-red-400 text-xs mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.title}</p>}
               </div>
               <div data-field="company">
                 <label className="text-sm text-steel-400 mb-1.5 block">公司名称 *</label>
-                <input value={company} onChange={e => setCompany(e.target.value)}
+                <input value={company} onChange={e => { setCompany(e.target.value); clearFieldError('company') }}
                   className={`input-dark w-full ${errors.company ? 'border-red-500 focus:border-red-400 focus:ring-red-500/20' : ''}`}
                   placeholder="如: 上汽集团" />
                 {errors.company && <p className="text-red-400 text-xs mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.company}</p>}
@@ -293,7 +307,7 @@ export default function JobCreate() {
               </div>
               <div data-field="location">
                 <label className="text-sm text-steel-400 mb-1.5 block">工作地点 *</label>
-                <input value={location} onChange={e => setLocation(e.target.value)}
+                <input value={location} onChange={e => { setLocation(e.target.value); clearFieldError('location') }}
                   className={`input-dark w-full ${errors.location ? 'border-red-500 focus:border-red-400 focus:ring-red-500/20' : ''}`}
                   placeholder="如: 上海" />
                 {errors.location && <p className="text-red-400 text-xs mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.location}</p>}
@@ -303,13 +317,13 @@ export default function JobCreate() {
             <div className="grid grid-cols-2 gap-4">
               <div data-field="salaryMin">
                 <label className="text-sm text-steel-400 mb-1.5 block">最低月薪 (元) *</label>
-                <input type="number" value={salaryMin} onChange={e => setSalaryMin(e.target.value)}
+                <input type="number" value={salaryMin} onChange={e => { setSalaryMin(e.target.value); clearFieldError('salaryMin'); clearFieldError('salaryMax') }}
                   className={`input-dark w-full ${errors.salaryMin ? 'border-red-500 focus:border-red-400 focus:ring-red-500/20' : ''}`} />
                 {errors.salaryMin && <p className="text-red-400 text-xs mt-1">{errors.salaryMin}</p>}
               </div>
               <div data-field="salaryMax">
                 <label className="text-sm text-steel-400 mb-1.5 block">最高月薪 (元) *</label>
-                <input type="number" value={salaryMax} onChange={e => setSalaryMax(e.target.value)}
+                <input type="number" value={salaryMax} onChange={e => { setSalaryMax(e.target.value); clearFieldError('salaryMax'); clearFieldError('salaryMin') }}
                   className={`input-dark w-full ${errors.salaryMax ? 'border-red-500 focus:border-red-400 focus:ring-red-500/20' : ''}`} />
                 {errors.salaryMax && <p className="text-red-400 text-xs mt-1">{errors.salaryMax}</p>}
               </div>

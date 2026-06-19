@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { GitMerge, MapPin, Sparkles, Users, Target, Globe, Award, TrendingUp } from 'lucide-react'
+import { GitMerge, MapPin, Sparkles, Users, Target, Globe, Award, TrendingUp, CheckCircle, XCircle, Building2, GraduationCap } from 'lucide-react'
 import { fetchApi } from '@/utils/api'
 import { FieldBadge, ScoreBar, LoadingSpinner, StatCard } from '@/components/Shared'
 import type { Job, MatchResult } from '@/types'
@@ -108,35 +108,96 @@ export default function MatchCenter() {
                 <div
                   key={m.talentId}
                   onClick={() => navigate(`/match/${m.jobId}/${m.talentId}`)}
-                  className="card-glass card-hover p-5 cursor-pointer flex items-start gap-5"
+                  className="card-glass card-hover p-5 cursor-pointer"
                 >
-                  <div className="flex flex-col items-center">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold ${
-                      m.overallScore >= 80 ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
-                      m.overallScore >= 60 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
-                      'bg-steel-700/50 text-steel-400 border border-steel-600'
-                    }`}>
-                      {m.overallScore.toFixed(0)}
-                    </div>
-                    <span className="text-xs text-steel-500 mt-1">综合分</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <h3 className="text-steel-100 font-semibold text-base">{m.talentName}</h3>
-                        <p className="text-steel-400 text-sm">{m.talentCompany}</p>
+                  <div className="flex items-start gap-5">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold ${
+                        m.overallScore >= 80 ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                        m.overallScore >= 60 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
+                        'bg-steel-700/50 text-steel-400 border border-steel-600'
+                      }`}>
+                        {m.overallScore.toFixed(0)}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <FieldBadge field={m.talentField} />
+                      <span className="text-xs text-steel-500 mt-1">综合分</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 className="text-steel-100 font-semibold text-base">{m.talentName}</h3>
+                          <p className="text-steel-400 text-sm">{m.talentCompany} · {m.talentExperience}年经验</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FieldBadge field={m.talentField} />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4 text-xs text-steel-400 mb-3">
-                      <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{m.talentLocation}</span>
-                    </div>
-                    <div className="grid grid-cols-3 gap-3">
-                      <ScoreBar score={m.semanticScore} label="语义" />
-                      <ScoreBar score={m.networkScore} label="人脉" />
-                      <ScoreBar score={m.regionScore} label="地域" />
+                      <div className="flex items-center gap-4 text-xs text-steel-400 mb-3">
+                        <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{m.talentLocation}</span>
+                        {m.clusterName && <span className="flex items-center gap-1 text-green-400/80"><Globe className="w-3 h-3" />{m.clusterName}</span>}
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        <ScoreBar score={m.semanticScore} label="语义" />
+                        <ScoreBar score={m.networkScore} label="人脉" />
+                        <ScoreBar score={m.regionScore} label="地域" />
+                      </div>
+
+                      <div className="mt-4 space-y-2 border-t border-steel-700/50 pt-3">
+                        {m.matchedSkills && m.matchedSkills.length > 0 && (
+                          <div className="flex items-start gap-2 text-xs">
+                            <CheckCircle className="w-3.5 h-3.5 text-green-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <span className="text-steel-400">JD关键词命中：</span>
+                              <div className="flex flex-wrap gap-1 mt-1 inline">
+                                {m.matchedSkills.map(s => (
+                                  <span key={s} className="inline-block px-1.5 py-0.5 rounded bg-green-500/15 text-green-300 text-[11px] border border-green-500/20">{s}</span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {m.missingSkills && m.missingSkills.length > 0 && (
+                          <div className="flex items-start gap-2 text-xs">
+                            <XCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <span className="text-steel-400">待补齐技能：</span>
+                              <div className="flex flex-wrap gap-1 mt-1 inline">
+                                {m.missingSkills.map(s => (
+                                  <span key={s} className="inline-block px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300/80 text-[11px] border border-amber-500/20">{s}</span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {m.matchedConstraintTypes && m.matchedConstraintTypes.length > 0 && (
+                          <div className="flex items-start gap-2 text-xs">
+                            <Award className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <span className="text-steel-400">强约束满足：</span>
+                              <div className="flex flex-wrap gap-1 mt-1 inline">
+                                {m.matchedConstraintTypes.map(c => (
+                                  <span key={c} className="inline-block px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 text-[11px] border border-amber-500/20">{c}</span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        {(m.sharedAlumniCount && m.sharedAlumniCount > 0) || (m.sharedCompanies && m.sharedCompanies > 0) ? (
+                          <div className="flex items-start gap-2 text-xs">
+                            <GraduationCap className="w-3.5 h-3.5 text-purple-400 flex-shrink-0 mt-0.5" />
+                            <div className="text-steel-400">
+                              {m.sharedAlumniCount && m.sharedAlumniCount > 0 && <span>校友网络 {m.sharedAlumniCount} 人</span>}
+                              {m.sharedAlumniCount && m.sharedAlumniCount > 0 && m.sharedCompanies && m.sharedCompanies > 0 && <span className="mx-2 text-steel-600">·</span>}
+                              {m.sharedCompanies && m.sharedCompanies > 0 && <span className="flex items-center gap-1 inline-flex"><Building2 className="w-3 h-3" />前司与招聘方重合</span>}
+                            </div>
+                          </div>
+                        ) : null}
+                        {m.sameRegion && (
+                          <div className="flex items-start gap-2 text-xs">
+                            <MapPin className="w-3.5 h-3.5 text-green-400 flex-shrink-0 mt-0.5" />
+                            <span className="text-steel-400">与招聘岗位同城，地域优势显著</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
