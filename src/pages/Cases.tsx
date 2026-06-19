@@ -10,11 +10,42 @@ import {
   Star,
   TrendingUp,
   Building,
+  CalendarCheck,
+  FileEdit,
+  Upload,
+  Route,
+  Bell,
+  MessageSquare,
+  CheckCircle2,
+  Circle,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { statusTextMap } from "@/data/mockData";
 import type { CaseStatus } from "@/types";
 import { cn } from "@/lib/utils";
+
+const lifecycleSteps = [
+  { key: "appointment", label: "预约", icon: CalendarCheck },
+  { key: "apply", label: "申办", icon: FileEdit },
+  { key: "upload", label: "材料上传", icon: Upload },
+  { key: "track", label: "进度追踪", icon: Route },
+  { key: "push", label: "结果推送", icon: Bell },
+  { key: "evaluate", label: "服务评价", icon: MessageSquare },
+];
+
+function getLifecycleStatus(caseItem: { status: string; timeline: { status: string }[] }) {
+  const done = caseItem.timeline.filter((t) => t.status === "completed").length;
+  const total = caseItem.timeline.length;
+  const isComplete = ["completed", "approved"].includes(caseItem.status);
+  const isRejected = caseItem.status === "rejected";
+  return lifecycleSteps.map((step, i) => {
+    if (isRejected) return { ...step, state: i < 2 ? "done" : "failed" as const };
+    if (isComplete) return { ...step, state: "done" as const };
+    const stepDone = i < done;
+    const stepActive = i === done;
+    return { ...step, state: stepDone ? "done" as const : stepActive ? "active" as const : "pending" as const };
+  });
+}
 
 const statusTabs: { key: CaseStatus | "all"; label: string }[] = [
   { key: "all", label: "全部" },
@@ -166,7 +197,7 @@ export default function Cases() {
                       <ChevronRight className="w-5 h-5 text-ink-lighter group-hover:text-gov-600 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 mb-2">
                       <div className="flex-1 h-1.5 bg-ink-bg rounded-full overflow-hidden">
                         <div
                           className={cn(
@@ -184,6 +215,41 @@ export default function Cases() {
                         {done}/{total}
                       </span>
                     </div>
+
+                    <div className="flex items-center gap-0 mt-1.5">
+                      {getLifecycleStatus(c).map((step, si) => {
+                        const StepIcon = step.icon;
+                        return (
+                          <div key={step.key} className="flex items-center">
+                            <div
+                              className={cn(
+                                "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
+                                step.state === "done" && "bg-success-50 text-success-700",
+                                step.state === "active" && "bg-gov-50 text-gov-700 ring-1 ring-gov-200",
+                                step.state === "pending" && "bg-gray-50 text-gray-400",
+                                step.state === "failed" && "bg-danger-50 text-danger-600"
+                              )}
+                            >
+                              {step.state === "done" ? (
+                                <CheckCircle2 className="w-2.5 h-2.5" />
+                              ) : step.state === "active" ? (
+                                <Circle className="w-2.5 h-2.5 fill-current" />
+                              ) : (
+                                <Circle className="w-2.5 h-2.5" />
+                              )}
+                              {step.label}
+                            </div>
+                            {si < 5 && (
+                              <div className={cn(
+                                "w-2 h-px mx-0.5",
+                                step.state === "done" ? "bg-success-400" : "bg-gray-200"
+                              )} />
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+
                     <p className="text-xs text-ink-light mt-2 flex items-center gap-1">
                       <ArrowLeft className="w-3 h-3 rotate-180" /> 当前节点：{c.currentNode}
                     </p>

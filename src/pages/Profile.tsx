@@ -14,6 +14,14 @@ import {
   Clock,
   Award,
   HeartHandshake,
+  CalendarCheck,
+  Route,
+  MessageSquare,
+  Send,
+  Fingerprint,
+  ScanFace,
+  KeyRound,
+  Eye,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/store";
@@ -139,6 +147,82 @@ export default function Profile() {
               </div>
             );
           })}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+          <div className="card p-5">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <Fingerprint className="w-4 h-4 text-gov-600" /> 身份认证状态
+            </h3>
+            <div className="space-y-2">
+              {[
+                { level: "L1", label: "手机号验证", icon: Phone, status: "done" },
+                { level: "L2", label: "身份证实名核验", icon: IdCard, status: "done" },
+                { level: "L3", label: "公安人脸实人认证", icon: ScanFace, status: user.authLevel === "L3" ? "done" : "pending" },
+              ].map((auth) => {
+                const AuthIcon = auth.icon;
+                return (
+                  <div key={auth.level} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50">
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${auth.status === "done" ? "bg-success-100" : "bg-gray-100"}`}>
+                      <AuthIcon className={`w-4 h-4 ${auth.status === "done" ? "text-success-600" : "text-gray-400"}`} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${auth.status === "done" ? "bg-success-100 text-success-700" : "bg-gray-100 text-gray-500"}`}>{auth.level}</span>
+                        <span className="text-sm text-gray-800">{auth.label}</span>
+                      </div>
+                    </div>
+                    <span className={`text-xs font-medium ${auth.status === "done" ? "text-success-600" : "text-gray-400"}`}>
+                      {auth.status === "done" ? "已通过" : "未认证"}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-3 p-2.5 rounded-lg bg-gov-50 border border-gov-100">
+              <div className="flex items-center gap-2 text-xs text-gov-700">
+                <KeyRound className="w-3.5 h-3.5" />
+                <span>SSO单点登录 · CAS/OAuth2.0 · 已接入3个委办局系统</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="card p-5">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <Route className="w-4 h-4 text-gov-600" /> 事项全生命周期闭环
+            </h3>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { label: "预约", icon: CalendarCheck, count: mockCases.filter((c) => c.status !== "draft").length, color: "bg-gov-50 text-gov-700" },
+                { label: "申办", icon: FileCheck, count: mockCases.filter((c) => ["submitted", "processing", "completed", "approved"].includes(c.status)).length, color: "bg-success-50 text-success-700" },
+                { label: "材料上传", icon: Send, count: mockCases.filter((c) => c.status !== "pending_material").length, color: "bg-cyan-50 text-cyan-700" },
+                { label: "进度追踪", icon: Route, count: mockCases.filter((c) => ["processing", "accepted"].includes(c.status)).length, color: "bg-warning-50 text-warning-700" },
+                { label: "结果推送", icon: Bell, count: mockCases.filter((c) => ["completed", "approved", "rejected"].includes(c.status)).length, color: "bg-violet-50 text-violet-700" },
+                { label: "服务评价", icon: MessageSquare, count: mockCases.filter((c) => c.status === "completed" || c.status === "approved").length, color: "bg-rose-50 text-rose-700" },
+              ].map((step) => {
+                const StepIcon = step.icon;
+                return (
+                  <button
+                    key={step.label}
+                    onClick={() => step.label === "服务评价" ? navigate("/cases") : step.label === "进度追踪" ? navigate("/cases") : step.label === "预约" || step.label === "申办" ? navigate("/services") : navigate("/cases")}
+                    className="flex flex-col items-center gap-1.5 p-3 rounded-lg hover:shadow-md transition-all"
+                  >
+                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${step.color}`}>
+                      <StepIcon className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-medium text-gray-800">{step.label}</span>
+                    <span className="text-[10px] text-gray-400">{step.count}件</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-100">
+              <div className="flex items-center gap-2 text-xs text-amber-700">
+                <Eye className="w-3.5 h-3.5" />
+                <span>访问审计已记录 · 近30天 {mockCases.length * 3 + 42} 条操作日志</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-4">

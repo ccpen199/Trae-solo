@@ -6,7 +6,8 @@ import app from './app.js';
 /**
  * start server with port
  */
-const PORT = Number(process.env.PORT || 3001);
+const rawPort = Number(process.env.PORT || 3003);
+const PORT = rawPort > 40000 ? 3003 : rawPort;
 const HOST = process.env.HOST || '127.0.0.1';
 
 const server = app.listen(PORT, HOST, () => {
