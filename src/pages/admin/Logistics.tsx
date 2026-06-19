@@ -1,5 +1,5 @@
 import { Search, MapPin, Phone, CheckCircle, XCircle, AlertCircle } from "lucide-react";
-import { mockCouriers } from "@/data/mockData";
+import { useStore } from "@/store/useStore";
 import { cn } from "@/lib/utils";
 
 const statusMap: Record<string, { label: string; className: string; icon: typeof MapPin }> = {
@@ -9,25 +9,26 @@ const statusMap: Record<string, { label: string; className: string; icon: typeof
 };
 
 export default function Logistics() {
+  const couriers = useStore((s) => s.couriers);
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="card p-4">
           <p className="text-sm text-neutral-500">在线快递员</p>
           <p className="mt-1 text-2xl font-bold text-eco-600">
-            {mockCouriers.filter((c) => c.status === "online").length}
+            {couriers.filter((c) => c.status === "online").length}
           </p>
         </div>
         <div className="card p-4">
           <p className="text-sm text-neutral-500">忙碌中</p>
           <p className="mt-1 text-2xl font-bold text-amber-600">
-            {mockCouriers.filter((c) => c.status === "busy").length}
+            {couriers.filter((c) => c.status === "busy").length}
           </p>
         </div>
         <div className="card p-4">
           <p className="text-sm text-neutral-500">今日总接单量</p>
           <p className="mt-1 text-2xl font-bold text-neutral-800">
-            {mockCouriers.reduce((s, c) => s + c.orderCount, 0)}
+            {couriers.reduce((s, c) => s + c.orderCount, 0)}
           </p>
         </div>
       </div>
@@ -40,7 +41,7 @@ export default function Logistics() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {mockCouriers.map((courier) => {
+        {couriers.map((courier) => {
           const status = statusMap[courier.status];
           const StatusIcon = status.icon;
           return (

@@ -21,6 +21,9 @@ import {
   ArrowRight,
   Info,
   Package,
+  Search,
+  ScanLine,
+  Lightbulb,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useStore } from "@/store/useStore";
@@ -96,6 +99,52 @@ const conditionLabels: Record<number, string> = {
   9: "几乎全新",
   10: "全新未使用",
 };
+
+const marketPrices: Record<Category, string> = {
+  clothing: "参考回收价 ¥2.0-3.5/kg",
+  books: "参考回收价 ¥1.0-2.0/本",
+  phones: "参考回收价 ¥200-8000/台",
+};
+
+const phoneBrandPriceRange: Record<string, string> = {
+  Apple: "¥2000-8000",
+  华为: "¥800-5000",
+  小米: "¥300-3000",
+  OPPO: "¥200-2500",
+  vivo: "¥200-2500",
+  三星: "¥500-4000",
+  荣耀: "¥300-3000",
+  其他: "¥200-2000",
+};
+
+const materialValueLevel: Record<string, { label: string; level: "高" | "中高" | "普通" | "低" }> = {
+  真丝: { label: "高价值", level: "高" },
+  羊毛: { label: "高价值", level: "高" },
+  羽绒: { label: "中高价值", level: "中高" },
+  纯棉: { label: "普通价值", level: "普通" },
+  牛仔: { label: "普通价值", level: "普通" },
+  混纺: { label: "普通价值", level: "普通" },
+  涤纶: { label: "普通价值", level: "普通" },
+  其他: { label: "普通价值", level: "普通" },
+};
+
+const bookConditionDesc: Record<BookCondition, string> = {
+  全新: "未拆封/几乎全新",
+  九成新: "轻微使用痕迹",
+  七成新: "有使用痕迹，无破损",
+  五成新: "明显使用痕迹，有磨损",
+  残损: "有破损/缺页/水渍",
+};
+
+const phoneBrandRetention: { brand: string; rate: string }[] = [
+  { brand: "Apple", rate: "75%" },
+  { brand: "华为", rate: "65%" },
+  { brand: "荣耀", rate: "55%" },
+  { brand: "小米", rate: "50%" },
+  { brand: "三星", rate: "48%" },
+  { brand: "OPPO", rate: "45%" },
+  { brand: "vivo", rate: "45%" },
+];
 
 interface ClothingFields {
   material: MaterialType | "";
@@ -523,6 +572,7 @@ export default function Estimate() {
     if (category === "phones") {
       return (
         !!brand &&
+        !!model &&
         !!phoneFields.warrantyStatus &&
         !!phoneFields.screenCondition &&
         !!phoneFields.batteryHealth &&
@@ -530,7 +580,7 @@ export default function Estimate() {
       );
     }
     return false;
-  }, [category, brand, clothingFields, bookFields, phoneFields]);
+  }, [category, brand, model, clothingFields, bookFields, phoneFields]);
 
   const canProceedStep2 = useMemo(() => {
     return !!selectedDate && !!selectedTimeWindow && !!selectedAddress && !!selectedCourier;
@@ -795,156 +845,221 @@ export default function Estimate() {
               </div>
             )}
 
-            {category === "clothing" && (
-              <>
-                <div>
-                  <label className="label-base">材质</label>
-                  <div className="grid grid-cols-4 gap-2">
-                    {materials.map((m) => (
-                      <button
-                        key={m}
-                        onClick={() => setClothingFields((prev) => ({ ...prev, material: m }))}
-                        className={cn(
-                          "py-2 px-2 rounded-xl text-sm font-medium border transition-all",
-                          clothingFields.material === m
-                            ? "bg-eco-500 text-white border-eco-500 shadow-card"
-                            : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
-                        )}
-                      >
-                        {m}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="label-base">季节</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {seasons.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => setClothingFields((prev) => ({ ...prev, season: s }))}
-                        className={cn(
-                          "py-2.5 px-2 rounded-xl text-sm font-medium border transition-all",
-                          clothingFields.season === s
-                            ? "bg-eco-500 text-white border-eco-500 shadow-card"
-                            : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
-                        )}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
-
-            {category === "books" && (
-              <>
-                <div>
-                  <label className="label-base">ISBN（选填）</label>
-                  <input
-                    type="text"
-                    value={bookFields.isbn}
-                    onChange={(e) => setBookFields((prev) => ({ ...prev, isbn: e.target.value }))}
-                    placeholder="请输入图书ISBN编号"
-                    className="input-base"
-                  />
-                </div>
-
-                <div>
-                  <label className="label-base">品相分级</label>
-                  <div className="grid grid-cols-5 gap-2">
-                    {bookConditions.map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => setBookFields((prev) => ({ ...prev, bookCondition: c }))}
-                        className={cn(
-                          "py-2 px-1 rounded-xl text-xs font-medium border transition-all",
-                          bookFields.bookCondition === c
-                            ? "bg-eco-500 text-white border-eco-500 shadow-card"
-                            : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
-                        )}
-                      >
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:border-eco-300 transition-all">
-                    <input
-                      type="checkbox"
-                      checked={bookFields.hasNotes}
-                      onChange={(e) => setBookFields((prev) => ({ ...prev, hasNotes: e.target.checked }))}
-                      className="w-4 h-4 rounded accent-eco-500"
-                    />
-                    <span className="text-sm font-medium text-neutral-700">有笔记/画线</span>
-                  </label>
-                  <label className="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:border-eco-300 transition-all">
-                    <input
-                      type="checkbox"
-                      checked={bookFields.isGenuine}
-                      onChange={(e) => setBookFields((prev) => ({ ...prev, isGenuine: e.target.checked }))}
-                      className="w-4 h-4 rounded accent-eco-500"
-                    />
-                    <span className="text-sm font-medium text-neutral-700">正版图书</span>
-                  </label>
-                </div>
-
-                {!bookFields.bookCategory && (
+            <div key={`cat-${category}`} className="animate-slide-up space-y-5">
+              {category === "clothing" && (
+                <>
                   <div>
-                    <label className="label-base">图书分类</label>
+                    <label className="label-base flex items-center gap-1.5">
+                      材质
+                      <span className="text-xs font-normal text-neutral-400">（不同材质回收价值不同）</span>
+                    </label>
                     <div className="grid grid-cols-4 gap-2">
-                      {bookCategories.slice(0, 8).map((c) => (
+                      {materials.map((m) => {
+                        const valueInfo = materialValueLevel[m];
+                        return (
+                          <button
+                            key={m}
+                            onClick={() => setClothingFields((prev) => ({ ...prev, material: m }))}
+                            className={cn(
+                              "py-2 px-2 rounded-xl text-sm font-medium border transition-all flex flex-col items-center gap-0.5",
+                              clothingFields.material === m
+                                ? "bg-eco-500 text-white border-eco-500 shadow-card"
+                                : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
+                            )}
+                          >
+                            <span>{m}</span>
+                            <span className={cn(
+                              "text-[10px] font-normal px-1.5 py-px rounded-full",
+                              clothingFields.material === m
+                                ? "bg-white/20 text-white"
+                                : valueInfo.level === "高"
+                                ? "bg-amber-100 text-amber-700"
+                                : valueInfo.level === "中高"
+                                ? "bg-eco-100 text-eco-700"
+                                : "bg-neutral-100 text-neutral-500"
+                            )}>
+                              {valueInfo.label}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="label-base">季节</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {seasons.map((s) => (
                         <button
-                          key={c}
-                          onClick={() => setBookFields((prev) => ({ ...prev, bookCategory: c }))}
+                          key={s}
+                          onClick={() => setClothingFields((prev) => ({ ...prev, season: s }))}
                           className={cn(
-                            "py-2 px-1 rounded-xl text-xs font-medium border transition-all",
-                            bookFields.bookCategory === c
+                            "py-2.5 px-2 rounded-xl text-sm font-medium border transition-all",
+                            clothingFields.season === s
                               ? "bg-eco-500 text-white border-eco-500 shadow-card"
                               : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
                           )}
                         >
-                          {c}
+                          {s}
                         </button>
                       ))}
                     </div>
                   </div>
-                )}
-              </>
-            )}
+                </>
+              )}
 
-            {category === "phones" && (
-              <>
-                <div className="grid grid-cols-2 gap-3">
+              {category === "books" && (
+                <>
                   <div>
-                    <label className="label-base">购买年份</label>
-                    <select
-                      value={phoneFields.purchaseYear}
-                      onChange={(e) => setPhoneFields((prev) => ({ ...prev, purchaseYear: Number(e.target.value) }))}
-                      className="input-base appearance-none pr-8 bg-no-repeat bg-right"
-                    >
-                      {years.map((y) => (
-                        <option key={y} value={y}>{y}年</option>
-                      ))}
-                    </select>
+                    <label className="label-base">ISBN（选填）</label>
+                    <div className="flex gap-2">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                        <input
+                          type="text"
+                          value={bookFields.isbn}
+                          onChange={(e) => setBookFields((prev) => ({ ...prev, isbn: e.target.value }))}
+                          placeholder="请输入图书ISBN编号"
+                          className="input-base pl-9 pr-4"
+                        />
+                      </div>
+                      <button
+                        className="px-4 py-3 rounded-xl bg-eco-50 border border-eco-200 text-eco-600 font-medium text-sm flex items-center gap-1.5 hover:bg-eco-100 transition-colors whitespace-nowrap"
+                      >
+                        <ScanLine className="w-4 h-4" />
+                        扫码识别
+                      </button>
+                    </div>
                   </div>
+
                   <div>
-                    <label className="label-base">购买月份</label>
-                    <select
-                      value={phoneFields.purchaseMonth}
-                      onChange={(e) => setPhoneFields((prev) => ({ ...prev, purchaseMonth: Number(e.target.value) }))}
-                      className="input-base appearance-none pr-8 bg-no-repeat bg-right"
-                    >
-                      {months.map((m) => (
-                        <option key={m} value={m}>{m}月</option>
+                    <label className="label-base">品相分级</label>
+                    <div className="grid grid-cols-5 gap-2">
+                      {bookConditions.map((c) => (
+                        <button
+                          key={c}
+                          onClick={() => setBookFields((prev) => ({ ...prev, bookCondition: c }))}
+                          className={cn(
+                            "py-3 px-2 rounded-xl text-xs font-medium border transition-all flex flex-col items-center gap-1",
+                            bookFields.bookCondition === c
+                              ? "bg-eco-500 text-white border-eco-500 shadow-card"
+                              : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
+                          )}
+                        >
+                          <span className="text-sm font-semibold">{c}</span>
+                          <span className={cn(
+                            "text-[10px] font-normal leading-tight",
+                            bookFields.bookCondition === c ? "text-eco-100" : "text-neutral-400"
+                          )}>
+                            {bookConditionDesc[c]}
+                          </span>
+                        </button>
                       ))}
-                    </select>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:border-eco-300 transition-all">
+                      <input
+                        type="checkbox"
+                        checked={bookFields.hasNotes}
+                        onChange={(e) => setBookFields((prev) => ({ ...prev, hasNotes: e.target.checked }))}
+                        className="w-4 h-4 rounded accent-eco-500"
+                      />
+                      <span className="text-sm font-medium text-neutral-700">有笔记/画线</span>
+                    </label>
+                    <label className="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:border-eco-300 transition-all">
+                      <input
+                        type="checkbox"
+                        checked={bookFields.isGenuine}
+                        onChange={(e) => setBookFields((prev) => ({ ...prev, isGenuine: e.target.checked }))}
+                        className="w-4 h-4 rounded accent-eco-500"
+                      />
+                      <span className="text-sm font-medium text-neutral-700">正版图书</span>
+                    </label>
+                  </div>
+
+                  {!bookFields.bookCategory && (
+                    <div>
+                      <label className="label-base">图书分类</label>
+                      <div className="grid grid-cols-4 gap-2">
+                        {bookCategories.slice(0, 8).map((c) => (
+                          <button
+                            key={c}
+                            onClick={() => setBookFields((prev) => ({ ...prev, bookCategory: c }))}
+                            className={cn(
+                              "py-2 px-1 rounded-xl text-xs font-medium border transition-all",
+                              bookFields.bookCategory === c
+                                ? "bg-eco-500 text-white border-eco-500 shadow-card"
+                                : "bg-white text-neutral-600 border-neutral-200 hover:border-eco-300 hover:text-eco-600"
+                            )}
+                          >
+                            {c}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {category === "phones" && (
+                <>
+                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-200">
+                    <div className="flex items-start gap-2">
+                      <Lightbulb className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-sm font-semibold text-amber-800">市场行情参考</span>
+                        <p className="text-xs text-amber-700 mt-0.5">品牌保值率排名（一年期）</p>
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {phoneBrandRetention.slice(0, 5).map((item, idx) => (
+                            <span
+                              key={item.brand}
+                              className={cn(
+                                "text-xs px-2 py-0.5 rounded-full",
+                                idx === 0
+                                  ? "bg-amber-200 text-amber-900 font-medium"
+                                  : idx === 1
+                                  ? "bg-amber-100 text-amber-800"
+                                  : idx === 2
+                                  ? "bg-amber-50 text-amber-700 border border-amber-200"
+                                  : "bg-white text-amber-600 border border-amber-200"
+                              )}
+                            >
+                              {idx + 1}. {item.brand} {item.rate}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="label-base">购买年份</label>
+                      <select
+                        value={phoneFields.purchaseYear}
+                        onChange={(e) => setPhoneFields((prev) => ({ ...prev, purchaseYear: Number(e.target.value) }))}
+                        className="input-base appearance-none pr-8 bg-no-repeat bg-right"
+                      >
+                        {years.map((y) => (
+                          <option key={y} value={y}>{y}年</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="label-base">购买月份</label>
+                      <select
+                        value={phoneFields.purchaseMonth}
+                        onChange={(e) => setPhoneFields((prev) => ({ ...prev, purchaseMonth: Number(e.target.value) }))}
+                        className="input-base appearance-none pr-8 bg-no-repeat bg-right"
+                      >
+                        {months.map((m) => (
+                          <option key={m} value={m}>{m}月</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
                 <div>
                   <label className="label-base">保修状态</label>
@@ -1026,8 +1141,9 @@ export default function Estimate() {
                     <span className="text-sm font-medium text-neutral-700">是否拆修</span>
                   </label>
                 </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
 
             <div>
               <div className="flex justify-between items-center mb-2">
@@ -1134,10 +1250,23 @@ export default function Estimate() {
                 </div>
                 <span className="text-xs text-neutral-500">最终以质检为准</span>
               </div>
+              <div className="mb-1">
+                <span className="text-xs text-neutral-500 flex items-center gap-1">
+                  <span>📈</span>
+                  <span>近7日市场行情均价</span>
+                </span>
+              </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-bold text-eco-600">¥{minPrice.toFixed(category === "phones" ? 0 : 2)}</span>
                 <span className="text-neutral-400 mx-1">~</span>
                 <span className="text-2xl font-bold text-eco-600">¥{maxPrice.toFixed(category === "phones" ? 0 : 2)}</span>
+              </div>
+              <div className="mt-1">
+                <span className="text-xs text-neutral-400">
+                  {category === "phones" && brand
+                    ? `${brand} ${phoneBrandPriceRange[brand] || phoneBrandPriceRange.other}`
+                    : marketPrices[category]}
+                </span>
               </div>
               {priceBreakdown.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-eco-200/50 space-y-1.5">
@@ -1524,39 +1653,68 @@ export default function Estimate() {
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 px-4 py-4 bg-white/95 backdrop-blur-md border-t border-neutral-100 z-20">
-        <div className="max-w-2xl mx-auto flex gap-3">
-          {step > 1 && (
-            <button
-              onClick={handlePrev}
-              className="btn-secondary flex-1 text-base"
-            >
-              <ChevronLeft className="w-5 h-5 mr-1" />
-              上一步
-            </button>
-          )}
-          {step < 3 && (
-            <button
-              onClick={handleNext}
-              disabled={(step === 1 && !canProceedStep1) || (step === 2 && !canProceedStep2)}
-              className={cn(
-                "btn-primary flex-1 text-base gap-2",
-                ((step === 1 && !canProceedStep1) || (step === 2 && !canProceedStep2)) &&
-                  "opacity-50 cursor-not-allowed hover:translate-y-0"
+      <div className="fixed bottom-0 left-0 right-0 px-4 py-3 bg-white/95 backdrop-blur-md border-t border-neutral-200 z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+        <div className="max-w-2xl mx-auto">
+          {step === 1 ? (
+            <div className="flex items-center gap-3">
+              <div className="flex-1">
+                <div className="text-xs text-neutral-500 mb-0.5">预估回收价</div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-bold text-eco-600">¥{minPrice.toFixed(category === "phones" ? 0 : 2)}</span>
+                  <span className="text-neutral-400 text-sm">~</span>
+                  <span className="text-xl font-bold text-eco-600">¥{maxPrice.toFixed(category === "phones" ? 0 : 2)}</span>
+                </div>
+              </div>
+              <button
+                onClick={handleNext}
+                disabled={!canProceedStep1}
+                className={cn(
+                  "px-8 py-3.5 rounded-xl text-white font-semibold text-base shadow-lg transition-all duration-200 flex items-center gap-2",
+                  canProceedStep1
+                    ? "bg-gradient-to-r from-eco-500 via-eco-500 to-emerald-500 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+                    : "bg-gradient-to-r from-neutral-300 to-neutral-400 cursor-not-allowed opacity-60"
+                )}
+              >
+                下一步
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-3">
+              {step > 1 && (
+                <button
+                  onClick={handlePrev}
+                  className="btn-secondary flex-1 text-base"
+                >
+                  <ChevronLeft className="w-5 h-5 mr-1" />
+                  上一步
+                </button>
               )}
-            >
-              下一步
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          )}
-          {step === 3 && (
-            <button
-              onClick={handleConfirm}
-              className="btn-primary flex-1 text-base gap-2"
-            >
-              确认预约
-              <ArrowRight className="w-5 h-5" />
-            </button>
+              {step < 3 && (
+                <button
+                  onClick={handleNext}
+                  disabled={!canProceedStep2}
+                  className={cn(
+                    "flex-1 text-base gap-2 px-6 py-3 rounded-xl text-white font-semibold shadow-lg transition-all duration-200 flex items-center justify-center",
+                    canProceedStep2
+                      ? "bg-gradient-to-r from-eco-500 via-eco-500 to-emerald-500 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+                      : "bg-gradient-to-r from-neutral-300 to-neutral-400 cursor-not-allowed opacity-60"
+                  )}
+                >
+                  下一步
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              )}
+              {step === 3 && (
+                <button
+                  onClick={handleConfirm}
+                  className="flex-1 text-base gap-2 px-6 py-3 rounded-xl text-white font-semibold shadow-lg bg-gradient-to-r from-eco-500 via-eco-500 to-emerald-500 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center"
+                >
+                  确认预约
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>

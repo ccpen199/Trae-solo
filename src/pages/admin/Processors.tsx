@@ -25,8 +25,8 @@ import {
   Filter,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { mockProcessors, mockMaterialTraces, mockOrders } from "@/data/mockData";
-import type { Processor, ProcessorStatus } from "../../../shared/types";
+import { useStore } from "@/store/useStore";
+import type { Processor, ProcessorStatus, ReviewStatus } from "../../../shared/types";
 
 type TabKey = "review" | "partners" | "trace";
 
@@ -66,7 +66,7 @@ const traceStatusOptions = [
 
 export default function Processors() {
   const [activeTab, setActiveTab] = useState<TabKey>("review");
-  const [processors, setProcessors] = useState<Processor[]>(mockProcessors);
+  const { processors, materialTraces, orders, updateProcessor } = useStore();
   const [searchKey, setSearchKey] = useState("");
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [currentProcessor, setCurrentProcessor] = useState<Processor | null>(null);
@@ -78,7 +78,7 @@ export default function Processors() {
   const pendingReviews = processors.filter((p) => p.status === "reviewing" || p.status === "pending");
   const approvedPartners = processors.filter((p) => p.status === "approved");
 
-  const filteredTraces = mockMaterialTraces.filter((t) => {
+  const filteredTraces = materialTraces.filter((t) => {
     if (traceStatus !== "all" && t.status !== traceStatus) return false;
     if (traceSearch && !t.batchNo.includes(traceSearch) && !t.orderId.includes(traceSearch)) return false;
     return true;
@@ -92,26 +92,18 @@ export default function Processors() {
 
   const handleReviewAction = (action: "approve" | "reject") => {
     if (!currentProcessor) return;
-    setProcessors((prev) =>
-      prev.map((p) =>
-        p.id === currentProcessor.id
-          ? {
-              ...p,
-              status: action === "approve" ? "approved" : "rejected",
-              reviewHistory: [
-                ...p.reviewHistory,
-                {
-                  id: `review-${Date.now()}`,
-                  status: action === "approve" ? "approved" : "rejected",
-                  reviewer: "运营管理员",
-                  comment: reviewComment || (action === "approve" ? "资质审核通过" : "资质审核未通过"),
-                  createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-                },
-              ],
-            }
-          : p
-      )
-    );
+    const newStatus: ReviewStatus = action === "approve" ? "approved" : "rejected";
+    const newReview = {
+      id: `review-${Date.now()}`,
+      status: newStatus,
+      reviewer: "运营管理员",
+      comment: reviewComment || (action === "approve" ? "资质审核通过" : "资质审核未通过"),
+      createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
+    };
+    updateProcessor(currentProcessor.id, {
+      status: newStatus,
+      reviewHistory: [...currentProcessor.reviewHistory, newReview],
+    });
     setShowReviewModal(false);
     setCurrentProcessor(null);
   };
@@ -432,7 +424,7 @@ export default function Processors() {
                 </thead>
                 <tbody>
                   {filteredTraces.map((trace, idx) => {
-                    const order = mockOrders.find((o) => o.id === trace.orderId);
+                    const order = orders.find((o) => o.id === trace.orderId);
                     const processor = processors.find((p) => p.id === trace.processorId);
                     return (
                       <tr

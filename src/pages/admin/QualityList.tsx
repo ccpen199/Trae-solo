@@ -18,9 +18,15 @@ import {
   Smartphone,
   Package,
   Trash2,
+  Image as ImageIcon,
+  Sparkles,
+  ListChecks,
+  UserCheck,
+  DollarSign,
+  PlayCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { mockQualityOrders, mockOrders } from '@/data/mockData';
+import { useStore } from '@/store/useStore';
 import type { QualityOrder, QualityOrderStatus, Category } from '../../../shared/types';
 
 const statusOptions: { value: QualityOrderStatus | 'all'; label: string }[] = [
@@ -68,6 +74,7 @@ type DropdownKey = 'status' | 'category' | null;
 
 export default function QualityList() {
   const navigate = useNavigate();
+  const { qualityOrders, orders } = useStore();
   const [statusFilter, setStatusFilter] = useState<QualityOrderStatus | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
   const [searchText, setSearchText] = useState('');
@@ -79,11 +86,20 @@ export default function QualityList() {
   const pageSize = 5;
 
   const getOrderInfo = (qo: QualityOrder) => {
-    return mockOrders.find((o) => o.id === qo.orderId);
+    return orders.find((o) => o.id === qo.orderId);
   };
 
+  const stats = useMemo(() => {
+    return {
+      pending: qualityOrders.filter((q) => q.status === 'pending').length,
+      aiScreening: qualityOrders.filter((q) => q.status === 'ai-screening').length,
+      manualInspection: qualityOrders.filter((q) => q.status === 'manual-inspection').length,
+      completed: qualityOrders.filter((q) => q.status === 'completed').length,
+    };
+  }, [qualityOrders]);
+
   const filteredOrders = useMemo(() => {
-    return mockQualityOrders.filter((qo) => {
+    return qualityOrders.filter((qo) => {
       if (statusFilter !== 'all' && qo.status !== statusFilter) return false;
       const order = getOrderInfo(qo);
       if (categoryFilter !== 'all' && order?.category !== categoryFilter) return false;
@@ -97,7 +113,7 @@ export default function QualityList() {
       if (dateTo && qo.createdAt > dateTo + ' 23:59:59') return false;
       return true;
     });
-  }, [statusFilter, categoryFilter, searchText, dateFrom, dateTo]);
+  }, [qualityOrders, statusFilter, categoryFilter, searchText, dateFrom, dateTo, orders]);
 
   const totalPages = Math.ceil(filteredOrders.length / pageSize);
   const paginatedOrders = filteredOrders.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -121,6 +137,22 @@ export default function QualityList() {
     if (newSelected.has(id)) newSelected.delete(id);
     else newSelected.add(id);
     setSelectedIds(newSelected);
+  };
+
+  const handleQuickFilter = (status: QualityOrderStatus | 'all') => {
+    setStatusFilter(status);
+    setCurrentPage(1);
+  };
+
+  const getSopProgress = (qo: QualityOrder) => {
+    const completed = qo.sopSteps.filter((s) => s.completed).length;
+    const total = qo.sopSteps.length;
+    return { completed, total, percentage: total > 0 ? (completed / total) * 100 : 0 };
+  };
+
+  const getFinalPrice = (qo: QualityOrder) => {
+    const order = getOrderInfo(qo);
+    return order?.finalPrice ?? order?.estimatedPrice;
   };
 
   const renderDropdown = (
@@ -160,6 +192,64 @@ export default function QualityList() {
     </div>
   );
 
+  const statBadgeConfig: Record<QualityOrderStatus, { dot: string; text: string; activeBg: string; activeRing: string }> = {
+    pending: {
+      dot: 'bg-neutral-400',
+      text: 'text-neutral-600',
+      activeBg: 'bg-neutral-50',
+      activeRing: 'ring-neutral-400',
+    },
+    'ai-screening': {
+      dot: 'bg-blue-500',
+      text: 'text-blue-600',
+      activeBg: 'bg-blue-50',
+      activeRing: 'ring-blue-500',
+    },
+    'manual-inspection': {
+      dot: 'bg-amber-500',
+      text: 'text-amber-600',
+      activeBg: 'bg-amber-50',
+      activeRing: 'ring-amber-500',
+    },
+    completed: {
+      dot: 'bg-eco-500',
+      text: 'text-eco-600',
+      activeBg: 'bg-eco-50',
+      activeRing: 'ring-eco-500',
+    },
+  };
+
+  const StatBadge = ({
+    label,
+    count,
+    status,
+    isActive,
+    onClick,
+  }: {
+    label: string;
+    count: number;
+    status: QualityOrderStatus;
+    isActive: boolean;
+    onClick: () => void;
+  }) => {
+    const config = statBadgeConfig[status];
+    return (
+      <button
+        onClick={onClick}
+        className={cn(
+          'flex items-center gap-2 px-3 py-2 rounded-lg transition-all border',
+          isActive
+            ? `${config.activeBg} border-transparent ring-2 ring-offset-1 ${config.activeRing}`
+            : 'bg-white border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50'
+        )}
+      >
+        <span className={cn('w-2 h-2 rounded-full', config.dot)}></span>
+        <span className="text-sm font-medium text-neutral-700">{label}</span>
+        <span className={cn('text-sm font-bold', config.text)}>{count}</span>
+      </button>
+    );
+  };
+
   return (
     <div className="p-6 animate-fade-in">
       <div className="mb-6">
@@ -168,6 +258,45 @@ export default function QualityList() {
       </div>
 
       <div className="card p-4 mb-5">
+        <div className="flex flex-wrap items-center gap-2 mb-4 pb-4 border-b border-neutral-100">
+          <StatBadge
+            label="待处理"
+            count={stats.pending}
+            status="pending"
+            isActive={statusFilter === 'pending'}
+            onClick={() => handleQuickFilter('pending')}
+          />
+          <StatBadge
+            label="AI质检中"
+            count={stats.aiScreening}
+            status="ai-screening"
+            isActive={statusFilter === 'ai-screening'}
+            onClick={() => handleQuickFilter('ai-screening')}
+          />
+          <StatBadge
+            label="人工质检中"
+            count={stats.manualInspection}
+            status="manual-inspection"
+            isActive={statusFilter === 'manual-inspection'}
+            onClick={() => handleQuickFilter('manual-inspection')}
+          />
+          <StatBadge
+            label="已完成"
+            count={stats.completed}
+            status="completed"
+            isActive={statusFilter === 'completed'}
+            onClick={() => handleQuickFilter('completed')}
+          />
+          {statusFilter !== 'all' && (
+            <button
+              onClick={() => handleQuickFilter('all')}
+              className="text-sm text-neutral-500 hover:text-neutral-700 underline ml-2"
+            >
+              清除筛选
+            </button>
+          )}
+        </div>
+
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[240px]">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
@@ -225,6 +354,10 @@ export default function QualityList() {
               <UserPlus className="w-4 h-4" />
               批量分配
             </button>
+            <button className="btn-secondary !py-2 !px-4 text-sm gap-1.5 text-blue-600 hover:!text-blue-600 hover:!border-blue-300 hover:!bg-blue-50">
+              <PlayCircle className="w-4 h-4" />
+              批量开始质检
+            </button>
             <button className="btn-secondary !py-2 !px-4 text-sm gap-1.5 text-amber-600 hover:!text-amber-600 hover:!border-amber-300 hover:!bg-amber-50">
               <Tag className="w-4 h-4" />
               批量标记
@@ -239,7 +372,7 @@ export default function QualityList() {
 
       <div className="card overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[1100px]">
             <thead>
               <tr>
                 <th className="table-th w-12">
@@ -251,9 +384,16 @@ export default function QualityList() {
                     )}
                   </button>
                 </th>
+                <th className="table-th w-12">
+                  <span className="text-xs text-neutral-400">图片</span>
+                </th>
                 <th className="table-th">订单号</th>
                 <th className="table-th">品类</th>
                 <th className="table-th">状态</th>
+                <th className="table-th">AI初筛</th>
+                <th className="table-th">SOP进度</th>
+                <th className="table-th">人工结论</th>
+                <th className="table-th">最终估价</th>
                 <th className="table-th">创建时间</th>
                 <th className="table-th">分配给</th>
                 <th className="table-th text-right">操作</th>
@@ -262,7 +402,7 @@ export default function QualityList() {
             <tbody>
               {paginatedOrders.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-16 text-center text-neutral-400">
+                  <td colSpan={12} className="py-16 text-center text-neutral-400">
                     暂无质检工单
                   </td>
                 </tr>
@@ -271,6 +411,8 @@ export default function QualityList() {
                   const order = getOrderInfo(qo);
                   const CatIcon = categoryIconMap[order?.category || ''] || Package;
                   const isSelected = selectedIds.has(qo.id);
+                  const sopProgress = getSopProgress(qo);
+                  const finalPrice = getFinalPrice(qo);
                   return (
                     <tr
                       key={qo.id}
@@ -282,13 +424,32 @@ export default function QualityList() {
                       style={{ animationDelay: `${idx * 40}ms` }}
                     >
                       <td className="table-td">
-                        <button onClick={(e) => { e.stopPropagation(); toggleSelect(qo.id); }} className="p-1">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSelect(qo.id);
+                          }}
+                          className="p-1"
+                        >
                           {isSelected ? (
                             <CheckSquare className="w-4 h-4 text-eco-600" />
                           ) : (
                             <Square className="w-4 h-4 text-neutral-400 hover:text-neutral-600" />
                           )}
                         </button>
+                      </td>
+                      <td className="table-td">
+                        <div className="w-8 h-8 rounded-lg overflow-hidden bg-neutral-100 flex items-center justify-center flex-shrink-0">
+                          {qo.images && qo.images.length > 0 ? (
+                            <img
+                              src={qo.images[0]}
+                              alt=""
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <ImageIcon className="w-4 h-4 text-neutral-300" />
+                          )}
+                        </div>
                       </td>
                       <td className="table-td font-medium text-neutral-800">{order?.orderNo || '-'}</td>
                       <td className="table-td">
@@ -307,9 +468,67 @@ export default function QualityList() {
                         </span>
                       </td>
                       <td className="table-td">
+                        {qo.aiResult ? (
+                          <div className="flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+                            <span className="text-sm font-medium text-blue-600">
+                              {qo.aiResult.detectedCondition}分
+                            </span>
+                            <span className="text-xs text-neutral-400">/</span>
+                            <span className="text-xs text-neutral-500">
+                              {Math.round(qo.aiResult.confidence * 100)}%
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-neutral-300 text-sm">-</span>
+                        )}
+                      </td>
+                      <td className="table-td">
+                        <div className="flex items-center gap-2">
+                          <ListChecks className="w-3.5 h-3.5 text-amber-500" />
+                          <div className="flex-1 min-w-[60px]">
+                            <div className="flex items-center justify-between mb-0.5">
+                              <span className="text-xs font-medium text-neutral-700">
+                                {sopProgress.completed}/{sopProgress.total}
+                              </span>
+                            </div>
+                            <div className="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full transition-all"
+                                style={{ width: `${sopProgress.percentage}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="table-td">
+                        {qo.manualResult ? (
+                          <div className="flex items-center gap-1.5">
+                            <UserCheck className="w-3.5 h-3.5 text-eco-500" />
+                            <span className="text-sm font-medium text-eco-600">
+                              {qo.manualResult.condition}分
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-neutral-300 text-sm">-</span>
+                        )}
+                      </td>
+                      <td className="table-td">
+                        {finalPrice ? (
+                          <div className="flex items-center gap-1">
+                            <DollarSign className="w-3.5 h-3.5 text-eco-500" />
+                            <span className="text-sm font-bold text-eco-600">
+                              ¥{finalPrice.toFixed(2)}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-neutral-300 text-sm">-</span>
+                        )}
+                      </td>
+                      <td className="table-td">
                         <div className="flex items-center gap-1.5 text-neutral-600">
                           <Clock className="w-3.5 h-3.5 text-neutral-400" />
-                          {qo.createdAt}
+                          <span className="text-xs">{qo.createdAt}</span>
                         </div>
                       </td>
                       <td className="table-td">
@@ -318,23 +537,30 @@ export default function QualityList() {
                             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-eco-400 to-eco-600 flex items-center justify-center text-white text-xs font-medium">
                               {qo.assignee.slice(-2)}
                             </div>
-                            <span className="text-neutral-700">{qo.assignee}</span>
+                            <span className="text-neutral-700 text-sm">{qo.assignee}</span>
                           </div>
                         ) : (
                           <span className="text-neutral-400 text-sm">未分配</span>
                         )}
                       </td>
                       <td className="table-td text-right">
-                        <div className="flex items-center justify-end gap-2">
+                        <div className="flex items-center justify-end gap-1">
                           <button
-                            onClick={(e) => { e.stopPropagation(); navigate(`/admin/quality/${qo.id}`); }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/admin/quality/${qo.id}`);
+                            }}
                             className="p-2 rounded-lg text-eco-600 hover:bg-eco-50 transition-colors"
+                            title="查看详情"
                           >
                             <Eye className="w-4 h-4" />
                           </button>
                           <button
-                            onClick={(e) => { e.stopPropagation(); }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
                             className="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 transition-colors"
+                            title="分配"
                           >
                             <UserPlus className="w-4 h-4" />
                           </button>

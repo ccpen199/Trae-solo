@@ -17,7 +17,7 @@ import {
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { mockPricingRules, brandList } from '@/data/mockData';
+import { useStore } from '@/store/useStore';
 import type {
   Category,
   PricingCondition,
@@ -71,8 +71,9 @@ type DropdownKey = 'category' | `field-${number}` | `operator-${number}` | 'form
 export default function PricingEdit() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { pricingRules, brands } = useStore();
   const isNew = id === 'new';
-  const existingRule = mockPricingRules.find((r) => r.id === id);
+  const existingRule = pricingRules.find((r) => r.id === id);
 
   const [name, setName] = useState(existingRule?.name || '');
   const [category, setCategory] = useState<Category | 'all'>(existingRule?.category || 'all');
@@ -135,7 +136,7 @@ export default function PricingEdit() {
       if (m.field === 'condition') fieldValue = testCondition;
       else if (m.field === 'weight') fieldValue = testWeight;
       else if (m.field === 'quantity') fieldValue = testQuantity;
-      else if (m.field === 'brand') fieldValue = brandList.some((b) => b.name === testBrand) ? 1.5 : 1;
+      else if (m.field === 'brand') fieldValue = brands.some((b) => b.name === testBrand) ? 1.5 : 1;
       price += price * fieldValue * m.factor;
     });
 

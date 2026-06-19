@@ -1,5 +1,5 @@
 import { Search, Filter, RefreshCw } from "lucide-react";
-import { mockPayouts } from "@/data/mockData";
+import { useStore } from "@/store/useStore";
 import { cn } from "@/lib/utils";
 
 const statusMap: Record<string, { label: string; className: string }> = {
@@ -15,31 +15,32 @@ const methodMap: Record<string, string> = {
 };
 
 export default function Payout() {
+  const payouts = useStore((s) => s.payouts);
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="card p-4">
           <p className="text-sm text-neutral-500">今日打款笔数</p>
           <p className="mt-1 text-2xl font-bold text-neutral-800">
-            {mockPayouts.filter((p) => p.status === "success").length}
+            {payouts.filter((p) => p.status === "success").length}
           </p>
         </div>
         <div className="card p-4">
           <p className="text-sm text-neutral-500">今日打款金额</p>
           <p className="mt-1 text-2xl font-bold text-eco-600">
-            ¥{mockPayouts.filter((p) => p.status === "success").reduce((s, p) => s + p.amount, 0).toFixed(2)}
+            ¥{payouts.filter((p) => p.status === "success").reduce((s, p) => s + p.amount, 0).toFixed(2)}
           </p>
         </div>
         <div className="card p-4">
           <p className="text-sm text-neutral-500">待处理</p>
           <p className="mt-1 text-2xl font-bold text-amber-600">
-            {mockPayouts.filter((p) => p.status === "pending" || p.status === "processing").length}
+            {payouts.filter((p) => p.status === "pending" || p.status === "processing").length}
           </p>
         </div>
         <div className="card p-4">
           <p className="text-sm text-neutral-500">异常</p>
           <p className="mt-1 text-2xl font-bold text-rose-600">
-            {mockPayouts.filter((p) => p.status === "failed").length}
+            {payouts.filter((p) => p.status === "failed").length}
           </p>
         </div>
       </div>
@@ -76,7 +77,7 @@ export default function Payout() {
             </tr>
           </thead>
           <tbody>
-            {mockPayouts.map((payout) => (
+            {payouts.map((payout) => (
               <tr key={payout.id} className="hover:bg-neutral-50">
                 <td className="table-td font-mono text-sm">{payout.id}</td>
                 <td className="table-td font-mono text-sm">{payout.orderId}</td>
