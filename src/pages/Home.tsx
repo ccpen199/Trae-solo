@@ -595,16 +595,45 @@ export default function Home() {
                 </div>
 
                 {displayCount < filteredServices.length && (
-                  <div className="text-center mt-6">
+                  <div className="text-center mt-6 space-y-3">
+                    <div className="max-w-lg mx-auto">
+                      <div className="flex items-center justify-between mb-1 text-xs text-ink-light">
+                        <span>加载进度</span>
+                        <span className="font-medium text-gov-700">
+                          {Math.min(displayCount, filteredServices.length)} / {filteredServices.length} 项 · 剩余 {Math.max(0, filteredServices.length - displayCount)} 项
+                        </span>
+                      </div>
+                      <div className="h-2 bg-ink-bg rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-gov-500 to-violet-500 rounded-full transition-all duration-500"
+                          style={{ width: `${Math.min(100, (displayCount / filteredServices.length) * 100)}%` }}
+                        />
+                      </div>
+                    </div>
                     <button
-                      onClick={() => setDisplayCount((c) => c + 12)}
-                      className="btn-secondary inline-flex items-center gap-1"
+                      onClick={() => setDisplayCount((c) => {
+                        const next = c + 12;
+                        return Math.min(next, filteredServices.length);
+                      })}
+                      className="btn-secondary inline-flex items-center gap-2"
                     >
                       加载更多 <ChevronRight className="w-4 h-4" />
-                      <span className="text-xs text-ink-light ml-1">
-                        （已加载 {Math.min(displayCount, filteredServices.length)} / 共 {filteredServices.length} 项，剩余 {filteredServices.length - displayCount} 项）
+                      <span className="text-xs text-ink-light">
+                        （下一批展开 {Math.min(12, filteredServices.length - displayCount)} 项）
                       </span>
                     </button>
+                    {displayCount + 12 < filteredServices.length && (
+                      <p className="text-[10px] text-ink-lighter">
+                        提示：您也可以前往 <Link to="/services" className="text-gov-600 hover:underline">服务大厅</Link> 使用多维检索筛选
+                      </p>
+                    )}
+                  </div>
+                )}
+                {displayCount >= filteredServices.length && filteredServices.length > 0 && (
+                  <div className="text-center mt-6 py-2">
+                    <p className="text-xs text-success-600 flex items-center justify-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> 已加载全部 {filteredServices.length} 项服务
+                    </p>
                   </div>
                 )}
               </>
@@ -667,36 +696,75 @@ export default function Home() {
                     </div>
                     <span className="text-[10px] text-ink-lighter">共 {mockCases.length} 条示例</span>
                   </div>
-                  {mockCases.slice(0, 3).map((c) => {
+                  <div className="grid grid-cols-4 gap-2 mb-3">
+                    <div className="p-2.5 rounded-lg bg-gov-50 border border-gov-100 text-center">
+                      <p className="text-lg font-bold text-gov-700 leading-none">{mockCases.length}</p>
+                      <p className="text-[10px] text-gov-600 mt-1">示例办件</p>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-success-50 border border-success-100 text-center">
+                      <p className="text-lg font-bold text-success-700 leading-none">{mockCases.filter(c => ["completed","approved"].includes(c.status)).length}</p>
+                      <p className="text-[10px] text-success-600 mt-1">已办结</p>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-warning-50 border border-warning-100 text-center">
+                      <p className="text-lg font-bold text-warning-700 leading-none">{mockCases.filter(c => ["processing","accepted","submitted","pending_material"].includes(c.status)).length}</p>
+                      <p className="text-[10px] text-warning-600 mt-1">办理中</p>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-violet-50 border border-violet-100 text-center">
+                      <p className="text-lg font-bold text-violet-700 leading-none">{mockCases.reduce((s,c)=>s+c.materials.length,0)}</p>
+                      <p className="text-[10px] text-violet-600 mt-1">上传材料</p>
+                    </div>
+                  </div>
+                  {mockCases.slice(0, 2).map((c) => {
                     const statusInfo = statusTextMap[c.status];
+                    const doneNodes = c.timeline.filter((t) => t.status === "completed").length;
+                    const lastNode = c.timeline[c.timeline.length - 1];
                     return (
-                      <div
+                      <Link
                         key={c.id}
-                        className="p-4 rounded-lg border border-dashed border-gray-200 bg-gray-50/50 hover:border-gov-200 hover:bg-gov-50/30 transition-all cursor-pointer"
+                        to={`/cases/${c.id}`}
+                        className="block p-4 rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50/40 hover:border-gov-300 hover:shadow-md hover:from-gov-50/30 transition-all group"
                       >
                         <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h3 className="font-medium text-ink flex items-center gap-2">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors flex items-center gap-2">
                               {c.serviceName}
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">示例</span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 shrink-0">示例</span>
                             </h3>
                             <p className="text-xs text-ink-light mt-1">
-                              办件编号：{c.caseNo} · 提交于 {c.applyTime.split(" ")[0]}
+                              <span className="font-mono">办件编号 {c.caseNo}</span> · 提交于 {c.applyTime.split(" ")[0]}
                             </p>
                           </div>
-                          <span className={cn("shrink-0 text-xs", statusInfo.badge)}>
+                          <span className={cn("shrink-0 text-xs ml-2", statusInfo.badge)}>
                             {statusInfo.text}
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-0">
+                        <div className="mb-3">
+                          <div className="flex items-center justify-between text-[11px] text-ink-light mb-1">
+                            <span>节点进度</span>
+                            <span className="font-medium text-gov-700">{doneNodes}/{c.timeline.length} · {Math.round(doneNodes / c.timeline.length * 100)}%</span>
+                          </div>
+                          <div className="flex-1 h-1.5 bg-ink-bg rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                "h-full rounded-full transition-all",
+                                c.status === "rejected" ? "bg-danger-500" : c.status === "completed" || c.status === "approved"
+                                  ? "bg-gradient-to-r from-success-500 to-gov-500"
+                                  : "bg-gradient-to-r from-gov-500 to-violet-500"
+                              )}
+                              style={{ width: `${(doneNodes / c.timeline.length) * 100}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-0 flex-wrap mb-2.5">
                           {getLifecycleStatus(c).map((step, si) => {
                             const StepIcon = step.icon;
                             return (
                               <div key={step.key} className="flex items-center">
                                 <div
                                   className={cn(
-                                    "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
+                                    "flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium",
                                     step.state === "done" && "bg-success-50 text-success-700",
                                     step.state === "active" && "bg-gov-50 text-gov-700 ring-1 ring-gov-200",
                                     step.state === "pending" && "bg-gray-50 text-gray-400",
@@ -706,7 +774,7 @@ export default function Home() {
                                   {step.state === "done" ? (
                                     <CheckCircle2 className="w-2.5 h-2.5" />
                                   ) : step.state === "active" ? (
-                                    <Circle className="w-2.5 h-2.5 fill-current" />
+                                    <Circle className="w-2.5 h-2.5 fill-current animate-pulse-soft" />
                                   ) : (
                                     <Circle className="w-2.5 h-2.5" />
                                   )}
@@ -723,14 +791,25 @@ export default function Home() {
                           })}
                         </div>
 
-                        <p className="text-xs text-ink-light mt-2 flex items-center gap-1">
-                          <Clock className="w-3 h-3" /> 当前节点：{c.currentNode}
-                        </p>
-                      </div>
+                        <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-dashed border-gray-200">
+                          <div className="flex items-center gap-1 text-[11px] text-ink-light min-w-0">
+                            <User className="w-3 h-3 shrink-0 text-gov-600" />
+                            <span className="truncate">经办人：{lastNode?.handler || "系统"}</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-[11px] text-ink-light min-w-0">
+                            <Upload className="w-3 h-3 shrink-0 text-violet-600" />
+                            <span className="truncate">{c.materials.length}份材料</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-[11px] text-ink-light min-w-0">
+                            <Clock className="w-3 h-3 shrink-0 text-success-600" />
+                            <span className="truncate">{lastNode?.handleTime?.split(" ")[0] || c.applyTime.split(" ")[0]}</span>
+                          </div>
+                        </div>
+                      </Link>
                     );
                   })}
 
-                  <div className="text-center pt-2">
+                  <div className="text-center pt-3">
                     <Link to="/login" className="btn-primary inline-flex items-center gap-2">
                       <LogOut className="w-4 h-4 rotate-180" />
                       立即登录查看我的真实办件
@@ -748,37 +827,75 @@ export default function Home() {
                   </Link>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
+                  <div className="grid grid-cols-4 gap-2 mb-2">
+                    <div className="p-2.5 rounded-lg bg-gov-50 border border-gov-100 text-center">
+                      <p className="text-lg font-bold text-gov-700 leading-none">{cases.length}</p>
+                      <p className="text-[10px] text-gov-600 mt-1">全部办件</p>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-success-50 border border-success-100 text-center">
+                      <p className="text-lg font-bold text-success-700 leading-none">{cases.filter(c => ["completed","approved"].includes(c.status)).length}</p>
+                      <p className="text-[10px] text-success-600 mt-1">已办结</p>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-warning-50 border border-warning-100 text-center">
+                      <p className="text-lg font-bold text-warning-700 leading-none">{activeCases.length}</p>
+                      <p className="text-[10px] text-warning-600 mt-1">办理中</p>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-violet-50 border border-violet-100 text-center">
+                      <p className="text-lg font-bold text-violet-700 leading-none">{cases.reduce((s,c)=>s+c.materials.length,0)}</p>
+                      <p className="text-[10px] text-violet-600 mt-1">上传材料</p>
+                    </div>
+                  </div>
                   {activeCases.slice(0, 2).map((c) => {
                     const statusInfo = statusTextMap[c.status];
+                    const doneNodes = c.timeline.filter((t) => t.status === "completed").length;
+                    const lastNode = c.timeline[c.timeline.length - 1];
                     return (
                       <Link
                         key={c.id}
                         to={`/cases/${c.id}`}
-                        className="block p-4 rounded-lg border border-ink-border hover:border-gov-200 hover:bg-gov-50/30 transition-all group"
+                        className="block p-4 rounded-xl border border-ink-border hover:border-gov-300 hover:shadow-md hover:bg-gov-50/20 transition-all group"
                       >
                         <div className="flex items-start justify-between mb-3">
-                          <div>
+                          <div className="flex-1 min-w-0">
                             <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors">
                               {c.serviceName}
                             </h3>
                             <p className="text-xs text-ink-light mt-1">
-                              办件编号：{c.caseNo} · 提交于 {c.applyTime.split(" ")[0]}
+                              <span className="font-mono">办件编号 {c.caseNo}</span> · 提交于 {c.applyTime.split(" ")[0]}
                             </p>
                           </div>
-                          <span className={cn("shrink-0", statusInfo.badge)}>
+                          <span className={cn("shrink-0 text-xs ml-2", statusInfo.badge)}>
                             {statusInfo.text}
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-0">
+                        <div className="mb-3">
+                          <div className="flex items-center justify-between text-[11px] text-ink-light mb-1">
+                            <span>节点进度</span>
+                            <span className="font-medium text-gov-700">{doneNodes}/{c.timeline.length} · {Math.round(doneNodes / c.timeline.length * 100)}%</span>
+                          </div>
+                          <div className="flex-1 h-1.5 bg-ink-bg rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                "h-full rounded-full transition-all",
+                                c.status === "rejected" ? "bg-danger-500" : c.status === "completed" || c.status === "approved"
+                                  ? "bg-gradient-to-r from-success-500 to-gov-500"
+                                  : "bg-gradient-to-r from-gov-500 to-violet-500"
+                              )}
+                              style={{ width: `${(doneNodes / c.timeline.length) * 100}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-0 flex-wrap mb-2.5">
                           {getLifecycleStatus(c).map((step, si) => {
                             const StepIcon = step.icon;
                             return (
                               <div key={step.key} className="flex items-center">
                                 <div
                                   className={cn(
-                                    "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
+                                    "flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium",
                                     step.state === "done" && "bg-success-50 text-success-700",
                                     step.state === "active" && "bg-gov-50 text-gov-700 ring-1 ring-gov-200",
                                     step.state === "pending" && "bg-gray-50 text-gray-400",
@@ -788,7 +905,7 @@ export default function Home() {
                                   {step.state === "done" ? (
                                     <CheckCircle2 className="w-2.5 h-2.5" />
                                   ) : step.state === "active" ? (
-                                    <Circle className="w-2.5 h-2.5 fill-current" />
+                                    <Circle className="w-2.5 h-2.5 fill-current animate-pulse-soft" />
                                   ) : (
                                     <Circle className="w-2.5 h-2.5" />
                                   )}
@@ -805,9 +922,28 @@ export default function Home() {
                           })}
                         </div>
 
-                        <p className="text-xs text-ink-light mt-2 flex items-center gap-1">
-                          <Clock className="w-3 h-3" /> 当前节点：{c.currentNode}
-                        </p>
+                        <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-dashed border-gray-200">
+                          <div className="flex items-center gap-1 text-[11px] text-ink-light min-w-0">
+                            <User className="w-3 h-3 shrink-0 text-gov-600" />
+                            <span className="truncate">经办人：{lastNode?.handler || "系统"}</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-[11px] text-ink-light min-w-0">
+                            <Upload className="w-3 h-3 shrink-0 text-violet-600" />
+                            <span className="truncate">{c.materials.length}份材料</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-[11px] text-ink-light min-w-0">
+                            <Clock className="w-3 h-3 shrink-0 text-success-600" />
+                            <span className="truncate">{lastNode?.handleTime?.split(" ")[0] || c.applyTime.split(" ")[0]}</span>
+                          </div>
+                        </div>
+
+                        {lastNode?.remark && (
+                          <div className="mt-2.5 p-2.5 rounded-lg bg-gov-50/60 border border-gov-100">
+                            <p className="text-[11px] text-gov-800 leading-relaxed">
+                              <b>最新处理</b>：{lastNode.remark}
+                            </p>
+                          </div>
+                        )}
                       </Link>
                     );
                   })}

@@ -7,8 +7,16 @@ import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const host = env.VITE_HOST || '127.0.0.1'
-  const port = Number(env.VITE_PORT || 49132)
-  const apiPort = Number(env.PORT || 59132)
+  const port = (() => {
+    const raw = Number(env.VITE_PORT || 49132);
+    if (isNaN(raw) || raw <= 0 || raw > 40000) return 5175;
+    return raw;
+  })();
+  const apiPort = (() => {
+    const raw = Number(env.PORT || 59132);
+    if (isNaN(raw) || raw <= 0 || raw > 40000) return 3003;
+    return raw;
+  })();
   const apiBaseUrl = env.VITE_API_BASE_URL || `http://${env.HOST || '127.0.0.1'}:${apiPort}`
 
   return {

@@ -119,13 +119,41 @@ export default function Services() {
 
   const stats = useMemo(() => {
     const total = services.length;
-    const online = services.filter((s) => s.onlineAvailable).length;
+    const online = services.filter((s) => s.status === "online").length;
+    const maintenance = services.filter((s) => s.status === "maintenance").length;
     const filteredTotal = filtered.length;
-    const filteredOnline = filtered.filter((s) => s.onlineAvailable).length;
-    const citizenCount = services.filter((s) => s.userType.includes("citizen")).length;
-    const enterpriseCount = services.filter((s) => s.userType.includes("enterprise")).length;
-    return { total, online, filteredTotal, filteredOnline, citizenCount, enterpriseCount, depts: mockDepartments.length };
+    const filteredOnline = filtered.filter((s) => s.status === "online").length;
+    const filteredMaintenance = filtered.filter((s) => s.status === "maintenance").length;
+    const citizenCount = filtered.filter((s) => s.userType.includes("citizen")).length;
+    const enterpriseCount = filtered.filter((s) => s.userType.includes("enterprise")).length;
+    return { total, online, maintenance, filteredTotal, filteredOnline, filteredMaintenance, citizenCount, enterpriseCount, depts: mockDepartments.length };
   }, [services, filtered]);
+
+  const statusStats = useMemo(() => {
+    const base = services.filter((s) => {
+      const domainMatch = selectedDomain === "all" || s.category === selectedDomain;
+      const kwMatch =
+        !searchKeyword ||
+        s.name.includes(searchKeyword) ||
+        s.description.includes(searchKeyword) ||
+        s.department.includes(searchKeyword) ||
+        s.subCategory.includes(searchKeyword);
+      const deptMatch = selectedDept === "all" || s.departmentId === selectedDept;
+      const userTypeMatch = selectedUserType === "all" || s.userType.includes(selectedUserType);
+      const authLevelMatch =
+        selectedAuthLevel === "all" ||
+        (selectedAuthLevel === "L1" && s.authLevel === "L1") ||
+        (selectedAuthLevel === "L2" && s.authLevel !== "L3") ||
+        (selectedAuthLevel === "L3" && s.authLevel === "L3");
+      const districtMatch = selectedDistrict === "all" || s.district.includes(selectedDistrict);
+      return domainMatch && kwMatch && deptMatch && userTypeMatch && authLevelMatch && districtMatch;
+    });
+    return {
+      all: base.length,
+      online: base.filter((s) => s.status === "online").length,
+      maintenance: base.filter((s) => s.status === "maintenance").length,
+    };
+  }, [services, selectedDomain, searchKeyword, selectedDept, selectedUserType, selectedAuthLevel, selectedDistrict]);
 
   const authLevelStats = useMemo(() => ({
     L1: services.filter((s) => s.authLevel === "L1").length,
@@ -382,9 +410,9 @@ export default function Services() {
                 </h4>
                 <div className="space-y-1.5">
                   {[
-                    { k: "all" as const, label: "全部服务", count: services.length },
-                    { k: "online" as const, label: "正常服务", count: stats.online },
-                    { k: "maintenance" as const, label: "维护中", count: services.filter((s) => s.status === "maintenance").length },
+                    { k: "all" as const, label: "全部服务", count: statusStats.all },
+                    { k: "online" as const, label: "正常服务", count: statusStats.online },
+                    { k: "maintenance" as const, label: "维护中", count: statusStats.maintenance },
                   ].map((s) => (
                     <button
                       key={s.k}
