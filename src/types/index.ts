@@ -52,6 +52,8 @@ export interface Post {
   authorName?: string
   authorType: 'user' | 'merchant'
   merchantVerified?: boolean
+  merchantRating?: number
+  merchantReviewCount?: number
   status: 'pending' | 'reviewing' | 'approved' | 'rejected' | 'flagged'
   riskScore: number
   isTop: boolean

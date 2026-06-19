@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Filter, Grid3X3, List, Map, X, MapPin, Clock, Tag, SearchX } from 'lucide-react'
+import { Filter, Grid3X3, List, Map, X, MapPin, Clock, Tag, SearchX, Plus } from 'lucide-react'
 import { useSearchParams, Link } from 'react-router-dom'
 import PostCard from '@/components/PostCard'
 import { EmptyState, ErrorState, SkeletonCard } from '@/components/StateFeedback'
@@ -51,6 +51,7 @@ export default function PostList() {
   const maxPrice = searchParams.get('maxPrice') || ''
   const timeRange = searchParams.get('timeRange') || ''
   const merchantOnly = searchParams.get('merchantOnly') === '1'
+  const currentCategory = CATEGORIES.find((c) => c.key === category) || null
 
   const setParam = useCallback((key: string, value: string) => {
     setSearchParams((prev) => {
@@ -184,28 +185,66 @@ export default function PostList() {
       )}
 
       <main className="flex-1 min-w-0">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <button onClick={() => setDrawerOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-slate-100">
-              <Filter className="w-5 h-5 text-slate-600" />
-            </button>
-            <span className="text-sm text-slate-500">共 <b className="text-slate-800">{total}</b> 条结果</span>
+        <div className="mb-4">
+          <div className="flex items-end justify-between mb-3 flex-wrap gap-3">
+            <div>
+              <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2 flex-wrap">
+                {currentCategory ? (
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
+                      style={{ backgroundColor: `${currentCategory.color}20`, color: currentCategory.color }}
+                    >
+                      {currentCategory.label.charAt(0)}
+                    </span>
+                    {currentCategory.label}
+                  </span>
+                ) : '全部信息'}
+                {(province || city || district) && (
+                  <span className="text-sm text-slate-400 font-normal">
+                    · {district || city || province}
+                  </span>
+                )}
+              </h1>
+              <p className="text-xs text-slate-400 mt-1">
+                {loading ? '加载中...' : `共 ${total} 条信息`}
+                {merchantOnly && <span className="ml-2">· 仅商家</span>}
+              </p>
+            </div>
+            <Link
+              to={currentCategory ? `/publish/${currentCategory.key}` : "/publish"}
+              className="btn-accent text-sm flex items-center gap-1.5"
+            >
+              <Plus className="w-4 h-4" />
+              发布{currentCategory ? currentCategory.label : '信息'}
+            </Link>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex border border-slate-200 rounded-lg overflow-hidden">
-              {([['grid', Grid3X3], ['list', List], ['map', Map]] as const).map(([mode, Icon]) => (
-                <button key={mode} onClick={() => setViewMode(mode)}
-                  className={`p-2 ${viewMode === mode ? 'bg-navy-800 text-white' : 'text-slate-400 hover:bg-slate-50'}`}>
-                  <Icon className="w-4 h-4" />
-                </button>
-              ))}
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <button onClick={() => setDrawerOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-slate-100">
+                <Filter className="w-5 h-5 text-slate-600" />
+              </button>
+              <span className="hidden lg:inline-flex text-sm text-slate-500">
+                共 <b className="text-slate-800 mx-1">{total}</b> 条结果
+              </span>
             </div>
 
-            <select value={sort} onChange={(e) => { setSort(e.target.value); setPage(1) }}
-              className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-navy-300">
-              {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
+            <div className="flex items-center gap-3">
+              <div className="flex border border-slate-200 rounded-lg overflow-hidden">
+                {([['grid', Grid3X3], ['list', List], ['map', Map]] as const).map(([mode, Icon]) => (
+                  <button key={mode} onClick={() => setViewMode(mode)}
+                    className={`p-2 ${viewMode === mode ? 'bg-navy-800 text-white' : 'text-slate-400 hover:bg-slate-50'}`}>
+                    <Icon className="w-4 h-4" />
+                  </button>
+                ))}
+              </div>
+
+              <select value={sort} onChange={(e) => { setSort(e.target.value); setPage(1) }}
+                className="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-navy-300">
+                {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
           </div>
         </div>
 
@@ -218,12 +257,16 @@ export default function PostList() {
         ) : posts.length === 0 ? (
           <EmptyState
             icon={<SearchX className="w-16 h-16 text-slate-300 mb-2" />}
-            title="未找到相关信息"
-            description="当前筛选条件下没有匹配的内容，试试调整筛选条件或查看其他分类"
+            title={currentCategory ? `暂无${currentCategory.label}信息` : '未找到相关信息'}
+            description={currentCategory
+              ? `当前${currentCategory.label}类目下还没有商家发布服务信息，您可以成为第一个发布者，或尝试调整地区筛选`
+              : '当前筛选条件下没有匹配的内容，试试调整筛选条件或查看其他分类'}
             action={
               <div className="flex gap-2">
                 <button onClick={resetFilters} className="btn-outline text-sm">清除筛选</button>
-                <Link to="/publish" className="btn-accent text-sm">发布新信息</Link>
+                <Link to={currentCategory ? `/publish/${currentCategory.key}` : "/publish"} className="btn-accent text-sm">
+                  发布{currentCategory ? currentCategory.label : '新'}信息
+                </Link>
               </div>
             }
           />

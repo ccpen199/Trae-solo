@@ -20,27 +20,30 @@ router.get('/', (req: Request, res: Response): void => {
   const params: unknown[] = []
 
   if (category) {
-    conditions.push('category = ?')
+    conditions.push('p.category = ?')
     params.push(category)
   }
   if (province) {
-    conditions.push('province = ?')
+    conditions.push('p.province = ?')
     params.push(province)
   }
   if (city) {
-    conditions.push('city = ?')
+    conditions.push('p.city = ?')
     params.push(city)
   }
   if (district) {
-    conditions.push('district = ?')
+    conditions.push('p.district = ?')
     params.push(district)
   }
   if (status) {
-    conditions.push('status = ?')
+    conditions.push('p.status = ?')
     params.push(status)
+  } else {
+    conditions.push('p.status = ?')
+    params.push('approved')
   }
   if (is_top !== undefined) {
-    conditions.push('is_top = ?')
+    conditions.push('p.is_top = ?')
     params.push(Number(is_top))
   }
 
@@ -49,15 +52,81 @@ router.get('/', (req: Request, res: Response): void => {
   const limitNum = Math.max(1, Math.min(100, Number(limit)))
   const offset = (pageNum - 1) * limitNum
 
-  const countRow = db.prepare(`SELECT COUNT(*) as total FROM posts ${where}`).get(...params) as { total: number }
+  const countRow = db.prepare(`SELECT COUNT(*) as total FROM posts p ${where}`).get(...params) as { total: number }
   const rows = db.prepare(
-    `SELECT * FROM posts ${where} ORDER BY is_top DESC, created_at DESC LIMIT ? OFFSET ?`
+    `SELECT p.*, u.name as author_name, u.role as author_type,
+            m.license_verified as merchant_verified, m.rating as merchant_rating, m.review_count as merchant_review_count
+     FROM posts p
+     LEFT JOIN users u ON p.author_id = u.id
+     LEFT JOIN merchants m ON u.id = m.user_id
+     ${where}
+     ORDER BY p.is_top DESC, p.created_at DESC
+     LIMIT ? OFFSET ?`
   ).all(...params, limitNum, offset) as Record<string, unknown>[]
+
+  const postIds = rows.map(r => r.id)
+  const imagesByPost = new Map<string, Record<string, unknown>[]>()
+  const attrsByPost = new Map<string, Record<string, unknown>[]>()
+  if (postIds.length > 0) {
+    const placeholders = postIds.map(() => '?').join(',')
+    const allImages = db.prepare(`SELECT * FROM post_images WHERE post_id IN (${placeholders})`).all(...postIds) as Record<string, unknown>[]
+    const allAttrs = db.prepare(`SELECT * FROM post_attributes WHERE post_id IN (${placeholders})`).all(...postIds) as Record<string, unknown>[]
+    for (const img of allImages) {
+      const pid = String(img.post_id)
+      if (!imagesByPost.has(pid)) imagesByPost.set(pid, [])
+      imagesByPost.get(pid)!.push(img)
+    }
+    for (const attr of allAttrs) {
+      const pid = String(attr.post_id)
+      if (!attrsByPost.has(pid)) attrsByPost.set(pid, [])
+      attrsByPost.get(pid)!.push(attr)
+    }
+  }
+
+  const posts = rows.map(r => {
+    const id = String(r.id)
+    return {
+      id,
+      category: r.category,
+      title: r.title,
+      description: r.description,
+      price: r.price,
+      province: r.province,
+      city: r.city,
+      district: r.district,
+      authorId: String(r.author_id),
+      authorName: r.author_name,
+      authorType: r.author_type === 'merchant' ? 'merchant' : 'user',
+      merchantVerified: Number(r.merchant_verified) === 1,
+      merchantRating: r.merchant_rating ? Number(r.merchant_rating) : undefined,
+      merchantReviewCount: r.merchant_review_count ? Number(r.merchant_review_count) : undefined,
+      status: r.status,
+      riskScore: Number(r.risk_score),
+      isTop: Number(r.is_top) === 1,
+      views: Number(r.views),
+      leads: Number(r.leads),
+      conversions: Number(r.conversions),
+      images: imagesByPost.get(id)?.map(img => ({
+        id: String(img.id),
+        postId: String(img.post_id),
+        url: img.url,
+        ocrText: img.ocr_text,
+        isPrimary: Number(img.is_primary) === 1,
+      })),
+      attributes: attrsByPost.get(id)?.map(a => ({
+        id: String(a.id),
+        postId: String(a.post_id),
+        key: a.key,
+        value: a.value,
+      })),
+      createdAt: r.created_at,
+    }
+  })
 
   res.json({
     success: true,
     data: {
-      items: rows,
+      posts,
       total: countRow.total,
       page: pageNum,
       limit: limitNum,
@@ -68,19 +137,61 @@ router.get('/', (req: Request, res: Response): void => {
 
 router.get('/:id', (req: Request, res: Response): void => {
   const db = getDb()
-  const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id) as Record<string, unknown> | undefined
+  const post = db.prepare(
+    `SELECT p.*, u.name as author_name, u.role as author_type,
+            m.license_verified as merchant_verified, m.rating as merchant_rating, m.review_count as merchant_review_count
+     FROM posts p
+     LEFT JOIN users u ON p.author_id = u.id
+     LEFT JOIN merchants m ON u.id = m.user_id
+     WHERE p.id = ?`
+  ).get(req.params.id) as Record<string, unknown> | undefined
 
   if (!post) {
     res.status(404).json({ success: false, error: 'Post not found' })
     return
   }
 
-  const images = db.prepare('SELECT * FROM post_images WHERE post_id = ?').all(req.params.id)
-  const attributes = db.prepare('SELECT * FROM post_attributes WHERE post_id = ?').all(req.params.id)
+  const images = db.prepare('SELECT * FROM post_images WHERE post_id = ?').all(req.params.id) as Record<string, unknown>[]
+  const attributes = db.prepare('SELECT * FROM post_attributes WHERE post_id = ?').all(req.params.id) as Record<string, unknown>[]
 
   res.json({
     success: true,
-    data: { ...post, images, attributes },
+    data: {
+      id: String(post.id),
+      category: post.category,
+      title: post.title,
+      description: post.description,
+      price: post.price,
+      province: post.province,
+      city: post.city,
+      district: post.district,
+      authorId: String(post.author_id),
+      authorName: post.author_name,
+      authorType: post.author_type === 'merchant' ? 'merchant' : 'user',
+      merchantVerified: Number(post.merchant_verified) === 1,
+      merchantRating: post.merchant_rating ? Number(post.merchant_rating) : undefined,
+      merchantReviewCount: post.merchant_review_count ? Number(post.merchant_review_count) : undefined,
+      status: post.status,
+      riskScore: Number(post.risk_score),
+      isTop: Number(post.is_top) === 1,
+      views: Number(post.views),
+      leads: Number(post.leads),
+      conversions: Number(post.conversions),
+      images: images.map(img => ({
+        id: String(img.id),
+        postId: String(img.post_id),
+        url: img.url,
+        ocrText: img.ocr_text,
+        isPrimary: Number(img.is_primary) === 1,
+      })),
+      attributes: attributes.map(a => ({
+        id: String(a.id),
+        postId: String(a.post_id),
+        key: a.key,
+        value: a.value,
+      })),
+      createdAt: post.created_at,
+    },
   })
 })
 

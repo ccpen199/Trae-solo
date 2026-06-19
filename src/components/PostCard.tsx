@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { ShieldCheck, MapPin, Clock } from 'lucide-react'
+import { ShieldCheck, MapPin, Clock, Star, AlertTriangle, Eye } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CATEGORIES } from '@/types'
 import type { Post } from '@/types'
@@ -72,13 +72,45 @@ export default function PostCard({ post }: { post: Post }) {
           {post.title}
         </h3>
 
+        {post.attributes && post.attributes.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {post.attributes.slice(0, 2).map((attr) => (
+              <span key={attr.key} className="text-[10px] text-slate-500 bg-slate-100 rounded px-1.5 py-0.5">
+                {attr.key}: {attr.value}
+              </span>
+            ))}
+          </div>
+        )}
+
         <div className="flex items-center justify-between mb-2">
-          <span className="text-base font-bold text-accent-600">
-            {formatPrice(post.price)}
-          </span>
-          {post.merchantVerified && (
-            <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-          )}
+          <div className="flex items-center gap-2">
+            <span className="text-base font-bold text-accent-600">
+              {formatPrice(post.price)}
+            </span>
+            {post.merchantRating !== undefined && (
+              <span className="flex items-center gap-0.5 text-[11px] text-amber-500">
+                <Star className="w-3 h-3 fill-current" />
+                {post.merchantRating.toFixed(1)}
+                {post.merchantReviewCount !== undefined && post.merchantReviewCount > 0 && (
+                  <span className="text-slate-400">({post.merchantReviewCount})</span>
+                )}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-1">
+            {post.merchantVerified && (
+              <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+            )}
+            {post.riskScore >= 40 && (
+              <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" title="内容存在风险提示" />
+            )}
+            {post.status === 'pending' && (
+              <span className="badge badge-warning text-[10px] py-0 px-1.5">待审核</span>
+            )}
+            {post.status === 'reviewing' && (
+              <span className="badge badge-info text-[10px] py-0 px-1.5">复审中</span>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center justify-between text-xs text-slate-400">
@@ -86,7 +118,10 @@ export default function PostCard({ post }: { post: Post }) {
             <MapPin className="w-3 h-3" />
             {post.district || post.city || '未定位'}
           </span>
-          <span className="flex items-center gap-0.5">
+          <span className="flex items-center gap-1">
+            <Eye className="w-3 h-3" />
+            {post.views || 0}
+            <span className="mx-1">·</span>
             <Clock className="w-3 h-3" />
             {timeAgo(post.createdAt)}
           </span>
