@@ -76,6 +76,22 @@ export interface Order {
   exception_type?: string | null
   exception_reason?: string | null
   is_abnormal?: boolean
+  cancelled_at?: string | null
+  cancel_reason?: string
+  cancel_role?: 'rider' | 'customer' | 'merchant' | 'system' | string
+  cancel_role_name?: string
+  fuse_triggered?: boolean
+  fuse_reason?: string
+  manual_operator?: string
+  manual_note?: string
+  compensation_triggered?: boolean
+  compensation_type?: 'voucher' | 'refund' | string
+  compensation_amount?: number
+  compensation_voucher_code?: string
+  compensation_status?: 'issued' | 'refunded' | 'pending' | 'not_applicable' | string
+  waybill_exported?: boolean
+  waybill_no?: string
+  waybill_invoice?: string
 }
 
 export interface Rider {

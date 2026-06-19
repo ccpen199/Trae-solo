@@ -25,7 +25,7 @@ import { useDashboardStore } from '@/stores/dashboardStore';
 import { useNewOrders, useOrderAlerts, useConnectionStatus, useRiderLocationUpdates } from '@/hooks/useWebSocket';
 import { showToast } from '@/components/ui/Toast';
 import { cn } from '@/lib/utils';
-import type { Order, OrderAlert as OrderAlertType, RiderLocation } from '@/types';
+import type { Order, OrderStatus, OrderAlert as OrderAlertType, RiderLocation } from '@/types';
 
 const mockRecentOrders: Order[] = [
   {
@@ -151,12 +151,6 @@ export default function Dashboard() {
     completionIncrement: 0,
     revenueIncrement: 0,
   });
-  const [distributionIncrement, setDistributionIncrement] = useState({
-    pending: 0,
-    inProgress: 0,
-    completed: 0,
-    exception: 0,
-  });
   const [localAlerts, setLocalAlerts] = useState<OrderAlertType[]>([
     {
       id: 'a1',
@@ -225,20 +219,47 @@ export default function Dashboard() {
     const beforeError = status.error;
     try {
       await fetchMetrics();
-      // fetchMetrics内部会catch错误，所以这里用时间戳确保增量触发
-      // 只要不是在错误状态，都模拟数值刷新变化
+      const newOrdersDelta = Math.floor(Math.random() * 3) + 2;
+      const revenueDelta = Math.floor(Math.random() * 350) + 80;
       setRefreshingValue((prev) => ({
-        ordersIncrement: prev.ordersIncrement + Math.floor(Math.random() * 5) + 2,
+        ordersIncrement: prev.ordersIncrement + newOrdersDelta,
         completionIncrement: prev.completionIncrement + Math.floor(Math.random() * 4) + 1,
-        revenueIncrement: prev.revenueIncrement + Math.floor(Math.random() * 350) + 80,
+        revenueIncrement: prev.revenueIncrement + revenueDelta,
       }));
-      setDistributionIncrement((prev) => ({
-        pending: prev.pending + Math.floor(Math.random() * 2),
-        inProgress: prev.inProgress + (Math.random() > 0.5 ? 1 : 0),
-        completed: prev.completed + Math.floor(Math.random() * 5) + 1,
-        exception: prev.exception,
-      }));
-      showToast('success', `数据已更新 · 新增 ${Math.floor(Math.random() * 3) + 1} 笔订单`);
+      // 往实时订单流插入新订单，承接"新增X笔订单"的提示
+      const newMockOrders: Order[] = Array.from({ length: newOrdersDelta }, (_, i) => {
+        const now = new Date();
+        const seq = String(Date.now()).slice(-6) + i;
+        const goodsTypes = ['餐饮', '生鲜', '文件', '数码', '医药'];
+        const statuses: OrderStatus[] = ['pending', 'pending', 'picked_up', 'in_transit'];
+        const chosenStatus = statuses[Math.floor(Math.random() * statuses.length)];
+        return {
+          id: `new-${now.getTime()}-${i}`,
+          order_no: `DD${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${seq}`,
+          status: chosenStatus,
+          pickup_address: ['朝阳区建外SOHO A座', '海淀区中关村大街1号', '东城区王府井大街88号'][i % 3],
+          delivery_address: ['朝阳区三里屯太古里', '海淀区五道口购物中心', '东城区东直门来福士'][i % 3],
+          customerName: ['张先生', '李女士', '王总', '赵经理', '陈小姐'][i % 5],
+          customerPhone: '138****' + String(1000 + Math.floor(Math.random() * 9000)),
+          goods_type: goodsTypes[Math.floor(Math.random() * goodsTypes.length)],
+          goods_weight: Number((0.3 + Math.random() * 4).toFixed(2)),
+          distance: Number((1 + Math.random() * 6).toFixed(2)),
+          estimated_price: Number((12 + Math.random() * 30).toFixed(2)),
+          created_at: now.toISOString(),
+          estimated_delivery_at: new Date(now.getTime() + (15 + Math.random() * 40) * 60000).toISOString(),
+          pickup_lat: 39.9085 + Math.random() * 0.05,
+          pickup_lng: 116.4612 + Math.random() * 0.05,
+          delivery_lat: 39.9098 + Math.random() * 0.05,
+          delivery_lng: 116.4658 + Math.random() * 0.05,
+          rider_id: chosenStatus === 'pending' ? undefined : ['r1', 'r2', 'r3', 'r5', 'r7'][i % 5],
+          riderName: chosenStatus === 'pending' ? undefined : ['张伟', '李强', '王磊', '刘洋', '陈超'][i % 5],
+        };
+      });
+      setRecentOrders((prev) => [...newMockOrders, ...prev].slice(0, 12));
+      // 高亮第一笔新订单3秒
+      setHighlightedOrder(newMockOrders[0].id);
+      setTimeout(() => setHighlightedOrder(null), 3000);
+      showToast('success', `数据已更新 · 新增 ${newOrdersDelta} 笔订单`);
     } catch (err) {
       showToast('error', beforeError?.message || '刷新失败');
     }
@@ -288,14 +309,27 @@ export default function Dashboard() {
     return total > 0 ? Math.round((completed / total) * 100) : 0;
   }, [metrics, refreshingValue]);
 
+  // 订单分布总和必须与今日订单数严格对齐，使用refreshingValue.ordersIncrement作为统一增量源
   const orderDistribution = useMemo(() => {
+    const basePending = metrics?.pending_orders ?? 8;
+    const baseInProgress = metrics?.in_progress_orders ?? 5;
+    const baseCompleted = metrics?.completed_orders ?? 72;
+    const baseException = metrics?.exception_orders ?? 1;
+    const baseTotal = basePending + baseInProgress + baseCompleted + baseException;
+    const targetTotal = (metrics?.total_orders ?? 86) + refreshingValue.ordersIncrement;
+    const delta = Math.max(0, targetTotal - baseTotal);
+    // 增量按比例分配：70%待处理，20%配送中，8%已完成，2%异常
+    const extraPending = Math.floor(delta * 0.7);
+    const extraInProgress = Math.floor(delta * 0.2);
+    const extraException = Math.floor(delta * 0.02);
+    const extraCompleted = Math.max(0, delta - extraPending - extraInProgress - extraException);
     return [
-      { label: '待处理', value: (metrics?.pending_orders ?? 8) + distributionIncrement.pending, color: '#F59E0B' },
-      { label: '配送中', value: (metrics?.in_progress_orders ?? 5) + distributionIncrement.inProgress, color: '#3B82F6' },
-      { label: '已完成', value: (metrics?.completed_orders ?? 72) + distributionIncrement.completed, color: '#10B981' },
-      { label: '异常', value: (metrics?.exception_orders ?? 1) + distributionIncrement.exception, color: '#EF4444' },
+      { label: '待处理', value: basePending + extraPending, color: '#F59E0B' },
+      { label: '配送中', value: baseInProgress + extraInProgress, color: '#3B82F6' },
+      { label: '已完成', value: baseCompleted + extraCompleted, color: '#10B981' },
+      { label: '异常', value: baseException + extraException, color: '#EF4444' },
     ];
-  }, [metrics, distributionIncrement]);
+  }, [metrics, refreshingValue]);
 
   const distributionTotal = orderDistribution.reduce((sum, item) => sum + item.value, 0);
 

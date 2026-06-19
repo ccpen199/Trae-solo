@@ -28,8 +28,12 @@ import {
   Thermometer,
   Snowflake,
   ShieldCheck,
+  ShieldAlert,
   Send,
   TrendingUp,
+  UserCheck,
+  Gift,
+  FileCheck,
 } from 'lucide-react';
 import { DataTable } from '@/components/ui/DataTable';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -173,6 +177,7 @@ const mockOrders: Order[] = [
     order_no: 'DD202406110007',
     customerName: '郑先生',
     customerPhone: '133****6789',
+    riderName: '吴骑手',
     pickup_address: '通州区新华大街',
     delivery_address: '朝阳区CBD万达广场',
     goods_type: '餐饮',
@@ -181,10 +186,90 @@ const mockOrders: Order[] = [
     estimated_price: 72,
     status: 'cancelled',
     created_at: '2024-06-11T08:00:00Z',
+    assigned_at: '2024-06-11T08:02:00Z',
+    cancelled_at: '2024-06-11T08:15:00Z',
+    cancel_reason: '骑手车辆故障，无法继续配送',
+    cancel_role: 'rider',
+    cancel_role_name: '吴骑手(系统触发)',
+    fuse_triggered: true,
+    fuse_reason: '地址超范围(22.5km>20km) + 骑手异常，自动触发熔断转人工',
+    manual_operator: '张调度(运营中心)',
+    manual_note: '联系客户致歉，已重新派单(DD202406110007-R)',
+    compensation_triggered: true,
+    compensation_type: 'voucher',
+    compensation_amount: 15,
+    compensation_voucher_code: 'CP20240611-SORRY',
+    compensation_status: 'issued',
+    waybill_exported: true,
+    waybill_no: 'WB202406110007',
+    waybill_invoice: '已开具(票号:FP202406118876)',
     pickup_lat: 39.9042,
     pickup_lng: 116.6574,
     delivery_lat: 39.9042,
     delivery_lng: 116.4674,
+  },
+  {
+    id: 'cancel-2',
+    order_no: 'DD202406110017',
+    customerName: '何女士',
+    customerPhone: '136****2341',
+    pickup_address: '海淀区中关村大街SOHO',
+    delivery_address: '海淀区学院路15号',
+    goods_type: '生鲜',
+    goods_weight: 2.5,
+    distance_km: 4.8,
+    estimated_price: 28,
+    status: 'cancelled',
+    created_at: '2024-06-11T09:30:00Z',
+    cancelled_at: '2024-06-11T09:42:00Z',
+    cancel_reason: '客户临时取消，无需配送',
+    cancel_role: 'customer',
+    cancel_role_name: '何女士(主动发起)',
+    fuse_triggered: false,
+    compensation_triggered: false,
+    compensation_status: 'not_applicable',
+    waybill_exported: false,
+    waybill_invoice: '未开具',
+    pickup_lat: 39.9842,
+    pickup_lng: 116.3174,
+    delivery_lat: 39.9942,
+    delivery_lng: 116.3474,
+  },
+  {
+    id: 'cancel-3',
+    order_no: 'DD202406110027',
+    customerName: '冯先生',
+    customerPhone: '137****9988',
+    riderName: '王骑手',
+    pickup_address: '朝阳区大望路合生汇',
+    delivery_address: '朝阳区望京SOHO',
+    goods_type: '医药',
+    goods_weight: 0.5,
+    distance_km: 12.3,
+    estimated_price: 45,
+    status: 'cancelled',
+    created_at: '2024-06-11T11:20:00Z',
+    assigned_at: '2024-06-11T11:22:00Z',
+    picked_up_at: '2024-06-11T11:35:00Z',
+    cancelled_at: '2024-06-11T11:58:00Z',
+    cancel_reason: '客户地址模糊，多次联系无果',
+    cancel_role: 'system',
+    cancel_role_name: '风控系统(自动触发)',
+    fuse_triggered: true,
+    fuse_reason: '地址解析失败率>60% + 3次未接通电话，触发熔断保护',
+    manual_operator: '李主管(客服)',
+    manual_note: '短信告知客户取件点，货品已返回药房，原订单已关闭',
+    compensation_triggered: true,
+    compensation_type: 'refund',
+    compensation_amount: 45,
+    compensation_status: 'refunded',
+    waybill_exported: true,
+    waybill_no: 'WB202406110027',
+    waybill_invoice: '已红冲(原票FP202406119123)',
+    pickup_lat: 39.9062,
+    pickup_lng: 116.4685,
+    delivery_lat: 40.0012,
+    delivery_lng: 116.4774,
   },
   {
     id: '8',
@@ -623,7 +708,10 @@ export default function Orders() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [dispatchOpen, setDispatchOpen] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+    'dispatch-group-a': true,
+    'dispatch-group-b': true,
+  });
   const [detailTab, setDetailTab] = useState<'timeline' | 'fare'>('timeline');
 
   const filteredOrders = useMemo(() => {
@@ -809,13 +897,66 @@ export default function Orders() {
       });
     }
     if (order.status === 'cancelled') {
+      const cancelTime = (order as any).cancelled_at || order.created_at;
+      // 1. 取消事件（含原因和触发角色）
       events.push({
-        status: '已取消',
-        time: order.created_at,
+        status: `已取消 · ${(order as any).cancel_reason || '未填写原因'}`,
+        subStatus: `触发：${(order as any).cancel_role_name || '未知'}`,
+        time: cancelTime,
         icon: XCircle,
         color: 'text-danger-400',
         completed: true,
       });
+      // 2. 熔断判断
+      if ((order as any).fuse_triggered) {
+        events.push({
+          status: `熔断触发 · ${(order as any).fuse_reason || '自动转人工'}`,
+          subStatus: '风控系统规则',
+          time: new Date(new Date(cancelTime).getTime() + 10000).toISOString(),
+          icon: ShieldAlert,
+          color: 'text-warning-400',
+          completed: true,
+        });
+      }
+      // 3. 人工介入
+      if ((order as any).manual_operator) {
+        events.push({
+          status: `人工介入 · ${(order as any).manual_operator}`,
+          subStatus: (order as any).manual_note || '',
+          time: new Date(new Date(cancelTime).getTime() + 60000).toISOString(),
+          icon: UserCheck,
+          color: 'text-info-400',
+          completed: true,
+        });
+      }
+      // 4. 赔付处理
+      if ((order as any).compensation_triggered) {
+        const comp = order as any;
+        const compLabel = comp.compensation_type === 'voucher'
+          ? `发放补偿券 ¥${comp.compensation_amount} (${comp.compensation_voucher_code || ''})`
+          : comp.compensation_type === 'refund'
+          ? `原路退款 ¥${comp.compensation_amount}`
+          : `赔付 ¥${comp.compensation_amount}`;
+        events.push({
+          status: `赔付完成 · ${compLabel}`,
+          subStatus: comp.compensation_status === 'issued' ? '券已发放/用户未使用' : comp.compensation_status === 'refunded' ? '退款已到账' : '',
+          time: new Date(new Date(cancelTime).getTime() + 180000).toISOString(),
+          icon: Gift,
+          color: 'text-success-400',
+          completed: true,
+        });
+      }
+      // 5. 运单留痕
+      if ((order as any).waybill_exported || (order as any).waybill_no) {
+        events.push({
+          status: `税务留痕 · 运单${(order as any).waybill_no || '已归档'}`,
+          subStatus: (order as any).waybill_invoice || '',
+          time: new Date(new Date(cancelTime).getTime() + 300000).toISOString(),
+          icon: FileCheck,
+          color: 'text-gray-300',
+          completed: true,
+        });
+      }
     }
     return events;
   };
@@ -1587,6 +1728,137 @@ export default function Orders() {
               />
             )}
 
+            {selectedOrder.status === 'cancelled' && (
+              <div className="space-y-4">
+                {/* 取消原因卡 */}
+                <div className="rounded-lg border border-danger-500/30 bg-danger-500/10 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-danger-500/20 flex items-center justify-center flex-shrink-0">
+                      <XCircle className="w-5 h-5 text-danger-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <span className="text-sm font-semibold text-danger-400">订单已取消</span>
+                        <StatusBadge variant="danger" size="sm" showDot={false}>
+                          {(() => {
+                            const role = (selectedOrder as any).cancel_role;
+                            return role === 'rider' ? '骑手发起' : role === 'customer' ? '客户发起' : role === 'merchant' ? '商家发起' : '系统自动';
+                          })()}
+                        </StatusBadge>
+                        <span className="text-xs text-gray-500">
+                          {(selectedOrder as any).cancel_role_name || ''}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-200">{(selectedOrder as any).cancel_reason || '无取消原因'}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        取消时间：{new Date((selectedOrder as any).cancelled_at || selectedOrder.created_at).toLocaleString('zh-CN')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 熔断与人工介入 */}
+                {((selectedOrder as any).fuse_triggered || (selectedOrder as any).manual_operator) && (
+                  <div className="rounded-lg border border-warning-500/30 bg-warning-500/5 p-4">
+                    <h4 className="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-1.5">
+                      <ShieldAlert className="w-4 h-4 text-warning-400" />
+                      熔断与人工处理
+                    </h4>
+                    <div className="space-y-2.5">
+                      {(selectedOrder as any).fuse_triggered && (
+                        <div className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-warning-500 mt-1.5 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-medium text-warning-400">已触发熔断保护</div>
+                            <div className="text-xs text-gray-400 mt-0.5">{(selectedOrder as any).fuse_reason || '风控系统规则命中'}</div>
+                          </div>
+                        </div>
+                      )}
+                      {(selectedOrder as any).manual_operator && (
+                        <div className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-info-500 mt-1.5 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-medium text-info-400">人工介入：{(selectedOrder as any).manual_operator}</div>
+                            <div className="text-xs text-gray-400 mt-0.5">{(selectedOrder as any).manual_note || '无备注'}</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* 赔付处理 */}
+                {(selectedOrder as any).compensation_triggered && (
+                  <div className="rounded-lg border border-success-500/30 bg-success-500/5 p-4">
+                    <h4 className="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-1.5">
+                      <Gift className="w-4 h-4 text-success-400" />
+                      赔付处理结果
+                    </h4>
+                    {(() => {
+                      const comp = selectedOrder as any;
+                      const isVoucher = comp.compensation_type === 'voucher';
+                      const isRefund = comp.compensation_type === 'refund';
+                      return (
+                        <div className="flex items-start justify-between gap-4 flex-wrap">
+                          <div className="flex items-center gap-3">
+                            <div className={cn(
+                              'w-12 h-12 rounded-lg flex items-center justify-center',
+                              isVoucher ? 'bg-amber-accent-500/20' : 'bg-success-500/20'
+                            )}>
+                              {isVoucher
+                                ? <span className="text-xl font-bold text-amber-accent-400">¥</span>
+                                : <span className="text-xl font-bold text-success-400">↩</span>}
+                            </div>
+                            <div>
+                              <div className="text-sm font-semibold text-gray-100">
+                                {isVoucher ? `补偿券 ¥${comp.compensation_amount}` : isRefund ? `原路退款 ¥${comp.compensation_amount}` : `赔付 ¥${comp.compensation_amount}`}
+                              </div>
+                              <div className="text-xs text-gray-500 mt-0.5">
+                                {comp.compensation_status === 'issued' ? `券码：${comp.compensation_voucher_code} · 已发放/未使用` :
+                                 comp.compensation_status === 'refunded' ? '款项已原路退回支付账户' :
+                                 comp.compensation_status === 'pending' ? '处理中' : '已完成'}
+                              </div>
+                            </div>
+                          </div>
+                          <StatusBadge variant={comp.compensation_status === 'pending' ? 'warning' : 'success'} size="sm" showDot={false}>
+                            {comp.compensation_status === 'issued' ? '已发放' :
+                             comp.compensation_status === 'refunded' ? '已到账' :
+                             comp.compensation_status === 'pending' ? '处理中' : '已完成'}
+                          </StatusBadge>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
+
+                {/* 税务运单留痕 */}
+                {(((selectedOrder as any).waybill_exported || (selectedOrder as any).waybill_no) && (
+                  <div className="rounded-lg border border-space-blue-600 bg-space-blue-800/30 p-4">
+                    <h4 className="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-1.5">
+                      <FileCheck className="w-4 h-4 text-amber-accent-400" />
+                      税务运单留痕
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div className="rounded-md bg-space-blue-900/50 px-3 py-2">
+                        <div className="text-gray-500">运单编号</div>
+                        <div className="mt-0.5 font-mono-code text-gray-200">{(selectedOrder as any).waybill_no || '-'}</div>
+                      </div>
+                      <div className="rounded-md bg-space-blue-900/50 px-3 py-2">
+                        <div className="text-gray-500">发票状态</div>
+                        <div className="mt-0.5 text-gray-200">{(selectedOrder as any).waybill_invoice || '-'}</div>
+                      </div>
+                      <div className="sm:col-span-2 rounded-md bg-space-blue-900/50 px-3 py-2">
+                        <div className="text-gray-500">合规留痕</div>
+                        <div className="mt-0.5 text-gray-400">
+                          订单取消记录已同步至税务中台，运单数据按《电子运单管理规范》归档留存期限 5 年
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div>
               <div className="flex items-center gap-1 mb-3 border-b border-space-blue-600">
                 <button
@@ -1649,6 +1921,9 @@ export default function Orders() {
                                 {new Date(event.time).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
                               </span>
                             </div>
+                            {(event as any).subStatus && (
+                              <p className="mt-0.5 text-xs text-gray-500">{(event as any).subStatus}</p>
+                            )}
                           </div>
                         </div>
                       );
