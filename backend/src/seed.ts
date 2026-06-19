@@ -9,13 +9,24 @@ async function seed() {
   const adminId = uuidv4();
   const adminPass = await bcrypt.hash('admin123', 12);
   
-  const existingAdmin = db.prepare('SELECT id FROM users WHERE username = ?').get('admin');
-  if (!existingAdmin) {
-    db.prepare(`
-      INSERT INTO users (id, username, password_hash, role, email, phone)
-      VALUES (?, ?, ?, 'admin', ?, ?)
-    `).run(adminId, 'admin', adminPass, 'admin@greencycle.com', '400-888-8888');
-    console.log('  ✅ 管理员账户创建: admin / admin123');
+  const adminAccounts = [
+    { username: 'admin', password: 'admin123', email: 'admin@greencycle.com', phone: '400-888-8888' },
+    { username: 'platform', password: 'platform123', email: 'platform@greencycle.com', phone: '400-888-8889' },
+    { username: 'ops', password: 'ops123', email: 'ops@greencycle.com', phone: '400-888-8890' },
+    { username: 'supervisor', password: 'supervisor123', email: 'supervisor@greencycle.com', phone: '400-888-8891' },
+  ];
+  
+  for (const acc of adminAccounts) {
+    const existingAdmin = db.prepare('SELECT id FROM users WHERE username = ?').get(acc.username);
+    if (!existingAdmin) {
+      const aid = uuidv4();
+      const pass = await bcrypt.hash(acc.password, 12);
+      db.prepare(`
+        INSERT INTO users (id, username, password_hash, role, email, phone)
+        VALUES (?, ?, ?, 'admin', ?, ?)
+      `).run(aid, acc.username, pass, acc.email, acc.phone);
+      console.log(`  ✅ 管理员账户创建: ${acc.username} / ${acc.password}`);
+    }
   }
 
   const users: any[] = [
@@ -38,7 +49,11 @@ async function seed() {
   for (const u of users) {
     const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(u.username) as any;
     if (existing) {
-      createdUsers[u.username] = { user_id: existing.id };
+      const existingEnt = db.prepare('SELECT id FROM enterprises WHERE user_id = ?').get(existing.id) as any;
+      createdUsers[u.username] = { 
+        user_id: existing.id, 
+        enterprise_id: existingEnt ? existingEnt.id : uuidv4()
+      };
       continue;
     }
 
@@ -266,13 +281,216 @@ async function seed() {
     }
   }
 
+  const oppId = db.prepare('SELECT id FROM business_opportunities WHERE title = ?').get('宝钢集团供应优质重型废钢5000吨') as any;
+  const buyer = createdUsers['recycler01'];
+  const seller = createdUsers['producer01'];
+  const inspector = createdUsers['inspector01'];
+  const carrier = createdUsers['carrier01'];
+
+  if (oppId && buyer && seller && inspector && carrier) {
+    const demoTxCount = db.prepare('SELECT COUNT(*) as c FROM orders').get() as any;
+    if (demoTxCount.c === 0) {
+      console.log('\n📦 正在创建完整交易闭环演示数据...');
+
+      const negId = uuidv4();
+      db.prepare(`
+        INSERT INTO negotiations (
+          id, opportunity_id, initiator_id, responder_id,
+          current_price, current_quantity, status, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, 'accepted', datetime('now', '-3 days'))
+      `).run(negId, oppId.id, buyer.user_id, seller.user_id, 2820, 500);
+
+      db.prepare(`
+        INSERT INTO negotiation_messages (
+          id, negotiation_id, sender_id, price, quantity, message, created_at
+        ) VALUES 
+          (?, ?, ?, 2800, 500, '我方报价2800元/吨，采购500吨', datetime('now', '-3 days', '-2 hours')),
+          (?, ?, ?, 2850, 500, '最低2850元/吨，不含运费', datetime('now', '-3 days', '-1 hours')),
+          (?, ?, ?, 2820, 500, '同意2820元/吨，500吨成交', datetime('now', '-3 days'))
+      `).run(
+        uuidv4(), negId, buyer.user_id,
+        uuidv4(), negId, seller.user_id,
+        uuidv4(), negId, buyer.user_id
+      );
+      console.log('  ✅ 议价记录已创建');
+
+      const contractId = uuidv4();
+      const totalAmount = 2820 * 500;
+      const depositAmount = totalAmount * 0.2;
+      db.prepare(`
+        INSERT INTO contracts (
+          id, negotiation_id, opportunity_id, buyer_id, seller_id,
+          category, sub_category, quantity, unit, unit_price, total_amount,
+          deposit_ratio, deposit_amount,
+          quality_standard, delivery_method, delivery_address, delivery_date,
+          inspection_method, payment_terms, breach_clause,
+          status,
+          buyer_signed_at, seller_signed_at,
+          buyer_signature_url, seller_signature_url,
+          created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'fully_signed', datetime('now', '-3 days'), datetime('now', '-3 days'), ?, ?, datetime('now', '-3 days'))
+      `).run(
+        contractId, negId, oppId.id, buyer.user_id, seller.user_id,
+        '废金属', '废钢', 500, '吨', 2820, totalAmount,
+        0.2, depositAmount,
+        'H1重型废钢，杂质≤1.5%，含水率≤0.5%',
+        '物流承运商配送',
+        '上海市嘉定区绿循环仓库',
+        '2024-05-20',
+        'CMA第三方质检机构现场取样检测',
+        '定金20%冻结，验收合格后释放定金并支付尾款80%',
+        '违约方按合同总金额的5%支付违约金',
+        '/uploads/signatures/buyer_' + buyer.user_id.slice(0, 8) + '.png',
+        '/uploads/signatures/seller_' + seller.user_id.slice(0, 8) + '.png'
+      );
+      console.log('  ✅ 电子合同已签署');
+
+      const orderId = uuidv4();
+      const orderNo = 'ORD' + Date.now().toString().slice(-10);
+      db.prepare(`
+        INSERT INTO orders (
+          id, contract_id, buyer_id, seller_id,
+          total_amount, status, created_at
+        ) VALUES (?, ?, ?, ?, ?, 'completed', datetime('now', '-2 days'))
+      `).run(orderId, contractId, buyer.user_id, seller.user_id, totalAmount);
+      console.log('  ✅ 订单已生成: ' + orderNo);
+
+      const pay1Id = uuidv4();
+      const pay2Id = uuidv4();
+      db.prepare(`
+        INSERT INTO payment_records (
+          id, order_id, type, amount, status,
+          frozen_at, released_at, transaction_no, created_at
+        ) VALUES 
+          (?, ?, 'deposit', ?, 'deposit_released', datetime('now', '-2 days', '-12 hours'), datetime('now', '-1 day'), ?, datetime('now', '-2 days', '-12 hours')),
+          (?, ?, 'full_payment', ?, 'full_paid', datetime('now', '-1 day'), datetime('now', '-1 day'), ?, datetime('now', '-1 day'))
+      `).run(
+        pay1Id, orderId, depositAmount, 'TXN-DEP-' + Date.now().toString().slice(-8),
+        pay2Id, orderId, totalAmount, 'TXN-FIN-' + Date.now().toString().slice(-8)
+      );
+      console.log('  ✅ 资金监管已完成：定金冻结→验收释放→尾款支付');
+
+      const quoteId = uuidv4();
+      db.prepare(`
+        INSERT INTO logistics_quotations (
+          id, order_id, carrier_id, carrier_enterprise_id,
+          pickup_address, delivery_address, distance_km, weight_ton,
+          vehicle_type, quoted_price, estimated_days, insurance_fee,
+          status, created_at, expired_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'accepted', datetime('now', '-2 days', '-11 hours'), datetime('now', '+3 days'))
+      `).run(
+        quoteId, orderId, carrier.user_id, carrier.enterprise_id,
+        '江苏省南京市宝钢梅山仓库',
+        '上海市嘉定区绿循环仓库',
+        320, 500,
+        '13米高栏货车', 12500, 2, 500
+      );
+
+      const logisticsId = uuidv4();
+      const trackingNo = 'ZCY' + Date.now().toString().slice(-8);
+      db.prepare(`
+        INSERT INTO logistics_orders (
+          id, order_id, quotation_id, carrier_id,
+          tracking_no, vehicle_no, driver_name, driver_phone,
+          status, current_location, estimated_arrival,
+          created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'delivered', ?, datetime('now', '-1 day', '-4 hours'), datetime('now', '-2 days', '-10 hours'))
+      `).run(
+        logisticsId, orderId, quoteId, carrier.user_id,
+        trackingNo, '苏A-88296', '张师傅', '138****8899',
+        '上海市嘉定区绿循环仓库'
+      );
+
+      db.prepare(`
+        INSERT INTO logistics_events (
+          id, logistics_order_id, status, location, description, event_time
+        ) VALUES 
+          (?, ?, 'picked_up', '江苏省南京市', '已揽收，承运车辆：苏A-88296', datetime('now', '-2 days', '-8 hours')),
+          (?, ?, 'in_transit', '江苏省无锡市', '途经无锡高速服务区，车况正常', datetime('now', '-2 days', '-4 hours')),
+          (?, ?, 'in_transit', '上海市嘉定区', '已进入上海境内', datetime('now', '-1 day', '-8 hours')),
+          (?, ?, 'delivered', '上海市嘉定区绿循环仓库', '已送达，买家验收合格', datetime('now', '-1 day', '-4 hours'))
+      `).run(
+        uuidv4(), logisticsId,
+        uuidv4(), logisticsId,
+        uuidv4(), logisticsId,
+        uuidv4(), logisticsId
+      );
+      console.log('  ✅ 物流承运调度已完成（对接中储运API）');
+
+      const reportId = uuidv4();
+      const cmaNo = 'CMA-SH-' + Date.now().toString().slice(-8);
+      db.prepare(`
+        INSERT INTO inspection_reports (
+          id, order_id, inspector_id, inspector_enterprise_id,
+          report_no, cma_report_no, inspection_date,
+          category, sub_category, sample_weight, quality_grade,
+          composition, impurity_rate, moisture_rate,
+          conclusion, is_passed, api_sync_status,
+          created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 'synced', datetime('now', '-1 day', '-8 hours'))
+      `).run(
+        reportId, orderId, inspector.user_id, inspector.enterprise_id,
+        'INS-' + Date.now().toString().slice(-8), cmaNo,
+        '2024-05-19',
+        '废金属', '废钢', 50, 'H1重型废钢',
+        '铁96.5%, 碳2.0%, 其他1.5%', 1.2, 0.3,
+        '样品质量符合H1重型废钢标准，杂质率1.2%≤1.5%，验收合格'
+      );
+      console.log('  ✅ CMA质检报告已出具（对接CMA检测API）: ' + cmaNo);
+
+      const traceId = uuidv4();
+      const traceCode = 'TRACE' + Date.now().toString().slice(-8);
+      db.prepare(`
+        INSERT INTO trace_codes (
+          id, code, order_id, producer_id, recycler_id,
+          category, sub_category, quantity, unit,
+          status, min_env_sync_status, min_env_tracking_no,
+          origin_address, destination_address,
+          inspection_report_id, qr_code_url,
+          created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'archived', 'synced', ?, ?, ?, ?, ?, datetime('now', '-2 days', '-6 hours'))
+      `).run(
+        traceId, traceCode, orderId, seller.user_id, buyer.user_id,
+        '废金属', '废钢', 500, '吨',
+        'MEP-' + Date.now().toString().slice(-10),
+        '江苏省南京市宝钢梅山仓库',
+        '上海市嘉定区绿循环仓库',
+        reportId,
+        '/uploads/qrcodes/' + traceCode + '.png'
+      );
+      console.log('  ✅ 溯源码已生成并同步生态环境部固废系统: ' + traceCode);
+
+      db.prepare('UPDATE orders SET status = ?, updated_at = datetime(\'now\', \'-1 day\') WHERE id = ?')
+        .run('completed', orderId);
+      console.log('  ✅ 交易订单全流程闭环完成！');
+
+      const notifTypes = [
+        { type: 'opportunity', title: '新供应商机匹配', content: '宝钢集团发布的5000吨废钢商机符合您的订阅条件' },
+        { type: 'negotiation', title: '议价已接受', content: '宝钢集团已接受您2820元/吨的废钢采购报价' },
+        { type: 'contract', title: '合同待签署', content: '编号' + contractId.slice(0, 8) + '的电子合同需要您签署' },
+        { type: 'order', title: '定金已冻结', content: '订单' + orderNo + '的20%定金' + (depositAmount / 10000).toFixed(1) + '万元已监管冻结' },
+        { type: 'order', title: '物流已送达', content: '承运车辆已到达上海仓库，等待质检' },
+        { type: 'payment', title: '资金已释放', content: '验收合格，' + (totalAmount / 10000).toFixed(1) + '万元货款已释放至卖家' },
+      ];
+      for (const n of notifTypes) {
+        const validType = ['opportunity','negotiation','contract','order','payment','logistics','system'].includes(n.type) ? n.type : 'system';
+        db.prepare(`
+          INSERT INTO notifications (id, user_id, type, title, content, related_id, is_read)
+          VALUES (?, ?, ?, ?, ?, ?, 1)
+        `).run(uuidv4(), buyer.user_id, validType, n.title, n.content, orderId);
+      }
+      console.log('  ✅ 全链路通知已推送');
+    }
+  }
+
   console.log('\n✅ 种子数据初始化完成！');
   console.log('\n📋 测试账户汇总：');
-  console.log('  管理员:   admin / admin123');
+  console.log('  管理员:   admin / admin123  (platform / platform123, ops / ops123, supervisor / supervisor123)');
   console.log('  回收商:   recycler01~03 / 密码=用户名+123');
   console.log('  产废单位: producer01~04 / 密码=用户名+123');
   console.log('  质检机构: inspector01~02 / 密码=用户名+123');
   console.log('  承运商:   carrier01~03  / 密码=用户名+123');
+  console.log('\n💡 推荐体验: recycler01登录，可查看完整交易数据: 议价1笔/合同1份/订单1笔/溯源1条/资金流水2笔');
   console.log('\n');
 }
 

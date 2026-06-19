@@ -95,10 +95,14 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
     `).get() as any;
 
     stats.recent_orders = db.prepare(`
-      SELECT o.*, c.category, c.sub_category,
+      SELECT o.*, c.category, c.sub_category, c.status as contract_status,
+             n.status as negotiation_status,
+             pr.status as payment_status,
              eb.company_name as buyer_name, es.company_name as seller_name
       FROM orders o
       JOIN contracts c ON o.contract_id = c.id
+      JOIN negotiations n ON c.negotiation_id = n.id
+      LEFT JOIN payment_records pr ON o.id = pr.order_id AND pr.type = 'deposit'
       JOIN enterprises eb ON o.buyer_id = eb.user_id
       JOIN enterprises es ON o.seller_id = es.user_id
       ORDER BY o.created_at DESC LIMIT 10
@@ -143,11 +147,11 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
     stats.orders.total_amount = stats.orders.total_amount || 0;
 
     if (role === 'recycler' || role === 'producer') {
-      const negWhere = role === 'recycler' ? 'initiator_id = ?' : 'opponent_id = ?';
+      const negWhere = role === 'recycler' ? 'initiator_id = ?' : 'responder_id = ?';
       stats.negotiations = db.prepare(`
         SELECT COUNT(*) as total,
                SUM(CASE WHEN status = 'accepted' THEN 1 ELSE 0 END) as accepted,
-               SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending
+               SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as pending
         FROM negotiations
         WHERE ${negWhere}
       `).get(userId) as any;
@@ -158,7 +162,7 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
       const contractWhere = role === 'recycler' ? 'buyer_id = ?' : 'seller_id = ?';
       stats.contracts = db.prepare(`
         SELECT COUNT(*) as total,
-               SUM(CASE WHEN signing_status = 'fully_signed' THEN 1 ELSE 0 END) as signed
+               SUM(CASE WHEN status = 'fully_signed' THEN 1 ELSE 0 END) as signed
         FROM contracts
         WHERE ${contractWhere}
       `).get(userId) as any;
@@ -167,22 +171,22 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
 
       stats.payments = db.prepare(`
         SELECT COUNT(*) as total,
-               COALESCE(SUM(CASE WHEN status = 'frozen' THEN amount ELSE 0 END), 0) as frozen_amount,
-               COALESCE(SUM(CASE WHEN status = 'released' THEN amount ELSE 0 END), 0) as released_amount
+               COALESCE(SUM(CASE WHEN status IN ('deposit_frozen') THEN amount ELSE 0 END), 0) as frozen_amount,
+               COALESCE(SUM(CASE WHEN status IN ('deposit_released','full_paid') THEN amount ELSE 0 END), 0) as released_amount
         FROM payment_records
-        WHERE payer_id = ? OR payee_id = ?
-      `).all(userId, userId).reduce((acc: any, row: any) => ({
-        total: row.total,
-        frozen_amount: row.frozen_amount,
-        released_amount: row.released_amount
-      }), { total: 0, frozen_amount: 0, released_amount: 0 }) as any;
+        WHERE order_id IN (SELECT id FROM orders WHERE ${roleWhere})
+      `).get(userId) as any;
+      stats.payments.total = stats.payments?.total || 0;
+      stats.payments.frozen_amount = stats.payments?.frozen_amount || 0;
+      stats.payments.released_amount = stats.payments?.released_amount || 0;
 
+      const traceWhere = role === 'recycler' ? 'recycler_id = ?' : 'producer_id = ?';
       stats.trace_codes = db.prepare(`
         SELECT COUNT(*) as total,
                SUM(CASE WHEN min_env_sync_status = 'synced' THEN 1 ELSE 0 END) as env_synced
         FROM trace_codes
-        WHERE enterprise_id = ?
-      `).get(enterpriseId) as any;
+        WHERE ${traceWhere}
+      `).get(userId) as any;
       stats.trace_codes.total = stats.trace_codes?.total || 0;
       stats.trace_codes.env_synced = stats.trace_codes?.env_synced || 0;
 
@@ -196,10 +200,14 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
       stats.logistics.delivered = stats.logistics.delivered || 0;
 
       stats.recent_orders = db.prepare(`
-        SELECT o.*, c.category, c.sub_category,
+        SELECT o.*, c.category, c.sub_category, c.status as contract_status,
+               n.status as negotiation_status,
+               pr.status as payment_status,
                eb.company_name as buyer_name, es.company_name as seller_name
         FROM orders o
         JOIN contracts c ON o.contract_id = c.id
+        JOIN negotiations n ON c.negotiation_id = n.id
+        LEFT JOIN payment_records pr ON o.id = pr.order_id AND pr.type = 'deposit'
         JOIN enterprises eb ON o.buyer_id = eb.user_id
         JOIN enterprises es ON o.seller_id = es.user_id
         WHERE o.${roleWhere}
@@ -208,7 +216,7 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
     } else if (role === 'inspector') {
       stats.inspections = db.prepare(`
         SELECT COUNT(*) as total,
-               SUM(CASE WHEN status = 'issued' THEN 1 ELSE 0 END) as issued
+               SUM(CASE WHEN is_passed = 1 THEN 1 ELSE 0 END) as issued
         FROM inspection_reports
         WHERE inspector_id = ?
       `).get(userId) as any;
@@ -216,13 +224,17 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
       stats.inspections.issued = stats.inspections.issued || 0;
 
       stats.recent_orders = db.prepare(`
-        SELECT o.*, c.category, c.sub_category,
+        SELECT o.*, c.category, c.sub_category, c.status as contract_status,
+               n.status as negotiation_status,
+               pr.status as payment_status,
                eb.company_name as buyer_name, es.company_name as seller_name
         FROM orders o
         JOIN contracts c ON o.contract_id = c.id
+        JOIN negotiations n ON c.negotiation_id = n.id
+        LEFT JOIN payment_records pr ON o.id = pr.order_id AND pr.type = 'deposit'
         JOIN enterprises eb ON o.buyer_id = eb.user_id
         JOIN enterprises es ON o.seller_id = es.user_id
-        WHERE o.inspector_id = ?
+        WHERE o.id IN (SELECT order_id FROM inspection_reports WHERE inspector_id = ?)
         ORDER BY o.created_at DESC LIMIT 10
       `).all(userId) as any[];
     } else if (role === 'carrier') {
@@ -230,7 +242,7 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
         SELECT COUNT(*) as total,
                SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) as delivered,
                SUM(CASE WHEN status = 'in_transit' THEN 1 ELSE 0 END) as in_transit,
-               COALESCE(SUM(quoted_price), 0) as total_income
+               COALESCE(SUM((SELECT quoted_price FROM logistics_quotations WHERE id = logistics_orders.quotation_id)), 0) as total_income
         FROM logistics_orders
         WHERE carrier_id = ?
       `).get(userId) as any;
@@ -240,13 +252,17 @@ app.get('/api/stats', authMiddleware, (req: AuthRequest, res) => {
       stats.logistics.total_income = stats.logistics.total_income || 0;
 
       stats.recent_orders = db.prepare(`
-        SELECT o.*, c.category, c.sub_category,
+        SELECT o.*, c.category, c.sub_category, c.status as contract_status,
+               n.status as negotiation_status,
+               pr.status as payment_status,
                eb.company_name as buyer_name, es.company_name as seller_name
         FROM orders o
         JOIN contracts c ON o.contract_id = c.id
+        JOIN negotiations n ON c.negotiation_id = n.id
+        LEFT JOIN payment_records pr ON o.id = pr.order_id AND pr.type = 'deposit'
         JOIN enterprises eb ON o.buyer_id = eb.user_id
         JOIN enterprises es ON o.seller_id = es.user_id
-        WHERE o.carrier_id = ?
+        WHERE o.id IN (SELECT order_id FROM logistics_orders WHERE carrier_id = ?)
         ORDER BY o.created_at DESC LIMIT 10
       `).all(userId) as any[];
     }
