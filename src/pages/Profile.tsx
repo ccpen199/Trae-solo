@@ -1,17 +1,20 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Wallet, TrendingUp, CheckCircle2, ShieldCheck, ChevronRight, Banknote,
   Camera, AlertCircle, History, DollarSign, X, Clock, Eye, RotateCcw,
-  ArrowRight, Landmark, UserCheck, Building2, XCircle, FileCheck, Search
+  ArrowRight, Landmark, UserCheck, Building2, XCircle, FileCheck, Search,
+  ListTodo, Timer
 } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import { cn } from '@/lib/utils'
 import { currentWorker } from '@/data/users'
 import { submissions, withdrawalRecords } from '@/data/submissions'
-import { formatPrice, formatDate, formatDateTime } from '@/utils'
+import { formatPrice, formatDate, formatDateTime, getAcceptanceDeadline, getAcceptanceTimeRemaining, getCommissionMultiplier } from '@/utils'
 import { DifficultyBadge, StatusBadge } from '@/components/common'
 import { tasks } from '@/data/tasks'
+import { useStore } from '@/store'
 import type { DifficultyLevel } from '@/types'
 
 const MILESTONES = [
@@ -171,6 +174,8 @@ const approvedSubmissions = submissions.filter((s) => s.workerId === currentWork
 const recentSubmissions = submissions.filter((s) => s.workerId === currentWorker.id)
 
 export default function Profile() {
+  const navigate = useNavigate()
+  const acceptedTaskIds = useStore((s) => s.acceptedTaskIds)
   const multiplier = getLocalMultiplier(currentWorker.completedTasks)
   const currentBonus = Math.round((multiplier - 1) * 100)
 
@@ -385,6 +390,108 @@ export default function Profile() {
               </table>
             </div>
           )}
+        </div>
+
+        <div className="mb-6 rounded-xl bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-serif text-lg font-bold text-zinc-900">
+              <Timer size={18} className="mr-2 inline text-sky-500" />
+              验收追踪与驳回复查
+            </h2>
+            <Link to="/my-tasks" className="inline-flex items-center gap-1 text-xs font-medium text-primary-500 hover:text-primary-600">
+              查看全部 <ChevronRight size={12} />
+            </Link>
+          </div>
+          {(() => {
+            const pendingSubs = recentSubmissions.filter((s) => s.status === 'submitted' || s.status === 'pending_review')
+            const rejectedSubs = recentSubmissions.filter((s) => s.status === 'rejected')
+            const allItems = [
+              ...acceptedTaskIds.filter(id => !recentSubmissions.some(s => s.taskId === id)).map(id => {
+                const t = tasks.find(t => t.id === id)
+                return t ? { type: 'accepted' as const, task: t } : null
+              }).filter(Boolean),
+              ...pendingSubs.map(s => ({ type: 'pending' as const, sub: s })),
+              ...rejectedSubs.map(s => ({ type: 'rejected' as const, sub: s })),
+            ]
+            if (allItems.length === 0) {
+              return <p className="py-8 text-center text-sm text-zinc-400">暂无验收追踪记录</p>
+            }
+            return (
+              <div className="space-y-3">
+                {allItems.map((item, i) => {
+                  if (!item) return null
+                  if (item.type === 'accepted' && 'task' in item) {
+                    const t = item.task
+                    return (
+                      <div key={`a-${t.id}`} className="flex items-center gap-4 rounded-xl border border-sky-100 bg-sky-50/50 p-4">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sky-100">
+                          <Camera size={20} className="text-sky-600" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="font-medium text-zinc-900">{t.title}</div>
+                          <div className="mt-1 flex items-center gap-2 text-xs">
+                            <span className="text-sky-600 font-medium">待上传截图</span>
+                            <span className="text-zinc-400">· 验收{t.acceptancePeriod === '24h' ? '24小时' : t.acceptancePeriod === '72h' ? '72小时' : '7天'}</span>
+                          </div>
+                        </div>
+                        <Link to="/my-tasks" className="shrink-0 rounded-lg bg-sky-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-sky-600">
+                          去上传
+                        </Link>
+                      </div>
+                    )
+                  }
+                  if (('sub' in item) && item.sub) {
+                    const s = item.sub
+                    const task = tasks.find(t => t.id === s.taskId)
+                    const accPeriod = task?.acceptancePeriod ?? '24h'
+                    const deadline = getAcceptanceDeadline(s.submittedAt, accPeriod)
+                    const remaining = getAcceptanceTimeRemaining(deadline)
+                    const isRejected = item.type === 'rejected'
+                    return (
+                      <div key={s.id} className={cn(
+                        'rounded-xl border p-4',
+                        isRejected ? 'border-rose-200 bg-rose-50/50' : 'border-amber-100 bg-amber-50/30'
+                      )}>
+                        <div className="flex items-start gap-4">
+                          <div className={cn(
+                            'flex h-12 w-12 shrink-0 items-center justify-center rounded-full',
+                            isRejected ? 'bg-rose-100' : 'bg-amber-100'
+                          )}>
+                            {isRejected ? <XCircle size={20} className="text-rose-500" /> : <Clock size={20} className="text-amber-500" />}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="font-medium text-zinc-900">{s.taskTitle}</div>
+                            <div className="mt-1 flex flex-wrap items-center gap-2 text-xs">
+                              {isRejected ? (
+                                <span className="text-rose-600 font-semibold">已驳回</span>
+                              ) : (
+                                <span className="text-amber-600 font-semibold">验收中 · {remaining.text}</span>
+                              )}
+                              <span className="text-zinc-400">· 提交于 {formatDateTime(s.submittedAt)}</span>
+                            </div>
+                            {!isRejected && remaining.percent < 50 && (
+                              <div className="mt-2 flex items-center gap-1.5 rounded-lg bg-amber-100 px-2.5 py-1 text-xs text-amber-700">
+                                <AlertCircle size={12} /> 验收时效剩余 {remaining.text}，超时将自动验收通过
+                              </div>
+                            )}
+                            {isRejected && s.reviewNotes && (
+                              <div className="mt-2 rounded-lg bg-white border border-rose-200 px-3 py-2 text-xs text-rose-700">
+                                <div className="mb-0.5 font-semibold">驳回原因：{s.reviewNotes}</div>
+                                <button className="mt-1 inline-flex items-center gap-0.5 rounded border border-rose-300 px-2 py-0.5 text-[11px] font-medium text-rose-600 hover:bg-rose-50">
+                                  <RotateCcw size={10} /> 修正后重新提交
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                  return null
+                })}
+              </div>
+            )
+          })()}
         </div>
 
         <div className="mb-6 rounded-xl bg-white p-6 shadow-sm">

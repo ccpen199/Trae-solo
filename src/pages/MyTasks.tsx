@@ -49,16 +49,18 @@ export default function MyTasks() {
   )
 
   const stats = useMemo(() => {
+    const signedUpCount = acceptedTasks.length
+    const submittedCount = mySubmissions.filter((s) => s.status === 'submitted').length
+    const underReviewCount = mySubmissions.filter((s) => s.status === 'pending_review').length
     const settledCount = mySubmissions.filter((s) => s.status === 'approved').length
+    const rejectedCount = mySubmissions.filter((s) => s.status === 'rejected').length
     const totalEarnings = mySubmissions
       .filter((s) => s.status === 'approved')
       .reduce((sum, s) => sum + s.price, 0)
-    const underReview = mySubmissions.filter((s) => s.status === 'submitted' || s.status === 'pending_review').length
-    const rejectedCount = mySubmissions.filter((s) => s.status === 'rejected').length
     return {
-      signedUp: acceptedTasks.length,
-      inProgress: mySubmissions.filter((s) => s.status === 'submitted').length,
-      underReview,
+      signedUp: signedUpCount,
+      inProgress: signedUpCount + submittedCount,
+      underReview: underReviewCount + submittedCount,
       settled: settledCount,
       rejected: rejectedCount,
       totalEarnings,
@@ -70,9 +72,12 @@ export default function MyTasks() {
       case 'signed_up':
         return acceptedTasks.map((t) => ({ type: 'task' as const, task: t }))
       case 'in_progress':
-        return mySubmissions
-          .filter((s) => s.status === 'submitted')
-          .map((s) => ({ type: 'submission' as const, submission: s, showReview: false }))
+        return [
+          ...acceptedTasks.map((t) => ({ type: 'task' as const, task: t })),
+          ...mySubmissions
+            .filter((s) => s.status === 'submitted')
+            .map((s) => ({ type: 'submission' as const, submission: s, showReview: false })),
+        ]
       case 'under_review':
         return mySubmissions
           .filter((s) => s.status === 'pending_review' || s.status === 'submitted')

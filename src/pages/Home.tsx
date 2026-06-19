@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowRight, Flame, Coins, ShieldCheck, Clock, CheckCircle2, TrendingUp,
   Zap, Award, Target, Camera, UserCheck, Wallet, FileCheck, ChevronRight,
-  ListTodo, AlertTriangle, Search, BarChart3, Building2, Landmark, Check
+  ListTodo, AlertTriangle, Search, BarChart3, Building2, Landmark, Check,
+  Plus, Eye, RefreshCw
 } from 'lucide-react'
 import { useStore } from '@/store'
 import { heatPredictions } from '@/data/heatPredictions'
-import { earningsBroadcasts, currentWorker } from '@/data/users'
+import { earningsBroadcasts, currentWorker, currentEmployer } from '@/data/users'
 import { tasks } from '@/data/tasks'
 import { DIFFICULTY_CONFIG, type DifficultyLevel } from '@/types'
 import { formatPrice, formatDate } from '@/utils'
@@ -56,6 +57,7 @@ function HeatCircle({ score }: { score: number }) {
 
 export default function Home() {
   const navigate = useNavigate()
+  const currentRole = useStore((s) => s.currentRole)
   const storeTasks = useStore((s) => s.tasks)
   const acceptTask = useStore((s) => s.acceptTask)
   const acceptedTaskIds = useStore((s) => s.acceptedTaskIds)
@@ -67,6 +69,16 @@ export default function Home() {
   const signedUpCount = acceptedTaskIds.filter((id) => !mySubmissions.some((s) => s.taskId === id)).length
   const inProgressCount = signedUpCount + mySubmissions.filter((s) => s.status === 'submitted' || s.status === 'pending_review').length
   const settledCount = mySubmissions.filter((s) => s.status === 'approved').length
+
+  const isEmployer = currentRole === 'employer'
+  const isWorker = currentRole === 'worker'
+
+  const employerGates = [
+    { title: '企业认证', desc: '营业执照+银行实名', icon: Building2, path: '/employer/certify', passed: currentEmployer.certificationStatus === 'approved' },
+    { title: '银行实名', desc: '对公账户核实', icon: Landmark, passed: currentEmployer.bankAccountVerified },
+    { title: '保证金托管', desc: `余额 ${formatPrice(currentEmployer.depositBalance)}`, icon: Wallet, path: '/employer', passed: currentEmployer.depositBalance >= 2000 },
+    { title: '合规审核', desc: '发布后自动预审', icon: ShieldCheck, path: '/employer', passed: true },
+  ]
 
   const handleQuickAccept = (taskId: string, taskTitle: string) => {
     if (acceptedTaskIds.includes(taskId)) {
@@ -153,18 +165,34 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="mb-6 flex flex-wrap gap-3 text-xs"
           >
-            <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
-              <ShieldCheck size={12} /> 企业认证雇主
-            </span>
-            <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
-              <Coins size={12} /> 保证金托管
-            </span>
-            <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
-              <FileCheck size={12} /> 合规审核保障
-            </span>
-            <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
-              <Wallet size={12} /> 完成10单佣金上浮15%
-            </span>
+            {isEmployer ? (
+              <>
+                {employerGates.map((g, i) => (
+                  <Link key={i} to={g.path || '/employer'}
+                    className={cn('rounded-full px-3 py-1 flex items-center gap-1 transition-colors',
+                      g.passed ? 'bg-emerald-500/20 text-white' : 'bg-amber-400/20 text-amber-100 hover:bg-amber-400/30')}>
+                    <g.icon size={12} />
+                    {g.title}
+                    {g.passed ? <Check size={10} /> : <AlertTriangle size={10} />}
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <>
+                <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
+                  <ShieldCheck size={12} /> 企业认证雇主
+                </span>
+                <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
+                  <Coins size={12} /> 保证金托管
+                </span>
+                <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
+                  <FileCheck size={12} /> 合规审核保障
+                </span>
+                <span className="rounded-full bg-white/15 px-3 py-1 flex items-center gap-1">
+                  <Wallet size={12} /> 完成10单佣金上浮15%
+                </span>
+              </>
+            )}
           </motion.div>
 
           <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -191,7 +219,7 @@ export default function Home() {
           </div>
 
           <AnimatePresence>
-            {inProgressCount > 0 && (
+            {isWorker && inProgressCount > 0 && (
               <motion.div
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
               className="mb-5 rounded-2xl bg-gradient-to-r from-gold-300 via-gold-200/90 to-gold-300 px-5 py-4 shadow-lg shadow-gold-900/10"
@@ -218,21 +246,70 @@ export default function Home() {
               </div>
               </motion.div>
             )}
+            {isEmployer && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                className="mb-5 rounded-2xl bg-gradient-to-r from-teal-600/90 via-teal-500/90 to-teal-600/90 px-5 py-4 shadow-lg"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/20">
+                    <Building2 size={22} className="text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-bold text-white">
+                      雇主工作台 · {employerGates.filter(g => g.passed).length}/{employerGates.length} 项门槛已通过
+                    </div>
+                    <div className="mt-0.5 text-xs text-teal-100">
+                      企业认证 · 银行实名 · 保证金托管 · 合规审核
+                    </div>
+                  </div>
+                  <Link to="/employer"
+                    className="flex items-center gap-1 rounded-full bg-white px-4 py-2 text-xs font-bold text-teal-700 hover:bg-teal-50">
+                    进入工作台 <ChevronRight size={14} />
+                  </Link>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
 
           <div className="flex flex-wrap gap-3">
-            <Link to="/tasks">
-              <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-semibold text-primary-600 shadow-lg hover:bg-gold-50 transition-colors">
-                <Flame size={18} /> 浏览任务大厅 <ArrowRight size={16} />
-              </motion.button>
-            </Link>
-            <Link to="/profile">
-              <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/30 px-7 py-3 font-semibold text-white hover:bg-white/25 transition-colors">
-                <UserCheck size={18} /> 查看接单权益
-              </motion.button>
-            </Link>
+            {isEmployer ? (
+              <>
+                <Link to="/employer">
+                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-semibold text-primary-600 shadow-lg hover:bg-gold-50 transition-colors">
+                    <Building2 size={18} /> 发包方工作台 <ArrowRight size={16} />
+                  </motion.button>
+                </Link>
+                <Link to="/employer/certify">
+                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/30 px-7 py-3 font-semibold text-white hover:bg-white/25 transition-colors">
+                    <ShieldCheck size={18} /> 企业认证与保证金
+                  </motion.button>
+                </Link>
+                <Link to="/employer">
+                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/30 px-7 py-3 font-semibold text-white hover:bg-white/25 transition-colors">
+                    <Plus size={18} /> 发布新任务
+                  </motion.button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/tasks">
+                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-semibold text-primary-600 shadow-lg hover:bg-gold-50 transition-colors">
+                    <Flame size={18} /> 浏览任务大厅 <ArrowRight size={16} />
+                  </motion.button>
+                </Link>
+                <Link to="/profile">
+                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/30 px-7 py-3 font-semibold text-white hover:bg-white/25 transition-colors">
+                    <UserCheck size={18} /> 查看接单权益
+                  </motion.button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -268,7 +345,7 @@ export default function Home() {
 
       <section className="bg-gradient-to-br from-gold-50 to-amber-50 px-6 py-10">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-6 flex items-end justify-between flex-wrap gap-3">
+          <div className="mb-4 flex items-end justify-between flex-wrap gap-3">
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <div className="h-6 w-1 rounded-full bg-gradient-to-b from-gold-400 to-gold-600" />
@@ -282,6 +359,50 @@ export default function Home() {
             <Link to="/tasks" className="text-sm text-primary-500 font-medium flex items-center hover:text-primary-600">
               查看全部 <ChevronRight size={16} />
             </Link>
+          </div>
+
+          <div className="mb-5 rounded-xl border border-gold-200/60 bg-white/80 p-4">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="flex-1 min-w-[280px]">
+                <div className="mb-2 text-xs font-semibold text-zinc-700 flex items-center gap-1.5">
+                  <BarChart3 size={13} className="text-gold-600" /> 推荐筛选依据与排序规则
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+                  <div className="rounded-lg bg-emerald-50 px-2.5 py-2">
+                    <div className="font-semibold text-emerald-700">完成率 × 0.4</div>
+                    <div className="text-zinc-500 mt-0.5">近30天历史完成率，权重最高</div>
+                  </div>
+                  <div className="rounded-lg bg-sky-50 px-2.5 py-2">
+                    <div className="font-semibold text-sky-700">(1-弃单率) × 0.3</div>
+                    <div className="text-zinc-500 mt-0.5">低弃单率任务优先推荐</div>
+                  </div>
+                  <div className="rounded-lg bg-amber-50 px-2.5 py-2">
+                    <div className="font-semibold text-amber-700">佣金吸引力 × 0.2</div>
+                    <div className="text-zinc-500 mt-0.5">单价/工时比综合评估</div>
+                  </div>
+                  <div className="rounded-lg bg-rose-50 px-2.5 py-2">
+                    <div className="font-semibold text-rose-700">供需比 × 0.1</div>
+                    <div className="text-zinc-500 mt-0.5">剩余名额/总名额比</div>
+                  </div>
+                </div>
+                <div className="mt-2 text-[11px] text-zinc-500 leading-relaxed">
+                  综合评分 = 完成率×0.4 + (1-弃单率)×0.3 + 佣金吸引力×0.2 + 供需比×0.1，得分≥75分且完成率≥70%方可入选推荐池，按得分降序排列
+                </div>
+              </div>
+              <div className="shrink-0 text-right">
+                <div className="mb-1 text-[11px] text-zinc-400">数据更新时间</div>
+                <div className="text-sm font-semibold text-zinc-700">2026-06-19 08:00</div>
+                <div className="mt-1 text-[11px] text-zinc-400">周期：每日 08:00 / 20:00</div>
+                <div className="mt-2 flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700">
+                    <Check size={9} /> 推荐池 {recommended.length} 个任务
+                  </span>
+                  <span className="inline-flex items-center gap-0.5 rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-medium text-sky-700">
+                    <Eye size={9} /> 可接名额 {recommended.reduce((s, r) => s + ((r.task?.totalSlots ?? 0) - (r.task?.takenSlots ?? 0)), 0)}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
