@@ -146,29 +146,39 @@ function useApi<T>(path: string, fallback: T) {
   return { data, loading, error, refresh };
 }
 
-const cacheRef: Record<string, { data: unknown; ts: number }> = {};
-const CACHE_TTL = 30_000;
+const CACHE_TTL = 300_000;
+
+function readCache<T>(path: string): T | null {
+  try {
+    const raw = sessionStorage.getItem(`agcache:${path}`);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    if (Date.now() - ts < CACHE_TTL) return data as T;
+    return data as T;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(path: string, data: unknown) {
+  try {
+    sessionStorage.setItem(`agcache:${path}`, JSON.stringify({ data, ts: Date.now() }));
+  } catch { /* ignore quota errors */ }
+}
 
 function useCachedApi<T>(path: string, fallback: T) {
   const [data, setData] = useState<T>(() => {
-    const cached = cacheRef[path];
-    if (cached && cached.data) {
-      return cached.data as T;
-    }
-    return fallback;
+    const cached = readCache<T>(path);
+    return cached ?? fallback;
   });
-  const [loading, setLoading] = useState(() => {
-    const cached = cacheRef[path];
-    return !(cached && cached.data && Date.now() - cached.ts < CACHE_TTL);
-  });
+  const [loading, setLoading] = useState(() => readCache<T>(path) === null);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const cached = cacheRef[path];
-    if (cached && cached.data && Date.now() - cached.ts < CACHE_TTL) {
-      setData(cached.data as T);
+    const cached = readCache<T>(path);
+    if (cached !== null) {
+      setData(cached);
       setLoading(false);
-      return;
     }
 
     let active = true;
@@ -178,14 +188,14 @@ function useCachedApi<T>(path: string, fallback: T) {
         if (active) {
           setData(payload);
           setError('');
-          cacheRef[path] = { data: payload, ts: Date.now() };
+          writeCache(path, payload);
         }
       })
       .catch((err: Error) => {
         if (active) {
           setError(err.message);
-          if (cached && cached.data) {
-            setData(cached.data as T);
+          if (cached !== null) {
+            setData(cached);
           }
         }
       })
@@ -227,6 +237,8 @@ interface AppState {
   matchResults: MatchResult[];
   addOrder: (order: Omit<OrderRow, 'id' | 'createdAt'>) => OrderRow;
   addContract: (contract: Omit<ContractRow, 'id' | 'signedAt'>) => ContractRow;
+  updateOrder: (id: string, patch: Partial<OrderRow>) => void;
+  updateContract: (id: string, patch: Partial<ContractRow>) => void;
   setMatchResults: (results: MatchResult[]) => void;
 }
 
@@ -238,10 +250,24 @@ function useAppState() {
   return ctx;
 }
 
+function loadLocal<T>(key: string): T[] {
+  try {
+    const raw = sessionStorage.getItem(key);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function saveLocal(key: string, data: unknown) {
+  try { sessionStorage.setItem(key, JSON.stringify(data)); } catch { /* ignore */ }
+}
+
 function App() {
-  const [orders, setOrders] = useState<OrderRow[]>([]);
-  const [contracts, setContracts] = useState<ContractRow[]>([]);
+  const [orders, setOrders] = useState<OrderRow[]>(() => loadLocal('ag_orders'));
+  const [contracts, setContracts] = useState<ContractRow[]>(() => loadLocal('ag_contracts'));
   const [matchResults, setMatchResults] = useState<MatchResult[]>([]);
+
+  useEffect(() => { saveLocal('ag_orders', orders); }, [orders]);
+  useEffect(() => { saveLocal('ag_contracts', contracts); }, [contracts]);
 
   const addOrder = useCallback((order: Omit<OrderRow, 'id' | 'createdAt'>): OrderRow => {
     const newOrder: OrderRow = {
@@ -249,7 +275,11 @@ function App() {
       id: `od-${Date.now()}`,
       createdAt: new Date().toLocaleString('zh-CN'),
     };
-    setOrders((prev) => [newOrder, ...prev]);
+    setOrders((prev) => {
+      const next = [newOrder, ...prev];
+      saveLocal('ag_orders', next);
+      return next;
+    });
     return newOrder;
   }, []);
 
@@ -259,8 +289,28 @@ function App() {
       id: `ct-${Date.now()}`,
       signedAt: new Date().toLocaleDateString('zh-CN'),
     };
-    setContracts((prev) => [newContract, ...prev]);
+    setContracts((prev) => {
+      const next = [newContract, ...prev];
+      saveLocal('ag_contracts', next);
+      return next;
+    });
     return newContract;
+  }, []);
+
+  const updateOrder = useCallback((id: string, patch: Partial<OrderRow>) => {
+    setOrders((prev) => {
+      const next = prev.map((o) => (o.id === id ? { ...o, ...patch } : o));
+      saveLocal('ag_orders', next);
+      return next;
+    });
+  }, []);
+
+  const updateContract = useCallback((id: string, patch: Partial<ContractRow>) => {
+    setContracts((prev) => {
+      const next = prev.map((c) => (c.id === id ? { ...c, ...patch } : c));
+      saveLocal('ag_contracts', next);
+      return next;
+    });
   }, []);
 
   const appState: AppState = {
@@ -269,6 +319,8 @@ function App() {
     matchResults,
     addOrder,
     addContract,
+    updateOrder,
+    updateContract,
     setMatchResults,
   };
 
@@ -575,8 +627,8 @@ function TracePage() {
     '监管复查': 'blue',
   };
 
-  const fullChainStages = ['种植建档', '农事操作', '加工包装', '冷链物流', '到货入库', '入市销售', '监管复查'];
-  const completedStages = data.timeline.map((t) => t.stage);
+  const fullChainStages = ['种植建档', '农事操作', '质量检测', '加工包装', '冷链物流', '到货入库', '入市销售', '监管复查'];
+  const completedStages = [...new Set(data.timeline.map((t) => t.stage))];
 
   return (
     <section className="page-space">
@@ -646,6 +698,7 @@ function TracePage() {
                   const labelMap: Record<string, string> = {
                     '种植建档': '种植',
                     '农事操作': '农事',
+                    '质量检测': '检测',
                     '加工包装': '加工',
                     '冷链物流': '物流',
                     '到货入库': '入库',
@@ -742,18 +795,25 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
 
   function handleMatchDemand(demand: typeof demandItems[0]) {
     setSelectedDemand(demand);
+    const keyword = demand.name.replace(/采购|长期求购|紧急采购|求购/g, '');
     const matched = data.products
-      .filter((p) => p.category === demand.category || p.name.includes(demand.name.replace('采购', '').replace('长期求购', '').replace('紧急采购', '')))
-      .map((p) => ({
-        id: p.id,
-        name: p.name,
-        category: p.category,
-        region: p.origin,
-        spec: p.specification,
-        price: currency(p.wholesalePrice),
-        seller: p.seller,
-        matchScore: Math.floor(Math.random() * 25) + 75,
-      }))
+      .map((p) => {
+        let score = 50;
+        if (p.category === demand.category) score += 30;
+        if (p.origin.includes(demand.region) || demand.region === '全国' || demand.region === '东北' && p.origin.includes('黑龙江')) score += 15;
+        if (p.name.includes(keyword) || keyword.includes(p.category)) score += 10;
+        if (p.specification === demand.spec) score += 5;
+        return {
+          id: p.id,
+          name: p.name,
+          category: p.category,
+          region: p.origin,
+          spec: p.specification,
+          price: currency(p.channel === 'b2b' ? p.wholesalePrice : p.price),
+          seller: p.seller,
+          matchScore: Math.min(score, 99),
+        };
+      })
       .sort((a, b) => b.matchScore - a.matchScore)
       .slice(0, 3);
     setMatchResults(matched);
@@ -834,9 +894,15 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
         </div>
       )}
 
+      {channel === 'b2c' && (
+        <div className="tab-bar">
+          <button className={`tab-btn active`}>精选好物</button>
+        </div>
+      )}
+
       <StatusLine loading={loading} error={error} />
 
-      {supplyTab === 'products' && (
+      {(supplyTab === 'products' || channel === 'b2c') && (
         <div className="product-grid">
           {data.products.map((product) => (
             <MarketProductCard key={product.id} product={product} onOrder={handleOrder} />
@@ -860,17 +926,22 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
                 <strong>{item.price}</strong>
                 <button className="action-btn blue" onClick={() => {
                   const matched = data.products
-                    .filter((p) => p.category === item.category)
-                    .map((p) => ({
-                      id: p.id,
-                      name: p.name,
-                      category: p.category,
-                      region: p.origin,
-                      spec: p.specification,
-                      price: currency(p.wholesalePrice),
-                      seller: p.seller,
-                      matchScore: Math.floor(Math.random() * 25) + 75,
-                    }))
+                    .map((p) => {
+                      let score = 50;
+                      if (p.category === item.category) score += 30;
+                      if (p.origin.includes(item.region)) score += 15;
+                      if (p.specification === item.spec) score += 5;
+                      return {
+                        id: p.id,
+                        name: p.name,
+                        category: p.category,
+                        region: p.origin,
+                        spec: p.specification,
+                        price: currency(p.channel === 'b2b' ? p.wholesalePrice : p.price),
+                        seller: p.seller,
+                        matchScore: Math.min(score, 99),
+                      };
+                    })
                     .sort((a, b) => b.matchScore - a.matchScore)
                     .slice(0, 3);
                   setMatchResults(matched);
@@ -1041,29 +1112,36 @@ function MarketPage({ channel }: { channel: 'b2b' | 'b2c' }) {
           <div className="modal-form">
             <div className="form-group">
               <label>按品类、地域、规格智能匹配</label>
-              <div className="stack-list">
-                {matchResults.map((match) => (
-                  <article key={match.id} className="supply-row">
-                    <div className="supply-info">
-                      <div className="supply-badge">匹配度 {match.matchScore}%</div>
-                      <div>
-                        <strong>{match.name}</strong>
-                        <p>{match.category} · {match.region} · {match.spec}</p>
-                        <span>供应商：{match.seller}</span>
+              {matchResults.length > 0 ? (
+                <div className="stack-list">
+                  {matchResults.map((match) => (
+                    <article key={match.id} className="supply-row">
+                      <div className="supply-info">
+                        <div className="supply-badge">匹配度 {match.matchScore}%</div>
+                        <div>
+                          <strong>{match.name}</strong>
+                          <p>{match.category} · {match.region} · {match.spec}</p>
+                          <span>供应商：{match.seller}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="supply-actions">
-                      <strong>{match.price}</strong>
-                      <button className="action-btn green" onClick={() => handleSelectMatch(match)}>
-                        <Handshake size={14} />
-                        选择下单
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
+                      <div className="supply-actions">
+                        <strong>{match.price}</strong>
+                        <button className="action-btn green" onClick={() => handleSelectMatch(match)}>
+                          <Handshake size={14} />
+                          选择下单
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="empty-state" style={{ padding: 24 }}>
+                  <Handshake size={32} />
+                  <p>正在匹配中，请稍候重试...</p>
+                </div>
+              )}
             </div>
-            <button className="action-btn outline full" onClick={matchModal.closeModal}>
+            <button className="action-btn outline full" onClick={(e) => { e.stopPropagation(); matchModal.closeModal(); }}>
               关闭
             </button>
           </div>
@@ -1239,13 +1317,35 @@ function ShopPage() {
 
 function OrdersPage() {
   const { data: apiData, loading, error, refresh } = useApi<{ orders: OrderRow[] }>('/api/orders', { orders: [] });
-  const { orders: localOrders } = useAppState();
+  const { orders: localOrders, updateOrder } = useAppState();
   const allOrders = [...localOrders, ...apiData.orders];
+
+  function handleAction(order: OrderRow) {
+    switch (order.status) {
+      case '担保支付中':
+        updateOrder(order.id, { status: '待签收', progress: 60, logistics: '已发货运输中' });
+        break;
+      case '保证金已冻结':
+        updateOrder(order.id, { status: '合同签署中', progress: 30, logistics: '待安排发货' });
+        break;
+      case '合同签署中':
+        updateOrder(order.id, { status: '担保支付中', progress: 40, logistics: '待安排发货' });
+        break;
+      case '待签收':
+        updateOrder(order.id, { status: '已验收', progress: 90, logistics: '已签收入库' });
+        break;
+      case '已验收':
+        updateOrder(order.id, { status: '已结算', progress: 100, logistics: '交易完成' });
+        break;
+      default:
+        refresh();
+    }
+  }
 
   const statusActions: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
     '担保支付中': { label: '确认放款', icon: <Wallet size={14} />, color: 'green' },
     '待签收': { label: '确认签收', icon: <CheckCircle2 size={14} />, color: 'blue' },
-    '已验收': { label: '查看详情', icon: <Eye size={14} />, color: 'slate' },
+    '已验收': { label: '确认结算', icon: <CheckCircle2 size={14} />, color: 'green' },
     '保证金已冻结': { label: '安排发货', icon: <Truck size={14} />, color: 'amber' },
     '合同签署中': { label: '签署合同', icon: <FileSignature size={14} />, color: 'blue' },
     '已结算': { label: '下载凭证', icon: <Download size={14} />, color: 'slate' },
@@ -1282,7 +1382,7 @@ function OrdersPage() {
                 <span className={`status-tag ${action?.color || 'slate'}`}>{order.status}</span>
                 <progress max={100} value={order.progress} />
                 {action && (
-                  <button className={`action-btn ${action.color} small`} onClick={refresh}>
+                  <button className={`action-btn ${action.color} small`} onClick={() => handleAction(order)}>
                     {action.icon}
                     {action.label}
                   </button>
@@ -1298,8 +1398,24 @@ function OrdersPage() {
 
 function ContractsPage() {
   const { data: apiData, loading, error, refresh } = useApi<{ contracts: ContractRow[] }>('/api/contracts', { contracts: [] });
-  const { contracts: localContracts } = useAppState();
+  const { contracts: localContracts, updateContract } = useAppState();
   const allContracts = [...localContracts, ...apiData.contracts];
+
+  function handleAction(contract: ContractRow) {
+    switch (contract.status) {
+      case '待乙方签署':
+        updateContract(contract.id, { status: '双方已签署' });
+        break;
+      case '保证金待缴纳':
+        updateContract(contract.id, { status: '平台见证中' });
+        break;
+      case '平台见证中':
+        updateContract(contract.id, { status: '双方已签署' });
+        break;
+      default:
+        refresh();
+    }
+  }
 
   const statusActions: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
     '双方已签署': { label: '查看存证', icon: <Eye size={14} />, color: 'slate' },
@@ -1316,9 +1432,7 @@ function ContractsPage() {
           <h2>电子合同 · {allContracts.length} 份</h2>
         </div>
         <div className="title-actions">
-          <button className="action-btn green" onClick={() => {
-            localContracts.find((c) => c.status === '待乙方签署') || refresh();
-          }}>
+          <button className="action-btn green" onClick={refresh}>
             <FileSignature size={16} />
             新建合同
           </button>
@@ -1334,7 +1448,7 @@ function ContractsPage() {
               <div className="contract-header">
                 <span className={`pill ${action?.color === 'green' ? 'green' : action?.color === 'amber' ? 'amber' : 'blue'}`}>{contract.status}</span>
                 {action && (
-                  <button className={`action-btn ${action.color} small`} onClick={refresh}>
+                  <button className={`action-btn ${action.color} small`} onClick={() => handleAction(contract)}>
                     {action.icon}
                     {action.label}
                   </button>
