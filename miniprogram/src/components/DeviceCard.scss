@@ -1,0 +1,123 @@
+.device-card {
+  display: flex;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  &--recent {
+    background: linear-gradient(135deg, #e6f7ff 0%, #ffffff 100%);
+    border: 1px solid #91d5ff;
+  }
+
+  &__icon-wrap {
+    position: relative;
+    margin-right: 24px;
+  }
+
+  &__icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    background: #f5f7fa;
+    padding: 16px;
+  }
+
+  &__bind-tag {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #52c41a;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  &__name {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+  }
+
+  &__status {
+    font-size: 22px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__meta-item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__meta-icon {
+    font-size: 24px;
+    margin-right: 8px;
+  }
+
+  &__meta-text {
+    font-size: 24px;
+    color: #666666;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__type-tag {
+    font-size: 22px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+  }
+
+  &__action-text {
+    font-size: 26px;
+    color: #1890ff;
+    font-weight: 500;
+    margin-right: 6px;
+  }
+
+  &__action-arrow {
+    font-size: 26px;
+    color: #1890ff;
+  }
+}

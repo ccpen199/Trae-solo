@@ -1,0 +1,149 @@
+.index-page {
+  min-height: 100vh;
+  background: #f5f7fa;
+
+  &__scroll {
+    height: 100vh;
+  }
+
+  &__section {
+    padding: 24px 30px;
+
+    &:first-child {
+      padding-top: 30px;
+    }
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  &__section-title {
+    font-size: 34px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  &__section-more {
+    font-size: 24px;
+    color: #1890ff;
+  }
+
+  &__section-badge {
+    background: #1890ff;
+    color: #ffffff;
+    font-size: 22px;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  &__safe-bottom {
+    height: 60px;
+  }
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 36px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    transition: transform 0.2s ease;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+    &--blue {
+      background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    }
+
+    &--cyan {
+      background: linear-gradient(135deg, #13c2c2 0%, #08979c 100%);
+    }
+
+    &--orange {
+      background: linear-gradient(135deg, #faad14 0%, #d48806 100%);
+    }
+  }
+
+  &__icon-text {
+    font-size: 44px;
+  }
+
+  &__label {
+    font-size: 26px;
+    color: #333333;
+    font-weight: 500;
+  }
+}
+
+.recent-scroll {
+  margin: 0 -30px;
+  padding: 0 30px;
+  white-space: nowrap;
+
+  &__inner {
+    display: inline-flex;
+    padding-right: 30px;
+  }
+
+  &__item {
+    display: inline-block;
+    width: 520px;
+    margin-right: 24px;
+    vertical-align: top;
+
+    .device-card {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 40px;
+  background: #ffffff;
+  border-radius: 20px;
+
+  &__icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+    opacity: 0.5;
+  }
+
+  &__text {
+    font-size: 30px;
+    color: #666666;
+    margin-bottom: 12px;
+  }
+
+  &__desc {
+    font-size: 24px;
+    color: #bbbbbb;
+  }
+}

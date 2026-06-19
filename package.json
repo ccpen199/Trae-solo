@@ -1,49 +1,51 @@
 {
-  "name": "may-89146",
+  "name": "campus-water-iot-platform",
+  "version": "1.0.0",
+  "description": "校园直饮水IoT服务平台 - 覆盖学生、运维方、投资商三方角色",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "backend",
+    "admin/investor",
+    "admin/operator",
+    "miniprogram"
+  ],
   "scripts": {
-    "client:dev": "vite",
-    "server:dev": "node api/server.js",
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "check": "tsc -b --noEmit"
+    "dev": "concurrently \"npm:dev:backend\" \"npm:dev:investor\" \"npm:dev:operator\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:investor": "cd admin/investor && npm run dev",
+    "dev:operator": "cd admin/operator && npm run dev",
+    "dev:miniprogram": "cd miniprogram && npm run dev:weapp",
+    "build": "npm run build:backend && npm run build:investor && npm run build:operator",
+    "build:backend": "cd backend && npm run build",
+    "build:investor": "cd admin/investor && npm run build",
+    "build:operator": "cd admin/operator && npm run build",
+    "build:miniprogram": "cd miniprogram && npm run build:weapp",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "lint": "npm run lint:backend && npm run lint:investor && npm run lint:operator",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:investor": "cd admin/investor && npm run lint",
+    "lint:operator": "cd admin/operator && npm run lint",
+    "test": "npm run test:backend",
+    "test:backend": "cd backend && npm run test",
+    "init:env": "cp .env.example .env && cp backend/.env.example backend/.env"
   },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.511.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^7.3.0",
-    "tailwind-merge": "^3.0.2",
-    "recharts": "^2.15.0",
-    "framer-motion": "^11.15.0",
-    "leaflet": "^1.9.4",
-    "react-leaflet": "^4.2.1",
-    "zustand": "^5.0.3"
-  },
+  "keywords": [
+    "iot",
+    "water-dispenser",
+    "campus",
+    "mqtt",
+    "miniprogram"
+  ],
+  "author": "Campus Water IoT Team",
+  "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.25.0",
-    "@types/node": "^22.15.30",
-    "@types/leaflet": "^1.9.14",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.4.1",
-    "autoprefixer": "^10.4.21",
-    "babel-plugin-react-dev-locator": "^1.0.0",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^3.4.17",
-    "eslint": "^9.25.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5",
-    "vite-plugin-trae-solo-badge": "^1.0.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

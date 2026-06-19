@@ -1,0 +1,124 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: campus-water-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: campus_water_iot
+    volumes:
+      - ./data/mongodb:/data/db
+    networks:
+      - campus-water-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: campus-water-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - campus-water-network
+
+  emqx:
+    image: emqx/emqx:5.3.0
+    container_name: campus-water-emqx
+    restart: always
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "8084:8084"
+      - "18083:18083"
+    environment:
+      EMQX_NAME: campus-water-broker
+      EMQX_HOST: 127.0.0.1
+    volumes:
+      - ./data/emqx/data:/opt/emqx/data
+      - ./data/emqx/log:/opt/emqx/log
+      - ./data/emqx/etc:/opt/emqx/etc
+    networks:
+      - campus-water-network
+    depends_on:
+      - redis
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: campus-water-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/campus_water_iot?authSource=admin
+      REDIS_HOST: redis
+      MQTT_HOST: emqx
+    volumes:
+      - ./uploads:/app/uploads
+      - ./firmware:/app/firmware
+    networks:
+      - campus-water-network
+    depends_on:
+      - mongodb
+      - redis
+      - emqx
+
+  investor-admin:
+    build:
+      context: ./admin/investor
+      dockerfile: Dockerfile
+    container_name: campus-water-investor-admin
+    restart: always
+    ports:
+      - "3001:80"
+    networks:
+      - campus-water-network
+    depends_on:
+      - backend
+
+  operator-admin:
+    build:
+      context: ./admin/operator
+      dockerfile: Dockerfile
+    container_name: campus-water-operator-admin
+    restart: always
+    ports:
+      - "3002:80"
+    networks:
+      - campus-water-network
+    depends_on:
+      - backend
+
+  student-miniprogram-api:
+    build:
+      context: ./miniprogram/server
+      dockerfile: Dockerfile
+    container_name: campus-water-miniprogram-api
+    restart: always
+    ports:
+      - "3003:3000"
+    environment:
+      NODE_ENV: production
+      BACKEND_API_URL: http://backend:3000
+    networks:
+      - campus-water-network
+    depends_on:
+      - backend
+
+networks:
+  campus-water-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  redis-data:
+  emqx-data:
