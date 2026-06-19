@@ -1,0 +1,16 @@
+{
+  "order": "may-89229",
+  "checkedAt": "2026-06-19T09:30:14.212Z",
+  "frontendUrl": "http://127.0.0.1:49229/",
+  "status": 200,
+  "ok": true,
+  "page": {
+    "title": "may-89229 Service Console",
+    "status": "API online",
+    "metricCount": 4,
+    "rowCount": 4,
+    "payloadText": "{\n  \"ok\": true,\n  \"status\": {\n    \"id\": 1,\n    \"order_id\": \"may-89229\",\n    \"status\": \"running\",\n    \"frontend_port\": 49229,\n    \"backend_port\": 59229,\n    \"updated_at\": \"2026-06-19T09:28:22.958188+00:00\"\n  },\n  \"metrics\": [\n    {\n      \"label\": \"Active workflows\",\n      \"value\": 12,\n      \"trend\": \"restored\"\n    },\n    {\n      \"label\": \"SQLite records\",\n      \"value\": 42,\n      \"trend\": \"seeded\"\n    },\n    {\n      \"label\": \"API latency\",\n      \"value\": 24,\n      \"trend\": \"ms avg\"\n    },\n    {\n      \"label\": \"Repair status\",\n      \"value\": 100,\n      \"trend\": \"percent\"\n    }\n  ],\n  \"items\": [\n    {\n      \"title\": \"Port binding check\",\n      \"owner\": \"service-repair\",\n      \"state\": \"done\",\n      \"dueTime\": \"12:22\"\n    },\n    {\n      \"title\": \"Backend health endpoint\",\n      \"owner\": \"api\",\n      \"state\": \"done\",\n      \"dueTime\": \"12:23\"\n    },\n    {\n      \"title\": \"Frontend API render\",\n      \"owner\": \"web\",\n      \"state\": \"done\",\n      \"dueTime\": \"12:24\"\n    },\n    {\n      \"title\": \"Browser smoke path\",\n      \"owner\": \"runtime\",\n      \"state\": \"ready\",\n      \"dueTime\": \"next check\"\n    }\n  ]\n}"
+  },
+  "events": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89229/runtime-check/codex-service-repair-may-89229.png"
+}

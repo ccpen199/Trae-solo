@@ -1,28 +1,10 @@
 {
-  "name": "postal-gov-service-platform",
+  "name": "may-89229",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "dev": "npm-run-all --parallel dev:server dev:web-user dev:web-courier dev:web-admin",
-    "dev:server": "cd packages/server && npm run dev",
-    "dev:web-user": "cd packages/web-user && npm run dev",
-    "dev:web-courier": "cd packages/web-courier && npm run dev",
-    "dev:web-admin": "cd packages/web-admin && npm run dev",
-    "build": "npm-run-all build:shared build:server build:web-user build:web-courier build:web-admin",
-    "build:shared": "cd packages/shared && npm run build",
-    "build:server": "cd packages/server && npm run build",
-    "build:web-user": "cd packages/web-user && npm run build",
-    "build:web-courier": "cd packages/web-courier && npm run build",
-    "build:web-admin": "cd packages/web-admin && npm run build",
-    "prisma:generate": "cd packages/server && npx prisma generate",
-    "prisma:migrate": "cd packages/server && npx prisma migrate dev",
-    "db:seed": "cd packages/server && npm run seed"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.4.0"
+    "start": "bash scripts/start.sh",
+    "start:backend": "python3 backend/server.py",
+    "start:frontend": "python3 scripts/frontend_server.py"
   }
 }
