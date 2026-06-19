@@ -287,9 +287,9 @@ export default function Estimate() {
     return [
       { id: `${selectedDate}-1`, date: selectedDate, startTime: "09:00", endTime: "11:00", available: true },
       { id: `${selectedDate}-2`, date: selectedDate, startTime: "11:00", endTime: "13:00", available: true },
-      { id: `${selectedDate}-3`, date: selectedDate, startTime: "14:00", endTime: "16:00", available: Math.random() > 0.3 },
+      { id: `${selectedDate}-3`, date: selectedDate, startTime: "14:00", endTime: "16:00", available: true },
       { id: `${selectedDate}-4`, date: selectedDate, startTime: "16:00", endTime: "18:00", available: true },
-      { id: `${selectedDate}-5`, date: selectedDate, startTime: "18:00", endTime: "20:00", available: Math.random() > 0.5 },
+      { id: `${selectedDate}-5`, date: selectedDate, startTime: "18:00", endTime: "20:00", available: true },
     ];
   }, [selectedDate, timeWindows]);
 
@@ -297,13 +297,19 @@ export default function Estimate() {
     if (!selectedDate || !selectedTimeWindow || !selectedAddress) return [];
     const onlineCouriers = couriers.filter((c) => c.status === "online");
     return onlineCouriers
-      .map((c, idx) => ({
-        ...c,
-        distanceKm: Number((0.5 + Math.random() * 4.5).toFixed(1)),
-        etaMinutes: Math.floor(15 + Math.random() * 45),
-        todayOrders: Math.floor(3 + Math.random() * 15),
-        isRecommended: idx === 0,
-      }))
+      .map((c, idx) => {
+        const seed = c.id.charCodeAt(c.id.length - 1);
+        const distanceKm = Number((0.5 + (seed % 50) / 10).toFixed(1));
+        const etaMinutes = 15 + (seed % 30);
+        const todayOrders = (seed % 8) + 1;
+        return {
+          ...c,
+          distanceKm,
+          etaMinutes,
+          todayOrders,
+          isRecommended: idx === 0,
+        };
+      })
       .sort((a, b) => a.distanceKm - b.distanceKm);
   }, [selectedDate, selectedTimeWindow, selectedAddress, couriers]);
 
@@ -508,7 +514,6 @@ export default function Estimate() {
   }, [category, condition, brand, clothingFields, bookFields, phoneFields]);
 
   const canProceedStep1 = useMemo(() => {
-    if (!brand) return false;
     if (category === "clothing") {
       return !!clothingFields.material && !!clothingFields.season && clothingFields.weightKg > 0;
     }
@@ -517,6 +522,7 @@ export default function Estimate() {
     }
     if (category === "phones") {
       return (
+        !!brand &&
         !!phoneFields.warrantyStatus &&
         !!phoneFields.screenCondition &&
         !!phoneFields.batteryHealth &&
@@ -696,7 +702,7 @@ export default function Estimate() {
           <div className="card p-5 animate-slide-up space-y-5">
             <div>
               <label className="label-base">
-                {category === "books" ? "出版社" : "品牌"}
+                {category === "books" ? "出版社（选填）" : category === "phones" ? "品牌" : "品牌（选填）"}
               </label>
               <div className="relative">
                 <button
@@ -706,7 +712,7 @@ export default function Estimate() {
                     !brand && "text-neutral-400"
                   )}
                 >
-                  <span>{brand || `请选择${category === "books" ? "出版社" : "品牌"}`}</span>
+                  <span>{brand || `请选择${category === "books" ? "出版社（选填）" : category === "phones" ? "品牌" : "品牌（选填）"}`}</span>
                   <ChevronDown
                     className={cn(
                       "w-4 h-4 transition-transform duration-200",
@@ -1118,6 +1124,33 @@ export default function Estimate() {
                   +
                 </button>
               </div>
+            </div>
+
+            <div className="mt-5 p-4 rounded-xl bg-gradient-to-r from-eco-50 to-teal-50 border border-eco-200">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-eco-600" />
+                  <span className="font-semibold text-neutral-800 text-sm">实时估价</span>
+                </div>
+                <span className="text-xs text-neutral-500">最终以质检为准</span>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-bold text-eco-600">¥{minPrice.toFixed(category === "phones" ? 0 : 2)}</span>
+                <span className="text-neutral-400 mx-1">~</span>
+                <span className="text-2xl font-bold text-eco-600">¥{maxPrice.toFixed(category === "phones" ? 0 : 2)}</span>
+              </div>
+              {priceBreakdown.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-eco-200/50 space-y-1.5">
+                  {priceBreakdown.filter(item => item.amount !== 0).map((item, idx) => (
+                    <div key={idx} className="flex justify-between text-xs">
+                      <span className="text-neutral-500">{item.description}</span>
+                      <span className={cn("font-medium", item.isAdd ? "text-eco-600" : "text-red-500")}>
+                        {item.isAdd ? "+" : "-"}¥{item.amount.toFixed(category === "phones" ? 0 : 2)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}

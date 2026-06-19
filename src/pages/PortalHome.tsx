@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store/useStore";
 import {
@@ -80,10 +80,18 @@ const processSteps = [
   { step: 5, title: "流向追溯", desc: "公益/环保，全程可查" },
 ];
 
+const animatedCache: Record<string, string> = {};
+
 function AnimatedNumber({ value }: { value: string }) {
-  const [display, setDisplay] = useState("0");
+  const cacheKey = `num-${value}`;
+  const [display, setDisplay] = useState(animatedCache[cacheKey] || "0");
+  const hasAnimated = useRef(!!animatedCache[cacheKey]);
 
   useEffect(() => {
+    if (hasAnimated.current) {
+      setDisplay(value);
+      return;
+    }
     const target = parseInt(value.replace(/,/g, ""));
     const duration = 1500;
     const start = performance.now();
@@ -91,13 +99,19 @@ function AnimatedNumber({ value }: { value: string }) {
     const animate = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(Math.floor(target * eased).toLocaleString());
-      if (progress < 1) frame = requestAnimationFrame(animate);
-      else setDisplay(value);
+      const current = Math.floor(target * eased).toLocaleString();
+      setDisplay(current);
+      if (progress < 1) {
+        frame = requestAnimationFrame(animate);
+      } else {
+        setDisplay(value);
+        animatedCache[cacheKey] = value;
+        hasAnimated.current = true;
+      }
     };
     frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
-  }, [value]);
+  }, [value, cacheKey]);
 
   return <span>{display}</span>;
 }

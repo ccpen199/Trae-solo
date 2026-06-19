@@ -275,13 +275,14 @@ export default function QualityList() {
                     <tr
                       key={qo.id}
                       className={cn(
-                        'hover:bg-eco-50/40 transition-colors animate-slide-up',
+                        'cursor-pointer hover:bg-neutral-50 transition-colors animate-slide-up',
                         isSelected && 'bg-eco-50/60'
                       )}
+                      onClick={() => navigate(`/admin/quality/${qo.id}`)}
                       style={{ animationDelay: `${idx * 40}ms` }}
                     >
                       <td className="table-td">
-                        <button onClick={() => toggleSelect(qo.id)} className="p-1">
+                        <button onClick={(e) => { e.stopPropagation(); toggleSelect(qo.id); }} className="p-1">
                           {isSelected ? (
                             <CheckSquare className="w-4 h-4 text-eco-600" />
                           ) : (
@@ -326,12 +327,15 @@ export default function QualityList() {
                       <td className="table-td text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => navigate(`/admin/quality/${qo.id}`)}
+                            onClick={(e) => { e.stopPropagation(); navigate(`/admin/quality/${qo.id}`); }}
                             className="p-2 rounded-lg text-eco-600 hover:bg-eco-50 transition-colors"
                           >
                             <Eye className="w-4 h-4" />
                           </button>
-                          <button className="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 transition-colors">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); }}
+                            className="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 transition-colors"
+                          >
                             <UserPlus className="w-4 h-4" />
                           </button>
                         </div>

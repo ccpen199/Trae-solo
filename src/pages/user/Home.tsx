@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Shirt,
@@ -57,31 +57,6 @@ const categoryLabelMap: Record<string, string> = {
   phones: "手机",
 };
 
-function AnimatedNumber({ value, suffix = "", duration = 1500 }: { value: number; suffix?: string; duration?: number }) {
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    let startTime: number;
-    let raf: number;
-    const step = (ts: number) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(Math.round(value * eased * 100) / 100);
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [value, duration]);
-
-  return (
-    <span>
-      {Number.isInteger(value) ? Math.round(display) : display.toFixed(1)}
-      {suffix}
-    </span>
-  );
-}
-
 export default function Home() {
   const navigate = useNavigate();
   const { currentUser, orders } = useStore();
@@ -105,7 +80,7 @@ export default function Home() {
             <div className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1.5">
               <Leaf className="w-4 h-4 text-eco-100" />
               <span className="text-white text-sm font-medium">
-                累计减碳 <AnimatedNumber value={currentUser?.carbonSavedKg ?? 0} suffix=" kg" />
+                累计减碳 {Math.round(currentUser?.carbonSavedKg ?? 0).toLocaleString()} kg
               </span>
             </div>
             <div className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1.5">
@@ -263,7 +238,7 @@ export default function Home() {
                 <Package className="w-6 h-6 text-eco-600" />
               </div>
               <p className="text-neutral-800 text-2xl font-bold">
-                <AnimatedNumber value={currentUser?.totalRecycledKg ?? 0} suffix=" kg" />
+                {Math.round(currentUser?.totalRecycledKg ?? 0).toLocaleString()} kg
               </p>
               <p className="text-xs text-neutral-500 mt-1">累计回收</p>
             </div>
@@ -272,7 +247,7 @@ export default function Home() {
                 <Leaf className="w-6 h-6 text-emerald-600" />
               </div>
               <p className="text-neutral-800 text-2xl font-bold">
-                <AnimatedNumber value={currentUser?.carbonSavedKg ?? 0} suffix=" kg" />
+                {Math.round(currentUser?.carbonSavedKg ?? 0).toLocaleString()} kg
               </p>
               <p className="text-xs text-neutral-500 mt-1">累计减碳</p>
             </div>
@@ -281,7 +256,7 @@ export default function Home() {
                 <HeartHandshake className="w-6 h-6 text-rose-500" />
               </div>
               <p className="text-neutral-800 text-2xl font-bold">
-                <AnimatedNumber value={currentUser?.donationCount ?? 0} />
+                {(currentUser?.donationCount ?? 0).toLocaleString()}
               </p>
               <p className="text-xs text-neutral-500 mt-1">捐赠次数</p>
             </div>
