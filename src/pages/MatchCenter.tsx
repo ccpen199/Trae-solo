@@ -47,6 +47,7 @@ export default function MatchCenter() {
   }, [matches])
 
   const highMatches = useMemo(() => matches.filter(m => m.overallScore >= 70).length, [matches])
+  const regionMatchCount = useMemo(() => matches.filter(m => m.regionScore >= 60).length, [matches])
 
   if (loading) return <LoadingSpinner />
 
@@ -89,7 +90,7 @@ export default function MatchCenter() {
           <StatCard label="匹配候选人" value={matches.length} suffix="位" icon={Users} color="amber" />
           <StatCard label="高匹配度(≥70)" value={highMatches} suffix="人" icon={Target} color="green" />
           <StatCard label="平均匹配分" value={avgScores.overall} suffix="分" icon={TrendingUp} color="ice" />
-          <StatCard label="地域契合度" value={avgScores.region} suffix="%" icon={Globe} color="purple" />
+          <StatCard label="地域契合(≥60)" value={regionMatchCount} suffix="人" icon={Globe} color="purple" />
         </div>
       )}
 

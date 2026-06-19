@@ -80,7 +80,6 @@ export default function JobCreate() {
       const raw = localStorage.getItem(DRAFT_KEY)
       if (raw) {
         const d: DraftData = JSON.parse(raw)
-        if (d.step) setStep(d.step)
         if (d.title !== undefined) setTitle(d.title)
         if (d.company !== undefined) setCompany(d.company)
         if (d.field) setField(d.field)
@@ -111,14 +110,15 @@ export default function JobCreate() {
     if (parseInt(salaryMin) <= 0) e.salaryMin = '请输入有效薪资下限'
     if (parseInt(salaryMax) <= parseInt(salaryMin)) e.salaryMax = '最高薪资需大于最低薪资'
     setErrors(e)
-    return Object.keys(e).length === 0
+    return { valid: Object.keys(e).length === 0, errors: e }
   }
 
   const nextStep = () => {
     setSubmitError(null)
     if (step === 1) {
-      if (!validateStep1()) {
-        const firstField = Object.keys(errors)[0]
+      const result = validateStep1()
+      if (!result.valid) {
+        const firstField = Object.keys(result.errors)[0]
         if (firstField) document.querySelector<HTMLElement>(`[data-field="${firstField}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         return
       }

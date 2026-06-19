@@ -30,7 +30,6 @@ export default function Home() {
 
   useEffect(() => {
     let cancelled = false
-    setLoading(true)
     Promise.all([
       fetchApi<AnalyticsOverview>('/api/analytics/overview'),
       fetchApi<Job[]>('/api/jobs?status=招聘中'),
@@ -74,14 +73,23 @@ export default function Home() {
       <section className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
         <h2 className="section-title">领域分布</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {FIELDS.map(f => (
-            <div key={f.name} className="card-glass card-hover p-5 flex flex-col items-center gap-3 cursor-pointer" onClick={() => navigate(`/talent?field=${encodeURIComponent(f.name)}`)}>
-              <f.icon className={`w-8 h-8 ${f.color}`} />
-              <span className="text-sm text-steel-200 font-medium">{f.name}</span>
-              <span className="text-2xl font-bold text-steel-50 font-mono">{fieldCount(f.name).toLocaleString()}</span>
-              <span className="text-xs text-steel-500">人才储备</span>
-            </div>
-          ))}
+          {loading ? (
+            <>
+              <div className="card-glass p-5 h-[130px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[130px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[130px] animate-pulse bg-steel-800/40" />
+              <div className="card-glass p-5 h-[130px] animate-pulse bg-steel-800/40" />
+            </>
+          ) : (
+            FIELDS.map(f => (
+              <div key={f.name} className="card-glass card-hover p-5 flex flex-col items-center gap-3 cursor-pointer" onClick={() => navigate(`/talent?field=${encodeURIComponent(f.name)}`)}>
+                <f.icon className={`w-8 h-8 ${f.color}`} />
+                <span className="text-sm text-steel-200 font-medium">{f.name}</span>
+                <span className="text-2xl font-bold text-steel-50 font-mono tabular-nums">{fieldCount(f.name).toLocaleString()}</span>
+                <span className="text-xs text-steel-500">人才储备</span>
+              </div>
+            ))
+          )}
         </div>
       </section>
 

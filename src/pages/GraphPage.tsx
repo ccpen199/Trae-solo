@@ -5,6 +5,9 @@ import { fetchApi } from '@/utils/api'
 import type { SkillNode, CertMapping } from '@/types'
 
 const categoryColors: Record<string, string> = {
+  '硬技能': '#38BDF8',
+  '软技能': '#22C55E',
+  '认证': '#F59E0B',
   '设计工具': '#38BDF8',
   '仿真分析': '#A855F7',
   '开发工具': '#22C55E',
@@ -13,6 +16,9 @@ const categoryColors: Record<string, string> = {
 }
 
 const categoryBg: Record<string, string> = {
+  '硬技能': 'bg-ice-500/20 text-ice-400 border-ice-500/30',
+  '软技能': 'bg-green-500/20 text-green-400 border-green-500/30',
+  '认证': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
   '设计工具': 'bg-ice-500/20 text-ice-400 border-ice-500/30',
   '仿真分析': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   '开发工具': 'bg-green-500/20 text-green-400 border-green-500/30',
@@ -127,7 +133,7 @@ function SkillGraphTab({ nodes, onSelect }: { nodes: SkillNode[]; onSelect: (n: 
   )
 }
 
-function CertMappingTab({ certs }: { certs: CertMapping[] }) {
+function CertMappingTab({ certs, certSkillLinks }: { certs: CertMapping[]; certSkillLinks: Record<string, any[]> }) {
   return (
     <div className="space-y-3">
       {certs.map((cert) => (
@@ -153,6 +159,18 @@ function CertMappingTab({ certs }: { certs: CertMapping[] }) {
                 ))}
               </div>
             </div>
+            {certSkillLinks[cert.certification] && certSkillLinks[cert.certification].length > 0 && (
+              <div>
+                <span className="text-xs text-steel-400">关联技能（持证人共同拥有）:</span>
+                <div className="flex flex-wrap gap-1.5 mt-1">
+                  {certSkillLinks[cert.certification].map((link: any) => (
+                    <span key={link.skill_name} className={link.category === '硬技能' ? 'badge-hard' : link.category === '认证' ? 'badge-cert' : 'badge-soft'}>
+                      {link.skill_name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}
@@ -238,6 +256,8 @@ export default function GraphPage() {
   const [tab, setTab] = useState<'skills' | 'certs'>('skills')
   const [skills, setSkills] = useState<SkillNode[]>([])
   const [certs, setCerts] = useState<CertMapping[]>([])
+  const [certSkillLinks, setCertSkillLinks] = useState<Record<string, any[]>>({})
+  const [categorySummary, setCategorySummary] = useState<Record<string, number>>({})
   const [selected, setSelected] = useState<SkillNode | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -248,7 +268,9 @@ export default function GraphPage() {
     ])
       .then(([s, c]) => {
         setSkills(s?.nodes || [])
+        setCategorySummary(s?.categorySummary || {})
         setCerts(c?.mappings || [])
+        setCertSkillLinks(c?.certSkillLinks || {})
       })
       .finally(() => setLoading(false))
   }, [])
@@ -260,6 +282,7 @@ export default function GraphPage() {
       <div className="flex items-center gap-3 mb-2">
         <Network className="w-5 h-5 text-amber-500" />
         <h1 className="section-title mb-0">知识图谱</h1>
+        <span className="text-xs text-steel-500">{skills.length} 个技能节点 · {certs.length} 个认证映射</span>
       </div>
 
       <div className="flex gap-2">
@@ -278,19 +301,28 @@ export default function GraphPage() {
       </div>
 
       {tab === 'skills' ? (
-        <div className="flex gap-4">
-          <div className="card-glass card-hover flex-1 p-4 overflow-hidden" style={{ minHeight: 520 }}>
-            <SkillGraphTab nodes={skills} onSelect={setSelected} />
+        <>
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(categorySummary).map(([cat, count]) => (
+              <span key={cat} className={`text-xs px-2.5 py-1 rounded-full border ${categoryBg[cat] || 'bg-steel-700 text-steel-300 border-steel-600'}`}>
+                {cat}: {count} 项
+              </span>
+            ))}
           </div>
-          {selected && (
-            <div className="w-72 flex-shrink-0">
-              <SkillDetailPanel node={selected} onClose={() => setSelected(null)} />
+          <div className="flex gap-4">
+            <div className="card-glass card-hover flex-1 p-4 overflow-hidden" style={{ minHeight: 520 }}>
+              <SkillGraphTab nodes={skills} onSelect={setSelected} />
             </div>
-          )}
-        </div>
+            {selected && (
+              <div className="w-72 flex-shrink-0">
+                <SkillDetailPanel node={selected} onClose={() => setSelected(null)} />
+              </div>
+            )}
+          </div>
+        </>
       ) : (
         <div className="card-glass card-hover p-5">
-          <CertMappingTab certs={certs} />
+          <CertMappingTab certs={certs} certSkillLinks={certSkillLinks} />
         </div>
       )}
     </div>
