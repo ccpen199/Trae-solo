@@ -143,7 +143,7 @@ const Dashboard = () => {
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
       hoverBg: 'hover:bg-blue-100',
-      navigatePath: '/sanxiaxiang/teams',
+      navigatePath: '/sanxiaxiang/teams?action=create',
       category: 'sanxiaxiang',
     },
     {
@@ -154,7 +154,7 @@ const Dashboard = () => {
       bgColor: 'bg-green-50',
       borderColor: 'border-green-200',
       hoverBg: 'hover:bg-green-100',
-      navigatePath: '/sanxiaxiang/checkin',
+      navigatePath: '/sanxiaxiang/checkin?action=create',
       category: 'sanxiaxiang',
     },
     {
@@ -165,7 +165,7 @@ const Dashboard = () => {
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
       hoverBg: 'hover:bg-orange-100',
-      navigatePath: '/sanxiaxiang/logs',
+      navigatePath: '/sanxiaxiang/logs?action=create',
       category: 'sanxiaxiang',
     },
     {
@@ -176,7 +176,7 @@ const Dashboard = () => {
       bgColor: 'bg-pink-50',
       borderColor: 'border-pink-200',
       hoverBg: 'hover:bg-pink-100',
-      navigatePath: '/scholarship/donors',
+      navigatePath: '/scholarship/donors?action=create',
       category: 'scholarship',
     },
     {
@@ -187,7 +187,7 @@ const Dashboard = () => {
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-200',
       hoverBg: 'hover:bg-purple-100',
-      navigatePath: '/scholarship/projects',
+      navigatePath: '/scholarship/projects?action=create',
       category: 'scholarship',
     },
     {
@@ -198,7 +198,7 @@ const Dashboard = () => {
       bgColor: 'bg-yellow-50',
       borderColor: 'border-yellow-200',
       hoverBg: 'hover:bg-yellow-100',
-      navigatePath: '/scholarship/stories',
+      navigatePath: '/scholarship/stories?action=create',
       category: 'scholarship',
     },
     {
@@ -209,7 +209,7 @@ const Dashboard = () => {
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
       hoverBg: 'hover:bg-red-100',
-      navigatePath: '/admin/credits',
+      navigatePath: '/admin/credits?action=review',
       category: 'admin',
     },
     {

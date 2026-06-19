@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
 import type { CheckInRecord, Team } from '../../types';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -105,10 +105,18 @@ const CheckIn = () => {
     return {
       base: params.get('base'),
       teamId: params.get('teamId'),
+      action: params.get('action'),
     };
   }, [location.search]);
 
   const hasUrlFilter = urlParams.base || urlParams.teamId;
+
+  useEffect(() => {
+    if (urlParams.action === 'create') {
+      setShowModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [urlParams.action]);
 
   const filterLabel = useMemo(() => {
     if (urlParams.teamId) {

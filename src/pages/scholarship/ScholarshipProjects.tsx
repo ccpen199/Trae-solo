@@ -1,7 +1,7 @@
 import type { Scholarship } from '../../types';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { mockScholarships, mockDonors } from '../../data/mockData';
 import {
   GraduationCap,
@@ -25,12 +25,21 @@ const mockApplicantCounts: Record<string, number> = {
 };
 
 const ScholarshipProjects: FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedScholarship, setSelectedScholarship] = useState<Scholarship | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('action') === 'create') {
+      setShowPublishModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.search]);
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: '',

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { PracticeLog, Team } from '../../types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
@@ -49,10 +49,18 @@ const PracticeLogs = () => {
     const params = new URLSearchParams(location.search);
     return {
       teamId: params.get('teamId'),
+      action: params.get('action'),
     };
   }, [location.search]);
 
   const hasUrlFilter = !!urlParams.teamId;
+
+  useEffect(() => {
+    if (urlParams.action === 'create') {
+      setShowCreateModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [urlParams.action]);
 
   const filterLabel = useMemo(() => {
     if (urlParams.teamId) {

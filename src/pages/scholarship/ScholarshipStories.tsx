@@ -1,7 +1,7 @@
 import type { ScholarshipStory } from '../../types';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { mockScholarshipStories, mockScholarships } from '../../data/mockData';
 import { Heart, MessageCircle, Filter, Search, User, Plus, X, Share2, Send, Building2, GraduationCap } from 'lucide-react';
 
@@ -31,6 +31,7 @@ const mockComments: Record<string, Comment[]> = {
 };
 
 const ScholarshipStories: FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [selectedScholarship, setSelectedScholarship] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,6 +39,14 @@ const ScholarshipStories: FC = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedStory, setSelectedStory] = useState<ScholarshipStory | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('action') === 'create') {
+      setShowShareModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.search]);
   const [likes, setLikes] = useState<Record<string, number>>({});
   const [hasLiked, setHasLiked] = useState<Record<string, boolean>>({});
   const [newComment, setNewComment] = useState('');

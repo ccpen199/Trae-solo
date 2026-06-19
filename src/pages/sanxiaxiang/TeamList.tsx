@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Team } from '../../types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { mockStudents, mockAdvisors } from '../../data/mockData';
@@ -87,10 +87,18 @@ const TeamList = () => {
     return {
       dept: params.get('dept'),
       base: params.get('base'),
+      action: params.get('action'),
     };
   }, [location.search]);
 
   const hasUrlFilter = urlParams.dept || urlParams.base;
+
+  useEffect(() => {
+    if (urlParams.action === 'create') {
+      setShowCreateModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [urlParams.action]);
 
   const [formData, setFormData] = useState({
     name: '',

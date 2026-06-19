@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { mockDonors } from '../../data/mockData';
 import { Building2, DollarSign, Award, Search, Plus, ExternalLink, X, Upload, ChevronDown, ChevronUp, Users, TrendingUp, GraduationCap, MessageCircle } from 'lucide-react';
 
@@ -65,11 +65,20 @@ const mockDonationTrends: Record<string, { month: string; amount: number }[]> = 
 };
 
 const Donors: FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [expandedDonorId, setExpandedDonorId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('action') === 'create') {
+      setShowInviteModal(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.search]);
   const [formData, setFormData] = useState({
     name: '',
     industry: '',
