@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import { Navbar } from '@/components/layout/Navbar'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { HRLayout } from '@/components/layout/HRLayout'

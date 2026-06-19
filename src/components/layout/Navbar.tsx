@@ -10,7 +10,6 @@ import {
   ChevronDown,
   LogOut,
   Network,
-  Building2,
   AlertTriangle,
   LayoutDashboard,
   Users,

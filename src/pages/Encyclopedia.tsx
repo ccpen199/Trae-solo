@@ -834,6 +834,7 @@ export default function Encyclopedia() {
               className="relative"
             >
               <motion.div variants={fadeInUp} className="mb-6">
+                <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
                 <div className="flex items-center gap-2 mb-3">
                   <Badge variant="gold" size="md" withDot>
                     <Sparkles className="w-3.5 h-3.5 mr-1" />
@@ -1109,11 +1110,12 @@ export default function Encyclopedia() {
             >
               <motion.div variants={fadeInUp} className="mb-6 flex items-end justify-between">
                 <div>
+                  <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
                   <Badge variant="purple" size="md" withDot className="mb-3">
                     <QuoteIcon />
                     真实分享
                   </Badge>
-                  <h2 className="font-heading text-3xl font-bold tracking-tight">
+                  <h2 className="font-heading text-2xl font-bold tracking-tight">
                     来自一线从业者的<span className="gradient-text">真实声音</span>
                   </h2>
                 </div>
@@ -1230,11 +1232,12 @@ export default function Encyclopedia() {
               viewport={{ once: true, margin: '-100px' }}
             >
               <motion.div variants={fadeInUp} className="mb-6">
+                <div className="w-16 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
                 <Badge variant="gold" size="md" withDot className="mb-3">
                   <Award className="w-3.5 h-3.5 mr-1" />
                   认证推荐
                 </Badge>
-                <h2 className="font-heading text-3xl font-bold tracking-tight">
+                <h2 className="font-heading text-2xl font-bold tracking-tight">
                   行业权威<span className="gradient-text">热门认证</span>
                 </h2>
                 <p className="text-slate-600 mt-2">
@@ -1301,13 +1304,24 @@ export default function Encyclopedia() {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-1.5 mb-4">
                         {cert.relatedJobs.slice(0, 2).map((j) => (
                           <Badge key={j} variant="emerald" size="sm">
                             {j}
                           </Badge>
                         ))}
                       </div>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        fullWidth
+                        onClick={() => navigate('/onboarding')}
+                        rightIcon={<ArrowRight className="w-4 h-4" />}
+                        className="group-hover:!border-emerald-400 group-hover:!bg-emerald-50 group-hover:!text-emerald-600"
+                      >
+                        开始学习
+                      </Button>
                     </Card>
                   </motion.div>
                 ))}

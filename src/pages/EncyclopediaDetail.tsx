@@ -5,6 +5,7 @@ import {
   ChevronRight,
   ArrowLeft,
   Play,
+  Video,
   TrendingUp,
   Clock,
   Award,
@@ -52,6 +53,7 @@ import type {
   EntryThresholdStep,
   Certification,
   CareerDirection,
+  CertificationCard,
 } from '@shared/types';
 
 const staggerContainer = {
@@ -263,6 +265,7 @@ export default function EncyclopediaDetail() {
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
   const [audioProgress, setAudioProgress] = useState<Record<string, number>>({});
   const [audioSpeeds, setAudioSpeeds] = useState<Record<string, number>>({});
+  const [certifications, setCertifications] = useState<CertificationCard[]>([]);
   const audioTimerRef = useRef<number | null>(null);
 
   const currentProgressPercent = useMemo(() => {
@@ -292,6 +295,25 @@ export default function EncyclopediaDetail() {
         setNotFound(true);
       })
       .finally(() => setIsLoading(false));
+  }, [jobId]);
+
+  useEffect(() => {
+    if (!jobId) return;
+    encyclopediaApi
+      .getCertifications({ jobId, page: 1, pageSize: 6 })
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setCertifications(res.data as unknown as CertificationCard[]);
+        }
+      })
+      .catch(() => {
+        setCertifications(DEFAULT_CERTIFICATIONS.map((c) => ({
+          ...c,
+          passRate: c.passRate,
+          relevance: Math.round(c.relevance * 100),
+          relatedJobs: [],
+        })));
+      });
   }, [jobId]);
 
   useEffect(() => {
@@ -354,6 +376,14 @@ export default function EncyclopediaDetail() {
     { step: 3, title: '项目实战', description: '参与真实项目，掌握工程化和协作流程', estimatedMonths: 9, typicalObstacles: ['项目经验不足', 'Git协作不熟悉', '代码质量差'] },
     { step: 4, title: '求职面试', description: '刷题、优化简历、面试实战', estimatedMonths: 3, typicalObstacles: ['简历关难过', '算法面试卡壳', '薪资谈判劣势'] },
     { step: 5, title: '入职适应', description: '快速融入团队，建立职场口碑', estimatedMonths: 3, typicalObstacles: ['新人期焦虑', '业务理解慢', '沟通障碍'] },
+  ];
+
+  const suggestedActions = [
+    '选择一门编程语言，系统学习基础语法和数据结构',
+    '完成2-3个实战项目，熟悉常用框架和开发工具',
+    '参与开源项目或团队协作，积累项目经验',
+    '刷100+算法题，准备STAR法则简历，多做模拟面试',
+    '主动沟通请教，快速熟悉业务，建立个人品牌',
   ];
 
   if (isLoading) {
@@ -502,36 +532,65 @@ export default function EncyclopediaDetail() {
             />
 
             <motion.div variants={fadeInUp} className="mb-8">
-              <div className="relative rounded-3xl overflow-hidden group">
+              <div className="relative rounded-3xl overflow-hidden group cursor-pointer">
                 <div
-                  className="aspect-[16/9] w-full rounded-3xl relative cursor-pointer"
+                  className="w-full rounded-3xl relative"
                   style={{
+                    height: '320px',
                     background:
                       'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #1e3a5f 60%, #065f46 100%)',
                   }}
                 >
                   <div className="absolute inset-0 opacity-30">
-                    <svg className="w-full h-full" viewBox="0 0 800 450">
+                    <svg className="w-full h-full" viewBox="0 0 800 320">
                       <defs>
-                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <pattern id="detailGrid" width="40" height="40" patternUnits="userSpaceOnUse">
                           <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(52,211,153,0.2)" strokeWidth="1" />
                         </pattern>
                       </defs>
-                      <rect width="100%" height="100%" fill="url(#grid)" />
+                      <rect width="100%" height="100%" fill="url(#detailGrid)" />
                     </svg>
                   </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.button
-                      whileHover={{ scale: 1.08 }}
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-xl border-2 border-white/30 flex items-center justify-center group-hover:bg-white/20 transition-all shadow-2xl"
+                      className="relative"
                     >
-                      <Play className="w-10 h-10 text-white ml-1" fill="white" />
-                    </motion.button>
+                      <motion.div
+                        className="absolute inset-0 rounded-full bg-emerald-500/30"
+                        animate={{
+                          scale: [1, 1.4, 1],
+                          opacity: [0.5, 0, 0.5],
+                        }}
+                        transition={{
+                          duration: 2.5,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                        }}
+                      />
+                      <motion.div
+                        className="absolute inset-0 rounded-full bg-emerald-500/20"
+                        animate={{
+                          scale: [1, 1.8, 1],
+                          opacity: [0.3, 0, 0.3],
+                        }}
+                        transition={{
+                          duration: 2.5,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 0.5,
+                        }}
+                      />
+                      <div className="w-28 h-28 rounded-full bg-gradient-to-br from-emerald-500/20 via-white/10 to-lavender-500/20 backdrop-blur-xl border-2 border-white/40 flex items-center justify-center shadow-2xl relative z-10 group-hover:border-white/60 transition-all">
+                        <Play className="w-12 h-12 text-white ml-1" fill="white" />
+                      </div>
+                    </motion.div>
                   </div>
-                  <div className="absolute bottom-6 left-6 flex items-center gap-3">
+                  <div className="absolute bottom-6 left-6 flex items-center gap-3 z-10">
                     <Badge variant="default" className="bg-black/40 text-white border-white/20 backdrop-blur">
-                      <Play className="w-3 h-3 mr-1" fill="white" />
+                      <Video className="w-3 h-3 mr-1" />
                       真实工作流记录
                     </Badge>
                     <Badge variant="default" className="bg-black/40 text-white border-white/20 backdrop-blur">
@@ -539,9 +598,9 @@ export default function EncyclopediaDetail() {
                       08:42
                     </Badge>
                   </div>
-                  <div className="absolute top-6 right-6 flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/90 text-white text-xs font-medium backdrop-blur">
+                  <div className="absolute top-6 right-6 flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-xs font-medium shadow-lg z-10">
                     <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                    已完结
+                    高清视频
                   </div>
                 </div>
               </div>
@@ -805,14 +864,20 @@ export default function EncyclopediaDetail() {
                         </div>
                         <p className="text-xs text-slate-500 leading-relaxed mb-2">{step.description}</p>
                         <div className="space-y-1 pt-2 border-t border-slate-100">
-                          <div className="text-[10px] font-semibold text-rose-500 uppercase tracking-wider">
+                          <div className="text-[10px] font-semibold text-rose-500 uppercase tracking-wider mb-1">
                             ⚠ 典型障碍
                           </div>
-                          <ul className="text-[11px] text-slate-500 space-y-0.5">
+                          <ul className="text-[11px] text-slate-500 space-y-0.5 mb-2">
                             {step.typicalObstacles.slice(0, 2).map((o) => (
                               <li key={o}>· {o}</li>
                             ))}
                           </ul>
+                          <div className="text-[10px] font-semibold text-emerald-600 uppercase tracking-wider mb-1">
+                            💡 建议行动
+                          </div>
+                          <p className="text-[11px] text-emerald-700 leading-relaxed">
+                            {suggestedActions[i]}
+                          </p>
                         </div>
                       </Card>
                     );
@@ -1243,47 +1308,50 @@ export default function EncyclopediaDetail() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
             >
-              {(DEFAULT_CERTIFICATIONS as (Certification & {
-                passRate: number;
-                relevance: number;
-              })[]).map((cert, i) => {
+              {certifications.map((cert, i) => {
                 const bgColors = [
                   'from-emerald-100 to-emerald-50',
                   'from-lavender-100 to-lavender-50',
                   'from-space-indigo-100 to-space-indigo-50',
                   'from-amber-gold-100 to-amber-gold-50',
+                  'from-rose-100 to-rose-50',
+                  'from-teal-100 to-teal-50',
                 ];
                 const borderColors = [
                   'border-emerald-200',
                   'border-lavender-200',
                   'border-space-indigo-200',
                   'border-amber-gold-200',
+                  'border-rose-200',
+                  'border-teal-200',
                 ];
                 const iconColors = [
                   'text-emerald-600',
                   'text-lavender-600',
                   'text-space-indigo-600',
                   'text-amber-gold-600',
+                  'text-rose-600',
+                  'text-teal-600',
                 ];
                 return (
                   <motion.div key={cert.id} variants={scaleIn} transition={{ delay: i * 0.07 }}>
-                    <Card variant="default" glowOnHover hoverable className="p-6 h-full group">
+                    <Card variant="default" glowOnHover hoverable className="p-6 h-full group flex flex-col">
                       <div
-                        className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${bgColors[i % 4]} border ${borderColors[i % 4]} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
+                        className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${bgColors[i % 6]} border ${borderColors[i % 6]} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
                       >
-                        <Award className={`w-7 h-7 ${iconColors[i % 4]}`} />
+                        <Award className={`w-7 h-7 ${iconColors[i % 6]}`} />
                       </div>
 
-                      <div className="mb-4">
-                        <h5 className="font-heading font-bold text-slate-900 mb-1 leading-snug line-clamp-2">
+                      <div className="mb-4 flex-1">
+                        <h5 className="font-heading font-bold text-slate-900 mb-1 leading-snug">
                           {cert.name}
                         </h5>
                         <p className="text-xs text-slate-500">{cert.issuer}</p>
                       </div>
 
-                      <div className="space-y-3 mb-4">
+                      <div className="space-y-2.5 mb-4">
                         <div className="flex items-center justify-between text-xs">
                           <span className="text-slate-500">难度</span>
                           {cert.difficulty === 'basic' ? (
@@ -1307,7 +1375,7 @@ export default function EncyclopediaDetail() {
                         </div>
                       </div>
 
-                      <div>
+                      <div className="mb-4">
                         <div className="flex items-center justify-between text-xs mb-1.5">
                           <span className="text-slate-500">岗位相关度</span>
                           <span className="font-semibold text-slate-700">{cert.relevance}%</span>
@@ -1319,6 +1387,17 @@ export default function EncyclopediaDetail() {
                           />
                         </div>
                       </div>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        fullWidth
+                        onClick={() => navigate('/onboarding')}
+                        rightIcon={<ArrowRight className="w-4 h-4" />}
+                        className="group-hover:!border-emerald-400 group-hover:!bg-emerald-50 group-hover:!text-emerald-600"
+                      >
+                        开始学习
+                      </Button>
                     </Card>
                   </motion.div>
                 );
@@ -1372,12 +1451,13 @@ function SectionTitle({
 }) {
   return (
     <motion.div variants={fadeInUp} className="mb-8">
+      <div className="w-20 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mb-4" />
       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold tracking-wide uppercase mb-3">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
         {eyebrow}
       </div>
-      <h2 className="font-heading text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight mb-2">
-        {title}
+      <h2 className="font-heading text-2xl lg:text-3xl font-bold tracking-tight mb-2">
+        <span className="gradient-text">{title}</span>
       </h2>
       {subtitle && <p className="text-slate-500 text-base max-w-2xl">{subtitle}</p>}
     </motion.div>

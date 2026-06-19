@@ -675,6 +675,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <motion.div variants={fadeInUp}>
+              <div className="w-20 h-1 rounded-full bg-gradient-to-r from-emerald-500 via-lavender-500 to-space-indigo-500 mx-auto mb-4" />
               <Badge variant="gold" size="md" withDot className="mb-4">
                 <BookOpen className="w-3.5 h-3.5 mr-1" />
                 职业百科

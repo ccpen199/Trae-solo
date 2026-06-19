@@ -16,7 +16,6 @@ import {
   AlertCircle,
   Phone,
   Briefcase,
-  Users,
   CheckCircle2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
