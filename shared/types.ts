@@ -1,4 +1,3 @@
-
 export interface Metric {
   id: string;
   label: string;
@@ -197,70 +196,4 @@ export interface Product {
   sales: number;
   imageUrl: string;
   channel: 'b2b' | 'b2c';
-}
-
-export interface OrderRow {
-  id: string;
-  buyer: string;
-  seller: string;
-  amount: number;
-  status: string;
-  progress: number;
-  logistics: string;
-  createdAt: string;
-}
-
-export interface ContractRow {
-  id: string;
-  title: string;
-  counterparty: string;
-  amount: number;
-  status: string;
-  blockchainHash: string;
-  signedAt: string;
-}
-
-export interface QuestionRow {
-  id: string;
-  title: string;
-  category: string;
-  expert: string;
-  status: string;
-  answers: number;
-  responseTime: string;
-}
-
-export interface WeatherAlert {
-  id: string;
-  region: string;
-  level: string;
-  alertType: string;
-  suggestion: string;
-  startsAt: string;
-}
-
-export interface QualityTrendItem {
-  month: string;
-  passRate: number;
-  sampling: number;
-  risk: number;
-}
-
-export interface DashboardData {
-  metrics: Metric[];
-  qualityTrend: QualityTrendItem[];
-  alerts: WeatherAlert[];
-}
-
-export interface TraceResult {
-  batch: TraceBatch;
-  timeline: TimelineItem[];
-}
-
-export interface RegulatoryReport {
-  id: string;
-  title: string;
-  risk: string;
-  sampleCount: number;
-  passRate: number;
 }

@@ -1,0 +1,2438 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-19T02:45:19.369Z",
+  "order": "may-89141",
+  "roundIndex": 4,
+  "captureId": "may-89141-codex-service-repair",
+  "url": "http://127.0.0.1:49141/",
+  "initialUrl": "http://127.0.0.1:49141/",
+  "finalUrl": "http://127.0.0.1:49141/",
+  "status": 200,
+  "title": "农产品可信溯源交易平台",
+  "initialTitle": "农产品可信溯源交易平台",
+  "navigationError": "",
+  "screenshotPath": ".trae/browser-repair/may-89141-codex-service-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.png"
+  ],
+  "issueTextPreview": "service-repair",
+  "targetReason": "页面存在购买/商品入口，优先复验交易链路",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49141/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49141/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查询",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查询:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:溯源",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查询",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:B2B",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:采购下单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:采购下单:确认下单并签署合同",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:采购需求",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:采购需求:响应需求",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 3
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^关闭$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"action-btn outline full\">关闭</button>\u001b[22m\n\u001b[2m  - attem"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/^关闭$/).first()\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"action-btn outline full\">关闭</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b["
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49141/",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "区域质量、链上批次与订单协同集中监控",
+          "98.7%",
+          "主动预警",
+          "热销农品"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "查看全部预警",
+          "进入交易市场"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员今日监管概览区域质量、链上批次与订单协同集中监控已接入生产档案、检测报告、冷链温湿度和电子合同数据，当前批次可从扫码查询直达链上存证。查询质量趋势98.7%1月2月3月4月5月6月抽检样本 1846风险事件 4溯源批次128,640+12.8%交易额¥8,742万+9.4%认证企业3,286+6.1%抽检合格率98.7%+1.2%气象与农事主动预警橙色山东寿光 · 强对流设施棚区加固棚膜，提前排查排水沟，暂停午后喷药作业。2026-06-19 14:00黄色浙江杭州 · 高温茶园覆盖遮阴网，采摘时段调整到清晨并补充滴灌。2026-06-20 10:00蓝色黑龙江五常 · 短时强降雨稻田保持浅水层，巡检田埂和排涝口。2026-06-21 06:00查看全部预警 交易市场热销农品东北黑豆有机豆黑龙江佳木斯 · 1kg/袋¥35设施番茄精品果山东寿光 · 2.5kg/箱¥30有机西兰花云南昆明 · 2颗/袋¥19五常有机稻花香黑龙江五常 · 5kg/袋¥68进入交易市场",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1108,
+          "scrollWidth": 1504,
+          "scrollHeight": 1108,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49141/",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.png",
+          "elementCount": 262,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "查看全部预警",
+            "进入交易市场"
+          ]
+        }
+      },
+      {
+        "label": "导航:看板",
+        "url": "http://127.0.0.1:49141/",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "区域质量、链上批次与订单协同集中监控",
+          "98.7%",
+          "主动预警",
+          "热销农品"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "查看全部预警",
+          "进入交易市场"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员今日监管概览区域质量、链上批次与订单协同集中监控已接入生产档案、检测报告、冷链温湿度和电子合同数据，当前批次可从扫码查询直达链上存证。查询质量趋势98.7%1月2月3月4月5月6月抽检样本 1846风险事件 4溯源批次128,640+12.8%交易额¥8,742万+9.4%认证企业3,286+6.1%抽检合格率98.7%+1.2%气象与农事主动预警橙色山东寿光 · 强对流设施棚区加固棚膜，提前排查排水沟，暂停午后喷药作业。2026-06-19 14:00黄色浙江杭州 · 高温茶园覆盖遮阴网，采摘时段调整到清晨并补充滴灌。2026-06-20 10:00蓝色黑龙江五常 · 短时强降雨稻田保持浅水层，巡检田埂和排涝口。2026-06-21 06:00查看全部预警 交易市场热销农品东北黑豆有机豆黑龙江佳木斯 · 1kg/袋¥35设施番茄精品果山东寿光 · 2.5kg/箱¥30有机西兰花云南昆明 · 2颗/袋¥19五常有机稻花香黑龙江五常 · 5kg/袋¥68进入交易市场",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1108,
+          "scrollWidth": 1536,
+          "scrollHeight": 1108,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-02-导航-看板",
+          "label": "导航:看板",
+          "finalUrl": "http://127.0.0.1:49141/",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.png",
+          "elementCount": 262,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "查看全部预警",
+            "进入交易市场"
+          ]
+        }
+      },
+      {
+        "label": "操作:查询",
+        "url": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "溯源查询",
+          "五常有机稻花香",
+          "全链路时间线 · 8 条记录",
+          "种植建档 · 王立国",
+          "农事操作 · 李春梅",
+          "质量检测 · 黑龙江农检中心",
+          "加工包装 · 禾源加工一厂",
+          "冷链物流 · 北方冷链 HL89141",
+          "到货入库 · 北京朝阳冷链仓",
+          "入市销售 · 北京朝阳农批中心",
+          "监管复查 · 北京市市场监管局"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询",
+          "刷新"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员Traceability溯源查询查询合格五常有机稻花香黑龙江禾源农业合作社溯源码TRC-2026-RICE-89141产地黑龙江哈尔滨五常市民乐乡规格5kg/袋批次状态已入市区块高度8,927,318生产日期2026-05-18全链路进度 · 8/7 环节种植农事加工物流入库入市监管链上哈希0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1Full Chain全链路时间线 · 8 条记录刷新2026-04-08 08:30种植建档 · 王立国完成有机稻种浸种、育秧盘建档，地块绑定土壤检测报告。五常市民乐乡 4 号田2026-05-02 10:15农事操作 · 李春梅无人机精准施用有机叶面肥 12L，作业轨迹已上传。五常市民乐乡 4 号田2026-05-22 15:20质量检测 · 黑龙江农检中心农残、重金属、黄曲霉毒素检测结果均符合绿色食品标准。哈尔滨市质量检测实验室2026-06-03 09:40加工包装 · 禾源加工一厂完成低温烘干、色选和真空包装，批次重量 18.6 吨。五常稻米加工园 · 18.2°C · 湿度 48%2026-06-09 13:05冷链物流 · 北方冷链 HL89141运输全程温湿度稳定，电子铅封状态正常。哈尔滨至北京干线 · 16.8°C · 湿度 52%2026-06-10 22:18到货入库 · 北京朝阳冷链仓到货温湿度检测合格，入库验收重量 18.58 吨，偏差 0.1%。北京朝阳冷链仓储中心 · 14.5°C · 湿度 55%2026-06-11 07:55入市销售 · 北京朝阳农批中心完成入库复核，分销至 28 家零售门店，上架率 100%。北京朝阳农产品批发市场2026-06-16 14:30监管复查 · 北京市市场监管局专项抽检复查合格，重金属、农残均低于国家标准限值，批次标记为闭环。北京朝阳农产品批发市场",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1404,
+          "scrollWidth": 1568,
+          "scrollHeight": 1404,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-03-操作-查询",
+          "label": "操作:查询",
+          "finalUrl": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.png",
+          "elementCount": 262,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查询->刷新",
+        "url": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "溯源查询",
+          "五常有机稻花香",
+          "全链路时间线 · 8 条记录",
+          "种植建档 · 王立国",
+          "农事操作 · 李春梅",
+          "质量检测 · 黑龙江农检中心",
+          "加工包装 · 禾源加工一厂",
+          "冷链物流 · 北方冷链 HL89141",
+          "到货入库 · 北京朝阳冷链仓",
+          "入市销售 · 北京朝阳农批中心",
+          "监管复查 · 北京市市场监管局"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询",
+          "刷新"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员Traceability溯源查询查询合格五常有机稻花香黑龙江禾源农业合作社溯源码TRC-2026-RICE-89141产地黑龙江哈尔滨五常市民乐乡规格5kg/袋批次状态已入市区块高度8,927,318生产日期2026-05-18全链路进度 · 8/7 环节种植农事加工物流入库入市监管链上哈希0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1Full Chain全链路时间线 · 8 条记录刷新2026-04-08 08:30种植建档 · 王立国完成有机稻种浸种、育秧盘建档，地块绑定土壤检测报告。五常市民乐乡 4 号田2026-05-02 10:15农事操作 · 李春梅无人机精准施用有机叶面肥 12L，作业轨迹已上传。五常市民乐乡 4 号田2026-05-22 15:20质量检测 · 黑龙江农检中心农残、重金属、黄曲霉毒素检测结果均符合绿色食品标准。哈尔滨市质量检测实验室2026-06-03 09:40加工包装 · 禾源加工一厂完成低温烘干、色选和真空包装，批次重量 18.6 吨。五常稻米加工园 · 18.2°C · 湿度 48%2026-06-09 13:05冷链物流 · 北方冷链 HL89141运输全程温湿度稳定，电子铅封状态正常。哈尔滨至北京干线 · 16.8°C · 湿度 52%2026-06-10 22:18到货入库 · 北京朝阳冷链仓到货温湿度检测合格，入库验收重量 18.58 吨，偏差 0.1%。北京朝阳冷链仓储中心 · 14.5°C · 湿度 55%2026-06-11 07:55入市销售 · 北京朝阳农批中心完成入库复核，分销至 28 家零售门店，上架率 100%。北京朝阳农产品批发市场2026-06-16 14:30监管复查 · 北京市市场监管局专项抽检复查合格，重金属、农残均低于国家标准限值，批次标记为闭环。北京朝阳农产品批发市场",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1404,
+          "scrollWidth": 1600,
+          "scrollHeight": 1404,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-04-二层操作-查询-刷新",
+          "label": "二层操作:查询->刷新",
+          "finalUrl": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.png",
+          "elementCount": 262,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:溯源",
+        "url": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "溯源查询",
+          "五常有机稻花香",
+          "全链路时间线 · 8 条记录",
+          "种植建档 · 王立国",
+          "农事操作 · 李春梅",
+          "质量检测 · 黑龙江农检中心",
+          "加工包装 · 禾源加工一厂",
+          "冷链物流 · 北方冷链 HL89141",
+          "到货入库 · 北京朝阳冷链仓",
+          "入市销售 · 北京朝阳农批中心",
+          "监管复查 · 北京市市场监管局"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询",
+          "刷新"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员Traceability溯源查询查询合格五常有机稻花香黑龙江禾源农业合作社溯源码TRC-2026-RICE-89141产地黑龙江哈尔滨五常市民乐乡规格5kg/袋批次状态已入市区块高度8,927,318生产日期2026-05-18全链路进度 · 8/7 环节种植农事加工物流入库入市监管链上哈希0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1Full Chain全链路时间线 · 8 条记录刷新2026-04-08 08:30种植建档 · 王立国完成有机稻种浸种、育秧盘建档，地块绑定土壤检测报告。五常市民乐乡 4 号田2026-05-02 10:15农事操作 · 李春梅无人机精准施用有机叶面肥 12L，作业轨迹已上传。五常市民乐乡 4 号田2026-05-22 15:20质量检测 · 黑龙江农检中心农残、重金属、黄曲霉毒素检测结果均符合绿色食品标准。哈尔滨市质量检测实验室2026-06-03 09:40加工包装 · 禾源加工一厂完成低温烘干、色选和真空包装，批次重量 18.6 吨。五常稻米加工园 · 18.2°C · 湿度 48%2026-06-09 13:05冷链物流 · 北方冷链 HL89141运输全程温湿度稳定，电子铅封状态正常。哈尔滨至北京干线 · 16.8°C · 湿度 52%2026-06-10 22:18到货入库 · 北京朝阳冷链仓到货温湿度检测合格，入库验收重量 18.58 吨，偏差 0.1%。北京朝阳冷链仓储中心 · 14.5°C · 湿度 55%2026-06-11 07:55入市销售 · 北京朝阳农批中心完成入库复核，分销至 28 家零售门店，上架率 100%。北京朝阳农产品批发市场2026-06-16 14:30监管复查 · 北京市市场监管局专项抽检复查合格，重金属、农残均低于国家标准限值，批次标记为闭环。北京朝阳农产品批发市场",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1404,
+          "scrollWidth": 1632,
+          "scrollHeight": 1404,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-05-导航-溯源",
+          "label": "导航:溯源",
+          "finalUrl": "http://127.0.0.1:49141/trace",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.png",
+          "elementCount": 262,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:查询",
+        "url": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "溯源查询",
+          "五常有机稻花香",
+          "全链路时间线 · 8 条记录",
+          "种植建档 · 王立国",
+          "农事操作 · 李春梅",
+          "质量检测 · 黑龙江农检中心",
+          "加工包装 · 禾源加工一厂",
+          "冷链物流 · 北方冷链 HL89141",
+          "到货入库 · 北京朝阳冷链仓",
+          "入市销售 · 北京朝阳农批中心",
+          "监管复查 · 北京市市场监管局"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询",
+          "刷新"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员Traceability溯源查询查询合格五常有机稻花香黑龙江禾源农业合作社溯源码TRC-2026-RICE-89141产地黑龙江哈尔滨五常市民乐乡规格5kg/袋批次状态已入市区块高度8,927,318生产日期2026-05-18全链路进度 · 8/7 环节种植农事加工物流入库入市监管链上哈希0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1Full Chain全链路时间线 · 8 条记录刷新2026-04-08 08:30种植建档 · 王立国完成有机稻种浸种、育秧盘建档，地块绑定土壤检测报告。五常市民乐乡 4 号田2026-05-02 10:15农事操作 · 李春梅无人机精准施用有机叶面肥 12L，作业轨迹已上传。五常市民乐乡 4 号田2026-05-22 15:20质量检测 · 黑龙江农检中心农残、重金属、黄曲霉毒素检测结果均符合绿色食品标准。哈尔滨市质量检测实验室2026-06-03 09:40加工包装 · 禾源加工一厂完成低温烘干、色选和真空包装，批次重量 18.6 吨。五常稻米加工园 · 18.2°C · 湿度 48%2026-06-09 13:05冷链物流 · 北方冷链 HL89141运输全程温湿度稳定，电子铅封状态正常。哈尔滨至北京干线 · 16.8°C · 湿度 52%2026-06-10 22:18到货入库 · 北京朝阳冷链仓到货温湿度检测合格，入库验收重量 18.58 吨，偏差 0.1%。北京朝阳冷链仓储中心 · 14.5°C · 湿度 55%2026-06-11 07:55入市销售 · 北京朝阳农批中心完成入库复核，分销至 28 家零售门店，上架率 100%。北京朝阳农产品批发市场2026-06-16 14:30监管复查 · 北京市市场监管局专项抽检复查合格，重金属、农残均低于国家标准限值，批次标记为闭环。北京朝阳农产品批发市场",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1404,
+          "scrollWidth": 1664,
+          "scrollHeight": 1404,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-06-操作-查询",
+          "label": "操作:查询",
+          "finalUrl": "http://127.0.0.1:49141/trace",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.png",
+          "elementCount": 262,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "溯源查询",
+          "五常有机稻花香",
+          "全链路时间线 · 8 条记录",
+          "种植建档 · 王立国",
+          "农事操作 · 李春梅",
+          "质量检测 · 黑龙江农检中心",
+          "加工包装 · 禾源加工一厂",
+          "冷链物流 · 北方冷链 HL89141",
+          "到货入库 · 北京朝阳冷链仓",
+          "入市销售 · 北京朝阳农批中心",
+          "监管复查 · 北京市市场监管局"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "查询",
+          "刷新"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入溯源码查询...",
+            "name": "",
+            "label": "溯源码"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员Traceability溯源查询查询合格五常有机稻花香黑龙江禾源农业合作社溯源码TRC-2026-RICE-89141产地黑龙江哈尔滨五常市民乐乡规格5kg/袋批次状态已入市区块高度8,927,318生产日期2026-05-18全链路进度 · 8/7 环节种植农事加工物流入库入市监管链上哈希0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1Full Chain全链路时间线 · 8 条记录刷新2026-04-08 08:30种植建档 · 王立国完成有机稻种浸种、育秧盘建档，地块绑定土壤检测报告。五常市民乐乡 4 号田2026-05-02 10:15农事操作 · 李春梅无人机精准施用有机叶面肥 12L，作业轨迹已上传。五常市民乐乡 4 号田2026-05-22 15:20质量检测 · 黑龙江农检中心农残、重金属、黄曲霉毒素检测结果均符合绿色食品标准。哈尔滨市质量检测实验室2026-06-03 09:40加工包装 · 禾源加工一厂完成低温烘干、色选和真空包装，批次重量 18.6 吨。五常稻米加工园 · 18.2°C · 湿度 48%2026-06-09 13:05冷链物流 · 北方冷链 HL89141运输全程温湿度稳定，电子铅封状态正常。哈尔滨至北京干线 · 16.8°C · 湿度 52%2026-06-10 22:18到货入库 · 北京朝阳冷链仓到货温湿度检测合格，入库验收重量 18.58 吨，偏差 0.1%。北京朝阳冷链仓储中心 · 14.5°C · 湿度 55%2026-06-11 07:55入市销售 · 北京朝阳农批中心完成入库复核，分销至 28 家零售门店，上架率 100%。北京朝阳农产品批发市场2026-06-16 14:30监管复查 · 北京市市场监管局专项抽检复查合格，重金属、农残均低于国家标准限值，批次标记为闭环。北京朝阳农产品批发市场",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1404,
+          "scrollWidth": 1696,
+          "scrollHeight": 1404,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-07-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49141/trace",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.png",
+          "elementCount": 262,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "TRC-2026-RICE-89141",
+            "查询",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:B2B",
+        "url": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "B2B批发市场",
+          "东北黑豆有机豆",
+          "五常有机稻花香",
+          "赣南脐橙精选果",
+          "冷链蓝莓鲜果",
+          "内蒙古有机羊排"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员WholesaleB2B批发市场在线开店商品市场供应大厅采购需求B2B粮油东北黑豆有机豆黑龙江农垦集团¥26MOQ 200黑龙江佳木斯1kg/袋库存 5800溯源采购下单B2B粮油五常有机稻花香黑龙江禾源农业合作社¥52MOQ 100黑龙江五常5kg/袋库存 4600溯源采购下单B2B水果赣南脐橙精选果赣州金橙农业公司¥32MOQ 200江西赣州5kg/箱库存 2200溯源采购下单B2B水果冷链蓝莓鲜果大兴安岭浆果基地¥63MOQ 50黑龙江大兴安岭1.5kg/箱库存 720溯源采购下单B2B肉禽内蒙古有机羊排锡林郭勒草原牧业¥98MOQ 20内蒙古锡林郭勒1kg/真空包装库存 600溯源采购下单",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1494,
+          "scrollWidth": 1728,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-08-导航-B2B",
+          "label": "导航:B2B",
+          "finalUrl": "http://127.0.0.1:49141/market/b2b",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.png",
+          "elementCount": 250,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "在线开店",
+            "商品市场",
+            "供应大厅",
+            "采购需求",
+            "采购下单"
+          ]
+        }
+      },
+      {
+        "label": "操作:采购下单",
+        "url": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "B2B批发市场",
+          "东北黑豆有机豆",
+          "五常有机稻花香",
+          "赣南脐橙精选果",
+          "冷链蓝莓鲜果",
+          "内蒙古有机羊排",
+          "采购下单"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单",
+          "确认下单并签署合同"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员WholesaleB2B批发市场在线开店商品市场供应大厅采购需求B2B粮油东北黑豆有机豆黑龙江农垦集团¥26MOQ 200黑龙江佳木斯1kg/袋库存 5800溯源采购下单B2B粮油五常有机稻花香黑龙江禾源农业合作社¥52MOQ 100黑龙江五常5kg/袋库存 4600溯源采购下单B2B水果赣南脐橙精选果赣州金橙农业公司¥32MOQ 200江西赣州5kg/箱库存 2200溯源采购下单B2B水果冷链蓝莓鲜果大兴安岭浆果基地¥63MOQ 50黑龙江大兴安岭1.5kg/箱库存 720溯源采购下单B2B肉禽内蒙古有机羊排锡林郭勒草原牧业¥98MOQ 20内蒙古锡林郭勒1kg/真空包装库存 600溯源采购下单采购下单东北黑豆有机豆黑龙江佳木斯 · 1kg/袋¥26采购数量（最低 200）单价¥26数量200合计¥5,200支付方式货款担保支付平台担保，验收后放款保证金+分期先付30%，到货付尾款关联电子合同下单后自动生成采购合同，双方在线签署确认下单并签署合同",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1510,
+          "scrollWidth": 1760,
+          "scrollHeight": 1526,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-09-操作-采购下单",
+          "label": "操作:采购下单",
+          "finalUrl": "http://127.0.0.1:49141/market/b2b",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.png",
+          "elementCount": 308,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "在线开店",
+            "商品市场",
+            "供应大厅",
+            "采购需求",
+            "采购下单",
+            "200",
+            "确认下单并签署合同"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:采购下单->确认下单并签署合同",
+        "url": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "B2B批发市场",
+          "东北黑豆有机豆",
+          "五常有机稻花香",
+          "赣南脐橙精选果",
+          "冷链蓝莓鲜果",
+          "内蒙古有机羊排",
+          "下单成功",
+          "交易已发起"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单",
+          "查看订单",
+          "查看合同"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员WholesaleB2B批发市场在线开店商品市场供应大厅采购需求B2B粮油东北黑豆有机豆黑龙江农垦集团¥26MOQ 200黑龙江佳木斯1kg/袋库存 5800溯源采购下单B2B粮油五常有机稻花香黑龙江禾源农业合作社¥52MOQ 100黑龙江五常5kg/袋库存 4600溯源采购下单B2B水果赣南脐橙精选果赣州金橙农业公司¥32MOQ 200江西赣州5kg/箱库存 2200溯源采购下单B2B水果冷链蓝莓鲜果大兴安岭浆果基地¥63MOQ 50黑龙江大兴安岭1.5kg/箱库存 720溯源采购下单B2B肉禽内蒙古有机羊排锡林郭勒草原牧业¥98MOQ 20内蒙古锡林郭勒1kg/真空包装库存 600溯源采购下单下单成功交易已发起订单和电子合同已生成，等待对方签署订单编号od-1781837102597合同编号ct-1781837102599状态待乙方签署 · 担保支付中查看订单查看合同",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1526,
+          "scrollWidth": 1792,
+          "scrollHeight": 1542,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同",
+          "label": "二层操作:采购下单->确认下单并签署合同",
+          "finalUrl": "http://127.0.0.1:49141/market/b2b",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.png",
+          "elementCount": 278,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "在线开店",
+            "商品市场",
+            "供应大厅",
+            "采购需求",
+            "采购下单",
+            "查看订单",
+            "查看合同"
+          ]
+        }
+      },
+      {
+        "label": "操作:采购需求",
+        "url": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "B2B批发市场",
+          "下单成功",
+          "交易已发起"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "响应需求",
+          "查看订单",
+          "查看合同"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员WholesaleB2B批发市场在线开店商品市场供应大厅采购需求采购采购精品番茄蔬菜 · 全国 · 2.5kg/箱 · 需求量 20吨采购方：上海永辉超市预算 ¥20/kg响应需求采购长期求购有机大米粮油 · 东北 · 5kg/袋 · 需求量 100吨/月采购方：北京物美集团预算 ¥50/kg响应需求采购紧急采购蓝莓水果 · 东北 · 1.5kg/箱 · 需求量 5吨采购方：广州百佳超市预算 ¥60/kg响应需求下单成功交易已发起订单和电子合同已生成，等待对方签署订单编号od-1781837102597合同编号ct-1781837102599状态待乙方签署 · 担保支付中查看订单查看合同",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1526,
+          "scrollWidth": 1824,
+          "scrollHeight": 1526,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-11-操作-采购需求",
+          "label": "操作:采购需求",
+          "finalUrl": "http://127.0.0.1:49141/market/b2b",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.png",
+          "elementCount": 211,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "在线开店",
+            "商品市场",
+            "供应大厅",
+            "采购需求",
+            "响应需求",
+            "查看订单",
+            "查看合同"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:采购需求->响应需求",
+        "url": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "headings": [
+          "农产品全链条可信溯源与交易协同平台",
+          "B2B批发市场",
+          "智能撮合结果",
+          "下单成功",
+          "交易已发起"
+        ],
+        "navLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管"
+        ],
+        "buttons": [
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "响应需求",
+          "关闭",
+          "查看订单",
+          "查看合同"
+        ],
+        "links": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "农品链可信溯源交易平台看板溯源B2BB2C店铺订单合同农技监管链上存证正常区块高度 8,927,523生产 · 加工 · 物流 · 销售农产品全链条可信溯源与交易协同平台监管专员WholesaleB2B批发市场在线开店商品市场供应大厅采购需求采购采购精品番茄蔬菜 · 全国 · 2.5kg/箱 · 需求量 20吨采购方：上海永辉超市预算 ¥20/kg响应需求采购长期求购有机大米粮油 · 东北 · 5kg/袋 · 需求量 100吨/月采购方：北京物美集团预算 ¥50/kg响应需求采购紧急采购蓝莓水果 · 东北 · 1.5kg/箱 · 需求量 5吨采购方：广州百佳超市预算 ¥60/kg响应需求智能撮合结果按品类、地域、规格智能匹配关闭下单成功交易已发起订单和电子合同已生成，等待对方签署订单编号od-1781837102597合同编号ct-1781837102599状态待乙方签署 · 担保支付中查看订单查看合同",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1526,
+          "scrollWidth": 1856,
+          "scrollHeight": 1526,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求",
+          "label": "二层操作:采购需求->响应需求",
+          "finalUrl": "http://127.0.0.1:49141/market/b2b",
+          "title": "农产品可信溯源交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.png",
+          "elementCount": 225,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "看板",
+            "溯源",
+            "B2B",
+            "B2C",
+            "店铺",
+            "订单",
+            "合同",
+            "农技",
+            "监管",
+            "溯源查询",
+            "监管专员",
+            "在线开店",
+            "商品市场",
+            "供应大厅",
+            "采购需求",
+            "响应需求",
+            "关闭",
+            "查看订单",
+            "查看合同"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "看板",
+        "label": "查询",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "看板",
+        "label": "查询->刷新",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "溯源",
+        "label": "查询",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "溯源",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "B2B",
+        "label": "采购下单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "B2B",
+        "label": "采购下单->确认下单并签署合同",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "B2B",
+        "label": "采购需求",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "B2B",
+        "label": "采购需求->响应需求",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49141/",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.png",
+        "elementCount": 262,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "查看全部预警",
+          "进入交易市场"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-02-导航-看板",
+        "label": "导航:看板",
+        "finalUrl": "http://127.0.0.1:49141/",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.png",
+        "elementCount": 262,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "查看全部预警",
+          "进入交易市场"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-03-操作-查询",
+        "label": "操作:查询",
+        "finalUrl": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-04-二层操作-查询-刷新",
+        "label": "二层操作:查询->刷新",
+        "finalUrl": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-05-导航-溯源",
+        "label": "导航:溯源",
+        "finalUrl": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-06-操作-查询",
+        "label": "操作:查询",
+        "finalUrl": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-08-导航-B2B",
+        "label": "导航:B2B",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.png",
+        "elementCount": 250,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-09-操作-采购下单",
+        "label": "操作:采购下单",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.png",
+        "elementCount": 308,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单",
+          "200",
+          "确认下单并签署合同"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同",
+        "label": "二层操作:采购下单->确认下单并签署合同",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.png",
+        "elementCount": 278,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单",
+          "查看订单",
+          "查看合同"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-11-操作-采购需求",
+        "label": "操作:采购需求",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.png",
+        "elementCount": 211,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "响应需求",
+          "查看订单",
+          "查看合同"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求",
+        "label": "二层操作:采购需求->响应需求",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.png",
+        "elementCount": 225,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "响应需求",
+          "关闭",
+          "查看订单",
+          "查看合同"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49141/",
+    "representativeScreenshotLabel": "农产品全链条可信溯源与交易协同平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49141/",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-01-首屏.png",
+        "elementCount": 262,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "查看全部预警",
+          "进入交易市场"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-02-导航-看板",
+        "label": "导航:看板",
+        "finalUrl": "http://127.0.0.1:49141/",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-02-导航-看板.png",
+        "elementCount": 262,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "查看全部预警",
+          "进入交易市场"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-03-操作-查询",
+        "label": "操作:查询",
+        "finalUrl": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-03-操作-查询.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-04-二层操作-查询-刷新",
+        "label": "二层操作:查询->刷新",
+        "finalUrl": "http://127.0.0.1:49141/trace?code=TRC-2026-RICE-89141",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-04-二层操作-查询-刷新.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-05-导航-溯源",
+        "label": "导航:溯源",
+        "finalUrl": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-05-导航-溯源.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-06-操作-查询",
+        "label": "操作:查询",
+        "finalUrl": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-06-操作-查询.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49141/trace",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-07-操作-刷新.png",
+        "elementCount": 262,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "TRC-2026-RICE-89141",
+          "查询",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-08-导航-B2B",
+        "label": "导航:B2B",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-08-导航-B2B.png",
+        "elementCount": 250,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-09-操作-采购下单",
+        "label": "操作:采购下单",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-09-操作-采购下单.png",
+        "elementCount": 308,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单",
+          "200",
+          "确认下单并签署合同"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同",
+        "label": "二层操作:采购下单->确认下单并签署合同",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-10-二层操作-采购下单-确认下单并签署合同.png",
+        "elementCount": 278,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "采购下单",
+          "查看订单",
+          "查看合同"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-11-操作-采购需求",
+        "label": "操作:采购需求",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-11-操作-采购需求.png",
+        "elementCount": 211,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "响应需求",
+          "查看订单",
+          "查看合同"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求",
+        "label": "二层操作:采购需求->响应需求",
+        "finalUrl": "http://127.0.0.1:49141/market/b2b",
+        "title": "农产品可信溯源交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89141/.trae/browser-repair/may-89141-codex-service-repair-structure-12-二层操作-采购需求-响应需求.png",
+        "elementCount": 225,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "看板",
+          "溯源",
+          "B2B",
+          "B2C",
+          "店铺",
+          "订单",
+          "合同",
+          "农技",
+          "监管",
+          "溯源查询",
+          "监管专员",
+          "在线开店",
+          "商品市场",
+          "供应大厅",
+          "采购需求",
+          "响应需求",
+          "关闭",
+          "查看订单",
+          "查看合同"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1526,
+    "scrollWidth": 1856,
+    "scrollHeight": 1526
+  },
+  "initialBodyTextPreview": "农品链\n可信溯源交易平台\n看板\n溯源\nB2B\nB2C\n店铺\n订单\n合同\n农技\n监管\n链上存证正常\n区块高度 8,927,523\n\n生产 · 加工 · 物流 · 销售\n\n农产品全链条可信溯源与交易协同平台\n监管专员\n\n今日监管概览\n\n区域质量、链上批次与订单协同集中监控\n\n已接入生产档案、检测报告、冷链温湿度和电子合同数据，当前批次可从扫码查询直达链上存证。\n\n查询\n\n质量趋势\n\n98.7%\n1月\n2月\n3月\n4月\n5月\n6月\n抽检样本 1846\n风险事件 4\n溯源批次\n128,640\n+12.8%\n交易额\n¥8,742万\n+9.4%\n认证企业\n3,286\n+6.1%\n抽检合格率\n98.7%\n+1.2%\n\n气象与农事\n\n主动预警\n橙色\n山东寿光 · 强对流\n\n设施棚区加固棚膜，提前排查排水沟，暂停午后喷药作业。\n\n2026-06-19 14:00\n黄色\n浙江杭州 · 高温\n\n茶园覆盖遮阴网，采摘时段调整到清晨并补充滴灌。\n\n2026-06-20 10:00\n蓝色\n黑龙江五常 · 短时强降雨\n\n稻田保持浅水层，巡检田埂和排涝口。\n\n2026-06-21 06:00\n查看全部预警\n\n交易市场\n\n热销农品\n东北黑豆有机豆\n黑龙江佳木斯 · 1kg/袋\n¥35\n设施番茄精品果\n山东寿光 · 2.5kg/箱\n¥30\n有机西兰花\n云南昆明 · 2颗/袋\n¥19\n五常有机稻花香\n黑龙江五常 · 5kg/袋\n¥68\n进入交易市场",
+  "bodyTextPreview": "农品链\n可信溯源交易平台\n看板\n溯源\nB2B\nB2C\n店铺\n订单\n合同\n农技\n监管\n链上存证正常\n区块高度 8,927,523\n\n生产 · 加工 · 物流 · 销售\n\n农产品全链条可信溯源与交易协同平台\n监管专员\n\n今日监管概览\n\n区域质量、链上批次与订单协同集中监控\n\n已接入生产档案、检测报告、冷链温湿度和电子合同数据，当前批次可从扫码查询直达链上存证。\n\n查询\n\n质量趋势\n\n98.7%\n1月\n2月\n3月\n4月\n5月\n6月\n抽检样本 1846\n风险事件 4\n溯源批次\n128,640\n+12.8%\n交易额\n¥8,742万\n+9.4%\n认证企业\n3,286\n+6.1%\n抽检合格率\n98.7%\n+1.2%\n\n气象与农事\n\n主动预警\n橙色\n山东寿光 · 强对流\n\n设施棚区加固棚膜，提前排查排水沟，暂停午后喷药作业。\n\n2026-06-19 14:00\n黄色\n浙江杭州 · 高温\n\n茶园覆盖遮阴网，采摘时段调整到清晨并补充滴灌。\n\n2026-06-20 10:00\n蓝色\n黑龙江五常 · 短时强降雨\n\n稻田保持浅水层，巡检田埂和排涝口。\n\n2026-06-21 06:00\n查看全部预警\n\n交易市场\n\n热销农品\n\n暂无商品数据\n\n进入交易市场",
+  "apiBase": "http://127.0.0.1:59141",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products?channel=b2b"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products?channel=b2b"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59141/api/products"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"service\":\"may-89141 traceability-api\",\"host\":\"127.0.0.1\",\"port\":59141,\"database\":{\"path\":\"/Users/chen/Documents/trae_projects/local_projects/may-89141/data/app.sqlite\",\"exists\":true,\"counts\":{\"metrics\":4,\"traceBatches\":3,\"products\":10,\"orders\":5}},\"timestamp\":\"2026-06-19T02:45:16.292Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/dashboard",
+      "path": "/api/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"metrics\":[{\"id\":\"trace-total\",\"label\":\"溯源批次\",\"value\":\"128,640\",\"delta\":\"+12.8%\",\"tone\":\"green\"},{\"id\":\"trade-amount\",\"label\":\"交易额\",\"value\":\"¥8,742万\",\"delta\":\"+9.4%\",\"tone\":\"blue\"},{\"id\":\"verified-enterprises\",\"label\":\"认证企业\",\"value\":\"3,286\",\"delta\":\"+6.1%\",\"tone\":\"slate\"},{\"id\":\"quality-pass\",\"label\":\"抽检合格率\",\"value\":\"98.7%\",\"delta\":\"+1.2%\",\"tone\":\"amber\"}],\"qualityTrend\":[{\"month\":\"1月\",\"passRate\":97.6,\"sampling\":1280,\"risk\":9},{\"month\":\"2月\",\"passRate\":97.9,\"sampling\":1360,\"risk\":8},{\"month\":\"3月"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"products\":[{\"id\":\"p-008\",\"name\":\"东北黑豆有机豆\",\"category\":\"粮油\",\"price\":35,\"wholesalePrice\":26,\"moq\":200,\"specification\":\"1kg/袋\",\"traceCode\":\"TRC-2026-BEAN-56890\",\"seller\":\"黑龙江农垦集团\",\"origin\":\"黑龙江佳木斯\",\"stock\":5800,\"sales\":3200,\"imageUrl\":\"https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80\",\"channel\":\"b2b\"},{\"id\":\"p-003\",\"name\":\"设施番茄精品果\",\"category\":\"蔬菜\",\"price\":29.9,\"wholesalePrice\":18.6,\"moq\":80,\"specification\":\"2.5kg/箱\",\"traceCode\":\"TRC-2026-TOMATO-19322\",\"s"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/trace/TRC-2026-RICE-89141",
+      "path": "/api/trace/TRC-2026-RICE-89141",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"batch\":{\"id\":\"tb-001\",\"traceCode\":\"TRC-2026-RICE-89141\",\"productName\":\"五常有机稻花香\",\"category\":\"粮油\",\"specification\":\"5kg/袋\",\"producer\":\"黑龙江禾源农业合作社\",\"origin\":\"黑龙江哈尔滨五常市民乐乡\",\"productionDate\":\"2026-05-18\",\"shelfLife\":365,\"status\":\"已入市\",\"blockchainHash\":\"0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1\",\"blockHeight\":8927318,\"qualityResult\":\"合格\"},\"timeline\":[{\"id\":\"tl-001\",\"stage\":\"种植建档\",\"operator\":\"王立国\",\"eventTime\":\"2026-04-08 08:30\",\"location\":\"五常市民乐乡 4 号田\",\"description\":\"完成有机稻种浸种、"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/products?channel=b2b",
+      "path": "/api/products?channel=b2b",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"products\":[{\"id\":\"p-008\",\"name\":\"东北黑豆有机豆\",\"category\":\"粮油\",\"price\":35,\"wholesalePrice\":26,\"moq\":200,\"specification\":\"1kg/袋\",\"traceCode\":\"TRC-2026-BEAN-56890\",\"seller\":\"黑龙江农垦集团\",\"origin\":\"黑龙江佳木斯\",\"stock\":5800,\"sales\":3200,\"imageUrl\":\"https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80\",\"channel\":\"b2b\"},{\"id\":\"p-001\",\"name\":\"五常有机稻花香\",\"category\":\"粮油\",\"price\":68,\"wholesalePrice\":52,\"moq\":100,\"specification\":\"5kg/袋\",\"traceCode\":\"TRC-2026-RICE-89141\",\"seller\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"NOT_FOUND\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"orders\":[{\"id\":\"od-89143\",\"buyer\":\"成都红旗连锁\",\"seller\":\"锡林郭勒草原牧业\",\"amount\":94500,\"status\":\"已结算\",\"progress\":100,\"logistics\":\"蓉冷配 55218 完成交接\",\"createdAt\":\"2026-06-16 14:00\"},{\"id\":\"od-89142\",\"buyer\":\"深圳百佳超市\",\"seller\":\"三亚热带果园\",\"amount\":67200,\"status\":\"合同签署中\",\"progress\":20,\"logistics\":\"待确认\",\"createdAt\":\"2026-06-18 11:15\"},{\"id\":\"od-89140\",\"buyer\":\"上海社区团购仓\",\"seller\":\"山东寿光智农园区\",\"amount\":73600,\"status\":\"已验收\",\"progress\":100,\"logistics\":\"沪农配 76219 完成入库\",\"createdAt\":\"2026-06-17 09:16\"},{\"id\":\"od-89139\",\"bu"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59141/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"NOT_FOUND\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49141/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=e207a514",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/react-router-dom.js?v=e207a514",
+        "lineNumber": 4424,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/react-router-dom.js?v=e207a514",
+        "lineNumber": 4424,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49141/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49141/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49141/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=e207a514",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49141/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/react-router-dom.js?v=e207a514",
+        "lineNumber": 4424,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/react-router-dom.js?v=e207a514",
+        "lineNumber": 4424,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49141/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=e207a514",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/react-router-dom.js?v=e207a514",
+        "lineNumber": 4424,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49141/node_modules/.vite/deps/react-router-dom.js?v=e207a514",
+        "lineNumber": 4424,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49141/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2c?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2c?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2c?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2c?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1603048568710-b5991b3b5d48?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1603048568710-b5991b3b5d48?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1603048568710-b5991b3b5d48?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1603048568710-b5991b3b5d48?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "method": "GET",
+      "url": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2c?auto=format&fit=crop&w=900&q=80",
+      "errorText": "net::ERR_BLOCKED_BY_ORB"
+    }
+  ],
+  "responseErrors": []
+}

@@ -1,508 +1,500 @@
-import Database from 'better-sqlite3'
-import { mkdirSync, existsSync } from 'fs'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { existsSync, mkdirSync } from 'node:fs';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import type {
+  Metric, Product, TimelineItem, TraceBatch,
+  UnionMember, UnionOrg, WelfareBudget, WelfareCoupon,
+  PointsAccount, PointsRecord, UnionCard, SupplierAssessment,
+  MemberBenefit, TravelBooking, LegalConsult, FunnelAnalysis
+} from '../shared/types';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const rootDir = process.cwd();
+const dbRelativePath = process.env.SQLITE_PATH || 'data/app.sqlite';
+export const dbPath = path.resolve(rootDir, dbRelativePath);
 
-const dataDir = join(__dirname, 'data')
-if (!existsSync(dataDir)) {
-  mkdirSync(dataDir, { recursive: true })
+type CountRow = { name: string; count: number };
+
+function ensureDirectory() {
+  mkdirSync(path.dirname(dbPath), { recursive: true });
 }
 
-const dbPath = join(dataDir, 'union.db')
-const db = new Database(dbPath)
+function runSql(sql: string) {
+  ensureDirectory();
+  const result = spawnSync('sqlite3', [dbPath], {
+    input: sql,
+    encoding: 'utf8',
+  });
 
-db.pragma('journal_mode = WAL')
-db.pragma('foreign_keys = ON')
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS organization (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    level TEXT NOT NULL CHECK(level IN ('province', 'city', 'base')),
-    parent_id TEXT,
-    member_count INTEGER DEFAULT 0,
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (parent_id) REFERENCES organization(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS member (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    id_card TEXT NOT NULL UNIQUE,
-    employee_no TEXT NOT NULL,
-    org_id TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'active', 'rejected')),
-    points INTEGER DEFAULT 0,
-    join_date TEXT,
-    phone TEXT,
-    password TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (org_id) REFERENCES organization(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS member_tag (
-    id TEXT PRIMARY KEY,
-    member_id TEXT NOT NULL,
-    tag TEXT NOT NULL,
-    FOREIGN KEY (member_id) REFERENCES member(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS voucher_template (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    amount REAL NOT NULL,
-    total_quantity INTEGER NOT NULL,
-    remaining_quantity INTEGER NOT NULL,
-    expiry_date TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft', 'active', 'expired')),
-    org_id TEXT NOT NULL,
-    budget_id TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (org_id) REFERENCES organization(id),
-    FOREIGN KEY (budget_id) REFERENCES budget_plan(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS voucher (
-    id TEXT PRIMARY KEY,
-    template_id TEXT NOT NULL,
-    member_id TEXT NOT NULL,
-    code TEXT NOT NULL UNIQUE,
-    status TEXT NOT NULL DEFAULT 'unused' CHECK(status IN ('unused', 'used', 'expired')),
-    issued_at TEXT DEFAULT (datetime('now')),
-    used_at TEXT,
-    FOREIGN KEY (template_id) REFERENCES voucher_template(id),
-    FOREIGN KEY (member_id) REFERENCES member(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS budget_plan (
-    id TEXT PRIMARY KEY,
-    org_id TEXT NOT NULL,
-    title TEXT NOT NULL,
-    total_amount REAL NOT NULL,
-    used_amount REAL DEFAULT 0,
-    status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'approved', 'rejected', 'executing', 'completed')),
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (org_id) REFERENCES organization(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS approval_step (
-    id TEXT PRIMARY KEY,
-    plan_id TEXT NOT NULL,
-    step INTEGER NOT NULL,
-    approver TEXT NOT NULL,
-    approver_name TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'approved', 'rejected')),
-    comment TEXT,
-    timestamp TEXT,
-    FOREIGN KEY (plan_id) REFERENCES budget_plan(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS points_product (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    points INTEGER NOT NULL,
-    stock INTEGER NOT NULL,
-    category TEXT NOT NULL,
-    image TEXT,
-    description TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS points_order (
-    id TEXT PRIMARY KEY,
-    member_id TEXT NOT NULL,
-    product_id TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'shipped', 'completed', 'cancelled')),
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (member_id) REFERENCES member(id),
-    FOREIGN KEY (product_id) REFERENCES points_product(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS booking (
-    id TEXT PRIMARY KEY,
-    member_id TEXT NOT NULL,
-    type TEXT NOT NULL CHECK(type IN ('vip_lounge', 'train_ticket', 'health_checkup', 'legal_consult')),
-    resource_id TEXT NOT NULL,
-    resource_name TEXT NOT NULL,
-    booking_date TEXT NOT NULL,
-    booking_time TEXT,
-    status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'confirmed', 'completed', 'cancelled')),
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (member_id) REFERENCES member(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS supplier (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    category TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'applying' CHECK(status IN ('applying', 'approved', 'suspended', 'blacklisted')),
-    score REAL DEFAULT 0,
-    contact TEXT,
-    description TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS supplier_assessment (
-    id TEXT PRIMARY KEY,
-    supplier_id TEXT NOT NULL,
-    score REAL NOT NULL,
-    comment TEXT,
-    assessor TEXT NOT NULL,
-    date TEXT NOT NULL,
-    FOREIGN KEY (supplier_id) REFERENCES supplier(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS recommendation_rule (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    conditions_json TEXT NOT NULL,
-    benefit_ids_json TEXT NOT NULL,
-    priority INTEGER DEFAULT 0,
-    enabled INTEGER DEFAULT 1,
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS member_audit (
-    id TEXT PRIMARY KEY,
-    member_id TEXT NOT NULL,
-    action TEXT NOT NULL,
-    source TEXT NOT NULL,
-    operator_id TEXT,
-    operator_name TEXT,
-    reason TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    FOREIGN KEY (member_id) REFERENCES member(id)
-  );
-`)
-
-db.exec(`
-  CREATE INDEX IF NOT EXISTS idx_member_org ON member(org_id);
-  CREATE INDEX IF NOT EXISTS idx_member_status ON member(status);
-  CREATE INDEX IF NOT EXISTS idx_voucher_member ON voucher(member_id);
-  CREATE INDEX IF NOT EXISTS idx_voucher_template ON voucher(template_id);
-  CREATE INDEX IF NOT EXISTS idx_booking_member ON booking(member_id);
-  CREATE INDEX IF NOT EXISTS idx_booking_type ON booking(type);
-  CREATE INDEX IF NOT EXISTS idx_budget_org ON budget_plan(org_id);
-  CREATE INDEX IF NOT EXISTS idx_supplier_status ON supplier(status);
-  CREATE INDEX IF NOT EXISTS idx_member_tag_member ON member_tag(member_id);
-  CREATE INDEX IF NOT EXISTS idx_audit_member ON member_audit(member_id);
-`)
-
-const orgCount = db.prepare('SELECT COUNT(*) as count FROM organization').get() as { count: number }
-if (orgCount.count === 0) {
-  const insertOrg = db.prepare(`
-    INSERT INTO organization (id, name, level, parent_id, member_count) VALUES (?, ?, ?, ?, ?)
-  `)
-
-  const insertMember = db.prepare(`
-    INSERT INTO member (id, name, id_card, employee_no, org_id, status, points, join_date, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertTag = db.prepare(`
-    INSERT INTO member_tag (id, member_id, tag) VALUES (?, ?, ?)
-  `)
-
-  const insertVoucherTemplate = db.prepare(`
-    INSERT INTO voucher_template (id, name, amount, total_quantity, remaining_quantity, expiry_date, status, org_id, budget_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertVoucher = db.prepare(`
-    INSERT INTO voucher (id, template_id, member_id, code, status, issued_at, used_at) VALUES (?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertPointsProduct = db.prepare(`
-    INSERT INTO points_product (id, name, points, stock, category, image, description) VALUES (?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertBudgetPlan = db.prepare(`
-    INSERT INTO budget_plan (id, org_id, title, total_amount, used_amount, status) VALUES (?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertApprovalStep = db.prepare(`
-    INSERT INTO approval_step (id, plan_id, step, approver, approver_name, status, comment, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertBooking = db.prepare(`
-    INSERT INTO booking (id, member_id, type, resource_id, resource_name, booking_date, booking_time, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertSupplier = db.prepare(`
-    INSERT INTO supplier (id, name, category, status, score, contact, description) VALUES (?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertSupplierAssessment = db.prepare(`
-    INSERT INTO supplier_assessment (id, supplier_id, score, comment, assessor, date) VALUES (?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertRecommendationRule = db.prepare(`
-    INSERT INTO recommendation_rule (id, name, conditions_json, benefit_ids_json, priority, enabled) VALUES (?, ?, ?, ?, ?, ?)
-  `)
-
-  const insertAudit = db.prepare(`
-    INSERT INTO member_audit (id, member_id, action, source, operator_id, operator_name, reason, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `)
-
-  const seedAll = db.transaction(() => {
-    insertOrg.run('org-1', 'XX省总工会', 'province', null, 0)
-    insertOrg.run('org-2', 'XX市总工会', 'city', 'org-1', 0)
-    insertOrg.run('org-3', 'YY市总工会', 'city', 'org-1', 0)
-    insertOrg.run('org-4', 'XX市教育工会', 'base', 'org-2', 0)
-    insertOrg.run('org-5', 'XX市卫生工会', 'base', 'org-2', 0)
-    insertOrg.run('org-6', 'YY市交通工会', 'base', 'org-3', 0)
-    insertOrg.run('org-7', 'YY市建设工会', 'base', 'org-3', 0)
-
-    const members = [
-      { id: 'mem-1', name: '张三', idCard: '320101199001011234', empNo: 'EDU001', orgId: 'org-4', status: 'active', points: 2500, joinDate: '2023-01-15', phone: '13800138001', pwd: '123456' },
-      { id: 'mem-2', name: '李四', idCard: '320101199205052345', empNo: 'EDU002', orgId: 'org-4', status: 'active', points: 1800, joinDate: '2023-02-20', phone: '13800138002', pwd: '123456' },
-      { id: 'mem-3', name: '王五', idCard: '320101198810103456', empNo: 'EDU003', orgId: 'org-4', status: 'active', points: 3200, joinDate: '2023-03-10', phone: '13800138003', pwd: '123456' },
-      { id: 'mem-4', name: '赵六', idCard: '320101199503154567', empNo: 'HEA001', orgId: 'org-5', status: 'active', points: 1500, joinDate: '2023-04-05', phone: '13800138004', pwd: '123456' },
-      { id: 'mem-5', name: '钱七', idCard: '320101198706205678', empNo: 'HEA002', orgId: 'org-5', status: 'active', points: 4100, joinDate: '2023-05-12', phone: '13800138005', pwd: '123456' },
-      { id: 'mem-6', name: '孙八', idCard: '320101199208256789', empNo: 'HEA003', orgId: 'org-5', status: 'pending', points: 0, joinDate: '2024-01-08', phone: '13800138006', pwd: '123456' },
-      { id: 'mem-7', name: '周九', idCard: '320101199311307890', empNo: 'TRA001', orgId: 'org-6', status: 'active', points: 2800, joinDate: '2023-06-18', phone: '13800138007', pwd: '123456' },
-      { id: 'mem-8', name: '吴十', idCard: '320101198512088901', empNo: 'TRA002', orgId: 'org-6', status: 'active', points: 3600, joinDate: '2023-07-22', phone: '13800138008', pwd: '123456' },
-      { id: 'mem-9', name: '郑十一', idCard: '320101199609129012', empNo: 'TRA003', orgId: 'org-6', status: 'active', points: 1200, joinDate: '2023-08-30', phone: '13800138009', pwd: '123456' },
-      { id: 'mem-10', name: '冯十二', idCard: '320101199004170123', empNo: 'CON001', orgId: 'org-7', status: 'active', points: 5000, joinDate: '2023-01-25', phone: '13800138010', pwd: '123456' },
-      { id: 'mem-11', name: '陈十三', idCard: '320101199807221234', empNo: 'CON002', orgId: 'org-7', status: 'active', points: 900, joinDate: '2023-09-14', phone: '13800138011', pwd: '123456' },
-      { id: 'mem-12', name: '褚十四', idCard: '320101199104272345', empNo: 'CON003', orgId: 'org-7', status: 'active', points: 2200, joinDate: '2023-10-03', phone: '13800138012', pwd: '123456' },
-      { id: 'mem-13', name: '卫十五', idCard: '320101199312013456', empNo: 'EDU004', orgId: 'org-4', status: 'pending', points: 0, joinDate: '2024-02-14', phone: '13800138013', pwd: '123456' },
-      { id: 'mem-14', name: '蒋十六', idCard: '320101198808054567', empNo: 'EDU005', orgId: 'org-4', status: 'rejected', points: 0, joinDate: '2024-02-28', phone: '13800138014', pwd: '123456' },
-      { id: 'mem-15', name: '沈十七', idCard: '320101199506105678', empNo: 'HEA004', orgId: 'org-5', status: 'active', points: 3100, joinDate: '2023-11-11', phone: '13800138015', pwd: '123456' },
-      { id: 'mem-16', name: '韩十八', idCard: '320101199109156789', empNo: 'HEA005', orgId: 'org-5', status: 'pending', points: 0, joinDate: '2024-03-05', phone: '13800138016', pwd: '123456' },
-      { id: 'mem-17', name: '杨十九', idCard: '320101199407206890', empNo: 'TRA004', orgId: 'org-6', status: 'rejected', points: 0, joinDate: '2024-03-15', phone: '13800138017', pwd: '123456' },
-      { id: 'mem-18', name: '朱二十', idCard: '320101198703257901', empNo: 'TRA005', orgId: 'org-6', status: 'active', points: 1900, joinDate: '2023-12-20', phone: '13800138018', pwd: '123456' },
-      { id: 'mem-19', name: '秦二一', idCard: '320101199605308012', empNo: 'CON004', orgId: 'org-7', status: 'active', points: 2700, joinDate: '2024-01-20', phone: '13800138019', pwd: '123456' },
-      { id: 'mem-20', name: '尤二二', idCard: '320101199208049123', empNo: 'CON005', orgId: 'org-7', status: 'active', points: 1400, joinDate: '2024-02-08', phone: '13800138020', pwd: '123456' },
-      { id: 'mem-21', name: '许二三', idCard: '320101199911098234', empNo: 'EDU006', orgId: 'org-4', status: 'active', points: 600, joinDate: '2024-04-01', phone: '13800138021', pwd: '123456' },
-      { id: 'mem-22', name: '何二四', idCard: '320101199003149345', empNo: 'HEA006', orgId: 'org-5', status: 'active', points: 3800, joinDate: '2023-06-06', phone: '13800138022', pwd: '123456' },
-      { id: 'mem-23', name: '吕二五', idCard: '320101198511197456', empNo: 'TRA006', orgId: 'org-6', status: 'active', points: 4500, joinDate: '2023-03-01', phone: '13800138023', pwd: '123456' },
-    ]
-
-    for (const m of members) {
-      insertMember.run(m.id, m.name, m.idCard, m.empNo, m.orgId, m.status, m.points, m.joinDate, m.phone, m.pwd)
-    }
-
-    const tags = [
-      { id: 'tag-1', memberId: 'mem-1', tag: '青年教师' },
-      { id: 'tag-2', memberId: 'mem-1', tag: '技术岗' },
-      { id: 'tag-3', memberId: 'mem-2', tag: '青年' },
-      { id: 'tag-4', memberId: 'mem-2', tag: '管理岗' },
-      { id: 'tag-5', memberId: 'mem-3', tag: '资深职工' },
-      { id: 'tag-6', memberId: 'mem-3', tag: '中年' },
-      { id: 'tag-7', memberId: 'mem-4', tag: '青年' },
-      { id: 'tag-8', memberId: 'mem-4', tag: '技术岗' },
-      { id: 'tag-9', memberId: 'mem-5', tag: '资深职工' },
-      { id: 'tag-10', memberId: 'mem-5', tag: '管理岗' },
-      { id: 'tag-11', memberId: 'mem-5', tag: '中年' },
-      { id: 'tag-12', memberId: 'mem-7', tag: '青年' },
-      { id: 'tag-13', memberId: 'mem-7', tag: '技术岗' },
-      { id: 'tag-14', memberId: 'mem-8', tag: '资深职工' },
-      { id: 'tag-15', memberId: 'mem-8', tag: '中年' },
-      { id: 'tag-16', memberId: 'mem-10', tag: '资深职工' },
-      { id: 'tag-17', memberId: 'mem-10', tag: '管理岗' },
-      { id: 'tag-18', memberId: 'mem-11', tag: '青年教师' },
-      { id: 'tag-19', memberId: 'mem-12', tag: '中年' },
-      { id: 'tag-20', memberId: 'mem-12', tag: '技术岗' },
-      { id: 'tag-21', memberId: 'mem-15', tag: '管理岗' },
-      { id: 'tag-22', memberId: 'mem-15', tag: '中年' },
-      { id: 'tag-23', memberId: 'mem-18', tag: '资深职工' },
-      { id: 'tag-24', memberId: 'mem-19', tag: '青年' },
-      { id: 'tag-25', memberId: 'mem-19', tag: '技术岗' },
-      { id: 'tag-26', memberId: 'mem-21', tag: '青年教师' },
-      { id: 'tag-27', memberId: 'mem-22', tag: '资深职工' },
-      { id: 'tag-28', memberId: 'mem-22', tag: '管理岗' },
-      { id: 'tag-29', memberId: 'mem-23', tag: '资深职工' },
-      { id: 'tag-30', memberId: 'mem-23', tag: '中年' },
-    ]
-    for (const t of tags) {
-      insertTag.run(t.id, t.memberId, t.tag)
-    }
-
-    insertVoucherTemplate.run('vt-1', '春节慰问金', 500, 100, 72, '2025-12-31', 'active', 'org-1', 'bp-1')
-    insertVoucherTemplate.run('vt-2', '五一劳动节福利', 300, 50, 35, '2025-06-30', 'active', 'org-2', 'bp-3')
-    insertVoucherTemplate.run('vt-3', '困难职工帮扶金', 1000, 20, 15, '2025-09-30', 'active', 'org-1', 'bp-3')
-
-    const vouchers = [
-      { id: 'v-1', templateId: 'vt-1', memberId: 'mem-1', code: 'VC2025SP0001', status: 'unused', issuedAt: '2025-01-20 10:00:00', usedAt: null },
-      { id: 'v-2', templateId: 'vt-1', memberId: 'mem-2', code: 'VC2025SP0002', status: 'used', issuedAt: '2025-01-20 10:00:00', usedAt: '2025-02-05 14:30:00' },
-      { id: 'v-3', templateId: 'vt-1', memberId: 'mem-3', code: 'VC2025SP0003', status: 'unused', issuedAt: '2025-01-20 10:00:00', usedAt: null },
-      { id: 'v-4', templateId: 'vt-2', memberId: 'mem-4', code: 'VC2025LY0001', status: 'unused', issuedAt: '2025-04-25 09:00:00', usedAt: null },
-      { id: 'v-5', templateId: 'vt-2', memberId: 'mem-5', code: 'VC2025LY0002', status: 'used', issuedAt: '2025-04-25 09:00:00', usedAt: '2025-05-01 11:20:00' },
-      { id: 'v-6', templateId: 'vt-3', memberId: 'mem-10', code: 'VC2025KF0001', status: 'unused', issuedAt: '2025-03-01 08:00:00', usedAt: null },
-      { id: 'v-7', templateId: 'vt-1', memberId: 'mem-7', code: 'VC2025SP0004', status: 'unused', issuedAt: '2025-01-20 10:00:00', usedAt: null },
-      { id: 'v-8', templateId: 'vt-2', memberId: 'mem-8', code: 'VC2025LY0003', status: 'unused', issuedAt: '2025-04-25 09:00:00', usedAt: null },
-    ]
-    for (const v of vouchers) {
-      insertVoucher.run(v.id, v.templateId, v.memberId, v.code, v.status, v.issuedAt, v.usedAt)
-    }
-
-    const products = [
-      { id: 'pp-1', name: '品牌保温杯', points: 200, stock: 50, category: '生活用品', image: '/images/cup.jpg', desc: '316不锈钢保温杯500ml' },
-      { id: 'pp-2', name: '运动背包', points: 500, stock: 30, category: '运动户外', image: '/images/bag.jpg', desc: '防水轻量运动背包30L' },
-      { id: 'pp-3', name: '图书卡100元', points: 800, stock: 100, category: '文化教育', image: '/images/book.jpg', desc: '新华书店100元购书卡' },
-      { id: 'pp-4', name: '体检套餐抵扣券', points: 1500, stock: 20, category: '健康医疗', image: '/images/health.jpg', desc: '基础体检套餐抵扣200元' },
-      { id: 'pp-5', name: '电影票2张', points: 300, stock: 80, category: '文化教育', image: '/images/movie.jpg', desc: '全国通用电影兑换券2张' },
-      { id: 'pp-6', name: '超市购物卡200元', points: 1800, stock: 15, category: '生活用品', image: '/images/shop.jpg', desc: '大型超市200元购物卡' },
-      { id: 'pp-7', name: '瑜伽垫', points: 350, stock: 40, category: '运动户外', image: '/images/yoga.jpg', desc: '加厚防滑瑜伽垫6mm' },
-      { id: 'pp-8', name: '家庭药箱', points: 600, stock: 25, category: '健康医疗', image: '/images/med.jpg', desc: '家庭常备药品收纳箱' },
-      { id: 'pp-9', name: '食用油一桶', points: 450, stock: 60, category: '生活用品', image: '/images/oil.jpg', desc: '5L品牌非转基因食用油' },
-    ]
-    for (const p of products) {
-      insertPointsProduct.run(p.id, p.name, p.points, p.stock, p.category, p.image, p.desc)
-    }
-
-    insertBudgetPlan.run('bp-1', 'org-4', '2025年春节慰问预算', 50000, 15000, 'executing')
-    insertBudgetPlan.run('bp-2', 'org-5', '2025年度职工培训预算', 80000, 0, 'pending')
-    insertBudgetPlan.run('bp-3', 'org-2', '2025年度困难帮扶预算', 120000, 10000, 'approved')
-
-    insertApprovalStep.run('as-1', 'bp-1', 1, 'admin-org-5', 'XX市卫生工会管理员', 'approved', '同意', '2025-01-10 09:30:00')
-    insertApprovalStep.run('as-2', 'bp-1', 2, 'admin-org-2', 'XX市总工会管理员', 'approved', '同意发放', '2025-01-11 14:20:00')
-    insertApprovalStep.run('as-3', 'bp-2', 1, 'admin-org-5', 'XX市卫生工会管理员', 'pending', null, null)
-    insertApprovalStep.run('as-4', 'bp-2', 2, 'admin-org-2', 'XX市总工会管理员', 'pending', null, null)
-    insertApprovalStep.run('as-5', 'bp-3', 1, 'admin-org-2', 'XX市总工会管理员', 'approved', '同意', '2025-01-05 10:00:00')
-    insertApprovalStep.run('as-6', 'bp-3', 2, 'admin-org-1', 'XX省总工会管理员', 'approved', '审批通过', '2025-01-06 16:45:00')
-
-    const bookings = [
-      { id: 'bk-1', memberId: 'mem-1', type: 'vip_lounge', resourceId: 'lounge-1', resourceName: 'T2航站楼贵宾厅A区', date: '2025-06-15', time: '08:00', status: 'confirmed' },
-      { id: 'bk-2', memberId: 'mem-7', type: 'train_ticket', resourceId: 'train-G101', resourceName: 'G101 南京→上海', date: '2025-06-20', time: null, status: 'pending' },
-      { id: 'bk-3', memberId: 'mem-4', type: 'health_checkup', resourceId: 'hpkg-1', resourceName: '基础健康体检套餐', date: '2025-07-01', time: '09:00', status: 'confirmed' },
-      { id: 'bk-4', memberId: 'mem-10', type: 'legal_consult', resourceId: 'lawyer-1', resourceName: '李律师-劳动纠纷', date: '2025-06-25', time: '14:00', status: 'completed' },
-      { id: 'bk-5', memberId: 'mem-5', type: 'vip_lounge', resourceId: 'lounge-2', resourceName: 'T1航站楼贵宾厅B区', date: '2025-07-10', time: '10:00', status: 'pending' },
-      { id: 'bk-6', memberId: 'mem-12', type: 'train_ticket', resourceId: 'train-D302', resourceName: 'D302 苏州→杭州', date: '2025-07-05', time: null, status: 'confirmed' },
-      { id: 'bk-7', memberId: 'mem-19', type: 'health_checkup', resourceId: 'hpkg-2', resourceName: '女性关爱体检套餐', date: '2025-07-15', time: '08:30', status: 'pending' },
-    ]
-    for (const b of bookings) {
-      insertBooking.run(b.id, b.memberId, b.type, b.resourceId, b.resourceName, b.date, b.time, b.status)
-    }
-
-    const suppliers = [
-      { id: 'sup-1', name: 'XX健康体检中心', category: '健康医疗', status: 'approved', score: 4.5, contact: '025-88881111', desc: '三甲合作体检机构' },
-      { id: 'sup-2', name: 'XX旅行社有限公司', category: '出行服务', status: 'approved', score: 4.2, contact: '025-88882222', desc: '工会指定差旅服务商' },
-      { id: 'sup-3', name: '正义律师事务所', category: '法律咨询', status: 'approved', score: 4.8, contact: '025-88883333', desc: '劳动法专业律所' },
-      { id: 'sup-4', name: 'XX商贸有限公司', category: '生活用品', status: 'applying', score: 0, contact: '025-88884444', desc: '节日慰问品供应商' },
-      { id: 'sup-5', name: 'YY健康管理公司', category: '健康医疗', status: 'suspended', score: 3.1, contact: '025-88885555', desc: '服务质量不稳定已暂停' },
-      { id: 'sup-6', name: 'XX文化用品公司', category: '文化教育', status: 'approved', score: 4.0, contact: '025-88886666', desc: '图书文具供应商' },
-    ]
-    for (const s of suppliers) {
-      insertSupplier.run(s.id, s.name, s.category, s.status, s.score, s.contact, s.desc)
-    }
-
-    const assessments = [
-      { id: 'sa-1', supplierId: 'sup-1', score: 4.5, comment: '服务质量稳定，报告准确及时', assessor: 'admin-org-1', date: '2025-03-15' },
-      { id: 'sa-2', supplierId: 'sup-2', score: 4.0, comment: '行程安排合理，偶有延误', assessor: 'admin-org-2', date: '2025-03-20' },
-      { id: 'sa-3', supplierId: 'sup-2', score: 4.4, comment: '近期服务水平提升', assessor: 'admin-org-1', date: '2025-05-10' },
-      { id: 'sa-4', supplierId: 'sup-3', score: 4.8, comment: '专业水平高，服务态度好', assessor: 'admin-org-1', date: '2025-04-01' },
-      { id: 'sa-5', supplierId: 'sup-5', score: 2.8, comment: '多次出现预约无法确认问题', assessor: 'admin-org-3', date: '2025-02-28' },
-      { id: 'sa-6', supplierId: 'sup-6', score: 4.0, comment: '产品齐全，配送及时', assessor: 'admin-org-2', date: '2025-04-15' },
-      { id: 'sa-7', supplierId: 'sup-1', score: 4.6, comment: '新增CT项目好评', assessor: 'admin-org-2', date: '2025-06-01' },
-    ]
-    for (const a of assessments) {
-      insertSupplierAssessment.run(a.id, a.supplierId, a.score, a.comment, a.assessor, a.date)
-    }
-
-    insertRecommendationRule.run('rr-1', '青年教师专项推荐', JSON.stringify({ tags: ['青年教师'], ageRange: [22, 35] }), JSON.stringify(['vt-1', 'pp-3', 'pp-5']), 10, 1)
-    insertRecommendationRule.run('rr-2', '资深职工健康关怀', JSON.stringify({ tags: ['资深职工', '中年'], ageRange: [45, 65] }), JSON.stringify(['vt-3', 'pp-4', 'pp-8']), 8, 1)
-    insertRecommendationRule.run('rr-3', '管理岗出行特权', JSON.stringify({ tags: ['管理岗'], jobTitle: '管理岗' }), JSON.stringify(['vt-2', 'pp-2', 'pp-1']), 5, 1)
-
-    const activeMembers = members.filter(m => m.status === 'active')
-    const orgActiveCounts: Record<string, number> = {}
-    for (const m of activeMembers) {
-      orgActiveCounts[m.orgId] = (orgActiveCounts[m.orgId] || 0) + 1
-    }
-    const updateOrgCount = db.prepare('UPDATE organization SET member_count = ? WHERE id = ?')
-    for (const [orgId, count] of Object.entries(orgActiveCounts)) {
-      updateOrgCount.run(count, orgId)
-    }
-
-    insertAudit.run('audit-1', 'mem-1', 'approve', 'national_db', 'admin-org-4', 'XX市教育工会管理员', null, '2023-01-16 09:30:00')
-    insertAudit.run('audit-2', 'mem-6', 'verify', 'national_db', null, null, null, '2024-01-08 14:20:00')
-    insertAudit.run('audit-3', 'mem-14', 'reject', 'manual', 'admin-org-4', 'XX市教育工会管理员', '工号与单位档案不符，无法匹配', '2024-03-01 10:15:00')
-    insertAudit.run('audit-4', 'mem-17', 'reject', 'manual', 'admin-org-6', 'YY市交通工会管理员', '身份证校验位异常', '2024-03-20 16:40:00')
-    insertAudit.run('audit-5', 'mem-16', 'verify', 'national_db', null, null, null, '2024-03-05 11:00:00')
-    insertAudit.run('audit-6', 'mem-1', 'sync_add', 'auto_sync', null, null, null, '2023-01-10 02:00:00')
-    insertAudit.run('audit-7', 'mem-2', 'sync_add', 'auto_sync', null, null, null, '2023-02-15 02:00:00')
-    insertAudit.run('audit-8', 'mem-3', 'sync_add', 'auto_sync', null, null, null, '2023-03-05 02:00:00')
-    insertAudit.run('audit-9', 'mem-4', 'sync_add', 'auto_sync', null, null, null, '2023-04-01 02:00:00')
-    insertAudit.run('audit-10', 'mem-5', 'sync_add', 'auto_sync', null, null, null, '2023-05-08 02:00:00')
-    insertAudit.run('audit-11', 'mem-7', 'sync_add', 'auto_sync', null, null, null, '2023-06-15 02:00:00')
-    insertAudit.run('audit-12', 'mem-8', 'sync_add', 'auto_sync', null, null, null, '2023-07-18 02:00:00')
-    insertAudit.run('audit-13', 'mem-9', 'sync_add', 'auto_sync', null, null, null, '2023-08-28 02:00:00')
-    insertAudit.run('audit-14', 'mem-10', 'sync_add', 'auto_sync', null, null, null, '2023-01-20 02:00:00')
-    insertAudit.run('audit-15', 'mem-11', 'sync_add', 'auto_sync', null, null, null, '2023-09-10 02:00:00')
-    insertAudit.run('audit-16', 'mem-12', 'sync_add', 'auto_sync', null, null, null, '2023-09-28 02:00:00')
-    insertAudit.run('audit-17', 'mem-15', 'sync_add', 'auto_sync', null, null, null, '2023-11-05 02:00:00')
-    insertAudit.run('audit-18', 'mem-18', 'sync_add', 'auto_sync', null, null, null, '2023-12-15 02:00:00')
-    insertAudit.run('audit-19', 'mem-22', 'sync_add', 'auto_sync', null, null, null, '2023-06-01 02:00:00')
-    insertAudit.run('audit-20', 'mem-23', 'sync_add', 'auto_sync', null, null, null, '2023-02-25 02:00:00')
-    insertAudit.run('audit-21', 'mem-2', 'sync_conflict', 'auto_sync', null, null, '工号不一致(本地EDU002 vs 全国库EDU002B)', '2025-05-15 03:10:00')
-    insertAudit.run('audit-22', 'mem-5', 'sync_conflict', 'auto_sync', null, null, '所属工会不匹配(教育工会 vs 卫生工会)', '2025-06-01 03:15:00')
-  })
-
-  seedAll()
+  if (result.status !== 0) {
+    throw new Error(result.stderr || `sqlite3 exited with ${result.status}`);
+  }
 }
 
-const auditExists = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='member_audit'").get();
-if (!auditExists) {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS member_audit (
-      id TEXT PRIMARY KEY,
-      member_id TEXT NOT NULL,
-      action TEXT NOT NULL,
-      source TEXT NOT NULL,
-      operator_id TEXT,
-      operator_name TEXT,
-      reason TEXT,
-      created_at TEXT DEFAULT (datetime('now')),
-      FOREIGN KEY (member_id) REFERENCES member(id)
-    );
-    CREATE INDEX IF NOT EXISTS idx_audit_member ON member_audit(member_id);
-  `);
+function queryJson<T>(sql: string): T[] {
+  ensureDirectory();
+  const result = spawnSync('sqlite3', ['-json', dbPath, sql], {
+    encoding: 'utf8',
+  });
+
+  if (result.status !== 0) {
+    throw new Error(result.stderr || `sqlite3 exited with ${result.status}`);
+  }
+
+  const output = result.stdout.trim();
+  return output ? JSON.parse(output) as T[] : [];
 }
 
-const auditInsert = db.prepare("INSERT OR IGNORE INTO member_audit (id, member_id, action, source, operator_id, operator_name, reason, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-const auditCountFor = (mid: string) => (db.prepare("SELECT COUNT(*) as c FROM member_audit WHERE member_id = ?").get(mid) as any).c;
+const schemaSql = `
+PRAGMA journal_mode = WAL;
+CREATE TABLE IF NOT EXISTS metrics (
+  id TEXT PRIMARY KEY,
+  label TEXT NOT NULL,
+  value TEXT NOT NULL,
+  delta TEXT NOT NULL,
+  tone TEXT NOT NULL
+);
 
-const tx = db.transaction(() => {
-  if (auditCountFor('mem-1') === 0) {
-    auditInsert.run('aud-m1-syncadd','mem-1','sync_add','auto_sync',null,null,null,'2023-01-10 09:12:00');
-    auditInsert.run('aud-m1-verify','mem-1','verify','national_db',null,null,null,'2023-01-15 10:30:00');
-    auditInsert.run('aud-m1-approve','mem-1','approve','manual','admin-base-edu','基层工会管理员',null,'2023-01-16 14:00:00');
-    auditInsert.run('aud-m1-syncupd','mem-1','sync_update','auto_sync',null,null,null,'2024-01-15 23:00:00');
-  }
-  if (auditCountFor('mem-14') === 0) {
-    auditInsert.run('aud-m14-v','mem-14','verify','national_db',null,null,null,'2024-06-18 09:00:00');
-    auditInsert.run('aud-m14-r','mem-14','reject','manual','admin-base-edu','基层工会管理员','工号与单位档案不符，无法匹配','2024-06-20 11:30:00');
-  }
-  if (auditCountFor('mem-17') === 0) {
-    auditInsert.run('aud-m17-v','mem-17','verify','national_db',null,null,null,'2024-08-01 14:20:00');
-    auditInsert.run('aud-m17-r','mem-17','reject','manual','admin-base-transport','交通工会管理员','身份证校验位异常','2024-08-02 16:00:00');
-  }
-  if (auditCountFor('mem-16') === 0) {
-    auditInsert.run('aud-m16-v','mem-16','verify','national_db',null,null,null,'2026-06-02 09:00:00');
-    auditInsert.run('aud-m16-sc','mem-16','sync_conflict','auto_sync',null,null,'所属工会不匹配(教育工会vs卫生工会)','2026-06-03 23:05:00');
-  }
-  for (let i = 2; i <= 13; i++) {
-    const mid = 'mem-' + i;
-    if (auditCountFor(mid) === 0) {
-      auditInsert.run('aud-' + mid + '-sa', mid, 'sync_add', 'auto_sync', null, null, null, '2024-03-15 10:00:00');
-    }
-  }
-  const m6sc = (db.prepare("SELECT COUNT(*) as c FROM member_audit WHERE member_id = 'mem-6' AND action = 'sync_conflict'").get() as any).c;
-  if (m6sc === 0) {
-    auditInsert.run('aud-m6-sc','mem-6','sync_conflict','auto_sync',null,null,'工号不一致(本地EDU002 vs全国库EDU002B)','2026-06-04 23:10:00');
-  }
-});
-tx();
+CREATE TABLE IF NOT EXISTS trace_batches (
+  id TEXT PRIMARY KEY,
+  traceCode TEXT UNIQUE NOT NULL,
+  productName TEXT NOT NULL,
+  category TEXT NOT NULL,
+  specification TEXT NOT NULL,
+  producer TEXT NOT NULL,
+  origin TEXT NOT NULL,
+  productionDate TEXT NOT NULL,
+  shelfLife INTEGER NOT NULL,
+  status TEXT NOT NULL,
+  blockchainHash TEXT NOT NULL,
+  blockHeight INTEGER NOT NULL,
+  qualityResult TEXT NOT NULL
+);
 
-const vtCols = db.prepare("PRAGMA table_info(voucher_template)").all() as any[];
-const hasBudgetCol = vtCols.some((c: any) => c.name === 'budget_id');
-if (!hasBudgetCol) {
-  db.prepare("ALTER TABLE voucher_template ADD COLUMN budget_id TEXT").run();
-  db.prepare("UPDATE voucher_template SET budget_id = ? WHERE id = ?").run('bp-1', 'vt-1');
-  db.prepare("UPDATE voucher_template SET budget_id = ? WHERE id = ?").run('bp-3', 'vt-2');
-  db.prepare("UPDATE voucher_template SET budget_id = ? WHERE id = ?").run('bp-3', 'vt-3');
+CREATE TABLE IF NOT EXISTS timeline (
+  id TEXT PRIMARY KEY,
+  traceCode TEXT NOT NULL,
+  stage TEXT NOT NULL,
+  operator TEXT NOT NULL,
+  eventTime TEXT NOT NULL,
+  location TEXT NOT NULL,
+  description TEXT NOT NULL,
+  temperature REAL,
+  humidity REAL
+);
+
+CREATE TABLE IF NOT EXISTS products (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  price REAL NOT NULL,
+  wholesalePrice REAL NOT NULL,
+  moq INTEGER NOT NULL,
+  specification TEXT NOT NULL,
+  traceCode TEXT NOT NULL,
+  seller TEXT NOT NULL,
+  origin TEXT NOT NULL,
+  stock INTEGER NOT NULL,
+  sales INTEGER NOT NULL,
+  imageUrl TEXT NOT NULL,
+  channel TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id TEXT PRIMARY KEY,
+  buyer TEXT NOT NULL,
+  seller TEXT NOT NULL,
+  amount REAL NOT NULL,
+  status TEXT NOT NULL,
+  progress INTEGER NOT NULL,
+  logistics TEXT NOT NULL,
+  createdAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS contracts (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  counterparty TEXT NOT NULL,
+  amount REAL NOT NULL,
+  status TEXT NOT NULL,
+  blockchainHash TEXT NOT NULL,
+  signedAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS questions (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  category TEXT NOT NULL,
+  expert TEXT NOT NULL,
+  status TEXT NOT NULL,
+  answers INTEGER NOT NULL,
+  responseTime TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS weather_alerts (
+  id TEXT PRIMARY KEY,
+  region TEXT NOT NULL,
+  level TEXT NOT NULL,
+  alertType TEXT NOT NULL,
+  suggestion TEXT NOT NULL,
+  startsAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS quality_trends (
+  id TEXT PRIMARY KEY,
+  month TEXT NOT NULL,
+  passRate REAL NOT NULL,
+  sampling INTEGER NOT NULL,
+  risk INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS union_orgs (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  level TEXT NOT NULL,
+  parentId TEXT NOT NULL,
+  memberCount INTEGER NOT NULL,
+  adminName TEXT NOT NULL,
+  status TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS union_members (
+  id TEXT PRIMARY KEY,
+  idCard TEXT UNIQUE NOT NULL,
+  employeeNo TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  gender TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  unionLevel TEXT NOT NULL,
+  unionName TEXT NOT NULL,
+  parentUnionId TEXT NOT NULL,
+  membershipStatus TEXT NOT NULL,
+  verifiedAt TEXT NOT NULL,
+  memberPoints INTEGER NOT NULL,
+  welfareBalance REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS welfare_budgets (
+  id TEXT PRIMARY KEY,
+  unionId TEXT NOT NULL,
+  unionName TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  quarter INTEGER NOT NULL,
+  totalAmount REAL NOT NULL,
+  usedAmount REAL NOT NULL,
+  remainingAmount REAL NOT NULL,
+  status TEXT NOT NULL,
+  approver TEXT NOT NULL,
+  approvedAt TEXT NOT NULL,
+  description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS welfare_coupons (
+  id TEXT PRIMARY KEY,
+  code TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL,
+  value REAL NOT NULL,
+  memberId TEXT NOT NULL,
+  memberName TEXT NOT NULL,
+  status TEXT NOT NULL,
+  validFrom TEXT NOT NULL,
+  validTo TEXT NOT NULL,
+  usedAt TEXT NOT NULL,
+  orderId TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS points_accounts (
+  id TEXT PRIMARY KEY,
+  memberId TEXT UNIQUE NOT NULL,
+  memberName TEXT NOT NULL,
+  totalPoints INTEGER NOT NULL,
+  availablePoints INTEGER NOT NULL,
+  frozenPoints INTEGER NOT NULL,
+  lastUpdated TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS points_records (
+  id TEXT PRIMARY KEY,
+  accountId TEXT NOT NULL,
+  type TEXT NOT NULL,
+  points INTEGER NOT NULL,
+  description TEXT NOT NULL,
+  orderId TEXT NOT NULL,
+  createdAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS union_cards (
+  id TEXT PRIMARY KEY,
+  cardNo TEXT UNIQUE NOT NULL,
+  memberId TEXT NOT NULL,
+  memberName TEXT NOT NULL,
+  bankName TEXT NOT NULL,
+  balance REAL NOT NULL,
+  status TEXT NOT NULL,
+  bindAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS supplier_assessments (
+  id TEXT PRIMARY KEY,
+  supplierId TEXT NOT NULL,
+  supplierName TEXT NOT NULL,
+  period TEXT NOT NULL,
+  qualityScore REAL NOT NULL,
+  priceScore REAL NOT NULL,
+  deliveryScore REAL NOT NULL,
+  serviceScore REAL NOT NULL,
+  totalScore REAL NOT NULL,
+  level TEXT NOT NULL,
+  assessor TEXT NOT NULL,
+  assessedAt TEXT NOT NULL,
+  status TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS member_benefits (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  description TEXT NOT NULL,
+  value TEXT NOT NULL,
+  pointsRequired INTEGER NOT NULL,
+  stock INTEGER NOT NULL,
+  imageUrl TEXT NOT NULL,
+  status TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS travel_bookings (
+  id TEXT PRIMARY KEY,
+  memberId TEXT NOT NULL,
+  memberName TEXT NOT NULL,
+  type TEXT NOT NULL,
+  travelDate TEXT NOT NULL,
+  departure TEXT NOT NULL,
+  destination TEXT NOT NULL,
+  price REAL NOT NULL,
+  status TEXT NOT NULL,
+  bookedAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS legal_consults (
+  id TEXT PRIMARY KEY,
+  memberId TEXT NOT NULL,
+  memberName TEXT NOT NULL,
+  category TEXT NOT NULL,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  lawyerName TEXT NOT NULL,
+  reply TEXT NOT NULL,
+  status TEXT NOT NULL,
+  createdAt TEXT NOT NULL,
+  repliedAt TEXT NOT NULL
+);
+`;
+
+const seedSql = `
+INSERT OR IGNORE INTO metrics VALUES
+('trace-total', '溯源批次', '128,640', '+12.8%', 'green'),
+('trade-amount', '交易额', '¥8,742万', '+9.4%', 'blue'),
+('verified-enterprises', '认证企业', '3,286', '+6.1%', 'slate'),
+('quality-pass', '抽检合格率', '98.7%', '+1.2%', 'amber');
+
+INSERT OR IGNORE INTO trace_batches VALUES
+('tb-001', 'TRC-2026-RICE-89141', '五常有机稻花香', '粮油', '5kg/袋', '黑龙江禾源农业合作社', '黑龙江哈尔滨五常市民乐乡', '2026-05-18', 365, '已入市', '0xf6c2a51e3e5b918d8a47d92ad74b8f2ac29389141b7d63e9c1b0f5a77d6258f1', 8927318, '合格'),
+('tb-002', 'TRC-2026-TEA-62201', '明前龙井鲜叶', '茶叶', '250g/盒', '杭州云栖茶业有限公司', '浙江杭州西湖龙坞茶镇', '2026-04-02', 540, '冷链配送', '0xa4f6e7aee8bc78212c32e31f64378aa4c7b2e55b7317b10ea36d4407b75d8a0c', 8927441, '合格'),
+('tb-003', 'TRC-2026-TOMATO-19322', '设施番茄精品果', '蔬菜', '2.5kg/箱', '山东寿光智农园区', '山东潍坊寿光洛城街道', '2026-06-08', 12, '门店在售', '0x8d34e5f04ad09b22e11b7c62a9586a47a2e68be6d819ea891414da8934b2c671', 8927523, '合格');
+
+INSERT OR IGNORE INTO timeline VALUES
+('tl-001', 'TRC-2026-RICE-89141', '种植建档', '王立国', '2026-04-08 08:30', '五常市民乐乡 4 号田', '完成有机稻种浸种、育秧盘建档，地块绑定土壤检测报告。', NULL, NULL),
+('tl-002', 'TRC-2026-RICE-89141', '农事操作', '李春梅', '2026-05-02 10:15', '五常市民乐乡 4 号田', '无人机精准施用有机叶面肥 12L，作业轨迹已上传。', NULL, NULL),
+('tl-003', 'TRC-2026-RICE-89141', '质量检测', '黑龙江农检中心', '2026-05-22 15:20', '哈尔滨市质量检测实验室', '农残、重金属、黄曲霉毒素检测结果均符合绿色食品标准。', NULL, NULL),
+('tl-004', 'TRC-2026-RICE-89141', '加工包装', '禾源加工一厂', '2026-06-03 09:40', '五常稻米加工园', '完成低温烘干、色选和真空包装，批次重量 18.6 吨。', 18.2, 48.0),
+('tl-005', 'TRC-2026-RICE-89141', '冷链物流', '北方冷链 HL89141', '2026-06-09 13:05', '哈尔滨至北京干线', '运输全程温湿度稳定，电子铅封状态正常。', 16.8, 52.0),
+('tl-006', 'TRC-2026-RICE-89141', '到货入库', '北京朝阳冷链仓', '2026-06-10 22:18', '北京朝阳冷链仓储中心', '到货温湿度检测合格，入库验收重量 18.58 吨，偏差 0.1%。', 14.5, 55.0),
+('tl-007', 'TRC-2026-RICE-89141', '入市销售', '北京朝阳农批中心', '2026-06-11 07:55', '北京朝阳农产品批发市场', '完成入库复核，分销至 28 家零售门店，上架率 100%。', NULL, NULL),
+('tl-008', 'TRC-2026-RICE-89141', '监管复查', '北京市市场监管局', '2026-06-16 14:30', '北京朝阳农产品批发市场', '专项抽检复查合格，重金属、农残均低于国家标准限值，批次标记为闭环。', NULL, NULL),
+('tl-101', 'TRC-2026-TEA-62201', '种植建档', '陆志远', '2026-02-15 07:00', '西湖龙坞茶镇 3 号茶园', '明前龙井鲜叶采摘区划块建档，茶园土壤pH检测6.2。', NULL, NULL),
+('tl-102', 'TRC-2026-TEA-62201', '农事操作', '陆志远', '2026-03-20 09:00', '西湖龙坞茶镇 3 号茶园', '完成手工采摘明前一芽一叶，鲜叶含水率 74%。', NULL, NULL),
+('tl-103', 'TRC-2026-TEA-62201', '加工包装', '云栖茶业加工厂', '2026-03-22 16:00', '杭州云栖茶业加工中心', '杀青、揉捻、干燥全流程完成，真空充氮包装 250g/盒。', 20.0, 45.0),
+('tl-104', 'TRC-2026-TEA-62201', '冷链物流', '顺丰冷运 99120348', '2026-04-05 08:30', '杭州至南京冷链专线', '全程 2-8°C 恒温运输，GPS定位实时上报。', 4.2, 62.0),
+('tl-105', 'TRC-2026-TEA-62201', '到货入库', '南京雨花冷链仓', '2026-04-06 14:20', '南京雨花冷链仓储中心', '到货温度 3.8°C，验收合格，入库 980 盒。', 3.8, 58.0),
+('tl-106', 'TRC-2026-TEA-62201', '入市销售', '南京雨花精品超市', '2026-04-08 09:00', '南京雨花区 6 家门店', '上架销售，首批 200 盒上架即售罄，补货 300 盒。', NULL, NULL),
+('tl-107', 'TRC-2026-TEA-62201', '监管复查', '杭州市市场监管局', '2026-05-10 10:00', '杭州西湖区市场监管所', '茶叶农残专项抽检合格，符合 GB 2763 标准，批次闭环。', NULL, NULL),
+('tl-201', 'TRC-2026-TOMATO-19322', '种植建档', '赵海涛', '2026-04-10 06:30', '寿光洛城街道智能温室 2 号', '设施番茄定植建档，品种为粉贝拉，智能环控系统已启用。', 22.0, 65.0),
+('tl-202', 'TRC-2026-TOMATO-19322', '农事操作', '赵海涛', '2026-05-15 08:00', '寿光洛城街道智能温室 2 号', '整枝打杈、滴灌施肥，智能系统记录生长周期 68 天。', 24.0, 60.0),
+('tl-203', 'TRC-2026-TOMATO-19322', '质量检测', '山东农检中心', '2026-06-05 11:00', '济南质量检测实验室', '农残检测合格，硝酸盐含量低于限值，品质等级 A。', NULL, NULL),
+('tl-204', 'TRC-2026-TOMATO-19322', '加工包装', '寿光分拣中心', '2026-06-08 06:00', '寿光农产品分拣包装中心', '光电分选、分级包装 2.5kg/箱，精品果率 92%。', 12.0, 70.0),
+('tl-205', 'TRC-2026-TOMATO-19322', '冷链物流', '沪农配 76219', '2026-06-10 04:30', '寿光至上海冷链干线', '全程 8-12°C 冷链运输，到货温湿度正常。', 10.5, 72.0),
+('tl-206', 'TRC-2026-TOMATO-19322', '到货入库', '上海江桥冷链仓', '2026-06-11 18:40', '上海江桥农产品冷链中心', '到货验收合格，糖度检测 8.2 Brix，入库 1500 箱。', 9.8, 68.0),
+('tl-207', 'TRC-2026-TOMATO-19322', '入市销售', '上海社区团购仓', '2026-06-12 07:00', '上海浦东 15 个社区团购点', '社区团购首发，当日售出 3060 箱。', NULL, NULL),
+('tl-208', 'TRC-2026-TOMATO-19322', '监管复查', '上海市市场监管局', '2026-06-15 09:30', '上海浦东市场监管所', '随机抽检合格，农残、重金属均达标，批次标记闭环。', NULL, NULL);
+
+INSERT OR IGNORE INTO products VALUES
+('p-001', '五常有机稻花香', '粮油', 68.00, 52.00, 100, '5kg/袋', 'TRC-2026-RICE-89141', '黑龙江禾源农业合作社', '黑龙江五常', 4600, 1820, 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=80', 'b2b'),
+('p-002', '明前龙井鲜叶', '茶叶', 198.00, 158.00, 20, '250g/盒', 'TRC-2026-TEA-62201', '杭州云栖茶业有限公司', '浙江杭州', 980, 421, 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80', 'b2c'),
+('p-003', '设施番茄精品果', '蔬菜', 29.90, 18.60, 80, '2.5kg/箱', 'TRC-2026-TOMATO-19322', '山东寿光智农园区', '山东寿光', 1500, 3060, 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=80', 'b2c'),
+('p-004', '冷链蓝莓鲜果', '水果', 86.00, 63.00, 50, '1.5kg/箱', 'TRC-2026-BERRY-81562', '大兴安岭浆果基地', '黑龙江大兴安岭', 720, 586, 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=900&q=80', 'b2b'),
+('p-005', '赣南脐橙精选果', '水果', 45.00, 32.00, 200, '5kg/箱', 'TRC-2026-ORANGE-43710', '赣州金橙农业公司', '江西赣州', 2200, 1480, 'https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=900&q=80', 'b2b'),
+('p-006', '阳澄湖大闸蟹', '水产', 298.00, 248.00, 10, '4只/盒', 'TRC-2026-CRAB-76005', '苏州阳澄湖蟹业有限公司', '江苏苏州', 500, 380, 'https://images.unsplash.com/photo-1510130387422-82bed34b37e9?auto=format&fit=crop&w=900&q=80', 'b2c'),
+('p-007', '有机西兰花', '蔬菜', 18.80, 12.00, 100, '2颗/袋', 'TRC-2026-BROCC-33201', '云南高原农业基地', '云南昆明', 3600, 2100, 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2c?auto=format&fit=crop&w=900&q=80', 'b2c'),
+('p-008', '东北黑豆有机豆', '粮油', 35.00, 26.00, 200, '1kg/袋', 'TRC-2026-BEAN-56890', '黑龙江农垦集团', '黑龙江佳木斯', 5800, 3200, 'https://images.unsplash.com/photo-1515543904323-e90e70c6efb3?auto=format&fit=crop&w=900&q=80', 'b2b'),
+('p-009', '海南贵妃芒', '水果', 56.00, 38.00, 50, '2.5kg/箱', 'TRC-2026-MANGO-12987', '三亚热带果园', '海南三亚', 1800, 1200, 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80', 'b2c'),
+('p-010', '内蒙古有机羊排', '肉禽', 128.00, 98.00, 20, '1kg/真空包装', 'TRC-2026-LAMB-94521', '锡林郭勒草原牧业', '内蒙古锡林郭勒', 600, 420, 'https://images.unsplash.com/photo-1603048568710-b5991b3b5d48?auto=format&fit=crop&w=900&q=80', 'b2b');
+
+INSERT OR IGNORE INTO orders VALUES
+('od-89141', '北京朝阳农批中心', '黑龙江禾源农业合作社', 286000.00, '担保支付中', 72, '京冷 A65918 已抵达北京中转仓', '2026-06-12 10:22'),
+('od-89139', '南京雨花精品超市', '杭州云栖茶业有限公司', 48500.00, '待签收', 86, '顺丰冷运 99120348 派送中', '2026-06-15 16:40'),
+('od-89140', '上海社区团购仓', '山东寿光智农园区', 73600.00, '已验收', 100, '沪农配 76219 完成入库', '2026-06-17 09:16'),
+('od-89141', '广州江南市场', '赣州金橙农业公司', 128000.00, '保证金已冻结', 45, '待发货', '2026-06-18 08:30'),
+('od-89142', '深圳百佳超市', '三亚热带果园', 67200.00, '合同签署中', 20, '待确认', '2026-06-18 11:15'),
+('od-89143', '成都红旗连锁', '锡林郭勒草原牧业', 94500.00, '已结算', 100, '蓉冷配 55218 完成交接', '2026-06-16 14:00');
+
+INSERT OR IGNORE INTO contracts VALUES
+('ct-001', '五常稻花香 B2B 采购合同', '北京朝阳农批中心', 286000.00, '双方已签署', '0x9f5e9f49141a7c4ad07ce5de9b372a90c9c6e2f8147fa112a2c8e4701f5f6d33', '2026-06-12 11:05'),
+('ct-002', '龙井茶叶年度供货框架', '南京雨花精品超市', 420000.00, '平台见证中', '0x62b8c0f4e7fdb9e1be5b1dd7a15ff1f02d6a7b12090ed62a4329ad8c51389141', '2026-06-14 14:20'),
+('ct-003', '赣南脐橙批发采购协议', '广州江南市场', 128000.00, '待乙方签署', '0x3a1f7b5c9e2d8a4f6b0c1d3e5f7a9b2c4d6e8f0a1b3c5d7e9f0a2b4c6d8e0f1', '2026-06-18 09:00'),
+('ct-004', '有机羊排冷链供货合同', '成都红旗连锁', 94500.00, '双方已签署', '0x7c2e4f6a8b0d1e3f5a7c9b1d3e5f7a9c1b3d5e7f9a1c3b5d7e9f1a3c5d7e9f0a2', '2026-06-16 15:30'),
+('ct-005', '海南贵妃芒直供合同', '深圳百佳超市', 67200.00, '保证金待缴纳', '0xb4d6e8f0a2c4d6e8f0a2b4c6d8e0f1a3c5d7e9f1a3c5d7e9f0a2b4c6d8e0f1a3', '2026-06-18 12:00');
+
+INSERT OR IGNORE INTO questions VALUES
+('qa-001', '番茄叶片边缘发黄并卷曲，是否为病毒病？', '病虫害', '张敏 高级农艺师', '专家已答复', 3, '18 分钟'),
+('qa-002', '水稻分蘖期遇持续降雨怎样控肥？', '种植管理', '刘建国 研究员', '工单处理中', 1, '42 分钟'),
+('qa-003', '蓝莓冷链到店后货架期如何延长？', '采后保鲜', '陈晓 采后工程师', '已归档', 4, '25 分钟');
+
+INSERT OR IGNORE INTO weather_alerts VALUES
+('wa-001', '山东寿光', '橙色', '强对流', '设施棚区加固棚膜，提前排查排水沟，暂停午后喷药作业。', '2026-06-19 14:00'),
+('wa-002', '浙江杭州', '黄色', '高温', '茶园覆盖遮阴网，采摘时段调整到清晨并补充滴灌。', '2026-06-20 10:00'),
+('wa-003', '黑龙江五常', '蓝色', '短时强降雨', '稻田保持浅水层，巡检田埂和排涝口。', '2026-06-21 06:00');
+
+INSERT OR IGNORE INTO quality_trends VALUES
+('qt-01', '1月', 97.6, 1280, 9),
+('qt-02', '2月', 97.9, 1360, 8),
+('qt-03', '3月', 98.1, 1524, 7),
+('qt-04', '4月', 98.4, 1648, 6),
+('qt-05', '5月', 98.5, 1720, 5),
+('qt-06', '6月', 98.7, 1846, 4);
+
+INSERT OR IGNORE INTO union_orgs VALUES
+('uo-001', '中华全国总工会', '全国', 'uo-000', 128600000, '李玉赋', '正常'),
+('uo-002', '北京市总工会', '省级', 'uo-001', 3280000, '张延昆', '正常'),
+('uo-003', '上海市总工会', '省级', 'uo-001', 2860000, '莫负春', '正常'),
+('uo-004', '黑龙江省总工会', '省级', 'uo-001', 1980000, '宋希斌', '正常'),
+('uo-005', '哈尔滨市总工会', '市级', 'uo-004', 685000, '黄玉生', '正常'),
+('uo-006', '五常市总工会', '区县', 'uo-005', 128000, '张英波', '正常'),
+('uo-007', '五常市民乐乡工会联合会', '基层', 'uo-006', 2860, '王立国', '正常');
+
+INSERT OR IGNORE INTO union_members VALUES
+('um-001', '230184198505120018', 'HLJ-2024-089141', '王建国', '男', '13800138001', '基层', '五常市民乐乡工会联合会', 'uo-006', '已入会', '2024-03-15 10:30:00', 12860, 8500.00),
+('um-002', '310101199010080025', 'SH-2023-112015', '李淑华', '女', '13900139002', '市级', '上海市总工会', 'uo-003', '已入会', '2023-06-20 14:20:00', 25680, 15600.00),
+('um-003', '110105198808150033', 'BJ-2022-056890', '张志强', '男', '13700137003', '省级', '北京市总工会', 'uo-002', '已入会', '2022-09-10 09:15:00', 38920, 28000.00),
+('um-004', '230108199212200047', 'HLJ-2025-001286', '赵春梅', '女', '13600136004', '基层', '五常市民乐乡工会联合会', 'uo-006', '核验中', '2025-06-10 16:45:00', 0, 0.00);
+
+INSERT OR IGNORE INTO welfare_budgets VALUES
+('wb-001', 'uo-004', '黑龙江省总工会', 2026, 2, 5000000.00, 3280000.00, 1720000.00, '已执行', '李玉赋', '2026-03-15 10:00:00', '2026年第二季度职工福利采购预算'),
+('wb-002', 'uo-002', '北京市总工会', 2026, 2, 8000000.00, 5200000.00, 2800000.00, '已批准', '李玉赋', '2026-03-20 14:30:00', '2026年第二季度节日福利预算'),
+('wb-003', 'uo-003', '上海市总工会', 2026, 2, 6500000.00, 0.00, 6500000.00, '待审批', '', '', '2026年高温慰问品采购预算'),
+('wb-004', 'uo-005', '哈尔滨市总工会', 2026, 2, 1200000.00, 860000.00, 340000.00, '已驳回', '', '', '预算超支，需重新编制');
+
+INSERT OR IGNORE INTO welfare_coupons VALUES
+('wc-001', 'WEL-AGRI-2026-0001', '端午节农产品提货券', '农产品券', 200.00, 'um-001', '王建国', '未使用', '2026-06-01', '2026-06-30', '', ''),
+('wc-002', 'WEL-AGRI-2026-0002', '五常稻花香5kg兑换券', '农产品券', 168.00, 'um-001', '王建国', '已使用', '2026-05-01', '2026-05-31', '2026-05-12', 'od-89145'),
+('wc-003', 'WEL-MOVIE-2026-0001', '全国通用电影票', '电影券', 80.00, 'um-002', '李淑华', '未使用', '2026-01-01', '2026-12-31', '', ''),
+('wc-004', 'WEL-BOOK-2026-0001', '图书购买抵用券', '图书券', 100.00, 'um-003', '张志强', '已过期', '2026-01-01', '2026-03-31', '', ''),
+('wc-005', 'WEL-FEST-2026-0001', '春节节日福利券', '节日福利', 500.00, 'um-002', '李淑华', '已使用', '2026-01-15', '2026-02-28', '2026-01-20', 'od-89146');
+
+INSERT OR IGNORE INTO points_accounts VALUES
+('pa-001', 'um-001', '王建国', 12860, 12860, 0, '2026-06-18 10:30:00'),
+('pa-002', 'um-002', '李淑华', 25680, 24680, 1000, '2026-06-18 11:20:00'),
+('pa-003', 'um-003', '张志强', 38920, 38920, 0, '2026-06-18 09:15:00');
+
+INSERT OR IGNORE INTO points_records VALUES
+('pr-001', 'pa-001', '获取', 500, '2026年5月工会活动参与奖励', '', '2026-05-20 14:30:00'),
+('pr-002', 'pa-001', '获取', 12860, '会员年度积分累计', '', '2026-06-01 00:00:00'),
+('pr-003', 'pa-002', '消费', 1000, '积分兑换电影票2张', 'od-89147', '2026-06-10 16:45:00'),
+('pr-004', 'pa-003', '获取', 2000, '工会积极分子奖励', '', '2026-05-04 10:00:00');
+
+INSERT OR IGNORE INTO union_cards VALUES
+('uc-001', '6222020100008914101', 'um-001', '王建国', '中国工商银行', 12860.50, '正常', '2024-03-20 10:30:00'),
+('uc-002', '6217000100001120102', 'um-002', '李淑华', '中国建设银行', 28650.80, '正常', '2023-06-25 14:20:00'),
+('uc-003', '6216610100005689003', 'um-003', '张志强', '中国银行', 45280.20, '正常', '2022-09-15 09:15:00');
+
+INSERT OR IGNORE INTO supplier_assessments VALUES
+('sa-001', 's-001', '黑龙江禾源农业合作社', '2026-Q1', 96.5, 92.0, 94.5, 95.0, 94.5, 'A', '采购评审组', '2026-04-10 14:30:00', '优秀'),
+('sa-002', 's-002', '杭州云栖茶业有限公司', '2026-Q1', 94.0, 88.5, 92.0, 93.0, 91.9, 'A', '采购评审组', '2026-04-10 15:00:00', '优秀'),
+('sa-003', 's-003', '山东寿光智农园区', '2026-Q1', 90.5, 85.0, 88.0, 86.0, 87.4, 'B', '采购评审组', '2026-04-10 15:30:00', '合格'),
+('sa-004', 's-004', '大兴安岭浆果基地', '2026-Q1', 82.0, 78.0, 80.0, 79.0, 79.8, 'C', '采购评审组', '2026-04-10 16:00:00', '整改'),
+('sa-005', 's-005', '某不合格供应商', '2026-Q1', 58.0, 55.0, 52.0, 54.0, 54.8, 'D', '采购评审组', '2026-04-10 16:30:00', '淘汰');
+
+INSERT OR IGNORE INTO member_benefits VALUES
+('mb-001', '五常有机稻花香5kg', '农产品', '会员专享价，溯源保真', '¥168', 1680, 500, 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=80', '上架'),
+('mb-002', '高铁票85折优惠', '出行', '全国高铁票会员专享折扣', '85折', 500, 1000, 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=900&q=80', '上架'),
+('mb-003', '免费法律咨询服务', '法律', '专业律师一对一咨询', '免费', 0, 500, 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=900&q=80', '上架'),
+('mb-004', '电影票兑换券', '文娱', '全国影院通用2D/3D通兑', '¥35', 350, 2000, 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80', '上架'),
+('mb-005', '体检套餐7折', '医疗', '三甲医院体检中心专属折扣', '7折', 1000, 300, 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80', '上架'),
+('mb-006', '职工技能培训课程', '教育', '线上线下技能提升培训', '免费', 0, 200, 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80', '上架');
+
+INSERT OR IGNORE INTO travel_bookings VALUES
+('tb-001', 'um-001', '王建国', '高铁', '2026-06-25', '哈尔滨', '北京', 541.50, '已支付', '2026-06-18 10:30:00'),
+('tb-002', 'um-002', '李淑华', '飞机', '2026-07-10', '上海', '广州', 1280.00, '待支付', '2026-06-18 11:20:00'),
+('tb-003', 'um-003', '张志强', '酒店', '2026-06-30', '北京', '杭州', 680.00, '已完成', '2026-06-15 14:30:00');
+
+INSERT OR IGNORE INTO legal_consults VALUES
+('lc-001', 'um-001', '王建国', '劳动纠纷', '公司拖欠工资怎么办？', '我所在的公司已经连续3个月未足额发放工资，请问我应该如何维权？', '张明律师', '建议您先与公司协商，协商不成可以向劳动监察部门投诉或申请劳动仲裁。注意收集劳动合同、工资条、考勤记录等证据。', '已回复', '2026-06-15 09:30:00', '2026-06-16 14:20:00'),
+('lc-002', 'um-002', '李淑华', '合同纠纷', '房屋租赁合同纠纷咨询', '我租的房子还没到期，房东要涨房租，否则让我搬走，这合法吗？', '李华律师', '', '处理中', '2026-06-17 10:15:00', ''),
+('lc-003', 'um-003', '张志强', '婚姻家庭', '离婚财产分割问题', '我和丈夫准备离婚，婚后购买的房产应该如何分割？', '王芳律师', '', '待处理', '2026-06-18 08:45:00', '');
+`;
+
+export function initializeDatabase() {
+  runSql(schemaSql);
+  runSql(seedSql);
 }
 
-export default db
+export function databaseExists() {
+  return existsSync(dbPath);
+}
+
+export function getCounts() {
+  return {
+    metrics: queryJson<CountRow>('SELECT "metrics" AS name, COUNT(*) AS count FROM metrics;')[0]?.count ?? 0,
+    traceBatches: queryJson<CountRow>('SELECT "trace_batches" AS name, COUNT(*) AS count FROM trace_batches;')[0]?.count ?? 0,
+    products: queryJson<CountRow>('SELECT "products" AS name, COUNT(*) AS count FROM products;')[0]?.count ?? 0,
+    orders: queryJson<CountRow>('SELECT "orders" AS name, COUNT(*) AS count FROM orders;')[0]?.count ?? 0,
+  };
+}
+
+export function getDashboard() {
+  return {
+    metrics: queryJson<Metric>('SELECT id, label, value, delta, tone FROM metrics ORDER BY rowid;'),
+    qualityTrend: queryJson('SELECT month, passRate, sampling, risk FROM quality_trends ORDER BY rowid;'),
+    alerts: queryJson('SELECT id, region, level, alertType, suggestion, startsAt FROM weather_alerts ORDER BY startsAt LIMIT 3;'),
+  };
+}
+
+export function findTraceBatch(traceCode: string) {
+  const batches = queryJson<TraceBatch>(
+    `SELECT id, traceCode, productName, category, specification, producer, origin, productionDate, shelfLife, status, blockchainHash, blockHeight, qualityResult FROM trace_batches WHERE traceCode = '${traceCode.replace(/'/g, "''")}' LIMIT 1;`,
+  );
+  const batch = batches[0];
+
+  if (!batch) {
+    return null;
+  }
+
+  return {
+    batch,
+    timeline: queryJson<TimelineItem>(
+      `SELECT id, stage, operator, eventTime, location, description, temperature, humidity FROM timeline WHERE traceCode = '${traceCode.replace(/'/g, "''")}' ORDER BY eventTime;`,
+    ),
+  };
+}
+
+export function listTraceBatches() {
+  return queryJson<TraceBatch>('SELECT id, traceCode, productName, category, specification, producer, origin, productionDate, shelfLife, status, blockchainHash, blockHeight, qualityResult FROM trace_batches ORDER BY productionDate DESC;');
+}
+
+export function listProducts(channel?: string) {
+  const where = channel ? `WHERE channel = '${channel.replace(/'/g, "''")}'` : '';
+  return queryJson<Product>(`SELECT id, name, category, price, wholesalePrice, moq, specification, traceCode, seller, origin, stock, sales, imageUrl, channel FROM products ${where} ORDER BY sales DESC;`);
+}
+
+export function listRows(table: 'orders' | 'contracts' | 'questions' | 'weather_alerts') {
+  return queryJson(`SELECT * FROM ${table} ORDER BY rowid DESC;`);
+}
