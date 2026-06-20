@@ -1,0 +1,203 @@
+import { getDb } from '../db';
+import { IndustryZone, ProsperityIndex } from '../types';
+import { v4 as uuidv4 } from 'uuid';
+
+export function calculateProsperityIndex(
+  adminDivisionId: string,
+  periodType: 'daily' | 'weekly' | 'monthly'
+): ProsperityIndex {
+  const db = getDb();
+  const now = new Date();
+  let periodStart: Date;
+  let periodEnd: Date;
+
+  switch (periodType) {
+    case 'daily':
+      periodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      periodEnd = new Date(periodStart.getTime() + 24 * 60 * 60 * 1000 - 1);
+      break;
+    case 'weekly':
+      periodStart = new Date(now);
+      periodStart.setDate(now.getDate() - now.getDay());
+      periodStart.setHours(0, 0, 0, 0);
+      periodEnd = new Date(periodStart.getTime() + 7 * 24 * 60 * 60 * 1000 - 1);
+      break;
+    case 'monthly':
+      periodStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      periodEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+      break;
+  }
+
+  const division = db.prepare('SELECT code, name, full_path FROM admin_divisions WHERE id = ?').get(adminDivisionId) as { code: string; name: string; full_path: string } | undefined;
+  if (!division) {
+    throw new Error('行政区划不存在');
+  }
+
+  const descendantIds = getDescendantDivisionIds(adminDivisionId);
+  const placeholders = descendantIds.map(() => '?').join(',');
+
+  const jobsResult = db.prepare(`
+    SELECT 
+      COUNT(*) as total,
+      COALESCE(SUM(application_count), 0) as applications,
+      COALESCE(AVG(salary_min), 0) as avg_salary
+    FROM jobs 
+    WHERE location_id IN (${placeholders}) 
+      AND status = 'published'
+      AND created_at >= ? AND created_at <= ?
+  `).get([...descendantIds, periodStart.toISOString(), periodEnd.toISOString()]) as { total: number; applications: number; avg_salary: number };
+
+  const prevPeriodStart = new Date(periodStart.getTime() - (periodEnd.getTime() - periodStart.getTime()));
+  const prevJobsResult = db.prepare(`
+    SELECT 
+      COUNT(*) as total,
+      COALESCE(SUM(application_count), 0) as applications
+    FROM jobs 
+    WHERE location_id IN (${placeholders}) 
+      AND status = 'published'
+      AND created_at >= ? AND created_at <= ?
+  `).get([...descendantIds, prevPeriodStart.toISOString(), periodStart.toISOString()]) as { total: number; applications: number };
+
+  const jobGrowthRate = prevJobsResult.total > 0 
+    ? ((jobsResult.total - prevJobsResult.total) / prevJobsResult.total) * 100 
+    : jobsResult.total > 0 ? 100 : 0;
+  const appGrowthRate = prevJobsResult.applications > 0 
+    ? ((jobsResult.applications - prevJobsResult.applications) / prevJobsResult.applications) * 100 
+    : jobsResult.applications > 0 ? 100 : 0;
+
+  const salaries = db.prepare(`
+    SELECT salary_min, salary_max 
+    FROM jobs 
+    WHERE location_id IN (${placeholders}) 
+      AND status = 'published'
+      AND salary_min IS NOT NULL
+      AND created_at >= ? AND created_at <= ?
+  `).all([...descendantIds, periodStart.toISOString(), periodEnd.toISOString()]) as { salary_min: number; salary_max: number }[];
+
+  const allSalaries = salaries.flatMap(s => [s.salary_min, s.salary_max || s.salary_min]).filter(s => s > 0);
+  allSalaries.sort((a, b) => a - b);
+  const median = allSalaries.length > 0 
+    ? allSalaries[Math.floor(allSalaries.length / 2)] 
+    : 0;
+
+  const industryZones = {} as Record<IndustryZone, { jobs: number; applications: number }>;
+  Object.values(IndustryZone).forEach(zone => {
+    const result = db.prepare(`
+      SELECT COUNT(*) as jobs, COALESCE(SUM(application_count), 0) as applications
+      FROM jobs 
+      WHERE location_id IN (${placeholders}) 
+        AND status = 'published'
+        AND industry_zone = ?
+        AND created_at >= ? AND created_at <= ?
+    `).get([...descendantIds, zone, periodStart.toISOString(), periodEnd.toISOString()]) as { jobs: number; applications: number };
+    industryZones[zone] = { jobs: result.jobs, applications: result.applications };
+  });
+
+  const jobScore = Math.min(100, (jobsResult.total / 100) * 40);
+  const appScore = Math.min(100, (jobsResult.applications / 500) * 30);
+  const salaryScore = Math.min(100, (median / 10000) * 30);
+  const prosperityScore = Math.round((jobScore + appScore + salaryScore) * 10) / 10;
+
+  const index: ProsperityIndex = {
+    id: uuidv4(),
+    admin_division_id: adminDivisionId,
+    period_type: periodType,
+    period_start: periodStart.toISOString(),
+    period_end: periodEnd.toISOString(),
+    total_jobs: jobsResult.total,
+    total_applications: jobsResult.applications,
+    salary_median: median,
+    salary_average: Math.round(jobsResult.avg_salary),
+    prosperity_score: prosperityScore,
+    job_growth_rate: Math.round(jobGrowthRate * 10) / 10,
+    application_growth_rate: Math.round(appGrowthRate * 10) / 10,
+    industry_zones: industryZones,
+    created_at: now.toISOString(),
+  };
+
+  return index;
+}
+
+export function saveProsperityIndex(index: ProsperityIndex): void {
+  const db = getDb();
+  db.prepare(`
+    INSERT INTO prosperity_indices (
+      id, admin_division_id, period_type, period_start, period_end,
+      total_jobs, total_applications, salary_median, salary_average,
+      prosperity_score, job_growth_rate, application_growth_rate, industry_zones, created_at
+    ) VALUES (
+      @id, @admin_division_id, @period_type, @period_start, @period_end,
+      @total_jobs, @total_applications, @salary_median, @salary_average,
+      @prosperity_score, @job_growth_rate, @application_growth_rate, @industry_zones, @created_at
+    )
+  `).run({ ...index, industry_zones: JSON.stringify(index.industry_zones) });
+}
+
+export function getLatestProsperityIndex(adminDivisionId: string, periodType: 'daily' | 'weekly' | 'monthly'): ProsperityIndex | null {
+  const db = getDb();
+  const result = db.prepare(`
+    SELECT * FROM prosperity_indices 
+    WHERE admin_division_id = ? AND period_type = ?
+    ORDER BY created_at DESC
+    LIMIT 1
+  `).get(adminDivisionId, periodType) as any;
+
+  if (!result) return null;
+
+  return {
+    ...result,
+    industry_zones: JSON.parse(result.industry_zones),
+  };
+}
+
+export function getProsperityHistory(adminDivisionId: string, periodType: 'daily' | 'weekly' | 'monthly', limit: number = 12): ProsperityIndex[] {
+  const db = getDb();
+  const results = db.prepare(`
+    SELECT * FROM prosperity_indices 
+    WHERE admin_division_id = ? AND period_type = ?
+    ORDER BY period_start DESC
+    LIMIT ?
+  `).all(adminDivisionId, periodType, limit) as any[];
+
+  return results.map(r => ({
+    ...r,
+    industry_zones: JSON.parse(r.industry_zones),
+  }));
+}
+
+function getDescendantDivisionIds(divisionId: string): string[] {
+  const db = getDb();
+  const ids: string[] = [divisionId];
+  const queue = [divisionId];
+
+  while (queue.length > 0) {
+    const currentId = queue.shift()!;
+    const children = db.prepare('SELECT id FROM admin_divisions WHERE parent_id = ?').all(currentId) as { id: string }[];
+    children.forEach(child => {
+      ids.push(child.id);
+      queue.push(child.id);
+    });
+  }
+
+  return ids;
+}
+
+export function calculateAndSaveAllIndices(): void {
+  const db = getDb();
+  const cities = db.prepare("SELECT id FROM admin_divisions WHERE level = 'city'").all() as { id: string }[];
+  const province = db.prepare("SELECT id FROM admin_divisions WHERE level = 'province'").get() as { id: string } | undefined;
+
+  if (province) {
+    for (const periodType of ['daily', 'weekly', 'monthly'] as const) {
+      const index = calculateProsperityIndex(province.id, periodType);
+      saveProsperityIndex(index);
+    }
+  }
+
+  for (const city of cities) {
+    for (const periodType of ['daily', 'weekly', 'monthly'] as const) {
+      const index = calculateProsperityIndex(city.id, periodType);
+      saveProsperityIndex(index);
+    }
+  }
+}

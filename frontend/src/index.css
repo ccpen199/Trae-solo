@@ -1,0 +1,263 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f7fa;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.ant-layout {
+  background: #f5f7fa !important;
+}
+
+.ant-layout-header {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%) !important;
+  padding: 0 24px !important;
+  height: 64px !important;
+  line-height: 64px !important;
+}
+
+.ant-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.ant-menu-item {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.ant-menu-item:hover {
+  color: #fff !important;
+}
+
+.ant-menu-item-selected {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.page-container {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 24px;
+  color: #fff;
+}
+
+.stat-card.green {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.stat-card.orange {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stat-card.blue {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-card .ant-statistic-title {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stat-card .ant-statistic-content {
+  color: #fff;
+}
+
+.industry-tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.industry-tag.dianzhong {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.industry-tag.puer {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.industry-tag.tourism {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.industry-tag.tobacco {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.industry-tag.it {
+  background: #fff0f6;
+  color: #eb2f96;
+}
+
+.industry-tag.energy {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.industry-tag.metallurgy {
+  background: #f5f5f5;
+  color: #595959;
+}
+
+.industry-tag.culture {
+  background: #e6fffb;
+  color: #13c2c2;
+}
+
+.job-card {
+  transition: all 0.3s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.salary-text {
+  color: #f5222d;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.prosperity-score {
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.level-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.level-badge.province {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.level-badge.city {
+  background: #1890ff;
+  color: #fff;
+}
+
+.level-badge.county {
+  background: #52c41a;
+  color: #fff;
+}
+
+.credit-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.credit-badge.AAA {
+  background: #f6ffed;
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+}
+
+.credit-badge.AA {
+  background: #e6f7ff;
+  color: #1890ff;
+  border: 1px solid #91d5ff;
+}
+
+.credit-badge.A {
+  background: #fff7e6;
+  color: #fa8c16;
+  border: 1px solid #ffd591;
+}
+
+.credit-badge.BBB {
+  background: #fffbe6;
+  color: #faad14;
+  border: 1px solid #ffe58f;
+}
+
+.fair-card {
+  border-left: 4px solid #1890ff;
+}
+
+.fair-card.live {
+  border-left-color: #f5222d;
+}
+
+.live-tag {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ranking-item:last-child {
+  border-bottom: none;
+}
+
+.ranking-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.ranking-number.top1 {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #fff;
+}
+
+.ranking-number.top2 {
+  background: linear-gradient(135deg, #c0c0c0, #808080);
+  color: #fff;
+}
+
+.ranking-number.top3 {
+  background: linear-gradient(135deg, #cd7f32, #8b4513);
+  color: #fff;
+}
