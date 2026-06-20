@@ -156,6 +156,30 @@ export interface BehaviorAlert {
   resolvedAt?: string;
 }
 
+export interface ChainStep {
+  key: string;
+  label: string;
+  status: 'pending' | 'active' | 'completed';
+  handler?: string;
+  time?: string;
+  remark?: string;
+}
+
+export interface TimelineEvent {
+  time: string;
+  title: string;
+  operator: string;
+  detail: string;
+}
+
+export interface ReviewRecord {
+  id: string;
+  time: string;
+  reviewer: string;
+  content: string;
+  result: 'satisfied' | 'normal' | 'dissatisfied';
+}
+
 export interface ComplaintRecord {
   id: string;
   elderId: string;
@@ -166,4 +190,13 @@ export interface ComplaintRecord {
   createdAt: string;
   resolvedAt?: string;
   resolution?: string;
+  institutionId?: string;
+  institutionName?: string;
+  handler?: string;
+  processingDuration?: string;
+  closureRate?: number;
+  chain?: ChainStep[];
+  timeline?: TimelineEvent[];
+  reviews?: ReviewRecord[];
+  relatedOrderId?: string;
 }
