@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Row, Col, Steps, Tag, Button, Modal, Form, Input, message, Tabs, Descriptions, Alert, Statistic, Table, Space, Badge, Empty, List } from 'antd';
+import { Card, Row, Col, Steps, Tag, Button, Modal, Form, Input, message, Tabs, Descriptions, Alert, Statistic, Table, Space, Badge, Empty, List, Avatar } from 'antd';
 import { SafetyCertificateOutlined, UserSwitchOutlined, FileSearchOutlined, PhoneOutlined, WarningOutlined, CheckCircleOutlined, ClockCircleOutlined, FileProtectOutlined } from '@ant-design/icons';
 import api from '../utils/request';
 
@@ -183,91 +183,244 @@ export default function Governance({ user }: Props) {
   const tabItems = [
     {
       key: 'system',
-      label: '治理体系总览',
+      label: '治理总览',
       children: (
         <div>
           {stats && (
             <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
               <Col span={6}>
-                <Card style={statsCardStyle}>
-                  <Statistic title="认证经纪人" value={stats.agents.verified} suffix={`/ ${stats.agents.total}`} />
+                <Card style={{ ...statsCardStyle, borderLeft: '4px solid #52c41a' }}>
+                  <Statistic 
+                    title={<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><UserSwitchOutlined /> 认证经纪人</div>}
+                    value={stats.agents.verified} 
+                    suffix={`/ ${stats.agents.total}`} 
+                    valueStyle={{ color: '#52c41a' }}
+                  />
+                  <Button type="link" size="small" onClick={() => setActiveTab('agent')} style={{ padding: 0, marginTop: 8 }}>
+                    查看审核记录 →
+                  </Button>
                 </Card>
               </Col>
               <Col span={6}>
-                <Card style={statsCardStyle}>
-                  <Statistic title="真房源认证" value={stats.properties.verified} suffix={`/ ${stats.properties.total}`} />
+                <Card style={{ ...statsCardStyle, borderLeft: '4px solid #1890ff' }}>
+                  <Statistic 
+                    title={<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><SafetyCertificateOutlined /> 真房源认证</div>}
+                    value={stats.properties.verified} 
+                    suffix={`/ ${stats.properties.total}`}
+                    valueStyle={{ color: '#1890ff' }}
+                  />
+                  <Button type="link" size="small" onClick={() => setActiveTab('owner')} style={{ padding: 0, marginTop: 8 }}>
+                    查看确认记录 →
+                  </Button>
                 </Card>
               </Col>
               <Col span={6}>
-                <Card style={statsCardStyle}>
-                  <Statistic title="价格预警" value={stats.properties.priceWarnings} valueStyle={{ color: '#fa8c16' }} />
+                <Card style={{ ...statsCardStyle, borderLeft: '4px solid #faad14' }}>
+                  <Statistic 
+                    title={<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><WarningOutlined /> 价格预警</div>}
+                    value={stats.properties.priceWarnings} 
+                    valueStyle={{ color: '#faad14' }}
+                  />
+                  <Button type="link" size="small" onClick={() => setActiveTab('warning')} style={{ padding: 0, marginTop: 8 }}>
+                    查看预警名单 →
+                  </Button>
                 </Card>
               </Col>
               <Col span={6}>
-                <Card style={statsCardStyle}>
-                  <Statistic title="监管备案" value={stats.transactions.synced} suffix={`/ ${stats.transactions.total}`} />
+                <Card style={{ ...statsCardStyle, borderLeft: '4px solid #722ed1' }}>
+                  <Statistic 
+                    title={<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><FileProtectOutlined /> 监管备案</div>}
+                    value={stats.transactions.synced} 
+                    suffix={`/ ${stats.transactions.total}`}
+                    valueStyle={{ color: '#722ed1' }}
+                  />
+                  <Button type="link" size="small" onClick={() => setActiveTab('compliance')} style={{ padding: 0, marginTop: 8 }}>
+                    查看备案记录 →
+                  </Button>
                 </Card>
               </Col>
             </Row>
           )}
 
+          <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+            <Col span={12}>
+              <Card 
+                title={<span><UserSwitchOutlined style={{ color: '#1890ff' }} /> 经纪人实名认证动态</span>} 
+                style={{ borderRadius: 8 }}
+                extra={<Button type="link" size="small" onClick={() => setActiveTab('agent')}>更多 →</Button>}
+              >
+                {agentRecords.length > 0 && (user?.role === 'agent' || user?.role === 'admin') ? (
+                  <List
+                    size="small"
+                    dataSource={agentRecords.slice(0, 5)}
+                    renderItem={(item: any) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          avatar={<Avatar size="small" style={{ background: '#e6f7ff', color: '#1890ff' }}>{item.real_name?.charAt(0) || 'A'}</Avatar>}
+                          title={<span style={{ fontSize: 13 }}>{item.real_name} · {item.agency}</span>}
+                          description={<span style={{ fontSize: 12 }}>{item.license_no} · {item.created_at}</span>}
+                        />
+                        {getStatusBadge(item.verified)}
+                      </List.Item>
+                    )}
+                  />
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '20px 0', color: '#999', fontSize: 13 }}>
+                    <UserSwitchOutlined style={{ fontSize: 28, color: '#d9d9d9', marginBottom: 8 }} />
+                    <div>登录后可查看详细认证记录</div>
+                  </div>
+                )}
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card 
+                title={<span><WarningOutlined style={{ color: '#faad14' }} /> 价格预警房源</span>} 
+                style={{ borderRadius: 8 }}
+                extra={<Button type="link" size="small" onClick={() => setActiveTab('warning')}>更多 →</Button>}
+              >
+                {priceWarnings.length > 0 ? (
+                  <List
+                    size="small"
+                    dataSource={priceWarnings.slice(0, 5)}
+                    renderItem={(item: any) => (
+                      <List.Item style={{ cursor: 'pointer' }} onClick={() => window.location.href = `/#/property/${item.id}`}>
+                        <List.Item.Meta
+                          title={<span style={{ fontSize: 13 }}>{item.title}</span>}
+                          description={<span style={{ fontSize: 12, color: '#999' }}>{item.district} · {item.area}㎡</span>}
+                        />
+                        <Space direction="vertical" size={0} style={{ textAlign: 'right' }}>
+                          <span style={{ color: '#fa8c16', fontWeight: 500, fontSize: 14 }}>{item.price}万</span>
+                          <Tag color="orange" style={{ margin: 0 }}>
+                            偏离 {item.deviation > 0 ? '+' : ''}{item.deviation || 0}%
+                          </Tag>
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '20px 0', color: '#999', fontSize: 13 }}>
+                    <CheckCircleOutlined style={{ fontSize: 28, color: '#52c41a', marginBottom: 8 }} />
+                    <div>暂无价格预警房源，市场价格稳定</div>
+                  </div>
+                )}
+              </Card>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+            <Col span={12}>
+              <Card 
+                title={<span><FileSearchOutlined style={{ color: '#52c41a' }} /> 图片AI去重检测</span>} 
+                style={{ borderRadius: 8 }}
+                extra={<Button type="link" size="small" onClick={() => setActiveTab('duplicate')}>更多 →</Button>}
+              >
+                {imageDuplicates.length > 0 ? (
+                  <List
+                    size="small"
+                    dataSource={imageDuplicates.slice(0, 5)}
+                    renderItem={(item: any) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          title={<span style={{ fontSize: 13 }}>{item.title}</span>}
+                          description={<span style={{ fontSize: 12, color: '#999' }}>{item.district} · {item.total_images}张图片</span>}
+                        />
+                        <Tag color="red">{item.duplicate_count}张重复</Tag>
+                      </List.Item>
+                    )}
+                  />
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '20px 0', color: '#999', fontSize: 13 }}>
+                    <CheckCircleOutlined style={{ fontSize: 28, color: '#52c41a', marginBottom: 8 }} />
+                    <div>图片查重合格，未发现重复图片房源</div>
+                  </div>
+                )}
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card 
+                title={<span><PhoneOutlined style={{ color: '#722ed1' }} /> 业主直连确认</span>} 
+                style={{ borderRadius: 8 }}
+                extra={<Button type="link" size="small" onClick={() => setActiveTab('owner')}>更多 →</Button>}
+              >
+                {ownerConfirmations.length > 0 && user ? (
+                  <List
+                    size="small"
+                    dataSource={ownerConfirmations.slice(0, 5)}
+                    renderItem={(item: any) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          title={<span style={{ fontSize: 13 }}>{item.property_title}</span>}
+                          description={<span style={{ fontSize: 12, color: '#999' }}>{item.owner_name} · {item.created_at}</span>}
+                        />
+                        {getConfirmBadge(item.confirmed)}
+                      </List.Item>
+                    )}
+                  />
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '20px 0', color: '#999', fontSize: 13 }}>
+                    <PhoneOutlined style={{ fontSize: 28, color: '#d9d9d9', marginBottom: 8 }} />
+                    <div>{user ? '暂无业主确认记录' : '登录后可查看确认记录'}</div>
+                  </div>
+                )}
+              </Card>
+            </Col>
+          </Row>
+
           <Alert
-            message="真房源保障体系"
-            description="平台建立四重真房源治理机制，确保每一套房源真实可靠，让您放心交易。"
+            message="四重真房源治理机制"
+            description="经纪人实名绑定 → 房源图片AI去重 → 挂牌价偏离度预警 → 业主直连确认，层层把关确保房源真实可靠。"
             type="success"
             showIcon
             style={{ marginBottom: 24 }}
           />
 
-          <Steps
-            direction="vertical"
-            current={3}
-            items={steps.map((s, i) => ({
-              title: s.title,
-              description: s.description,
-              status: 'finish',
-            }))}
-          />
-
-          <Row gutter={16} style={{ marginTop: 24 }}>
-            <Col span={8}>
-              <Card style={{ textAlign: 'center', borderRadius: 8 }}>
-                <UserSwitchOutlined style={{ fontSize: 48, color: '#1890ff' }} />
-                <h3 style={{ marginTop: 12 }}>经纪人实名绑定</h3>
-                <p style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
-                  所有经纪人必须完成实名认证，提交身份证和经纪资格证书，
-                  审核通过后方可发布房源，确保服务专业性。
-                </p>
-                <div style={{ marginTop: 12 }}>
-                  <Tag color="green">已认证 {stats?.agents.verified || 0} 人</Tag>
-                  <Tag color="orange">待审核 {stats?.agents.pending || 0} 人</Tag>
+          <Row gutter={16}>
+            <Col span={6}>
+              <Card style={{ textAlign: 'center', borderRadius: 8, background: 'linear-gradient(180deg, #e6f7ff 0%, #fff 100%)' }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#1890ff20', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <UserSwitchOutlined style={{ fontSize: 28, color: '#1890ff' }} />
                 </div>
+                <h3 style={{ marginTop: 12, marginBottom: 4 }}>经纪人实名绑定</h3>
+                <Tag color="green">已认证 {stats?.agents.verified || 0} 人</Tag>
+                <p style={{ color: '#666', fontSize: 12, marginTop: 8, marginBottom: 0, lineHeight: 1.6 }}>
+                  身份证+从业资格证双重验证
+                </p>
               </Card>
             </Col>
-            <Col span={8}>
-              <Card style={{ textAlign: 'center', borderRadius: 8 }}>
-                <FileSearchOutlined style={{ fontSize: 48, color: '#52c41a' }} />
-                <h3 style={{ marginTop: 12 }}>房源图片AI去重</h3>
-                <p style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
-                  利用AI图像识别技术，自动检测重复房源图片，
-                  有效防止一房多发、虚假房源等问题。
-                </p>
-                <div style={{ marginTop: 12 }}>
-                  <Tag color="blue">检测到 {imageDuplicates.length} 套重复图片房源</Tag>
+            <Col span={6}>
+              <Card style={{ textAlign: 'center', borderRadius: 8, background: 'linear-gradient(180deg, #f6ffed 0%, #fff 100%)' }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#52c41a20', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <FileSearchOutlined style={{ fontSize: 28, color: '#52c41a' }} />
                 </div>
+                <h3 style={{ marginTop: 12, marginBottom: 4 }}>房源图片AI去重</h3>
+                <Tag color="blue">已检测 {imageDuplicates.length} 套</Tag>
+                <p style={{ color: '#666', fontSize: 12, marginTop: 8, marginBottom: 0, lineHeight: 1.6 }}>
+                  智能识别重复图片，防一房多发
+                </p>
               </Card>
             </Col>
-            <Col span={8}>
-              <Card style={{ textAlign: 'center', borderRadius: 8 }}>
-                <WarningOutlined style={{ fontSize: 48, color: '#faad14' }} />
-                <h3 style={{ marginTop: 12 }}>挂牌价偏离度预警</h3>
-                <p style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
-                  基于区域市场均价，自动计算挂牌价偏离度，
-                  超过±15%自动预警，保护买卖双方利益。
-                </p>
-                <div style={{ marginTop: 12 }}>
-                  <Tag color="orange">当前预警 {stats?.properties.priceWarnings || 0} 套</Tag>
+            <Col span={6}>
+              <Card style={{ textAlign: 'center', borderRadius: 8, background: 'linear-gradient(180deg, #fff7e6 0%, #fff 100%)' }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#faad1420', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <WarningOutlined style={{ fontSize: 28, color: '#faad14' }} />
                 </div>
+                <h3 style={{ marginTop: 12, marginBottom: 4 }}>挂牌价偏离度预警</h3>
+                <Tag color="orange">预警 {stats?.properties.priceWarnings || 0} 套</Tag>
+                <p style={{ color: '#666', fontSize: 12, marginTop: 8, marginBottom: 0, lineHeight: 1.6 }}>
+                  对比区域均价，异常价格自动预警
+                </p>
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card style={{ textAlign: 'center', borderRadius: 8, background: 'linear-gradient(180deg, #f9f0ff 0%, #fff 100%)' }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#722ed120', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <PhoneOutlined style={{ fontSize: 28, color: '#722ed1' }} />
+                </div>
+                <h3 style={{ marginTop: 12, marginBottom: 4 }}>业主直连确认</h3>
+                <Tag color="purple">已确认 {stats?.properties.ownerConfirmed || 0} 套</Tag>
+                <p style={{ color: '#666', fontSize: 12, marginTop: 8, marginBottom: 0, lineHeight: 1.6 }}>
+                  验证码验证业主身份，确保真实
+                </p>
               </Card>
             </Col>
           </Row>

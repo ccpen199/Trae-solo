@@ -249,41 +249,139 @@ export default function Home() {
           </Row>
         </Card>
 
-        {user && recommendations.length > 0 && (
-          <Card 
-            title={<Title level={4} style={{ margin: 0 }}>🤖 为你推荐</Title>}
-            style={{ marginBottom: 24, borderRadius: 12, background: 'linear-gradient(135deg, #f0f5ff 0%, #e6f7ff 100%)' }}
-            extra={
-              <Space>
-                <Tag color="purple">基于您的浏览历史</Tag>
-                <Button type="link" onClick={() => navigate('/user')}>查看更多 →</Button>
-              </Space>
-            }
-          >
+        <Card 
+          title={<Title level={4} style={{ margin: 0 }}>🤖 智能推荐</Title>}
+          style={{ marginBottom: 24, borderRadius: 12, background: 'linear-gradient(135deg, #f9f0ff 0%, #f0f5ff 100%)' }}
+          extra={
+            <Space>
+              {user ? (
+                <Tag color="purple">基于您的浏览/收藏行为</Tag>
+              ) : (
+                <Tag color="blue">热门推荐</Tag>
+              )}
+              <Button type="link" onClick={() => user ? navigate('/user') : navigate('/login')}>
+                查看更多 →
+              </Button>
+            </Space>
+          }
+        >
+          {user ? (
             <Row gutter={[16, 16]}>
-              {recommendations.map(item => (
-                <Col span={6} key={item.id}>{renderRecommendCard(item)}</Col>
-              ))}
+              {recommendations.length > 0 ? (
+                recommendations.map(item => (
+                  <Col span={6} key={item.id}>{renderRecommendCard(item)}</Col>
+                ))
+              ) : (
+                <Col span={24}>
+                  <div style={{ textAlign: 'center', padding: '40px 0', color: '#999' }}>
+                    多浏览一些房源，系统将为您生成个性化推荐
+                  </div>
+                </Col>
+              )}
             </Row>
-          </Card>
-        )}
+          ) : (
+            <div>
+              <Row gutter={[16, 16]}>
+                {hotProperties.slice(0, 4).map(item => (
+                  <Col span={6} key={item.id}>
+                    {renderRecommendCard({ ...item, reasons: ['热门房源，多人关注', '真房源认证'] })}
+                  </Col>
+                ))}
+              </Row>
+              <div style={{ textAlign: 'center', marginTop: 16, color: '#999', fontSize: 13 }}>
+                💡 <a onClick={() => navigate('/login')} style={{ color: '#1890ff', cursor: 'pointer' }}>登录后</a>可获得基于您浏览偏好的个性化推荐
+              </div>
+            </div>
+          )}
+        </Card>
 
         <Card 
-          title={<Title level={4} style={{ margin: 0 }}>平台特色</Title>}
-          style={{ marginBottom: 24, borderRadius: 12 }}
+          title={<Title level={4} style={{ margin: 0 }}>🏛️ 交易中台</Title>}
+          style={{ marginBottom: 24, borderRadius: 12, background: 'linear-gradient(135deg, #f0f5ff 0%, #e6f7ff 100%)' }}
+          extra={<Button type="link" onClick={() => navigate('/transactions')}>交易大厅 →</Button>}
         >
-          <Row gutter={[24, 24]}>
-            {features.map((f, idx) => (
+          <Row gutter={[16, 16]}>
+            {[
+              { icon: '📝', title: '电子签约', desc: '在线签署合同，法律效力等同纸质', color: '#1890ff' },
+              { icon: '💰', title: '资金监管', desc: '交易资金全程银行监管，安全有保障', color: '#52c41a' },
+              { icon: '🧾', title: '税费测算', desc: '契税/个税/增值税自动精准计算', color: '#faad14' },
+              { icon: '🏠', title: '产权过户', desc: '过户进度全程可追踪，透明公开', color: '#722ed1' },
+            ].map((item, idx) => (
               <Col span={6} key={idx}>
-                <div style={{ textAlign: 'center', padding: '16px 8px' }}>
-                  {f.icon}
-                  <div style={{ fontSize: 16, fontWeight: 600, marginTop: 12 }}>{f.title}</div>
-                  <div style={{ fontSize: 13, color: '#666', marginTop: 8, lineHeight: 1.6 }}>{f.desc}</div>
+                <div 
+                  style={{ 
+                    textAlign: 'center', 
+                    padding: '20px 12px', 
+                    background: '#fff', 
+                    borderRadius: 8,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'none';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                  onClick={() => user ? navigate('/transactions') : navigate('/login')}
+                >
+                  <div style={{ fontSize: 36 }}>{item.icon}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, marginTop: 12, color: item.color }}>{item.title}</div>
+                  <div style={{ fontSize: 12, color: '#666', marginTop: 6, lineHeight: 1.5 }}>{item.desc}</div>
                 </div>
               </Col>
             ))}
           </Row>
         </Card>
+
+        {!user && (
+          <Card 
+            title={<Title level={4} style={{ margin: 0 }}>👥 B端专业工作台</Title>}
+            style={{ marginBottom: 24, borderRadius: 12, background: 'linear-gradient(135deg, #fff7e6 0%, #fff1e6 100%)' }}
+            extra={<Button type="primary" onClick={() => navigate('/login')}>立即登录 →</Button>}
+          >
+            <Row gutter={[16, 16]}>
+              {[
+                { icon: '👨💼', title: '经纪人工作台', desc: '客户跟进 · 带看日志 · 业绩看板 · 房源管理', role: 'agent', color: '#1890ff' },
+                { icon: '🏗️', title: '开发商营销看板', desc: '渠道转化 · 客户热力 · 去化分析 · 楼盘管理', role: 'developer', color: '#722ed1' },
+                { icon: '🏠', title: '业主委托管理', desc: '委托房源 · 看房反馈 · 置换匹配 · 交易追踪', role: 'owner', color: '#52c41a' },
+                { icon: '⚙️', title: '管理员后台', desc: '真房源治理 · 交易监管 · 备案管理 · 平台运营', role: 'admin', color: '#faad14' },
+              ].map((item, idx) => (
+                <Col span={6} key={idx}>
+                  <div 
+                    style={{ 
+                      textAlign: 'center', 
+                      padding: '20px 12px', 
+                      background: '#fff', 
+                      borderRadius: 8,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s',
+                      borderTop: `3px solid ${item.color}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                    onClick={() => navigate('/login')}
+                  >
+                    <div style={{ fontSize: 36 }}>{item.icon}</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, marginTop: 12, color: item.color }}>{item.title}</div>
+                    <div style={{ fontSize: 12, color: '#666', marginTop: 6, lineHeight: 1.6 }}>{item.desc}</div>
+                    <Button type="primary" size="small" style={{ marginTop: 12, background: item.color, borderColor: item.color }}>
+                      立即进入
+                    </Button>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          </Card>
+        )}
 
         {user && (
           <Card 

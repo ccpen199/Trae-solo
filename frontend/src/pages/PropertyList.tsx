@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Row, Col, Card, Input, Select, Slider, Pagination, Button, Space, Tag, Empty, message } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Row, Col, Card, Input, Select, Slider, Pagination, Button, Space, Tag, Empty, message, Tabs } from 'antd';
+import { SearchOutlined, ApartmentOutlined, HomeOutlined, KeyOutlined, ShopOutlined, AppstoreOutlined } from '@ant-design/icons';
 import api from '../utils/request';
 
 const { Option } = Select;
@@ -112,8 +112,64 @@ export default function PropertyList() {
   const priceMax = type === 'rental' ? 20000 : type === 'commercial' ? 5000 : 2000;
   const priceStep = type === 'rental' ? 500 : type === 'commercial' ? 100 : 50;
 
+  const typeTabs = [
+    { key: 'all', label: <span><AppstoreOutlined /> 全部房源</span> },
+    { key: 'new', label: <span><ApartmentOutlined /> 新房</span> },
+    { key: 'secondhand', label: <span><HomeOutlined /> 二手房</span> },
+    { key: 'rental', label: <span><KeyOutlined /> 租房</span> },
+    { key: 'commercial', label: <span><ShopOutlined /> 商业物业</span> },
+  ];
+
+  const handleTypeChange = (key: string) => {
+    setPage(1);
+    navigate(`/properties/${key}`);
+  };
+
   return (
     <div className="page-container">
+      <Card 
+        style={{ 
+          marginBottom: 16, 
+          borderRadius: 8, 
+          background: type === 'commercial' ? 'linear-gradient(135deg, #f9f0ff 0%, #fff 100%)' : undefined
+        }}
+        bodyStyle={{ paddingBottom: 0 }}
+      >
+        <Tabs
+          activeKey={type}
+          onChange={handleTypeChange}
+          items={typeTabs}
+          size="large"
+          style={{ marginBottom: -1 }}
+          tabBarExtraContent={
+            <span style={{ color: '#999', fontSize: 13 }}>
+              共找到 <b style={{ color: '#1890ff', fontSize: 16 }}>{total}</b> 套房源
+            </span>
+          }
+        />
+      </Card>
+
+      {type === 'commercial' && (
+        <Card style={{ marginBottom: 16, borderRadius: 8, background: '#f9f0ff' }}>
+          <Space size="large" wrap>
+            <div style={{ flex: 1, minWidth: 280 }}>
+              <h3 style={{ margin: '0 0 8px 0', color: '#722ed1' }}>🏢 商业物业专区</h3>
+              <p style={{ margin: 0, color: '#666', fontSize: 13 }}>
+                覆盖写字楼、商铺、办公楼、产业园、酒店等多业态商业地产，专业投资顾问一对一服务
+              </p>
+            </div>
+            <Space>
+              <Button type="primary" style={{ background: '#722ed1', borderColor: '#722ed1' }} onClick={() => message.info('预约商业顾问将尽快联系您')}>
+                预约商业顾问
+              </Button>
+              <Button onClick={() => message.info('商业贷款计算器')}>
+                投资回报测算
+              </Button>
+            </Space>
+          </Space>
+        </Card>
+      )}
+
       <Card style={{ marginBottom: 16, borderRadius: 8 }}>
         <Space size="large" wrap>
           <Input.Search
@@ -124,7 +180,9 @@ export default function PropertyList() {
             onSearch={handleSearch}
             onChange={(e) => setKeyword(e.target.value)}
           />
-          <span style={{ color: '#999' }}>共找到 <b style={{ color: '#1890ff' }}>{total}</b> 套{typeMap[type]}房源</span>
+          <Tag color="green">真房源认证</Tag>
+          <Tag color="blue">资金监管</Tag>
+          <Tag color="orange">网签备案</Tag>
         </Space>
       </Card>
 

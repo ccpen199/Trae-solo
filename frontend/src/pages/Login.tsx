@@ -223,46 +223,76 @@ export default function Login({ onLogin }: Props) {
 
             <Card style={{ borderRadius: 12, boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
               <div style={{ textAlign: 'center', marginBottom: 20 }}>
-                <Title level={4} style={{ margin: 0 }}>角色快捷登录</Title>
-                <div style={{ color: '#999', fontSize: 13, marginTop: 4 }}>选择您的身份，一键进入专属工作台</div>
+                <Title level={4} style={{ margin: 0 }}>🎯 选择身份，一键进入</Title>
+                <div style={{ color: '#999', fontSize: 13, marginTop: 4 }}>不同身份专属工作台，高效处理业务</div>
               </div>
-              <Row gutter={[12, 12]}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {roleQuickEntries.map((entry) => (
-                  <Col span={8} key={entry.key}>
-                    <div
-                      style={{
-                        padding: '20px 12px',
-                        borderRadius: 8,
-                        background: entry.bgColor,
-                        border: `2px solid ${entry.color}20`,
-                        cursor: 'pointer',
-                        transition: 'all 0.3s',
-                        textAlign: 'center',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.boxShadow = `0 4px 16px ${entry.color}30`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'none';
-                        e.currentTarget.style.boxShadow = 'none';
-                      }}
-                      onClick={() => handleQuickLogin(entry.key)}
-                    >
-                      <div>{entry.icon}</div>
-                      <div style={{ fontWeight: 600, marginTop: 8, color: entry.color, fontSize: 14 }}>
+                  <div
+                    key={entry.key}
+                    style={{
+                      padding: '16px 20px',
+                      borderRadius: 10,
+                      background: entry.bgColor,
+                      border: `2px solid ${entry.color}30`,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 16,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateX(4px)';
+                      e.currentTarget.style.boxShadow = `0 4px 16px ${entry.color}30`;
+                      e.currentTarget.style.borderColor = entry.color;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.boxShadow = 'none';
+                      e.currentTarget.style.borderColor = `${entry.color}30`;
+                    }}
+                    onClick={() => handleQuickLogin(entry.key)}
+                  >
+                    <div style={{ 
+                      width: 48, 
+                      height: 48, 
+                      borderRadius: 10, 
+                      background: '#fff', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                    }}>
+                      {entry.icon}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600, color: entry.color, fontSize: 15 }}>
                         {entry.title}
                       </div>
-                      <div style={{ fontSize: 11, color: '#666', marginTop: 4, lineHeight: 1.4 }}>
+                      <div style={{ fontSize: 12, color: '#666', marginTop: 2 }}>
                         {entry.desc}
                       </div>
-                      <div style={{ fontSize: 10, color: '#999', marginTop: 8 }}>
-                        {entry.testAccount}
-                      </div>
                     </div>
-                  </Col>
+                    <Button 
+                      type="primary" 
+                      size="small"
+                      style={{ 
+                        background: entry.color, 
+                        borderColor: entry.color,
+                        borderRadius: 16,
+                        padding: '0 16px'
+                      }}
+                    >
+                      进入
+                    </Button>
+                  </div>
                 ))}
-              </Row>
+              </div>
+              <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px dashed #e8e8e8' }}>
+                <div style={{ textAlign: 'center', fontSize: 12, color: '#999' }}>
+                  💡 点击上方卡片可使用测试账号快速登录体验
+                </div>
+              </div>
             </Card>
           </Col>
 
