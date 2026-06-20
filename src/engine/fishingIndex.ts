@@ -217,7 +217,8 @@ function getSuggestion(score: number, factors: IndexFactor[], speciesName: strin
 export function calculateFishingIndex(
   envData: EnvironmentData,
   species: FishSpecies,
-  method: FishingMethod
+  method: FishingMethod,
+  spot?: { avgDepth: number; maxDepth: number }
 ): FishingIndex {
   const hour = getHours(new Date(envData.timestamp));
   const date = new Date(envData.timestamp);
@@ -232,13 +233,13 @@ export function calculateFishingIndex(
   const seasonBonus = getSeasonBonus(date, species);
   
   const factors: IndexFactor[] = [
-    { name: '气压', key: 'pressure', score: pressureResult.score, weight: 20, description: pressureResult.description },
-    { name: '水温', key: 'waterTemp', score: waterTempResult.score, weight: 18, description: waterTempResult.description },
-    { name: '溶解氧', key: 'dissolvedOxygen', score: doResult.score, weight: 15, description: doResult.description },
-    { name: '时段', key: 'time', score: timeResult.score, weight: 15, description: timeResult.description },
-    { name: '潮汐', key: 'tide', score: tideResult.score, weight: envData.tideType ? 12 : 5, description: tideResult.description },
-    { name: '月相', key: 'moon', score: moonResult.score, weight: 8, description: moonResult.description },
-    { name: '风力', key: 'wind', score: windResult.score, weight: 10, description: windResult.description },
+    { name: '气压', key: 'pressure', score: Math.round(pressureResult.score), weight: 20, description: pressureResult.description },
+    { name: '水温', key: 'waterTemp', score: Math.round(waterTempResult.score), weight: 18, description: waterTempResult.description },
+    { name: '溶解氧', key: 'dissolvedOxygen', score: Math.round(doResult.score), weight: 15, description: doResult.description },
+    { name: '时段', key: 'time', score: Math.round(timeResult.score), weight: 15, description: timeResult.description },
+    { name: '潮汐', key: 'tide', score: Math.round(tideResult.score), weight: envData.tideType ? 12 : 5, description: tideResult.description },
+    { name: '月相', key: 'moon', score: Math.round(moonResult.score), weight: 8, description: moonResult.description },
+    { name: '风力', key: 'wind', score: Math.round(windResult.score), weight: 10, description: windResult.description },
   ];
   
   const totalWeight = factors.reduce((sum, f) => sum + f.weight, 0);
@@ -248,9 +249,33 @@ export function calculateFishingIndex(
   const { level, levelName } = getLevelAndName(overallScore);
   const suggestion = getSuggestion(overallScore, factors, species.name);
   
-  const bestDepth = `${species.optimalDepth[0]}-${species.optimalDepth[1]}米`;
-  const baits = ['蚯蚓', '红虫', '玉米粒', '商品饵', '螺蛳'];
-  const bestBait = baits[Math.floor(Math.random() * baits.length)];
+  const [minSP, maxSP] = species.optimalDepth;
+  let depthMin = minSP;
+  let depthMax = maxSP;
+  if (spot) {
+    depthMin = Math.max(minSP, Math.max(1, spot.avgDepth - 3));
+    depthMax = Math.min(maxSP, spot.maxDepth);
+    if (depthMin >= depthMax) {
+      depthMin = Math.max(1, spot.avgDepth - 2);
+      depthMax = Math.min(spot.maxDepth, spot.avgDepth + 3);
+    }
+  }
+  const bestDepth = `${depthMin}-${depthMax}米`;
+  
+  const baitPriority: Record<string, string[]> = {
+    liyu: ['螺鲤+三合一', '蚯蚓', '玉米粒', '商品饵'],
+    caoyu: ['嫩玉米', '草鱼饵', '蚯蚓', '商品饵'],
+    qingyu: ['螺蛳', '蚌肉', '玉米粒', '商品饵'],
+    jiyu: ['红虫', '蚯蚓', '商品饵', '玉米粒'],
+    lianyong: ['鲢鳙酸臭饵', '草莓饵', '商品饵', '豆渣'],
+    guiyu: ['活虾', '泥鳅', '米诺', '软虫'],
+    bayu: ['沙蚕', '小鱼', 'VIB', '米诺'],
+    luyu: ['米诺', '软虫', 'VIB', '活虾'],
+    huangyu: ['蚯蚓', '蛆虫', '商品饵', '沙蚕'],
+    heiyu: ['雷蛙', '软虫', '米诺', '小鱼'],
+  };
+  const baits = baitPriority[species.id] || ['蚯蚓', '红虫', '玉米粒', '商品饵'];
+  const bestBait = baits[0];
   
   return {
     spotId: envData.spotId,

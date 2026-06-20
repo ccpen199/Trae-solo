@@ -39,6 +39,7 @@ export default function Dashboard() {
     setSelectedSpecies,
     setSelectedMethod,
     theme,
+    heatmapData,
   } = useAppStore();
   
   const [showSpotPicker, setShowSpotPicker] = useState(false);
@@ -48,6 +49,18 @@ export default function Dashboard() {
   if (!currentIndex || !currentEnvironment || !selectedSpot || !selectedSpecies || !selectedMethod) {
     return <div className="flex items-center justify-center h-96">加载中...</div>;
   }
+  
+  const methodTypeName: Record<string, string> = {
+    tai: '台钓',
+    lure: '路亚',
+    sea: '海钓',
+    blackpit: '黑坑',
+  };
+  
+  const formatFixed = (val: number, digits = 1) => {
+    if (typeof val !== 'number' || isNaN(val)) return '0';
+    return val.toFixed(digits);
+  };
   
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-lake-green-400';
@@ -271,7 +284,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex-1 text-left min-w-0">
                     <p className="font-medium text-sm truncate">{selectedMethod.name}</p>
-                    <p className="text-xs text-moonlight-400 truncate">{selectedMethod.type}</p>
+                    <p className="text-xs text-moonlight-400 truncate">{methodTypeName[selectedMethod.type] || selectedMethod.type}</p>
                   </div>
                   <ChevronRight size={16} className="text-moonlight-400 flex-shrink-0" />
                 </button>
@@ -319,8 +332,8 @@ export default function Dashboard() {
               <EnvCard
                 icon={<Thermometer size={20} />}
                 label="气温"
-                value={`${currentEnvironment.temperature}°C`}
-                sub={`水温 ${currentEnvironment.waterTemp}°C`}
+                value={`${formatFixed(currentEnvironment.temperature)}°C`}
+                sub={`水温 ${formatFixed(currentEnvironment.waterTemp)}°C`}
                 color="text-orange-400"
                 bgColor="bg-orange-500/10"
                 theme={theme}
@@ -328,7 +341,7 @@ export default function Dashboard() {
               <EnvCard
                 icon={<Droplets size={20} />}
                 label="气压"
-                value={`${currentEnvironment.pressure} hPa`}
+                value={`${formatFixed(currentEnvironment.pressure, 0)} hPa`}
                 sub={currentEnvironment.pressureTrend === 'rising' ? '上升趋势 ↗' : currentEnvironment.pressureTrend === 'falling' ? '下降趋势 ↘' : '稳定 →'}
                 color="text-blue-400"
                 bgColor="bg-blue-500/10"
@@ -337,7 +350,7 @@ export default function Dashboard() {
               <EnvCard
                 icon={<Wind size={20} />}
                 label="风力"
-                value={`${currentEnvironment.windSpeed} m/s`}
+                value={`${formatFixed(currentEnvironment.windSpeed)} m/s`}
                 sub={currentEnvironment.windDirectionName}
                 color="text-cyan-400"
                 bgColor="bg-cyan-500/10"
@@ -346,7 +359,7 @@ export default function Dashboard() {
               <EnvCard
                 icon={<Zap size={20} />}
                 label="溶解氧"
-                value={`${currentEnvironment.dissolvedOxygen} mg/L`}
+                value={`${formatFixed(currentEnvironment.dissolvedOxygen)} mg/L`}
                 sub={currentEnvironment.dissolvedOxygen >= 8 ? '溶氧充足' : currentEnvironment.dissolvedOxygen >= 5 ? '溶氧一般' : '溶氧偏低'}
                 color="text-emerald-400"
                 bgColor="bg-emerald-500/10"
@@ -405,7 +418,7 @@ export default function Dashboard() {
             <span className="w-3 h-3 rounded-sm bg-orange-500"></span> 高
           </div>
         </div>
-        <FishingHeatmap />
+        <FishingHeatmap data={heatmapData} height={460} />
       </div>
       
       {/* 指数因子详情 + 推荐钓点 */}
@@ -492,14 +505,37 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="p-4">
-                  <h4 className="font-medium mb-1">{spot.name}</h4>
-                  <div className="flex items-center gap-2 text-xs text-moonlight-400">
+                  <h4 className="font-medium mb-2">{spot.name}</h4>
+                  <div className="flex items-center gap-2 text-xs text-moonlight-400 mb-2">
                     <MapPin size={12} />
-                    <span>{spot.city}</span>
+                    <span>{spot.city || spot.province}</span>
                     <span>·</span>
-                    <span>水深 {spot.avgDepth}m</span>
+                    <span>{spot.latitude.toFixed(2)}°N, {spot.longitude.toFixed(2)}°E</span>
                   </div>
-                  <div className="flex items-center justify-between mt-3">
+                  <div className="grid grid-cols-3 gap-2 text-xs mb-3">
+                    <div className={cn(
+                      'p-2 rounded-lg text-center',
+                      theme === 'dark' ? 'bg-deep-sea-800/50' : 'bg-moonlight-50'
+                    )}>
+                      <p className="text-moonlight-400">水深</p>
+                      <p className="font-semibold text-lake-green-400">{spot.avgDepth}m</p>
+                    </div>
+                    <div className={cn(
+                      'p-2 rounded-lg text-center',
+                      theme === 'dark' ? 'bg-deep-sea-800/50' : 'bg-moonlight-50'
+                    )}>
+                      <p className="text-moonlight-400">障碍</p>
+                      <p className="font-semibold text-sunset-orange-400">{spot.obstacles.length}处</p>
+                    </div>
+                    <div className={cn(
+                      'p-2 rounded-lg text-center',
+                      theme === 'dark' ? 'bg-deep-sea-800/50' : 'bg-moonlight-50'
+                    )}>
+                      <p className="text-moonlight-400">鱼种</p>
+                      <p className="font-semibold text-deep-sea-400">{spot.fishSpecies.length}种</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
                     <span className={cn(
                       'text-xs px-2 py-1 rounded-full',
                       spot.difficulty === 'easy' ? 'bg-green-500/20 text-green-400' :

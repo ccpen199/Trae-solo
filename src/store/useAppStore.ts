@@ -64,12 +64,13 @@ export const useAppStore = create<AppState>((set, get) => {
     envData: EnvironmentData[],
     currentEnv: EnvironmentData,
     species: FishSpecies,
-    method: FishingMethod
+    method: FishingMethod,
+    spot: FishingSpot
   ) => {
     const key = getCalcCacheKey(spotId, speciesId, methodId);
     let cached = calcCache.get(key);
     if (!cached) {
-      const currentIdx = calculateFishingIndex(currentEnv, species, method);
+      const currentIdx = calculateFishingIndex(currentEnv, species, method, { avgDepth: spot.avgDepth, maxDepth: spot.maxDepth });
       const heatmap = generateHeatmapData(envData, species, method);
       cached = { currentIdx, heatmap };
       calcCache.set(key, cached);
@@ -83,7 +84,7 @@ export const useAppStore = create<AppState>((set, get) => {
   const initialEnv = getCachedEnvData(initialSpot.id, initialSpot.waterType === 'sea');
   const initialCalc = getCachedCalcData(
     initialSpot.id, initialSpecies.id, initialMethod.id,
-    initialEnv.envData, initialEnv.currentEnv, initialSpecies, initialMethod
+    initialEnv.envData, initialEnv.currentEnv, initialSpecies, initialMethod, initialSpot
   );
   
   return {
@@ -112,7 +113,7 @@ export const useAppStore = create<AppState>((set, get) => {
       const env = getCachedEnvData(spot.id, spot.waterType === 'sea');
       const calc = getCachedCalcData(
         spot.id, selectedSpecies!.id, selectedMethod!.id,
-        env.envData, env.currentEnv, selectedSpecies!, selectedMethod!
+        env.envData, env.currentEnv, selectedSpecies!, selectedMethod!, spot
       );
       
       set({
@@ -128,7 +129,7 @@ export const useAppStore = create<AppState>((set, get) => {
       const { selectedSpot, selectedMethod, environmentData, currentEnvironment } = get();
       const calc = getCachedCalcData(
         selectedSpot!.id, species.id, selectedMethod!.id,
-        environmentData, currentEnvironment!, species, selectedMethod!
+        environmentData, currentEnvironment!, species, selectedMethod!, selectedSpot!
       );
       
       set({
@@ -142,7 +143,7 @@ export const useAppStore = create<AppState>((set, get) => {
       const { selectedSpot, selectedSpecies, environmentData, currentEnvironment } = get();
       const calc = getCachedCalcData(
         selectedSpot!.id, selectedSpecies!.id, method.id,
-        environmentData, currentEnvironment!, selectedSpecies!, method
+        environmentData, currentEnvironment!, selectedSpecies!, method, selectedSpot!
       );
       
       set({
@@ -158,7 +159,7 @@ export const useAppStore = create<AppState>((set, get) => {
         const env = getCachedEnvData(selectedSpot.id, selectedSpot.waterType === 'sea');
         const calc = getCachedCalcData(
           selectedSpot.id, selectedSpecies.id, selectedMethod.id,
-          env.envData, env.currentEnv, selectedSpecies, selectedMethod
+          env.envData, env.currentEnv, selectedSpecies, selectedMethod, selectedSpot
         );
         
         set({

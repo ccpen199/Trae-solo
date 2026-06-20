@@ -113,6 +113,18 @@ export default function SpotDetail() {
     return format(new Date(timestamp * 1000), 'HH:mm');
   };
 
+  const formatFixed = (val: number, digits = 1) => {
+    if (typeof val !== 'number' || isNaN(val)) return '0';
+    return val.toFixed(digits);
+  };
+
+  const methodTypeName: Record<string, string> = {
+    tai: '台钓',
+    lure: '路亚',
+    sea: '海钓',
+    blackpit: '黑坑',
+  };
+
   const getRiskLabel = (risk: string) => {
     return risk === 'high' ? '高风险' : risk === 'medium' ? '中风险' : '低风险';
   };
@@ -311,28 +323,28 @@ export default function SpotDetail() {
                     <Gauge size={14} className="text-lake-green-400" />
                     <span className="text-xs text-moonlight-400">气压</span>
                   </div>
-                  <p className="text-xl font-bold">{currentEnvironment.pressure} <span className="text-xs text-moonlight-400">hPa</span></p>
+                  <p className="text-xl font-bold">{formatFixed(currentEnvironment.pressure, 0)} <span className="text-xs text-moonlight-400">hPa</span></p>
                 </div>
                 <div className="p-3 rounded-xl bg-deep-sea-800/30">
                   <div className="flex items-center gap-2 mb-1">
                     <Thermometer size={14} className="text-sunset-orange-400" />
                     <span className="text-xs text-moonlight-400">水温</span>
                   </div>
-                  <p className="text-xl font-bold">{currentEnvironment.waterTemp} <span className="text-xs text-moonlight-400">°C</span></p>
+                  <p className="text-xl font-bold">{formatFixed(currentEnvironment.waterTemp)} <span className="text-xs text-moonlight-400">°C</span></p>
                 </div>
                 <div className="p-3 rounded-xl bg-deep-sea-800/30">
                   <div className="flex items-center gap-2 mb-1">
                     <Droplets size={14} className="text-blue-400" />
                     <span className="text-xs text-moonlight-400">溶解氧</span>
                   </div>
-                  <p className="text-xl font-bold">{currentEnvironment.dissolvedOxygen} <span className="text-xs text-moonlight-400">mg/L</span></p>
+                  <p className="text-xl font-bold">{formatFixed(currentEnvironment.dissolvedOxygen)} <span className="text-xs text-moonlight-400">mg/L</span></p>
                 </div>
                 <div className="p-3 rounded-xl bg-deep-sea-800/30">
                   <div className="flex items-center gap-2 mb-1">
                     <Wind size={14} className="text-cyan-400" />
                     <span className="text-xs text-moonlight-400">风速</span>
                   </div>
-                  <p className="text-xl font-bold">{currentEnvironment.windSpeed} <span className="text-xs text-moonlight-400">m/s</span></p>
+                  <p className="text-xl font-bold">{formatFixed(currentEnvironment.windSpeed)} <span className="text-xs text-moonlight-400">m/s</span></p>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3 pt-2 border-t border-deep-sea-700/30">
@@ -615,7 +627,7 @@ export default function SpotDetail() {
                   <h4 className="font-semibold text-lg flex items-center gap-2">
                     {m.name}
                     <span className="text-xs px-2 py-0.5 rounded-full bg-deep-sea-500/10 text-deep-sea-400">
-                      {m.type}
+                      {methodTypeName[m.type] || m.type}
                     </span>
                   </h4>
                   <ChevronRight size={20} className="text-moonlight-500" />
