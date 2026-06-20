@@ -6,7 +6,7 @@ import zhCN from 'antd/locale/zh_CN'
 import App from './App'
 import './index.css'
 
-const CACHE_VERSION = 'v3_20250620'
+const CACHE_VERSION = 'v4_20250620_login_fix'
 const PREFIX = 'app_'
 try {
   const stored = localStorage.getItem(PREFIX + 'cache_version')

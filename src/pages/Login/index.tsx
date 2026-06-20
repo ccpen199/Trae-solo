@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import {
   Home,
@@ -14,29 +14,126 @@ import {
 } from 'lucide-react';
 import { useUserStore } from '@/store/userStore';
 import { cn } from '@/utils/cn';
-import { mockUsers } from '@/mocks/data/users';
-import type { User } from '@/types/entity';
+import type { User, UserRole } from '@/types/entity';
 
 type LoginRole = 'RESIDENT' | 'PROPERTY_STAFF' | 'COMMUNITY_ADMIN' | 'MERCHANT';
+
+const now = new Date().toISOString();
+const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+const testAccounts: Record<string, User & { password: string }> = {
+  admin: {
+    id: 'user_super_001',
+    username: 'admin',
+    realName: '张建国',
+    phone: '13800138001',
+    email: 'admin@community.com',
+    idCard: '110101198001011234',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
+    role: 'SUPER_ADMIN',
+    communityId: 'comm_default',
+    createdAt: thirtyDaysAgo,
+    updatedAt: now,
+    password: '123456',
+  },
+  superadmin: {
+    id: 'user_super_002',
+    username: 'superadmin',
+    realName: '李国强',
+    phone: '13800138002',
+    email: 'super@community.com',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=super',
+    role: 'SUPER_ADMIN',
+    communityId: 'comm_default',
+    createdAt: thirtyDaysAgo,
+    updatedAt: now,
+    password: '123456',
+  },
+  manager_yangguang: {
+    id: 'user_comm_001',
+    username: 'manager_yangguang',
+    realName: '王秀兰',
+    phone: '13900139001',
+    email: 'wangxl@yangguang.com',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wangxl',
+    role: 'COMMUNITY_ADMIN',
+    communityId: 'comm_yangguang',
+    createdAt: thirtyDaysAgo,
+    updatedAt: now,
+    password: '123456',
+  },
+  tech_zhang: {
+    id: 'user_prop_001',
+    username: 'tech_zhang',
+    realName: '张伟',
+    phone: '13700137001',
+    email: 'zhangwei@community.com',
+    idCard: '110101199005055678',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhangwei',
+    role: 'PROPERTY_STAFF',
+    communityId: 'comm_yangguang',
+    createdAt: thirtyDaysAgo,
+    updatedAt: now,
+    password: '123456',
+  },
+  zhangsan: {
+    id: 'user_resident_001',
+    username: 'zhangsan',
+    realName: '张三',
+    phone: '13600136001',
+    email: 'zhangsan@example.com',
+    idCard: '110101199203154321',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhangsan',
+    role: 'RESIDENT',
+    communityId: 'comm_yangguang',
+    buildingId: 'b001',
+    unitId: 'u001',
+    roomId: 'r00101',
+    createdAt: thirtyDaysAgo,
+    updatedAt: now,
+    password: '123456',
+  },
+  lisi: {
+    id: 'user_resident_002',
+    username: 'lisi',
+    realName: '李四',
+    phone: '13600136002',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=lisi',
+    role: 'RESIDENT',
+    communityId: 'comm_yangguang',
+    buildingId: 'b002',
+    unitId: 'u002',
+    roomId: 'r00201',
+    createdAt: thirtyDaysAgo,
+    updatedAt: now,
+    password: '123456',
+  },
+};
 
 const roleTabs: { key: LoginRole; label: string; icon: typeof Home; defaultUsername: string }[] = [
   { key: 'RESIDENT', label: '业主', icon: Home, defaultUsername: 'zhangsan' },
   { key: 'PROPERTY_STAFF', label: '物业管家', icon: Building2, defaultUsername: 'tech_zhang' },
-  { key: 'COMMUNITY_ADMIN', label: '物业管理员', icon: ShieldCheck, defaultUsername: 'admin' },
+  { key: 'COMMUNITY_ADMIN', label: '管理员', icon: ShieldCheck, defaultUsername: 'admin' },
   { key: 'MERCHANT', label: '商户', icon: Store, defaultUsername: 'admin' },
 ];
 
+const roleNameMap: Record<UserRole, string> = {
+  SUPER_ADMIN: '超级管理员',
+  COMMUNITY_ADMIN: '小区管理员',
+  PROPERTY_STAFF: '物业管家',
+  FINANCE_STAFF: '财务人员',
+  SECURITY_STAFF: '安保人员',
+  RESIDENT: '业主',
+};
+
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, logout } = useUserStore();
+  const location = useLocation();
+  const { login } = useUserStore();
 
-  useEffect(() => {
-    logout();
-  }, []);
-
-  const [selectedRole, setSelectedRole] = useState<LoginRole>('RESIDENT');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState<LoginRole>('COMMUNITY_ADMIN');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('123456');
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,36 +141,50 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!username.trim()) {
+      message.warning('请输入用户名');
+      return;
+    }
+    if (!password) {
+      message.warning('请输入密码');
       return;
     }
 
     setIsLoading(true);
 
-    setTimeout(() => {
-      const foundUser = mockUsers.find((u) => u.username === username);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-      if (!foundUser || password !== '123456') {
-        message.error('用户名或密码错误');
+      const account = testAccounts[username.trim().toLowerCase()];
+
+      if (!account) {
+        message.error(`账号 "${username}" 不存在，请检查用户名`);
         setIsLoading(false);
         return;
       }
 
-      const completeUser: User = {
-        ...foundUser,
-        email: foundUser.email || `${foundUser.username}@example.com`,
-        communityId: foundUser.communityId || 'comm_default',
-        buildingId: foundUser.buildingId,
-        unitId: foundUser.unitId,
-        roomId: foundUser.roomId,
-      };
+      if (account.password !== password) {
+        message.error('密码错误，请重新输入');
+        setIsLoading(false);
+        return;
+      }
 
-      const mockToken = 'mock-jwt-token-' + Date.now();
+      const { password: _pwd, ...userData } = account;
+      const user: User = { ...userData };
+      const token = `mock-token-${user.id}-${Date.now()}`;
 
-      login(completeUser, mockToken);
+      login(user, token);
+
+      const roleName = roleNameMap[user.role] || user.role;
+      message.success(`登录成功！欢迎，${user.realName}（${roleName}）`);
+
+      const from = (location.state as any)?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.error('登录失败:', error);
+      message.error('登录失败，请稍后重试');
       setIsLoading(false);
-      navigate('/dashboard');
-    }, 1200);
+    }
   };
 
   return (
@@ -138,6 +249,7 @@ export default function LoginPage() {
                     onClick={() => {
                       setSelectedRole(role.key);
                       setUsername(role.defaultUsername);
+                      setPassword('123456');
                     }}
                     className={cn(
                       'flex flex-col items-center gap-1.5 py-3 px-2 rounded-lg transition-all duration-300',
@@ -176,6 +288,7 @@ export default function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="请输入用户名"
                 className="input-field"
+                autoComplete="username"
               />
             </div>
 
@@ -190,6 +303,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="请输入密码"
                   className="input-field pr-12"
+                  autoComplete="current-password"
                 />
                 <button
                   type="button"
@@ -250,9 +364,32 @@ export default function LoginPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-8"
+            className="mt-6 p-3 rounded-lg bg-white/5 border border-white/10"
           >
-            <div className="flex items-center gap-4 mb-6">
+            <p className="text-xs text-neutral-500 mb-2">测试账号（密码均为 123456）：</p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="text-neutral-400">
+                <span className="text-primary-400">admin</span> 超级管理员
+              </div>
+              <div className="text-neutral-400">
+                <span className="text-primary-400">tech_zhang</span> 物业管家
+              </div>
+              <div className="text-neutral-400">
+                <span className="text-primary-400">zhangsan</span> 业主
+              </div>
+              <div className="text-neutral-400">
+                <span className="text-primary-400">manager_yangguang</span> 小区管理员
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.75, duration: 0.5 }}
+            className="mt-6"
+          >
+            <div className="flex items-center gap-4 mb-4">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/10" />
               <span className="text-xs text-neutral-500">其他登录方式</span>
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/10" />
