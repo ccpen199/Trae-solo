@@ -1,11 +1,29 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import * as echarts from 'echarts';
 import { useAppStore } from '@/store/useAppStore';
+import { HeatmapDataPoint } from '@/types';
 
-export default function FishingHeatmap() {
+interface FishingHeatmapProps {
+  data?: HeatmapDataPoint[];
+  height?: number;
+}
+
+export default function FishingHeatmap({ data: propData, height = 420 }: FishingHeatmapProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
-  const { heatmapData, theme } = useAppStore();
+  const { heatmapData: storeHeatmapData, theme } = useAppStore();
+  
+  const heatmapData = propData || storeHeatmapData;
+  
+  const days = useMemo(() => Array.from({ length: 14 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    return `${date.getMonth() + 1}/${date.getDate()}日`;
+  }), []);
+  
+  const hours = useMemo(() => Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`), []);
+  
+  const chartData = useMemo(() => heatmapData.map(item => [item.hour, item.day, item.score]), [heatmapData]);
   
   useEffect(() => {
     if (!chartRef.current) return;
@@ -15,16 +33,6 @@ export default function FishingHeatmap() {
     }
     
     const chart = chartInstance.current;
-    
-    const days = Array.from({ length: 14 }, (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() + i);
-      return `${date.getMonth() + 1}/${date.getDate()}日`;
-    });
-    
-    const hours = Array.from({ length: 24 }, (_, i) => `${i.toString().padStart(2, '0')}:00`);
-    
-    const data = heatmapData.map(item => [item.hour, item.day, item.score]);
     
     const option: echarts.EChartsOption = {
       tooltip: {
@@ -54,10 +62,10 @@ export default function FishingHeatmap() {
         },
       },
       grid: {
-        top: 10,
-        right: 40,
-        bottom: 30,
-        left: 60,
+        top: 20,
+        right: 60,
+        bottom: 50,
+        left: 70,
       },
       xAxis: {
         type: 'category',
@@ -68,7 +76,15 @@ export default function FishingHeatmap() {
         axisLabel: {
           color: theme === 'dark' ? '#94a3b8' : '#64748b',
           fontSize: 10,
-          interval: 2,
+          interval: 1,
+          rotate: 45,
+        },
+        name: '时间',
+        nameLocation: 'middle',
+        nameGap: 40,
+        nameTextStyle: {
+          color: theme === 'dark' ? '#94a3b8' : '#64748b',
+          fontSize: 12,
         },
       },
       yAxis: {
@@ -81,6 +97,13 @@ export default function FishingHeatmap() {
           color: theme === 'dark' ? '#94a3b8' : '#64748b',
           fontSize: 11,
         },
+        name: '日期',
+        nameLocation: 'middle',
+        nameGap: 50,
+        nameTextStyle: {
+          color: theme === 'dark' ? '#94a3b8' : '#64748b',
+          fontSize: 12,
+        },
       },
       visualMap: {
         min: 0,
@@ -92,6 +115,7 @@ export default function FishingHeatmap() {
         inRange: {
           color: ['#1e3a5f', '#0e7490', '#06b6d4', '#34d399', '#10b981', '#facc15', '#f97316', '#ef4444'],
         },
+        text: ['高', '低'],
         textStyle: {
           color: theme === 'dark' ? '#94a3b8' : '#64748b',
           fontSize: 10,
@@ -101,8 +125,14 @@ export default function FishingHeatmap() {
         {
           name: '钓鱼指数',
           type: 'heatmap',
-          data: data,
-          label: { show: false },
+          data: chartData,
+          label: {
+            show: false,
+          },
+          itemStyle: {
+            borderWidth: 1,
+            borderColor: theme === 'dark' ? 'rgba(30, 58, 95, 0.5)' : 'rgba(241, 245, 249, 0.8)',
+          },
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -115,7 +145,7 @@ export default function FishingHeatmap() {
       ],
     };
     
-    chart.setOption(option);
+    chart.setOption(option, true);
     
     const handleResize = () => chart.resize();
     window.addEventListener('resize', handleResize);
@@ -123,10 +153,10 @@ export default function FishingHeatmap() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [heatmapData, theme]);
+  }, [chartData, theme, days, hours]);
   
   return (
-    <div className="w-full h-[380px]">
+    <div className="w-full" style={{ height: `${height}px` }}>
       <div ref={chartRef} className="w-full h-full" />
     </div>
   );

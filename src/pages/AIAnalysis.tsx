@@ -62,14 +62,14 @@ export default function AIAnalysis() {
   };
   
   const getActivityColor = (level: string) => {
-    if (level === 'high') return 'text-lake-green-400';
-    if (level === 'medium') return 'text-yellow-400';
+    if (level === '极高' || level === 'high') return 'text-lake-green-400';
+    if (level === '较高' || level === 'medium' || level === '中等') return 'text-yellow-400';
     return 'text-sunset-orange-400';
   };
   
   const getActivityBg = (level: string) => {
-    if (level === 'high') return 'from-lake-green-500/20 to-lake-green-500/5';
-    if (level === 'medium') return 'from-yellow-500/20 to-yellow-500/5';
+    if (level === '极高' || level === 'high') return 'from-lake-green-500/20 to-lake-green-500/5';
+    if (level === '较高' || level === 'medium' || level === '中等') return 'from-yellow-500/20 to-yellow-500/5';
     return 'from-sunset-orange-500/20 to-sunset-orange-500/5';
   };
   
@@ -216,20 +216,20 @@ export default function AIAnalysis() {
               {/* 活跃度评分 */}
               <div className={cn(
                 'rounded-2xl p-6 bg-gradient-to-br',
-                getActivityBg(analysisResult.activityLevel),
+                getActivityBg(analysisResult.activityLevel.level),
                 theme === 'dark' ? 'border border-deep-sea-700/50' : 'border border-moonlight-200'
               )}>
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <Zap size={20} className={getActivityColor(analysisResult.activityLevel)} />
+                  <Zap size={20} className={getActivityColor(analysisResult.activityLevel.level)} />
                   鱼口活跃度预测
                 </h3>
                 <div className="flex items-center justify-center py-6">
                   <div className="text-center">
-                    <span className={cn('text-6xl font-bold', getActivityColor(analysisResult.activityLevel))}>
-                      {analysisResult.activityScore}
+                    <span className={cn('text-6xl font-bold', getActivityColor(analysisResult.activityLevel.level))}>
+                      {analysisResult.activityLevel.score}
                     </span>
-                    <p className="text-2xl font-bold mt-2">{analysisResult.activityLevelName}</p>
-                    <p className="text-moonlight-400 mt-2">{analysisResult.activityDescription}</p>
+                    <p className="text-2xl font-bold mt-2">{analysisResult.activityLevel.level}</p>
+                    <p className="text-moonlight-400 mt-2">{analysisResult.activityLevel.description}</p>
                   </div>
                 </div>
               </div>
@@ -244,7 +244,7 @@ export default function AIAnalysis() {
                   黄金时段推荐
                 </h3>
                 <div className="space-y-3">
-                  {analysisResult.primeTimes.map((time: any, index: number) => (
+                  {analysisResult.goldenHours.map((time: any, index: number) => (
                     <div
                       key={index}
                       className={cn(
@@ -263,11 +263,11 @@ export default function AIAnalysis() {
                       </div>
                       <span className={cn(
                         'px-3 py-1 rounded-full text-sm font-medium',
-                        time.level === 'excellent' ? 'bg-lake-green-500/20 text-lake-green-400' :
-                        time.level === 'good' ? 'bg-deep-sea-500/20 text-deep-sea-400' :
+                        time.score >= 80 ? 'bg-lake-green-500/20 text-lake-green-400' :
+                        time.score >= 65 ? 'bg-deep-sea-500/20 text-deep-sea-400' :
                         'bg-yellow-500/20 text-yellow-400'
                       )}>
-                        {time.levelName}
+                        {time.score}分
                       </span>
                     </div>
                   ))}
@@ -284,7 +284,7 @@ export default function AIAnalysis() {
                   装备匹配建议
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
-                  {analysisResult.gearRecommendations.map((gear: any, index: number) => (
+                  {analysisResult.equipmentSuggestions.map((gear: any, index: number) => (
                     <div
                       key={index}
                       className={cn(
@@ -293,8 +293,10 @@ export default function AIAnalysis() {
                       )}
                     >
                       <p className="text-xs text-moonlight-400 mb-1">{gear.type}</p>
-                      <p className="font-medium text-lake-green-400">{gear.recommendation}</p>
-                      <p className="text-xs text-moonlight-500 mt-1">{gear.reason}</p>
+                      <p className="font-medium text-lake-green-400">{gear.suggestion}</p>
+                      <p className="text-xs text-moonlight-500 mt-1">
+                        优先级：{gear.priority === 'high' ? '高' : gear.priority === 'medium' ? '中' : '低'}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -310,14 +312,70 @@ export default function AIAnalysis() {
                   钓法优化策略
                 </h3>
                 <div className="space-y-3">
-                  {analysisResult.strategyTips.map((tip: string, index: number) => (
+                  {analysisResult.strategyAdvice.map((tip: any, index: number) => (
                     <div key={index} className="flex gap-3">
                       <div className="w-6 h-6 rounded-full bg-lake-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Check size={12} className="text-lake-green-400" />
                       </div>
-                      <p className="text-sm text-moonlight-300">{tip}</p>
+                      <div>
+                        <p className="font-medium text-sm">{tip.title}</p>
+                        <p className="text-sm text-moonlight-400 mt-1">{tip.content}</p>
+                      </div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* 饵料推荐 */}
+              <div className={cn(
+                'rounded-2xl p-6',
+                theme === 'dark' ? 'bg-deep-sea-900/50 border border-deep-sea-700/50' : 'bg-white border border-moonlight-200'
+              )}>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Fish size={20} className="text-lake-green-400" />
+                  推荐饵料
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {analysisResult.baitRecommendations.map((bait: any, index: number) => (
+                    <div
+                      key={index}
+                      className={cn(
+                        'p-3 rounded-xl flex items-center justify-between',
+                        theme === 'dark' ? 'bg-deep-sea-800/50' : 'bg-moonlight-50'
+                      )}
+                    >
+                      <div>
+                        <p className="font-medium text-sm">{bait.name}</p>
+                        <p className="text-xs text-moonlight-400">{bait.reason}</p>
+                      </div>
+                      <span className="text-lake-green-400 font-bold text-sm">{bait.effectiveness}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 最佳深度 + 下次最佳日 */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className={cn(
+                  'rounded-2xl p-5',
+                  theme === 'dark' ? 'bg-deep-sea-900/50 border border-deep-sea-700/50' : 'bg-white border border-moonlight-200'
+                )}>
+                  <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                    <Droplets size={16} className="text-deep-sea-400" />
+                    最佳水层
+                  </h3>
+                  <p className="text-lg font-bold text-lake-green-400">{analysisResult.optimalDepth}</p>
+                </div>
+                <div className={cn(
+                  'rounded-2xl p-5',
+                  theme === 'dark' ? 'bg-deep-sea-900/50 border border-deep-sea-700/50' : 'bg-white border border-moonlight-200'
+                )}>
+                  <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                    <Calendar size={16} className="text-yellow-400" />
+                    下次最佳日
+                  </h3>
+                  <p className="text-lg font-bold text-lake-green-400">{analysisResult.nextBestDay.date}</p>
+                  <p className="text-xs text-moonlight-400 mt-1">{analysisResult.nextBestDay.reason}</p>
                 </div>
               </div>
             </>
@@ -345,7 +403,7 @@ interface FormFieldProps {
   value: string;
   onChange: (value: string) => void;
   theme: string;
-  type?: 'text' | 'select';
+  type?: 'text' | 'select' | 'textarea';
   options?: { value: string; label: string }[];
 }
 
@@ -368,6 +426,19 @@ function FormField({ label, placeholder, value, onChange, theme, type = 'text', 
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
+      ) : type === 'textarea' ? (
+        <textarea
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          rows={3}
+          className={cn(
+            'w-full px-4 py-2.5 rounded-xl border outline-none transition-all resize-none',
+            theme === 'dark'
+              ? 'bg-deep-sea-800/50 border-deep-sea-700 text-moonlight-100 placeholder-moonlight-500 focus:border-lake-green-500/50'
+              : 'bg-moonlight-50 border-moonlight-200 text-deep-sea-900 placeholder-moonlight-400 focus:border-lake-green-500/50'
+          )}
+        />
       ) : (
         <input
           type="text"

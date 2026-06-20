@@ -1,5 +1,6 @@
 import { useAppStore } from '@/store/useAppStore';
 import FishingHeatmap from '@/components/charts/FishingHeatmap';
+import { useNavigate } from 'react-router-dom';
 import {
   Thermometer,
   Droplets,
@@ -24,6 +25,7 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const {
     selectedSpot,
     selectedSpecies,
@@ -457,7 +459,10 @@ export default function Dashboard() {
             {spots.slice(0, 4).map((spot, index) => (
               <div
                 key={spot.id}
-                onClick={() => setSelectedSpot(spot)}
+                onClick={() => {
+                  setSelectedSpot(spot);
+                  navigate(`/spots/${spot.id}`);
+                }}
                 className={cn(
                   'rounded-xl overflow-hidden cursor-pointer transition-all duration-300 card-hover',
                   theme === 'dark' ? 'bg-deep-sea-800/50' : 'bg-moonlight-50'

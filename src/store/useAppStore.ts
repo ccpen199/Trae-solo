@@ -39,13 +39,52 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set, get) => {
+  const envCache = new Map<string, { envData: EnvironmentData[]; currentEnv: EnvironmentData }>();
+  const calcCache = new Map<string, { currentIdx: FishingIndex; heatmap: HeatmapDataPoint[] }>();
+  
+  const getEnvCacheKey = (spotId: string, isSea: boolean) => `${spotId}|${isSea}|${new Date().toDateString()}`;
+  const getCalcCacheKey = (spotId: string, speciesId: string, methodId: string) => `${spotId}|${speciesId}|${methodId}`;
+  
+  const getCachedEnvData = (spotId: string, isSea: boolean) => {
+    const key = getEnvCacheKey(spotId, isSea);
+    let cached = envCache.get(key);
+    if (!cached) {
+      const envData = generate14DayEnvironmentData(spotId, new Date(), isSea);
+      const currentEnv = getCurrentEnvironmentData(spotId, isSea);
+      cached = { envData, currentEnv };
+      envCache.set(key, cached);
+    }
+    return cached;
+  };
+  
+  const getCachedCalcData = (
+    spotId: string,
+    speciesId: string,
+    methodId: string,
+    envData: EnvironmentData[],
+    currentEnv: EnvironmentData,
+    species: FishSpecies,
+    method: FishingMethod
+  ) => {
+    const key = getCalcCacheKey(spotId, speciesId, methodId);
+    let cached = calcCache.get(key);
+    if (!cached) {
+      const currentIdx = calculateFishingIndex(currentEnv, species, method);
+      const heatmap = generateHeatmapData(envData, species, method);
+      cached = { currentIdx, heatmap };
+      calcCache.set(key, cached);
+    }
+    return cached;
+  };
+
   const initialSpot = fishingSpots[0];
   const initialSpecies = fishSpecies[0];
   const initialMethod = fishingMethods[0];
-  const envData = generate14DayEnvironmentData(initialSpot.id, new Date(), initialSpot.waterType === 'sea');
-  const currentEnv = getCurrentEnvironmentData(initialSpot.id, initialSpot.waterType === 'sea');
-  const currentIdx = calculateFishingIndex(currentEnv, initialSpecies, initialMethod);
-  const heatmap = generateHeatmapData(envData, initialSpecies, initialMethod);
+  const initialEnv = getCachedEnvData(initialSpot.id, initialSpot.waterType === 'sea');
+  const initialCalc = getCachedCalcData(
+    initialSpot.id, initialSpecies.id, initialMethod.id,
+    initialEnv.envData, initialEnv.currentEnv, initialSpecies, initialMethod
+  );
   
   return {
     selectedSpot: initialSpot,
@@ -54,10 +93,10 @@ export const useAppStore = create<AppState>((set, get) => {
     spots: fishingSpots,
     species: fishSpecies,
     methods: fishingMethods,
-    environmentData: envData,
-    currentEnvironment: currentEnv,
-    currentIndex: currentIdx,
-    heatmapData: heatmap,
+    environmentData: initialEnv.envData,
+    currentEnvironment: initialEnv.currentEnv,
+    currentIndex: initialCalc.currentIdx,
+    heatmapData: initialCalc.heatmap,
     user: currentUser,
     posts: socialPosts,
     catchRecords,
@@ -70,59 +109,63 @@ export const useAppStore = create<AppState>((set, get) => {
     
     setSelectedSpot: (spot: FishingSpot) => {
       const { selectedSpecies, selectedMethod } = get();
-      const envData = generate14DayEnvironmentData(spot.id, new Date(), spot.waterType === 'sea');
-      const currentEnv = getCurrentEnvironmentData(spot.id, spot.waterType === 'sea');
-      const currentIdx = calculateFishingIndex(currentEnv, selectedSpecies!, selectedMethod!);
-      const heatmap = generateHeatmapData(envData, selectedSpecies!, selectedMethod!);
+      const env = getCachedEnvData(spot.id, spot.waterType === 'sea');
+      const calc = getCachedCalcData(
+        spot.id, selectedSpecies!.id, selectedMethod!.id,
+        env.envData, env.currentEnv, selectedSpecies!, selectedMethod!
+      );
       
       set({
         selectedSpot: spot,
-        environmentData: envData,
-        currentEnvironment: currentEnv,
-        currentIndex: currentIdx,
-        heatmapData: heatmap,
+        environmentData: env.envData,
+        currentEnvironment: env.currentEnv,
+        currentIndex: calc.currentIdx,
+        heatmapData: calc.heatmap,
       });
     },
     
     setSelectedSpecies: (species: FishSpecies) => {
-      const { selectedSpot, selectedMethod, environmentData } = get();
-      const currentEnv = getCurrentEnvironmentData(selectedSpot!.id, selectedSpot!.waterType === 'sea');
-      const currentIdx = calculateFishingIndex(currentEnv, species, selectedMethod!);
-      const heatmap = generateHeatmapData(environmentData, species, selectedMethod!);
+      const { selectedSpot, selectedMethod, environmentData, currentEnvironment } = get();
+      const calc = getCachedCalcData(
+        selectedSpot!.id, species.id, selectedMethod!.id,
+        environmentData, currentEnvironment!, species, selectedMethod!
+      );
       
       set({
         selectedSpecies: species,
-        currentIndex: currentIdx,
-        heatmapData: heatmap,
+        currentIndex: calc.currentIdx,
+        heatmapData: calc.heatmap,
       });
     },
     
     setSelectedMethod: (method: FishingMethod) => {
-      const { selectedSpot, selectedSpecies, environmentData } = get();
-      const currentEnv = getCurrentEnvironmentData(selectedSpot!.id, selectedSpot!.waterType === 'sea');
-      const currentIdx = calculateFishingIndex(currentEnv, selectedSpecies!, method);
-      const heatmap = generateHeatmapData(environmentData, selectedSpecies!, method);
+      const { selectedSpot, selectedSpecies, environmentData, currentEnvironment } = get();
+      const calc = getCachedCalcData(
+        selectedSpot!.id, selectedSpecies!.id, method.id,
+        environmentData, currentEnvironment!, selectedSpecies!, method
+      );
       
       set({
         selectedMethod: method,
-        currentIndex: currentIdx,
-        heatmapData: heatmap,
+        currentIndex: calc.currentIdx,
+        heatmapData: calc.heatmap,
       });
     },
     
     recalculateIndex: () => {
       const { selectedSpot, selectedSpecies, selectedMethod } = get();
       if (selectedSpot && selectedSpecies && selectedMethod) {
-        const envData = generate14DayEnvironmentData(selectedSpot.id, new Date(), selectedSpot.waterType === 'sea');
-        const currentEnv = getCurrentEnvironmentData(selectedSpot.id, selectedSpot.waterType === 'sea');
-        const currentIdx = calculateFishingIndex(currentEnv, selectedSpecies, selectedMethod);
-        const heatmap = generateHeatmapData(envData, selectedSpecies, selectedMethod);
+        const env = getCachedEnvData(selectedSpot.id, selectedSpot.waterType === 'sea');
+        const calc = getCachedCalcData(
+          selectedSpot.id, selectedSpecies.id, selectedMethod.id,
+          env.envData, env.currentEnv, selectedSpecies, selectedMethod
+        );
         
         set({
-          environmentData: envData,
-          currentEnvironment: currentEnv,
-          currentIndex: currentIdx,
-          heatmapData: heatmap,
+          environmentData: env.envData,
+          currentEnvironment: env.currentEnv,
+          currentIndex: calc.currentIdx,
+          heatmapData: calc.heatmap,
         });
       }
     },
