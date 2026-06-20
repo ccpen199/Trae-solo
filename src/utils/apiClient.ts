@@ -1,9 +1,12 @@
 import { toast } from 'react-hot-toast';
+import type { AuthErrorCode } from '@shared/types';
+import { AuthError } from '@shared/types';
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
+  errorCode?: AuthErrorCode;
 }
 
 const getToken = (): string | null => {
@@ -26,23 +29,32 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 
   if (!response.ok || !result.success) {
     const errorMessage = result.error || `请求失败: ${response.status}`;
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
+    const errorCode = result.errorCode || 'NETWORK_ERROR';
+    
+    const authError = new AuthError(errorMessage, errorCode);
+    
+    if (!errorMessage.includes('登录') && !errorMessage.includes('密码') && !errorMessage.includes('账号')) {
+      toast.error(errorMessage);
+    }
+    
+    throw authError;
   }
 
   return result.data as T;
 };
 
 const handleError = (error: unknown): never => {
-  if (error instanceof Error) {
-    if (!error.message.includes('请求失败') && !error.message.includes('登录')) {
-      toast.error(error.message);
-    }
+  if (error instanceof AuthError) {
     throw error;
   }
+  
+  if (error instanceof Error) {
+    throw error;
+  }
+  
   const message = '网络错误，请稍后重试';
   toast.error(message);
-  throw new Error(message);
+  throw new AuthError(message, 'NETWORK_ERROR');
 };
 
 const apiClient = {

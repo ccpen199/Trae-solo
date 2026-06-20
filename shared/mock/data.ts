@@ -58,7 +58,40 @@ export const mockUsers: User[] = [
     phone: '13900139000',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
   },
+  {
+    id: 'talent-001',
+    role: 'talent',
+    name: '王小明',
+    email: 'talent1@example.com',
+    phone: '13900139001',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=talent1',
+  },
+  {
+    id: 'talent-002',
+    role: 'talent',
+    name: '李小红',
+    email: 'talent2@example.com',
+    phone: '13900139002',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=talent2',
+  },
+  {
+    id: 'talent-003',
+    role: 'talent',
+    name: '张小花',
+    email: 'talent3@example.com',
+    phone: '13900139003',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=talent3',
+  },
 ];
+
+export const mockUserPasswords: Record<string, string> = {
+  'hr-001': '123456',
+  'hr-002': '123456',
+  'admin-001': '123456',
+  'talent-001': '123456',
+  'talent-002': '123456',
+  'talent-003': '123456',
+};
 
 export const mockCompanies: Company[] = [
   {

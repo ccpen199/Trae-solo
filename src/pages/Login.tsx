@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { Button, Card, Badge } from '@/components/ui';
 import { useAuthStore } from '@/store/authStore';
-import type { UserRole } from '@shared/types';
-import { User, Lock, Eye, EyeOff, Check, MessageCircle, Smartphone, ArrowRight, Mail, Phone, Shield, Award, Video, Key } from 'lucide-react';
+import type { UserRole, AuthErrorCode, AuthError } from '@shared/types';
+import { User, Lock, Eye, EyeOff, Check, MessageCircle, Smartphone, ArrowRight, Mail, Phone, Shield, Award, Video, Key, AlertCircle, Info, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type LoginMode = 'login' | 'register';
@@ -18,6 +18,33 @@ interface FormErrors {
   verifyCode?: string;
 }
 
+interface AuthErrorInfo {
+  message: string;
+  code: AuthErrorCode;
+  suggestion?: string;
+}
+
+const testAccounts = [
+  { role: 'admin' as const, email: 'admin@platform.com', password: '123456', name: '系统管理员' },
+  { role: 'hr' as const, email: 'hr@hotelgroup.com', password: '123456', name: '张经理' },
+  { role: 'talent' as const, email: 'talent1@example.com', password: '123456', name: '王小明' },
+];
+
+const getErrorSuggestion = (code: AuthErrorCode): string => {
+  switch (code) {
+    case 'USER_NOT_FOUND':
+      return '请检查邮箱/手机号是否正确，或切换到注册模式创建新账号';
+    case 'INVALID_PASSWORD':
+      return '请确认密码是否正确，默认密码为 123456';
+    case 'ROLE_MISMATCH':
+      return '请在上方选择与账号匹配的角色标签（求职者/HR/管理员）';
+    case 'ACCOUNT_LOCKED':
+      return '请联系客服解锁账号';
+    default:
+      return '请检查网络连接后重试';
+  }
+};
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,6 +56,8 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [authError, setAuthError] = useState<AuthErrorInfo | null>(null);
+  const [showTestAccounts, setShowTestAccounts] = useState(false);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -41,6 +70,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     setErrors({});
+    setAuthError(null);
   }, [mode, role]);
 
   const validateEmail = (email: string) => {
@@ -99,10 +129,12 @@ export default function LoginPage() {
     e.preventDefault();
     if (!validateForm()) return;
 
+    setAuthError(null);
+
     try {
       if (mode === 'login') {
         const loginId = formData.email || formData.phone;
-        await login(loginId, formData.password);
+        await login(loginId, formData.password, role as UserRole);
       } else {
         await register({
           name: formData.name,
@@ -124,6 +156,26 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error('Auth error:', error);
+      if (error instanceof Error && 'code' in error) {
+        const authError = error as AuthError;
+        setAuthError({
+          message: authError.message,
+          code: authError.code,
+          suggestion: getErrorSuggestion(authError.code),
+        });
+      } else if (error instanceof Error) {
+        setAuthError({
+          message: error.message,
+          code: 'NETWORK_ERROR',
+          suggestion: getErrorSuggestion('NETWORK_ERROR'),
+        });
+      } else {
+        setAuthError({
+          message: '登录失败，请稍后重试',
+          code: 'NETWORK_ERROR',
+          suggestion: getErrorSuggestion('NETWORK_ERROR'),
+        });
+      }
     }
   };
 
@@ -137,6 +189,18 @@ export default function LoginPage() {
       name: '',
       verifyCode: '',
     });
+    setAuthError(null);
+  };
+
+  const fillTestAccount = (account: typeof testAccounts[0]) => {
+    setRole(account.role);
+    setFormData(prev => ({
+      ...prev,
+      email: account.email,
+      password: account.password,
+    }));
+    setShowTestAccounts(false);
+    setAuthError(null);
   };
 
   if (isAuthenticated) {
@@ -248,6 +312,55 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            {authError && (
+              <div className={cn(
+                'p-4 rounded-xl border-2 bg-red-50/50 backdrop-blur-sm',
+                authError.code === 'USER_NOT_FOUND' && 'border-orange-200',
+                authError.code === 'INVALID_PASSWORD' && 'border-orange-200',
+                authError.code === 'ROLE_MISMATCH' && 'border-primary-200',
+                authError.code === 'NETWORK_ERROR' && 'border-neutral-200',
+              )}>
+                <div className="flex items-start gap-3">
+                  <div className={cn(
+                    'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0',
+                    authError.code === 'ROLE_MISMATCH' ? 'bg-primary-100 text-primary-600' :
+                    authError.code === 'NETWORK_ERROR' ? 'bg-neutral-100 text-neutral-600' :
+                    'bg-orange-100 text-orange-600'
+                  )}>
+                    <AlertCircle size={18} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-neutral-800">{authError.message}</h4>
+                      <button
+                        type="button"
+                        onClick={() => setAuthError(null)}
+                        className="text-neutral-400 hover:text-neutral-600 transition-colors"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                    {authError.suggestion && (
+                      <p className="text-sm text-neutral-500 mt-1 flex items-start gap-1.5">
+                        <Info size={14} className="mt-0.5 flex-shrink-0" />
+                        {authError.suggestion}
+                      </p>
+                    )}
+                    <div className="mt-2.5 text-xs">
+                      <span className={cn(
+                        'inline-flex items-center gap-1 px-2 py-1 rounded-full font-medium',
+                        authError.code === 'USER_NOT_FOUND' && 'bg-orange-100 text-orange-700',
+                        authError.code === 'INVALID_PASSWORD' && 'bg-orange-100 text-orange-700',
+                        authError.code === 'ROLE_MISMATCH' && 'bg-primary-100 text-primary-700',
+                        authError.code === 'NETWORK_ERROR' && 'bg-neutral-100 text-neutral-700',
+                      )}>
+                        错误代码: {authError.code}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {mode === 'register' && (
               <div className="space-y-1.5">
                 <label className="flex items-center gap-2 text-sm font-medium text-neutral-700">
@@ -436,6 +549,80 @@ export default function LoginPage() {
               <Smartphone size={20} className="text-mint-500" />
               <span className="text-sm font-medium text-neutral-700">手机快捷登录</span>
             </button>
+          </div>
+
+          <div className="mt-6">
+            {!showTestAccounts ? (
+              <button
+                type="button"
+                onClick={() => setShowTestAccounts(true)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-neutral-500 hover:text-primary-600 transition-colors"
+              >
+                <Key size={14} />
+                查看测试账号
+              </button>
+            ) : (
+              <div className="bg-primary-50/50 border border-primary-100 rounded-xl p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-primary-800 flex items-center gap-2">
+                    <Key size={14} />
+                    测试账号（点击一键填充）
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={() => setShowTestAccounts(false)}
+                    className="text-neutral-400 hover:text-neutral-600 transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {testAccounts.map((account) => (
+                    <button
+                      key={account.role}
+                      type="button"
+                      onClick={() => fillTestAccount(account)}
+                      className={cn(
+                        'w-full flex items-center justify-between p-3 rounded-lg border transition-all text-left',
+                        role === account.role
+                          ? 'bg-white border-primary-300 shadow-sm'
+                          : 'bg-white/50 border-primary-100 hover:border-primary-300 hover:bg-white'
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={cn(
+                          'w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold',
+                          account.role === 'admin' && 'bg-primary-500',
+                          account.role === 'hr' && 'bg-mint-500',
+                          account.role === 'talent' && 'bg-accent-500',
+                        )}>
+                          {account.name[0]}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-neutral-800">{account.name}</p>
+                          <p className="text-xs text-neutral-500">{account.email}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className={cn(
+                          'inline-block px-2 py-0.5 rounded text-xs font-medium',
+                          account.role === 'admin' && 'bg-primary-100 text-primary-700',
+                          account.role === 'hr' && 'bg-mint-100 text-mint-700',
+                          account.role === 'talent' && 'bg-accent-100 text-accent-700',
+                        )}>
+                          {account.role === 'admin' ? '管理员' : account.role === 'hr' ? 'HR' : '求职者'}
+                        </span>
+                        <p className="text-xs text-neutral-400 mt-0.5">密码: {account.password}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-3 text-xs text-neutral-500 flex items-start gap-1.5">
+                  <Info size={12} className="mt-0.5 flex-shrink-0" />
+                  所有测试账号的默认密码均为 123456，请务必选择与账号匹配的角色标签
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="mt-8 text-center">

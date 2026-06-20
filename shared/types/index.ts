@@ -223,6 +223,33 @@ export interface User {
   companyId?: string;
 }
 
+export interface LoginCredentials {
+  email: string;
+  password: string;
+  role?: UserRole;
+}
+
+export interface LoginResult {
+  user: User;
+  token: string;
+}
+
+export type AuthErrorCode = 
+  | 'USER_NOT_FOUND'
+  | 'INVALID_PASSWORD'
+  | 'ROLE_MISMATCH'
+  | 'ACCOUNT_LOCKED'
+  | 'NETWORK_ERROR';
+
+export class AuthError extends Error {
+  code: AuthErrorCode;
+  constructor(message: string, code: AuthErrorCode) {
+    super(message);
+    this.code = code;
+    this.name = 'AuthError';
+  }
+}
+
 export interface AuthState {
   user: User | null;
   token: string | null;

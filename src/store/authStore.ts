@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import type { User, UserRole } from '@shared/types';
+import type { User, UserRole, LoginResult } from '@shared/types';
+import { AuthError } from '@shared/types';
 import apiClient from '@/utils/apiClient';
 
 interface LoginResponse {
@@ -28,7 +29,7 @@ interface AuthStoreState {
 }
 
 interface AuthStoreActions {
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, role?: UserRole) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   getCurrentUser: () => Promise<void>;
@@ -66,10 +67,10 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   isAuthenticated: !!initialToken,
   loading: false,
 
-  login: async (email: string, password: string) => {
+  login: async (email: string, password: string, role?: UserRole) => {
     set({ loading: true });
     try {
-      const result = await apiClient.post<LoginResponse>('/api/auth/login', { email, password });
+      const result = await apiClient.post<LoginResponse>('/api/auth/login', { email, password, role });
       localStorage.setItem('token', result.token);
       localStorage.setItem('user', JSON.stringify(result.user));
       set({
@@ -79,7 +80,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         loading: false,
       });
     } catch (error) {
-      set({ loading: false });
+      set({ loading: false, user: null, token: null, isAuthenticated: false });
       throw error;
     }
   },
