@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Table, Select, Button, Space, Statistic, Tag, Tabs, Tooltip } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
+import { Card, Row, Col, Table, Select, Button, Space, Statistic, Tag, Tabs, Tooltip, message } from 'antd';
 import { Line, Bar, Pie } from '@ant-design/charts';
 import { ReloadOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { apiEndpoints, ApiResponse } from '../api';
@@ -10,22 +10,75 @@ const { Option } = Select;
 const { TabPane } = Tabs;
 
 const ProsperityPage: React.FC = () => {
-  const { currentDivision } = useAppStore();
+  const { currentDivision, setCurrentDivision, setCurrentLevel } = useAppStore();
   const [currentIndex, setCurrentIndex] = useState<any>(null);
   const [historyData, setHistoryData] = useState<any[]>([]);
   const [rankingData, setRankingData] = useState<any[]>([]);
   const [periodType, setPeriodType] = useState<'daily' | 'weekly' | 'monthly'>('monthly');
   const [loading, setLoading] = useState(false);
+  const [industryZoneData, setIndustryZoneData] = useState<any[]>([]);
+  const requestIdRef = useRef(0);
+  const divisionLoadedRef = useRef(false);
+
+  useEffect(() => {
+    loadDivisionIfNeeded();
+  }, []);
 
   useEffect(() => {
     if (currentDivision?.id) {
       loadData();
     }
-  }, [periodType, currentDivision]);
+  }, [periodType, currentDivision?.id]);
+
+  useEffect(() => {
+    if (currentIndex?.industry_zones) {
+      const zoneData = Object.entries(currentIndex.industry_zones)
+        .map(([key, value]: [string, any]) => ({
+          type: getIndustryZoneLabel(key),
+          value: value.jobs || 0,
+          key,
+        }))
+        .filter(item => item.value > 0);
+      setIndustryZoneData(zoneData);
+    } else {
+      setIndustryZoneData([]);
+    }
+  }, [currentIndex]);
+
+  const uniqueHistoryData = () => {
+    const seen = new Set();
+    return historyData
+      .filter(item => {
+        const date = formatDate(item.period_start);
+        if (seen.has(date)) return false;
+        seen.add(date);
+        return true;
+      })
+      .sort((a, b) => new Date(a.period_start).getTime() - new Date(b.period_start).getTime());
+  };
+
+  const loadDivisionIfNeeded = async () => {
+    if (currentDivision?.id || divisionLoadedRef.current) return;
+    divisionLoadedRef.current = true;
+    
+    try {
+      const res = await apiEndpoints.divisions.getTree() as ApiResponse;
+      if (res.success && res.data?.length > 0) {
+        const province = res.data[0];
+        setCurrentLevel('province');
+        setCurrentDivision(province);
+      }
+    } catch (error) {
+      console.error('加载行政区划失败:', error);
+    }
+  };
 
   const loadData = async () => {
     if (!currentDivision?.id) return;
+    
+    const currentRequestId = ++requestIdRef.current;
     setLoading(true);
+    
     try {
       const [indexRes, historyRes, rankingRes] = await Promise.all([
         apiEndpoints.prosperity.getCurrent({ admin_division_id: currentDivision.id, period_type: periodType }) as Promise<ApiResponse>,
@@ -33,29 +86,45 @@ const ProsperityPage: React.FC = () => {
         apiEndpoints.prosperity.getRanking({ period_type: periodType, limit: 16 }) as Promise<ApiResponse>,
       ]);
 
+      if (currentRequestId !== requestIdRef.current) return;
+
       setCurrentIndex(indexRes.data);
-      setHistoryData(historyRes.data || []);
-      setRankingData(rankingRes.data || []);
+      setHistoryData(Array.isArray(historyRes.data) ? historyRes.data : []);
+      setRankingData(Array.isArray(rankingRes.data) ? rankingRes.data : []);
     } catch (error) {
       console.error('加载景气指数失败:', error);
+      if (currentRequestId === requestIdRef.current) {
+        setCurrentIndex(null);
+        setHistoryData([]);
+        setRankingData([]);
+      }
     } finally {
-      setLoading(false);
+      if (currentRequestId === requestIdRef.current) {
+        setLoading(false);
+      }
     }
   };
 
   const handleCalculateAll = async () => {
     try {
+      message.loading('正在计算景气指数...', 0);
       const res = await apiEndpoints.prosperity.calculateAll() as ApiResponse;
+      message.destroy();
       if (res.success) {
+        message.success('景气指数计算完成');
         loadData();
+      } else {
+        message.error(res.message || '计算失败');
       }
     } catch (error) {
+      message.destroy();
+      message.error('计算失败');
       console.error('计算失败:', error);
     }
   };
 
   const lineConfig = {
-    data: historyData.map((item: any) => ({
+    data: uniqueHistoryData().map((item: any) => ({
       date: formatDate(item.period_start),
       景气指数: item.prosperity_score,
       岗位数: item.total_jobs / 10,
@@ -65,31 +134,39 @@ const ProsperityPage: React.FC = () => {
     yField: ['景气指数', '岗位数', '投递数'],
     smooth: true,
     animation: { appear: { animation: 'path-in', duration: 1000 } },
+    point: { size: 3, shape: 'circle' },
+    legend: { position: 'top' },
   };
 
   const barConfig = {
     data: rankingData,
     xField: 'prosperity_score',
     yField: 'division_name',
-    seriesField: 'prosperity_score',
+    seriesField: 'division_name',
+    isGroup: false,
     color: ({ prosperity_score }: any) => {
       if (prosperity_score >= 80) return '#52c41a';
       if (prosperity_score >= 60) return '#faad14';
       return '#ff4d4f';
     },
     label: {
-      position: 'middle',
-      style: { fill: '#fff', opacity: 0.8 },
+      position: 'right',
+      style: { fill: '#333', opacity: 0.8 },
+      formatter: (datum: any) => datum.prosperity_score,
+    },
+    xAxis: {
+      title: { text: '景气指数', style: { fontSize: 12 } },
+    },
+    yAxis: {
+      title: { text: '州市', style: { fontSize: 12 } },
+    },
+    tooltip: {
+      formatter: (datum: any) => ({
+        name: datum.division_name,
+        value: `景气指数: ${datum.prosperity_score}`,
+      }),
     },
   };
-
-  const industryZoneData = currentIndex?.industry_zones
-    ? Object.entries(currentIndex.industry_zones).map(([key, value]: [string, any]) => ({
-        type: getIndustryZoneLabel(key),
-        value: value.jobs || 0,
-        key,
-      }))
-    : [];
 
   const pieConfig = {
     data: industryZoneData,
@@ -98,6 +175,13 @@ const ProsperityPage: React.FC = () => {
     radius: 0.8,
     label: { type: 'outer', content: '{name} {percentage}' },
     interactions: [{ type: 'element-active' }],
+    legend: { position: 'bottom' },
+    tooltip: {
+      formatter: (datum: any) => ({
+        name: datum.type,
+        value: `${datum.value} 个岗位`,
+      }),
+    },
   };
 
   const rankingColumns = [
@@ -260,6 +344,7 @@ const ProsperityPage: React.FC = () => {
                   rowKey="division_id"
                   pagination={false}
                   size="small"
+                  locale={{ emptyText: '暂无排名数据' }}
                 />
               </Col>
             </Row>
@@ -290,6 +375,7 @@ const ProsperityPage: React.FC = () => {
                       key: 'percentage',
                       render: (_: any, record: any) => {
                         const total = industryZoneData.reduce((sum, item) => sum + item.value, 0);
+                        if (total === 0) return '0%';
                         return `${((record.value / total) * 100).toFixed(1)}%`;
                       },
                     },
@@ -298,6 +384,7 @@ const ProsperityPage: React.FC = () => {
                   rowKey="key"
                   pagination={false}
                   size="small"
+                  locale={{ emptyText: '暂无产业带数据' }}
                 />
               </Col>
             </Row>

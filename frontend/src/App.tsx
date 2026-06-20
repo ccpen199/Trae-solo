@@ -71,7 +71,7 @@ const App: React.FC = () => {
 
   const handleLevelChange = (level: 'province' | 'city' | 'county') => {
     setCurrentLevel(level);
-    if (level === 'province') {
+    if (level === 'province' && divisions.length > 0) {
       setCurrentDivision(divisions[0]);
       navigate('/province');
     }

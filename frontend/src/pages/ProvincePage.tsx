@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Row, Col, Card, Statistic, Table, Button, Input, Select, Space, Tag, List, Tooltip } from 'antd';
 import { SearchOutlined, BuildOutlined, TeamOutlined, ReadOutlined, PlayCircleOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ const { Option } = Select;
 
 const ProvincePage: React.FC = () => {
   const navigate = useNavigate();
-  const { currentDivision } = useAppStore();
+  const { currentDivision, setCurrentLevel, setCurrentDivision } = useAppStore();
   const [stats, setStats] = useState<any>({});
   const [jobs, setJobs] = useState<any[]>([]);
   const [companies, setCompanies] = useState<any[]>([]);
@@ -29,17 +29,23 @@ const ProvincePage: React.FC = () => {
   const [showAllJobs, setShowAllJobs] = useState(false);
   const [showAllCompanies, setShowAllCompanies] = useState(false);
   const [cities, setCities] = useState<any[]>([]);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
-    loadData();
-  }, [currentDivision, showAllJobs, showAllCompanies, jobsPage, companiesPage]);
+    if (currentDivision?.id) {
+      loadData();
+    }
+  }, [currentDivision?.id, showAllJobs, showAllCompanies, jobsPage, companiesPage]);
 
   const loadData = async () => {
     if (!currentDivision?.id) return;
+    
+    const currentRequestId = ++requestIdRef.current;
     setLoading(true);
+    
     try {
-      const jobsPageSize = showAllJobs ? 100 : 8;
-      const companiesPageSize = showAllCompanies ? 100 : 6;
+      const jobsPageSize = showAllJobs ? 10 : 8;
+      const companiesPageSize = showAllCompanies ? 10 : 6;
       const [statsRes, jobsRes, companiesRes, fairsRes, policiesRes, zonesRes, prosperityRes, divisionsRes] = await Promise.all([
         apiEndpoints.stats.getSummary({ admin_division_id: currentDivision.id }) as Promise<ApiResponse>,
         apiEndpoints.jobs.getList({ admin_division_id: currentDivision.id, pageSize: jobsPageSize, page: jobsPage }) as Promise<ApiResponse>,
@@ -51,22 +57,33 @@ const ProvincePage: React.FC = () => {
         apiEndpoints.divisions.getTree() as Promise<ApiResponse>,
       ]);
 
-      setStats(statsRes.data);
-      setJobs(jobsRes.data || []);
+      if (currentRequestId !== requestIdRef.current) return;
+
+      setStats(statsRes.data || {});
+      setJobs(Array.isArray(jobsRes.data) ? jobsRes.data : []);
       setJobsTotal(jobsRes.total || 0);
-      setCompanies(companiesRes.data || []);
+      setCompanies(Array.isArray(companiesRes.data) ? companiesRes.data : []);
       setCompaniesTotal(companiesRes.total || 0);
-      setFairs(fairsRes.data || []);
-      setPolicies(policiesRes.data || []);
-      setIndustryZones(zonesRes.data || []);
+      setFairs(Array.isArray(fairsRes.data) ? fairsRes.data : []);
+      setPolicies(Array.isArray(policiesRes.data) ? policiesRes.data : []);
+      setIndustryZones(Array.isArray(zonesRes.data) ? zonesRes.data : []);
       setProsperity(prosperityRes.data);
       if (divisionsRes.success && divisionsRes.data?.[0]?.children) {
         setCities(divisionsRes.data[0].children);
       }
     } catch (error) {
       console.error('加载数据失败:', error);
+      if (currentRequestId === requestIdRef.current) {
+        setStats({});
+        setJobs([]);
+        setCompanies([]);
+        setFairs([]);
+        setPolicies([]);
+      }
     } finally {
-      setLoading(false);
+      if (currentRequestId === requestIdRef.current) {
+        setLoading(false);
+      }
     }
   };
 
@@ -74,30 +91,44 @@ const ProvincePage: React.FC = () => {
     setKeyword(value);
     setJobsPage(1);
     setShowAllJobs(true);
-    const res = await apiEndpoints.jobs.getList({
-      admin_division_id: currentDivision?.id,
-      keyword: value,
-      industry_zone: selectedZone,
-      pageSize: 100,
-      page: 1,
-    }) as ApiResponse;
-    setJobs(res.data || []);
-    setJobsTotal(res.total || 0);
+    const searchRequestId = ++requestIdRef.current;
+    try {
+      const res = await apiEndpoints.jobs.getList({
+        admin_division_id: currentDivision?.id,
+        keyword: value,
+        industry_zone: selectedZone,
+        pageSize: 10,
+        page: 1,
+      }) as ApiResponse;
+      if (searchRequestId === requestIdRef.current) {
+        setJobs(Array.isArray(res.data) ? res.data : []);
+        setJobsTotal(res.total || 0);
+      }
+    } catch (error) {
+      console.error('搜索失败:', error);
+    }
   };
 
   const handleZoneChange = async (value: string | undefined) => {
     setSelectedZone(value);
     setJobsPage(1);
     setShowAllJobs(true);
-    const res = await apiEndpoints.jobs.getList({
-      admin_division_id: currentDivision?.id,
-      keyword,
-      industry_zone: value,
-      pageSize: 100,
-      page: 1,
-    }) as ApiResponse;
-    setJobs(res.data || []);
-    setJobsTotal(res.total || 0);
+    const zoneRequestId = ++requestIdRef.current;
+    try {
+      const res = await apiEndpoints.jobs.getList({
+        admin_division_id: currentDivision?.id,
+        keyword,
+        industry_zone: value,
+        pageSize: 10,
+        page: 1,
+      }) as ApiResponse;
+      if (zoneRequestId === requestIdRef.current) {
+        setJobs(Array.isArray(res.data) ? res.data : []);
+        setJobsTotal(res.total || 0);
+      }
+    } catch (error) {
+      console.error('筛选失败:', error);
+    }
   };
 
   const handleShowAllJobs = () => {
@@ -108,6 +139,12 @@ const ProvincePage: React.FC = () => {
   const handleShowAllCompanies = () => {
     setShowAllCompanies(true);
     setCompaniesPage(1);
+  };
+
+  const handleCityCardClick = (city: any) => {
+    setCurrentLevel('city');
+    setCurrentDivision(city);
+    navigate(`/city/${city.id}`);
   };
 
   const jobColumns = [
@@ -472,7 +509,7 @@ const ProvincePage: React.FC = () => {
                 hoverable
                 size="small"
                 className="job-card"
-                onClick={() => navigate(`/city/${city.id}`)}
+                onClick={() => handleCityCardClick(city)}
                 style={{ textAlign: 'center', cursor: 'pointer' }}
                 bodyStyle={{ padding: 12 }}
               >

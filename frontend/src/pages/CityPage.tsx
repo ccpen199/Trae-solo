@@ -28,14 +28,17 @@ const CityPage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      loadDivisionInfo();
-      loadData();
+      const abortController = new AbortController();
+      loadDivisionInfo(abortController);
+      loadData(abortController);
+      return () => abortController.abort();
     }
   }, [id]);
 
-  const loadDivisionInfo = async () => {
+  const loadDivisionInfo = async (abortController?: AbortController) => {
     try {
       const res = await apiEndpoints.divisions.getTree() as ApiResponse;
+      if (abortController?.signal.aborted) return;
       if (res.success && res.data.length > 0) {
         const findDivision = (nodes: any[], targetId: string): any => {
           for (const node of nodes) {
@@ -47,8 +50,8 @@ const CityPage: React.FC = () => {
           }
           return null;
         };
-        const division = findDivision(res.data, id);
-        if (division) {
+        const division = findDivision(res.data, id!);
+        if (division && !abortController?.signal.aborted) {
           setDivisionInfo(division);
           setCurrentLevel('city');
           setCurrentDivision(division);
@@ -59,7 +62,7 @@ const CityPage: React.FC = () => {
     }
   };
 
-  const loadData = async () => {
+  const loadData = async (abortController?: AbortController) => {
     if (!id) return;
     setLoading(true);
     try {
@@ -72,6 +75,8 @@ const CityPage: React.FC = () => {
         apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
       ]);
 
+      if (abortController?.signal.aborted) return;
+
       setStats(statsRes.data);
       setJobs(jobsRes.data || []);
       setFairs(fairsRes.data || []);
@@ -81,7 +86,9 @@ const CityPage: React.FC = () => {
     } catch (error) {
       console.error('加载数据失败:', error);
     } finally {
-      setLoading(false);
+      if (!abortController?.signal.aborted) {
+        setLoading(false);
+      }
     }
   };
 
