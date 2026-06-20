@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Star, Send } from 'lucide-react';
 import { Input } from 'antd';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const { TextArea } = Input;
 

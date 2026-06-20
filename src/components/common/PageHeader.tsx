@@ -1,6 +1,6 @@
 import { Breadcrumb, type BreadcrumbProps } from 'antd';
 import { ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 interface PageHeaderProps {
   title: React.ReactNode;

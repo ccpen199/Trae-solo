@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Clock, AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
 import dayjs from 'dayjs';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export type SlaStatus = 'normal' | 'warning' | 'danger' | 'overdue' | 'completed';
 

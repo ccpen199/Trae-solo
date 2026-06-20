@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { Image as AntImage } from 'antd';
 import dayjs from 'dayjs';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import type { WorkOrderStatus } from '@/components/common/StatusBadge';
 
 export interface TimelineNode {

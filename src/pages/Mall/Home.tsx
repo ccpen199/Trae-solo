@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { Input, Carousel, message } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { mockProducts } from '@/mocks/data/mall';
 import type { Product } from '@/types/entity';
 

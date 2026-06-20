@@ -18,7 +18,7 @@ import {
 import { PageHeader } from '@/components/common/PageHeader';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { DesensitizeText } from '@/components/common/DesensitizeText';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import type { Bill, BillType, BillStatus } from '@/types/entity';
 import dayjs from 'dayjs';
 

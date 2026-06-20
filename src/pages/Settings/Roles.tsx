@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/common/PageHeader';
 import { EmptyState } from '@/components/common/EmptyState';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { Input, message } from 'antd';
 
 interface Role {

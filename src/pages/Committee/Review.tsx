@@ -20,7 +20,7 @@ import {
 import { PageHeader } from '@/components/common/PageHeader';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { EmptyState } from '@/components/common/EmptyState';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { Input } from 'antd';
 import dayjs from 'dayjs';
 

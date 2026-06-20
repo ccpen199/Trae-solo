@@ -6,7 +6,7 @@ import {
   Plus,
   type LucideIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export type EmptyType = 'default' | 'search' | 'network' | 'permission' | 'data';
 

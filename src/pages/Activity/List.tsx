@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Search,
@@ -12,12 +13,15 @@ import {
   CheckCircle2,
   Plus,
 } from 'lucide-react';
-import { Input, Select, Button, message, Progress } from 'antd';
+import { Input, Select, Button, message, Progress, Modal, Form, InputNumber, DatePicker } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
 import { EmptyState } from '@/components/common/EmptyState';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { mockActivities } from '@/mocks/data/activities';
 import type { Activity, ActivityStatus, ActivityCategory } from '@/types/entity';
+
+const { TextArea } = Input;
+const { RangePicker } = DatePicker;
 
 const categoryOptions = [
   { value: 'all', label: '全部分类' },
@@ -249,10 +253,21 @@ function ActivityCard({ activity, onClick, onSignUp }: ActivityCardProps) {
   );
 }
 
+const publishCategoryOptions = [
+  { value: 'CULTURE', label: '文化活动' },
+  { value: 'SPORTS', label: '体育运动' },
+  { value: 'EDUCATION', label: '教育培训' },
+  { value: 'CHARITY', label: '公益慈善' },
+  { value: 'OTHER', label: '其他' },
+];
+
 export default function ActivityList() {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [category, setCategory] = useState('all');
   const [status, setStatus] = useState('all');
+  const [publishModalVisible, setPublishModalVisible] = useState(false);
+  const [publishForm] = Form.useForm();
 
   const filteredActivities = useMemo(() => {
     return mockActivities.filter((activity) => {
@@ -269,7 +284,7 @@ export default function ActivityList() {
   }, [searchText, category, status]);
 
   const handleActivityClick = (activity: Activity) => {
-    message.info(`查看活动详情: ${activity.title}`);
+    navigate(`/activity/${activity.id}`);
   };
 
   const handleSignUp = (activity: Activity) => {
@@ -278,8 +293,16 @@ export default function ActivityList() {
     } else if (activity.maxParticipants && activity.currentParticipants >= activity.maxParticipants) {
       message.warning('活动已报满');
     } else {
-      message.success(`正在跳转到报名页面: ${activity.title}`);
+      navigate(`/activity/${activity.id}`);
     }
+  };
+
+  const handlePublishSubmit = () => {
+    publishForm.validateFields().then(() => {
+      setPublishModalVisible(false);
+      message.success('活动发布成功');
+      publishForm.resetFields();
+    });
   };
 
   return (
@@ -291,7 +314,7 @@ export default function ActivityList() {
         extra={
           <button
             className="btn-primary flex items-center gap-2"
-            onClick={() => message.info('发布活动')}
+            onClick={() => setPublishModalVisible(true)}
           >
             <Plus className="w-4 h-4" />
             发布活动
@@ -374,6 +397,90 @@ export default function ActivityList() {
           </motion.div>
         )}
       </div>
+
+      <Modal
+        title="发布活动"
+        open={publishModalVisible}
+        onCancel={() => setPublishModalVisible(false)}
+        footer={null}
+        width={560}
+      >
+        <Form form={publishForm} layout="vertical" className="mt-4">
+          <Form.Item
+            label="活动标题"
+            name="title"
+            rules={[{ required: true, message: '请输入活动标题' }]}
+          >
+            <Input placeholder="请输入活动标题" />
+          </Form.Item>
+          <Form.Item
+            label="活动分类"
+            name="category"
+            rules={[{ required: true, message: '请选择活动分类' }]}
+          >
+            <Select placeholder="请选择活动分类" options={publishCategoryOptions} />
+          </Form.Item>
+          <Form.Item label="活动时间" required>
+            <Input.Group compact>
+              <Form.Item
+                name="startTime"
+                noStyle
+                rules={[{ required: true, message: '请选择开始时间' }]}
+              >
+                <DatePicker
+                  showTime
+                  placeholder="开始时间"
+                  style={{ width: '50%' }}
+                />
+              </Form.Item>
+              <Form.Item
+                name="endTime"
+                noStyle
+                rules={[{ required: true, message: '请选择结束时间' }]}
+              >
+                <DatePicker
+                  showTime
+                  placeholder="结束时间"
+                  style={{ width: '50%' }}
+                />
+              </Form.Item>
+            </Input.Group>
+          </Form.Item>
+          <Form.Item
+            label="活动地点"
+            name="location"
+            rules={[{ required: true, message: '请输入活动地点' }]}
+          >
+            <Input placeholder="请输入活动地点" />
+          </Form.Item>
+          <div className="grid grid-cols-2 gap-4">
+            <Form.Item
+              label="最大人数"
+              name="maxParticipants"
+              rules={[{ required: true, message: '请输入最大人数' }]}
+            >
+              <InputNumber min={1} className="!w-full" placeholder="请输入最大人数" />
+            </Form.Item>
+            <Form.Item
+              label="报名费用"
+              name="fee"
+            >
+              <InputNumber min={0} className="!w-full" placeholder="免费请填0" addonAfter="元" />
+            </Form.Item>
+          </div>
+          <Form.Item
+            label="活动描述"
+            name="description"
+            rules={[{ required: true, message: '请输入活动描述' }]}
+          >
+            <TextArea rows={4} placeholder="请输入活动描述" />
+          </Form.Item>
+          <div className="flex justify-end gap-3 mt-4">
+            <Button onClick={() => setPublishModalVisible(false)}>取消</Button>
+            <Button type="primary" onClick={handlePublishSubmit}>发布活动</Button>
+          </div>
+        </Form>
+      </Modal>
     </div>
   );
 }

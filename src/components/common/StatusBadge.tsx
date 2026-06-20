@@ -11,7 +11,7 @@ import {
   Ban,
   type LucideIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export type WorkOrderStatus = 'pending' | 'processing' | 'completed' | 'cancelled' | 'overdue' | 'assigned';
 export type OrderStatus = 'unpaid' | 'paid' | 'refunded' | 'cancelled';

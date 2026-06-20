@@ -20,7 +20,7 @@ import {
 import { Input, Select, Upload as AntUpload, message } from 'antd';
 import type { UploadProps } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import type { WorkOrderType, WorkOrderPriority } from '@/types/entity';
 import { WORK_ORDER_TYPE, WORK_ORDER_PRIORITY } from '@/constants/enums';
 

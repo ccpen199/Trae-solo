@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Plus,
@@ -25,7 +26,7 @@ import { StatusBadge } from '@/components/common/StatusBadge';
 import { SlaCountdown } from '@/components/common/SlaCountdown';
 import { DesensitizeText } from '@/components/common/DesensitizeText';
 import { DataTable } from '@/components/common/DataTable';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import type { WorkOrder, WorkOrderStatus, WorkOrderType, WorkOrderPriority } from '@/types/entity';
 import { WORK_ORDER_TYPE, WORK_ORDER_PRIORITY } from '@/constants/enums';
 
@@ -304,6 +305,7 @@ function WorkOrderCard({ order, onClick }: { order: WorkOrder; onClick?: () => v
 }
 
 export default function WorkOrderList() {
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('kanban');
   const [searchText, setSearchText] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('');
@@ -344,11 +346,11 @@ export default function WorkOrderList() {
   }, [filteredOrders]);
 
   const handleCreateClick = () => {
-    message.success('跳转到新建工单页面');
+    navigate('/work-order/create');
   };
 
   const handleCardClick = (order: WorkOrder) => {
-    message.info(`查看工单详情: ${order.orderNo}`);
+    navigate(`/work-order/${order.id}`);
   };
 
   const handleResetFilter = () => {

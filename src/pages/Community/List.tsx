@@ -17,7 +17,7 @@ import {
 import { Input, message, Popconfirm, Button, Progress } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
 import { DataTable } from '@/components/common/DataTable';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import type { Community } from '@/types/entity';
 
 interface CommunityItem extends Community {

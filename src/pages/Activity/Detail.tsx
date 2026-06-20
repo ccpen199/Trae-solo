@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Calendar,
@@ -22,14 +23,10 @@ import {
 import { Button, Input, InputNumber, message, Modal, Progress, Form } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
 import { StatusBadge } from '@/components/common/StatusBadge';
-import { cn } from '@/lib/utils';
+import { EmptyState } from '@/components/common/EmptyState';
+import { cn } from '@/utils/cn';
 import { mockActivities, mockActivityParticipants } from '@/mocks/data/activities';
 import type { Activity } from '@/types/entity';
-
-const activityDetail = mockActivities[4];
-const participants = mockActivityParticipants.filter(
-  (p) => p.activityId === activityDetail.id
-);
 
 const organizerInfo = {
   name: '阳光花园社区居委会',
@@ -38,12 +35,38 @@ const organizerInfo = {
   address: '阳光花园社区活动中心',
 };
 
-const activityImages = [
-  activityDetail.coverImage || 'https://api.dicebear.com/7.x/shapes/svg?seed=act1',
-  'https://api.dicebear.com/7.x/shapes/svg?seed=act2',
-  'https://api.dicebear.com/7.x/shapes/svg?seed=act3',
-  'https://api.dicebear.com/7.x/shapes/svg?seed=act4',
-];
+function QrCodeSvg() {
+  const cells = 21;
+  const size = 168;
+  const cellSize = size / cells;
+  const pattern: number[][] = [];
+  for (let r = 0; r < cells; r++) {
+    const row: number[] = [];
+    for (let c = 0; c < cells; c++) {
+      const inFinder =
+        (r < 7 && c < 7) || (r < 7 && c >= cells - 7) || (r >= cells - 7 && c < 7);
+      if (inFinder) {
+        const lr = r < 7 ? r : r >= cells - 7 ? r - (cells - 7) : r;
+        const lc = c < 7 ? c : c >= cells - 7 ? c - (cells - 7) : c;
+        row.push(lr === 0 || lr === 6 || lc === 0 || lc === 6 || (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4) ? 1 : 0);
+      } else {
+        row.push(Math.random() > 0.5 ? 1 : 0);
+      }
+    }
+    pattern.push(row);
+  }
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {pattern.map((row, r) =>
+        row.map((cell, c) =>
+          cell ? (
+            <rect key={`${r}-${c}`} x={c * cellSize} y={r * cellSize} width={cellSize} height={cellSize} fill="#000" />
+          ) : null
+        )
+      )}
+    </svg>
+  );
+}
 
 const categoryLabels: Record<string, string> = {
   CULTURE: '文化活动',
@@ -93,12 +116,48 @@ function getStatusBadgeProps(status: string) {
 }
 
 export default function ActivityDetail() {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const activityDetail = mockActivities.find((a) => a.id === id);
+  const participants = activityDetail
+    ? mockActivityParticipants.filter((p) => p.activityId === activityDetail.id)
+    : [];
+
+  const activityImages = activityDetail
+    ? [
+        activityDetail.coverImage || 'https://api.dicebear.com/7.x/shapes/svg?seed=act1',
+        'https://api.dicebear.com/7.x/shapes/svg?seed=act2',
+        'https://api.dicebear.com/7.x/shapes/svg?seed=act3',
+        'https://api.dicebear.com/7.x/shapes/svg?seed=act4',
+      ]
+    : [];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isSignUpModalVisible, setIsSignUpModalVisible] = useState(false);
   const [isQrModalVisible, setIsQrModalVisible] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [form] = Form.useForm();
+
+  if (!activityDetail) {
+    return (
+      <div className="p-6">
+        <PageHeader
+          title="活动详情"
+          breadcrumb={[{ title: '首页' }, { title: '邻里活动' }, { title: '活动详情' }]}
+          showBack
+          onBack={() => navigate(-1)}
+        />
+        <div className="max-w-5xl mx-auto">
+          <EmptyState
+            type="search"
+            title="活动不存在"
+            description="未找到该活动，请返回活动列表查看"
+          />
+        </div>
+      </div>
+    );
+  }
 
   const progress = activityDetail.maxParticipants
     ? (activityDetail.currentParticipants / activityDetail.maxParticipants) * 100
@@ -134,8 +193,16 @@ export default function ActivityDetail() {
       return;
     }
     if (isSignUp) {
-      setIsSignUp(false);
-      message.success('已取消报名');
+      Modal.confirm({
+        title: '取消报名',
+        content: '确定要取消报名吗？取消后可重新报名。',
+        okText: '确认取消',
+        cancelText: '再想想',
+        onOk: () => {
+          setIsSignUp(false);
+          message.success('已取消报名');
+        },
+      });
     } else {
       setIsSignUpModalVisible(true);
     }
@@ -182,7 +249,7 @@ export default function ActivityDetail() {
           { title: '活动详情' },
         ]}
         showBack
-        onBack={() => message.info('返回活动列表')}
+        onBack={() => navigate(-1)}
         extra={
           <div className="flex items-center gap-2">
             <button
@@ -580,10 +647,8 @@ export default function ActivityDetail() {
           <p className="text-sm text-neutral-500 mb-6">
             请在活动现场出示此二维码进行签到
           </p>
-          <div className="w-48 h-48 mx-auto bg-white rounded-xl flex items-center justify-center mb-4">
-            <div className="w-40 h-40 bg-grid-pattern flex items-center justify-center">
-              <QrCode className="w-32 h-32 text-black" />
-            </div>
+          <div className="w-48 h-48 mx-auto bg-white rounded-xl flex items-center justify-center mb-4 p-2">
+            <QrCodeSvg />
           </div>
           <p className="text-sm text-neutral-400">
             活动：{activityDetail.title}

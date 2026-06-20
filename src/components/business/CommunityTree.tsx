@@ -12,7 +12,7 @@ import {
   Unlink,
 } from 'lucide-react';
 import { Tooltip } from 'antd';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export type NodeBindingStatus = 'bound' | 'unbound';
 export type NodePaymentStatus = 'paid' | 'partial' | 'unpaid' | 'overdue';

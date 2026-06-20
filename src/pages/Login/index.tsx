@@ -12,7 +12,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { useUserStore } from '@/store/userStore';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import type { UserRole } from '@/types/entity';
 
 type LoginRole = 'RESIDENT' | 'PROPERTY_STAFF' | 'COMMUNITY_ADMIN' | 'MERCHANT';

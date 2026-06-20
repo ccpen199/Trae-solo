@@ -26,7 +26,7 @@ import {
 import { PageHeader } from '@/components/common/PageHeader';
 import { DesensitizeText } from '@/components/common/DesensitizeText';
 import { EmptyState } from '@/components/common/EmptyState';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import dayjs from 'dayjs';
 
 type FamilyMember = 'self' | 'spouse' | 'father' | 'mother' | 'child';

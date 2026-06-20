@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   DollarSign,
@@ -9,6 +10,15 @@ import {
   Calendar,
   Activity,
   ChevronRight,
+  Wrench,
+  CreditCard,
+  Ticket,
+  ShoppingBag,
+  ClipboardList,
+  BarChart3,
+  FileCheck,
+  Send,
+  PenLine,
 } from 'lucide-react';
 import {
   LineChart,
@@ -30,7 +40,7 @@ import { StatusBadge } from '@/components/common/StatusBadge';
 import { HeatmapChart } from '@/components/business/HeatmapChart';
 import { useUserStore } from '@/store/userStore';
 import { WORK_ORDER_TYPE } from '@/constants/enums';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import {
   workOrderTrendData,
   workOrderTypeData,
@@ -179,7 +189,7 @@ function WorkOrderTypePie() {
   );
 }
 
-function SlaWarningList({ orders }: { orders: WorkOrder[] }) {
+function SlaWarningList({ orders, onOrderClick, onViewAll }: { orders: WorkOrder[]; onOrderClick: (id: string) => void; onViewAll: () => void }) {
   return (
     <div className="glass-card p-6 h-full">
       <div className="flex items-center justify-between mb-5">
@@ -187,7 +197,10 @@ function SlaWarningList({ orders }: { orders: WorkOrder[] }) {
           <AlertTriangle className="w-5 h-5 text-warning-400" />
           SLA预警工单
         </h3>
-        <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-0.5 transition-colors">
+        <button
+          onClick={onViewAll}
+          className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-0.5 transition-colors"
+        >
           查看全部 <ChevronRight className="w-3 h-3" />
         </button>
       </div>
@@ -195,6 +208,7 @@ function SlaWarningList({ orders }: { orders: WorkOrder[] }) {
         {orders.map((order) => (
           <div
             key={order.id}
+            onClick={() => onOrderClick(order.id)}
             className="p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/[0.07] hover:border-white/10 transition-all duration-300 cursor-pointer"
           >
             <div className="flex items-start justify-between gap-4 mb-3">
@@ -217,7 +231,7 @@ function SlaWarningList({ orders }: { orders: WorkOrder[] }) {
   );
 }
 
-function HotActivities({ activities }: { activities: ActivityEntity[] }) {
+function HotActivities({ activities, onActivityClick, onViewAll }: { activities: ActivityEntity[]; onActivityClick: (id: string) => void; onViewAll: () => void }) {
   return (
     <div className="glass-card p-6 h-full">
       <div className="flex items-center justify-between mb-5">
@@ -225,7 +239,10 @@ function HotActivities({ activities }: { activities: ActivityEntity[] }) {
           <Calendar className="w-5 h-5 text-success-400" />
           热门活动
         </h3>
-        <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-0.5 transition-colors">
+        <button
+          onClick={onViewAll}
+          className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-0.5 transition-colors"
+        >
           更多活动 <ChevronRight className="w-3 h-3" />
         </button>
       </div>
@@ -237,6 +254,7 @@ function HotActivities({ activities }: { activities: ActivityEntity[] }) {
           return (
             <div
               key={activity.id}
+              onClick={() => onActivityClick(activity.id)}
               className="flex gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/[0.07] hover:border-white/10 transition-all duration-300 cursor-pointer"
             >
               <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-primary-500/30 to-accent-500/20 flex-shrink-0 flex items-center justify-center">
@@ -272,7 +290,7 @@ function HotActivities({ activities }: { activities: ActivityEntity[] }) {
   );
 }
 
-function TopProducts({ products }: { products: Product[] }) {
+function TopProducts({ products, onProductClick }: { products: Product[]; onProductClick: (id: string) => void }) {
   return (
     <div className="glass-card p-6 h-full">
       <div className="flex items-center justify-between mb-5">
@@ -285,6 +303,7 @@ function TopProducts({ products }: { products: Product[] }) {
         {products.map((product, index) => (
           <div
             key={product.id}
+            onClick={() => onProductClick(product.id)}
             className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/[0.07] hover:border-white/10 transition-all duration-300 cursor-pointer"
           >
             <div
@@ -318,8 +337,58 @@ function TopProducts({ products }: { products: Product[] }) {
   );
 }
 
+const adminQuickActions = [
+  { key: 'dispatch', label: '一键派单', icon: Send, path: '/work-order' },
+  { key: 'publish', label: '发布活动', icon: Calendar, path: '/activity' },
+  { key: 'audit', label: '审核商户', icon: FileCheck, path: '/mall/product' },
+  { key: 'report', label: '查看报表', icon: BarChart3, path: '/report' },
+];
+
+const staffQuickActions = [
+  { key: 'accept', label: '接单处理', icon: ClipboardList, path: '/work-order' },
+  { key: 'progress', label: '进度更新', icon: PenLine, path: '/work-order' },
+  { key: 'repair', label: '快速报修', icon: Wrench, path: '/work-order/create' },
+];
+
+const residentQuickActions = [
+  { key: 'repair', label: '快速报修', icon: Wrench, path: '/work-order/create' },
+  { key: 'pay', label: '我要缴费', icon: CreditCard, path: '/finance/bill' },
+  { key: 'signup', label: '报名活动', icon: Ticket, path: '/activity' },
+  { key: 'shop', label: '在线购物', icon: ShoppingBag, path: '/mall' },
+];
+
+function QuickActions({ actions, onNavigate }: { actions: typeof adminQuickActions; onNavigate: (path: string) => void }) {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {actions.map((action) => (
+        <button
+          key={action.key}
+          onClick={() => onNavigate(action.path)}
+          className="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/[0.07] hover:border-white/10 transition-all duration-300 group"
+        >
+          <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center group-hover:bg-primary-500/20 transition-colors">
+            <action.icon className="w-5 h-5 text-primary-400" />
+          </div>
+          <span className="text-sm text-neutral-300 group-hover:text-white transition-colors">{action.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const { user } = useUserStore();
+
+  const isAdmin = user?.role === 'SUPER_ADMIN' || user?.role === 'COMMUNITY_ADMIN';
+  const isPropertyStaff = user?.role === 'PROPERTY_STAFF';
+  const isResident = user?.role === 'RESIDENT';
+
+  const quickActions = useMemo(() => {
+    if (isResident) return residentQuickActions;
+    if (isPropertyStaff) return staffQuickActions;
+    return adminQuickActions;
+  }, [isResident, isPropertyStaff]);
 
   const pageTitle = useMemo(() => {
     if (!user) return '工作台';
@@ -364,95 +433,286 @@ export default function DashboardPage() {
         animate="visible"
         className="space-y-6"
       >
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <StatCard
-            title="物业费收缴率"
-            value="92.5"
-            unit="%"
-            icon={DollarSign}
-            variant="primary"
-            trend={{ value: 3.2, direction: 'up', label: '同比' }}
-            sparklineData={sparklineData}
-          />
-          <StatCard
-            title="工单处理时效"
-            value="28"
-            unit="分钟"
-            icon={Clock}
-            variant="success"
-            trend={{ value: 12, direction: 'down', label: '平均响应' }}
-            sparklineData={[
-              { name: '', value: 50 },
-              { name: '', value: 42 },
-              { name: '', value: 38 },
-              { name: '', value: 35 },
-              { name: '', value: 32 },
-              { name: '', value: 30 },
-              { name: '', value: 28 },
-            ]}
-          />
-          <StatCard
-            title="本月电商GMV"
-            value="128,560"
-            prefix="¥"
-            icon={ShoppingCart}
-            variant="accent"
-            trend={{ value: 15.8, direction: 'up', label: '环比' }}
-            sparklineData={[
-              { name: '', value: 20 },
-              { name: '', value: 35 },
-              { name: '', value: 28 },
-              { name: '', value: 45 },
-              { name: '', value: 52 },
-              { name: '', value: 48 },
-              { name: '', value: 65 },
-            ]}
-          />
-          <StatCard
-            title="活动参与人次"
-            value="3,256"
-            icon={Users}
-            variant="warning"
-            trend={{ value: 25.3, direction: 'up', label: '同比' }}
-            sparklineData={[
-              { name: '', value: 15 },
-              { name: '', value: 28 },
-              { name: '', value: 32 },
-              { name: '', value: 40 },
-              { name: '', value: 48 },
-              { name: '', value: 55 },
-              { name: '', value: 62 },
-            ]}
-          />
+        <motion.div variants={itemVariants}>
+          <QuickActions actions={quickActions} onNavigate={(path) => navigate(path)} />
         </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-4"
-        >
-          <WorkOrderTrendChart />
-          <WorkOrderTypePie />
-        </motion.div>
+        {isAdmin && (
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <StatCard
+              title="物业费收缴率"
+              value="92.5"
+              unit="%"
+              icon={DollarSign}
+              variant="primary"
+              trend={{ value: 3.2, direction: 'up', label: '同比' }}
+              sparklineData={sparklineData}
+            />
+            <StatCard
+              title="工单处理时效"
+              value="28"
+              unit="分钟"
+              icon={Clock}
+              variant="success"
+              trend={{ value: 12, direction: 'down', label: '平均响应' }}
+              sparklineData={[
+                { name: '', value: 50 },
+                { name: '', value: 42 },
+                { name: '', value: 38 },
+                { name: '', value: 35 },
+                { name: '', value: 32 },
+                { name: '', value: 30 },
+                { name: '', value: 28 },
+              ]}
+            />
+            <StatCard
+              title="本月电商GMV"
+              value="128,560"
+              prefix="¥"
+              icon={ShoppingCart}
+              variant="accent"
+              trend={{ value: 15.8, direction: 'up', label: '环比' }}
+              sparklineData={[
+                { name: '', value: 20 },
+                { name: '', value: 35 },
+                { name: '', value: 28 },
+                { name: '', value: 45 },
+                { name: '', value: 52 },
+                { name: '', value: 48 },
+                { name: '', value: 65 },
+              ]}
+            />
+            <StatCard
+              title="活动参与人次"
+              value="3,256"
+              icon={Users}
+              variant="warning"
+              trend={{ value: 25.3, direction: 'up', label: '同比' }}
+              sparklineData={[
+                { name: '', value: 15 },
+                { name: '', value: 28 },
+                { name: '', value: 32 },
+                { name: '', value: 40 },
+                { name: '', value: 48 },
+                { name: '', value: 55 },
+                { name: '', value: 62 },
+              ]}
+            />
+          </motion.div>
+        )}
 
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-4"
-        >
-          <SlaWarningList orders={slaWarningOrders} />
-          <HotActivities activities={hotActivities} />
-        </motion.div>
+        {isPropertyStaff && (
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <StatCard
+              title="待处理工单"
+              value="12"
+              icon={ClipboardList}
+              variant="primary"
+              trend={{ value: 3, direction: 'up', label: '较昨日' }}
+              sparklineData={sparklineData}
+            />
+            <StatCard
+              title="工单处理时效"
+              value="28"
+              unit="分钟"
+              icon={Clock}
+              variant="success"
+              trend={{ value: 12, direction: 'down', label: '平均响应' }}
+              sparklineData={[
+                { name: '', value: 50 },
+                { name: '', value: 42 },
+                { name: '', value: 38 },
+                { name: '', value: 35 },
+                { name: '', value: 32 },
+                { name: '', value: 30 },
+                { name: '', value: 28 },
+              ]}
+            />
+            <StatCard
+              title="今日完工数"
+              value="8"
+              icon={FileCheck}
+              variant="accent"
+              trend={{ value: 15, direction: 'up', label: '较昨日' }}
+              sparklineData={[
+                { name: '', value: 20 },
+                { name: '', value: 35 },
+                { name: '', value: 28 },
+                { name: '', value: 45 },
+                { name: '', value: 52 },
+                { name: '', value: 48 },
+                { name: '', value: 65 },
+              ]}
+            />
+            <StatCard
+              title="SLA预警"
+              value="3"
+              icon={AlertTriangle}
+              variant="warning"
+              trend={{ value: 1, direction: 'down', label: '较昨日' }}
+              sparklineData={[
+                { name: '', value: 15 },
+                { name: '', value: 28 },
+                { name: '', value: 32 },
+                { name: '', value: 40 },
+                { name: '', value: 48 },
+                { name: '', value: 55 },
+                { name: '', value: 62 },
+              ]}
+            />
+          </motion.div>
+        )}
 
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 xl:grid-cols-2 gap-4"
-        >
-          <TopProducts products={topProducts} />
-          <HeatmapChart
-            data={heatmapData}
-            title="活动参与热力图"
-            height={380}
-          />
-        </motion.div>
+        {isResident && (
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <StatCard
+              title="待缴账单"
+              value="3"
+              icon={CreditCard}
+              variant="primary"
+              sparklineData={sparklineData}
+            />
+            <StatCard
+              title="我的工单"
+              value="5"
+              icon={ClipboardList}
+              variant="success"
+              sparklineData={[
+                { name: '', value: 50 },
+                { name: '', value: 42 },
+                { name: '', value: 38 },
+                { name: '', value: 35 },
+                { name: '', value: 32 },
+                { name: '', value: 30 },
+                { name: '', value: 28 },
+              ]}
+            />
+            <StatCard
+              title="进行中活动"
+              value="8"
+              icon={Calendar}
+              variant="accent"
+              sparklineData={[
+                { name: '', value: 20 },
+                { name: '', value: 35 },
+                { name: '', value: 28 },
+                { name: '', value: 45 },
+                { name: '', value: 52 },
+                { name: '', value: 48 },
+                { name: '', value: 65 },
+              ]}
+            />
+            <StatCard
+              title="优惠商品"
+              value="12"
+              icon={ShoppingBag}
+              variant="warning"
+              sparklineData={[
+                { name: '', value: 15 },
+                { name: '', value: 28 },
+                { name: '', value: 32 },
+                { name: '', value: 40 },
+                { name: '', value: 48 },
+                { name: '', value: 55 },
+                { name: '', value: 62 },
+              ]}
+            />
+          </motion.div>
+        )}
+
+        {isPropertyStaff && (
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+          >
+            <WorkOrderTrendChart />
+            <SlaWarningList
+              orders={slaWarningOrders}
+              onOrderClick={(id) => navigate(`/work-order/${id}`)}
+              onViewAll={() => navigate('/work-order')}
+            />
+          </motion.div>
+        )}
+
+        {isAdmin && (
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+          >
+            <WorkOrderTrendChart />
+            <WorkOrderTypePie />
+          </motion.div>
+        )}
+
+        {isAdmin && (
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+          >
+            <SlaWarningList
+              orders={slaWarningOrders}
+              onOrderClick={(id) => navigate(`/work-order/${id}`)}
+              onViewAll={() => navigate('/work-order')}
+            />
+            <HotActivities
+              activities={hotActivities}
+              onActivityClick={(id) => navigate(`/activity/${id}`)}
+              onViewAll={() => navigate('/activity')}
+            />
+          </motion.div>
+        )}
+
+        {isResident && (
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+          >
+            <HotActivities
+              activities={hotActivities}
+              onActivityClick={(id) => navigate(`/activity/${id}`)}
+              onViewAll={() => navigate('/activity')}
+            />
+            <SlaWarningList
+              orders={slaWarningOrders}
+              onOrderClick={(id) => navigate(`/work-order/${id}`)}
+              onViewAll={() => navigate('/work-order')}
+            />
+          </motion.div>
+        )}
+
+        {isAdmin && (
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 xl:grid-cols-2 gap-4"
+          >
+            <TopProducts
+              products={topProducts}
+              onProductClick={(id) => navigate(`/mall/product/${id}`)}
+            />
+            <HeatmapChart
+              data={heatmapData}
+              title="活动参与热力图"
+              height={380}
+            />
+          </motion.div>
+        )}
+
+        {isResident && (
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 xl:grid-cols-2 gap-4"
+          >
+            <TopProducts
+              products={topProducts}
+              onProductClick={(id) => navigate(`/mall/product/${id}`)}
+            />
+            <HotActivities
+              activities={hotActivities}
+              onActivityClick={(id) => navigate(`/activity/${id}`)}
+              onViewAll={() => navigate('/activity')}
+            />
+          </motion.div>
+        )}
       </motion.div>
     </div>
   );

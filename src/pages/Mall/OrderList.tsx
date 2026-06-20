@@ -14,7 +14,7 @@ import {
 import { Tabs, Button, message, Input } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
 import { EmptyState } from '@/components/common/EmptyState';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { mockOrders, mockOrderItems } from '@/mocks/data/mall';
 import type { Order, OrderItem, OrderStatus } from '@/types/entity';
 

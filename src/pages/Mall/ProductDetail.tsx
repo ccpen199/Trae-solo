@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { Tabs, Button, message, Rate } from 'antd';
 import { PageHeader } from '@/components/common/PageHeader';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { mockProducts } from '@/mocks/data/mall';
 
 const productDetail = {

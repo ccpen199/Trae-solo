@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff, Lock } from 'lucide-react';
 import { Tooltip } from 'antd';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export type DesensitizeType = 'phone' | 'name' | 'idCard' | 'bankCard';
 

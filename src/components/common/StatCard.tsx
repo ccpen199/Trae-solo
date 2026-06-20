@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
 } from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export type TrendDirection = 'up' | 'down' | 'flat';
 export type CardVariant = 'primary' | 'accent' | 'success' | 'warning' | 'danger';

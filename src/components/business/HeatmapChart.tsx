@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 export interface HeatmapDataPoint {
   building: string;

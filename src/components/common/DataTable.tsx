@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, ConfigProvider, type TableProps } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 interface DataTableProps<T> extends TableProps<T> {
   className?: string;

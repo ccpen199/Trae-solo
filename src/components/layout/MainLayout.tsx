@@ -1,31 +1,21 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
 import { useUserStore } from '@/store/userStore';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
-import type { UserRole } from './Sidebar';
-
-const roleMap: Record<string, UserRole> = {
-  SUPER_ADMIN: 'admin',
-  COMMUNITY_ADMIN: 'admin',
-  PROPERTY_STAFF: 'property',
-  FINANCE_STAFF: 'property',
-  SECURITY_STAFF: 'maintenance',
-  RESIDENT: 'resident',
-};
 
 export function MainLayout() {
-  const { user, isAuthenticated } = useUserStore();
-  const role: UserRole = user ? roleMap[user.role] || 'admin' : 'admin';
-  const collapsed = false;
+  const { isAuthenticated } = useUserStore();
+  const [collapsed, setCollapsed] = useState(false);
 
   if (!isAuthenticated) return null;
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar collapsed={collapsed} role={role} />
+    <div className="flex min-h-screen bg-neutral-950">
+      <Sidebar collapsed={collapsed} onToggleCollapsed={() => setCollapsed(!collapsed)} />
       <div className="flex-1 flex flex-col min-w-0">
-        <Header collapsed={collapsed} onToggleCollapsed={() => {}} />
+        <Header collapsed={collapsed} onToggleCollapsed={() => setCollapsed(!collapsed)} />
         <motion.main
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

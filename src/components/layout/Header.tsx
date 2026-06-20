@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Menu,
   Search,
@@ -10,8 +11,10 @@ import {
   HelpCircle,
   X,
 } from 'lucide-react';
-import { Badge, Dropdown, Avatar, Input, List, Tooltip } from 'antd';
-import { cn } from '@/lib/utils';
+import { Badge, Dropdown, Avatar, Input, List, Tooltip, message } from 'antd';
+import { cn } from '@/utils/cn';
+import { useUserStore } from '@/store/userStore';
+import type { UserRole } from '@/types/entity';
 
 interface HeaderProps {
   collapsed: boolean;
@@ -40,6 +43,21 @@ interface UserMenuDivider {
 }
 
 type UserMenuType = UserMenuItem | UserMenuDivider;
+
+const roleNameMap: Record<UserRole, string> = {
+  SUPER_ADMIN: '超级管理员',
+  COMMUNITY_ADMIN: '小区管理员',
+  PROPERTY_STAFF: '物业管家',
+  FINANCE_STAFF: '财务人员',
+  SECURITY_STAFF: '安保人员',
+  RESIDENT: '业主',
+};
+
+function desensitizeName(name: string): string {
+  if (!name) return '';
+  if (name.length <= 1) return name;
+  return name[0] + '*'.repeat(name.length - 1);
+}
 
 const mockNotifications: NotificationItem[] = [
   {
@@ -77,6 +95,8 @@ const mockNotifications: NotificationItem[] = [
 ];
 
 export function Header({ collapsed, onToggleCollapsed }: HeaderProps) {
+  const navigate = useNavigate();
+  const { user, logout } = useUserStore();
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -95,6 +115,23 @@ export function Header({ collapsed, onToggleCollapsed }: HeaderProps) {
   }, []);
 
   const unreadCount = mockNotifications.filter((n) => !n.read).length;
+
+  const displayName = user?.realName ? desensitizeName(user.realName) : '用户';
+  const displayRole = user?.role ? roleNameMap[user.role] : '';
+
+  const handleUserMenuClick = (key: string) => {
+    switch (key) {
+      case 'profile':
+        navigate('/profile');
+        break;
+      case 'logout':
+        logout();
+        navigate('/login');
+        break;
+      default:
+        break;
+    }
+  };
 
   const userMenuItems: UserMenuType[] = [
     {
@@ -172,7 +209,10 @@ export function Header({ collapsed, onToggleCollapsed }: HeaderProps) {
         />
       </div>
       <div className="px-4 py-3 border-t border-white/10 text-center">
-        <span className="text-sm text-primary-400 cursor-pointer hover:text-primary-300">
+        <span
+          className="text-sm text-primary-400 cursor-pointer hover:text-primary-300"
+          onClick={() => message.info('查看全部通知')}
+        >
           查看全部通知
         </span>
       </div>
@@ -188,6 +228,7 @@ export function Header({ collapsed, onToggleCollapsed }: HeaderProps) {
         return (
           <div
             key={item.key}
+            onClick={() => handleUserMenuClick(item.key)}
             className={cn(
               'flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors hover:bg-white/5',
               item.danger && 'text-danger-400 hover:text-danger-300 hover:bg-danger-500/5',
@@ -301,13 +342,14 @@ export function Header({ collapsed, onToggleCollapsed }: HeaderProps) {
               size={32}
               className="bg-gradient-to-br from-primary-400 to-primary-600 border-none"
               icon={<User className="w-4 h-4" />}
+              src={user?.avatar}
             />
             <div className="hidden lg:flex flex-col items-start">
               <span className="text-sm font-medium text-white leading-tight">
-                管理员
+                {displayName}
               </span>
               <span className="text-xs text-neutral-500 leading-tight">
-                超级管理员
+                {displayRole}
               </span>
             </div>
             <ChevronDown className="w-4 h-4 text-neutral-500 hidden lg:block" />

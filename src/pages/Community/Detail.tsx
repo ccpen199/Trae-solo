@@ -23,7 +23,7 @@ import {
   type CommunityTreeNode,
 } from '@/components/business/CommunityTree';
 import type { CardVariant } from '@/components/common/StatCard';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 interface RoomInfo {
   id: string;

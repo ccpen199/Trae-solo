@@ -48,7 +48,7 @@ import { PageHeader } from '@/components/common/PageHeader';
 import { StatCard } from '@/components/common/StatCard';
 import { DataTable } from '@/components/common/DataTable';
 import { EmptyState } from '@/components/common/EmptyState';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { mockProducts } from '@/mocks/data/mall';
 import type { Product } from '@/types/entity';
 
