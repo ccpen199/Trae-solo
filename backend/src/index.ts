@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import dotenv from 'dotenv';
 import { initDatabase, seedDatabase } from './db/schema';
+import { seedBusinessData } from './db/seedData';
 import authRoutes from './routes/auth';
 import propertyRoutes from './routes/properties';
 import userRoutes from './routes/user';
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 initDatabase();
 seedDatabase();
+seedBusinessData();
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: '房产交易平台后端服务运行正常', timestamp: new Date().toISOString() });

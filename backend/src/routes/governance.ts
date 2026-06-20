@@ -201,8 +201,8 @@ router.get('/agent/verify-records', authMiddleware, (req: AuthRequest, res) => {
 
 router.get('/price-warnings', (req, res) => {
   const list = db.prepare(
-    `SELECT p.id, p.title, p.price, p.area, p.district, p.community, p.images,
-            p.price_warning, p.is_verified,
+    `SELECT p.id, p.title, p.price, p.price_unit, p.area, p.district, p.community, p.images,
+            p.price_warning, p.is_verified, p.price_deviation,
             m.avg_price, m.destocking_cycle
      FROM properties p
      LEFT JOIN market_data m ON p.district = m.district AND p.type = m.type
@@ -217,7 +217,7 @@ router.get('/price-warnings', (req, res) => {
       const deviation = ((unitPrice - p.avg_price) / p.avg_price) * 100;
       return { ...p, deviation: Math.round(deviation * 100) / 100, unitPrice: Math.round(unitPrice) };
     }
-    return { ...p, deviation: 0, unitPrice: 0 };
+    return { ...p, deviation: p.price_deviation || 0, unitPrice: 0 };
   });
 
   res.json({ list: listWithDeviation });

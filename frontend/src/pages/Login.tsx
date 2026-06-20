@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, Input, Button, Card, Typography, Tabs, Select, Row, Col, Divider, Tag, message } from 'antd';
-import { UserOutlined, LockOutlined, PhoneOutlined, MailOutlined, ApartmentOutlined, ShopOutlined, UserSwitchOutlined, HomeOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, PhoneOutlined, MailOutlined, ApartmentOutlined, ShopOutlined, UserSwitchOutlined, HomeOutlined, SafetyOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/request';
 
@@ -39,6 +39,15 @@ const roleQuickEntries = [
     bgColor: '#f6ffed',
     testAccount: 'user001 / user123',
   },
+  {
+    key: 'admin',
+    icon: <SafetyOutlined style={{ fontSize: 32, color: '#faad14' }} />,
+    title: '管理员监管中心',
+    desc: '真房源治理 · 交易监管 · 备案管理',
+    color: '#faad14',
+    bgColor: '#fffbe6',
+    testAccount: 'admin / admin123',
+  },
 ];
 
 export default function Login({ onLogin }: Props) {
@@ -59,7 +68,7 @@ export default function Login({ onLogin }: Props) {
       } else if (user.role === 'developer') {
         navigate('/developer/dashboard');
       } else if (user.role === 'admin') {
-        navigate('/user');
+        navigate('/governance');
       } else {
         navigate('/');
       }
@@ -73,21 +82,29 @@ export default function Login({ onLogin }: Props) {
     setQuickRole(role);
     let username = '';
     let password = '';
+    let roleName = '';
     
     if (role === 'agent') {
       username = 'agent001';
       password = 'agent123';
+      roleName = '经纪人';
     } else if (role === 'developer') {
       username = 'dev001';
       password = 'dev123';
+      roleName = '开发商';
     } else if (role === 'owner') {
       username = 'user001';
       password = 'user123';
+      roleName = '业主';
+    } else if (role === 'admin') {
+      username = 'admin';
+      password = 'admin123';
+      roleName = '管理员';
     }
     
     try {
       const res: any = await api.post('/auth/login', { username, password });
-      message.success(`已登录${role === 'agent' ? '经纪人' : role === 'developer' ? '开发商' : '业主'}工作台`);
+      message.success(`已登录${roleName}工作台`);
       onLogin(res);
       
       const user = res.user;
@@ -95,6 +112,8 @@ export default function Login({ onLogin }: Props) {
         navigate('/agent/dashboard');
       } else if (user.role === 'developer') {
         navigate('/developer/dashboard');
+      } else if (user.role === 'admin') {
+        navigate('/governance');
       } else {
         navigate('/user');
       }
