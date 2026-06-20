@@ -61,17 +61,23 @@ router.post('/', (req: Request, res: Response): void => {
 router.delete('/:id', (req: Request, res: Response): void => {
   const { id } = req.params
 
-  const favorite = db.prepare('SELECT * FROM favorites WHERE id = ?').get(id) as Record<string, unknown> | undefined
+  let favorite = db.prepare('SELECT * FROM favorites WHERE id = ?').get(id) as Record<string, unknown> | undefined
+
+  if (!favorite) {
+    favorite = db.prepare('SELECT * FROM favorites WHERE case_id = ? OR designer_id = ?').get(id, id) as Record<string, unknown> | undefined
+  }
+
   if (!favorite) {
     res.status(404).json({ success: false, error: '收藏记录不存在' })
     return
   }
 
+  const favId = String(favorite.id)
   if (favorite.case_id) {
     db.prepare('UPDATE cases SET likes = CASE WHEN likes > 0 THEN likes - 1 ELSE 0 END WHERE id = ?').run(favorite.case_id)
   }
 
-  db.prepare('DELETE FROM favorites WHERE id = ?').run(id)
+  db.prepare('DELETE FROM favorites WHERE id = ?').run(favId)
 
   res.json({ success: true })
 })

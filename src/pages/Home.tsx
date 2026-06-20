@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Calculator, Glasses, Ruler, Palette, ChevronRight } from 'lucide-react'
+import { Calculator, Glasses, Ruler, Palette, ChevronRight, MapPin, Tag } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CaseCard from '@/components/CaseCard'
 import DesignerCard from '@/components/DesignerCard'
 import type { CaseItem, DesignerItem } from '@/lib/types'
-import { STYLES } from '@/lib/types'
+import { STYLES, REGIONS } from '@/lib/types'
 import { fetchApi } from '@/lib/api'
 
 const HERO_IMAGES = [
@@ -17,10 +17,20 @@ const HERO_IMAGES = [
 
 const QUICK_ENTRIES = [
   { icon: Calculator, label: '装修计算器', to: '/calculator', color: 'text-sage-400' },
-  { icon: Glasses, label: 'VR体验', to: '/cases', color: 'text-sage-400' },
+  { icon: Glasses, label: 'VR体验', to: '/cases?vr=1', color: 'text-sage-400' },
   { icon: Ruler, label: '预约量房', to: '/designers', color: 'text-sage-400' },
   { icon: Palette, label: '风格测试', to: '/cases', color: 'text-sage-400' },
 ]
+
+const entryAction = (label: string, cases: CaseItem[], activeStyle: string) => {
+  if (label === 'VR体验' && cases.length > 0) {
+    return `/cases/${cases[0].id}?vr=1`
+  }
+  if (label === '风格测试' && activeStyle) {
+    return `/cases?style=${encodeURIComponent(activeStyle)}`
+  }
+  return undefined
+}
 
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0)
@@ -29,6 +39,8 @@ export default function Home() {
   const [designers, setDesigners] = useState<DesignerItem[]>([])
   const [casesLoading, setCasesLoading] = useState(true)
   const [designersLoading, setDesignersLoading] = useState(true)
+  const [designerRegion, setDesignerRegion] = useState('')
+  const [designerStyle, setDesignerStyle] = useState('')
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -38,18 +50,29 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    fetchApi<{ items: CaseItem[] }>('/api/cases?limit=4')
+    setCasesLoading(true)
+    const params = new URLSearchParams()
+    params.set('limit', '4')
+    if (activeStyle && activeStyle !== '') {
+      params.set('style', activeStyle)
+    }
+    fetchApi<{ items: CaseItem[] }>(`/api/cases?${params.toString()}`)
       .then((data) => setCases(data.items))
       .catch(() => setCases([]))
       .finally(() => setCasesLoading(false))
-  }, [])
+  }, [activeStyle])
 
   useEffect(() => {
-    fetchApi<{ items: DesignerItem[] }>('/api/designers?limit=4')
+    setDesignersLoading(true)
+    const params = new URLSearchParams()
+    params.set('limit', '4')
+    if (designerRegion) params.set('region', designerRegion)
+    if (designerStyle) params.set('style', designerStyle)
+    fetchApi<{ items: DesignerItem[] }>(`/api/designers?${params.toString()}`)
       .then((data) => setDesigners(data.items))
       .catch(() => setDesigners([]))
       .finally(() => setDesignersLoading(false))
-  }, [])
+  }, [designerRegion, designerStyle])
 
   return (
     <div className="min-h-screen bg-sand-100">
@@ -129,7 +152,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <h2 className="font-display text-2xl font-bold text-sand-900">精选案例</h2>
             <Link
-              to="/cases"
+              to={`/cases${activeStyle ? `?style=${encodeURIComponent(activeStyle)}` : ''}`}
               className="flex items-center gap-1 text-sm text-sand-400 transition-colors hover:text-sand-500"
             >
               查看更多 <ChevronRight size={16} />
@@ -147,20 +170,64 @@ export default function Home() {
 
       <section className="py-16">
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl font-bold text-sand-900">推荐设计师</h2>
-          <div className="mt-8 flex gap-5 overflow-x-auto pb-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-display text-2xl font-bold text-sand-900">推荐设计师</h2>
+            <Link
+              to={`/designers${designerRegion || designerStyle ? `?region=${encodeURIComponent(designerRegion)}&style=${encodeURIComponent(designerStyle)}` : ''}`}
+              className="flex items-center gap-1 text-sm text-sand-400 transition-colors hover:text-sand-500"
+            >
+              查看更多 <ChevronRight size={16} />
+            </Link>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <MapPin size={16} className="text-sand-400" />
+              <select
+                value={designerRegion}
+                onChange={(e) => setDesignerRegion(e.target.value)}
+                className="rounded-lg border border-sand-200 bg-white px-3 py-1.5 text-sm text-sand-900 outline-none focus:border-sand-400"
+              >
+                <option value="">全部地区</option>
+                {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+              <Tag size={16} className="text-sage-400" />
+              <select
+                value={designerStyle}
+                onChange={(e) => setDesignerStyle(e.target.value)}
+                className="rounded-lg border border-sand-200 bg-white px-3 py-1.5 text-sm text-sand-900 outline-none focus:border-sand-400"
+              >
+                <option value="">全部风格</option>
+                {STYLES.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="mt-6 flex gap-5 overflow-x-auto pb-4">
             {designersLoading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <div
                     key={i}
-                    className="flex-shrink-0 w-72 h-32 animate-pulse rounded-xl bg-sand-200"
+                    className="flex-shrink-0 w-72 h-44 animate-pulse rounded-xl bg-sand-200"
                   />
                 ))
-              : designers.map((d) => (
+              : designers.length > 0
+              ? designers.map((d) => (
                   <div key={d.id} className="flex-shrink-0 w-72">
                     <DesignerCard designer={d} />
                   </div>
-                ))}
+                ))
+              : (
+                <div className="w-full py-12 text-center text-sand-900/40">
+                  <p className="font-display text-lg">该条件下暂无设计师</p>
+                  <button
+                    onClick={() => { setDesignerRegion(''); setDesignerStyle('') }}
+                    className="mt-2 text-sm text-sand-400 hover:underline"
+                  >
+                    清除筛选条件
+                  </button>
+                </div>
+              )}
           </div>
         </div>
       </section>
@@ -168,16 +235,19 @@ export default function Home() {
       <section className="py-16">
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {QUICK_ENTRIES.map((entry) => (
-              <Link
-                key={entry.label}
-                to={entry.to}
-                className="glass flex flex-col items-center gap-3 rounded-xl p-6 transition-colors hover:bg-sand-200/60"
-              >
-                <entry.icon size={32} className={entry.color} />
-                <span className="text-sm font-medium text-sand-900">{entry.label}</span>
-              </Link>
-            ))}
+            {QUICK_ENTRIES.map((entry) => {
+              const to = entryAction(entry.label, cases, activeStyle) || entry.to
+              return (
+                <Link
+                  key={entry.label}
+                  to={to}
+                  className="glass flex flex-col items-center gap-3 rounded-xl p-6 transition-colors hover:bg-sand-200/60"
+                >
+                  <entry.icon size={32} className={entry.color} />
+                  <span className="text-sm font-medium text-sand-900">{entry.label}</span>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>

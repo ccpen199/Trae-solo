@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { ArrowLeft, Star, ShieldCheck, Calendar, FileText, X } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -165,6 +165,7 @@ function cn(...classes: (string | false | undefined)[]) {
 
 export default function DesignerDetail() {
   const { id } = useParams<{ id: string }>()
+  const [searchParams] = useSearchParams()
   const [data, setData] = useState<DesignerItem | null>(null)
   const [loading, setLoading] = useState(true)
   const [showAppointment, setShowAppointment] = useState(false)
@@ -178,6 +179,17 @@ export default function DesignerDetail() {
       .catch(() => setData(null))
       .finally(() => setLoading(false))
   }, [id])
+
+  useEffect(() => {
+    const action = searchParams.get('action')
+    if (action === 'appointment') {
+      setShowQuote(false)
+      setShowAppointment(true)
+    } else if (action === 'quote') {
+      setShowAppointment(false)
+      setShowQuote(true)
+    }
+  }, [searchParams])
 
   if (loading) {
     return (

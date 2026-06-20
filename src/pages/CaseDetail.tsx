@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { ArrowLeft, ZoomIn, ZoomOut } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -152,6 +152,7 @@ function ConstructionTab({ nodes }: { nodes: ConstructionNodeItem[] }) {
 
 export default function CaseDetail() {
   const { id } = useParams<{ id: string }>()
+  const [searchParams] = useSearchParams()
   const [data, setData] = useState<CaseItem | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<TabKey>('平面图')
@@ -165,6 +166,18 @@ export default function CaseDetail() {
       .catch(() => setData(null))
       .finally(() => setLoading(false))
   }, [id])
+
+  useEffect(() => {
+    const tab = searchParams.get('tab') as TabKey | null
+    if (tab && TABS.includes(tab)) {
+      setActiveTab(tab)
+    }
+    const vr = searchParams.get('vr')
+    if (vr === '1' || vr === 'true') {
+      setActiveTab('3D全景')
+      setVrMode(true)
+    }
+  }, [searchParams])
 
   if (loading) {
     return (
