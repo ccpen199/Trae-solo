@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area, Legend, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
@@ -21,7 +22,24 @@ import {
   Newspaper,
   Tv,
   Smartphone,
-  MessageCircle
+  MessageCircle,
+  PenTool,
+  Camera,
+  AlertTriangle,
+  GraduationCap,
+  Database,
+  CheckCircle,
+  XCircle,
+  Clock as ClockIcon,
+  Copyright,
+  Send,
+  ChevronRight,
+  Layers,
+  Search,
+  Award,
+  BookOpen,
+  Video,
+  Mic
 } from 'lucide-react';
 import { dashboardStats, articleTrendData, channelDistribution, departmentStats, sentimentDistribution, hotEvents } from '../data/mockData';
 
@@ -37,7 +55,7 @@ type PlatformStatus = {
   sqliteLabel?: string;
 };
 
-function StatCard({ icon: Icon, title, value, unit, trend, trendValue, color }: {
+function StatCard({ icon: Icon, title, value, unit, trend, trendValue, color, onClick }: {
   icon: any;
   title: string;
   value: number | string;
@@ -45,9 +63,13 @@ function StatCard({ icon: Icon, title, value, unit, trend, trendValue, color }: 
   trend?: 'up' | 'down';
   trendValue?: string;
   color: string;
+  onClick?: () => void;
 }) {
   return (
-    <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 relative overflow-hidden group hover:border-primary-500/50 transition-all">
+    <div 
+      onClick={onClick}
+      className={`bg-dark-100 rounded-xl p-5 border border-slate-700/50 relative overflow-hidden group hover:border-primary-500/50 transition-all ${onClick ? 'cursor-pointer hover:scale-[1.02] hover:shadow-lg hover:shadow-primary-500/10' : ''}`}
+    >
       <div className="absolute top-0 right-0 w-32 h-32 opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" style={{ backgroundColor: color }}></div>
       <div className="relative">
         <div className="flex items-center justify-between mb-3">
@@ -65,22 +87,31 @@ function StatCard({ icon: Icon, title, value, unit, trend, trendValue, color }: 
           {typeof value === 'number' ? value.toLocaleString() : value}
           {unit && <span className="text-sm font-normal text-slate-400 ml-1">{unit}</span>}
         </div>
-        <div className="text-sm text-slate-400">{title}</div>
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-slate-400">{title}</div>
+          {onClick && (
+            <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-primary-400 transition-colors" />
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-function ChannelItem({ name, icon: Icon, value, total, color }: {
+function ChannelItem({ name, icon: Icon, value, total, color, onClick }: {
   name: string;
   icon: any;
   value: number;
   total: number;
   color: string;
+  onClick?: () => void;
 }) {
   const percentage = Math.round((value / total) * 100);
   return (
-    <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition-colors">
+    <div 
+      onClick={onClick}
+      className={`flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition-colors ${onClick ? 'cursor-pointer' : ''}`}
+    >
       <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}20` }}>
         <Icon className="w-5 h-5" style={{ color }} />
       </div>
@@ -100,9 +131,12 @@ function ChannelItem({ name, icon: Icon, value, total, color }: {
   );
 }
 
-function HotEventItem({ event, index }: { event: any; index: number }) {
+function HotEventItem({ event, index, onClick }: { event: any; index: number; onClick?: () => void }) {
   return (
-    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800/50 transition-colors">
+    <div 
+      onClick={onClick}
+      className={`flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800/50 transition-colors ${onClick ? 'cursor-pointer' : ''}`}
+    >
       <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
         index < 3 ? 'bg-red-500 text-white' : 'bg-slate-700 text-slate-300'
       }`}>
@@ -143,7 +177,79 @@ function LiveFeedItem({ item }: { item: any }) {
   );
 }
 
+function BusinessEntryCard({ icon: Icon, title, desc, color, onClick }: {
+  icon: any;
+  title: string;
+  desc: string;
+  color: string;
+  onClick: () => void;
+}) {
+  return (
+    <div 
+      onClick={onClick}
+      className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 hover:border-primary-500/50 cursor-pointer transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-primary-500/10 group"
+    >
+      <div className="flex items-start justify-between mb-4">
+        <div className={`w-12 h-12 rounded-xl flex items-center justify-center`} style={{ backgroundColor: `${color}20` }}>
+          <Icon className="w-6 h-6" style={{ color }} />
+        </div>
+        <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
+      </div>
+      <h4 className="text-white font-semibold mb-1">{title}</h4>
+      <p className="text-xs text-slate-400">{desc}</p>
+    </div>
+  );
+}
+
+function WorkflowStep({ icon: Icon, title, count, status, color, isLast }: {
+  icon: any;
+  title: string;
+  count: number;
+  status: string;
+  color: string;
+  isLast?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-3 flex-1">
+      <div className="flex flex-col items-center">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${color}20` }}>
+          <Icon className="w-5 h-5" style={{ color }} />
+        </div>
+        <div className="text-sm font-medium text-white mt-2">{title}</div>
+        <div className="text-xl font-bold" style={{ color }}>{count}</div>
+        <div className="text-xs text-slate-500">{status}</div>
+      </div>
+      {!isLast && (
+        <div className="flex-1 h-px bg-gradient-to-r from-slate-600/50 to-transparent hidden lg:block"></div>
+      )}
+    </div>
+  );
+}
+
+function StatusItem({ label, value, color, icon: Icon }: {
+  label: string;
+  value: number;
+  color: string;
+  icon?: any;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      {Icon && <Icon className="w-4 h-4" style={{ color }} />}
+      <div className="flex-1">
+        <div className="flex justify-between mb-1">
+          <span className="text-xs text-slate-400">{label}</span>
+          <span className="text-sm font-medium text-white">{value}</span>
+        </div>
+        <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-full rounded-full" style={{ width: `${Math.min(value / 150 * 100, 100)}%`, backgroundColor: color }}></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [platformStatus, setPlatformStatus] = useState<PlatformStatus>({
     status: 'loading',
@@ -284,22 +390,68 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
-        <StatCard icon={FileText} title="总发稿量" value={dashboardStats.totalArticles} unit="篇" trend="up" trendValue="12.5%" color="#3b82f6" />
-        <StatCard icon={Zap} title="今日发稿" value={dashboardStats.todayArticles} unit="篇" trend="up" trendValue="8.3%" color="#10b981" />
-        <StatCard icon={Eye} title="总阅读量" value={dashboardStats.totalViews} trend="up" trendValue="15.2%" color="#f59e0b" />
-        <StatCard icon={Share2} title="总转发" value={dashboardStats.totalShares} trend="up" trendValue="5.8%" color="#8b5cf6" />
-        <StatCard icon={Activity} title="传播力指数" value={dashboardStats.spreadIndex} trend="up" trendValue="3.2%" color="#06b6d4" />
-        <StatCard icon={Globe} title="矩阵覆盖率" value={dashboardStats.matrixCoverage} unit="%" trend="up" trendValue="1.5%" color="#ec4899" />
+        <StatCard icon={FileText} title="总发稿量" value={dashboardStats.totalArticles} unit="篇" trend="up" trendValue="12.5%" color="#3b82f6" onClick={() => navigate('/editor')} />
+        <StatCard icon={Zap} title="今日发稿" value={dashboardStats.todayArticles} unit="篇" trend="up" trendValue="8.3%" color="#10b981" onClick={() => navigate('/editor')} />
+        <StatCard icon={Eye} title="总阅读量" value={dashboardStats.totalViews} trend="up" trendValue="15.2%" color="#f59e0b" onClick={() => navigate('/sentiment')} />
+        <StatCard icon={Share2} title="总转发" value={dashboardStats.totalShares} trend="up" trendValue="5.8%" color="#8b5cf6" onClick={() => navigate('/sentiment')} />
+        <StatCard icon={Activity} title="传播力指数" value={dashboardStats.spreadIndex} trend="up" trendValue="3.2%" color="#06b6d4" onClick={() => navigate('/sentiment')} />
+        <StatCard icon={Globe} title="矩阵覆盖率" value={dashboardStats.matrixCoverage} unit="%" trend="up" trendValue="1.5%" color="#ec4899" onClick={() => navigate('/editor')} />
+      </div>
+
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <Layers className="w-5 h-5 text-primary-400" />
+            业务快速入口
+          </h3>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <BusinessEntryCard 
+            icon={PenTool} 
+            title="编辑后台" 
+            desc="稿件编辑·三审三校·一键分发" 
+            color="#3b82f6" 
+            onClick={() => navigate('/editor')} 
+          />
+          <BusinessEntryCard 
+            icon={Camera} 
+            title="记者移动端" 
+            desc="素材回传·AI转写·选题申报" 
+            color="#10b981" 
+            onClick={() => navigate('/reporter')} 
+          />
+          <BusinessEntryCard 
+            icon={AlertTriangle} 
+            title="舆情监测" 
+            desc="热点追踪·舆情简报·预警处置" 
+            color="#f59e0b" 
+            onClick={() => navigate('/sentiment')} 
+          />
+          <BusinessEntryCard 
+            icon={GraduationCap} 
+            title="培训管理" 
+            desc="在线学习·考试认证·学时统计" 
+            color="#8b5cf6" 
+            onClick={() => navigate('/training')} 
+          />
+          <BusinessEntryCard 
+            icon={Database} 
+            title="内容资产" 
+            desc="素材管理·版权标记·授权加工" 
+            color="#06b6d4" 
+            onClick={() => navigate('/assets')} 
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="lg:col-span-2 bg-dark-100 rounded-xl p-5 border border-slate-700/50">
+        <div className="lg:col-span-2 bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-white">发稿量与传播趋势</h3>
-            <div className="flex gap-4 text-xs">
-              <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-primary-500"></span>发稿量</span>
-              <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-green-500"></span>阅读量</span>
-            </div>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              查看详情
+              <ChevronRight className="w-3 h-3" />
+            </button>
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -328,8 +480,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50">
-          <h3 className="text-lg font-semibold text-white mb-4">渠道传播分布</h3>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white">渠道传播分布</h3>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              分发管理
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
           <div className="h-48">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -367,13 +525,22 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-400" />
-            热点事件排行
-          </h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <Zap className="w-5 h-5 text-yellow-400" />
+              热点事件排行
+            </h3>
+            <button 
+              onClick={() => navigate('/sentiment')}
+              className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1"
+            >
+              更多
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
           <div className="space-y-1">
             {hotEvents.slice(0, 5).map((event, index) => (
-              <HotEventItem key={event.id} event={event} index={index} />
+              <HotEventItem key={event.id} event={event} index={index} onClick={() => navigate('/sentiment')} />
             ))}
           </div>
         </div>
@@ -390,20 +557,32 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50">
-          <h3 className="text-lg font-semibold text-white mb-4">媒体矩阵效能</h3>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white">媒体矩阵效能</h3>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              分发配置
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
           <div className="space-y-3">
-            <ChannelItem name="微信公众号" icon={MessageCircle} value={320000} total={500000} color="#07c160" />
-            <ChannelItem name="抖音" icon={Tv} value={1250000} total={2000000} color="#000000" />
-            <ChannelItem name="微博" icon={Activity} value={580000} total={1000000} color="#e6162d" />
-            <ChannelItem name="APP" icon={Smartphone} value={450000} total={800000} color="#3b82f6" />
+            <ChannelItem name="微信公众号" icon={MessageCircle} value={320000} total={500000} color="#07c160" onClick={() => navigate('/editor')} />
+            <ChannelItem name="抖音" icon={Tv} value={1250000} total={2000000} color="#000000" onClick={() => navigate('/editor')} />
+            <ChannelItem name="微博" icon={Activity} value={580000} total={1000000} color="#e6162d" onClick={() => navigate('/editor')} />
+            <ChannelItem name="APP" icon={Smartphone} value={450000} total={800000} color="#3b82f6" onClick={() => navigate('/editor')} />
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50">
-          <h3 className="text-lg font-semibold text-white mb-4">各部门发稿统计</h3>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white">各部门发稿统计</h3>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              查看明细
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={departmentStats} layout="vertical">
@@ -431,6 +610,157 @@ export default function Dashboard() {
                 <Radar name="评分" dataKey="A" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
               </RadarChart>
             </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 mt-6">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <Layers className="w-5 h-5 text-primary-400" />
+            采编发全流程概览
+          </h3>
+          <button 
+            onClick={() => navigate('/editor')}
+            className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1"
+          >
+            进入流程
+            <ChevronRight className="w-3 h-3" />
+          </button>
+        </div>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div onClick={() => navigate('/reporter')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center group-hover:bg-orange-500/30 transition-colors">
+              <Zap className="w-6 h-6 text-orange-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">选题策划</div>
+            <div className="text-xl font-bold text-orange-400 mt-1">28</div>
+            <div className="text-xs text-slate-500">待审选题</div>
+          </div>
+          <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
+          
+          <div onClick={() => navigate('/reporter')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
+              <Camera className="w-6 h-6 text-green-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">素材采集</div>
+            <div className="text-xl font-bold text-green-400 mt-1">156</div>
+            <div className="text-xs text-slate-500">今日回传</div>
+          </div>
+          <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
+          
+          <div onClick={() => navigate('/editor')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+              <PenTool className="w-6 h-6 text-blue-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">稿件编辑</div>
+            <div className="text-xl font-bold text-blue-400 mt-1">42</div>
+            <div className="text-xs text-slate-500">在编辑稿</div>
+          </div>
+          <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
+          
+          <div onClick={() => navigate('/editor')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
+              <CheckCircle className="w-6 h-6 text-yellow-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">三审三校</div>
+            <div className="text-xl font-bold text-yellow-400 mt-1">18</div>
+            <div className="text-xs text-slate-500">审核中</div>
+          </div>
+          <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
+          
+          <div onClick={() => navigate('/editor')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+              <Send className="w-6 h-6 text-purple-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">多端分发</div>
+            <div className="text-xl font-bold text-purple-400 mt-1">86</div>
+            <div className="text-xs text-slate-500">今日发布</div>
+          </div>
+          <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
+          
+          <div onClick={() => navigate('/sentiment')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center group-hover:bg-cyan-500/30 transition-colors">
+              <Activity className="w-6 h-6 text-cyan-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">传播效果</div>
+            <div className="text-xl font-bold text-cyan-400 mt-1">87.5</div>
+            <div className="text-xs text-slate-500">传播指数</div>
+          </div>
+          <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
+          
+          <div onClick={() => navigate('/assets')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+            <div className="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:bg-pink-500/30 transition-colors">
+              <Database className="w-6 h-6 text-pink-400" />
+            </div>
+            <div className="text-sm font-medium text-white mt-3">内容资产</div>
+            <div className="text-xl font-bold text-pink-400 mt-1">2,856</div>
+            <div className="text-xs text-slate-500">可复用素材</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <Clock className="w-5 h-5 text-yellow-400" />
+              审核状态分布
+            </h3>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              审核留痕
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
+          <div className="space-y-4">
+            <StatusItem label="待审核" value={12} color="#f59e0b" icon={ClockIcon} />
+            <StatusItem label="初审中" value={8} color="#3b82f6" icon={Users} />
+            <StatusItem label="复审中" value={5} color="#8b5cf6" icon={BookOpen} />
+            <StatusItem label="终审中" value={3} color="#ec4899" icon={Award} />
+            <StatusItem label="已发布" value={86} color="#10b981" icon={CheckCircle} />
+            <StatusItem label="已退回" value={6} color="#ef4444" icon={XCircle} />
+          </div>
+        </div>
+
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <Send className="w-5 h-5 text-purple-400" />
+              分发去向统计
+            </h3>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              分发管理
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
+          <div className="space-y-4">
+            <StatusItem label="网站" value={78} color="#3b82f6" icon={Globe} />
+            <StatusItem label="微信公众号" value={65} color="#07c160" icon={MessageCircle} />
+            <StatusItem label="微博" value={52} color="#e6162d" icon={Activity} />
+            <StatusItem label="抖音" value={38} color="#000000" icon={Tv} />
+            <StatusItem label="APP" value={45} color="#8b5cf6" icon={Smartphone} />
+            <StatusItem label="视频号" value={28} color="#07c160" icon={Video} />
+          </div>
+        </div>
+
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/assets')}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <Copyright className="w-5 h-5 text-cyan-400" />
+              版权归属构成
+            </h3>
+            <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              资产管理
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
+          <div className="space-y-4">
+            <StatusItem label="原创内容" value={1256} color="#10b981" icon={PenTool} />
+            <StatusItem label="授权转载" value={586} color="#3b82f6" icon={Share2} />
+            <StatusItem label="公共素材" value={428} color="#8b5cf6" icon={Database} />
+            <StatusItem label="待授权" value={89} color="#f59e0b" icon={ClockIcon} />
+            <StatusItem label="受限使用" value={45} color="#ef4444" icon={AlertTriangle} />
+            <StatusItem label="二次加工" value={232} color="#ec4899" icon={Mic} />
           </div>
         </div>
       </div>

@@ -193,6 +193,7 @@ export interface User {
   name: string;
   avatar: string;
   role: 'admin' | 'editor' | 'reporter' | 'reviewer' | 'trainee';
+  roleName: string;
   department: string;
   phone: string;
   email: string;

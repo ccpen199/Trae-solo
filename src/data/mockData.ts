@@ -5,6 +5,7 @@ export const currentUser: User = {
   name: '张编辑',
   avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
   role: 'editor',
+  roleName: '高级编辑',
   department: '新闻中心',
   phone: '138****8888',
   email: 'zhangbianji@changping.gov.cn'

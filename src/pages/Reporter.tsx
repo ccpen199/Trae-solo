@@ -40,7 +40,8 @@ import {
   Bell,
   LogOut,
   Image,
-  Edit3
+  Edit3,
+  Tag
 } from 'lucide-react';
 import { materials, topics, reporters, currentUser } from '../data/mockData';
 import type { Topic, Material } from '../types';
