@@ -8,7 +8,7 @@ interface FishingHeatmapProps {
   height?: number;
 }
 
-export default function FishingHeatmap({ data: propData, height = 420 }: FishingHeatmapProps) {
+export default function FishingHeatmap({ data: propData, height = 520 }: FishingHeatmapProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
   const { heatmapData: storeHeatmapData, theme } = useAppStore();
@@ -33,6 +33,7 @@ export default function FishingHeatmap({ data: propData, height = 420 }: Fishing
     }
     
     const chart = chartInstance.current;
+    chart.resize();
     
     const option: echarts.EChartsOption = {
       tooltip: {
@@ -61,65 +62,80 @@ export default function FishingHeatmap({ data: propData, height = 420 }: Fishing
           `;
         },
       },
+      animation: true,
       grid: {
-        top: 20,
-        right: 60,
-        bottom: 50,
-        left: 70,
+        top: 30,
+        right: 80,
+        bottom: 80,
+        left: 80,
+        containLabel: false,
       },
       xAxis: {
         type: 'category',
         data: hours,
         splitArea: { show: true },
-        axisLine: { show: false },
+        axisLine: { show: true, lineStyle: { color: theme === 'dark' ? 'rgba(148, 163, 184, 0.3)' : 'rgba(100, 116, 139, 0.3)' } },
         axisTick: { show: false },
         axisLabel: {
           color: theme === 'dark' ? '#94a3b8' : '#64748b',
           fontSize: 10,
-          interval: 1,
-          rotate: 45,
+          interval: 0,
+          rotate: 60,
+          margin: 12,
+          align: 'right',
+          verticalAlign: 'top',
         },
-        name: '时间',
+        name: '时间（逐小时）',
         nameLocation: 'middle',
-        nameGap: 40,
+        nameGap: 65,
         nameTextStyle: {
-          color: theme === 'dark' ? '#94a3b8' : '#64748b',
-          fontSize: 12,
+          color: theme === 'dark' ? '#cbd5e1' : '#475569',
+          fontSize: 13,
+          fontWeight: 500,
         },
       },
       yAxis: {
         type: 'category',
         data: days,
         splitArea: { show: true },
-        axisLine: { show: false },
+        axisLine: { show: true, lineStyle: { color: theme === 'dark' ? 'rgba(148, 163, 184, 0.3)' : 'rgba(100, 116, 139, 0.3)' } },
         axisTick: { show: false },
         axisLabel: {
           color: theme === 'dark' ? '#94a3b8' : '#64748b',
           fontSize: 11,
+          margin: 12,
+          fontWeight: 500,
         },
-        name: '日期',
+        name: '日期（14天）',
         nameLocation: 'middle',
-        nameGap: 50,
+        nameGap: 60,
         nameTextStyle: {
-          color: theme === 'dark' ? '#94a3b8' : '#64748b',
-          fontSize: 12,
+          color: theme === 'dark' ? '#cbd5e1' : '#475569',
+          fontSize: 13,
+          fontWeight: 500,
         },
+        inverse: true,
       },
       visualMap: {
         min: 0,
         max: 100,
         calculable: true,
         orient: 'vertical',
-        right: 5,
+        right: 10,
         top: 'center',
+        itemWidth: 16,
+        itemHeight: 200,
+        textGap: 10,
         inRange: {
           color: ['#1e3a5f', '#0e7490', '#06b6d4', '#34d399', '#10b981', '#facc15', '#f97316', '#ef4444'],
         },
         text: ['高', '低'],
         textStyle: {
           color: theme === 'dark' ? '#94a3b8' : '#64748b',
-          fontSize: 10,
+          fontSize: 11,
+          fontWeight: 500,
         },
+        formatter: (value: number) => String(Math.round(value)),
       },
       series: [
         {
@@ -141,11 +157,16 @@ export default function FishingHeatmap({ data: propData, height = 420 }: Fishing
               borderWidth: 2,
             },
           },
+          progressive: 1000,
+          animation: true,
+          animationDuration: 600,
         },
       ],
     };
     
     chart.setOption(option, true);
+    
+    setTimeout(() => chart.resize(), 50);
     
     const handleResize = () => chart.resize();
     window.addEventListener('resize', handleResize);
@@ -156,7 +177,7 @@ export default function FishingHeatmap({ data: propData, height = 420 }: Fishing
   }, [chartData, theme, days, hours]);
   
   return (
-    <div className="w-full" style={{ height: `${height}px` }}>
+    <div className="w-full overflow-hidden rounded-lg" style={{ minHeight: `${height}px`, height: `${height}px` }}>
       <div ref={chartRef} className="w-full h-full" />
     </div>
   );

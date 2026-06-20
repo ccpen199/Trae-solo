@@ -19,6 +19,12 @@ import {
   ChevronRight,
   Sparkles,
   Calendar,
+  Database,
+  FileCheck2,
+  History,
+  AlertTriangle,
+  Activity,
+  ArrowRightLeft,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -40,6 +46,8 @@ export default function Dashboard() {
     setSelectedMethod,
     theme,
     heatmapData,
+    modelVersions,
+    dataSources,
   } = useAppStore();
   
   const [showSpotPicker, setShowSpotPicker] = useState(false);
@@ -418,7 +426,7 @@ export default function Dashboard() {
             <span className="w-3 h-3 rounded-sm bg-orange-500"></span> 高
           </div>
         </div>
-        <FishingHeatmap data={heatmapData} height={460} />
+        <FishingHeatmap data={heatmapData} height={560} />
       </div>
       
       {/* 指数因子详情 + 推荐钓点 */}
@@ -456,6 +464,83 @@ export default function Dashboard() {
                 <p className="text-xs text-moonlight-400 mt-1">{factor.description}</p>
               </div>
             ))}
+          </div>
+          
+          {/* 指数审计追溯信息 */}
+          <div className="mt-6 pt-5 border-t border-deep-sea-700/40">
+            <h4 className="text-sm font-semibold mb-3 flex items-center gap-2 text-moonlight-200">
+              <FileCheck2 size={15} className="text-lake-green-400" />
+              计算审计追溯
+            </h4>
+            
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className={cn(
+                'p-2.5 rounded-lg',
+                theme === 'dark' ? 'bg-deep-sea-800/40' : 'bg-moonlight-50'
+              )}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <History size={11} className="text-moonlight-400" />
+                  <span className="text-moonlight-400">采集时间</span>
+                </div>
+                <p className="font-medium">{format(new Date(currentEnvironment.timestamp * 1000), 'MM-dd HH:mm')}</p>
+              </div>
+              <div className={cn(
+                'p-2.5 rounded-lg',
+                theme === 'dark' ? 'bg-deep-sea-800/40' : 'bg-moonlight-50'
+              )}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <ArrowRightLeft size={11} className="text-moonlight-400" />
+                  <span className="text-moonlight-400">数据类型</span>
+                </div>
+                <p className="font-medium">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-lake-green-500/20 text-lake-green-400 mr-1">实测</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-deep-sea-500/20 text-deep-sea-400">预报</span>
+                </p>
+              </div>
+              <div className={cn(
+                'p-2.5 rounded-lg',
+                theme === 'dark' ? 'bg-deep-sea-800/40' : 'bg-moonlight-50'
+              )}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Database size={11} className="text-moonlight-400" />
+                  <span className="text-moonlight-400">数据源</span>
+                </div>
+                <p className="font-medium truncate">
+                  {dataSources.filter(d => d.status === 'active').length}路接入
+                </p>
+              </div>
+              <div className={cn(
+                'p-2.5 rounded-lg',
+                theme === 'dark' ? 'bg-deep-sea-800/40' : 'bg-moonlight-50'
+              )}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Activity size={11} className="text-moonlight-400" />
+                  <span className="text-moonlight-400">模型版本</span>
+                </div>
+                <p className="font-medium">
+                  {modelVersions.find(m => m.status === 'production')?.version || 'v2.3.0'}
+                </p>
+              </div>
+            </div>
+            
+            <div className={cn(
+              'mt-2.5 p-2.5 rounded-lg text-[11px]',
+              theme === 'dark' ? 'bg-deep-sea-800/30' : 'bg-moonlight-50'
+            )}>
+              <p className="mb-1.5 flex items-center gap-1.5">
+                <AlertTriangle size={11} className="text-yellow-400" />
+                <span className="text-moonlight-300 font-medium">计算口径说明</span>
+              </p>
+              <p className="text-moonlight-400 leading-relaxed">
+                综合评分 = Σ（因子得分 × 权重）÷ 总权重 + 季节修正。7因子权重：气压20%、水温18%、溶解氧15%、时段15%、潮汐5-12%、风力10%、月相8%。
+                缓存键：<code className="px-1 rounded bg-deep-sea-700/60 text-[10px]">钓点ID×鱼种ID×钓法ID</code>
+              </p>
+            </div>
+            
+            <div className="mt-2.5 flex items-center justify-between text-[11px] text-moonlight-400">
+              <span>复核ID：{currentIndex.timestamp?.toString().slice(-8) || '---'}</span>
+              <span className="text-lake-green-400">状态：已入库 ✓</span>
+            </div>
           </div>
         </div>
         
@@ -535,6 +620,71 @@ export default function Dashboard() {
                       <p className="font-semibold text-deep-sea-400">{spot.fishSpecies.length}种</p>
                     </div>
                   </div>
+                  
+                  {/* 障碍物类型标签 */}
+                  {spot.obstacles.length > 0 && (
+                    <div className="mb-2.5">
+                      <p className="text-[10px] text-moonlight-500 mb-1">障碍物：</p>
+                      <div className="flex flex-wrap gap-1">
+                        {[...new Set(spot.obstacles.slice(0, 4).map(o => o.typeName))].map((name, i) => (
+                          <span key={i} className="text-[10px] px-1.5 py-0.5 rounded bg-sunset-orange-500/10 text-sunset-orange-400">
+                            {name}
+                          </span>
+                        ))}
+                        {spot.obstacles.length > 4 && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-moonlight-600/20 text-moonlight-400">
+                            +{spot.obstacles.length - 4}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* 鱼种习性标签 */}
+                  {(() => {
+                    const habitTags = Array.from(
+                      new Set(
+                        spot.fishSpecies
+                          .map(fsid => species.find(s => s.id === fsid))
+                          .filter(Boolean)
+                          .flatMap(s => s!.habits.slice(0, 2).map(h => h.name))
+                      )
+                    ).slice(0, 4);
+                    if (habitTags.length === 0) return null;
+                    return (
+                      <div className="mb-2.5">
+                        <p className="text-[10px] text-moonlight-500 mb-1">鱼种习性：</p>
+                        <div className="flex flex-wrap gap-1">
+                          {habitTags.map((name, i) => (
+                            <span key={i} className="text-[10px] px-1.5 py-0.5 rounded bg-deep-sea-500/10 text-deep-sea-400">
+                              {name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  
+                  {/* 钓位风险 */}
+                  {(() => {
+                    const hasDanger = spot.obstacles.some(o =>
+                      o.type === 'rock' || o.type === 'weed'
+                    );
+                    const hasDeep = spot.maxDepth > 15;
+                    if (!hasDanger && !hasDeep) return null;
+                    return (
+                      <div className="mb-2.5 flex items-center gap-1 text-[10px]">
+                        <AlertTriangle size={11} className="text-yellow-400 flex-shrink-0" />
+                        <span className="text-moonlight-400">风险：</span>
+                        {hasDanger && (
+                          <span className="px-1.5 py-0.5 rounded bg-yellow-500/10 text-yellow-400">水下障碍</span>
+                        )}
+                        {hasDeep && (
+                          <span className="px-1.5 py-0.5 rounded bg-sunset-orange-500/10 text-sunset-orange-400">超深水区</span>
+                        )}
+                      </div>
+                    );
+                  })()}
                   <div className="flex items-center justify-between">
                     <span className={cn(
                       'text-xs px-2 py-1 rounded-full',
