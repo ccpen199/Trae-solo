@@ -5,7 +5,10 @@ import fs from 'fs';
 let db: Database.Database | null = null;
 
 export function initDb(): Database.Database {
-  const dbPath = path.resolve(process.cwd(), 'data', 'recruitment.db');
+  const configuredDbPath = process.env.DATABASE_URL?.trim() || path.join('data', 'recruitment.db');
+  const dbPath = path.isAbsolute(configuredDbPath)
+    ? configuredDbPath
+    : path.resolve(process.cwd(), configuredDbPath);
   const dataDir = path.dirname(dbPath);
 
   if (!fs.existsSync(dataDir)) {

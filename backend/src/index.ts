@@ -6,7 +6,8 @@ import { initDb } from './db';
 import routes from './routes';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.PORT || 3001);
 const API_PREFIX = process.env.API_PREFIX || '/api/v1';
 
 app.use(cors());
@@ -17,8 +18,24 @@ initDb();
 
 app.use(`${API_PREFIX}`, routes);
 
+const getHealthPayload = () => ({
+  status: 'ok',
+  timestamp: new Date().toISOString(),
+  host: HOST,
+  port: PORT,
+  apiPrefix: API_PREFIX,
+});
+
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json(getHealthPayload());
+});
+
+app.get('/api/health', (req, res) => {
+  res.json(getHealthPayload());
+});
+
+app.get(`${API_PREFIX}/health`, (req, res) => {
+  res.json(getHealthPayload());
 });
 
 const frontendDist = path.join(__dirname, '../../frontend/dist');
@@ -36,13 +53,13 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   res.status(500).json({ success: false, message: '服务器内部错误' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`
   🚀 云南省全域招聘公共服务平台
   ===============================
-  📡 后端服务已启动: http://localhost:${PORT}
+  📡 后端服务已启动: http://${HOST}:${PORT}
   🌐 API 前缀: ${API_PREFIX}
-  📊 健康检查: http://localhost:${PORT}/health
+  📊 健康检查: http://${HOST}:${PORT}/api/health
   ===============================
   `);
 });

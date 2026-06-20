@@ -7,6 +7,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 
+function getDivisionCodePattern(db: any, divisionId: string): string | null {
+  const division = db.prepare('SELECT code FROM admin_divisions WHERE id = ?').get(divisionId) as { code?: string } | undefined;
+  if (!division?.code) {
+    return null;
+  }
+
+  const prefix = division.code.replace(/0+$/, '');
+  return `${prefix || division.code}%`;
+}
+
 router.get('/divisions', (req, res) => {
   const db = getDb();
   const { level, parent_id } = req.query;
@@ -67,10 +77,10 @@ router.get('/companies', (req, res) => {
     params.push(industry_zone);
   }
   if (admin_division_id) {
-    const div = db.prepare('SELECT code FROM admin_divisions WHERE id = ?').get(admin_division_id) as any;
-    if (div) {
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
       whereSql += ' AND admin_division_id IN (SELECT id FROM admin_divisions WHERE code LIKE ?)';
-      params.push(div.code.substr(0, 4) + '%');
+      params.push(divisionPattern);
     }
   }
   if (keyword) {
@@ -109,7 +119,7 @@ router.get('/companies/:id', (req, res) => {
 
 router.get('/jobs', (req, res) => {
   const db = getDb();
-  const { page = 1, pageSize = 10, industry_zone, location_id, salary_min, salary_max, keyword, status = 'published' } = req.query;
+  const { page = 1, pageSize = 10, industry_zone, admin_division_id, location_id, salary_min, salary_max, keyword, status = 'published' } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
   let whereSql = 'WHERE j.status = ?';
@@ -119,7 +129,13 @@ router.get('/jobs', (req, res) => {
     whereSql += ' AND j.industry_zone = ?';
     params.push(industry_zone);
   }
-  if (location_id) {
+  if (admin_division_id) {
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
+      whereSql += ' AND j.location_id IN (SELECT id FROM admin_divisions WHERE code LIKE ?)';
+      params.push(divisionPattern);
+    }
+  } else if (location_id) {
     whereSql += ' AND j.location_id = ?';
     params.push(location_id);
   }
@@ -485,19 +501,26 @@ router.get('/rpo/batches', (req, res) => {
 
 router.get('/schools', (req, res) => {
   const db = getDb();
-  const { page = 1, pageSize = 20, school_type, admin_division_id } = req.query;
+  const { id, page = 1, pageSize = 20, school_type, admin_division_id } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
   let whereSql = 'WHERE 1=1';
   const params: any[] = [];
 
+  if (id) {
+    whereSql += ' AND id = ?';
+    params.push(id);
+  }
   if (school_type) {
     whereSql += ' AND school_type = ?';
     params.push(school_type);
   }
   if (admin_division_id) {
-    whereSql += ' AND admin_division_id = ?';
-    params.push(admin_division_id);
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
+      whereSql += ' AND admin_division_id IN (SELECT id FROM admin_divisions WHERE code LIKE ?)';
+      params.push(divisionPattern);
+    }
   }
 
   const total = db.prepare(`SELECT COUNT(*) as count FROM schools ${whereSql}`).get(...params) as { count: number };
@@ -598,10 +621,10 @@ router.get('/stats/summary', (req, res) => {
   const params: any[] = [];
 
   if (admin_division_id) {
-    const div = db.prepare('SELECT code FROM admin_divisions WHERE id = ?').get(admin_division_id) as any;
-    if (div) {
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
       divisionFilter = 'AND d.code LIKE ?';
-      params.push(div.code.substr(0, 2) + '%');
+      params.push(divisionPattern);
     }
   }
 

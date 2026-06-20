@@ -39,7 +39,9 @@ async function seed() {
     )
   `);
   const companyTx = db.transaction(comps => {
-    for (const comp of comps) insertCompany.run(comp);
+    for (const comp of comps) {
+      insertCompany.run({ ...comp, verified: comp.verified ? 1 : 0 });
+    }
   });
   companyTx(companies);
   console.log(`已插入 ${companies.length} 条企业数据`);
@@ -58,7 +60,9 @@ async function seed() {
     )
   `);
   const jobTx = db.transaction(jobsArr => {
-    for (const job of jobsArr) insertJob.run(job);
+    for (const job of jobsArr) {
+      insertJob.run({ ...job, salary_negotiable: job.salary_negotiable ? 1 : 0 });
+    }
   });
   jobTx(jobs);
   console.log(`已插入 ${jobs.length} 条岗位数据`);
@@ -113,7 +117,9 @@ async function seed() {
     )
   `);
   const fairTx = db.transaction(fairsArr => {
-    for (const fair of fairsArr) insertFair.run(fair);
+    for (const fair of fairsArr) {
+      insertFair.run({ ...fair, is_live: fair.is_live ? 1 : 0 });
+    }
   });
   fairTx(fairs);
   console.log(`已插入 ${fairs.length} 条招聘会数据`);
