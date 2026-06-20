@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 import {
   Home,
   Building2,
@@ -13,20 +14,25 @@ import {
 } from 'lucide-react';
 import { useUserStore } from '@/store/userStore';
 import { cn } from '@/utils/cn';
-import type { UserRole } from '@/types/entity';
+import { mockUsers } from '@/mocks/data/users';
+import type { User } from '@/types/entity';
 
 type LoginRole = 'RESIDENT' | 'PROPERTY_STAFF' | 'COMMUNITY_ADMIN' | 'MERCHANT';
 
-const roleTabs: { key: LoginRole; label: string; icon: typeof Home }[] = [
-  { key: 'RESIDENT', label: '业主', icon: Home },
-  { key: 'PROPERTY_STAFF', label: '物业管家', icon: Building2 },
-  { key: 'COMMUNITY_ADMIN', label: '物业管理员', icon: ShieldCheck },
-  { key: 'MERCHANT', label: '商户', icon: Store },
+const roleTabs: { key: LoginRole; label: string; icon: typeof Home; defaultUsername: string }[] = [
+  { key: 'RESIDENT', label: '业主', icon: Home, defaultUsername: 'zhangsan' },
+  { key: 'PROPERTY_STAFF', label: '物业管家', icon: Building2, defaultUsername: 'tech_zhang' },
+  { key: 'COMMUNITY_ADMIN', label: '物业管理员', icon: ShieldCheck, defaultUsername: 'admin' },
+  { key: 'MERCHANT', label: '商户', icon: Store, defaultUsername: 'admin' },
 ];
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useUserStore();
+  const { login, logout } = useUserStore();
+
+  useEffect(() => {
+    logout();
+  }, []);
 
   const [selectedRole, setSelectedRole] = useState<LoginRole>('RESIDENT');
   const [username, setUsername] = useState('');
@@ -45,25 +51,26 @@ export default function LoginPage() {
     setIsLoading(true);
 
     setTimeout(() => {
-      const mockUser = {
-        id: 'u001',
-        username,
-        realName: username,
-        phone: '138****8888',
-        email: `${username}@example.com`,
-        avatar: '',
-        role: selectedRole as UserRole,
-        communityId: 'c001',
-        buildingId: 'b001',
-        unitId: 'u001',
-        roomId: 'r001',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+      const foundUser = mockUsers.find((u) => u.username === username);
+
+      if (!foundUser || password !== '123456') {
+        message.error('用户名或密码错误');
+        setIsLoading(false);
+        return;
+      }
+
+      const completeUser: User = {
+        ...foundUser,
+        email: foundUser.email || `${foundUser.username}@example.com`,
+        communityId: foundUser.communityId || 'comm_default',
+        buildingId: foundUser.buildingId,
+        unitId: foundUser.unitId,
+        roomId: foundUser.roomId,
       };
 
       const mockToken = 'mock-jwt-token-' + Date.now();
 
-      login(mockUser, mockToken);
+      login(completeUser, mockToken);
       setIsLoading(false);
       navigate('/dashboard');
     }, 1200);
@@ -128,7 +135,10 @@ export default function LoginPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35 + index * 0.05 }}
-                    onClick={() => setSelectedRole(role.key)}
+                    onClick={() => {
+                      setSelectedRole(role.key);
+                      setUsername(role.defaultUsername);
+                    }}
                     className={cn(
                       'flex flex-col items-center gap-1.5 py-3 px-2 rounded-lg transition-all duration-300',
                       isActive

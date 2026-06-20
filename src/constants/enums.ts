@@ -32,6 +32,7 @@ export const WORK_ORDER_TYPE: Record<WorkOrderType, string> = {
   COMPLAINT: '投诉',
   CONSULT: '咨询',
   SUGGESTION: '建议',
+  APPOINTMENT: '预约服务',
   OTHER: '其他',
 };
 
@@ -40,6 +41,7 @@ export const WORK_ORDER_TYPE_COLOR: Record<WorkOrderType, string> = {
   COMPLAINT: 'bg-purple-50 text-purple-700 border-purple-200',
   CONSULT: 'bg-blue-50 text-blue-700 border-blue-200',
   SUGGESTION: 'bg-teal-50 text-teal-700 border-teal-200',
+  APPOINTMENT: 'bg-indigo-50 text-indigo-700 border-indigo-200',
   OTHER: 'bg-gray-50 text-gray-600 border-gray-200',
 };
 
@@ -175,3 +177,10 @@ export const USER_ROLE_COLOR: Record<UserRole, string> = {
 
 export const SLA_WARNING_THRESHOLD_HOURS = 2;
 export const SLA_CRITICAL_THRESHOLD_HOURS = 1;
+
+export const WORK_ORDER_SOURCE: Record<string, string> = {
+  RESIDENT_APP: '业主APP',
+  PHONE: '电话',
+  STAFF_ENTRY: '管家录入',
+  OTHER: '其他',
+};

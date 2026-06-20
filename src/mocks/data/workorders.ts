@@ -1,9 +1,9 @@
-import type { WorkOrder, ProgressLog, Satisfaction, WorkOrderType, WorkOrderStatus, WorkOrderPriority } from '@/types/entity';
+import type { WorkOrder, ProgressLog, Satisfaction, WorkOrderType, WorkOrderStatus, WorkOrderPriority, WorkOrderSource } from '@/types/entity';
 
 const now = new Date();
 const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
-const types: WorkOrderType[] = ['REPAIR', 'COMPLAINT', 'CONSULT', 'SUGGESTION', 'OTHER'];
+const types: WorkOrderType[] = ['REPAIR', 'COMPLAINT', 'CONSULT', 'SUGGESTION', 'APPOINTMENT', 'OTHER'];
 const statuses: WorkOrderStatus[] = ['PENDING', 'ASSIGNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'];
 const priorities: WorkOrderPriority[] = ['LOW', 'MEDIUM', 'HIGH', 'URGENT'];
 
@@ -12,6 +12,7 @@ const titleTemplates: Record<WorkOrderType, string[]> = {
   COMPLAINT: ['噪音扰民投诉', '卫生清洁不到位', '停车位被占', '保安态度差', '快递丢失投诉', '绿化养护差'],
   CONSULT: ['物业费收费标准咨询', '装修流程咨询', '停车位办理咨询', '居住证办理咨询', '过户流程咨询', '子女入学咨询'],
   SUGGESTION: ['建议增加健身器材', '建议增设充电桩', '建议优化门禁系统', '建议增加儿童游乐设施', '建议改善绿化', '建议举办社区活动'],
+  APPOINTMENT: ['预约上门维修服务', '预约管家上门走访', '预约家政服务', '预约空调清洗', '预约管道疏通', '预约家具安装'],
   OTHER: ['其他问题反馈', '需要协助办理事项', '综合问题咨询'],
 };
 
@@ -29,6 +30,8 @@ const residentUsers = [
   { id: 'user_res_005', name: '孙七' },
 ];
 
+const sources: WorkOrderSource[] = ['RESIDENT_APP', 'PHONE', 'STAFF_ENTRY', 'OTHER'];
+
 const generateWorkOrders = (): WorkOrder[] => {
   const orders: WorkOrder[] = [];
   for (let i = 1; i <= 30; i++) {
@@ -38,6 +41,7 @@ const generateWorkOrders = (): WorkOrder[] => {
     const priority = priorities[i % priorities.length];
     const submitter = residentUsers[i % residentUsers.length];
     const assignee = i > 2 ? staffUsers[i % staffUsers.length] : null;
+    const source = sources[i % sources.length];
     const createdAt = new Date(thirtyDaysAgo.getTime() + Math.random() * 25 * 24 * 60 * 60 * 1000);
     const slaDeadline = new Date(createdAt.getTime() + (4 + Math.random() * 20) * 60 * 60 * 1000);
     const completedAt = status === 'COMPLETED' ? new Date(createdAt.getTime() + Math.random() * 12 * 60 * 60 * 1000) : undefined;
@@ -53,6 +57,7 @@ const generateWorkOrders = (): WorkOrder[] => {
       type,
       status,
       priority,
+      source,
       submitterId: submitter.id,
       submitterName: submitter.name,
       assigneeId: assignee?.id,

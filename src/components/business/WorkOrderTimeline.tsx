@@ -21,6 +21,7 @@ export interface TimelineNode {
   description?: string;
   operator: string;
   operatorAvatar?: string;
+  operatorRole?: string;
   time: string | Date;
   thumbnails?: string[];
 }
@@ -245,7 +246,12 @@ export function WorkOrderTimeline({ nodes, className }: WorkOrderTimelineProps) 
                             <UserCircle2 className="w-4 h-4 text-white" />
                           </div>
                         )}
-                        <span className="text-sm text-neutral-300">{node.operator}</span>
+                        <div className="text-right">
+                          <span className="text-sm text-neutral-300 block">{node.operator}</span>
+                          {node.operatorRole && (
+                            <span className="text-xs text-neutral-500">{node.operatorRole}</span>
+                          )}
+                        </div>
                       </div>
                       <span className="text-xs text-neutral-500">
                         {dayjs(node.time).format('YYYY-MM-DD HH:mm:ss')}

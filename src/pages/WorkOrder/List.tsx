@@ -18,8 +18,10 @@ import {
   AlertCircle,
   AlertTriangle,
   ArrowUp,
+  CalendarClock,
+  GripVertical,
 } from 'lucide-react';
-import { Select, DatePicker, Input, message } from 'antd';
+import { Select, DatePicker, Input, message, Tag } from 'antd';
 import dayjs from 'dayjs';
 import { PageHeader } from '@/components/common/PageHeader';
 import { StatusBadge } from '@/components/common/StatusBadge';
@@ -27,8 +29,9 @@ import { SlaCountdown } from '@/components/common/SlaCountdown';
 import { DesensitizeText } from '@/components/common/DesensitizeText';
 import { DataTable } from '@/components/common/DataTable';
 import { cn } from '@/utils/cn';
-import type { WorkOrder, WorkOrderStatus, WorkOrderType, WorkOrderPriority } from '@/types/entity';
-import { WORK_ORDER_TYPE, WORK_ORDER_PRIORITY } from '@/constants/enums';
+import { useUserStore } from '@/store/userStore';
+import type { WorkOrder, WorkOrderStatus, WorkOrderType, WorkOrderPriority, WorkOrderSource } from '@/types/entity';
+import { WORK_ORDER_TYPE, WORK_ORDER_PRIORITY, WORK_ORDER_SOURCE, USER_ROLE } from '@/constants/enums';
 
 const { RangePicker } = DatePicker;
 
@@ -43,9 +46,11 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'REPAIR',
     status: 'PENDING',
     priority: 'URGENT',
+    source: 'RESIDENT_APP',
     submitterId: 'u1',
     submitterName: '张三',
     communityId: 'c1',
+    communityName: '阳光花园',
     buildingId: 'b1',
     roomId: 'r1',
     slaDeadline: dayjs().add(3, 'hour').toISOString(),
@@ -60,9 +65,11 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'REPAIR',
     status: 'PENDING',
     priority: 'HIGH',
+    source: 'PHONE',
     submitterId: 'u2',
     submitterName: '李四',
     communityId: 'c1',
+    communityName: '阳光花园',
     buildingId: 'b1',
     slaDeadline: dayjs().add(8, 'hour').toISOString(),
     createdAt: dayjs().subtract(2, 'hour').toISOString(),
@@ -76,11 +83,14 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'COMPLAINT',
     status: 'ASSIGNED',
     priority: 'MEDIUM',
+    source: 'RESIDENT_APP',
     submitterId: 'u3',
     submitterName: '王五',
     assigneeId: 's1',
     assigneeName: '赵管家',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s1',
     communityId: 'c1',
+    communityName: '阳光花园',
     slaDeadline: dayjs().add(12, 'hour').toISOString(),
     createdAt: dayjs().subtract(4, 'hour').toISOString(),
     updatedAt: dayjs().subtract(2, 'hour').toISOString(),
@@ -93,11 +103,14 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'CONSULT',
     status: 'IN_PROGRESS',
     priority: 'LOW',
+    source: 'STAFF_ENTRY',
     submitterId: 'u4',
     submitterName: '赵六',
     assigneeId: 's2',
     assigneeName: '钱财务',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s2',
     communityId: 'c1',
+    communityName: '阳光花园',
     slaDeadline: dayjs().add(24, 'hour').toISOString(),
     createdAt: dayjs().subtract(6, 'hour').toISOString(),
     updatedAt: dayjs().subtract(3, 'hour').toISOString(),
@@ -110,15 +123,19 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'SUGGESTION',
     status: 'COMPLETED',
     priority: 'LOW',
+    source: 'RESIDENT_APP',
     submitterId: 'u5',
     submitterName: '孙七',
     assigneeId: 's1',
     assigneeName: '赵管家',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s1',
     communityId: 'c1',
+    communityName: '阳光花园',
     slaDeadline: dayjs().subtract(1, 'day').toISOString(),
     createdAt: dayjs().subtract(3, 'day').toISOString(),
     updatedAt: dayjs().subtract(1, 'day').toISOString(),
     completedAt: dayjs().subtract(1, 'day').toISOString(),
+    satisfaction: 5,
   },
   {
     id: '6',
@@ -128,11 +145,14 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'REPAIR',
     status: 'IN_PROGRESS',
     priority: 'HIGH',
+    source: 'RESIDENT_APP',
     submitterId: 'u6',
     submitterName: '周八',
     assigneeId: 's3',
     assigneeName: '吴维修',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s3',
     communityId: 'c1',
+    communityName: '阳光花园',
     buildingId: 'b2',
     slaDeadline: dayjs().add(5, 'hour').toISOString(),
     createdAt: dayjs().subtract(5, 'hour').toISOString(),
@@ -146,9 +166,11 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'REPAIR',
     status: 'PENDING',
     priority: 'URGENT',
+    source: 'PHONE',
     submitterId: 'u7',
     submitterName: '吴九',
     communityId: 'c1',
+    communityName: '阳光花园',
     buildingId: 'b2',
     slaDeadline: dayjs().add(30, 'minute').toISOString(),
     createdAt: dayjs().subtract(30, 'minute').toISOString(),
@@ -162,11 +184,14 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'COMPLAINT',
     status: 'CANCELLED',
     priority: 'MEDIUM',
+    source: 'OTHER',
     submitterId: 'u8',
     submitterName: '郑十',
     assigneeId: 's4',
     assigneeName: '保安王',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s4',
     communityId: 'c1',
+    communityName: '阳光花园',
     createdAt: dayjs().subtract(2, 'day').toISOString(),
     updatedAt: dayjs().subtract(1, 'day').toISOString(),
     slaDeadline: dayjs().subtract(1, 'day').toISOString(),
@@ -179,11 +204,14 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'CONSULT',
     status: 'ASSIGNED',
     priority: 'LOW',
+    source: 'RESIDENT_APP',
     submitterId: 'u9',
     submitterName: '冯十一',
     assigneeId: 's1',
     assigneeName: '赵管家',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s1',
     communityId: 'c1',
+    communityName: '阳光花园',
     slaDeadline: dayjs().add(20, 'hour').toISOString(),
     createdAt: dayjs().subtract(8, 'hour').toISOString(),
     updatedAt: dayjs().subtract(4, 'hour').toISOString(),
@@ -196,15 +224,19 @@ const mockWorkOrders: WorkOrder[] = [
     type: 'OTHER',
     status: 'COMPLETED',
     priority: 'MEDIUM',
+    source: 'STAFF_ENTRY',
     submitterId: 'u10',
     submitterName: '陈十二',
     assigneeId: 's5',
     assigneeName: '前台李',
+    assigneeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=s5',
     communityId: 'c1',
+    communityName: '阳光花园',
     slaDeadline: dayjs().subtract(2, 'day').toISOString(),
     createdAt: dayjs().subtract(5, 'day').toISOString(),
     updatedAt: dayjs().subtract(3, 'day').toISOString(),
     completedAt: dayjs().subtract(3, 'day').toISOString(),
+    satisfaction: 4,
   },
 ];
 
@@ -213,6 +245,7 @@ const typeIcons: Record<WorkOrderType, typeof Wrench> = {
   COMPLAINT: MessageSquare,
   CONSULT: HelpCircle,
   SUGGESTION: Lightbulb,
+  APPOINTMENT: CalendarClock,
   OTHER: MoreHorizontal,
 };
 
@@ -242,7 +275,7 @@ function convertStatus(status: WorkOrderStatus): 'pending' | 'assigned' | 'proce
   return map[status];
 }
 
-function WorkOrderCard({ order, onClick }: { order: WorkOrder; onClick?: () => void }) {
+function WorkOrderCard({ order, onClick, showDragHandle = false }: { order: WorkOrder; onClick?: () => void; showDragHandle?: boolean }) {
   const TypeIcon = typeIcons[order.type];
   const priorityColor = priorityColors[order.priority];
   const isCompleted = order.status === 'COMPLETED';
@@ -251,11 +284,17 @@ function WorkOrderCard({ order, onClick }: { order: WorkOrder; onClick?: () => v
     <motion.div
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       className={cn(
-        'glass-card-hover p-4 cursor-pointer border-l-4',
+        'glass-card-hover p-4 cursor-pointer border-l-4 relative group',
         priorityColor
       )}
       onClick={onClick}
     >
+      {showDragHandle && (
+        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
+          <GripVertical className="w-4 h-4 text-neutral-500" />
+        </div>
+      )}
+
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-xs font-mono text-neutral-500">{order.orderNo}</span>
         <StatusBadge status={convertStatus(order.status)} category="workorder" size="sm" showIcon={false} showDot />
@@ -287,6 +326,17 @@ function WorkOrderCard({ order, onClick }: { order: WorkOrder; onClick?: () => v
         <DesensitizeText value={order.submitterName} type="name" />
       </div>
 
+      {order.assigneeName && (
+        <div className="flex items-center gap-2 text-xs text-neutral-500 mb-3">
+          <img
+            src={order.assigneeAvatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=default'}
+            alt={order.assigneeName}
+            className="w-5 h-5 rounded-full"
+          />
+          <span>{order.assigneeName}</span>
+        </div>
+      )}
+
       <div className="mb-3">
         <SlaCountdown
           deadline={order.slaDeadline}
@@ -306,15 +356,42 @@ function WorkOrderCard({ order, onClick }: { order: WorkOrder; onClick?: () => v
 
 export default function WorkOrderList() {
   const navigate = useNavigate();
+  const { user } = useUserStore();
   const [viewMode, setViewMode] = useState<ViewMode>('kanban');
   const [searchText, setSearchText] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [priorityFilter, setPriorityFilter] = useState<string>('');
+  const [sourceFilter, setSourceFilter] = useState<string>('');
+  const [assigneeFilter, setAssigneeFilter] = useState<string>('');
   const [dateRange, setDateRange] = useState<[dayjs.Dayjs | null, dayjs.Dayjs | null] | null>(null);
+
+  const currentUserRole = user?.role || 'RESIDENT';
+  const isResident = currentUserRole === 'RESIDENT';
+  const isAdmin = currentUserRole === 'SUPER_ADMIN' || currentUserRole === 'COMMUNITY_ADMIN';
+  const isStaff = currentUserRole === 'PROPERTY_STAFF' || isAdmin;
+
+  const stewardOptions = useMemo(() => {
+    const stewards = new Map<string, string>();
+    mockWorkOrders.forEach((order) => {
+      if (order.assigneeId && order.assigneeName) {
+        stewards.set(order.assigneeId, order.assigneeName);
+      }
+    });
+    return Array.from(stewards.entries()).map(([id, name]) => ({
+      label: name,
+      value: id,
+    }));
+  }, []);
 
   const filteredOrders = useMemo(() => {
     return mockWorkOrders.filter((order) => {
+      if (isResident && order.submitterId !== 'u1') {
+        return false;
+      }
+      if (isStaff && !isAdmin && order.assigneeId !== 's3') {
+        return false;
+      }
       if (searchText && !order.title.includes(searchText) && !order.orderNo.includes(searchText)) {
         return false;
       }
@@ -327,6 +404,12 @@ export default function WorkOrderList() {
       if (priorityFilter && order.priority !== priorityFilter) {
         return false;
       }
+      if (sourceFilter && order.source !== sourceFilter) {
+        return false;
+      }
+      if (assigneeFilter && order.assigneeId !== assigneeFilter) {
+        return false;
+      }
       if (dateRange && dateRange[0] && dateRange[1]) {
         const orderDate = dayjs(order.createdAt);
         if (orderDate.isBefore(dateRange[0]) || orderDate.isAfter(dateRange[1])) {
@@ -335,7 +418,7 @@ export default function WorkOrderList() {
       }
       return true;
     });
-  }, [searchText, typeFilter, statusFilter, priorityFilter, dateRange]);
+  }, [searchText, typeFilter, statusFilter, priorityFilter, sourceFilter, assigneeFilter, dateRange, isResident, isStaff, isAdmin]);
 
   const kanbanData = useMemo(() => {
     const result: Record<string, WorkOrder[]> = {};
@@ -358,6 +441,8 @@ export default function WorkOrderList() {
     setTypeFilter('');
     setStatusFilter('');
     setPriorityFilter('');
+    setSourceFilter('');
+    setAssigneeFilter('');
     setDateRange(null);
     message.info('已重置筛选条件');
   };
@@ -423,11 +508,39 @@ export default function WorkOrderList() {
       ),
     },
     {
+      title: '来源',
+      dataIndex: 'source',
+      key: 'source',
+      width: 100,
+      render: (source: WorkOrderSource) => (
+        <span className="text-sm text-neutral-400">{WORK_ORDER_SOURCE[source] || source}</span>
+      ),
+    },
+    {
       title: '提交人',
       dataIndex: 'submitterName',
       key: 'submitterName',
       width: 120,
       render: (name: string) => <DesensitizeText value={name} type="name" />,
+    },
+    {
+      title: '处理人',
+      dataIndex: 'assigneeName',
+      key: 'assigneeName',
+      width: 120,
+      render: (name: string, record: WorkOrder) => {
+        if (!name) return <span className="text-xs text-neutral-500">未分派</span>;
+        return (
+          <div className="flex items-center gap-2">
+            <img
+              src={record.assigneeAvatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=default'}
+              alt={name}
+              className="w-5 h-5 rounded-full"
+            />
+            <span className="text-sm text-neutral-300">{name}</span>
+          </div>
+        );
+      },
     },
     {
       title: 'SLA',
@@ -468,8 +581,8 @@ export default function WorkOrderList() {
   return (
     <div className="p-6">
       <PageHeader
-        title="工单管理"
-        subtitle="共处理小区日常报修、投诉、咨询等各类工单"
+        title={isResident ? '我的工单' : isStaff && !isAdmin ? '我的工单' : '工单管理'}
+        subtitle={isResident ? '查看您提交的所有工单' : isStaff && !isAdmin ? '查看分配给您的工单' : '共处理小区日常报修、投诉、咨询等各类工单'}
         breadcrumb={[{ title: '首页' }, { title: '工单管理' }]}
         extra={
           <div className="flex items-center gap-3">
@@ -499,13 +612,15 @@ export default function WorkOrderList() {
                 列表
               </button>
             </div>
-            <button
-              onClick={handleCreateClick}
-              className="btn-primary flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              新建工单
-            </button>
+            {!isResident && (
+              <button
+                onClick={handleCreateClick}
+                className="btn-primary flex items-center gap-2"
+              >
+                <Plus className="w-4 h-4" />
+                新建工单
+              </button>
+            )}
           </div>
         }
       />
@@ -520,7 +635,7 @@ export default function WorkOrderList() {
           <Filter className="w-4 h-4 text-neutral-400" />
           <span className="text-sm font-medium text-neutral-300">筛选条件</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
           <div className="lg:col-span-2">
             <label className="block text-xs text-neutral-500 mb-1.5">搜索</label>
             <div className="relative">
@@ -574,6 +689,31 @@ export default function WorkOrderList() {
                 label,
                 value: key,
               }))}
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-neutral-500 mb-1.5">工单来源</label>
+            <Select
+              placeholder="全部来源"
+              value={sourceFilter || undefined}
+              onChange={(v) => setSourceFilter(v)}
+              allowClear
+              className="w-full"
+              options={Object.entries(WORK_ORDER_SOURCE).map(([key, label]) => ({
+                label,
+                value: key,
+              }))}
+            />
+          </div>
+          <div>
+            <label className="block text-xs text-neutral-500 mb-1.5">处理人</label>
+            <Select
+              placeholder="全部处理人"
+              value={assigneeFilter || undefined}
+              onChange={(v) => setAssigneeFilter(v)}
+              allowClear
+              className="w-full"
+              options={stewardOptions}
             />
           </div>
           <div className="lg:col-span-2">
@@ -631,6 +771,7 @@ export default function WorkOrderList() {
                       <WorkOrderCard
                         order={order}
                         onClick={() => handleCardClick(order)}
+                        showDragHandle={!isResident}
                       />
                     </motion.div>
                   ))

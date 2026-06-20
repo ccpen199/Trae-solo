@@ -6,6 +6,21 @@ import zhCN from 'antd/locale/zh_CN'
 import App from './App'
 import './index.css'
 
+const CACHE_VERSION = 'v3_20250620'
+const PREFIX = 'app_'
+try {
+  const stored = localStorage.getItem(PREFIX + 'cache_version')
+  if (stored !== JSON.stringify(CACHE_VERSION)) {
+    const keys: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i)
+      if (k && k.startsWith(PREFIX)) keys.push(k)
+    }
+    keys.forEach(k => localStorage.removeItem(k))
+    localStorage.setItem(PREFIX + 'cache_version', JSON.stringify(CACHE_VERSION))
+  }
+} catch {}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

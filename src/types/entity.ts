@@ -86,9 +86,11 @@ export type WorkOrderStatus =
   | 'COMPLETED'
   | 'CANCELLED';
 
-export type WorkOrderType = 'REPAIR' | 'COMPLAINT' | 'CONSULT' | 'SUGGESTION' | 'OTHER';
+export type WorkOrderType = 'REPAIR' | 'COMPLAINT' | 'CONSULT' | 'SUGGESTION' | 'APPOINTMENT' | 'OTHER';
 
 export type WorkOrderPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
+
+export type WorkOrderSource = 'RESIDENT_APP' | 'PHONE' | 'STAFF_ENTRY' | 'OTHER';
 
 export interface WorkOrder {
   id: string;
@@ -98,14 +100,28 @@ export interface WorkOrder {
   type: WorkOrderType;
   status: WorkOrderStatus;
   priority: WorkOrderPriority;
+  source: WorkOrderSource;
   submitterId: string;
   submitterName: string;
+  submitterRole?: UserRole;
   assigneeId?: string;
   assigneeName?: string;
+  assigneeAvatar?: string;
   communityId: string;
+  communityName?: string;
   buildingId?: string;
+  buildingName?: string;
+  unitId?: string;
+  unitName?: string;
   roomId?: string;
+  roomName?: string;
+  locationDetail?: string;
+  appointmentTime?: string;
   slaDeadline: string;
+  satisfaction?: number;
+  satisfactionComment?: string;
+  satisfactionTags?: string[];
+  images?: string[];
   createdAt: string;
   updatedAt: string;
   completedAt?: string;
@@ -190,10 +206,15 @@ export interface Activity {
   endTime: string;
   maxParticipants?: number;
   currentParticipants: number;
+  fee?: number;
+  needReview?: boolean;
+  registrationDeadline?: string;
   communityId: string;
   createdAt: string;
   updatedAt: string;
 }
+
+export type ActivityParticipantStatus = 'PENDING_REVIEW' | 'REGISTERED' | 'CANCELLED' | 'ATTENDED' | 'REJECTED';
 
 export interface ActivityParticipant {
   id: string;
@@ -202,7 +223,11 @@ export interface ActivityParticipant {
   userName: string;
   phone: string;
   signedUpAt: string;
-  status: 'REGISTERED' | 'CANCELLED' | 'ATTENDED';
+  status: ActivityParticipantStatus;
+  reviewedAt?: string;
+  reviewerName?: string;
+  attendedAt?: string;
+  remark?: string;
 }
 
 export type FinanceProductType = 'FUND' | 'INSURANCE' | 'DEPOSIT' | 'LOAN' | 'OTHER';

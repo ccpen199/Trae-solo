@@ -53,7 +53,7 @@ export const getWorkOrderList = async (
   });
 };
 
-export interface WorkOrderDetail extends WorkOrder {
+export interface WorkOrderDetail extends Omit<WorkOrder, 'satisfaction'> {
   progressLogs: ProgressLog[];
   satisfaction?: Satisfaction;
 }
@@ -101,6 +101,7 @@ export const createWorkOrder = async (data: CreateWorkOrderData): Promise<ApiRes
     type: data.type as WorkOrder['type'],
     status: 'PENDING',
     priority: data.priority as WorkOrder['priority'],
+    source: 'RESIDENT_APP',
     submitterId: 'user_res_001',
     submitterName: '张三',
     communityId: data.communityId,

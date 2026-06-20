@@ -16,9 +16,11 @@ import {
   AlertCircle,
   ArrowUp,
   Send,
+  CalendarClock,
 } from 'lucide-react';
-import { Input, Select, Upload as AntUpload, message } from 'antd';
+import { Input, Select, Upload as AntUpload, DatePicker, message } from 'antd';
 import type { UploadProps } from 'antd';
+import dayjs from 'dayjs';
 import { PageHeader } from '@/components/common/PageHeader';
 import { cn } from '@/utils/cn';
 import type { WorkOrderType, WorkOrderPriority } from '@/types/entity';
@@ -63,6 +65,13 @@ const typeOptions: TypeOption[] = [
     color: 'text-success-400',
     bg: 'bg-success-500/15',
   },
+  {
+    key: 'APPOINTMENT',
+    label: '预约服务',
+    icon: CalendarClock,
+    color: 'text-info-400',
+    bg: 'bg-info-500/15',
+  },
 ];
 
 const communityOptions = [
@@ -87,15 +96,50 @@ const buildingOptions: Record<string, { label: string; value: string }[]> = {
   ],
 };
 
-const roomOptions: Record<string, { label: string; value: string }[]> = {
+const unitOptions: Record<string, { label: string; value: string }[]> = {
   b1: [
+    { label: '1单元', value: 'u1' },
+    { label: '2单元', value: 'u2' },
+    { label: '3单元', value: 'u3' },
+  ],
+  b2: [
+    { label: '1单元', value: 'u4' },
+    { label: '2单元', value: 'u5' },
+  ],
+  b3: [
+    { label: '1单元', value: 'u6' },
+    { label: '2单元', value: 'u7' },
+  ],
+  b4: [
+    { label: '1单元', value: 'u8' },
+  ],
+  b5: [
+    { label: '1单元', value: 'u9' },
+    { label: '2单元', value: 'u10' },
+  ],
+  b6: [
+    { label: '1单元', value: 'u11' },
+    { label: '2单元', value: 'u12' },
+  ],
+  b7: [
+    { label: '1单元', value: 'u13' },
+  ],
+};
+
+const roomOptions: Record<string, { label: string; value: string }[]> = {
+  u1: [
     { label: '501室', value: 'r1' },
     { label: '502室', value: 'r2' },
     { label: '601室', value: 'r3' },
   ],
-  b2: [
+  u2: [
     { label: '301室', value: 'r4' },
     { label: '302室', value: 'r5' },
+    { label: '401室', value: 'r6' },
+  ],
+  u3: [
+    { label: '201室', value: 'r7' },
+    { label: '202室', value: 'r8' },
   ],
 };
 
@@ -112,9 +156,11 @@ export default function WorkOrderCreate() {
   const [description, setDescription] = useState('');
   const [communityId, setCommunityId] = useState('');
   const [buildingId, setBuildingId] = useState('');
+  const [unitId, setUnitId] = useState('');
   const [roomId, setRoomId] = useState('');
   const [locationDetail, setLocationDetail] = useState('');
   const [priority, setPriority] = useState<WorkOrderPriority>('MEDIUM');
+  const [appointmentTime, setAppointmentTime] = useState<dayjs.Dayjs | null>(null);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
 
@@ -129,11 +175,18 @@ export default function WorkOrderCreate() {
   const handleCommunityChange = (value: string) => {
     setCommunityId(value);
     setBuildingId('');
+    setUnitId('');
     setRoomId('');
   };
 
   const handleBuildingChange = (value: string) => {
     setBuildingId(value);
+    setUnitId('');
+    setRoomId('');
+  };
+
+  const handleUnitChange = (value: string) => {
+    setUnitId(value);
     setRoomId('');
   };
 
@@ -168,6 +221,10 @@ export default function WorkOrderCreate() {
       message.warning('请输入详细描述');
       return;
     }
+    if (type === 'APPOINTMENT' && !appointmentTime) {
+      message.warning('请选择预约时间');
+      return;
+    }
 
     setSubmitting(true);
 
@@ -181,9 +238,11 @@ export default function WorkOrderCreate() {
     setDescription('');
     setCommunityId('');
     setBuildingId('');
+    setUnitId('');
     setRoomId('');
     setLocationDetail('');
     setPriority('MEDIUM');
+    setAppointmentTime(null);
     setUploadedImages([]);
   };
 
@@ -222,7 +281,7 @@ export default function WorkOrderCreate() {
               </span>
               选择工单类型
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {typeOptions.map((option, index) => {
                 const Icon = option.icon;
                 const isSelected = type === option.key;
@@ -306,7 +365,7 @@ export default function WorkOrderCreate() {
 
               <div>
                 <label className="block text-sm text-neutral-400 mb-2">
-                  上传图片（选填）
+                  上传图片（选填，最多6张）
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {uploadedImages.map((img, idx) => (
@@ -327,7 +386,7 @@ export default function WorkOrderCreate() {
                       </button>
                     </div>
                   ))}
-                  {uploadedImages.length < 9 && (
+                  {uploadedImages.length < 6 && (
                     <AntUpload {...uploadProps}>
                       <div className="w-20 h-20 rounded-lg border-2 border-dashed border-white/15 flex flex-col items-center justify-center text-neutral-500 hover:border-primary-500/50 hover:text-primary-400 transition-colors cursor-pointer">
                         <Upload className="w-5 h-5 mb-1" />
@@ -336,10 +395,39 @@ export default function WorkOrderCreate() {
                     </AntUpload>
                   )}
                 </div>
-                <p className="text-xs text-neutral-600 mt-2">支持 JPG、PNG 格式，最多上传9张</p>
+                <p className="text-xs text-neutral-600 mt-2">支持 JPG、PNG 格式，最多上传6张</p>
               </div>
             </div>
           </div>
+
+          {type === 'APPOINTMENT' && (
+            <>
+              <div className="divider mb-8" />
+              <div className="mb-8">
+                <h3 className="text-sm font-medium text-neutral-300 mb-4 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-info-500/20 text-info-400 text-xs flex items-center justify-center font-medium">
+                    2.5
+                  </span>
+                  预约时间
+                </h3>
+                <div>
+                  <label className="block text-sm text-neutral-400 mb-2">
+                    选择预约时间 <span className="text-danger-400">*</span>
+                  </label>
+                  <DatePicker
+                    showTime
+                    value={appointmentTime}
+                    onChange={(date) => setAppointmentTime(date as dayjs.Dayjs)}
+                    placeholder="请选择预约时间"
+                    className="w-full"
+                    minDate={dayjs()}
+                    format="YYYY-MM-DD HH:mm"
+                  />
+                  <p className="text-xs text-neutral-600 mt-2">请选择您方便的时间，我们会准时上门服务</p>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="divider mb-8" />
 
@@ -351,7 +439,7 @@ export default function WorkOrderCreate() {
               位置信息
             </h3>
             <div className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <label className="block text-sm text-neutral-400 mb-2">
                     所属小区
@@ -379,15 +467,28 @@ export default function WorkOrderCreate() {
                 </div>
                 <div>
                   <label className="block text-sm text-neutral-400 mb-2">
+                    单元
+                  </label>
+                  <Select
+                    placeholder="选择单元"
+                    value={unitId || undefined}
+                    onChange={handleUnitChange}
+                    disabled={!buildingId}
+                    className="w-full"
+                    options={unitOptions[buildingId] || []}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-neutral-400 mb-2">
                     房号
                   </label>
                   <Select
                     placeholder="选择房号"
                     value={roomId || undefined}
                     onChange={setRoomId}
-                    disabled={!buildingId}
+                    disabled={!unitId}
                     className="w-full"
-                    options={roomOptions[buildingId] || []}
+                    options={roomOptions[unitId] || []}
                   />
                 </div>
               </div>
