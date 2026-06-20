@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-ink-200;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-50 text-ink-800 font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold text-ink-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-2.5 bg-primary-600 text-white font-medium rounded-md transition-all duration-300 hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-600/20 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-2.5 border-2 border-primary-600 text-primary-600 font-medium rounded-md transition-all duration-300 hover:bg-primary-50 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-6 py-2.5 bg-gold-500 text-white font-medium rounded-md transition-all duration-300 hover:bg-gold-600 hover:shadow-lg hover:shadow-gold-500/20 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-ink-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-gold-300;
+  }
+
+  .card-premium {
+    @apply bg-white rounded-lg border-2 border-gold-200 shadow-lg shadow-gold-100/50 transition-all duration-300 hover:shadow-xl hover:border-gold-400;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 border border-ink-300 rounded-md bg-white text-ink-800 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200;
+  }
+
+  .tag {
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full;
+  }
+
+  .tag-danger {
+    @apply bg-danger-50 text-danger-600 border border-danger-200;
+  }
+
+  .tag-warning {
+    @apply bg-gold-50 text-gold-700 border border-gold-200;
+  }
+
+  .tag-success {
+    @apply bg-success-50 text-success-700 border border-success-200;
+  }
+
+  .tag-info {
+    @apply bg-primary-50 text-primary-600 border border-primary-200;
+  }
+
+  .stat-card {
+    @apply relative overflow-hidden bg-white rounded-lg p-6 border border-ink-200;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-gold-500 to-primary-500;
+  }
+
+  .section-title {
+    @apply text-2xl md:text-3xl font-serif font-bold text-ink-900 mb-2;
+  }
+
+  .section-subtitle {
+    @apply text-ink-500 mb-8;
+  }
+
+  .hero-gradient {
+    @apply bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300 bg-clip-text text-transparent;
+  }
+
+  .risk-pulse {
+    animation: riskPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes riskPulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(224, 164, 88, 0.3);
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e0 #f7fafc;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-ink-100 rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-ink-300 rounded-full hover:bg-ink-400 transition-colors;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .content-auto {
+    content-visibility: auto;
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+}
