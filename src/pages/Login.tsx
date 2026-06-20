@@ -6,9 +6,9 @@ import { cn } from '@/lib/utils';
 import type { UserRole } from 'shared/types';
 
 const roleCredentials: Record<UserRole, { username: string; password: string; label: string; icon: typeof Package }> = {
-  courier: { username: 'courier', password: '123456', label: '快递员', icon: Truck },
-  admin: { username: 'admin', password: '123456', label: '管理员', icon: Shield },
-  operator: { username: 'operator', password: '123456', label: '运营员', icon: Users },
+  courier: { username: 'courier1', password: 'courier123', label: '快递员', icon: Truck },
+  admin: { username: 'admin1', password: 'admin123', label: '管理员', icon: Shield },
+  operator: { username: 'operator1', password: 'operator123', label: '运营员', icon: Users },
 };
 
 export default function Login() {
@@ -17,8 +17,8 @@ export default function Login() {
   const { login, isLoading, isAuthenticated } = useAuthStore();
   
   const [selectedRole, setSelectedRole] = useState<UserRole>('courier');
-  const [username, setUsername] = useState('courier');
-  const [password, setPassword] = useState('123456');
+  const [username, setUsername] = useState('courier1');
+  const [password, setPassword] = useState('courier123');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
@@ -58,7 +58,7 @@ export default function Login() {
     if (!validate()) return;
 
     setError('');
-    const result = await login(username, password, selectedRole);
+    const result = await login(username, password);
     
     if (!result.success) {
       setError(result.message || '登录失败');
@@ -270,15 +270,15 @@ export default function Login() {
               <div className="grid grid-cols-3 gap-2 text-xs">
                 <div className="text-center p-2 bg-white/5 rounded-lg">
                   <div className="text-blue-200 font-medium">快递员</div>
-                  <div className="text-blue-300/60">courier / 123456</div>
+                  <div className="text-blue-300/60">courier1 / courier123</div>
                 </div>
                 <div className="text-center p-2 bg-white/5 rounded-lg">
                   <div className="text-blue-200 font-medium">管理员</div>
-                  <div className="text-blue-300/60">admin / 123456</div>
+                  <div className="text-blue-300/60">admin1 / admin123</div>
                 </div>
                 <div className="text-center p-2 bg-white/5 rounded-lg">
                   <div className="text-blue-200 font-medium">运营员</div>
-                  <div className="text-blue-300/60">operator / 123456</div>
+                  <div className="text-blue-300/60">operator1 / operator123</div>
                 </div>
               </div>
             </div>

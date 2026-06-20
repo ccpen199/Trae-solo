@@ -24,7 +24,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    path: '/',
+    path: '/dashboard',
     label: '工作台',
     icon: LayoutDashboard,
     roles: ['courier', 'admin', 'operator'],
@@ -36,10 +36,10 @@ const menuItems: MenuItem[] = [
     roles: ['courier', 'admin', 'operator'],
   },
   {
-    path: '/offline',
+    path: '/offline-pickup',
     label: '离线揽收',
     icon: WifiOff,
-    roles: ['courier', 'admin', 'operator'],
+    roles: ['courier'],
   },
   {
     path: '/orders',
@@ -48,7 +48,7 @@ const menuItems: MenuItem[] = [
     roles: ['admin', 'operator'],
   },
   {
-    path: '/waybill',
+    path: '/waybill-account',
     label: '电子面单',
     icon: FileText,
     roles: ['admin', 'operator'],
@@ -72,10 +72,10 @@ const menuItems: MenuItem[] = [
     roles: ['admin', 'operator'],
   },
   {
-    path: '/dashboard',
+    path: '/global-dashboard',
     label: '全局看板',
     icon: BarChart3,
-    roles: ['admin', 'operator'],
+    roles: ['operator'],
   },
   {
     path: '/profile',
