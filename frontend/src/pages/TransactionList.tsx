@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Table, Tag, Button, Select, Space } from 'antd';
+import { Card, Table, Tag, Button, Select, Space, Alert, Steps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/request';
 
@@ -21,14 +21,14 @@ export default function TransactionList({ user }: Props) {
 
   useEffect(() => {
     loadList();
-  }, [page, role, type]);
+  }, [page, role, type, user]);
 
   const loadList = async () => {
     setLoading(true);
     try {
-      const res: any = await api.get('/transactions/my', {
-        params: { role, type, page, pageSize },
-      });
+      const endpoint = user ? '/transactions/my' : '/transactions/public';
+      const params: any = user ? { role, type, page, pageSize } : { type, page, pageSize };
+      const res: any = await api.get(endpoint, { params });
       setList(res.list || []);
       setTotal(res.total || 0);
     } catch (e) {
@@ -51,6 +51,25 @@ export default function TransactionList({ user }: Props) {
     commercial: '商业物业',
   };
 
+  const stepLabels: Record<string, string> = {
+    sign_contract: '签约',
+    fund_escrow: '资金监管',
+    tax_payment: '税费',
+    property_transfer: '过户',
+    delivery: '交付',
+  };
+
+  const getCurrentStep = (progress: Record<string, string>) => {
+    const order = ['sign_contract', 'fund_escrow', 'tax_payment', 'property_transfer', 'delivery'];
+    for (let i = order.length - 1; i >= 0; i--) {
+      if (progress[order[i]] === 'completed') return i;
+    }
+    for (let i = 0; i < order.length; i++) {
+      if (progress[order[i]] === 'processing') return i;
+    }
+    return 0;
+  };
+
   const columns = [
     {
       title: '订单编号',
@@ -62,8 +81,8 @@ export default function TransactionList({ user }: Props) {
       dataIndex: 'property_title',
       render: (text: string, record: any) => (
         <div>
-          <div>{text}</div>
-          <div style={{ color: '#999', fontSize: 12 }}>{record.property_address}</div>
+          <div style={{ fontWeight: 500 }}>{text}</div>
+          <div style={{ color: '#999', fontSize: 12 }}>{record.property_address || record.district}</div>
         </div>
       ),
     },
@@ -75,11 +94,32 @@ export default function TransactionList({ user }: Props) {
     {
       title: '成交价格',
       dataIndex: 'price',
-      render: (p: number, record: any) => (
+      render: (p: number) => (
         <span style={{ color: '#ff4d4f', fontWeight: 'bold' }}>
-          {p}{record.price_unit === 'yuan/month' ? '元/月' : '万'}
+          {p}万
         </span>
       ),
+    },
+    {
+      title: '交易进度',
+      key: 'progress',
+      render: (_: any, record: any) => {
+        if (!record.progress) return '-';
+        const current = getCurrentStep(record.progress);
+        return (
+          <Steps
+            size="small"
+            current={current}
+            direction="horizontal"
+            style={{ width: 320 }}
+            items={['sign_contract', 'fund_escrow', 'tax_payment', 'property_transfer', 'delivery'].map((s) => ({
+              title: stepLabels[s],
+              status: record.progress[s] === 'completed' ? 'finish' : 
+                     record.progress[s] === 'processing' ? 'process' : 'wait',
+            }))}
+          />
+        );
+      },
     },
     {
       title: '状态',
@@ -107,23 +147,35 @@ export default function TransactionList({ user }: Props) {
   return (
     <div className="page-container">
       <Card 
-        title="我的交易" 
+        title={user ? '我的交易' : '交易大厅（示例）'} 
         style={{ borderRadius: 8 }}
         extra={
           <Space>
-            <Select value={role} onChange={setRole} style={{ width: 120 }}>
-              <Option value="buyer">作为买家</Option>
-              <Option value="seller">作为卖家</Option>
-            </Select>
+            {user && (
+              <Select value={role} onChange={setRole} style={{ width: 120 }}>
+                <Option value="buyer">作为买家</Option>
+                <Option value="seller">作为卖家</Option>
+              </Select>
+            )}
             <Select value={type} onChange={setType} style={{ width: 120 }}>
               <Option value="all">全部类型</Option>
               <Option value="new">新房</Option>
               <Option value="secondhand">二手房</Option>
               <Option value="rental">租赁</Option>
+              <Option value="commercial">商业物业</Option>
             </Select>
           </Space>
         }
       >
+        {!user && (
+          <Alert
+            message="当前显示平台交易示例数据"
+            description="登录后可查看您的个人交易记录。"
+            type="info"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
         <Table
           columns={columns}
           dataSource={list}

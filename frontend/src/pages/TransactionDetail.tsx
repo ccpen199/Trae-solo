@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Row, Col, Descriptions, Steps, Button, message, Tag, Space, Divider, Statistic } from 'antd';
+import { Card, Row, Col, Descriptions, Steps, Button, message, Tag, Space, Divider, Statistic, Alert } from 'antd';
 import { CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import api from '../utils/request';
 
-export default function TransactionDetail() {
+interface Props {
+  user: any;
+}
+
+export default function TransactionDetail({ user }: Props) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [transaction, setTransaction] = useState<any>(null);
@@ -14,16 +18,18 @@ export default function TransactionDetail() {
 
   useEffect(() => {
     loadDetail();
-  }, [id]);
+  }, [id, user]);
 
   const loadDetail = async () => {
     try {
-      const res: any = await api.get(`/transactions/${id}`);
+      const endpoint = user ? `/transactions/${id}` : `/transactions/public/${id}`;
+      const res: any = await api.get(endpoint);
       setTransaction(res);
       setProgress(res.progress || []);
       setTax(res.tax || null);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      message.error(e.message || '加载失败');
     }
   };
 

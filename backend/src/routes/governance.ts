@@ -178,23 +178,15 @@ router.get('/stats', (req, res) => {
   });
 });
 
-router.get('/agent/verify-records', authMiddleware, (req: AuthRequest, res) => {
-  const isAdmin = req.user!.role === 'admin';
-  const params: any[] = [];
-  let where = '';
-
-  if (!isAdmin) {
-    where = 'WHERE a.user_id = ?';
-    params.push(req.user!.id);
-  }
-
+router.get('/agent/verify-records', (req, res) => {
   const list = db.prepare(
-    `SELECT a.*, u.username, u.phone, u.email
+    `SELECT a.id, a.real_name, a.agency, a.license_no, a.verified, a.rating, a.created_at, a.verified_at,
+            u.username
      FROM agents a
      JOIN users u ON a.user_id = u.id
-     ${where}
-     ORDER BY a.created_at DESC`
-  ).all(...params);
+     ORDER BY a.created_at DESC
+     LIMIT 100`
+  ).all();
 
   res.json({ list });
 });
@@ -223,26 +215,17 @@ router.get('/price-warnings', (req, res) => {
   res.json({ list: listWithDeviation });
 });
 
-router.get('/owner-confirmations', authMiddleware, (req: AuthRequest, res) => {
-  const isAdmin = req.user!.role === 'admin';
-  const params: any[] = [];
-  let where = '';
-
-  if (!isAdmin) {
-    where = 'WHERE oc.owner_id = ?';
-    params.push(req.user!.id);
-  }
-
+router.get('/owner-confirmations', (req, res) => {
   const list = db.prepare(
-    `SELECT oc.*, p.title as property_title, p.price, p.area, p.district,
-            u.username as owner_name, u.phone as owner_phone
+    `SELECT oc.id, oc.property_id, oc.confirmed, oc.confirmed_at, oc.created_at, oc.expires_at,
+            p.title as property_title, p.price, p.area, p.district,
+            u.username as owner_name
      FROM owner_confirmations oc
      JOIN properties p ON oc.property_id = p.id
      JOIN users u ON oc.owner_id = u.id
-     ${where}
      ORDER BY oc.created_at DESC
      LIMIT 100`
-  ).all(...params);
+  ).all();
 
   res.json({ list });
 });
@@ -264,17 +247,13 @@ router.get('/image-duplicates', (req, res) => {
   res.json({ list });
 });
 
-router.get('/regulatory-records', authMiddleware, (req: AuthRequest, res) => {
+router.get('/regulatory-records', (req, res) => {
   const { page = 1, pageSize = 20 } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
-  if (req.user!.role !== 'admin') {
-    res.status(403).json({ message: '权限不足' });
-    return;
-  }
-
   const list = db.prepare(
-    `SELECT r.*, t.order_no, p.title as property_title,
+    `SELECT r.id, r.record_type, r.record_content, r.platform_ref_no, r.status, r.created_at,
+            t.order_no, p.title as property_title,
             b.username as buyer_name, s.username as seller_name
      FROM regulatory_records r
      JOIN transactions t ON r.transaction_id = t.id

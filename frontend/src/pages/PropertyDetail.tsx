@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Row, Col, Card, Button, Tag, Descriptions, Divider, Avatar, Modal, Form, Input, message, Carousel, Space, Statistic } from 'antd';
+import { Row, Col, Card, Button, Tag, Descriptions, Divider, Avatar, Modal, Form, Input, message, Carousel, Space, Statistic, Alert } from 'antd';
 import { HeartOutlined, HeartFilled, PhoneOutlined, MessageOutlined, EyeOutlined, HomeOutlined } from '@ant-design/icons';
 import api from '../utils/request';
 
@@ -43,6 +43,10 @@ interface PropertyDetail {
   developer_id: number;
   developer_name: string;
   developer_credit: string;
+  owner_confirmed: number;
+  duplicate_images: number;
+  has_regulatory: number;
+  ownerConfirmations: any[];
   detail: {
     plot_ratio: number;
     green_ratio: number;
@@ -168,10 +172,21 @@ export default function PropertyDetailPage({ user }: Props) {
           <Card title="房源详情" style={{ borderRadius: 8, marginBottom: 16 }}>
             <div style={{ marginBottom: 16 }}>
               <h2 style={{ marginBottom: 8 }}>{property.title}</h2>
-              <Space size="small">
+              <Space size="small" wrap>
                 <Tag color="blue">{typeLabel}</Tag>
-                {property.is_verified ? <Tag color="green">真房源认证</Tag> : null}
-                {property.price_warning ? <Tag color="orange">价格偏离预警</Tag> : null}
+                {property.is_verified ? <Tag color="green">真房源认证</Tag> : <Tag color="default">未认证</Tag>}
+                {property.owner_confirmed ? <Tag color="green">业主已确认</Tag> : <Tag color="orange">待业主确认</Tag>}
+                {property.price_warning ? (
+                  <Tag color="orange">
+                    价格偏离{property.price_deviation > 0 ? '+' : ''}{property.price_deviation || 0}%
+                  </Tag>
+                ) : <Tag color="blue">价格正常</Tag>}
+                {property.duplicate_images > 0 ? (
+                  <Tag color="red">图片重复{property.duplicate_images}张</Tag>
+                ) : <Tag color="green">图片合规</Tag>}
+                {property.has_regulatory ? (
+                  <Tag color="purple">已备案</Tag>
+                ) : <Tag color="default">未备案</Tag>}
                 {features.map((f: string, idx: number) => (
                   <Tag key={idx}>{f}</Tag>
                 ))}
@@ -289,6 +304,61 @@ export default function PropertyDetailPage({ user }: Props) {
                 <EyeOutlined /> 浏览 {property.view_count} · 收藏 {property.favorite_count}
               </div>
             </Space>
+          </Card>
+
+          <Card title="🛡️ 真房源治理台账" style={{ borderRadius: 8, marginBottom: 16, background: 'linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%)' }}>
+            <Row gutter={[12, 12]}>
+              <Col span={6}>
+                <div style={{ padding: 12, background: '#fff', borderRadius: 6, textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>经纪人实名认证</div>
+                  <Tag color={property.agent_name ? 'green' : 'default'} style={{ fontSize: 12, margin: 0 }}>
+                    {property.agent_name ? '已认证' : '未认证'}
+                  </Tag>
+                  {property.agent_name && <div style={{ fontSize: 11, color: '#999', marginTop: 4 }}>{property.agent_name}</div>}
+                </div>
+              </Col>
+              <Col span={6}>
+                <div style={{ padding: 12, background: '#fff', borderRadius: 6, textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>业主直连确认</div>
+                  <Tag color={property.owner_confirmed ? 'green' : 'orange'} style={{ fontSize: 12, margin: 0 }}>
+                    {property.owner_confirmed ? '已确认' : '待确认'}
+                  </Tag>
+                  {property.ownerConfirmations && property.ownerConfirmations.length > 0 && (
+                    <div style={{ fontSize: 11, color: '#999', marginTop: 4 }}>
+                      {property.ownerConfirmations[0].owner_name} · {property.ownerConfirmations[0].created_at?.slice(0, 10)}
+                    </div>
+                  )}
+                </div>
+              </Col>
+              <Col span={6}>
+                <div style={{ padding: 12, background: '#fff', borderRadius: 6, textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>挂牌价偏离预警</div>
+                  {property.price_warning ? (
+                    <Tag color="orange" style={{ fontSize: 12, margin: 0 }}>
+                      偏离 {property.price_deviation > 0 ? '+' : ''}{property.price_deviation || 0}%
+                    </Tag>
+                  ) : (
+                    <Tag color="green" style={{ fontSize: 12, margin: 0 }}>正常区间</Tag>
+                  )}
+                </div>
+              </Col>
+              <Col span={6}>
+                <div style={{ padding: 12, background: '#fff', borderRadius: 6, textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>住建监管备案</div>
+                  <Tag color={property.has_regulatory ? 'purple' : 'default'} style={{ fontSize: 12, margin: 0 }}>
+                    {property.has_regulatory ? '已网签备案' : '未备案'}
+                  </Tag>
+                </div>
+              </Col>
+            </Row>
+            {property.duplicate_images > 0 && (
+              <Alert
+                message={`检测到${property.duplicate_images}张重复图片，平台已介入处理`}
+                type="warning"
+                showIcon
+                style={{ marginTop: 12 }}
+              />
+            )}
           </Card>
 
           {(property.agent_id || property.developer_id) && (

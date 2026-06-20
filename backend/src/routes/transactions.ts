@@ -49,6 +49,77 @@ router.get('/tax/calculate', (req, res) => {
   res.json(result);
 });
 
+router.get('/public', (req, res) => {
+  const { type, page = 1, pageSize = 20 } = req.query;
+  const offset = (Number(page) - 1) * Number(pageSize);
+
+  let where = '';
+  let params: any[] = [];
+
+  if (type && type !== 'all') {
+    where = 'WHERE t.type = ?';
+    params.push(type);
+  }
+
+  const total = db.prepare(
+    `SELECT COUNT(*) as count FROM transactions t ${where}`
+  ).get(...params) as { count: number };
+
+  const list = db.prepare(
+    `SELECT t.id, t.order_no, t.type, t.price, t.status, t.created_at, t.contract_signed, t.fund_escrow, t.transfer_status,
+            p.title as property_title, p.images as property_images, p.address as property_address, p.area as property_area, p.district,
+            b.username as buyer_name, s.username as seller_name,
+            a.real_name as agent_name
+     FROM transactions t
+     JOIN properties p ON t.property_id = p.id
+     JOIN users b ON t.buyer_id = b.id
+     JOIN users s ON t.seller_id = s.id
+     LEFT JOIN agents a ON t.agent_id = a.id
+     ${where}
+     ORDER BY t.created_at DESC
+     LIMIT ? OFFSET ?`
+  ).all(...params, Number(pageSize), offset);
+
+  const listWithProgress = (list as any[]).map(t => {
+    const progress = db.prepare(
+      "SELECT step, status FROM transaction_progress WHERE transaction_id = ? ORDER BY id"
+    ).all(t.id);
+    const progressMap: Record<string, string> = {};
+    progress.forEach((p: any) => { progressMap[p.step] = p.status; });
+    return { ...t, progress: progressMap };
+  });
+
+  res.json({ list: listWithProgress, total: total.count, page: Number(page), pageSize: Number(pageSize) });
+});
+
+router.get('/public/:id', (req, res) => {
+  const transaction = db.prepare(
+    `SELECT t.id, t.order_no, t.type, t.price, t.status, t.created_at, t.contract_signed, t.fund_escrow, t.fund_amount, t.transfer_status,
+            p.title as property_title, p.images as property_images, p.address as property_address, p.area as property_area,
+            b.username as buyer_name, s.username as seller_name,
+            a.real_name as agent_name, a.agency as agent_agency
+     FROM transactions t
+     JOIN properties p ON t.property_id = p.id
+     JOIN users b ON t.buyer_id = b.id
+     JOIN users s ON t.seller_id = s.id
+     LEFT JOIN agents a ON t.agent_id = a.id
+     WHERE t.id = ?`
+  ).get(req.params.id);
+
+  if (!transaction) {
+    res.status(404).json({ message: '交易不存在' });
+    return;
+  }
+
+  const progress = db.prepare(
+    'SELECT step, status, operator, created_at FROM transaction_progress WHERE transaction_id = ? ORDER BY id'
+  ).all(req.params.id);
+
+  const tax = calculateTax((transaction as any).price, (transaction as any).type);
+
+  res.json({ ...transaction, progress, tax });
+});
+
 router.post('/', authMiddleware, (req: AuthRequest, res) => {
   const { propertyId, type, price, sellerId } = req.body;
 

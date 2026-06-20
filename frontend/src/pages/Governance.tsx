@@ -26,23 +26,20 @@ export default function Governance({ user }: Props) {
     loadStats();
     loadPriceWarnings();
     loadImageDuplicates();
+    loadAgentRecords();
+    loadOwnerConfirmations();
+    loadRegulatoryRecords();
     if (user?.role === 'agent') {
       loadAgentVerifyStatus();
-      loadAgentRecords();
-    }
-    if (user?.role === 'user' || user?.role === 'agent' || user?.role === 'admin') {
-      loadOwnerConfirmations();
-    }
-    if (user?.role === 'admin') {
-      loadRegulatoryRecords();
-      loadAgentRecords();
     }
   }, [user]);
 
   useEffect(() => {
-    if (activeTab === 'agent' && user?.role === 'agent') {
-      loadAgentVerifyStatus();
+    if (activeTab === 'agent') {
       loadAgentRecords();
+      if (user?.role === 'agent') {
+        loadAgentVerifyStatus();
+      }
     }
     if (activeTab === 'warning') {
       loadPriceWarnings();
@@ -50,12 +47,11 @@ export default function Governance({ user }: Props) {
     if (activeTab === 'duplicate') {
       loadImageDuplicates();
     }
-    if (activeTab === 'owner' && user) {
+    if (activeTab === 'owner') {
       loadOwnerConfirmations();
     }
-    if (activeTab === 'compliance' && user?.role === 'admin') {
+    if (activeTab === 'compliance') {
       loadRegulatoryRecords();
-      loadAgentRecords();
     }
   }, [activeTab, user]);
 
@@ -249,7 +245,7 @@ export default function Governance({ user }: Props) {
                 style={{ borderRadius: 8 }}
                 extra={<Button type="link" size="small" onClick={() => setActiveTab('agent')}>更多 →</Button>}
               >
-                {agentRecords.length > 0 && (user?.role === 'agent' || user?.role === 'admin') ? (
+                {agentRecords.length > 0 ? (
                   <List
                     size="small"
                     dataSource={agentRecords.slice(0, 5)}
@@ -267,7 +263,7 @@ export default function Governance({ user }: Props) {
                 ) : (
                   <div style={{ textAlign: 'center', padding: '20px 0', color: '#999', fontSize: 13 }}>
                     <UserSwitchOutlined style={{ fontSize: 28, color: '#d9d9d9', marginBottom: 8 }} />
-                    <div>登录后可查看详细认证记录</div>
+                    <div>暂无经纪人认证记录</div>
                   </div>
                 )}
               </Card>
@@ -342,7 +338,7 @@ export default function Governance({ user }: Props) {
                 style={{ borderRadius: 8 }}
                 extra={<Button type="link" size="small" onClick={() => setActiveTab('owner')}>更多 →</Button>}
               >
-                {ownerConfirmations.length > 0 && user ? (
+                {ownerConfirmations.length > 0 ? (
                   <List
                     size="small"
                     dataSource={ownerConfirmations.slice(0, 5)}
@@ -359,7 +355,7 @@ export default function Governance({ user }: Props) {
                 ) : (
                   <div style={{ textAlign: 'center', padding: '20px 0', color: '#999', fontSize: 13 }}>
                     <PhoneOutlined style={{ fontSize: 28, color: '#d9d9d9', marginBottom: 8 }} />
-                    <div>{user ? '暂无业主确认记录' : '登录后可查看确认记录'}</div>
+                    <div>暂无业主确认记录</div>
                   </div>
                 )}
               </Card>
@@ -464,18 +460,8 @@ export default function Governance({ user }: Props) {
             </Card>
           )}
 
-          {user?.role !== 'agent' && user?.role !== 'admin' && (
-            <Alert
-              message="请以经纪人身份登录"
-              description="经纪人实名认证仅限经纪人账号使用，请先注册或切换至经纪人账号。"
-              type="warning"
-              showIcon
-              style={{ marginBottom: 16 }}
-            />
-          )}
-
-          {agentRecords.length > 0 && (user?.role === 'agent' || user?.role === 'admin') && (
-            <Card title="认证审核记录" style={{ borderRadius: 8 }}>
+          <Card title={`认证审核记录（${agentRecords.length}条）`} style={{ borderRadius: 8 }}>
+            {agentRecords.length > 0 ? (
               <Table
                 dataSource={agentRecords}
                 rowKey="id"
@@ -483,18 +469,28 @@ export default function Governance({ user }: Props) {
                 columns={[
                   { title: '经纪人', dataIndex: 'real_name', key: 'real_name' },
                   { title: '所属机构', dataIndex: 'agency', key: 'agency' },
-                  { title: '联系电话', dataIndex: 'phone', key: 'phone' },
                   { title: '资格证号', dataIndex: 'license_no', key: 'license_no' },
                   {
                     title: '认证状态',
                     key: 'verified',
                     render: (_, record: any) => getStatusBadge(record.verified),
                   },
+                  {
+                    title: '信用评级',
+                    key: 'rating',
+                    render: (_, record: any) => (
+                      <Tag color={record.rating >= 4 ? 'green' : record.rating >= 3 ? 'blue' : 'orange'}>
+                        {'★'.repeat(record.rating || 0)}{'☆'.repeat(5 - (record.rating || 0))}
+                      </Tag>
+                    ),
+                  },
                   { title: '提交时间', dataIndex: 'created_at', key: 'created_at' },
                 ]}
               />
-            </Card>
-          )}
+            ) : (
+              <Empty description="暂无认证记录" />
+            )}
+          </Card>
         </div>
       ),
     },
@@ -622,8 +618,8 @@ export default function Governance({ user }: Props) {
             style={{ marginBottom: 16 }}
           />
           
-          {user ? (
-            <div>
+          <div>
+            {user && (
               <Card title="发起业主确认" style={{ marginBottom: 16, borderRadius: 8 }}>
                 <Form form={confirmForm} layout="vertical" style={{ maxWidth: 500 }}>
                   <Form.Item name="propertyId" label="房源ID" rules={[{ required: true, message: '请输入房源ID' }]}>
@@ -650,43 +646,40 @@ export default function Governance({ user }: Props) {
                   </div>
                 )}
               </Card>
+            )}
 
-              {ownerConfirmations.length > 0 && (
-                <Card title="业主确认记录" style={{ borderRadius: 8 }}>
-                  <List
-                    dataSource={ownerConfirmations}
-                    renderItem={(item: any) => (
-                      <List.Item
-                        actions={[getConfirmBadge(item.confirmed)]}
-                      >
-                        <List.Item.Meta
-                          title={item.property_title}
-                          description={
-                            <div>
-                              <span style={{ color: '#999' }}>
-                                业主: {item.owner_name} · {item.owner_phone} · {item.property_price}万 · {item.property_area}㎡ · {item.district}
-                              </span>
-                              <div style={{ marginTop: 4, fontSize: 12, color: '#999' }}>
-                                申请时间: {item.created_at}
-                                {item.confirmed_at && ` · 确认时间: ${item.confirmed_at}`}
-                              </div>
-                            </div>
-                          }
-                        />
-                      </List.Item>
-                    )}
-                  />
-                </Card>
+            <Card title={`业主确认记录（${ownerConfirmations.length}条）`} style={{ borderRadius: 8 }}>
+              {ownerConfirmations.length > 0 ? (
+                <Table
+                  dataSource={ownerConfirmations}
+                  rowKey="id"
+                  size="small"
+                  columns={[
+                    { title: '房源ID', dataIndex: 'property_id', key: 'property_id' },
+                    { title: '房源标题', dataIndex: 'property_title', key: 'property_title' },
+                    {
+                      title: '价格/面积',
+                      key: 'info',
+                      render: (_, record: any) => (
+                        <span>{record.price}万 / {record.area}㎡</span>
+                      ),
+                    },
+                    { title: '区域', dataIndex: 'district', key: 'district' },
+                    { title: '业主', dataIndex: 'owner_name', key: 'owner_name' },
+                    {
+                      title: '确认状态',
+                      key: 'confirmed',
+                      render: (_, record: any) => getConfirmBadge(record.confirmed),
+                    },
+                    { title: '申请时间', dataIndex: 'created_at', key: 'created_at' },
+                    { title: '确认时间', dataIndex: 'confirmed_at', key: 'confirmed_at', render: (v: string) => v || '-' },
+                  ]}
+                />
+              ) : (
+                <Empty description="暂无业主确认记录" />
               )}
-            </div>
-          ) : (
-            <Alert
-              message="请先登录"
-              description="业主确认需要登录账号，请先登录后再进行操作。"
-              type="warning"
-              showIcon
-            />
-          )}
+            </Card>
+          </div>
         </div>
       ),
     },
@@ -720,46 +713,37 @@ export default function Governance({ user }: Props) {
             ))}
           </Row>
 
-          {user?.role === 'admin' ? (
-            <Card title="监管备案记录" style={{ borderRadius: 8 }}>
-              {regulatoryRecords.length > 0 ? (
-                <Table
-                  dataSource={regulatoryRecords}
-                  rowKey="id"
-                  size="small"
-                  columns={[
-                    { title: '备案号', dataIndex: 'platform_ref_no', key: 'platform_ref_no' },
-                    { title: '房源', dataIndex: 'property_title', key: 'property_title' },
-                    { title: '交易编号', dataIndex: 'order_no', key: 'order_no' },
-                    { title: '记录类型', dataIndex: 'record_type', key: 'record_type' },
-                    { title: '买方', dataIndex: 'buyer_name', key: 'buyer_name' },
-                    { title: '卖方', dataIndex: 'seller_name', key: 'seller_name' },
-                    {
-                      title: '同步状态',
-                      key: 'status',
-                      render: (_, record: any) => (
-                        record.status === 'synced' ?
-                          <Tag color="success">已同步</Tag> :
-                          record.status === 'pending' ?
-                            <Tag color="orange">同步中</Tag> :
-                            <Tag color="red">同步失败</Tag>
-                      ),
-                    },
-                    { title: '同步时间', dataIndex: 'created_at', key: 'created_at' },
-                  ]}
-                />
-              ) : (
-                <Empty description="暂无监管备案记录" />
-              )}
-            </Card>
-          ) : (
-            <Alert
-              message="监管备案记录仅限管理员查看"
-              description="请使用管理员账号登录查看详细的监管备案记录。"
-              type="info"
-              showIcon
-            />
-          )}
+          <Card title={`监管备案记录（${regulatoryRecords.length}条）`} style={{ borderRadius: 8 }}>
+            {regulatoryRecords.length > 0 ? (
+              <Table
+                dataSource={regulatoryRecords}
+                rowKey="id"
+                size="small"
+                columns={[
+                  { title: '备案号', dataIndex: 'platform_ref_no', key: 'platform_ref_no' },
+                  { title: '房源', dataIndex: 'property_title', key: 'property_title' },
+                  { title: '交易编号', dataIndex: 'order_no', key: 'order_no' },
+                  { title: '记录类型', dataIndex: 'record_type', key: 'record_type' },
+                  { title: '买方', dataIndex: 'buyer_name', key: 'buyer_name' },
+                  { title: '卖方', dataIndex: 'seller_name', key: 'seller_name' },
+                  {
+                    title: '同步状态',
+                    key: 'status',
+                    render: (_, record: any) => (
+                      record.status === 'synced' ?
+                        <Tag color="success">已同步</Tag> :
+                        record.status === 'pending' ?
+                          <Tag color="orange">同步中</Tag> :
+                          <Tag color="red">同步失败</Tag>
+                    ),
+                  },
+                  { title: '同步时间', dataIndex: 'created_at', key: 'created_at' },
+                ]}
+              />
+            ) : (
+              <Empty description="暂无监管备案记录" />
+            )}
+          </Card>
 
           <div style={{ marginTop: 24, padding: 16, background: '#e6f7ff', borderRadius: 6 }}>
             <h4 style={{ color: '#1890ff', marginTop: 0 }}>监管合规承诺</h4>

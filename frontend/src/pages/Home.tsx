@@ -34,14 +34,14 @@ export default function Home() {
     }
     loadHotProperties();
     loadNewProperties();
-    if (savedUser) {
-      loadRecommendations();
-    }
+    loadRecommendations();
   }, []);
 
   const loadRecommendations = async () => {
     try {
-      const res: any = await api.get('/user/recommendations?limit=4');
+      const savedUser = localStorage.getItem('user');
+      const endpoint = savedUser ? '/user/recommendations?limit=4' : '/properties/recommendations/list?limit=4';
+      const res: any = await api.get(endpoint);
       setRecommendations(res.list || []);
     } catch (e) {
       console.error(e);
@@ -254,45 +254,51 @@ export default function Home() {
           style={{ marginBottom: 24, borderRadius: 12, background: 'linear-gradient(135deg, #f9f0ff 0%, #f0f5ff 100%)' }}
           extra={
             <Space>
-              {user ? (
-                <Tag color="purple">基于您的浏览/收藏行为</Tag>
-              ) : (
-                <Tag color="blue">热门推荐</Tag>
-              )}
+              <Tag color="purple">
+                {user ? '基于您的浏览/收藏/咨询行为' : '融合楼盘画像+市场因子'}
+              </Tag>
               <Button type="link" onClick={() => user ? navigate('/user') : navigate('/login')}>
                 查看更多 →
               </Button>
             </Space>
           }
         >
-          {user ? (
-            <Row gutter={[16, 16]}>
-              {recommendations.length > 0 ? (
-                recommendations.map(item => (
-                  <Col span={6} key={item.id}>{renderRecommendCard(item)}</Col>
-                ))
-              ) : (
-                <Col span={24}>
-                  <div style={{ textAlign: 'center', padding: '40px 0', color: '#999' }}>
-                    多浏览一些房源，系统将为您生成个性化推荐
-                  </div>
-                </Col>
-              )}
-            </Row>
-          ) : (
-            <div>
-              <Row gutter={[16, 16]}>
-                {hotProperties.slice(0, 4).map(item => (
-                  <Col span={6} key={item.id}>
-                    {renderRecommendCard({ ...item, reasons: ['热门房源，多人关注', '真房源认证'] })}
-                  </Col>
-                ))}
-              </Row>
-              <div style={{ textAlign: 'center', marginTop: 16, color: '#999', fontSize: 13 }}>
-                💡 <a onClick={() => navigate('/login')} style={{ color: '#1890ff', cursor: 'pointer' }}>登录后</a>可获得基于您浏览偏好的个性化推荐
-              </div>
-            </div>
-          )}
+          <Row gutter={[16, 16]}>
+            {recommendations.length > 0 ? (
+              recommendations.map(item => (
+                <Col span={6} key={item.id}>{renderRecommendCard(item)}</Col>
+              ))
+            ) : (
+              <Col span={24}>
+                <div style={{ textAlign: 'center', padding: '40px 0', color: '#999' }}>
+                  多浏览一些房源，系统将为您生成个性化推荐
+                </div>
+              </Col>
+            )}
+          </Row>
+          <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+            <Col span={8}>
+              <Card size="small" style={{ borderRadius: 8, background: '#fff' }}>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>📊 用户行为权重</div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#722ed1' }}>40%</div>
+                <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>浏览 · 收藏 · 咨询</div>
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card size="small" style={{ borderRadius: 8, background: '#fff' }}>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>🏢 楼盘画像权重</div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#1890ff' }}>35%</div>
+                <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>容积率 · 学区 · 开发商信用</div>
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card size="small" style={{ borderRadius: 8, background: '#fff' }}>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>📈 市场因子权重</div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#52c41a' }}>25%</div>
+                <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>去化周期 · 贷款利率 · 区域均价</div>
+              </Card>
+            </Col>
+          </Row>
         </Card>
 
         <Card 

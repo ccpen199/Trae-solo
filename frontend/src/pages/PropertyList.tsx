@@ -28,6 +28,10 @@ interface Property {
   view_count: number;
   favorite_count: number;
   price_warning: number;
+  price_deviation: number;
+  owner_confirmed: number;
+  duplicate_images: number;
+  has_regulatory: number;
 }
 
 const typeMap: Record<string, string> = {
@@ -306,8 +310,21 @@ export default function PropertyList() {
                             {item.is_verified ? (
                               <Tag color="green" style={{ position: 'absolute', top: 8, left: 8 }}>真房源</Tag>
                             ) : null}
+                            {item.owner_confirmed ? (
+                              <Tag color="green" style={{ position: 'absolute', top: 8, left: item.is_verified ? 70 : 8 }}>业主已确认</Tag>
+                            ) : null}
                             {item.price_warning ? (
-                              <Tag color="orange" style={{ position: 'absolute', top: 8, right: 8 }}>价格异常</Tag>
+                              <Tag color="orange" style={{ position: 'absolute', top: 8, right: 8 }}>
+                                偏离{item.price_deviation > 0 ? '+' : ''}{item.price_deviation || 0}%
+                              </Tag>
+                            ) : null}
+                            {item.duplicate_images > 0 ? (
+                              <Tag color="red" style={{ position: 'absolute', top: 8, right: item.price_warning ? 82 : 8 }}>
+                                重复图{item.duplicate_images}张
+                              </Tag>
+                            ) : null}
+                            {item.has_regulatory ? (
+                              <Tag color="purple" style={{ position: 'absolute', bottom: 8, right: 8 }}>已备案</Tag>
                             ) : null}
                             {item.type === 'commercial' && (
                               <Tag color="purple" style={{ position: 'absolute', bottom: 8, left: 8 }}>{categoryLabels[item.category] || '商业'}</Tag>

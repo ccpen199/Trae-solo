@@ -63,16 +63,8 @@ function App() {
               <UserCenter user={user} />
             </ProtectedRoute>
           } />
-          <Route path="transactions" element={
-            <ProtectedRoute>
-              <TransactionList user={user} />
-            </ProtectedRoute>
-          } />
-          <Route path="transaction/:id" element={
-            <ProtectedRoute>
-              <TransactionDetail />
-            </ProtectedRoute>
-          } />
+          <Route path="transactions" element={<TransactionList user={user} />} />
+          <Route path="transaction/:id" element={<TransactionDetail user={user} />} />
           <Route path="agent/dashboard" element={
             <ProtectedRoute role="agent">
               <AgentDashboard />
