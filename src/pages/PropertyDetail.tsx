@@ -23,6 +23,7 @@ import {
   Play,
   ZoomIn,
   ChevronDown,
+  ChevronUp,
   Plus,
   Minus,
   FileCheck,
@@ -30,6 +31,12 @@ import {
   ArrowRight,
   RotateCcw,
   Bell,
+  Scale,
+  FileSpreadsheet,
+  History,
+  Lightbulb,
+  TrendingUp,
+  TrendingDown,
 } from 'lucide-react';
 import {
   getPropertyById,
@@ -38,6 +45,7 @@ import {
   getBidRecords,
   getDocuments,
   riskTagDescriptions,
+  mockMarketData,
 } from '@/mock/data';
 import {
   formatPrice,
@@ -80,6 +88,9 @@ export default function PropertyDetail() {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, isEnded: false });
   const [showVR, setShowVR] = useState(false);
   const [vrAngle, setVrAngle] = useState(0);
+  const [showMaterialDetail, setShowMaterialDetail] = useState(false);
+  const [expandedRisks, setExpandedRisks] = useState<string[]>([]);
+  const [expandedRiskTags, setExpandedRiskTags] = useState<string[]>([]);
 
   useEffect(() => {
     if (property) {
@@ -131,14 +142,49 @@ export default function PropertyDetail() {
   const minIncrement = Math.ceil(property.startingPrice * 0.01 / 10000) * 10000;
 
   const phases = [
-    { key: 'notice', label: '公告期', start: process?.noticeStart, end: process?.noticeEnd },
-    { key: 'due-diligence', label: '尽调期', start: process?.dueDiligenceStart, end: process?.dueDiligenceEnd },
-    { key: 'deposit', label: '保证金缴纳', end: process?.depositDeadline },
-    { key: 'bidding', label: '竞价阶段', start: process?.auctionStart, end: process?.auctionEnd },
+    { key: 'notice', label: '公告期', start: process?.noticeStart, end: process?.noticeEnd, description: '法院发布拍卖公告，展示标的信息和竞拍规则' },
+    { key: 'due-diligence', label: '尽调期', start: process?.dueDiligenceStart, end: process?.dueDiligenceEnd, description: '意向竞买人可现场看样、咨询、开展尽职调查' },
+    { key: 'deposit', label: '保证金缴纳', end: process?.depositDeadline, description: '保证金通过银行监管账户冻结，未成交自动退还' },
+    { key: 'bidding', label: '延时竞价', start: process?.auctionStart, end: process?.auctionEnd, description: '结束前5分钟有人出价则自动延时5分钟' },
+    { key: 'confirmation', label: '成交确认', description: '最高出价者竞得，签署成交确认书' },
+    { key: 'contract', label: '电子签约', description: '线上电子合同存证，法院出具执行裁定书' },
   ];
 
-  const phaseOrder = ['notice', 'due-diligence', 'deposit', 'bidding', 'ended'];
+  const phaseOrder = ['notice', 'due-diligence', 'deposit', 'bidding', 'confirmation', 'contract', 'ended'];
   const currentPhaseIndex = phaseOrder.indexOf(process?.currentPhase || 'notice');
+
+  const toggleRisk = (key: string) => {
+    setExpandedRisks((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
+  };
+
+  const toggleRiskTag = (tag: string) => {
+    setExpandedRiskTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const getRiskLevelTagClass = (level: string) => {
+    const classes: Record<string, string> = {
+      high: 'text-danger-600 bg-danger-50',
+      medium: 'text-gold-700 bg-gold-50',
+      low: 'text-success-600 bg-success-50',
+    };
+    return classes[level] || '';
+  };
+
+  const getRiskInfoByTag = (tag: string) => {
+    if (!report) return null;
+    const riskMap: Record<string, any> = {
+      '有抵押': report.mortgageInfo,
+      '有查封': report.seizureRecord,
+      '户口未迁出': report.householdInfo,
+      '租赁关系存续': report.leaseInfo,
+      '有欠费': report.arrears,
+    };
+    return riskMap[tag];
+  };
 
   return (
     <div className="min-h-screen bg-ink-50 pb-10">
@@ -396,168 +442,449 @@ export default function PropertyDetail() {
                       </span>
                     </div>
 
-                    {/* Ownership Status */}
-                    <div className="bg-ink-50 rounded-lg p-5">
+                    <div className="bg-gradient-to-r from-primary-50 to-gold-50 rounded-xl p-6 border border-primary-100">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className={cn(
-                          'w-10 h-10 rounded-full flex items-center justify-center',
-                          report.ownershipStatus === 'clear' ? 'bg-success-100' : 'bg-danger-100'
-                        )}>
-                          {report.ownershipStatus === 'clear' ? (
-                            <CheckCircle2 className="w-5 h-5 text-success-600" />
-                          ) : (
-                            <AlertTriangle className="w-5 h-5 text-danger-600" />
-                          )}
+                        <Scale className="w-6 h-6 text-primary-600" />
+                        <h4 className="font-serif font-bold text-ink-900">法院评估价详情</h4>
+                        <span className="text-xs px-2 py-0.5 bg-primary-100 text-primary-700 rounded-full">
+                          法院委托评估
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-sm">
+                        <div>
+                          <span className="text-ink-500">评估机构：</span>
+                          <span className="text-ink-800">{report.appraisalDetail.agency}</span>
                         </div>
                         <div>
-                          <div className="font-medium text-ink-900">产权状态</div>
-                          <div className="text-sm text-ink-500">
-                            {report.ownershipStatus === 'clear' ? '产权清晰' :
-                             report.ownershipStatus === 'mortgaged' ? '有抵押' :
-                             report.ownershipStatus === 'seized' ? '已查封' : '有争议'}
+                          <span className="text-ink-500">评估基准日：</span>
+                          <span className="text-ink-800">{report.appraisalDetail.baseDate}</span>
+                        </div>
+                        <div>
+                          <span className="text-ink-500">评估方法：</span>
+                          <span className="text-ink-800">{report.appraisalDetail.method}</span>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-4 p-4 bg-white/60 rounded-lg">
+                        <div className="text-center">
+                          <div className="text-xs text-ink-500 mb-1">房屋价值</div>
+                          <div className="text-lg font-bold text-ink-900 font-serif">
+                            ¥{formatPrice(report.appraisalDetail.houseValue)}
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-ink-500 mb-1">土地价值</div>
+                          <div className="text-lg font-bold text-ink-900 font-serif">
+                            ¥{formatPrice(report.appraisalDetail.landValue)}
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-ink-500 mb-1">装修价值</div>
+                          <div className="text-lg font-bold text-ink-900 font-serif">
+                            ¥{formatPrice(report.appraisalDetail.decorationValue)}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex items-center justify-between text-sm">
+                        <div>
+                          <span className="text-ink-500">评估总价：</span>
+                          <span className="text-lg font-bold text-primary-600 font-serif">
+                            ¥{formatPrice(property.appraisalPrice)}
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-ink-500">较起拍价：</span>
+                          <span className="text-success-600 font-medium">低 {discount}%</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={cn(
+                      'rounded-xl p-6 border-l-4',
+                      report.ownershipStatus === 'clear'
+                        ? 'bg-success-50 border-success-500'
+                        : 'bg-gold-50 border-gold-500'
+                    )}>
+                      <div className="flex items-center gap-3 mb-2">
+                        {report.ownershipStatus === 'clear' ? (
+                          <CheckCircle2 className="w-8 h-8 text-success-600" />
+                        ) : (
+                          <AlertTriangle className="w-8 h-8 text-gold-600" />
+                        )}
+                        <div>
+                          <div className="text-xs text-ink-500 mb-1">核查结论</div>
+                          <div className="text-xl font-bold font-serif text-ink-900">
+                            {report.conclusion}
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Risk Items */}
+                    <div className="bg-ink-50 rounded-xl p-5">
+                      <div className="flex items-center gap-2 mb-4">
+                        <History className="w-5 h-5 text-ink-600" />
+                        <h4 className="font-medium text-ink-900">复查记录</h4>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-ink-200"></div>
+                        <div className="space-y-4">
+                          {report.reviewRecords.slice(0, 3).map((record, index) => (
+                            <div key={index} className="relative pl-8">
+                              <div className={cn(
+                                'absolute left-1.5 top-1 w-3 h-3 rounded-full',
+                                index === 0 ? 'bg-primary-500' : 'bg-ink-300'
+                              )}></div>
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-sm font-medium text-ink-800">{record.date}</span>
+                                <span className="text-xs text-ink-500">复查人：{record.reviewer}</span>
+                              </div>
+                              <p className="text-sm text-ink-600">{record.result}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-ink-200 rounded-xl overflow-hidden">
+                      <button
+                        onClick={() => setShowMaterialDetail(!showMaterialDetail)}
+                        className="w-full flex items-center justify-between p-4 hover:bg-ink-50 transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <FileSpreadsheet className="w-5 h-5 text-ink-600" />
+                          <span className="font-medium text-ink-900">材料正文</span>
+                        </div>
+                        {showMaterialDetail ? (
+                          <ChevronUp className="w-5 h-5 text-ink-400" />
+                        ) : (
+                          <ChevronDown className="w-5 h-5 text-ink-400" />
+                        )}
+                      </button>
+                      {showMaterialDetail && (
+                        <div className="px-4 pb-4 pt-2 border-t border-ink-100">
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <span className="text-ink-500">产权证书编号：</span>
+                              <span className="text-ink-800">{report.materialDetail.certNo}</span>
+                            </div>
+                            <div>
+                              <span className="text-ink-500">登记时间：</span>
+                              <span className="text-ink-800">{report.materialDetail.registerDate}</span>
+                            </div>
+                            <div>
+                              <span className="text-ink-500">产权性质：</span>
+                              <span className="text-ink-800">{report.materialDetail.ownershipType}</span>
+                            </div>
+                            <div>
+                              <span className="text-ink-500">共有情况：</span>
+                              <span className="text-ink-800">{report.materialDetail.coOwnership}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
                     <div className="space-y-4">
-                      {/* Mortgage */}
                       <div className={cn(
-                        'p-4 rounded-lg border',
+                        'rounded-xl border overflow-hidden',
                         report.mortgageInfo.hasMortgage
                           ? 'bg-danger-50 border-danger-200'
                           : 'bg-success-50 border-success-200'
                       )}>
-                        <div className="flex items-center justify-between mb-2">
+                        <button
+                          onClick={() => toggleRisk('mortgage')}
+                          className="w-full p-4 flex items-center justify-between"
+                        >
                           <span className="font-medium text-ink-900 flex items-center gap-2">
                             <Shield className="w-4 h-4" />
                             抵押情况
                           </span>
-                          {report.mortgageInfo.hasMortgage ? (
-                            <span className="text-xs text-danger-600 font-medium">有抵押</span>
-                          ) : (
-                            <span className="text-xs text-success-600 font-medium">无抵押</span>
-                          )}
-                        </div>
-                        {report.mortgageInfo.hasMortgage && (
-                          <div className="text-sm text-ink-600 space-y-1">
-                            <p>抵押权人：{report.mortgageInfo.mortgagee}</p>
-                            <p>抵押金额：¥{formatPrice(report.mortgageInfo.mortgageAmount)}</p>
-                            <p>抵押日期：{report.mortgageInfo.mortgageDate}</p>
+                          <div className="flex items-center gap-2">
+                            {report.mortgageInfo.hasMortgage ? (
+                              <span className="text-xs text-danger-600 font-medium">有抵押</span>
+                            ) : (
+                              <span className="text-xs text-success-600 font-medium">无抵押</span>
+                            )}
+                            {expandedRisks.includes('mortgage') ? (
+                              <ChevronUp className="w-4 h-4 text-ink-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-ink-400" />
+                            )}
+                          </div>
+                        </button>
+                        {expandedRisks.includes('mortgage') && (
+                          <div className="px-4 pb-4 space-y-3 border-t border-danger-100/50">
+                            {report.mortgageInfo.hasMortgage && (
+                              <div className="text-sm text-ink-600 space-y-1 pt-3">
+                                <p>抵押权人：{report.mortgageInfo.mortgagee}</p>
+                                <p>抵押金额：¥{formatPrice(report.mortgageInfo.mortgageAmount)}</p>
+                                <p>抵押日期：{report.mortgageInfo.mortgageDate}</p>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-2 pt-2">
+                              <span className="text-xs text-ink-500">风险等级：</span>
+                              <span className={cn(
+                                'text-xs px-2 py-0.5 rounded-full font-medium',
+                                getRiskLevelTagClass(report.mortgageInfo.riskLevel)
+                              )}>
+                                {getRiskLevelLabel(report.mortgageInfo.riskLevel)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-xs text-ink-500">影响程度：</span>
+                              <p className="text-sm text-ink-700 mt-1">{report.mortgageInfo.impact}</p>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1 mb-1">
+                                <Lightbulb className="w-3 h-3 text-primary-500" />
+                                <span className="text-xs text-primary-700 font-medium">处置建议</span>
+                              </div>
+                              <p className="text-sm text-ink-700">{report.mortgageInfo.suggestion}</p>
+                            </div>
                           </div>
                         )}
                       </div>
 
-                      {/* Seizure */}
                       <div className={cn(
-                        'p-4 rounded-lg border',
+                        'rounded-xl border overflow-hidden',
                         report.seizureRecord.hasSeizure
                           ? 'bg-danger-50 border-danger-200'
                           : 'bg-success-50 border-success-200'
                       )}>
-                        <div className="flex items-center justify-between mb-2">
+                        <button
+                          onClick={() => toggleRisk('seizure')}
+                          className="w-full p-4 flex items-center justify-between"
+                        >
                           <span className="font-medium text-ink-900 flex items-center gap-2">
                             <Gavel className="w-4 h-4" />
                             查封记录
                           </span>
-                          {report.seizureRecord.hasSeizure ? (
-                            <span className="text-xs text-danger-600 font-medium">
-                              {report.seizureRecord.seizureCount}轮查封
-                            </span>
-                          ) : (
-                            <span className="text-xs text-success-600 font-medium">无查封</span>
-                          )}
-                        </div>
-                        {report.seizureRecord.hasSeizure && (
-                          <div className="text-sm text-ink-600 space-y-1">
-                            <p>查封法院：{report.seizureRecord.seizureCourt}</p>
-                            <p>查封日期：{report.seizureRecord.seizureDate}</p>
+                          <div className="flex items-center gap-2">
+                            {report.seizureRecord.hasSeizure ? (
+                              <span className="text-xs text-danger-600 font-medium">
+                                {report.seizureRecord.seizureCount}轮查封
+                              </span>
+                            ) : (
+                              <span className="text-xs text-success-600 font-medium">无查封</span>
+                            )}
+                            {expandedRisks.includes('seizure') ? (
+                              <ChevronUp className="w-4 h-4 text-ink-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-ink-400" />
+                            )}
+                          </div>
+                        </button>
+                        {expandedRisks.includes('seizure') && (
+                          <div className="px-4 pb-4 space-y-3 border-t border-danger-100/50">
+                            {report.seizureRecord.hasSeizure && (
+                              <div className="text-sm text-ink-600 space-y-1 pt-3">
+                                <p>查封法院：{report.seizureRecord.seizureCourt}</p>
+                                <p>查封日期：{report.seizureRecord.seizureDate}</p>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-2 pt-2">
+                              <span className="text-xs text-ink-500">风险等级：</span>
+                              <span className={cn(
+                                'text-xs px-2 py-0.5 rounded-full font-medium',
+                                getRiskLevelTagClass(report.seizureRecord.riskLevel)
+                              )}>
+                                {getRiskLevelLabel(report.seizureRecord.riskLevel)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-xs text-ink-500">影响程度：</span>
+                              <p className="text-sm text-ink-700 mt-1">{report.seizureRecord.impact}</p>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1 mb-1">
+                                <Lightbulb className="w-3 h-3 text-primary-500" />
+                                <span className="text-xs text-primary-700 font-medium">处置建议</span>
+                              </div>
+                              <p className="text-sm text-ink-700">{report.seizureRecord.suggestion}</p>
+                            </div>
                           </div>
                         )}
                       </div>
 
-                      {/* Household */}
                       <div className={cn(
-                        'p-4 rounded-lg border',
+                        'rounded-xl border overflow-hidden',
                         report.householdInfo.hasHousehold
                           ? 'bg-gold-50 border-gold-200'
                           : 'bg-success-50 border-success-200'
                       )}>
-                        <div className="flex items-center justify-between mb-2">
+                        <button
+                          onClick={() => toggleRisk('household')}
+                          className="w-full p-4 flex items-center justify-between"
+                        >
                           <span className="font-medium text-ink-900 flex items-center gap-2">
                             <Users className="w-4 h-4" />
                             户口情况
                           </span>
-                          {report.householdInfo.hasHousehold ? (
-                            <span className="text-xs text-gold-700 font-medium">有户口未迁出</span>
-                          ) : (
-                            <span className="text-xs text-success-600 font-medium">无户口</span>
-                          )}
-                        </div>
-                        {report.householdInfo.hasHousehold && (
-                          <div className="text-sm text-ink-600 space-y-1">
-                            <p>户口数量：{report.householdInfo.householdCount}人</p>
-                            <p>能否迁出：{report.householdInfo.canMoveOut ? '可协助迁出' : '暂无法迁出'}</p>
+                          <div className="flex items-center gap-2">
+                            {report.householdInfo.hasHousehold ? (
+                              <span className="text-xs text-gold-700 font-medium">有户口未迁出</span>
+                            ) : (
+                              <span className="text-xs text-success-600 font-medium">无户口</span>
+                            )}
+                            {expandedRisks.includes('household') ? (
+                              <ChevronUp className="w-4 h-4 text-ink-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-ink-400" />
+                            )}
+                          </div>
+                        </button>
+                        {expandedRisks.includes('household') && (
+                          <div className="px-4 pb-4 space-y-3 border-t border-gold-100/50">
+                            {report.householdInfo.hasHousehold && (
+                              <div className="text-sm text-ink-600 space-y-1 pt-3">
+                                <p>户口数量：{report.householdInfo.householdCount}人</p>
+                                <p>能否迁出：{report.householdInfo.canMoveOut ? '可协助迁出' : '暂无法迁出'}</p>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-2 pt-2">
+                              <span className="text-xs text-ink-500">风险等级：</span>
+                              <span className={cn(
+                                'text-xs px-2 py-0.5 rounded-full font-medium',
+                                getRiskLevelTagClass(report.householdInfo.riskLevel)
+                              )}>
+                                {getRiskLevelLabel(report.householdInfo.riskLevel)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-xs text-ink-500">影响程度：</span>
+                              <p className="text-sm text-ink-700 mt-1">{report.householdInfo.impact}</p>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1 mb-1">
+                                <Lightbulb className="w-3 h-3 text-primary-500" />
+                                <span className="text-xs text-primary-700 font-medium">处置建议</span>
+                              </div>
+                              <p className="text-sm text-ink-700">{report.householdInfo.suggestion}</p>
+                            </div>
                           </div>
                         )}
                       </div>
 
-                      {/* Lease */}
                       <div className={cn(
-                        'p-4 rounded-lg border',
+                        'rounded-xl border overflow-hidden',
                         report.leaseInfo.hasLease
                           ? 'bg-danger-50 border-danger-200'
                           : 'bg-success-50 border-success-200'
                       )}>
-                        <div className="flex items-center justify-between mb-2">
+                        <button
+                          onClick={() => toggleRisk('lease')}
+                          className="w-full p-4 flex items-center justify-between"
+                        >
                           <span className="font-medium text-ink-900 flex items-center gap-2">
                             <FileText className="w-4 h-4" />
                             租赁情况
                           </span>
-                          {report.leaseInfo.hasLease ? (
-                            <span className="text-xs text-danger-600 font-medium">有租约</span>
-                          ) : (
-                            <span className="text-xs text-success-600 font-medium">无租约</span>
-                          )}
-                        </div>
-                        {report.leaseInfo.hasLease && (
-                          <div className="text-sm text-ink-600 space-y-1">
-                            <p>承租人：{report.leaseInfo.lessee}</p>
-                            <p>租赁期限：{report.leaseInfo.leaseTerm}</p>
-                            <p className="text-danger-600 text-xs mt-2">
-                              提示：根据"买卖不破租赁"原则，租赁合同继续有效
-                            </p>
+                          <div className="flex items-center gap-2">
+                            {report.leaseInfo.hasLease ? (
+                              <span className="text-xs text-danger-600 font-medium">有租约</span>
+                            ) : (
+                              <span className="text-xs text-success-600 font-medium">无租约</span>
+                            )}
+                            {expandedRisks.includes('lease') ? (
+                              <ChevronUp className="w-4 h-4 text-ink-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-ink-400" />
+                            )}
+                          </div>
+                        </button>
+                        {expandedRisks.includes('lease') && (
+                          <div className="px-4 pb-4 space-y-3 border-t border-danger-100/50">
+                            {report.leaseInfo.hasLease && (
+                              <div className="text-sm text-ink-600 space-y-1 pt-3">
+                                <p>承租人：{report.leaseInfo.lessee}</p>
+                                <p>租赁期限：{report.leaseInfo.leaseTerm}</p>
+                                <p className="text-danger-600 text-xs mt-2">
+                                  提示：根据"买卖不破租赁"原则，租赁合同继续有效
+                                </p>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-2 pt-2">
+                              <span className="text-xs text-ink-500">风险等级：</span>
+                              <span className={cn(
+                                'text-xs px-2 py-0.5 rounded-full font-medium',
+                                getRiskLevelTagClass(report.leaseInfo.riskLevel)
+                              )}>
+                                {getRiskLevelLabel(report.leaseInfo.riskLevel)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-xs text-ink-500">影响程度：</span>
+                              <p className="text-sm text-ink-700 mt-1">{report.leaseInfo.impact}</p>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1 mb-1">
+                                <Lightbulb className="w-3 h-3 text-primary-500" />
+                                <span className="text-xs text-primary-700 font-medium">处置建议</span>
+                              </div>
+                              <p className="text-sm text-ink-700">{report.leaseInfo.suggestion}</p>
+                            </div>
                           </div>
                         )}
                       </div>
 
-                      {/* Arrears */}
                       <div className={cn(
-                        'p-4 rounded-lg border',
+                        'rounded-xl border overflow-hidden',
                         report.arrears.totalArrears > 0
                           ? 'bg-gold-50 border-gold-200'
                           : 'bg-success-50 border-success-200'
                       )}>
-                        <div className="flex items-center justify-between mb-2">
+                        <button
+                          onClick={() => toggleRisk('arrears')}
+                          className="w-full p-4 flex items-center justify-between"
+                        >
                           <span className="font-medium text-ink-900 flex items-center gap-2">
                             <Calculator className="w-4 h-4" />
                             欠费情况
                           </span>
-                          <span className={cn(
-                            'text-xs font-medium',
-                            report.arrears.totalArrears > 0 ? 'text-gold-700' : 'text-success-600'
-                          )}>
-                            {report.arrears.totalArrears > 0
-                              ? `欠费 ¥${formatPrice(report.arrears.totalArrears)}`
-                              : '无欠费'}
-                          </span>
-                        </div>
-                        {report.arrears.totalArrears > 0 && (
-                          <div className="text-sm text-ink-600 space-y-1">
-                            <p>物业费：¥{formatPrice(report.arrears.propertyFee)}</p>
-                            <p>水电煤：¥{formatPrice(report.arrears.utilityFee)}</p>
-                            <p>房产税：¥{formatPrice(report.arrears.propertyTax)}</p>
+                          <div className="flex items-center gap-2">
+                            <span className={cn(
+                              'text-xs font-medium',
+                              report.arrears.totalArrears > 0 ? 'text-gold-700' : 'text-success-600'
+                            )}>
+                              {report.arrears.totalArrears > 0
+                                ? `欠费 ¥${formatPrice(report.arrears.totalArrears)}`
+                                : '无欠费'}
+                            </span>
+                            {expandedRisks.includes('arrears') ? (
+                              <ChevronUp className="w-4 h-4 text-ink-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-ink-400" />
+                            )}
+                          </div>
+                        </button>
+                        {expandedRisks.includes('arrears') && (
+                          <div className="px-4 pb-4 space-y-3 border-t border-gold-100/50">
+                            {report.arrears.totalArrears > 0 && (
+                              <div className="text-sm text-ink-600 space-y-1 pt-3">
+                                <p>物业费：¥{formatPrice(report.arrears.propertyFee)}</p>
+                                <p>水电煤：¥{formatPrice(report.arrears.utilityFee)}</p>
+                                <p>房产税：¥{formatPrice(report.arrears.propertyTax)}</p>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-2 pt-2">
+                              <span className="text-xs text-ink-500">风险等级：</span>
+                              <span className={cn(
+                                'text-xs px-2 py-0.5 rounded-full font-medium',
+                                getRiskLevelTagClass(report.arrears.riskLevel)
+                              )}>
+                                {getRiskLevelLabel(report.arrears.riskLevel)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-xs text-ink-500">影响程度：</span>
+                              <p className="text-sm text-ink-700 mt-1">{report.arrears.impact}</p>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1 mb-1">
+                                <Lightbulb className="w-3 h-3 text-primary-500" />
+                                <span className="text-xs text-primary-700 font-medium">处置建议</span>
+                              </div>
+                              <p className="text-sm text-ink-700">{report.arrears.suggestion}</p>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -746,8 +1073,15 @@ export default function PropertyDetail() {
                               </span>
                             </div>
 
+                            <p className={cn(
+                              'text-sm mt-1',
+                              isCompleted || isCurrent ? 'text-ink-500' : 'text-ink-300'
+                            )}>
+                              {phase.description}
+                            </p>
+
                             {isCurrent && (
-                              <p className="text-sm text-primary-600 mt-1">
+                              <p className="text-sm text-primary-600 mt-1 font-medium">
                                 当前阶段进行中
                               </p>
                             )}
@@ -844,6 +1178,59 @@ export default function PropertyDetail() {
               </div>
             </div>
 
+            {/* Neighborhood Market */}
+            <div className="bg-white rounded-xl border border-ink-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="font-serif font-bold text-lg text-ink-900">同地段近半年行情分析</h3>
+                  <p className="text-sm text-ink-500">{property.district} {property.title.split(' ')[0]}板块</p>
+                </div>
+                <Link to="/#market" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                  查看更多
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                {[
+                  { label: '成交均价', value: (mockMarketData.find(d => d.district === property.district)?.avgPrice || 70000) / 10000 + '万/㎡', change: (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) + '%', trend: (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) >= 0 ? 'up' : 'down' },
+                  { label: '流拍率', value: (mockMarketData.find(d => d.district === property.district)?.unsoldRate || 20) + '%', change: '-2.1%', trend: 'down' },
+                  { label: '平均溢价率', value: (mockMarketData.find(d => d.district === property.district)?.premiumRate || 15) + '%', change: '+1.8%', trend: 'up' },
+                ].map((item, i) => (
+                  <div key={i} className="text-center p-3 bg-ink-50 rounded-lg">
+                    <div className="text-xs text-ink-500 mb-1">{item.label}</div>
+                    <div className="text-lg font-bold text-ink-900 font-serif">{item.value}</div>
+                    <div className={cn(
+                      'text-xs font-medium flex items-center justify-center gap-0.5 mt-1',
+                      item.trend === 'up' ? 'text-success-600' : 'text-danger-600'
+                    )}>
+                      {item.trend === 'up' ? (
+                        <TrendingUp className="w-3 h-3" />
+                      ) : (
+                        <TrendingDown className="w-3 h-3" />
+                      )}
+                      环比{item.change}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <div className="text-xs text-ink-500 mb-3">近6个月成交量</div>
+                <div className="flex items-end justify-between gap-2 h-20">
+                  {[0.65, 0.78, 0.85, 0.92, 1.0, 1.1].map((ratio, i) => (
+                    <div key={i} className="flex-1 flex flex-col items-center">
+                      <div
+                        className="w-full bg-gradient-to-t from-primary-500 to-primary-300 rounded-t transition-all hover:from-primary-600 hover:to-primary-400"
+                        style={{ height: `${ratio * 100}%`, minHeight: '8px' }}
+                      ></div>
+                      <span className="text-xs text-ink-400 mt-2">{['1月', '2月', '3月', '4月', '5月', '6月'][i]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             {/* Risk Tags Detail */}
             {property.riskTags.length > 0 && (
               <div className="bg-white rounded-xl border border-ink-200 p-6">
@@ -851,26 +1238,86 @@ export default function PropertyDetail() {
                   <AlertTriangle className="w-5 h-5 text-gold-500" />
                   风险提示
                 </h3>
-                <div className="flex flex-wrap gap-3">
+                <div className="space-y-3">
                   {property.riskTags.map((tag) => {
                     const desc = riskTagDescriptions[tag];
+                    const riskInfo = getRiskInfoByTag(tag);
+                    const isExpanded = expandedRiskTags.includes(tag);
                     return (
                       <div
                         key={tag}
-                        className="group relative"
+                        className={cn(
+                          'rounded-lg border overflow-hidden',
+                          desc?.level === 'danger' ? 'border-danger-200 bg-danger-50' : 'border-gold-200 bg-gold-50'
+                        )}
                       >
-                        <span className={cn(
-                          'tag cursor-help',
-                          desc?.level === 'danger' ? 'tag-danger' : 'tag-warning'
-                        )}>
-                          <AlertTriangle className="w-3 h-3 mr-1" />
-                          {tag}
-                        </span>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-ink-900 text-white text-xs p-3 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
-                          <p className="font-medium mb-1">{desc?.description}</p>
-                          <p className="text-ink-300">{desc?.suggestion}</p>
-                          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-ink-900"></div>
-                        </div>
+                        <button
+                          onClick={() => toggleRiskTag(tag)}
+                          className="w-full p-4 flex items-center justify-between"
+                        >
+                          <span className={cn(
+                            'tag',
+                            desc?.level === 'danger' ? 'tag-danger' : 'tag-warning'
+                          )}>
+                            <AlertTriangle className="w-3 h-3 mr-1" />
+                            {tag}
+                          </span>
+                          {isExpanded ? (
+                            <ChevronUp className="w-4 h-4 text-ink-400" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4 text-ink-400" />
+                          )}
+                        </button>
+                        {isExpanded && (
+                          <div className="px-4 pb-4 space-y-3 border-t border-ink-200/30">
+                            <div className="pt-3">
+                              <div className="text-xs text-ink-500 mb-1">判定依据</div>
+                              <p className="text-sm text-ink-700">{desc?.description}</p>
+                            </div>
+                            {riskInfo && (
+                              <>
+                                <div className="flex items-center gap-4">
+                                  <div>
+                                    <div className="text-xs text-ink-500 mb-1">风险等级</div>
+                                    <span className={cn(
+                                      'text-xs px-2 py-0.5 rounded-full font-medium',
+                                      getRiskLevelTagClass(riskInfo.riskLevel)
+                                    )}>
+                                      {getRiskLevelLabel(riskInfo.riskLevel)}
+                                    </span>
+                                  </div>
+                                  {report?.reviewRecords[0] && (
+                                    <div>
+                                      <div className="text-xs text-ink-500 mb-1">最近复查</div>
+                                      <span className="text-sm text-ink-700">
+                                        {report.reviewRecords[0].date}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                                <div>
+                                  <div className="text-xs text-ink-500 mb-1">复查结果</div>
+                                  <p className="text-sm text-ink-700">
+                                    {report?.reviewRecords[0]?.result || '暂无复查记录'}
+                                  </p>
+                                </div>
+                                <div>
+                                  <div className="text-xs text-ink-500 mb-1">影响程度</div>
+                                  <p className="text-sm text-ink-700">{riskInfo.impact}</p>
+                                </div>
+                              </>
+                            )}
+                            <div>
+                              <div className="flex items-center gap-1 mb-1">
+                                <Lightbulb className="w-3 h-3 text-primary-500" />
+                                <span className="text-xs text-primary-700 font-medium">应对建议</span>
+                              </div>
+                              <p className="text-sm text-ink-700">
+                                {riskInfo?.suggestion || desc?.suggestion}
+                              </p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -995,6 +1442,31 @@ export default function PropertyDetail() {
                 <div className="flex items-center gap-2 text-ink-600">
                   <Building2 className="w-4 h-4 text-ink-400" />
                   <span className="truncate">{property.court}</span>
+                </div>
+              </div>
+
+              {/* Transaction Security */}
+              <div className="mt-6 pt-6 border-t border-ink-100">
+                <h4 className="font-medium text-ink-900 mb-4 text-sm">交易流程保障</h4>
+                <div className="space-y-3">
+                  {[
+                    { icon: Shield, title: '保证金监管', desc: '银行存管' },
+                    { icon: FileCheck, title: '电子签约', desc: '区块链存证' },
+                    { icon: Gavel, title: '过户保障', desc: '法院协助执行' },
+                  ].map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={i} className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-primary-50 flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-4.5 h-4.5 text-primary-600" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-ink-800">{item.title}</div>
+                          <div className="text-xs text-ink-500">{item.desc}</div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

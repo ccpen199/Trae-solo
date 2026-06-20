@@ -34,6 +34,7 @@ import {
 } from 'recharts';
 import PropertyCard from '@/components/PropertyCard';
 import { mockProperties, mockMarketData, mockMarketTrend } from '@/mock/data';
+import type { MarketTrendPoint } from '@/types';
 import { formatPrice, cn } from '@/utils';
 
 const platformStats = (() => {
@@ -85,9 +86,60 @@ const riskTypes = [
 
 const districts = ['全部', '浦东新区', '徐汇区', '静安区', '长宁区', '杨浦区', '闵行区', '黄浦区', '虹口区'];
 
+const generateDistrictTrend = (basePrice: number, baseCount: number) => {
+  const months = ['1月', '2月', '3月', '4月', '5月', '6月'];
+  const priceVariations = [0.92, 0.94, 0.96, 0.98, 1.0, 1.03];
+  const countVariations = [0.7, 0.85, 1.0, 1.1, 1.2, 1.3];
+  return months.map((month, i) => ({
+    month,
+    avgPrice: Math.round(basePrice * priceVariations[i]),
+    transactionCount: Math.round(baseCount * countVariations[i]),
+  }));
+};
+
+const districtTrends: Record<string, MarketTrendPoint[]> = {
+  '全部': mockMarketTrend,
+  '浦东新区': generateDistrictTrend(78500, 128),
+  '徐汇区': generateDistrictTrend(95200, 86),
+  '静安区': generateDistrictTrend(82300, 65),
+  '长宁区': generateDistrictTrend(88600, 72),
+  '杨浦区': generateDistrictTrend(65400, 94),
+  '闵行区': generateDistrictTrend(58200, 156),
+  '黄浦区': generateDistrictTrend(102000, 58),
+  '虹口区': generateDistrictTrend(62000, 76),
+};
+
+const getDistrictMetrics = (district: string) => {
+  if (district === '全部') {
+    return [
+      { label: '平均溢价率', value: '17.5%', change: '+2.3%', trend: 'up' as const, color: 'success' as const },
+      { label: '整体流拍率', value: '19.8%', change: '-3.1%', trend: 'down' as const, color: 'success' as const },
+      { label: '近半年成交量', value: '821套', change: '+156套', trend: 'up' as const, color: 'success' as const },
+      { label: '参拍人数/标的', value: '12人', change: '+3人', trend: 'up' as const, color: 'warning' as const },
+    ];
+  }
+  const data = mockMarketData.find(d => d.district === district);
+  if (!data) {
+    return [
+      { label: '平均溢价率', value: '15.0%', change: '+1.5%', trend: 'up' as const, color: 'success' as const },
+      { label: '整体流拍率', value: '20.0%', change: '-2.0%', trend: 'down' as const, color: 'success' as const },
+      { label: '近半年成交量', value: '60套', change: '+10套', trend: 'up' as const, color: 'success' as const },
+      { label: '参拍人数/标的', value: '10人', change: '+2人', trend: 'up' as const, color: 'warning' as const },
+    ];
+  }
+  const priceChange = data.avgPriceChange;
+  return [
+    { label: '平均溢价率', value: data.premiumRate + '%', change: (priceChange > 0 ? '+' : '') + (priceChange * 0.8).toFixed(1) + '%', trend: priceChange >= 0 ? 'up' as const : 'down' as const, color: 'success' as const },
+    { label: '整体流拍率', value: data.unsoldRate + '%', change: (priceChange > 0 ? '-' : '+') + Math.abs(priceChange * 0.5).toFixed(1) + '%', trend: priceChange >= 0 ? 'down' as const : 'up' as const, color: 'success' as const },
+    { label: '近半年成交量', value: data.transactionCount + '套', change: '+' + Math.round(data.transactionCount * 0.15) + '套', trend: 'up' as const, color: 'success' as const },
+    { label: '参拍人数/标的', value: Math.round(data.transactionCount / 10) + '人', change: '+2人', trend: 'up' as const, color: 'warning' as const },
+  ];
+};
+
 export default function Home() {
   const [activeDistrict, setActiveDistrict] = useState('全部');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [marketDistrict, setMarketDistrict] = useState('全部');
 
   const featuredProperties = mockProperties.slice(0, 4);
   const hotProperties = mockProperties.filter((p) => p.status === 'bidding').slice(0, 3);
@@ -266,12 +318,29 @@ export default function Home() {
             <p className="section-subtitle mb-0">近半年司法拍卖房产数据洞察 · 数据来源：法院司法拍卖系统</p>
           </div>
 
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {districts.map((district) => (
+              <button
+                key={district}
+                onClick={() => setMarketDistrict(district)}
+                className={cn(
+                  'px-4 py-2 rounded-full text-sm font-medium transition-all',
+                  marketDistrict === district
+                    ? 'bg-primary-600 text-white shadow-md shadow-primary-200'
+                    : 'bg-white text-ink-600 border border-ink-200 hover:border-primary-300 hover:text-primary-600'
+                )}
+              >
+                {district}
+              </button>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-ink-200 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="font-serif font-bold text-lg text-ink-900">成交均价与成交量走势</h3>
-                  <p className="text-sm text-ink-500">近6个月全市成交均价及成交量变化</p>
+                  <h3 className="font-serif font-bold text-lg text-ink-900">{marketDistrict === '全部' ? '全市' : marketDistrict}成交均价与成交量走势</h3>
+                  <p className="text-sm text-ink-500">近6个月{marketDistrict === '全部' ? '全市' : marketDistrict}成交均价及成交量变化</p>
                 </div>
                 <div className="flex items-center gap-4 text-xs">
                   <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-primary-700 inline-block"></span>均价</span>
@@ -280,7 +349,7 @@ export default function Home() {
               </div>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={mockMarketTrend}>
+                  <AreaChart data={districtTrends[marketDistrict] || mockMarketTrend}>
                     <defs>
                       <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#0A2463" stopOpacity={0.3} />
@@ -358,12 +427,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            {[
-              { label: '平均溢价率', value: '17.5%', change: '+2.3%', trend: 'up', color: 'success' },
-              { label: '整体流拍率', value: '19.8%', change: '-3.1%', trend: 'down', color: 'success' },
-              { label: '近半年成交量', value: '821套', change: '+156套', trend: 'up', color: 'success' },
-              { label: '参拍人数/标的', value: '12人', change: '+3人', trend: 'up', color: 'warning' },
-            ].map((metric, index) => (
+            {getDistrictMetrics(marketDistrict).map((metric, index) => (
               <motion.div
                 key={metric.label}
                 initial={{ opacity: 0, y: 20 }}

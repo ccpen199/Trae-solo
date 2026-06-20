@@ -35,33 +35,68 @@ export interface PropertyReport {
   id: string;
   propertyId: string;
   ownershipStatus: 'clear' | 'mortgaged' | 'seized' | 'disputed';
+  appraisalDetail: {
+    agency: string;
+    baseDate: string;
+    method: string;
+    houseValue: number;
+    landValue: number;
+    decorationValue: number;
+  };
+  conclusion: string;
+  reviewRecords: Array<{
+    date: string;
+    reviewer: string;
+    result: string;
+  }>;
+  materialDetail: {
+    certNo: string;
+    registerDate: string;
+    ownershipType: string;
+    coOwnership: string;
+  };
   mortgageInfo: {
     hasMortgage: boolean;
     mortgageAmount: number;
     mortgagee: string;
     mortgageDate: string;
+    riskLevel: RiskLevel;
+    impact: string;
+    suggestion: string;
   };
   seizureRecord: {
     hasSeizure: boolean;
     seizureCourt: string;
     seizureDate: string;
     seizureCount: number;
+    riskLevel: RiskLevel;
+    impact: string;
+    suggestion: string;
   };
   householdInfo: {
     hasHousehold: boolean;
     householdCount: number;
     canMoveOut: boolean;
+    riskLevel: RiskLevel;
+    impact: string;
+    suggestion: string;
   };
   leaseInfo: {
     hasLease: boolean;
     leaseTerm: string;
     lessee: string;
+    riskLevel: RiskLevel;
+    impact: string;
+    suggestion: string;
   };
   arrears: {
     propertyTax: number;
     utilityFee: number;
     propertyFee: number;
     totalArrears: number;
+    riskLevel: RiskLevel;
+    impact: string;
+    suggestion: string;
   };
   reportDate: string;
   reportNo: string;

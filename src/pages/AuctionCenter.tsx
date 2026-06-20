@@ -14,7 +14,6 @@ import {
   Camera,
   Shield,
   TrendingUp,
-  ArrowRight,
   Bell,
   Settings,
   HelpCircle,
@@ -30,6 +29,530 @@ const menuItems = [
   { key: 'favorites', label: '我的关注', icon: Bell },
   { key: 'settings', label: '账号设置', icon: Settings },
 ];
+
+function QualificationContent() {
+  const [fundUploadStatus, setFundUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('success');
+  const [creditStatus, setCreditStatus] = useState<'idle' | 'checking' | 'passed' | 'failed'>('passed');
+  const [uploadProgress, setUploadProgress] = useState(65);
+
+  const fundAmount = 5800000;
+  const fundProofDate = '2026-06-15';
+  const creditCheckDate = '2026-06-18';
+  const creditReportNo = 'CR-2026-0618-8857';
+
+  const steps = [
+    { key: 'realname', label: '实名认证', status: 'completed' as const },
+    { key: 'fund', label: '资金证明', status: mockBidder.fundProofStatus === 'verified' ? 'completed' as const : mockBidder.fundProofStatus === 'pending' ? 'current' as const : 'upcoming' as const },
+    { key: 'credit', label: '征信核验', status: mockBidder.fundProofStatus === 'verified' ? 'completed' as const : 'upcoming' as const },
+    { key: 'risk', label: '风险测评', status: mockBidder.fundProofStatus === 'verified' ? 'completed' as const : 'upcoming' as const },
+  ];
+
+  const canSubmit = fundUploadStatus === 'success' && creditStatus === 'passed';
+
+  const auditHistory = [
+    { time: '2026-06-18 14:30', type: 'submit', desc: '您提交了资质审核申请' },
+    { time: '2026-06-18 15:12', type: 'review', desc: '审核专员已受理，正在审核资料' },
+    { time: '2026-06-19 09:45', type: 'info', desc: '实名认证核验通过' },
+    { time: '2026-06-19 10:30', type: 'info', desc: '资金证明核验通过' },
+    { time: '2026-06-19 11:20', type: 'info', desc: '征信报告核验通过' },
+    { time: '2026-06-19 14:00', type: 'pass', desc: '资质审核已通过，可参与竞拍' },
+  ];
+
+  const rejectedMaterials = [
+    '银行存款证明金额不足，需提供至少500万存款证明',
+    '征信报告查询时间超过7天，请重新查询',
+    '身份证照片不清晰，请重新上传',
+  ];
+
+  return (
+    <div className="space-y-6">
+      {/* 审核状态总览 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <h2 className="font-serif font-bold text-xl text-ink-900 mb-1">
+              竞买人资质审核
+            </h2>
+            <p className="text-sm text-ink-500">
+              完成资质审核后方可参与司法拍卖，审核通过后长期有效
+            </p>
+          </div>
+          <div className={cn(
+            'px-4 py-2 rounded-lg text-sm font-medium',
+            mockBidder.fundProofStatus === 'verified' && 'bg-success-50 text-success-700 border border-success-200',
+            mockBidder.fundProofStatus === 'pending' && 'bg-gold-50 text-gold-700 border border-gold-200',
+            mockBidder.fundProofStatus === 'rejected' && 'bg-danger-50 text-danger-700 border border-danger-200'
+          )}>
+            {mockBidder.fundProofStatus === 'verified' && '已通过'}
+            {mockBidder.fundProofStatus === 'pending' && '审核中'}
+            {mockBidder.fundProofStatus === 'rejected' && '已驳回'}
+          </div>
+        </div>
+
+        {/* 进度条 */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            {steps.map((step, index) => (
+              <div key={step.key} className="flex flex-col items-center flex-1">
+                <div className={cn(
+                  'w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium mb-2 z-10',
+                  step.status === 'completed' && 'bg-success-500 text-white',
+                  step.status === 'current' && 'bg-gold-500 text-white',
+                  step.status === 'upcoming' && 'bg-ink-100 text-ink-400'
+                )}>
+                  {step.status === 'completed' ? (
+                    <CheckCircle2 className="w-5 h-5" />
+                  ) : (
+                    index + 1
+                  )}
+                </div>
+                <span className={cn(
+                  'text-xs font-medium',
+                  step.status === 'completed' && 'text-success-600',
+                  step.status === 'current' && 'text-gold-600',
+                  step.status === 'upcoming' && 'text-ink-400'
+                )}>
+                  {step.label}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="relative h-1 bg-ink-100 rounded-full mx-8">
+            <div
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-primary-500 to-success-500 rounded-full transition-all duration-500"
+              style={{ width: `${steps.filter(s => s.status === 'completed').length / (steps.length - 1) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        {mockBidder.fundProofStatus !== 'verified' && mockBidder.fundProofStatus !== 'pending' && (
+          <button
+            disabled={!canSubmit}
+            className={cn(
+              'w-full py-3 rounded-lg font-medium transition-colors',
+              canSubmit
+                ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800'
+                : 'bg-ink-100 text-ink-400 cursor-not-allowed'
+            )}
+          >
+            提交审核
+          </button>
+        )}
+      </div>
+
+      {/* 驳回反馈 */}
+      {mockBidder.fundProofStatus === 'rejected' && (
+        <div className="bg-white rounded-xl border border-danger-200 overflow-hidden">
+          <div className="bg-danger-50 px-6 py-4 border-b border-danger-200">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-danger-100 flex items-center justify-center">
+                <XCircle className="w-5 h-5 text-danger-600" />
+              </div>
+              <div>
+                <h3 className="font-medium text-ink-900">审核未通过</h3>
+                <p className="text-xs text-ink-500">驳回时间：2026年6月17日 16:30</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-6">
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-ink-900 mb-2">驳回原因</h4>
+              <p className="text-sm text-ink-600 bg-ink-50 p-3 rounded-lg">
+                您提交的资金证明材料金额不足，且征信报告有效期已过。请补充相关材料后重新提交审核。
+              </p>
+            </div>
+            <div className="mb-6">
+              <h4 className="text-sm font-medium text-ink-900 mb-2">需补充材料</h4>
+              <ul className="space-y-2">
+                {rejectedMaterials.map((item, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm text-ink-600">
+                    <AlertCircle className="w-4 h-4 text-danger-500 mt-0.5 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button className="w-full py-2.5 bg-danger-600 text-white rounded-lg text-sm font-medium hover:bg-danger-700 transition-colors">
+              重新提交审核
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 实名认证卡片 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+            <User className="w-5 h-5 text-primary-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-medium text-ink-900">实名认证</h3>
+            <p className="text-xs text-ink-500">身份信息核验</p>
+          </div>
+          <span className="text-success-600 text-sm font-medium flex items-center gap-1">
+            <CheckCircle2 className="w-4 h-4" />
+            已完成
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-ink-100">
+          <div>
+            <span className="text-xs text-ink-400">姓名</span>
+            <p className="text-sm text-ink-900 mt-1">{mockBidder.name}</p>
+          </div>
+          <div>
+            <span className="text-xs text-ink-400">身份证号</span>
+            <p className="text-sm text-ink-900 mt-1">{mockBidder.idCard}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 资金证明 OCR 上传 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 rounded-lg bg-gold-50 flex items-center justify-center">
+            <CreditCard className="w-5 h-5 text-gold-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-medium text-ink-900">资金证明</h3>
+            <p className="text-xs text-ink-500">银行存款证明 / 流水 / 资产证明</p>
+          </div>
+          {fundUploadStatus === 'success' && (
+            <span className="text-success-600 text-sm font-medium flex items-center gap-1">
+              <CheckCircle2 className="w-4 h-4" />
+              已识别
+            </span>
+          )}
+          {fundUploadStatus === 'error' && (
+            <span className="text-danger-600 text-sm font-medium flex items-center gap-1">
+              <XCircle className="w-4 h-4" />
+              识别失败
+            </span>
+          )}
+        </div>
+
+        {fundUploadStatus === 'idle' && (
+          <div className="border-2 border-dashed border-ink-200 rounded-xl p-8 text-center hover:border-primary-300 hover:bg-primary-50/30 transition-all cursor-pointer">
+            <div className="w-14 h-14 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Upload className="w-7 h-7 text-primary-600" />
+            </div>
+            <h4 className="font-medium text-ink-900 mb-1">上传资金证明</h4>
+            <p className="text-sm text-ink-500 mb-4">
+              上传银行存款证明 / 银行流水 / 资产证明，OCR自动识别
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => { setFundUploadStatus('uploading'); setUploadProgress(0); }}
+                className="btn-primary justify-center text-sm"
+              >
+                <Upload className="w-4 h-4 mr-2" />
+                上传文件
+              </button>
+              <button className="px-4 py-2 border border-ink-200 text-ink-700 rounded-lg text-sm font-medium hover:bg-ink-50 transition-colors">
+                <Camera className="w-4 h-4 inline mr-1" />
+                拍照
+              </button>
+            </div>
+            <p className="text-xs text-ink-400 mt-4">
+              支持 JPG、PNG、PDF 格式，单个文件不超过10MB
+            </p>
+          </div>
+        )}
+
+        {fundUploadStatus === 'uploading' && (
+          <div className="border border-primary-200 bg-primary-50/50 rounded-xl p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+                <FileCheck className="w-6 h-6 text-primary-600" />
+              </div>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-ink-900">存款证明_20260615.pdf</div>
+                <div className="text-xs text-ink-500 mt-0.5">OCR识别中...</div>
+              </div>
+              <div className="text-sm font-medium text-primary-600">{uploadProgress}%</div>
+            </div>
+            <div className="h-2 bg-primary-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              />
+            </div>
+            <p className="text-xs text-ink-400 mt-3">
+              正在识别文字信息，请稍候...
+            </p>
+          </div>
+        )}
+
+        {fundUploadStatus === 'success' && (
+          <div>
+            <div className="bg-success-50 border border-success-200 rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <CheckCircle2 className="w-5 h-5 text-success-600" />
+                <span className="text-sm font-medium text-success-700">OCR识别成功</span>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <span className="text-xs text-ink-400">姓名</span>
+                  <p className="text-sm font-medium text-ink-900 mt-1">{mockBidder.name}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-ink-400">证件号</span>
+                  <p className="text-sm font-medium text-ink-900 mt-1">{mockBidder.idCard}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-ink-400">存款金额</span>
+                  <p className="text-sm font-bold text-success-600 mt-1 font-serif">¥{formatPrice(fundAmount)}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-ink-400">开户行</span>
+                  <p className="text-sm font-medium text-ink-900 mt-1">中国工商银行上海分行</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-ink-100">
+              <span className="text-xs text-ink-400">
+                证明日期：{fundProofDate}
+              </span>
+              <button
+                onClick={() => setFundUploadStatus('idle')}
+                className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+              >
+                重新上传
+              </button>
+            </div>
+          </div>
+        )}
+
+        {fundUploadStatus === 'error' && (
+          <div className="bg-danger-50 border border-danger-200 rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <XCircle className="w-5 h-5 text-danger-600" />
+              <span className="text-sm font-medium text-danger-700">识别失败</span>
+            </div>
+            <p className="text-sm text-ink-600 mb-4">
+              图片模糊或文件格式不正确，请重新上传清晰的资金证明文件。
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setFundUploadStatus('idle')}
+                className="flex-1 py-2 bg-danger-600 text-white rounded-lg text-sm font-medium hover:bg-danger-700 transition-colors"
+              >
+                重新上传
+              </button>
+              <button className="px-4 py-2 border border-ink-200 text-ink-700 rounded-lg text-sm font-medium hover:bg-ink-50 transition-colors">
+                手动填写
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 征信核验模块 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+            <Shield className="w-5 h-5 text-primary-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-medium text-ink-900">征信核验</h3>
+            <p className="text-xs text-ink-500">个人信用报告查询与核验</p>
+          </div>
+          {creditStatus === 'passed' && (
+            <span className="text-success-600 text-sm font-medium flex items-center gap-1">
+              <CheckCircle2 className="w-4 h-4" />
+              已通过
+            </span>
+          )}
+          {creditStatus === 'failed' && (
+            <span className="text-danger-600 text-sm font-medium flex items-center gap-1">
+              <XCircle className="w-4 h-4" />
+              未通过
+            </span>
+          )}
+          {creditStatus === 'checking' && (
+            <span className="text-gold-600 text-sm font-medium flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              核验中
+            </span>
+          )}
+        </div>
+
+        {creditStatus === 'idle' && (
+          <div className="text-center py-8 border border-dashed border-ink-200 rounded-xl">
+            <div className="w-14 h-14 bg-ink-50 rounded-full flex items-center justify-center mx-auto mb-3">
+              <FileCheck className="w-7 h-7 text-ink-400" />
+            </div>
+            <h4 className="font-medium text-ink-900 mb-1">尚未核验征信</h4>
+            <p className="text-sm text-ink-500 mb-4">
+              点击下方按钮授权查询个人征信报告
+            </p>
+            <button
+              onClick={() => setCreditStatus('checking')}
+              className="btn-primary justify-center text-sm"
+            >
+              <Shield className="w-4 h-4 mr-2" />
+              立即核验
+            </button>
+          </div>
+        )}
+
+        {creditStatus === 'checking' && (
+          <div className="bg-gold-50 border border-gold-200 rounded-xl p-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gold-100 rounded-full flex items-center justify-center">
+                <Clock className="w-6 h-6 text-gold-600" />
+              </div>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-ink-900">征信核验中</div>
+                <div className="text-xs text-ink-500 mt-1">正在连接征信中心查询数据...</div>
+              </div>
+            </div>
+            <div className="mt-4 h-1.5 bg-gold-100 rounded-full overflow-hidden">
+              <div className="h-full w-1/2 bg-gold-500 rounded-full animate-pulse" />
+            </div>
+          </div>
+        )}
+
+        {creditStatus === 'passed' && (
+          <div>
+            <div className="bg-gradient-to-r from-success-50 to-primary-50 border border-success-200 rounded-xl p-5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-success-600" />
+                  <span className="text-sm font-medium text-success-700">征信核验通过</span>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-success-600 font-serif">{mockBidder.creditScore}</div>
+                  <div className="text-xs text-ink-500">信用分</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-success-100">
+                <div>
+                  <span className="text-xs text-ink-400">查询时间</span>
+                  <p className="text-sm text-ink-900 mt-1">{creditCheckDate}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-ink-400">报告编号</span>
+                  <p className="text-sm text-ink-900 mt-1">{creditReportNo}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-ink-400">信用等级</span>
+                  <p className="text-sm text-success-600 font-medium mt-1">良好</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={() => setCreditStatus('idle')}
+                className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+              >
+                重新核验
+              </button>
+            </div>
+          </div>
+        )}
+
+        {creditStatus === 'failed' && (
+          <div className="bg-danger-50 border border-danger-200 rounded-xl p-5">
+            <div className="flex items-start gap-3 mb-4">
+              <XCircle className="w-5 h-5 text-danger-600 mt-0.5" />
+              <div>
+                <div className="text-sm font-medium text-danger-700">征信核验未通过</div>
+                <p className="text-sm text-ink-600 mt-2">
+                  经核查，您存在以下不良信用记录：
+                </p>
+                <ul className="text-sm text-ink-600 mt-2 space-y-1">
+                  <li>• 信用卡逾期记录 2 次</li>
+                  <li>• 贷款当前存在逾期</li>
+                </ul>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setCreditStatus('idle')}
+                className="flex-1 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors"
+              >
+                重新核验
+              </button>
+              <button className="px-4 py-2 border border-ink-200 text-ink-700 rounded-lg text-sm font-medium hover:bg-ink-50 transition-colors">
+                申诉
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 风险测评 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gold-50 flex items-center justify-center">
+            <AlertCircle className="w-5 h-5 text-gold-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-medium text-ink-900">风险测评</h3>
+            <p className="text-xs text-ink-500">投资风险承受能力评估</p>
+          </div>
+          {mockBidder.fundProofStatus === 'verified' ? (
+            <span className="text-success-600 text-sm font-medium flex items-center gap-1">
+              <CheckCircle2 className="w-4 h-4" />
+              已完成
+            </span>
+          ) : (
+            <span className="text-ink-400 text-sm font-medium flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              待测评
+            </span>
+          )}
+        </div>
+        {mockBidder.fundProofStatus === 'verified' && (
+          <div className="pt-4 border-t border-ink-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs text-ink-400">风险等级</span>
+                <p className="text-base font-bold text-gold-600 mt-1">稳健型 (C3)</p>
+              </div>
+              <div className="text-right">
+                <span className="text-xs text-ink-400">测评日期</span>
+                <p className="text-sm text-ink-900 mt-1">2026-06-10</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 审核历史记录 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <h3 className="font-medium text-ink-900 mb-5 flex items-center gap-2">
+          <Clock className="w-5 h-5 text-ink-400" />
+          审核历史记录
+        </h3>
+        <div className="relative">
+          <div className="absolute left-4 top-2 bottom-2 w-px bg-ink-200" />
+          <div className="space-y-5">
+            {auditHistory.map((record, index) => (
+              <div key={index} className="relative flex gap-4 pl-10">
+                <div className={cn(
+                  'absolute left-2 top-0.5 w-5 h-5 rounded-full flex items-center justify-center border-2 border-white',
+                  record.type === 'pass' && 'bg-success-500',
+                  record.type === 'reject' && 'bg-danger-500',
+                  record.type === 'submit' && 'bg-primary-500',
+                  record.type === 'review' && 'bg-gold-500',
+                  record.type === 'info' && 'bg-ink-300'
+                )}>
+                  {record.type === 'pass' && <CheckCircle2 className="w-3 h-3 text-white" />}
+                  {record.type === 'reject' && <XCircle className="w-3 h-3 text-white" />}
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-ink-900">{record.desc}</p>
+                  <p className="text-xs text-ink-400 mt-1">{record.time}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AuctionCenter() {
   const [activeMenu, setActiveMenu] = useState('bids');
@@ -342,120 +865,7 @@ export default function AuctionCenter() {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-6"
               >
-                <div className="bg-white rounded-xl border border-ink-200 p-6">
-                  <h2 className="font-serif font-bold text-xl text-ink-900 mb-2">
-                    竞买人资质审核
-                  </h2>
-                  <p className="text-sm text-ink-500 mb-6">
-                    完成资质审核后方可参与司法拍卖，审核通过后长期有效
-                  </p>
-
-                  {/* Status Card */}
-                  <div className={cn(
-                    'rounded-xl p-6 mb-6',
-                    mockBidder.fundProofStatus === 'verified'
-                      ? 'bg-gradient-to-r from-success-50 to-primary-50 border border-success-200'
-                      : 'bg-gold-50 border border-gold-200'
-                  )}>
-                    <div className="flex items-center gap-4">
-                      <div className={cn(
-                        'w-16 h-16 rounded-full flex items-center justify-center',
-                        mockBidder.fundProofStatus === 'verified'
-                          ? 'bg-success-100'
-                          : 'bg-gold-100'
-                      )}>
-                        {mockBidder.fundProofStatus === 'verified' ? (
-                          <CheckCircle2 className="w-8 h-8 text-success-600" />
-                        ) : mockBidder.fundProofStatus === 'pending' ? (
-                          <Clock className="w-8 h-8 text-gold-600" />
-                        ) : (
-                          <XCircle className="w-8 h-8 text-danger-600" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-serif font-bold text-lg text-ink-900 mb-1">
-                          {mockBidder.fundProofStatus === 'verified' && '资质审核已通过'}
-                          {mockBidder.fundProofStatus === 'pending' && '资质审核中'}
-                          {mockBidder.fundProofStatus === 'rejected' && '资质审核未通过'}
-                        </h3>
-                        <p className="text-sm text-ink-600">
-                          {mockBidder.fundProofStatus === 'verified' && '您的竞买资质已审核通过，可参与全部司法拍卖标的'}
-                          {mockBidder.fundProofStatus === 'pending' && '您的资质资料正在审核中，预计1-3个工作日完成'}
-                          {mockBidder.fundProofStatus === 'rejected' && '您的资质资料未通过审核，请补充后重新提交'}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Qualification Items */}
-                  <div className="space-y-4">
-                    {[
-                      {
-                        title: '实名认证',
-                        status: 'verified',
-                        desc: '身份信息已核验通过',
-                        icon: User,
-                      },
-                      {
-                        title: '资金证明',
-                        status: 'verified',
-                        desc: '银行存款证明、流水等资产证明已核验',
-                        icon: CreditCard,
-                      },
-                      {
-                        title: '征信查询',
-                        status: 'verified',
-                        desc: '个人信用报告已查询，信用良好',
-                        icon: FileCheck,
-                      },
-                      {
-                        title: '风险测评',
-                        status: 'verified',
-                        desc: '投资风险承受能力测评已完成',
-                        icon: AlertCircle,
-                      },
-                    ].map((item, index) => {
-                      const Icon = item.icon;
-                      return (
-                        <div key={index} className="flex items-center gap-4 p-4 bg-ink-50 rounded-lg">
-                          <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                            <Icon className="w-5 h-5 text-primary-600" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="font-medium text-ink-900">{item.title}</div>
-                            <div className="text-xs text-ink-500">{item.desc}</div>
-                          </div>
-                          {item.status === 'verified' ? (
-                            <span className="text-success-600 text-sm font-medium flex items-center gap-1">
-                              <CheckCircle2 className="w-4 h-4" />
-                              已完成
-                            </span>
-                          ) : (
-                            <span className="text-gold-600 text-sm font-medium flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
-                              待审核
-                            </span>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* OCR Upload */}
-                  <div className="mt-8 p-5 border-2 border-dashed border-ink-200 rounded-xl text-center hover:border-primary-300 transition-colors cursor-pointer">
-                    <div className="w-14 h-14 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Upload className="w-7 h-7 text-primary-600" />
-                    </div>
-                    <h4 className="font-medium text-ink-900 mb-1">上传资金证明</h4>
-                    <p className="text-sm text-ink-500 mb-3">
-                      支持银行存款证明、流水账单等，OCR自动识别
-                    </p>
-                    <button className="btn-primary justify-center">
-                      <Camera className="w-4 h-4 mr-2" />
-                      拍照/上传
-                    </button>
-                  </div>
-                </div>
+                <QualificationContent />
               </motion.div>
             )}
 

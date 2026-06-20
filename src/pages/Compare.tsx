@@ -121,7 +121,7 @@ function CandidateCard({ property, isFull, onAdd }: { property: Property; isFull
 }
 
 export default function Compare() {
-  const { compareList, removeFromCompare, addToCompare, clearCompare, maxCompare } = useCompareStore();
+  const { compareList, removeFromCompare, addToCompare, clearCompare, maxCompare, isInCompare } = useCompareStore();
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['basic', 'price', 'auction', 'risk']);
@@ -207,6 +207,29 @@ export default function Compare() {
       default:
         return property[key as keyof Property] || '-';
     }
+  };
+
+  const recommendedByDistrict = useMemo(() => {
+    const districts = [...new Set(mockProperties.map((p) => p.district))];
+    return districts.map((district) => {
+      const list = mockProperties
+        .filter((p) => p.district === district)
+        .sort((a, b) => (b.appraisalPrice - b.startingPrice) / b.appraisalPrice - (a.appraisalPrice - a.startingPrice) / a.appraisalPrice)
+        .slice(0, 3);
+      return { district, list };
+    }).filter((d) => d.list.length >= 2);
+  }, []);
+
+  const addTopFromDistrict = (district: string) => {
+    const list = mockProperties
+      .filter((p) => p.district === district)
+      .sort((a, b) => (b.appraisalPrice - b.startingPrice) / b.appraisalPrice - (a.appraisalPrice - a.startingPrice) / a.appraisalPrice)
+      .slice(0, maxCompare);
+    list.forEach((p) => {
+      if (!isInCompare(p.id) && compareList.length < maxCompare) {
+        addToCompare(p);
+      }
+    });
   };
 
   const isValueBetter = (key: string, value: any, allValues: any[]) => {
@@ -566,26 +589,65 @@ export default function Compare() {
         )}
 
         {compareList.length === 0 && (
-          <div className="bg-white rounded-xl border border-ink-200 py-16 text-center">
-            <div className="w-20 h-20 bg-ink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Gavel className="w-10 h-10 text-ink-300" />
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl border border-ink-200 py-12 text-center">
+              <div className="w-20 h-20 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-10 h-10 text-primary-500" />
+              </div>
+              <h3 className="text-xl font-serif font-bold text-ink-900 mb-2">智能选房对比</h3>
+              <p className="text-sm text-ink-500 mb-6 max-w-sm mx-auto">
+                选择同区域最多 {maxCompare} 套标的进行多维度对比，<br />帮您快速识别性价比最高的标的
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <Link to="/list" className="btn-primary">
+                  去选房
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+                <button
+                  onClick={() => setShowAddModal(true)}
+                  className="btn-secondary"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  手动添加
+                </button>
+              </div>
             </div>
-            <h3 className="text-lg font-medium text-ink-700 mb-2">还没有添加对比标的</h3>
-            <p className="text-sm text-ink-500 mb-6 max-w-sm mx-auto">
-              从标的列表中选择最多 {maxCompare} 套房产进行多维度对比，帮您做出更明智的选择
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              <Link to="/list" className="btn-primary">
-                去选房
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="btn-secondary"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                快速添加
-              </button>
+
+            <div className="bg-white rounded-xl border border-ink-200 p-6">
+              <h3 className="font-serif font-bold text-lg text-ink-900 mb-4 flex items-center gap-2">
+                <Star className="w-5 h-5 text-gold-500" />
+                同区域推荐组合
+                <span className="text-xs font-normal text-ink-400 ml-2">智能匹配高性价比标的</span>
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {recommendedByDistrict.map((group) => (
+                  <div key={group.district} className="border border-ink-200 rounded-xl p-4 hover:border-primary-300 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-medium text-ink-900">{group.district}</span>
+                      <span className="text-xs text-gold-600 bg-gold-50 px-2 py-0.5 rounded-full">
+                        {group.list.length}套精选
+                      </span>
+                    </div>
+                    <div className="space-y-2 mb-4">
+                      {group.list.map((p) => (
+                        <div key={p.id} className="flex items-center gap-2 text-sm text-ink-600">
+                          <span className="text-ink-300">•</span>
+                          <span className="truncate flex-1">{p.title.split(' ').slice(1).join(' ')}</span>
+                          <span className="text-primary-600 font-medium flex-shrink-0">
+                            ¥{formatPrice(p.startingPrice)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => addTopFromDistrict(group.district)}
+                      className="w-full py-2 bg-primary-50 text-primary-600 rounded-lg text-sm font-medium hover:bg-primary-100 transition-colors"
+                    >
+                      一键加入对比
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
