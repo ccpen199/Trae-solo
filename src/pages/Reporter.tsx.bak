@@ -378,6 +378,48 @@ function MaterialPage({ onUploadSuccess, onOpenDetail }: { onUploadSuccess: () =
     { label: '退回', value: 2, color: 'text-red-600', bg: 'bg-red-50', icon: Ban },
   ];
 
+  const renderTimelineProgress = (currentStep: number, flowStatus: string) => {
+    const baseSteps = 4;
+    const isRejected = flowStatus === 'rejected';
+    const isAdopted = flowStatus === 'adopted';
+    const isPending = flowStatus === 'pending';
+
+    return (
+      <div className="space-y-1.5">
+        <div className="flex items-center gap-0.5">
+          {Array.from({ length: baseSteps }).map((_, idx) => {
+            let stepColor = 'bg-slate-200';
+            if (isRejected) {
+              stepColor = idx < currentStep - 1 ? 'bg-slate-400' : idx === currentStep - 1 ? 'bg-red-500' : 'bg-slate-200';
+            } else if (isAdopted || isPending) {
+              stepColor = 'bg-green-500';
+            } else {
+              stepColor = idx < currentStep - 1 ? (idx === 0 ? 'bg-slate-400' : idx === 1 ? 'bg-blue-500' : 'bg-purple-500') : idx === currentStep - 1 ? 'bg-green-500' : 'bg-slate-200';
+            }
+            const isLastActive = idx === currentStep - 1 && !isAdopted && !isPending && !isRejected && flowStatus !== 'storage';
+            return (
+              <div key={idx} className={`flex-1 h-1.5 rounded-full ${stepColor} ${isLastActive ? 'animate-pulse' : ''}`} />
+            );
+          })}
+          {isAdopted && <div className="flex-1 h-1.5 rounded-full bg-green-600" />}
+          {isPending && <div className="flex-1 h-1.5 rounded-full bg-amber-500" />}
+          {isRejected && <div className="flex-1 h-1.5 rounded-full bg-red-500" />}
+        </div>
+        <div className="flex justify-between text-[10px]">
+          <span className="text-slate-500">上传</span>
+          <span className="text-blue-500">质检</span>
+          <span className="text-purple-500">标签</span>
+          <span className="text-green-500">入库</span>
+          {(isAdopted || isPending || isRejected) && (
+            <span className={isAdopted ? 'text-green-600' : isPending ? 'text-amber-500' : 'text-red-500'}>
+              {isAdopted ? '已采用' : isPending ? '待采用' : '退回'}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -399,7 +441,7 @@ function MaterialPage({ onUploadSuccess, onOpenDetail }: { onUploadSuccess: () =
       </div>
 
       {activeTab === 'upload' && (
-        <div className="space-y-4">
+        <>
           <div className="flex gap-2">
             {[
               { id: 'gallery', label: '相册', icon: Folder },
@@ -508,7 +550,7 @@ function MaterialPage({ onUploadSuccess, onOpenDetail }: { onUploadSuccess: () =
             <Upload className="w-5 h-5" />
             上传 {selectedFiles.length > 0 ? `${selectedFiles.length} 个素材` : '素材'}
           </button>
-        </div>
+        </>
       )}
 
       {activeTab === 'list' && (
@@ -517,7 +559,7 @@ function MaterialPage({ onUploadSuccess, onOpenDetail }: { onUploadSuccess: () =
             {statsBar.map((stat, idx) => {
               const Icon = stat.icon;
               return (
-                <div key={idx} className={`${stat.bg} rounded-lg p-2 text-center`}>
+                <div key={idx} className={`${stat.bg} rounded-lg p-2 text-center">
                   <Icon className={`w-4 h-4 mx-auto mb-1 ${stat.color}`} />
                   <div className={`text-lg font-bold ${stat.color}`}>{stat.value}</div>
                   <div className="text-[10px] text-slate-500">{stat.label}</div>
@@ -568,6 +610,10 @@ function MaterialPage({ onUploadSuccess, onOpenDetail }: { onUploadSuccess: () =
                     </div>
                   </div>
 
+                  <div className="mb-3 px-1">
+                    {renderTimelineProgress(material.currentStep, material.flowStatus)}
+                  </div>
+
                   {material.flowStatus === 'rejected' && (
                     <div className="mb-3 p-2 bg-red-50 rounded-lg">
                       <div className="flex items-start gap-1.5">
@@ -602,11 +648,11 @@ function MaterialPage({ onUploadSuccess, onOpenDetail }: { onUploadSuccess: () =
                         补充信息
                       </button>
                     ) : (
-                      <button className="flex-1 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs flex items-center justify-center gap-1 hover:bg-blue-100">
-                        <Edit3 className="w-3.5 h-3.5" />
-                        编辑
-                      </button>
-                    )}
+                        <button className="flex-1 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs flex items-center justify-center gap-1 hover:bg-blue-100">
+                          <Edit3 className="w-3.5 h-3.5" />
+                          编辑
+                        </button>
+                      )}
                   </div>
                 </div>
               );
@@ -1506,7 +1552,7 @@ function TopicPage({ onCreate, onOpenDetail }: { onCreate: () => void; onOpenDet
                   <AlertCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="text-xs font-medium text-red-700">退回原因</div>
-                    <p className="text-xs text-red-600 mt-0.5">{(topic as any).rejectReason}</p>
+                    <p className="text-xs text-red-600 mt-0.5">{topic.rejectReason}</p>
                   </div>
                 </div>
                 <button 
@@ -1531,10 +1577,10 @@ function TopicPage({ onCreate, onOpenDetail }: { onCreate: () => void; onOpenDet
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                {(topic as any).usedCount > 0 && (
+                {topic.usedCount > 0 && (
                   <span className="text-emerald-500 flex items-center gap-0.5">
                     <Activity className="w-3 h-3" />
-                    {(topic as any).usedCount}篇采用
+                    {topic.usedCount}篇采用
                   </span>
                 )}
                 <span className={`flex items-center gap-1 ${
