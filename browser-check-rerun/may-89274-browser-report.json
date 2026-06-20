@@ -1,0 +1,187 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-20T07:41:26.029Z",
+  "order": "may-89274",
+  "roundIndex": 8,
+  "captureId": "may-89274-repair-r2",
+  "url": "http://127.0.0.1:49274/",
+  "initialUrl": "http://127.0.0.1:49274/",
+  "finalUrl": "http://127.0.0.1:49274/",
+  "status": 200,
+  "title": "臻回收 · 奢侈品与高值数码专业回收平台",
+  "initialTitle": "臻回收 · 奢侈品与高值数码专业回收平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49274/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49274/",
+        "title": "臻回收 · 奢侈品与高值数码专业回收平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89274-repair-r2-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49274/",
+          "title": "臻回收 · 奢侈品与高值数码专业回收平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.png",
+          "elementCount": 13,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89274-repair-r2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49274/",
+        "title": "臻回收 · 奢侈品与高值数码专业回收平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.png",
+        "elementCount": 13,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49274/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89274-repair-r2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49274/",
+        "title": "臻回收 · 奢侈品与高值数码专业回收平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89274/browser-check-rerun/may-89274-repair-r2-structure-01-首屏.png",
+        "elementCount": 13,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49274/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49274/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89274/src/pages/HomePage.tsx: Unterminated JSX contents. (2008:100)\n\n  2006 |\n  2007 |       {/* Divider */}\n> 2008 |       <div className=\"container mx-auto px-4 sm:px-6 lg:px-8\"><div className=\"divider-gold\" /></div>\n       |                                                                                                     ^\n  2009 |\n2006|  \n2007|        {/* Divider */}\n2008|        <div className=\"container mx-auto px-4 sm:px-6 lg:px-8\"><div className=\"divider-gold\" /></div>\n   |                                                                                                      ^\n2009|  ",
+      "location": {
+        "url": "http://127.0.0.1:49274/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49274/src/pages/HomePage.tsx?t=1781941244690",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49274/src/pages/HomePage.tsx?t=1781941244690",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49274/src/pages/HomePage.tsx?t=1781941244690"
+    }
+  ]
+}
