@@ -97,6 +97,8 @@ export const hotelApi = {
     request(`/hotels/${hotelId}/rooms`),
   getRoom: (hotelId: string, roomId: string) =>
     request(`/hotels/${hotelId}/rooms/${roomId}`),
+  getRatePlans: (hotelId: string, roomId: string) =>
+    request(`/hotels/${hotelId}/rooms/${roomId}`).then((data: any) => data.ratePlans),
   calculatePrice: (data: any) =>
     request('/hotels/calculate-price', {
       method: 'POST',

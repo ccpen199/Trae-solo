@@ -6,8 +6,6 @@ import {
   Clock, Users, Calendar, Info, TrendingUp, Heart,
   Share2, Download, Crown, AlertCircle
 } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
@@ -65,21 +63,28 @@ const HotelDetailPage: React.FC = () => {
   const loadHotelData = async () => {
     setIsLoading(true);
     try {
-      const [hotelData, roomsData, comparisonData] = await Promise.all([
+      const [hotelDetailData, comparisonData] = await Promise.all([
         hotelApi.getById(id!),
-        hotelApi.getRooms(id!),
         comparisonApi.compare({ hotelId: id, checkIn, checkOut, adults, children, rooms }),
-      ]);
+      ]) as [any, any];
       
-      setHotel(hotelData as Hotel);
-      setRoomTypes(roomsData as RoomType[]);
+      setHotel(hotelDetailData.hotel as Hotel);
+      
+      const roomsWithRates = hotelDetailData.roomTypes || [];
+      setRoomTypes(roomsWithRates as RoomType[]);
+      
+      const ratesMap: Record<string, RatePlan[]> = {};
+      roomsWithRates.forEach((room: any) => {
+        ratesMap[room.id] = room.ratePlans || [];
+      });
+      setRatePlans(ratesMap);
+      
       setComparisonData(comparisonData);
 
-      if ((roomsData as RoomType[]).length > 0) {
-        const firstRoom = (roomsData as RoomType[])[0];
-        setSelectedRoomType(firstRoom);
-        const rates = await hotelApi.getRatePlans(id!, firstRoom.id) as RatePlan[];
-        setRatePlans(prev => ({ ...prev, [firstRoom.id]: rates }));
+      if (roomsWithRates.length > 0) {
+        const firstRoom = roomsWithRates[0];
+        setSelectedRoomType(firstRoom as RoomType);
+        const rates = ratesMap[firstRoom.id] || [];
         if (rates.length > 0) {
           setSelectedRatePlan(rates[0]);
         }
@@ -201,9 +206,8 @@ const HotelDetailPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-cloud-50">
-        <Header />
-        <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
           <Skeleton variant="rectangular" height={400} className="rounded-2xl mb-8" />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
@@ -215,17 +219,15 @@ const HotelDetailPage: React.FC = () => {
               <Skeleton variant="rectangular" height={400} />
             </div>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </>
     );
   }
 
   if (!hotel) {
     return (
-      <div className="min-h-screen flex flex-col bg-cloud-50">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
+      <>
+        <div className="flex items-center justify-center py-16">
           <div className="text-center">
             <AlertCircle className="w-16 h-16 text-graphite-400 mx-auto mb-4" />
             <h2 className="text-2xl font-display font-bold text-graphite-900 mb-2">酒店不存在</h2>
@@ -234,20 +236,16 @@ const HotelDetailPage: React.FC = () => {
               返回搜索
             </Button>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </>
     );
   }
 
   const memberDiscount = member?.tier === 'GOLD' ? 0.10 : member?.tier === 'SILVER' ? 0.05 : 0;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1">
-        {bookingSuccess && (
+    <>
+      {bookingSuccess && (
           <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-emerald-500 text-white px-6 py-3 rounded-xl shadow-elevated flex items-center gap-2">
             <Check className="w-5 h-5" />
             <span>预订成功！订单号: {bookingSuccess}</span>
@@ -794,9 +792,6 @@ const HotelDetailPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
 
       <Modal
         isOpen={showBookingModal}
@@ -915,7 +910,7 @@ const HotelDetailPage: React.FC = () => {
           </ul>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

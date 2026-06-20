@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, User, Phone, Globe, Check, AlertCircle, Crown } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import { Badge } from '../components/ui/Badge';
@@ -101,10 +99,8 @@ const RegisterPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1 flex items-center justify-center py-12 px-4">
+    <>
+      <div className="flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-4xl">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-2">
@@ -338,10 +334,8 @@ const RegisterPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </>
   );
 };
 

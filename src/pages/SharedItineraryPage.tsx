@@ -17,8 +17,6 @@ import {
   Check,
   Heart,
 } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent } from '../components/ui/Card';
@@ -128,9 +126,8 @@ https://stayglobal.com
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-cloud-50">
-        <Header />
-        <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
           <div className="space-y-6">
             <Card>
               <CardContent className="p-8">
@@ -153,17 +150,15 @@ https://stayglobal.com
               </Card>
             ))}
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="min-h-screen flex flex-col bg-cloud-50">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
+      <>
+        <div className="flex items-center justify-center py-16">
           <div className="text-center max-w-md mx-auto px-4">
             <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <AlertTriangle className="w-12 h-12 text-amber-600" />
@@ -183,9 +178,8 @@ https://stayglobal.com
               </Button>
             </div>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </>
     );
   }
 
@@ -214,11 +208,8 @@ https://stayglobal.com
   const endDate = sortedBookings[sortedBookings.length - 1]?.checkOutDate;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-
-      <main className="flex-1">
-        <div className="bg-gradient-to-r from-deep-blue via-deep-blue-light to-deep-blue text-white py-12">
+    <>
+      <div className="bg-gradient-to-r from-deep-blue via-deep-blue-light to-deep-blue text-white py-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2 text-cloud-200 mb-4">
               <Globe className="w-4 h-4" />
@@ -486,10 +477,7 @@ https://stayglobal.com
             </CardContent>
           </Card>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

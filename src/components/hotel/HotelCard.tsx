@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Star, MapPin, Heart, TrendingUp, Shield, Wifi, Coffee, Dumbbell, Utensils, Car } from 'lucide-react';
 import { HotelSearchResult, Currency } from '@shared/types';
 import { Badge } from '../ui/Badge';
-import { cn } from '../lib/utils';
+import { cn, formatCurrency } from '../lib/utils';
 import { useAuthStore, selectMember } from '../../store/authStore';
 import { useSearchStore, selectSearchParams } from '../../store/searchStore';
 
@@ -18,8 +18,15 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
   const searchParams = useSearchStore(selectSearchParams);
   const [isFavorite, setIsFavorite] = React.useState(false);
 
+  const hotelInfo = hotel.hotel;
+  const bestRate = hotel.bestRate;
+  const priceAmount = bestRate.price.amount;
+  const priceCurrency = bestRate.price.currency;
+
   const memberDiscount = member?.tier === 'GOLD' ? 0.10 : member?.tier === 'SILVER' ? 0.05 : 0;
-  const discountedPrice = hotel.lowestPrice.amount * (1 - memberDiscount);
+  const discountedPrice = priceAmount * (1 - memberDiscount);
+
+  const hasSaving = bestRate.originalPrice && bestRate.originalPrice.amount > priceAmount;
 
   const renderStars = (rating: number) => {
     return (
@@ -46,7 +53,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
   };
 
   const handleClick = () => {
-    navigate(`/hotels/${hotel.id}`, {
+    navigate(`/hotel/${hotelInfo.id}`, {
       state: {
         checkIn: searchParams.checkIn,
         checkOut: searchParams.checkOut,
@@ -57,19 +64,18 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
     });
   };
 
-  const formatCurrency = (amount: number, currency: Currency) => {
-    const symbols: Record<Currency, string> = {
-      [Currency.CNY]: '¥',
-      [Currency.USD]: '$',
-      [Currency.EUR]: '€',
-      [Currency.GBP]: '£',
-      [Currency.JPY]: '¥',
-      [Currency.AED]: 'AED ',
-      [Currency.SGD]: 'S$',
-      [Currency.THB]: '฿',
-    };
-    return `${symbols[currency] || ''}${amount.toLocaleString()}`;
-  };
+  const displayFacilities = hotelInfo.facilities.filter(
+    (f) => facilityIcons[f]
+  ).slice(0, 4);
+
+  const hasVIPAccess = hotelInfo.facilities.includes('VIP Access');
+
+  const bestCompetitor = hotel.rateComparison
+    .filter((r) => r.channel !== 'stayglobal')
+    .sort((a, b) => a.price.amount - b.price.amount)[0];
+  const savingPercent = bestCompetitor
+    ? Math.round(((bestCompetitor.price.amount - priceAmount) / bestCompetitor.price.amount) * 100)
+    : 0;
 
   return (
     <div
@@ -82,8 +88,8 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
       <div className="relative">
         <div className="aspect-[4/3] overflow-hidden">
           <img
-            src={hotel.thumbnail}
-            alt={hotel.name}
+            src={hotelInfo.thumbnail}
+            alt={hotelInfo.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>
@@ -107,7 +113,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
               精选推荐
             </Badge>
           )}
-          {hotel.isVIPAccess && (
+          {hasVIPAccess && (
             <Badge variant="gold" size="sm">
               VIP Access
             </Badge>
@@ -134,31 +140,31 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
             <h3 className="text-lg font-display font-bold text-graphite-900 line-clamp-1">
-              {hotel.name}
+              {hotelInfo.name}
             </h3>
             <div className="flex items-center gap-2 mt-1">
-              {renderStars(hotel.starRating)}
-              <span className="text-sm text-graphite-500">{hotel.starRating}星酒店</span>
+              {renderStars(hotelInfo.starRating)}
+              <span className="text-sm text-graphite-500">{hotelInfo.starRating}星酒店</span>
             </div>
           </div>
           <div className="ml-3 text-right">
             <div className="flex items-center gap-1 bg-deep-blue/10 px-2 py-1 rounded-lg">
               <Star className="w-4 h-4 text-deep-blue fill-deep-blue" />
-              <span className="font-bold text-deep-blue">{hotel.overallRating.toFixed(1)}</span>
+              <span className="font-bold text-deep-blue">{hotelInfo.overallRating.toFixed(1)}</span>
             </div>
-            <span className="text-xs text-graphite-500">{hotel.reviewCount} 条评价</span>
+            <span className="text-xs text-graphite-500">{hotelInfo.reviewCount} 条评价</span>
           </div>
         </div>
 
         <div className="flex items-center gap-1 text-sm text-graphite-500 mb-3">
           <MapPin className="w-4 h-4" />
           <span className="line-clamp-1">
-            {hotel.address.city}, {hotel.address.country}
+            {hotelInfo.address.city}, {hotelInfo.address.country}
           </span>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-3">
-          {hotel.facilities.slice(0, 4).map((facility) => (
+          {displayFacilities.map((facility) => (
             <div
               key={facility}
               className="flex items-center gap-1 px-2 py-1 bg-cloud-100 rounded-full text-xs text-graphite-600"
@@ -168,65 +174,56 @@ const HotelCard: React.FC<HotelCardProps> = ({ hotel, featured = false }) => {
               <span className="hidden sm:inline">{facility}</span>
             </div>
           ))}
-          {hotel.facilities.length > 4 && (
+          {hotelInfo.facilities.length > displayFacilities.length && (
             <div className="flex items-center gap-1 px-2 py-1 bg-cloud-100 rounded-full text-xs text-graphite-600">
-              +{hotel.facilities.length - 4}
+              +{hotelInfo.facilities.length - displayFacilities.length}
             </div>
           )}
         </div>
-
-        {hotel.tags && hotel.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {hotel.tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} variant="primary" size="sm">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
 
         <div className="pt-3 border-t border-cloud-200">
           <div className="flex items-end justify-between">
             <div>
               <div className="flex items-baseline gap-2">
+                {hasSaving && bestRate.originalPrice && (
+                  <span className="text-sm text-graphite-400 line-through">
+                    {formatCurrency(bestRate.originalPrice.amount, bestRate.originalPrice.currency)}
+                  </span>
+                )}
                 {memberDiscount > 0 && (
                   <span className="text-sm text-graphite-400 line-through">
-                    {formatCurrency(hotel.lowestPrice.amount, hotel.lowestPrice.currency)}
+                    {formatCurrency(priceAmount, priceCurrency)}
                   </span>
                 )}
                 <span className="text-2xl font-display font-bold text-coral-orange">
                   {formatCurrency(
-                    memberDiscount > 0 ? discountedPrice : hotel.lowestPrice.amount,
-                    hotel.lowestPrice.currency
+                    memberDiscount > 0 ? discountedPrice : priceAmount,
+                    priceCurrency
                   )}
                 </span>
-                <span className="text-sm text-graphite-500">
-                  / {hotel.lowestPriceNight}晚
-                </span>
+                <span className="text-sm text-graphite-500">/ 晚起</span>
               </div>
               <div className="flex items-center gap-2 mt-1">
-                {hotel.isFreeCancellation && (
+                {bestRate.isRefundable && (
                   <Badge variant="success" size="sm" dot>
                     免费取消
                   </Badge>
                 )}
-                {hotel.includesBreakfast && (
+                {bestRate.includesBreakfast && (
                   <Badge variant="info" size="sm" dot>
                     含早餐
                   </Badge>
                 )}
-                {hotel.isPayAtHotel && (
-                  <Badge variant="warning" size="sm" dot>
-                    到店支付
-                  </Badge>
-                )}
+                <Badge variant="secondary" size="sm">
+                  {bestRate.channel === 'stayglobal' ? 'StayGlobal' : bestRate.channel}
+                </Badge>
               </div>
             </div>
             <div className="text-right">
-              {hotel.priceComparison && (
+              {bestCompetitor && savingPercent > 0 && (
                 <div className="flex items-center gap-1 text-xs text-emerald-600">
                   <Shield className="w-3 h-3" />
-                  <span>比{hotel.priceComparison.bestCompetitor}省 {hotel.priceComparison.savingPercent}%</span>
+                  <span>比{bestCompetitor.channel}省 {savingPercent}%</span>
                 </div>
               )}
             </div>

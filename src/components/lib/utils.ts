@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Currency, MemberTier } from '@shared/types';
 import { format, differenceInDays } from 'date-fns';
-import { zhCN, enUS, jaJP, frFR, deDE } from 'date-fns/locale';
+import { zhCN, enUS, ja, fr, de } from 'date-fns/locale';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -29,9 +29,9 @@ export function formatDate(dateStr: string, lang: string = 'zh-CN'): string {
   const locales: Record<string, Locale> = {
     'zh-CN': zhCN,
     'en-US': enUS,
-    'ja-JP': jaJP,
-    'fr-FR': frFR,
-    'de-DE': deDE,
+    'ja-JP': ja,
+    'fr-FR': fr,
+    'de-DE': de,
   };
   
   const locale = locales[lang] || zhCN;

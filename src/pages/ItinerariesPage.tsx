@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Calendar, Users, ChevronRight, Share2, Download, Plus, Trash2, Edit3, Link2, Globe, Clock, Hotel, AlertCircle, Check } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
@@ -124,11 +122,8 @@ const ItinerariesPage: React.FC = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1">
-        <div className="bg-gradient-to-r from-deep-blue via-deep-blue-light to-deep-blue text-white py-12">
+    <>
+      <div className="bg-gradient-to-r from-deep-blue via-deep-blue-light to-deep-blue text-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
@@ -365,9 +360,6 @@ const ItinerariesPage: React.FC = () => {
             </div>
           )}
         </div>
-      </main>
-
-      <Footer />
 
       <Modal
         isOpen={showCreateModal}
@@ -455,7 +447,7 @@ const ItinerariesPage: React.FC = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

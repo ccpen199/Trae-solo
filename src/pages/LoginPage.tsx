@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Globe, AlertCircle } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import { Badge } from '../components/ui/Badge';
@@ -66,10 +64,8 @@ const LoginPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1 flex items-center justify-center py-12 px-4">
+    <>
+      <div className="flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-deep-blue to-deep-blue-light rounded-2xl mb-4">
@@ -216,10 +212,8 @@ const LoginPage: React.FC = () => {
             </p>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -22,8 +22,6 @@ import {
   Copy,
   Check,
 } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
@@ -211,11 +209,8 @@ const GDPRPage: React.FC = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-
-      <main className="flex-1">
-        <div className="bg-gradient-to-br from-deep-blue via-deep-blue-light to-deep-blue text-white py-12 relative overflow-hidden">
+    <>
+      <div className="bg-gradient-to-br from-deep-blue via-deep-blue-light to-deep-blue text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-96 h-96 bg-shield-500 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
           </div>
@@ -600,7 +595,6 @@ const GDPRPage: React.FC = () => {
             </CardContent>
           </Card>
         </div>
-      </main>
 
       <Modal
         isOpen={showRequestModal}
@@ -749,9 +743,7 @@ const GDPRPage: React.FC = () => {
           </div>
         )}
       </Modal>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Globe, Shield, TrendingUp, Clock, Users, Award, ChevronRight, Star, MapPin, Zap } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import SearchForm from '../components/search/SearchForm';
 import HotelCard from '../components/hotel/HotelCard';
 import Button from '../components/ui/Button';
@@ -11,23 +9,24 @@ import { useAuthStore } from '../store/authStore';
 import { hotelApi } from '../services/api';
 import { HotelSearchResult } from '@shared/types';
 import { SkeletonCard } from '../components/ui/Skeleton';
+import { cn } from '../components/lib/utils';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { fetchCurrentUser, isAuthenticated } = useAuthStore();
+  const { getCurrentUser, isAuthenticated } = useAuthStore();
   const [featuredHotels, setFeaturedHotels] = React.useState<HotelSearchResult[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchCurrentUser();
+      getCurrentUser();
     }
     loadFeaturedHotels();
   }, [isAuthenticated]);
 
   const loadFeaturedHotels = async () => {
     try {
-      const response = await hotelApi.search({
+      const result = await hotelApi.search({
         destination: '',
         checkIn: '',
         checkOut: '',
@@ -37,8 +36,10 @@ const HomePage: React.FC = () => {
         page: 1,
         pageSize: 4,
       }) as any;
-      if (response && response.data) {
-        setFeaturedHotels(response.data.slice(0, 4));
+      if (result && Array.isArray(result)) {
+        setFeaturedHotels(result.slice(0, 4));
+      } else if (result?.items && Array.isArray(result.items)) {
+        setFeaturedHotels(result.items.slice(0, 4));
       }
     } catch (error) {
       console.error('Failed to load featured hotels:', error);
@@ -117,10 +118,7 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1">
+    <>
         <section className="relative overflow-hidden bg-gradient-to-br from-deep-blue via-deep-blue-light to-deep-blue">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&h=800&fit=crop')] bg-cover bg-center opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-b from-deep-blue/60 via-deep-blue/40 to-deep-blue" />
@@ -384,10 +382,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </section>
-      </main>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

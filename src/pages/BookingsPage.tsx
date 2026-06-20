@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Calendar, MapPin, Clock, Users, ChevronRight, Download, Share2, XCircle, CheckCircle, AlertCircle, CreditCard, Hotel, Filter, Search } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
@@ -33,12 +31,12 @@ const BookingsPage: React.FC = () => {
   const loadBookings = async () => {
     setIsLoading(true);
     try {
-      let params: any = {};
+      let params: any = { page: 1, pageSize: 20 };
       if (activeTab !== 'all') {
         params.status = activeTab.toUpperCase();
       }
-      const response = await bookingApi.getMyBookings(params) as BookingOrder[];
-      setBookings(response);
+      const response = await bookingApi.getMyBookings(params) as any;
+      setBookings(response.items || []);
     } catch (error) {
       console.error('Failed to load bookings:', error);
     } finally {
@@ -92,11 +90,8 @@ const BookingsPage: React.FC = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1">
-        <div className="bg-gradient-to-r from-deep-blue to-deep-blue-light text-white py-12">
+    <>
+      <div className="bg-gradient-to-r from-deep-blue to-deep-blue-light text-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">
               我的订单
@@ -335,10 +330,7 @@ const BookingsPage: React.FC = () => {
             </div>
           )}
         </div>
-      </main>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

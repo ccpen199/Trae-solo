@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Filter, SlidersHorizontal, Grid3X3, List, MapPin, Star, TrendingUp, ChevronDown, ChevronUp, X, Sparkles } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import SearchForm from '../components/search/SearchForm';
 import HotelCard from '../components/hotel/HotelCard';
 import Button from '../components/ui/Button';
@@ -37,7 +35,7 @@ const SearchResultsPage: React.FC = () => {
     if (locationState?.destination) {
       setSearchParams({ destination: locationState.destination });
     }
-    if (!searchResults || searchResults.data.length === 0) {
+    if (!searchResults || searchResults.items.length === 0) {
       performSearch();
     }
   }, []);
@@ -119,11 +117,8 @@ const SearchResultsPage: React.FC = () => {
     priceRange[0] > 0 || priceRange[1] < 10000;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-      
-      <main className="flex-1">
-        <div className="bg-white border-b border-cloud-200 sticky top-16 z-30">
+    <>
+      <div className="bg-white border-b border-cloud-200 sticky top-16 z-30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <SearchForm variant="compact" />
           </div>
@@ -357,12 +352,12 @@ const SearchResultsPage: React.FC = () => {
                 <SkeletonCard key={i} />
               ))}
             </div>
-          ) : searchResults && searchResults.data.length > 0 ? (
+          ) : searchResults && searchResults.items.length > 0 ? (
             <div className={cn(
               'grid gap-6',
               viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'
             )}>
-              {searchResults.data.map((hotel: HotelSearchResult, index: number) => (
+              {searchResults.items.map((hotel: HotelSearchResult, index: number) => (
                 <HotelCard
                   key={hotel.id}
                   hotel={hotel}
@@ -430,10 +425,7 @@ const SearchResultsPage: React.FC = () => {
             </div>
           )}
         </div>
-      </main>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

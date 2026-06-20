@@ -26,8 +26,6 @@ import {
   Plus,
   Info,
 } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
@@ -143,11 +141,8 @@ const MemberCenterPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-
-      <main className="flex-1">
-        {member && (
+    <>
+      {member && (
           <div className="bg-gradient-to-br from-deep-blue via-deep-blue-light to-deep-blue text-white py-12 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 right-0 w-96 h-96 bg-gold-foil rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
@@ -1051,7 +1046,6 @@ const MemberCenterPage: React.FC = () => {
             </>
           )}
         </div>
-      </main>
 
       <Modal
         isOpen={showRedeemModal}
@@ -1130,9 +1124,7 @@ const MemberCenterPage: React.FC = () => {
           </div>
         </div>
       </Modal>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

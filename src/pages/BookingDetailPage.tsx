@@ -22,8 +22,6 @@ import {
   Check,
   Plus,
 } from 'lucide-react';
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
@@ -244,9 +242,8 @@ ${booking.guestInfo.map((g, i) => `${i + 1}. ${g.lastName}${g.firstName} | ${g.e
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-cloud-50">
-        <Header />
-        <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
           <div className="flex items-center gap-4 mb-8">
             <Button variant="ghost" onClick={() => navigate('/bookings')}>
               <ChevronLeft className="w-5 h-5 mr-1" />
@@ -271,17 +268,15 @@ ${booking.guestInfo.map((g, i) => `${i + 1}. ${g.lastName}${g.firstName} | ${g.e
               </Card>
             </div>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </>
     );
   }
 
   if (!booking) {
     return (
-      <div className="min-h-screen flex flex-col bg-cloud-50">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
+      <>
+        <div className="flex items-center justify-center py-16">
           <div className="text-center">
             <FileText className="w-16 h-16 text-graphite-300 mx-auto mb-4" />
             <h2 className="text-2xl font-display font-bold text-graphite-900 mb-2">
@@ -292,9 +287,8 @@ ${booking.guestInfo.map((g, i) => `${i + 1}. ${g.lastName}${g.firstName} | ${g.e
             </p>
             <Button onClick={() => navigate('/bookings')}>返回订单列表</Button>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </>
     );
   }
 
@@ -303,11 +297,8 @@ ${booking.guestInfo.map((g, i) => `${i + 1}. ${g.lastName}${g.firstName} | ${g.e
   const nights = calculateNights(booking.checkInDate, booking.checkOutDate);
 
   return (
-    <div className="min-h-screen flex flex-col bg-cloud-50">
-      <Header />
-
-      <main className="flex-1">
-        <div className="bg-gradient-to-r from-deep-blue to-deep-blue-light text-white py-8">
+    <>
+      <div className="bg-gradient-to-r from-deep-blue to-deep-blue-light text-white py-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-4 mb-6">
               <Button
@@ -782,7 +773,6 @@ ${booking.guestInfo.map((g, i) => `${i + 1}. ${g.lastName}${g.firstName} | ${g.e
             </div>
           </div>
         </div>
-      </main>
 
       <Modal
         isOpen={showCancelModal}
@@ -909,9 +899,7 @@ ${booking.guestInfo.map((g, i) => `${i + 1}. ${g.lastName}${g.firstName} | ${g.e
           </div>
         </div>
       </Modal>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

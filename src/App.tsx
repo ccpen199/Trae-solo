@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -23,6 +23,15 @@ import ItinerariesPage from './pages/ItinerariesPage';
 import SharedItineraryPage from './pages/SharedItineraryPage';
 import MemberCenterPage from './pages/MemberCenterPage';
 import GDPRPage from './pages/GDPRPage';
+import AdminLayout from './components/layout/AdminLayout';
+import PlatformAdminLayout from './components/layout/PlatformAdminLayout';
+import HotelAdminDashboardPage from './pages/hotel-admin/DashboardPage';
+import HotelAdminBookingsPage from './pages/hotel-admin/BookingsPage';
+import HotelAdminRoomsPage from './pages/hotel-admin/RoomsPage';
+import AdminDashboardPage from './pages/admin/DashboardPage';
+import AdminHotelReviewPage from './pages/admin/HotelReviewPage';
+import AdminCommissionsPage from './pages/admin/CommissionsPage';
+import AdminTaxesPage from './pages/admin/TaxesPage';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -260,21 +269,35 @@ const AppRoutes: React.FC = () => {
           <ProtectedRoute
             requireRole={[UserRole.HOTEL_ADMIN, UserRole.HOTEL_STAFF]}
           >
-            <MainLayout>
-              <div className="max-w-6xl mx-auto px-4 py-12 text-center">
-                <h1 className="text-3xl font-display font-bold text-graphite-900 mb-4">
-                  酒店管理后台
-                </h1>
-                <p className="text-graphite-500 mb-8">
-                  酒店管理后台正在开发中，敬请期待
-                </p>
-                <img
-                  src="https://images.unsplash.com/photo-1556740755-069a40165b40?w=600&h=400&fit=crop"
-                  alt="Hotel Admin"
-                  className="rounded-2xl shadow-lg mx-auto max-w-lg"
-                />
-              </div>
-            </MainLayout>
+            <AdminLayout>
+              <HotelAdminDashboardPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/hotel-admin/bookings"
+        element={
+          <ProtectedRoute
+            requireRole={[UserRole.HOTEL_ADMIN, UserRole.HOTEL_STAFF]}
+          >
+            <AdminLayout>
+              <HotelAdminBookingsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/hotel-admin/rooms"
+        element={
+          <ProtectedRoute
+            requireRole={[UserRole.HOTEL_ADMIN, UserRole.HOTEL_STAFF]}
+          >
+            <AdminLayout>
+              <HotelAdminRoomsPage />
+            </AdminLayout>
           </ProtectedRoute>
         }
       />
@@ -285,21 +308,48 @@ const AppRoutes: React.FC = () => {
           <ProtectedRoute
             requireRole={[UserRole.SUPER_ADMIN, UserRole.PLATFORM_OPERATOR]}
           >
-            <MainLayout>
-              <div className="max-w-6xl mx-auto px-4 py-12 text-center">
-                <h1 className="text-3xl font-display font-bold text-graphite-900 mb-4">
-                  平台运营后台
-                </h1>
-                <p className="text-graphite-500 mb-8">
-                  平台运营后台正在开发中，敬请期待
-                </p>
-                <img
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
-                  alt="Platform Admin"
-                  className="rounded-2xl shadow-lg mx-auto max-w-lg"
-                />
-              </div>
-            </MainLayout>
+            <PlatformAdminLayout>
+              <AdminDashboardPage />
+            </PlatformAdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/hotel-review"
+        element={
+          <ProtectedRoute
+            requireRole={[UserRole.SUPER_ADMIN, UserRole.PLATFORM_OPERATOR]}
+          >
+            <PlatformAdminLayout>
+              <AdminHotelReviewPage />
+            </PlatformAdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/commissions"
+        element={
+          <ProtectedRoute
+            requireRole={[UserRole.SUPER_ADMIN, UserRole.PLATFORM_OPERATOR]}
+          >
+            <PlatformAdminLayout>
+              <AdminCommissionsPage />
+            </PlatformAdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/taxes"
+        element={
+          <ProtectedRoute
+            requireRole={[UserRole.SUPER_ADMIN, UserRole.PLATFORM_OPERATOR]}
+          >
+            <PlatformAdminLayout>
+              <AdminTaxesPage />
+            </PlatformAdminLayout>
           </ProtectedRoute>
         }
       />
