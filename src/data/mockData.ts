@@ -1,4 +1,8 @@
-import { Company, Job, JobSeeker, ReviewItem, HeatmapData, ActivityData } from '../types';
+import {
+  Company, Job, JobSeeker, ReviewItem, HeatmapData, ActivityData,
+  ReviewItemDetail, ReviewRecord, VerificationTask,
+  VerificationRecord, Complaint, DailyActivity, FunnelData
+} from '../types';
 
 export const companies: Company[] = [
   {
@@ -24,6 +28,11 @@ export const companies: Company[] = [
         tags: ['咖啡师', '拉花', '服务', '精品咖啡'],
         views: 12580,
         likes: 3420,
+        completionRate: 72,
+        favorites: 580,
+        conversions: 38,
+        reviewStatus: 'approved',
+        isPublished: true,
         aiKeywords: ['咖啡制作', '拉花艺术', '客户服务', '意式咖啡', '手冲咖啡']
       },
       {
@@ -35,7 +44,12 @@ export const companies: Company[] = [
         type: 'team',
         tags: ['团队', '文化', '团建'],
         views: 8920,
-        likes: 2150
+        likes: 2150,
+        completionRate: 65,
+        favorites: 420,
+        conversions: 22,
+        reviewStatus: 'approved',
+        isPublished: true
       },
       {
         id: 'v3',
@@ -46,7 +60,12 @@ export const companies: Company[] = [
         type: 'office',
         tags: ['环境', '门店', '装修'],
         views: 15600,
-        likes: 4200
+        likes: 4200,
+        completionRate: 78,
+        favorites: 650,
+        conversions: 15,
+        reviewStatus: 'approved',
+        isPublished: true
       }
     ],
     jobs: [
@@ -74,7 +93,9 @@ export const companies: Company[] = [
         tags: ['咖啡师', '餐饮', '服务'],
         postedDate: '2024-01-15',
         applications: 56,
-        verified: true
+        verified: true,
+        views: 3200,
+        matchedSeekers: 18
       },
       {
         id: 'j2',
@@ -98,7 +119,9 @@ export const companies: Company[] = [
         tags: ['管理', '餐饮', '运营'],
         postedDate: '2024-01-10',
         applications: 32,
-        verified: true
+        verified: true,
+        views: 2100,
+        matchedSeekers: 12
       }
     ],
     teamMembers: [
@@ -153,6 +176,11 @@ export const companies: Company[] = [
         tags: ['健身教练', '私教', '训练'],
         views: 9800,
         likes: 2800,
+        completionRate: 68,
+        favorites: 510,
+        conversions: 42,
+        reviewStatus: 'approved',
+        isPublished: true,
         aiKeywords: ['力量训练', '有氧运动', '体能评估', '训练计划', '营养指导']
       },
       {
@@ -164,7 +192,12 @@ export const companies: Company[] = [
         type: 'office',
         tags: ['环境', '设施', '健身房'],
         views: 12300,
-        likes: 3500
+        likes: 3500,
+        completionRate: 74,
+        favorites: 480,
+        conversions: 18,
+        reviewStatus: 'approved',
+        isPublished: true
       }
     ],
     jobs: [
@@ -192,7 +225,9 @@ export const companies: Company[] = [
         tags: ['健身', '教练', '销售'],
         postedDate: '2024-01-12',
         applications: 78,
-        verified: true
+        verified: true,
+        views: 4500,
+        matchedSeekers: 25
       }
     ],
     teamMembers: [
@@ -232,7 +267,12 @@ export const companies: Company[] = [
         type: 'office',
         tags: ['办公环境', '科技公司', '开放办公'],
         views: 18500,
-        likes: 5200
+        likes: 5200,
+        completionRate: 81,
+        favorites: 720,
+        conversions: 28,
+        reviewStatus: 'approved',
+        isPublished: true
       },
       {
         id: 'v7',
@@ -244,6 +284,11 @@ export const companies: Company[] = [
         tags: ['程序员', '前端', '开发'],
         views: 25600,
         likes: 6800,
+        completionRate: 76,
+        favorites: 890,
+        conversions: 56,
+        reviewStatus: 'approved',
+        isPublished: true,
         aiKeywords: ['React', 'TypeScript', '前端开发', '代码评审', '敏捷开发']
       },
       {
@@ -255,7 +300,12 @@ export const companies: Company[] = [
         type: 'team',
         tags: ['团建', '团队', '活动'],
         views: 11200,
-        likes: 3100
+        likes: 3100,
+        completionRate: 70,
+        favorites: 380,
+        conversions: 12,
+        reviewStatus: 'approved',
+        isPublished: true
       }
     ],
     jobs: [
@@ -283,7 +333,9 @@ export const companies: Company[] = [
         tags: ['前端', 'React', 'TypeScript'],
         postedDate: '2024-01-08',
         applications: 124,
-        verified: true
+        verified: true,
+        views: 6800,
+        matchedSeekers: 35
       },
       {
         id: 'j5',
@@ -307,7 +359,9 @@ export const companies: Company[] = [
         tags: ['AI', '算法', '机器学习'],
         postedDate: '2024-01-05',
         applications: 67,
-        verified: true
+        verified: true,
+        views: 4200,
+        matchedSeekers: 22
       }
     ],
     teamMembers: [
@@ -355,6 +409,11 @@ export const companies: Company[] = [
         tags: ['花艺师', '插花', '设计'],
         views: 8500,
         likes: 2600,
+        completionRate: 69,
+        favorites: 430,
+        conversions: 31,
+        reviewStatus: 'approved',
+        isPublished: true,
         aiKeywords: ['花束设计', '色彩搭配', '鲜花养护', '婚礼花艺', '空间花艺']
       },
       {
@@ -366,7 +425,12 @@ export const companies: Company[] = [
         type: 'office',
         tags: ['工作室', '环境', '鲜花'],
         views: 10200,
-        likes: 3200
+        likes: 3200,
+        completionRate: 75,
+        favorites: 510,
+        conversions: 14,
+        reviewStatus: 'approved',
+        isPublished: true
       }
     ],
     jobs: [
@@ -394,7 +458,9 @@ export const companies: Company[] = [
         tags: ['花艺', '设计', '学徒'],
         postedDate: '2024-01-14',
         applications: 45,
-        verified: true
+        verified: true,
+        views: 2800,
+        matchedSeekers: 15
       }
     ],
     teamMembers: [
@@ -435,6 +501,11 @@ export const companies: Company[] = [
         tags: ['书店', '店员', '文化'],
         views: 6700,
         likes: 1900,
+        completionRate: 62,
+        favorites: 320,
+        conversions: 25,
+        reviewStatus: 'pending',
+        isPublished: false,
         aiKeywords: ['图书整理', '客户咨询', '活动策划', '库存管理', '阅读推荐']
       }
     ],
@@ -463,7 +534,9 @@ export const companies: Company[] = [
         tags: ['书店', '零售', '服务'],
         postedDate: '2024-01-13',
         applications: 34,
-        verified: false
+        verified: false,
+        views: 1800,
+        matchedSeekers: 8
       }
     ],
     teamMembers: [
@@ -509,6 +582,11 @@ export const jobSeekers: JobSeeker[] = [
       tags: ['咖啡师', '自我介绍', '技能展示'],
       views: 1250,
       likes: 230,
+      completionRate: 78,
+      favorites: 85,
+      conversions: 0,
+      reviewStatus: 'approved',
+      isPublished: true,
       subtitles: [
         { startTime: 0, endTime: 5, text: '大家好，我是王小明' },
         { startTime: 5, endTime: 12, text: '一名有三年经验的咖啡师' },
@@ -546,6 +624,11 @@ export const jobSeekers: JobSeeker[] = [
       tags: ['前端', '程序员', '自我介绍'],
       views: 2340,
       likes: 450,
+      completionRate: 82,
+      favorites: 120,
+      conversions: 0,
+      reviewStatus: 'approved',
+      isPublished: true,
       aiKeywords: ['React', 'TypeScript', '前端开发', '四年经验', '大型项目']
     }
   },
@@ -572,6 +655,11 @@ export const jobSeekers: JobSeeker[] = [
       tags: ['健身', '教练', '展示'],
       views: 1890,
       likes: 520,
+      completionRate: 75,
+      favorites: 95,
+      conversions: 0,
+      reviewStatus: 'approved',
+      isPublished: true,
       aiKeywords: ['健身教练', '私教', '体能训练', '营养指导', '五年经验']
     }
   }
@@ -671,4 +759,275 @@ export const industryTags = [
   '互联网/科技', '餐饮/咖啡', '健身/运动', '零售/快消',
   '教育/培训', '医疗/健康', '金融/银行', '文化传媒',
   '生活服务', '建筑/地产'
+];
+
+const reviewerAvatars = [
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
+  'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop',
+];
+
+export const reviewItemsDetail: ReviewItemDetail[] = [
+  {
+    id: 'r1',
+    type: 'video',
+    title: '咖啡师的一天：从拉花到服务',
+    thumbnail: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200&h=300&fit=crop',
+    submitter: '星辰咖啡',
+    submitTime: '2024-01-15 10:30',
+    status: 'ai_reviewed',
+    aiScore: 92,
+    aiIssues: [],
+    aiIssueDetails: [],
+    content: '展示咖啡师从开门准备到服务客人的完整工作流程，包括意式咖啡制作、拉花艺术展示等。'
+  },
+  {
+    id: 'r2',
+    type: 'video',
+    title: '私人教练的日常工作',
+    thumbnail: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=200&h=300&fit=crop',
+    submitter: '悦动健身',
+    submitTime: '2024-01-14 15:20',
+    status: 'approved',
+    aiIssueDetails: [],
+    content: '私人教练带学员进行力量训练和有氧运动的日常记录。'
+  },
+  {
+    id: 'r3',
+    type: 'job',
+    title: '资深咖啡师',
+    submitter: '星辰咖啡',
+    submitTime: '2024-01-15 09:00',
+    status: 'pending',
+    aiScore: 68,
+    aiIssues: ['薪资描述可能存在夸大', '岗位职责描述不完整'],
+    aiIssueDetails: [
+      { category: 'keyword', severity: 'medium', description: '检测到薪资描述"月薪过万"可能存在夸大，实际薪资范围8k-12k' },
+      { category: 'quality', severity: 'low', description: '岗位职责描述较为简略，建议补充详细工作内容' }
+    ],
+    content: '岗位薪资8k-12k，要求1年以上咖啡师经验，熟练掌握意式咖啡制作。'
+  },
+  {
+    id: 'r4',
+    type: 'company',
+    title: '书香书店 企业认证',
+    thumbnail: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=200&h=200&fit=crop',
+    submitter: '书香书店',
+    submitTime: '2024-01-13 14:00',
+    status: 'ai_reviewed',
+    aiScore: 65,
+    aiIssues: ['工商信息待核验', '办公地址街景不清晰'],
+    aiIssueDetails: [
+      { category: 'copyright', severity: 'high', description: '工商营业执照信息与公开数据库比对不一致，需人工核验' },
+      { category: 'quality', severity: 'medium', description: '办公地址街景图片分辨率过低，无法确认门店实际位置' }
+    ],
+    reportedCount: 2,
+    content: '书香书店企业认证申请，需核验工商营业执照及经营地址。'
+  },
+  {
+    id: 'r5',
+    type: 'video',
+    title: '花艺师的创作过程',
+    thumbnail: 'https://images.unsplash.com/photo-1457089328109-e5d9bd499191?w=200&h=300&fit=crop',
+    submitter: '花时间花艺',
+    submitTime: '2024-01-12 11:30',
+    status: 'rejected',
+    aiScore: 45,
+    aiIssues: ['视频中出现竞品logo', '画面模糊抖动'],
+    aiIssueDetails: [
+      { category: 'copyright', severity: 'high', description: '视频00:32-00:45秒出现明显竞品"某某花艺"品牌logo，涉嫌广告侵权' },
+      { category: 'quality', severity: 'medium', description: '视频画面存在明显抖动和模糊，建议使用稳定设备重新拍摄' }
+    ],
+    notes: '视频中出现竞品logo，需要重新剪辑',
+    content: '花艺师进行花束设计和制作的全过程展示。'
+  },
+  {
+    id: 'r6',
+    type: 'job',
+    title: 'AI算法工程师',
+    submitter: '科技创想',
+    submitTime: '2024-01-08 16:45',
+    status: 'approved',
+    aiIssueDetails: [],
+    content: 'AI算法工程师岗位，薪资30k-60k，要求硕士及以上学历。'
+  },
+  {
+    id: 'r7',
+    type: 'video',
+    title: '我们的团队文化',
+    thumbnail: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&h=300&fit=crop',
+    submitter: '星辰咖啡',
+    submitTime: '2024-01-15 11:00',
+    status: 'pending',
+    aiScore: 55,
+    aiIssues: ['含违规风险词', '画面质量待提升'],
+    aiIssueDetails: [
+      { category: 'keyword', severity: 'high', description: '检测到违规风险词："保底薪资超高"涉嫌虚假宣传' },
+      { category: 'quality', severity: 'low', description: '视频画面光线较暗，建议提升曝光度' }
+    ],
+    reportedCount: 1,
+    content: '团队日常工作和团建活动展示。'
+  }
+];
+
+export const reviewRecords: ReviewRecord[] = [
+  { id: 'rr1', reviewer: '张伟', reviewerAvatar: reviewerAvatars[0], time: '2024-01-15 14:30', action: 'approve', targetId: 'r2', targetTitle: '私人教练的日常工作', targetType: 'video' },
+  { id: 'rr2', reviewer: '李娜', reviewerAvatar: reviewerAvatars[1], time: '2024-01-15 11:20', action: 'reject', targetId: 'r5', targetTitle: '花艺师的创作过程', targetType: 'video', reason: '视频中出现竞品logo' },
+  { id: 'rr3', reviewer: '王强', reviewerAvatar: reviewerAvatars[2], time: '2024-01-15 10:15', action: 'approve', targetId: 'r6', targetTitle: 'AI算法工程师', targetType: 'job' },
+  { id: 'rr4', reviewer: '刘芳', reviewerAvatar: reviewerAvatars[3], time: '2024-01-14 16:45', action: 'request_material', targetId: 'r4', targetTitle: '书香书店 企业认证', targetType: 'company', reason: '需要补充营业执照高清扫描件' },
+  { id: 'rr5', reviewer: '陈明', reviewerAvatar: reviewerAvatars[4], time: '2024-01-14 15:30', action: 'approve', targetId: 'r1', targetTitle: '咖啡师的一天：从拉花到服务', targetType: 'video' },
+  { id: 'rr6', reviewer: '张伟', reviewerAvatar: reviewerAvatars[0], time: '2024-01-14 14:00', action: 'approve', targetId: 'j2', targetTitle: '店长助理', targetType: 'job' },
+  { id: 'rr7', reviewer: '李娜', reviewerAvatar: reviewerAvatars[1], time: '2024-01-14 11:20', action: 'reject', targetId: 'v10', targetTitle: '工作室环境展示', targetType: 'video', reason: '画面质量过低' },
+  { id: 'rr8', reviewer: '王强', reviewerAvatar: reviewerAvatars[2], time: '2024-01-13 17:30', action: 'approve', targetId: 'j3', targetTitle: '私人健身教练', targetType: 'job' },
+  { id: 'rr9', reviewer: '刘芳', reviewerAvatar: reviewerAvatars[3], time: '2024-01-13 15:45', action: 'approve', targetId: 'v4', targetTitle: '私人教练的日常工作', targetType: 'video' },
+  { id: 'rr10', reviewer: '陈明', reviewerAvatar: reviewerAvatars[4], time: '2024-01-13 10:00', action: 'request_material', targetId: 'c5', targetTitle: '书香书店', targetType: 'company', reason: '办公地址证明材料不完整' },
+  { id: 'rr11', reviewer: '张伟', reviewerAvatar: reviewerAvatars[0], time: '2024-01-12 16:20', action: 'approve', targetId: 'j4', targetTitle: '高级前端工程师', targetType: 'job' },
+  { id: 'rr12', reviewer: '李娜', reviewerAvatar: reviewerAvatars[1], time: '2024-01-12 14:10', action: 'approve', targetId: 'v7', targetTitle: '前端开发工程师的一天', targetType: 'video' },
+  { id: 'rr13', reviewer: '王强', reviewerAvatar: reviewerAvatars[2], time: '2024-01-12 11:30', action: 'reject', targetId: 'j8', targetTitle: '兼职店员', targetType: 'job', reason: '薪资信息不明确' },
+  { id: 'rr14', reviewer: '刘芳', reviewerAvatar: reviewerAvatars[3], time: '2024-01-11 17:00', action: 'approve', targetId: 'c3', targetTitle: '科技创想', targetType: 'company' },
+  { id: 'rr15', reviewer: '陈明', reviewerAvatar: reviewerAvatars[4], time: '2024-01-11 15:30', action: 'approve', targetId: 'j5', targetTitle: 'AI算法工程师', targetType: 'job' },
+  { id: 'rr16', reviewer: '张伟', reviewerAvatar: reviewerAvatars[0], time: '2024-01-11 10:45', action: 'approve', targetId: 'v6', targetTitle: '我们的办公环境', targetType: 'video' },
+  { id: 'rr17', reviewer: '李娜', reviewerAvatar: reviewerAvatars[1], time: '2024-01-10 16:20', action: 'reject', targetId: 'v12', targetTitle: '招聘宣传视频', targetType: 'video', reason: '含有夸大宣传内容' },
+  { id: 'rr18', reviewer: '王强', reviewerAvatar: reviewerAvatars[2], time: '2024-01-10 14:00', action: 'approve', targetId: 'c2', targetTitle: '悦动健身', targetType: 'company' },
+  { id: 'rr19', reviewer: '刘芳', reviewerAvatar: reviewerAvatars[3], time: '2024-01-10 11:15', action: 'approve', targetId: 'j6', targetTitle: '花艺师助理', targetType: 'job' },
+  { id: 'rr20', reviewer: '陈明', reviewerAvatar: reviewerAvatars[4], time: '2024-01-09 17:30', action: 'approve', targetId: 'c1', targetTitle: '星辰咖啡', targetType: 'company' },
+];
+
+export const verificationTasks: VerificationTask[] = [
+  {
+    id: 'vt1',
+    companyId: 'c5',
+    companyName: '书香书店',
+    companyLogo: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=100&h=100&fit=crop',
+    type: 'enterprise',
+    status: 'pending',
+    aiScore: 65,
+    issues: ['工商信息待核验', '办公地址街景不清晰'],
+    submitTime: '2024-01-13 14:00',
+    reportedCount: 2
+  },
+  {
+    id: 'vt2',
+    companyId: 'c1',
+    companyName: '星辰咖啡',
+    companyLogo: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=100&h=100&fit=crop',
+    type: 'job',
+    status: 'approved',
+    aiScore: 92,
+    issues: [],
+    submitTime: '2024-01-10 09:30'
+  },
+  {
+    id: 'vt3',
+    companyId: 'c2',
+    companyName: '悦动健身',
+    companyLogo: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=100&h=100&fit=crop',
+    type: 'enterprise',
+    status: 'approved',
+    aiScore: 88,
+    issues: [],
+    submitTime: '2024-01-08 11:20'
+  },
+  {
+    id: 'vt4',
+    companyId: 'c4',
+    companyName: '花时间花艺',
+    companyLogo: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=100&h=100&fit=crop',
+    type: 'job',
+    status: 'need_material',
+    aiScore: 75,
+    issues: ['需补充岗位详细说明'],
+    submitTime: '2024-01-12 16:45'
+  },
+  {
+    id: 'vt5',
+    companyId: 'c3',
+    companyName: '科技创想',
+    companyLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop',
+    type: 'enterprise',
+    status: 'pending',
+    aiScore: 58,
+    issues: ['法人信息与工商系统不一致', '被用户举报存在虚假招聘'],
+    submitTime: '2024-01-15 08:30',
+    reportedCount: 3
+  }
+];
+
+export const verificationRecords: VerificationRecord[] = [
+  { id: 'vr1', companyId: 'c1', companyName: '星辰咖啡', companyLogo: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=100&h=100&fit=crop', verifier: '陈明', verifierAvatar: reviewerAvatars[4], verifyDate: '2024-01-09', result: 'approved', type: 'enterprise' },
+  { id: 'vr2', companyId: 'c2', companyName: '悦动健身', companyLogo: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=100&h=100&fit=crop', verifier: '王强', verifierAvatar: reviewerAvatars[2], verifyDate: '2024-01-10', result: 'approved', type: 'enterprise' },
+  { id: 'vr3', companyId: 'c3', companyName: '科技创想', companyLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop', verifier: '刘芳', verifierAvatar: reviewerAvatars[3], verifyDate: '2024-01-11', result: 'approved', type: 'enterprise' },
+  { id: 'vr4', companyId: 'c4', companyName: '花时间花艺', companyLogo: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=100&h=100&fit=crop', verifier: '张伟', verifierAvatar: reviewerAvatars[0], verifyDate: '2024-01-12', result: 'approved', type: 'enterprise' },
+  { id: 'vr5', companyId: 'c1', companyName: '星辰咖啡', companyLogo: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=100&h=100&fit=crop', verifier: '李娜', verifierAvatar: reviewerAvatars[1], verifyDate: '2024-01-10', result: 'approved', type: 'job' },
+  { id: 'vr6', companyId: 'c2', companyName: '悦动健身', companyLogo: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=100&h=100&fit=crop', verifier: '陈明', verifierAvatar: reviewerAvatars[4], verifyDate: '2024-01-12', result: 'approved', type: 'job' },
+];
+
+export const complaints: Complaint[] = [
+  {
+    id: 'cp1',
+    targetId: 'c5',
+    targetTitle: '书香书店 虚假招聘',
+    targetType: 'company',
+    targetName: '书香书店',
+    targetLogo: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=100&h=100&fit=crop',
+    reporter: '匿名用户',
+    reportTime: '2024-01-15 09:20',
+    reason: '招聘信息与实际不符，面试后告知薪资只有 advertised 的一半',
+    status: 'pending'
+  },
+  {
+    id: 'cp2',
+    targetId: 'j3',
+    targetTitle: '私人健身教练',
+    targetType: 'job',
+    targetName: '悦动健身',
+    targetLogo: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=100&h=100&fit=crop',
+    reporter: '李**',
+    reportTime: '2024-01-14 16:45',
+    reason: '要求入职前缴纳培训费，疑似培训贷',
+    status: 'handled'
+  },
+  {
+    id: 'cp3',
+    targetId: 'c3',
+    targetTitle: '科技创想',
+    targetType: 'company',
+    targetName: '科技创想',
+    targetLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop',
+    reporter: '王**',
+    reportTime: '2024-01-14 11:30',
+    reason: '公司名称与工商注册信息不一致',
+    status: 'pending'
+  },
+  {
+    id: 'cp4',
+    targetId: 'r5',
+    targetTitle: '花艺师的创作过程',
+    targetType: 'job',
+    targetName: '花时间花艺',
+    targetLogo: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=100&h=100&fit=crop',
+    reporter: '张**',
+    reportTime: '2024-01-13 14:10',
+    reason: '视频内容涉及侵权，盗用他人作品',
+    status: 'dismissed'
+  },
+];
+
+export const dailyActivities: DailyActivity[] = [
+  { date: '01-09', activeUsers: 2650 },
+  { date: '01-10', activeUsers: 2890 },
+  { date: '01-11', activeUsers: 3120 },
+  { date: '01-12', activeUsers: 2980 },
+  { date: '01-13', activeUsers: 2750 },
+  { date: '01-14', activeUsers: 3210 },
+  { date: '01-15', activeUsers: 3420 },
+];
+
+export const funnelData: FunnelData[] = [
+  { stage: 'exposure', count: 125000, label: '曝光' },
+  { stage: 'click', count: 45000, label: '点击' },
+  { stage: 'apply', count: 12500, label: '投递' },
+  { stage: 'interview', count: 3200, label: '面试' },
 ];

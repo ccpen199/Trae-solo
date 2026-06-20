@@ -30,6 +30,11 @@ export interface Video {
   tags: string[];
   views: number;
   likes: number;
+  completionRate: number;
+  favorites: number;
+  conversions: number;
+  reviewStatus: 'pending' | 'approved' | 'rejected';
+  isPublished: boolean;
   subtitles?: Subtitle[];
   aiKeywords?: string[];
   score?: number;
@@ -66,6 +71,8 @@ export interface Job {
   postedDate: string;
   applications: number;
   verified: boolean;
+  views: number;
+  matchedSeekers: number;
 }
 
 export interface JobSeeker {
@@ -120,4 +127,86 @@ export interface ActivityData {
   applications: number;
   videoViews: number;
   activeUsers: number;
+}
+
+export interface ScoreBreakdown {
+  industry: number;
+  salary: number;
+  commute: number;
+  interaction: number;
+  popularity: number;
+  base: number;
+}
+
+export interface AIIssueDetail {
+  category: 'keyword' | 'quality' | 'copyright' | 'other';
+  severity: 'low' | 'medium' | 'high';
+  description: string;
+}
+
+export interface ReviewItemDetail extends ReviewItem {
+  aiIssueDetails?: AIIssueDetail[];
+  content?: string;
+  reportedCount?: number;
+}
+
+export interface ReviewRecord {
+  id: string;
+  reviewer: string;
+  reviewerAvatar?: string;
+  time: string;
+  action: 'approve' | 'reject' | 'request_material';
+  targetId: string;
+  targetTitle: string;
+  targetType: 'video' | 'job' | 'company';
+  reason?: string;
+}
+
+export interface VerificationTask {
+  id: string;
+  companyId: string;
+  companyName: string;
+  companyLogo: string;
+  type: 'enterprise' | 'job';
+  status: 'pending' | 'approved' | 'rejected' | 'need_material';
+  aiScore: number;
+  issues: string[];
+  submitTime: string;
+  reportedCount?: number;
+}
+
+export interface VerificationRecord {
+  id: string;
+  companyId: string;
+  companyName: string;
+  companyLogo: string;
+  verifier: string;
+  verifierAvatar?: string;
+  verifyDate: string;
+  result: 'approved' | 'rejected';
+  type: 'enterprise' | 'job';
+}
+
+export interface Complaint {
+  id: string;
+  targetId: string;
+  targetTitle: string;
+  targetType: 'company' | 'job';
+  targetName: string;
+  targetLogo: string;
+  reporter: string;
+  reportTime: string;
+  reason: string;
+  status: 'pending' | 'handled' | 'dismissed';
+}
+
+export interface DailyActivity {
+  date: string;
+  activeUsers: number;
+}
+
+export interface FunnelData {
+  stage: string;
+  count: number;
+  label: string;
 }

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 import { companies, jobs } from '../data/mockData';
-import { Video, Job } from '../types';
+import { Video, Job, ScoreBreakdown } from '../types';
 
 interface UserPreferences {
   industryInterests: string[];
@@ -27,6 +27,16 @@ interface UserActivity {
   timestamp: number;
 }
 
+interface VideoWithCompany extends Video {
+  companyId: string;
+  companyName: string;
+  companyLogo: string;
+  companyIndustry: string;
+  companyLocation: string;
+  companySalaryMin?: number;
+  companySalaryMax?: number;
+}
+
 interface AppState {
   preferences: UserPreferences;
   interactions: InteractionState;
@@ -42,7 +52,7 @@ interface AppState {
   removeIndustryInterest: (industry: string) => void;
   setSalaryRange: (range: string) => void;
   setCommutePreference: (pref: 'walk' | 'bike' | 'bus' | null) => void;
-  getRecommendedVideos: () => Array<Video & { companyId: string; companyName: string; companyLogo: string; score: number }>;
+  getRecommendedVideos: () => Array<Video & { companyId: string; companyName: string; companyLogo: string; score: number; scoreBreakdown: ScoreBreakdown }>;
   getRecommendedJobs: () => Array<Job & { score: number }>;
   getDiscoveryVideos: () => Array<Video & { companyId: string; companyName: string; companyLogo: string }>;
   isVideoLiked: (videoId: string) => boolean;
@@ -218,55 +228,89 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setPreferences(prev => ({ ...prev, commutePreference: pref }));
   }, []);
 
-  const allVideosWithCompany = useMemo(() => {
-    return companies.flatMap(company =>
-      company.videos.map(video => ({
+  const allVideosWithCompany = useMemo((): VideoWithCompany[] => {
+    return companies.flatMap(company => {
+      const salaryMin = company.jobs.length > 0 ? Math.min(...company.jobs.map(j => j.salaryMin)) : undefined;
+      const salaryMax = company.jobs.length > 0 ? Math.max(...company.jobs.map(j => j.salaryMax)) : undefined;
+      return company.videos.map(video => ({
         ...video,
         companyId: company.id,
         companyName: company.name,
         companyLogo: company.logo,
         companyIndustry: company.industry,
         companyLocation: company.location,
-      }))
-    );
+        companySalaryMin: salaryMin,
+        companySalaryMax: salaryMax,
+      }));
+    });
   }, []);
 
-  const calculateVideoScore = useCallback((video: typeof allVideosWithCompany[0]): number => {
-    let score = 0;
+  const parseSalaryRange = (range: string): [number, number] | null => {
+    if (range === '5k以下') return [0, 5000];
+    if (range === '5k-10k') return [5000, 10000];
+    if (range === '10k-20k') return [10000, 20000];
+    if (range === '20k-30k') return [20000, 30000];
+    if (range === '30k以上') return [30000, Infinity];
+    return null;
+  };
+
+  const calculateVideoScore = useCallback((video: VideoWithCompany): { score: number; breakdown: ScoreBreakdown } => {
+    const breakdown: ScoreBreakdown = {
+      industry: 0,
+      salary: 0,
+      commute: 0,
+      interaction: 0,
+      popularity: 0,
+      base: 0,
+    };
 
     const industryMatch = preferences.industryInterests.some(interest =>
       video.companyIndustry.includes(interest) || interest.includes(video.companyIndustry) ||
       video.tags.some(tag => tag.includes(interest) || interest.includes(tag)) ||
       video.aiKeywords?.some(kw => kw.includes(interest) || interest.includes(kw))
     );
-    if (industryMatch) score += 30;
+    if (industryMatch) breakdown.industry = 30;
 
-    if (interactions.likedVideos.includes(video.id)) score += 15;
-    if (interactions.bookmarkedVideos.includes(video.id)) score += 20;
-    if (interactions.completedVideos.includes(video.id)) score += 25;
-    if (interactions.watchedVideos.includes(video.id)) score += 5;
-    if (interactions.sharedVideos.includes(video.id)) score += 18;
-
-    if (interactions.followedCompanies.includes(video.companyId)) score += 25;
-
-    score += Math.log10(video.views + 1) * 3;
-    score += Math.log10(video.likes + 1) * 2;
-
-    if (preferences.preferredLocations.length > 0) {
-      const locMatch = preferences.preferredLocations.some(loc => video.companyLocation.includes(loc));
-      if (locMatch) score += 15;
+    if (preferences.salaryRange !== '全部' && video.companySalaryMin !== undefined && video.companySalaryMax !== undefined) {
+      const range = parseSalaryRange(preferences.salaryRange);
+      if (range) {
+        const [min, max] = range;
+        if (video.companySalaryMax >= min && video.companySalaryMin <= max) {
+          breakdown.salary = 25;
+        }
+      }
     }
 
-    score += Math.random() * 8;
+    if (preferences.commutePreference) {
+      breakdown.commute = 15;
+    }
 
-    return score;
+    if (interactions.likedVideos.includes(video.id)) breakdown.interaction += 15;
+    if (interactions.bookmarkedVideos.includes(video.id)) breakdown.interaction += 20;
+    if (interactions.completedVideos.includes(video.id)) breakdown.interaction += 25;
+    if (interactions.watchedVideos.includes(video.id)) breakdown.interaction += 5;
+    if (interactions.sharedVideos.includes(video.id)) breakdown.interaction += 18;
+    if (interactions.followedCompanies.includes(video.companyId)) breakdown.interaction += 25;
+
+    breakdown.popularity += Math.log10(video.views + 1) * 3;
+    breakdown.popularity += Math.log10(video.likes + 1) * 2;
+
+    breakdown.base = Math.random() * 8;
+
+    const score = breakdown.industry + breakdown.salary + breakdown.commute + breakdown.interaction + breakdown.popularity + breakdown.base;
+
+    return { score, breakdown };
   }, [preferences, interactions]);
 
   const getRecommendedVideos = useCallback(() => {
-    const scored = allVideosWithCompany.map(v => ({
-      ...v,
-      score: calculateVideoScore(v),
-    }));
+    const scored = allVideosWithCompany.map(v => {
+      const { score, breakdown } = calculateVideoScore(v);
+      return {
+        ...v,
+        score,
+        scoreBreakdown: breakdown,
+      };
+    });
 
     scored.sort((a, b) => b.score - a.score);
 

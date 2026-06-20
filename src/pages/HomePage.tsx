@@ -3,26 +3,73 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   Heart, MessageCircle, Share2, Bookmark, MapPin, Briefcase, Play, ChevronDown,
   Sparkles, Search, Map, X, Filter,
-  Video, Users, Sparkles as SparklesIcon
+  Video, Users, Building2, ShieldCheck, TrendingUp
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { companies } from '../data/mockData';
+import { companies, jobSeekers, heatmapData } from '../data/mockData';
+import { ScoreBreakdown } from '../types';
 
-const VideoCard = ({
-  video,
-  companyName,
-  companyLogo,
-  jobTitle,
-  companyId,
-  index,
-}: {
+interface ScoreBreakdownProps {
+  breakdown: ScoreBreakdown;
+  totalScore: number;
+}
+
+const ScoreBreakdownDisplay = ({ breakdown, totalScore }: ScoreBreakdownProps) => {
+  const items = [
+    { label: '行业', value: breakdown.industry, color: 'bg-purple-500', textColor: 'text-purple-600', bgLight: 'bg-purple-50' },
+    { label: '薪资', value: breakdown.salary, color: 'bg-green-500', textColor: 'text-green-600', bgLight: 'bg-green-50' },
+    { label: '通勤', value: breakdown.commute, color: 'bg-blue-500', textColor: 'text-blue-600', bgLight: 'bg-blue-50' },
+    { label: '互动', value: breakdown.interaction, color: 'bg-orange-500', textColor: 'text-orange-600', bgLight: 'bg-orange-50' },
+  ];
+
+  return (
+    <div className="bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-100">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-semibold text-gray-700">匹配度 {Math.round(totalScore)} 分</span>
+        <div className="flex items-center gap-1">
+          <Sparkles className="w-3 h-3 text-primary-500" />
+          <span className="text-[10px] text-gray-500">AI加权</span>
+        </div>
+      </div>
+      <div className="space-y-1.5">
+        {items.map(item => (
+          <div key={item.label} className="flex items-center gap-2">
+            <span className={`text-[10px] font-medium w-6 ${item.textColor}`}>{item.label}</span>
+            <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+              <div
+                className={`h-full ${item.color} rounded-full transition-all duration-500`}
+                style={{ width: `${(item.value / 35) * 100}%` }}
+              />
+            </div>
+            <span className={`text-[10px] font-semibold w-6 text-right ${item.textColor}`}>
+              +{Math.round(item.value)}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+interface VideoCardProps {
   video: any;
   companyId: string;
   companyName: string;
   companyLogo: string;
   jobTitle?: string;
   index: number;
-}) => {
+  scoreBreakdown?: ScoreBreakdown;
+}
+
+const VideoCard = ({
+  video,
+  companyId,
+  companyName,
+  companyLogo,
+  jobTitle,
+  index,
+  scoreBreakdown,
+}: VideoCardProps) => {
   const {
     toggleLikeVideo, toggleBookmarkVideo, isVideoLiked, isVideoBookmarked,
     markVideoWatched, shareVideo
@@ -32,6 +79,7 @@ const VideoCard = ({
   const isLiked = isVideoLiked(video.id);
   const isBookmarked = isVideoBookmarked(video.id);
   const [likes, setLikes] = useState(video.likes + (isLiked ? 1 : 0));
+  const [showBreakdown, setShowBreakdown] = useState(false);
 
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -66,6 +114,15 @@ const VideoCard = ({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const videoTypeLabels: Record<string, { label: string; color: string }> = {
+    job: { label: '岗位', color: 'bg-accent-500' },
+    office: { label: '办公环境', color: 'bg-blue-500' },
+    team: { label: '团队', color: 'bg-green-500' },
+    introduction: { label: '介绍', color: 'bg-purple-500' },
+  };
+
+  const typeInfo = videoTypeLabels[video.type] || { label: '视频', color: 'bg-gray-500' };
+
   return (
     <div
       onClick={handleCardClick}
@@ -85,23 +142,37 @@ const VideoCard = ({
         </button>
       </div>
 
-      <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-10">
+      <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-10 gap-2">
         <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1.5">
           <img src={companyLogo} alt={companyName} className="w-6 h-6 rounded-full object-cover" />
           <span className="text-white text-sm font-medium">{companyName}</span>
-          {video.type === 'job' && (
-            <span className="px-2 py-0.5 bg-accent-500 text-white text-xs rounded-full">招聘中</span>
-          )}
+          <span className={`px-2 py-0.5 ${typeInfo.color} text-white text-xs rounded-full`}>{typeInfo.label}</span>
         </div>
-        <div className="bg-black/40 backdrop-blur-sm rounded-full px-3 py-1 text-white text-sm">
-          {formatDuration(video.duration)}
+        <div className="flex items-center gap-2">
+          <div className="bg-black/40 backdrop-blur-sm rounded-full px-3 py-1 text-white text-sm">
+            {formatDuration(video.duration)}
+          </div>
         </div>
       </div>
 
-      {video.score !== undefined && video.score > 40 && (
-        <div className="absolute top-4 right-20 flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full text-white text-xs font-medium z-10">
-          <Sparkles className="w-3 h-3" />
-          <span>推荐 {Math.round(video.score)}</span>
+      {video.score !== undefined && video.score > 40 && scoreBreakdown && (
+        <div className="absolute top-16 left-4 right-4 z-10">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowBreakdown(!showBreakdown);
+            }}
+            className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full text-white text-xs font-medium hover:opacity-90 transition-opacity"
+          >
+            <Sparkles className="w-3 h-3" />
+            <span>匹配 {Math.round(video.score)}</span>
+            <ChevronDown className={`w-3 h-3 transition-transform ${showBreakdown ? 'rotate-180' : ''}`} />
+          </button>
+          {showBreakdown && (
+            <div className="mt-2" onClick={(e) => e.stopPropagation()}>
+              <ScoreBreakdownDisplay breakdown={scoreBreakdown} totalScore={video.score} />
+            </div>
+          )}
         </div>
       )}
 
@@ -123,7 +194,7 @@ const VideoCard = ({
         {video.aiKeywords && video.aiKeywords.length > 0 && (
           <div className="flex items-center gap-1.5 text-xs text-white/80 mb-3 flex-wrap">
             <span className="text-primary-400 flex items-center gap-1">
-              <SparklesIcon className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5" />
               AI识别:
             </span>
             {video.aiKeywords.slice(0, 3).map((kw: string) => (
@@ -182,7 +253,11 @@ const VideoCard = ({
   );
 };
 
-const PreferencePanel = ({ onClose }: { onClose: () => void }) => {
+interface PreferencePanelProps {
+  onClose: () => void;
+}
+
+const PreferencePanel = ({ onClose }: PreferencePanelProps) => {
   const { preferences, addIndustryInterest, removeIndustryInterest, setSalaryRange, setCommutePreference } = useApp();
 
   const industries = ['互联网/科技', '餐饮/咖啡', '健身/运动', '零售/快消', '教育/培训', '生活服务', '医疗/健康', '金融/银行', '文化传媒', '建筑/地产'];
@@ -201,7 +276,7 @@ const PreferencePanel = ({ onClose }: { onClose: () => void }) => {
       >
         <div className="sticky top-0 bg-white p-4 border-b border-gray-100 flex items-center justify-between">
           <div>
-          <h3 className="text-lg font-bold text-gray-800">个性化推荐设置</h3>
+            <h3 className="text-lg font-bold text-gray-800">个性化推荐设置</h3>
             <p className="text-sm text-gray-500">完善偏好，获取更精准的推荐</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -267,7 +342,7 @@ const PreferencePanel = ({ onClose }: { onClose: () => void }) => {
                 <button
                   key={c.id}
                   onClick={() => setCommutePreference(
-                    preferences.commutePreference === c.id ? null : (c.id as any)
+                    preferences.commutePreference === c.id ? null : (c.id as 'walk' | 'bike' | 'bus' | null)
                   )}
                   className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
                     preferences.commutePreference === c.id
@@ -301,9 +376,27 @@ const PreferencePanel = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
+const hotSearchKeywords = [
+  { text: '咖啡师拉花', icon: '☕' },
+  { text: 'React前端', icon: '💻' },
+  { text: '健身私教', icon: '💪' },
+];
+
+const getHeatmapColor = (intensity: number): string => {
+  if (intensity >= 0.85) return 'bg-red-500';
+  if (intensity >= 0.7) return 'bg-orange-500';
+  if (intensity >= 0.55) return 'bg-yellow-500';
+  if (intensity >= 0.4) return 'bg-green-500';
+  return 'bg-blue-500';
+};
+
+const getHeatmapOpacity = (intensity: number): number => {
+  return 0.5 + intensity * 0.5;
+};
+
 const HomePage = () => {
   const navigate = useNavigate();
-  const { getRecommendedVideos, getDiscoveryVideos, getRecommendedJobs, preferences } = useApp();
+  const { getRecommendedVideos, getDiscoveryVideos, getRecommendedJobs, preferences, interactions } = useApp();
   const [activeTab, setActiveTab] = useState<'recommend' | 'discover'>('recommend');
   const [showPrefs, setShowPrefs] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -315,7 +408,7 @@ const HomePage = () => {
     preferences.commutePreference !== null;
 
   const recommendedVideos = useMemo(() => {
-      const list = activeTab === 'recommend' ? getRecommendedVideos() : getDiscoveryVideos();
+      const list: any[] = activeTab === 'recommend' ? getRecommendedVideos() : getDiscoveryVideos();
       return list.map(v => {
         const company = companies.find(c => c.id === v.companyId);
         return {
@@ -326,6 +419,37 @@ const HomePage = () => {
     }, [activeTab, getRecommendedVideos, getDiscoveryVideos, forceRefresh]);
 
   const recommendedJobs = useMemo(() => getRecommendedJobs().slice(0, 6), [getRecommendedJobs]);
+
+  const enterpriseVideos = useMemo(() => {
+    const videos: Array<{ id: string; thumbnail: string; title: string; companyId: string; companyName: string; type: string }> = [];
+    companies.forEach(company => {
+      company.videos.forEach(video => {
+        if (videos.length < 6) {
+          videos.push({
+            id: video.id,
+            thumbnail: video.thumbnail,
+            title: video.title,
+            companyId: company.id,
+            companyName: company.name,
+            type: video.type,
+          });
+        }
+      });
+    });
+    return videos.slice(0, 6);
+  }, []);
+
+  const verificationStatuses = useMemo(() => {
+    return companies.slice(0, 5).map(company => ({
+      id: company.id,
+      name: company.name,
+      logo: company.logo,
+      industry: company.industry,
+      businessVerified: company.verified,
+      addressVerified: company.verified,
+      legalVerified: company.verified || Math.random() > 0.3,
+    }));
+  }, []);
 
   const tabs = [
     { id: 'recommend', label: '职影推荐', icon: Sparkles, desc: '基于你的偏好与互动加权推荐' },
@@ -341,8 +465,16 @@ const HomePage = () => {
     }
   };
 
+  const handleHotSearch = (keyword: string) => {
+    navigate(`/search?q=${encodeURIComponent(keyword)}`);
+  };
+
   const refreshRecommendations = () => {
     forceRefresh(prev => prev + 1);
+  };
+
+  const getTotalInteractionCount = () => {
+    return interactions.likedVideos.length + interactions.bookmarkedVideos.length + interactions.completedVideos.length;
   };
 
   return (
@@ -356,10 +488,17 @@ const HomePage = () => {
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder="视频语义搜索：如「咖啡师 拉花」「前端开发 React」..."
+                placeholder="AI语义搜索：搜索岗位技能、工作场景..."
                 className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all text-sm"
               />
             </div>
+            <button
+              type="submit"
+              className="px-4 py-2.5 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl hover:opacity-90 transition-opacity text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
+            >
+              <Sparkles className="w-4 h-4" />
+              AI搜索
+            </button>
             <Link
               to="/map"
               className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 bg-primary-50 text-primary-600 rounded-xl hover:bg-primary-100 transition-colors text-sm font-medium whitespace-nowrap"
@@ -381,7 +520,24 @@ const HomePage = () => {
             </button>
           </form>
 
-          <div className="flex items-center gap-4 overflow-x-auto pb-3 scrollbar-hide">
+          <div className="pb-3 flex flex-wrap gap-2">
+            <span className="text-xs text-gray-500 flex items-center gap-1">
+              <TrendingUp className="w-3 h-3" />
+              热门搜索:
+            </span>
+            {hotSearchKeywords.map(item => (
+              <button
+                key={item.text}
+                onClick={() => handleHotSearch(item.text)}
+                className="px-3 py-1 bg-gray-100 hover:bg-purple-50 hover:text-purple-600 text-gray-600 rounded-full text-xs font-medium transition-colors flex items-center gap-1"
+              >
+                <span>{item.icon}</span>
+                {item.text}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4 overflow-x-auto pb-3 scrollbar-hide border-t border-gray-50 pt-3">
             {tabs.map(tab => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -402,58 +558,45 @@ const HomePage = () => {
             })}
             <div className="ml-auto flex items-center gap-2">
               <button
-              onClick={refreshRecommendations}
-              className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary-600 transition-colors"
-            >
-              <ChevronDown className="w-4 h-4" />
-              换一批
-            </button>
+                onClick={refreshRecommendations}
+                className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary-600 transition-colors"
+              >
+                <ChevronDown className="w-4 h-4" />
+                换一批
+              </button>
             </div>
           </div>
         </div>
         {hasPreferences && (
           <div className="px-4 pb-3">
             <div className="flex items-center gap-2 flex-wrap">
-            {preferences.industryInterests.slice(0, 3).map(ind => (
-              <span key={ind} className="flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded-full text-xs font-medium">
-              🏷️ {ind}
-            </span>
-          ))}
-          {preferences.salaryRange !== '全部' && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-green-50 text-green-600 rounded-full text-xs font-medium">
-              💰 {preferences.salaryRange}
-            </span>
-          )}
-          {preferences.commutePreference && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium">
-              🚶 {preferences.commutePreference === 'walk' ? '步行' : preferences.commutePreference === 'bike' ? '骑行' : '公交'} 15分钟
-            </span>
-          )}
-          <button
-            onClick={() => setShowPrefs(true)}
-            className="text-xs text-gray-500 underline underline-offset-2 hover:text-primary-600"
-          >
-            编辑
-          </button>
+              {preferences.industryInterests.slice(0, 3).map(ind => (
+                <span key={ind} className="flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded-full text-xs font-medium">
+                  🏷️ {ind}
+                </span>
+              ))}
+              {preferences.salaryRange !== '全部' && (
+                <span className="flex items-center gap-1 px-2 py-1 bg-green-50 text-green-600 rounded-full text-xs font-medium">
+                  💰 {preferences.salaryRange}
+                </span>
+              )}
+              {preferences.commutePreference && (
+                <span className="flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium">
+                  🚶 {preferences.commutePreference === 'walk' ? '步行' : preferences.commutePreference === 'bike' ? '骑行' : '公交'} 15分钟
+                </span>
+              )}
+              <button
+                onClick={() => setShowPrefs(true)}
+                className="text-xs text-gray-500 underline underline-offset-2 hover:text-primary-600"
+              >
+                编辑
+              </button>
             </div>
           </div>
         )}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-lg font-bold text-gray-800">
-              {activeTab === 'recommend' ? '为你推荐' : '发现精彩'}
-            </h2>
-            <p className="text-sm text-gray-500">
-              {activeTab === 'recommend'
-                ? '基于行业兴趣、薪资预期、通勤偏好与互动行为双重加权推荐'
-                : '探索不同行业的优质岗位与企业视频'}
-            </p>
-          </div>
-        </div>
-
         {activeTab === 'recommend' && (
           <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 via-blue-50 to-orange-50 rounded-2xl border border-purple-100">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -464,7 +607,9 @@ const HomePage = () => {
                 <div>
                   <p className="text-sm font-semibold text-gray-800">智能推荐引擎</p>
                   <p className="text-xs text-gray-600">
-                    {recommendedVideos.length > 0 ? `已为你精选 ${recommendedVideos.length} 条内容，匹配度 ${Math.round(recommendedVideos[0]?.score || 0)}%` : '添加偏好以获得更精准的推荐'}
+                    {recommendedVideos.length > 0
+                      ? `已为你精选 ${recommendedVideos.length} 条内容 · 最高匹配度 ${Math.round(recommendedVideos[0]?.score || 0)}分 · 你已互动 ${getTotalInteractionCount()} 次`
+                      : '添加偏好以获得更精准的推荐'}
                   </p>
                 </div>
               </div>
@@ -478,6 +623,19 @@ const HomePage = () => {
           </div>
         )}
 
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-bold text-gray-800">
+              {activeTab === 'recommend' ? '为你推荐' : '发现精彩'}
+            </h2>
+            <p className="text-sm text-gray-500">
+              {activeTab === 'recommend'
+                ? '基于行业兴趣、薪资预期、通勤偏好与互动行为双重加权推荐'
+                : '探索不同行业的优质岗位与企业视频'}
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {recommendedVideos.map((video, index) => (
             <VideoCard
@@ -488,14 +646,348 @@ const HomePage = () => {
               companyLogo={video.companyLogo}
               jobTitle={video.jobTitle}
               index={index}
+              scoreBreakdown={video.scoreBreakdown}
             />
           ))}
+        </div>
+
+        {recommendedJobs.length > 0 && (
+          <div className="mt-8">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-xl font-bold text-gray-800">匹配你的热门岗位</h2>
+                <p className="text-sm text-gray-500">基于偏好与互动加权排序</p>
+              </div>
+              <Link to="/jobs" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                查看更多
+                <ChevronDown className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {recommendedJobs.map(job => (
+                <div
+                  key={job.id}
+                  onClick={() => navigate(`/company/${job.companyId}`)}
+                  className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all border border-gray-100 cursor-pointer card-hover"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-gray-800">{job.title}</h3>
+                        {job.score > 40 && (
+                          <span className="px-1.5 py-0.5 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-[10px] rounded-full font-medium">
+                            匹配 {Math.round(job.score)}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-accent-600 font-bold text-lg mt-1">{job.salary}</p>
+                    </div>
+                    {job.videoThumbnail && (
+                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0 relative group">
+                        <img src={job.videoThumbnail} alt="" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Play className="w-5 h-5 text-white" fill="white" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                    <MapPin className="w-4 h-4" />
+                    {job.location}
+                    <span>·</span>
+                    {job.experience}
+                    <span>·</span>
+                    {job.education}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {job.tags.map(tag => (
+                      <span key={tag} className="tag tag-blue">{tag}</span>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <div className="flex items-center gap-2">
+                      <img src={job.companyLogo} alt="" className="w-6 h-6 rounded-full" />
+                      <span className="text-sm text-gray-600">{job.companyName}</span>
+                      {job.verified && (
+                        <span className="px-1.5 py-0.5 bg-green-100 text-green-600 text-[10px] rounded-full font-medium">
+                          已认证
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs text-gray-400">{job.applications}人投递</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <Users className="w-5 h-5 text-green-600" />
+                视频简历人才库
+              </h2>
+              <p className="text-sm text-gray-500">AI自动提取字幕与技能关键词，快速识人</p>
+            </div>
+            <Link to="/seekers" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
+              查看全部
+              <ChevronDown className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {jobSeekers.slice(0, 3).map(seeker => (
+              <Link
+                key={seeker.id}
+                to={`/seeker/${seeker.id}`}
+                className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all border border-gray-100 card-hover"
+              >
+                <div className="flex items-start gap-4 mb-4">
+                  <img
+                    src={seeker.avatar}
+                    alt={seeker.name}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-gray-100"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-800">{seeker.name}</h3>
+                    <p className="text-sm text-primary-600 font-medium">{seeker.title}</p>
+                    <p className="text-xs text-gray-500 mt-1">{seeker.experience} · {seeker.education}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{seeker.location}</p>
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <p className="text-xs font-medium text-gray-500 mb-2 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-purple-500" />
+                    AI识别技能
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {seeker.resumeVideo?.aiKeywords?.slice(0, 4).map(kw => (
+                      <span key={kw} className="px-2 py-0.5 bg-purple-50 text-purple-600 rounded-full text-xs font-medium">
+                        {kw}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-gray-500 mb-2">技能标签</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {seeker.skills.slice(0, 4).map(skill => (
+                      <span key={skill} className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-xs text-gray-500">{seeker.views} 次浏览</span>
+                  <span className="text-sm font-semibold text-green-600">{seeker.expectedSalary}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-blue-600" />
+                企业真实性核验
+              </h2>
+              <p className="text-sm text-gray-500">工商比对+街景验证，保障岗位真实可靠</p>
+            </div>
+            <Link to="/companies" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
+              全部企业
+              <ChevronDown className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+            <div className="grid grid-cols-5 gap-0 border-b border-gray-100 bg-gray-50 px-4 py-3">
+              <div className="col-span-2 text-xs font-semibold text-gray-600">企业</div>
+              <div className="text-center text-xs font-semibold text-gray-600">工商</div>
+              <div className="text-center text-xs font-semibold text-gray-600">地址</div>
+              <div className="text-center text-xs font-semibold text-gray-600">法人</div>
+            </div>
+            {verificationStatuses.map(company => (
+              <Link
+                key={company.id}
+                to={`/company/${company.id}`}
+                className="grid grid-cols-5 gap-0 items-center px-4 py-3 border-b border-gray-50 last:border-b-0 hover:bg-gray-50 transition-colors"
+              >
+                <div className="col-span-2 flex items-center gap-3">
+                  <img src={company.logo} alt={company.name} className="w-8 h-8 rounded-lg object-cover" />
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-gray-800 truncate">{company.name}</p>
+                    <p className="text-xs text-gray-500">{company.industry}</p>
+                  </div>
+                </div>
+                <div className="flex justify-center">
+                  {company.businessVerified ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-medium">
+                      <ShieldCheck className="w-3 h-3" />
+                      已核验
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-500 rounded-full text-[10px] font-medium">
+                      待核验
+                    </span>
+                  )}
+                </div>
+                <div className="flex justify-center">
+                  {company.addressVerified ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-medium">
+                      <ShieldCheck className="w-3 h-3" />
+                      已核验
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-500 rounded-full text-[10px] font-medium">
+                      待核验
+                    </span>
+                  )}
+                </div>
+                <div className="flex justify-center">
+                  {company.legalVerified ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-medium">
+                      <ShieldCheck className="w-3 h-3" />
+                      已核验
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-600 rounded-full text-[10px] font-medium">
+                      审核中
+                    </span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <Link
+            to="/map"
+            className="group bg-white rounded-xl border border-gray-100 overflow-hidden card-hover"
+          >
+            <div className="p-4 border-b border-gray-50 flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <Map className="w-4 h-4 text-blue-600" />
+                  15分钟通勤热力图
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">点击查看完整地图找岗</p>
+              </div>
+              <ChevronDown className="w-5 h-5 text-gray-400 group-hover:text-primary-600 transition-colors -rotate-90" />
+            </div>
+            <div className="relative h-48 bg-gradient-to-br from-blue-50 via-green-50 to-orange-50 overflow-hidden">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'linear-gradient(rgba(59,130,246,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.1) 1px, transparent 1px)',
+                backgroundSize: '24px 24px'
+              }} />
+              {heatmapData.slice(0, 6).map((point, idx) => {
+                const x = 15 + ((point.lng - 121.38) / 0.18) * 70;
+                const y = 15 + ((31.27 - point.lat) / 0.12) * 70;
+                const size = 28 + point.intensity * 40;
+                return (
+                  <div
+                    key={idx}
+                    className={`absolute rounded-full ${getHeatmapColor(point.intensity)} blur-md heatmap-cell`}
+                    style={{
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      width: `${size}px`,
+                      height: `${size}px`,
+                      opacity: getHeatmapOpacity(point.intensity),
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  />
+                );
+              })}
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-lg px-3 py-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-gray-600">热度:</span>
+                  <div className="flex items-center gap-1">
+                    <span className="w-3 h-3 rounded-full bg-blue-500" />
+                    <span className="w-3 h-3 rounded-full bg-green-500" />
+                    <span className="w-3 h-3 rounded-full bg-yellow-500" />
+                    <span className="w-3 h-3 rounded-full bg-orange-500" />
+                    <span className="w-3 h-3 rounded-full bg-red-500" />
+                  </div>
+                </div>
+                <span className="text-[10px] font-medium text-gray-600">
+                  {heatmapData.reduce((sum, h) => sum + h.jobCount, 0)} 个岗位
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+            <div className="p-4 border-b border-gray-50 flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <Video className="w-4 h-4 text-purple-600" />
+                  企业视频画廊
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">办公环境/团队/岗位实拍</p>
+              </div>
+              <Link to="/companies" className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                更多
+                <ChevronDown className="w-4 h-4 -rotate-90" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5 p-1.5">
+              {enterpriseVideos.map(video => {
+                const typeLabel: Record<string, string> = {
+                  job: '岗位',
+                  office: '环境',
+                  team: '团队',
+                  introduction: '介绍',
+                };
+                const typeColor: Record<string, string> = {
+                  job: 'bg-accent-500',
+                  office: 'bg-blue-500',
+                  team: 'bg-green-500',
+                  introduction: 'bg-purple-500',
+                };
+                return (
+                  <Link
+                    key={video.id}
+                    to={`/company/${video.companyId}`}
+                    className="relative aspect-[9/16] rounded-lg overflow-hidden group cursor-pointer"
+                  >
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute top-1.5 right-1.5">
+                      <span className={`px-1.5 py-0.5 ${typeColor[video.type] || 'bg-gray-500'} text-white text-[9px] rounded-full font-medium`}>
+                        {typeLabel[video.type] || '视频'}
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                        <Play className="w-4 h-4 ml-0.5 text-white" fill="white" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                      <p className="text-[10px] text-white font-medium truncate">{video.title}</p>
+                      <p className="text-[9px] text-white/70 truncate">{video.companyName}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 p-6 bg-gradient-to-r from-primary-500 to-accent-500 rounded-2xl text-white">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-bold mb-2">企业招聘新方式</h3>
+              <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                <Building2 className="w-6 h-6" />
+                企业招聘新方式
+              </h3>
               <p className="text-white/80 text-sm">用短视频展示岗位，吸引更多优质人才</p>
             </div>
             <div className="flex items-center gap-3">
@@ -514,108 +1006,6 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
-        </div>
-
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-xl font-bold text-gray-800">匹配你的热门岗位</h2>
-              <p className="text-sm text-gray-500">基于偏好与互动加权排序</p>
-            </div>
-            <Link to="/jobs" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
-              查看更多
-              <ChevronDown className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {recommendedJobs.map(job => (
-              <div
-                key={job.id}
-                onClick={() => navigate(`/company/${job.companyId}`)}
-                className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all border border-gray-100 cursor-pointer card-hover"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-gray-800">{job.title}</h3>
-                    {job.score > 40 && (
-                      <span className="px-1.5 py-0.5 bg-gradient-to-r from-primary-500 to-accent-500 text-white text-[10px rounded-full font-medium">
-                        匹配 {Math.round(job.score)}
-                      </span>
-                    )}
-                  </div>
-                    <p className="text-accent-600 font-bold text-lg mt-1">{job.salary}</p>
-                  </div>
-                  {job.videoThumbnail && (
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0 relative group">
-                      <img src={job.videoThumbnail} alt="" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Play className="w-5 h-5 text-white" fill="white" />
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                  <MapPin className="w-4 h-4" />
-                  {job.location}
-                  <span>·</span>
-                  {job.experience}
-                  <span>·</span>
-                  {job.education}
-                </div>
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {job.tags.map(tag => (
-                    <span key={tag} className="tag tag-blue">{tag}</span>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                  <div className="flex items-center gap-2">
-                    <img src={job.companyLogo} alt="" className="w-6 h-6 rounded-full" />
-                    <span className="text-sm text-gray-600">{job.companyName}</span>
-                    {job.verified && (
-                      <span className="px-1.5 py-0.5 bg-green-100 text-green-600 text-[10px] rounded-full font-medium">
-                      已认证
-                    </span>
-                    )}
-                  </div>
-                  <span className="text-xs text-gray-400">{job.applications}人投递</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link
-            to="/search"
-            className="group p-5 bg-white rounded-2xl border border-gray-100 hover:border-primary-200 transition-all card-hover"
-          >
-            <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-              <Search className="w-6 h-6 text-purple-600" />
-            </div>
-            <h3 className="font-semibold text-gray-800 mb-1">视频语义搜索</h3>
-            <p className="text-sm text-gray-500">搜索咖啡师，自动匹配带拉花操作画面的岗位视频</p>
-          </Link>
-          <Link
-            to="/seekers"
-            className="group p-5 bg-white rounded-2xl border border-gray-100 hover:border-green-200 transition-all card-hover"
-          >
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-              <Users className="w-6 h-6 text-green-600" />
-            </div>
-            <h3 className="font-semibold text-gray-800 mb-1">视频简历人才库</h3>
-            <p className="text-sm text-gray-500">AI自动提取字幕与技能关键词，快速识人</p>
-          </Link>
-          <Link
-            to="/admin"
-            className="group p-5 bg-white rounded-2xl border border-gray-100 hover:border-blue-200 transition-all card-hover"
-          >
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-              <Sparkles className="w-6 h-6 text-blue-600" />
-            </div>
-            <h3 className="font-semibold text-gray-800 mb-1">企业真实性核验</h3>
-            <p className="text-sm text-gray-500">工商比对+街景验证，保障岗位真实可靠</p>
-          </Link>
         </div>
       </div>
 
