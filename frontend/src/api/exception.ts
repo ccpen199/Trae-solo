@@ -1,34 +1,36 @@
 import { get, post, put } from './request'
 
-export type ExceptionType = 'traffic' | 'damage' | 'contact' | 'other'
+export type ExceptionType = 'traffic' | 'damage' | 'contact' | 'delay' | 'no_driver' | 'other'
 export type ExceptionLevel = 'low' | 'medium' | 'high'
 export type ExceptionStatus = 'pending' | 'processing' | 'resolved'
 
 export interface ExceptionItem {
   id: string
-  orderId: string
-  orderNo: string
+  order_id: string
+  order_no?: string
+  driver_id?: string
+  driver_name?: string
   type: ExceptionType
   level: ExceptionLevel
   description: string
   status: ExceptionStatus
-  driverName?: string
-  driverId?: string
-  createdAt: string
-  resolvedAt?: string
-  handleRemark?: string
+  handle_remark?: string
+  created_at: string
+  resolved_at?: string
 }
 
 export interface AppealItem {
   id: string
-  exceptionId: string
-  driverId: string
-  driverName: string
-  content: string
+  exception_id: string
+  driver_id: string
+  driver_name?: string
+  content?: string
+  reason?: string
   images?: string[]
   status: 'pending' | 'approved' | 'rejected'
-  createdAt: string
-  reviewRemark?: string
+  created_at: string
+  review_remark?: string
+  resolver_note?: string
 }
 
 export interface ExceptionListParams {
@@ -79,13 +81,13 @@ export function processException(id: string) {
 }
 
 export function getAppeals(params?: { exceptionId?: string; status?: string; page?: number; pageSize?: number }) {
-  return get<AppealListResponse>('/exceptions/appeals', { params })
+  return get<AppealListResponse>('/appeals', { params })
 }
 
 export function createAppeal(data: Partial<AppealItem>) {
-  return post<AppealItem>('/exceptions/appeals', data)
+  return post<AppealItem>('/appeals', data)
 }
 
 export function reviewAppeal(id: string, status: 'approved' | 'rejected', remark?: string) {
-  return post<AppealItem>(`/exceptions/appeals/${id}/review`, { status, remark })
+  return post<AppealItem>(`/appeals/${id}/review`, { status, remark })
 }

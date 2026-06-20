@@ -4,28 +4,28 @@ export type CreditLevel = 'S' | 'A' | 'B' | 'C' | 'D'
 
 export interface DriverCredit {
   id: string
-  driverId: string
-  driverName: string
+  driver_id: string
+  driver_name: string
   score: number
   level: CreditLevel
-  totalOrders: number
-  completedOrders: number
-  onTimeRate: number
-  serviceRating: number
-  violationCount: number
-  complaintCount: number
-  lastUpdated: string
+  total_orders: number
+  completed_orders: number
+  on_time_rate: number
+  service_rating: number
+  violation_count: number
+  complaint_count: number
+  last_updated: string
 }
 
 export interface CreditRankingItem {
   rank: number
-  driverId: string
-  driverName: string
+  driver_id: string
+  driver_name: string
   score: number
   level: CreditLevel
-  onTimeRate: number
-  serviceRating: number
-  violationCount: number
+  on_time_rate: number
+  service_rating: number
+  violation_count: number
 }
 
 export interface CreditListParams {

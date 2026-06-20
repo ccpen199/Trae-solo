@@ -17,7 +17,6 @@ interface TopDriver {
   key: string
   rank: number
   name: string
-  orders: number
   onTimeRate: number
   credit: number
 }
@@ -50,11 +49,10 @@ const Dashboard: React.FC = () => {
       }
       if (creditRes.code === 0) {
         const drivers: TopDriver[] = creditRes.data.map((item: CreditRankingItem, index: number) => ({
-          key: item.driverId,
+          key: item.driver_id,
           rank: index + 1,
-          name: item.driverName,
-          orders: Math.round(Math.random() * 50 + 100),
-          onTimeRate: item.onTimeRate,
+          name: item.driver_name,
+          onTimeRate: item.on_time_rate,
           credit: item.score
         }))
         setTopDrivers(drivers)
@@ -196,11 +194,6 @@ const Dashboard: React.FC = () => {
       key: 'name'
     },
     {
-      title: '完成订单',
-      dataIndex: 'orders',
-      key: 'orders'
-    },
-    {
       title: '准时率',
       dataIndex: 'onTimeRate',
       key: 'onTimeRate',
@@ -220,7 +213,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="今日订单总量"
-              value={metrics?.totalOrders || 0}
+              value={metrics?.total_orders || 0}
               valueStyle={{ color: '#1890ff' }}
               prefix={<ArrowUpOutlined />}
             />
@@ -230,7 +223,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="完成订单"
-              value={metrics?.completedOrders || 0}
+              value={metrics?.completed_orders || 0}
               valueStyle={{ color: '#52c41a' }}
               prefix={<ArrowUpOutlined />}
             />
@@ -240,7 +233,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="准时率"
-              value={metrics?.onTimeRate || 0}
+              value={metrics?.on_time_rate || 0}
               precision={2}
               valueStyle={{ color: '#faad14' }}
               suffix="%"
@@ -251,7 +244,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="异常事件"
-              value={metrics?.exceptionCount || 0}
+              value={metrics?.exception_count || 0}
               valueStyle={{ color: '#ff4d4f' }}
               prefix={<ArrowDownOutlined />}
             />
@@ -268,12 +261,12 @@ const Dashboard: React.FC = () => {
         <Col span={8}>
           <Card title="活跃司机" loading={loading}>
             <Statistic
-              value={metrics?.activeDrivers || 0}
+              value={metrics?.active_drivers || 0}
               valueStyle={{ color: '#1890ff' }}
               suffix="人"
             />
             <div style={{ marginTop: 16, fontSize: 13, color: '#8c8c8c' }}>
-              平均配送时长: {metrics?.avgDeliveryTime || 0} 分钟
+              平均配送时长: {metrics?.avg_delivery_time || 0} 分钟
             </div>
           </Card>
         </Col>

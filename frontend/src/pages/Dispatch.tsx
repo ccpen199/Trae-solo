@@ -16,11 +16,11 @@ interface AvailableDriver {
   key: string
   id: string
   name: string
-  vehicleNo: string
+  vehicle_plate: string
   distance: number
   score: number
   currentLoad: number
-  creditScore: number
+  credit_score: number | undefined
 }
 
 const Dispatch: React.FC = () => {
@@ -59,7 +59,7 @@ const Dispatch: React.FC = () => {
           distance: Math.round(Math.random() * 6 + 0.5),
           score: Math.round(Math.random() * 15 + 85),
           currentLoad: Math.floor(Math.random() * 3),
-          creditScore: item.creditScore
+          credit_score: item.credit_score
         }))
         setAvailableDrivers(drivers)
       }
@@ -101,7 +101,7 @@ const Dispatch: React.FC = () => {
       const response = await autoDispatchOrder(order.id)
       if (response.code === 0) {
         setPendingOrders(pendingOrders.filter(o => o.id !== order.id))
-        message.success(`订单 ${order.orderNo} 智能派单成功`)
+        message.success(`订单 ${order.order_no} 智能派单成功`)
       } else {
         message.error(response.message || '智能派单失败')
       }
@@ -148,20 +148,20 @@ const Dispatch: React.FC = () => {
   const orderColumns: ColumnsType<PendingOrder> = [
     {
       title: '订单号',
-      dataIndex: 'orderNo',
-      key: 'orderNo',
+      dataIndex: 'order_no',
+      key: 'order_no',
       width: 150
     },
     {
       title: '取货地址',
-      dataIndex: 'pickupAddress',
-      key: 'pickupAddress',
+      dataIndex: 'pickup_address',
+      key: 'pickup_address',
       ellipsis: true
     },
     {
       title: '送货地址',
-      dataIndex: 'deliveryAddress',
-      key: 'deliveryAddress',
+      dataIndex: 'delivery_address',
+      key: 'delivery_address',
       ellipsis: true
     },
     {
@@ -177,8 +177,8 @@ const Dispatch: React.FC = () => {
     },
     {
       title: '重量',
-      dataIndex: 'weight',
-      key: 'weight',
+      dataIndex: 'cargo_weight',
+      key: 'cargo_weight',
       width: 80,
       render: (w: number) => `${w}kg`
     },
@@ -220,8 +220,8 @@ const Dispatch: React.FC = () => {
     },
     {
       title: '车牌号',
-      dataIndex: 'vehicleNo',
-      key: 'vehicleNo',
+      dataIndex: 'vehicle_plate',
+      key: 'vehicle_plate',
       width: 110
     },
     {

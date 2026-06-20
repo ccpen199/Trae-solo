@@ -1,20 +1,28 @@
 import { get, post } from './request'
-import type { Driver } from './driver'
 
 export interface Order {
   id: string
-  orderNo: string
-  customerName: string
-  customerPhone: string
-  pickupAddress: string
-  deliveryAddress: string
-  goodsDesc: string
-  weight: number
-  status: 'pending' | 'assigned' | 'picking' | 'delivering' | 'completed' | 'cancelled'
-  driverId?: string
-  driverName?: string
-  estimatedTime?: string
-  createdAt: string
+  order_no: string
+  cargo_volume?: number
+  cargo_weight: number
+  loading_requirement?: string
+  time_window_start?: string
+  time_window_end?: string
+  customer_name: string
+  customer_phone: string
+  customer_credit_score?: number
+  pickup_address: string
+  delivery_address: string
+  pickup_lng?: number
+  pickup_lat?: number
+  delivery_lng?: number
+  delivery_lat?: number
+  status: 'pending' | 'assigned' | 'accepted' | 'in_transit' | 'completed' | 'cancelled'
+  assigned_driver_id?: string
+  driver_name?: string
+  estimated_time?: string
+  created_at: string
+  finished_at?: string
 }
 
 export interface OrderListParams {
@@ -44,7 +52,7 @@ export function createOrder(data: Partial<Order>) {
 }
 
 export function assignOrder(id: string, driverId: string) {
-  return post<Order>(`/orders/${id}/assign`, { driverId })
+  return post<Order>(`/orders/${id}/assign`, { driver_id: driverId })
 }
 
 export function autoDispatchOrder(id: string) {
@@ -52,13 +60,9 @@ export function autoDispatchOrder(id: string) {
 }
 
 export function autoDispatch() {
-  return post<{ success: number; failed: number; message: string }>('/auto-dispatch')
+  return post<{ success: number; failed: number; message: string }>('/orders/auto-dispatch')
 }
 
 export function getPendingOrders(params?: { page?: number; pageSize?: number }) {
   return get<OrderListResponse>('/orders/pending', { params })
-}
-
-export function getAvailableDrivers(orderId?: string) {
-  return get<Driver[]>('/drivers/available', { params: { orderId } })
 }

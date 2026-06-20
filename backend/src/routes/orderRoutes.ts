@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import { getOrders, getOrderById, createOrder, assignOrder, autoDispatchOrder, acceptOrder, pickupOrder, deliverOrder } from '../controllers/orderController';
+import { getOrders, getOrderById, createOrder, assignOrder, autoDispatchOrder, autoDispatch, acceptOrder, pickupOrder, deliverOrder, getPendingOrders } from '../controllers/orderController';
 
 const router = Router();
 
+router.get('/pending', getPendingOrders);
 router.get('/', getOrders);
 router.get('/:id', getOrderById);
 router.post('/', createOrder);
+router.post('/auto-dispatch', autoDispatch);
 router.post('/:id/assign', assignOrder);
 router.post('/:id/auto-dispatch', autoDispatchOrder);
 router.post('/:id/accept', acceptOrder);

@@ -4,13 +4,16 @@ export interface Driver {
   id: string
   name: string
   phone: string
-  idCard: string
-  vehicleNo: string
-  vehicleType: string
-  status: 'active' | 'inactive' | 'offline'
-  creditScore: number
-  totalOrders: number
-  createdAt: string
+  id_card: string
+  driver_license?: string
+  vehicle_type: string
+  vehicle_plate: string
+  vehicle_inspection_status?: string
+  rating?: number
+  status: 'available' | 'busy' | 'offline'
+  credit_score?: number
+  total_orders?: number
+  created_at: string
 }
 
 export interface DriverListParams {
@@ -37,4 +40,8 @@ export function getDriverById(id: string) {
 
 export function createDriver(data: Partial<Driver>) {
   return post<Driver>('/drivers', data)
+}
+
+export function getAvailableDrivers(orderId?: string) {
+  return get<Driver[]>('/drivers/available', { params: { orderId } })
 }

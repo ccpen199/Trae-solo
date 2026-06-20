@@ -79,7 +79,7 @@ const Credit: React.FC = () => {
     try {
       const response = await getCreditRanking(10)
       if (response.code === 0) {
-        const list = response.data.map((item: CreditRankingItem) => ({ ...item, key: item.driverId }))
+        const list = response.data.map((item: CreditRankingItem) => ({ ...item, key: item.driver_id }))
         setRankingList(list)
       }
     } catch (error) {
@@ -142,7 +142,7 @@ const Credit: React.FC = () => {
 
   const handleRecalculate = async (record: TableCreditItem) => {
     try {
-      const response = await recalculateCredit(record.driverId)
+      const response = await recalculateCredit(record.driver_id)
       if (response.code === 0) {
         message.success('信用分重新计算成功')
         fetchCreditList({ page: pagination.page, pageSize: pagination.pageSize })
@@ -246,8 +246,8 @@ const Credit: React.FC = () => {
     },
     {
       title: '司机姓名',
-      dataIndex: 'driverName',
-      key: 'driverName',
+      dataIndex: 'driver_name',
+      key: 'driver_name',
       width: 100
     },
     {
@@ -274,21 +274,21 @@ const Credit: React.FC = () => {
     },
     {
       title: '准时率',
-      dataIndex: 'onTimeRate',
-      key: 'onTimeRate',
+      dataIndex: 'on_time_rate',
+      key: 'on_time_rate',
       width: 100,
       render: (rate: number) => `${rate}%`
     },
     {
       title: '服务评分',
-      dataIndex: 'serviceRating',
-      key: 'serviceRating',
+      dataIndex: 'service_rating',
+      key: 'service_rating',
       width: 100
     },
     {
       title: '违规次数',
-      dataIndex: 'violationCount',
-      key: 'violationCount',
+      dataIndex: 'violation_count',
+      key: 'violation_count',
       width: 100,
       render: (count: number) => (
         <span style={{ color: count > 0 ? '#ff4d4f' : '#52c41a' }}>{count} 次</span>
@@ -299,8 +299,8 @@ const Credit: React.FC = () => {
   const creditColumns: ColumnsType<TableCreditItem> = [
     {
       title: '司机姓名',
-      dataIndex: 'driverName',
-      key: 'driverName',
+      dataIndex: 'driver_name',
+      key: 'driver_name',
       width: 100
     },
     {
@@ -330,27 +330,27 @@ const Credit: React.FC = () => {
     },
     {
       title: '完成订单',
-      dataIndex: 'completedOrders',
-      key: 'completedOrders',
+      dataIndex: 'completed_orders',
+      key: 'completed_orders',
       width: 100
     },
     {
       title: '准时率',
-      dataIndex: 'onTimeRate',
-      key: 'onTimeRate',
+      dataIndex: 'on_time_rate',
+      key: 'on_time_rate',
       width: 100,
       render: (rate: number) => `${rate}%`
     },
     {
       title: '服务评分',
-      dataIndex: 'serviceRating',
-      key: 'serviceRating',
+      dataIndex: 'service_rating',
+      key: 'service_rating',
       width: 100
     },
     {
       title: '投诉次数',
-      dataIndex: 'complaintCount',
-      key: 'complaintCount',
+      dataIndex: 'complaint_count',
+      key: 'complaint_count',
       width: 100,
       render: (count: number) => (
         <span style={{ color: count > 0 ? '#ff4d4f' : '#52c41a' }}>{count} 次</span>
@@ -358,8 +358,8 @@ const Credit: React.FC = () => {
     },
     {
       title: '违规次数',
-      dataIndex: 'violationCount',
-      key: 'violationCount',
+      dataIndex: 'violation_count',
+      key: 'violation_count',
       width: 100,
       render: (count: number) => (
         <span style={{ color: count > 0 ? '#ff4d4f' : '#52c41a' }}>{count} 次</span>
@@ -367,8 +367,8 @@ const Credit: React.FC = () => {
     },
     {
       title: '更新时间',
-      dataIndex: 'lastUpdated',
-      key: 'lastUpdated',
+      dataIndex: 'last_updated',
+      key: 'last_updated',
       width: 160
     },
     {
@@ -421,7 +421,7 @@ const Credit: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="平均准时率"
-              value={rankingList.length > 0 ? Math.round(rankingList.reduce((sum, item) => sum + item.onTimeRate, 0) / rankingList.length) : 0}
+              value={rankingList.length > 0 ? Math.round(rankingList.reduce((sum, item) => sum + item.on_time_rate, 0) / rankingList.length) : 0}
               valueStyle={{ color: '#52c41a' }}
               prefix={<CheckCircleOutlined />}
               suffix="%"
@@ -556,8 +556,8 @@ const Credit: React.FC = () => {
       >
         {selectedDriver && (
           <Descriptions column={2} bordered size="small">
-            <Descriptions.Item label="司机姓名">{selectedDriver.driverName}</Descriptions.Item>
-            <Descriptions.Item label="司机ID">{selectedDriver.driverId}</Descriptions.Item>
+            <Descriptions.Item label="司机姓名">{selectedDriver.driver_name}</Descriptions.Item>
+            <Descriptions.Item label="司机ID">{selectedDriver.driver_id}</Descriptions.Item>
             <Descriptions.Item label="信用分" span={2}>
               <Space>
                 <Progress
@@ -571,25 +571,25 @@ const Credit: React.FC = () => {
                 </Tag>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label="总订单数">{selectedDriver.totalOrders}</Descriptions.Item>
-            <Descriptions.Item label="完成订单">{selectedDriver.completedOrders}</Descriptions.Item>
+            <Descriptions.Item label="总订单数">{selectedDriver.total_orders}</Descriptions.Item>
+            <Descriptions.Item label="完成订单">{selectedDriver.completed_orders}</Descriptions.Item>
             <Descriptions.Item label="准时率">
-              <span style={{ color: selectedDriver.onTimeRate >= 95 ? '#52c41a' : selectedDriver.onTimeRate >= 90 ? '#faad14' : '#ff4d4f' }}>
-                {selectedDriver.onTimeRate}%
+              <span style={{ color: selectedDriver.on_time_rate >= 95 ? '#52c41a' : selectedDriver.on_time_rate >= 90 ? '#faad14' : '#ff4d4f' }}>
+                {selectedDriver.on_time_rate}%
               </span>
             </Descriptions.Item>
-            <Descriptions.Item label="服务评分">{selectedDriver.serviceRating}</Descriptions.Item>
+            <Descriptions.Item label="服务评分">{selectedDriver.service_rating}</Descriptions.Item>
             <Descriptions.Item label="违规次数">
-              <span style={{ color: selectedDriver.violationCount > 0 ? '#ff4d4f' : '#52c41a' }}>
-                {selectedDriver.violationCount} 次
+              <span style={{ color: selectedDriver.violation_count > 0 ? '#ff4d4f' : '#52c41a' }}>
+                {selectedDriver.violation_count} 次
               </span>
             </Descriptions.Item>
             <Descriptions.Item label="投诉次数">
-              <span style={{ color: selectedDriver.complaintCount > 0 ? '#ff4d4f' : '#52c41a' }}>
-                {selectedDriver.complaintCount} 次
+              <span style={{ color: selectedDriver.complaint_count > 0 ? '#ff4d4f' : '#52c41a' }}>
+                {selectedDriver.complaint_count} 次
               </span>
             </Descriptions.Item>
-            <Descriptions.Item label="最后更新" span={2}>{selectedDriver.lastUpdated}</Descriptions.Item>
+            <Descriptions.Item label="最后更新" span={2}>{selectedDriver.last_updated}</Descriptions.Item>
           </Descriptions>
         )}
       </Modal>

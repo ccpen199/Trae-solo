@@ -1,12 +1,12 @@
 import { get } from './request'
 
 export interface FulfillmentMetrics {
-  totalOrders: number
-  completedOrders: number
-  onTimeRate: number
-  avgDeliveryTime: number
-  activeDrivers: number
-  exceptionCount: number
+  total_orders: number
+  completed_orders: number
+  on_time_rate: number
+  avg_delivery_time: number
+  active_drivers: number
+  exception_count: number
 }
 
 export interface TrendDataItem {

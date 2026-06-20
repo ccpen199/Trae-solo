@@ -3,58 +3,108 @@ import db from '../db';
 
 export const createAppeal = (req: Request, res: Response) => {
   try {
-    const { exception_id, driver_id, reason, evidence } = req.body;
+    const { exception_id, driver_id, content } = req.body;
 
     const exception = db.prepare('SELECT * FROM exceptions WHERE id = ?').get(exception_id);
     if (!exception) {
-      return res.status(404).json({ error: 'Exception not found' });
+      return res.error('Exception not found');
     }
 
-    const info = db.prepare(`
-      INSERT INTO appeals (exception_id, driver_id, reason, evidence)
-      VALUES (?, ?, ?, ?)
-    `).run(exception_id, driver_id || null, reason, evidence || null);
+    const driver = db.prepare('SELECT * FROM drivers WHERE id = ?').get(driver_id);
+    const driverName = driver ? (driver as any).name : undefined;
 
-    const appeal = db.prepare('SELECT * FROM appeals WHERE id = ?').get(info.lastInsertRowid);
-    res.status(201).json(appeal);
+    const info = db.prepare(`
+      INSERT INTO appeals (exception_id, driver_id, reason)
+      VALUES (?, ?, ?)
+    `).run(exception_id, driver_id || null, content);
+
+    const appeal = db.prepare('SELECT * FROM appeals WHERE id = ?').get(info.lastInsertRowid) as any;
+    res.success({ ...appeal, driver_name: driverName });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create appeal' });
+    res.error('Failed to create appeal');
   }
 };
 
-export const getAppeals = (_req: Request, res: Response) => {
+export const getAppeals = (req: Request, res: Response) => {
   try {
-    const appeals = db.prepare(`
-      SELECT a.*, e.type as exception_type, e.description as exception_description
-      FROM appeals a
-      LEFT JOIN exceptions e ON a.exception_id = e.id
-      ORDER BY a.created_at DESC
-    `).all();
-    res.json(appeals);
+    const { exceptionId } = req.query;
+
+    let appeals;
+    if (exceptionId) {
+      appeals = db.prepare(`
+        SELECT a.*, d.name as driver_name
+        FROM appeals a
+        LEFT JOIN drivers d ON a.driver_id = d.id
+        WHERE a.exception_id = ?
+        ORDER BY a.created_at DESC
+      `).all(exceptionId);
+    } else {
+      appeals = db.prepare(`
+        SELECT a.*, d.name as driver_name
+        FROM appeals a
+        LEFT JOIN drivers d ON a.driver_id = d.id
+        ORDER BY a.created_at DESC
+      `).all();
+    }
+
+    res.success({ list: appeals, total: appeals.length });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch appeals' });
+    res.error('Failed to fetch appeals');
   }
 };
 
 export const resolveAppeal = (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { status, resolver_note } = req.body;
+    const { status, remark } = req.body;
 
     const appeal = db.prepare('SELECT * FROM appeals WHERE id = ?').get(id);
     if (!appeal) {
-      return res.status(404).json({ error: 'Appeal not found' });
+      return res.error('Appeal not found');
     }
 
     db.prepare(`
       UPDATE appeals 
       SET status = ?, resolved_at = datetime('now'), resolver_note = ?
       WHERE id = ?
-    `).run(status || 'resolved', resolver_note || null, id);
+    `).run(status || 'approved', remark || null, id);
 
-    const updatedAppeal = db.prepare('SELECT * FROM appeals WHERE id = ?').get(id);
-    res.json(updatedAppeal);
+    const updatedAppeal = db.prepare(`
+      SELECT a.*, d.name as driver_name
+      FROM appeals a
+      LEFT JOIN drivers d ON a.driver_id = d.id
+      WHERE a.id = ?
+    `).get(id);
+    res.success(updatedAppeal);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to resolve appeal' });
+    res.error('Failed to resolve appeal');
+  }
+};
+
+export const reviewAppeal = (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { status, remark } = req.body;
+
+    const appeal = db.prepare('SELECT * FROM appeals WHERE id = ?').get(id);
+    if (!appeal) {
+      return res.error('Appeal not found');
+    }
+
+    db.prepare(`
+      UPDATE appeals 
+      SET status = ?, resolved_at = datetime('now'), resolver_note = ?
+      WHERE id = ?
+    `).run(status, remark || null, id);
+
+    const updatedAppeal = db.prepare(`
+      SELECT a.*, d.name as driver_name
+      FROM appeals a
+      LEFT JOIN drivers d ON a.driver_id = d.id
+      WHERE a.id = ?
+    `).get(id);
+    res.success(updatedAppeal);
+  } catch (error) {
+    res.error('Failed to review appeal');
   }
 };

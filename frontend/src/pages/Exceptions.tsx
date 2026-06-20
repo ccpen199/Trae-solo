@@ -47,10 +47,12 @@ interface TableException extends ExceptionItem {
   key: string
 }
 
-const typeMap: Record<ExceptionType, { text: string; color: string }> = {
+const typeMap: Record<string, { text: string; color: string }> = {
   traffic: { text: '堵车', color: 'orange' },
   damage: { text: '货物损毁', color: 'red' },
   contact: { text: '客户失联', color: 'blue' },
+  delay: { text: '延误', color: 'orange' },
+  no_driver: { text: '无司机接单', color: 'purple' },
   other: { text: '其他', color: 'default' }
 }
 
@@ -187,10 +189,9 @@ const Exceptions: React.FC = () => {
     if (!selectedException) return
     try {
       const response = await createAppeal({
-        exceptionId: selectedException.id,
-        driverId: selectedException.driverId,
-        driverName: selectedException.driverName,
-        ...values
+        exception_id: selectedException.id,
+        driver_id: selectedException.driver_id,
+        content: values.content
       })
       if (response.code === 0) {
         message.success('申诉提交成功')
@@ -246,9 +247,10 @@ const Exceptions: React.FC = () => {
   const columns: ColumnsType<TableException> = [
     {
       title: '订单号',
-      dataIndex: 'orderNo',
-      key: 'orderNo',
-      width: 140
+      dataIndex: 'order_no',
+      key: 'order_no',
+      width: 140,
+      render: (text: string) => text || '-'
     },
     {
       title: '异常类型',
@@ -278,8 +280,8 @@ const Exceptions: React.FC = () => {
     },
     {
       title: '涉事司机',
-      dataIndex: 'driverName',
-      key: 'driverName',
+      dataIndex: 'driver_name',
+      key: 'driver_name',
       width: 90,
       render: (name?: string) => name || '-'
     },
@@ -295,8 +297,8 @@ const Exceptions: React.FC = () => {
     },
     {
       title: '上报时间',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      dataIndex: 'created_at',
+      key: 'created_at',
       width: 160
     },
     {
@@ -381,13 +383,15 @@ const Exceptions: React.FC = () => {
       >
         <Form form={searchForm} layout="inline" style={{ marginBottom: 16 }} onFinish={handleSearch}>
           <Form.Item name="keyword">
-            <Input placeholder="搜索订单号" prefix={<SearchOutlined />} style={{ width: 200 }} />
+            <Input placeholder="搜索订单号/描述" prefix={<SearchOutlined />} style={{ width: 200 }} />
           </Form.Item>
           <Form.Item name="type">
             <Select placeholder="异常类型" allowClear style={{ width: 120 }}>
               <Select.Option value="traffic">堵车</Select.Option>
               <Select.Option value="damage">货物损毁</Select.Option>
               <Select.Option value="contact">客户失联</Select.Option>
+              <Select.Option value="delay">延误</Select.Option>
+              <Select.Option value="no_driver">无司机接单</Select.Option>
               <Select.Option value="other">其他</Select.Option>
             </Select>
           </Form.Item>
@@ -437,21 +441,20 @@ const Exceptions: React.FC = () => {
         width={500}
       >
         <Form form={reportForm} layout="vertical" onFinish={handleReport}>
-          <Form.Item name="orderId" label="关联订单ID" rules={[{ required: true, message: '请输入订单ID' }]}>
+          <Form.Item name="order_id" label="关联订单ID" rules={[{ required: true, message: '请输入订单ID' }]}>
             <Input placeholder="请输入订单ID" />
-          </Form.Item>
-          <Form.Item name="orderNo" label="订单号" rules={[{ required: true, message: '请输入订单号' }]}>
-            <Input placeholder="请输入订单号" />
           </Form.Item>
           <Form.Item name="type" label="异常类型" rules={[{ required: true, message: '请选择异常类型' }]}>
             <Select placeholder="请选择异常类型">
               <Select.Option value="traffic">堵车</Select.Option>
               <Select.Option value="damage">货物损毁</Select.Option>
               <Select.Option value="contact">客户失联</Select.Option>
+              <Select.Option value="delay">延误</Select.Option>
+              <Select.Option value="no_driver">无司机接单</Select.Option>
               <Select.Option value="other">其他</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name="level" label="紧急程度" rules={[{ required: true, message: '请选择紧急程度' }]}>
+          <Form.Item name="level" label="紧急程度">
             <Select placeholder="请选择紧急程度">
               <Select.Option value="low">低</Select.Option>
               <Select.Option value="medium">中</Select.Option>
@@ -486,7 +489,7 @@ const Exceptions: React.FC = () => {
                 label: '基本信息',
                 children: (
                   <Descriptions column={2} bordered size="small">
-                    <Descriptions.Item label="订单号">{selectedException.orderNo}</Descriptions.Item>
+                    <Descriptions.Item label="订单号">{selectedException.order_no || '-'}</Descriptions.Item>
                     <Descriptions.Item label="异常类型">
                       <Tag color={typeMap[selectedException.type]?.color}>
                         {typeMap[selectedException.type]?.text}
@@ -500,14 +503,14 @@ const Exceptions: React.FC = () => {
                     <Descriptions.Item label="状态">
                       <Badge status={statusMap[selectedException.status]?.status} text={statusMap[selectedException.status]?.text} />
                     </Descriptions.Item>
-                    <Descriptions.Item label="涉事司机" span={2}>{selectedException.driverName || '-'}</Descriptions.Item>
+                    <Descriptions.Item label="涉事司机" span={2}>{selectedException.driver_name || '-'}</Descriptions.Item>
                     <Descriptions.Item label="异常描述" span={2}>{selectedException.description}</Descriptions.Item>
-                    <Descriptions.Item label="上报时间" span={2}>{selectedException.createdAt}</Descriptions.Item>
-                    {selectedException.resolvedAt && (
-                      <Descriptions.Item label="解决时间" span={2}>{selectedException.resolvedAt}</Descriptions.Item>
+                    <Descriptions.Item label="上报时间" span={2}>{selectedException.created_at}</Descriptions.Item>
+                    {selectedException.resolved_at && (
+                      <Descriptions.Item label="解决时间" span={2}>{selectedException.resolved_at}</Descriptions.Item>
                     )}
-                    {selectedException.handleRemark && (
-                      <Descriptions.Item label="处理备注" span={2}>{selectedException.handleRemark}</Descriptions.Item>
+                    {selectedException.handle_remark && (
+                      <Descriptions.Item label="处理备注" span={2}>{selectedException.handle_remark}</Descriptions.Item>
                     )}
                   </Descriptions>
                 )
@@ -534,15 +537,15 @@ const Exceptions: React.FC = () => {
                         <List.Item.Meta
                           title={
                             <Space>
-                              <span>{item.driverName}</span>
+                              <span>{item.driver_name || '未知司机'}</span>
                               <Tag color={appealStatusMap[item.status]?.color}>
                                 {appealStatusMap[item.status]?.text}
                               </Tag>
                             </Space>
                           }
-                          description={item.content}
+                          description={item.reason || item.content}
                         />
-                        <div style={{ fontSize: 12, color: '#999' }}>{item.createdAt}</div>
+                        <div style={{ fontSize: 12, color: '#999' }}>{item.created_at}</div>
                       </List.Item>
                     )}
                   />

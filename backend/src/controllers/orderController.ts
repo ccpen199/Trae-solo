@@ -22,24 +22,56 @@ function getVehicleTypeMatchScore(orderReq: string | null | undefined, driverTyp
   return 0.3;
 }
 
-export const getOrders = (_req: Request, res: Response) => {
+export const getOrders = (req: Request, res: Response) => {
   try {
-    const orders = db.prepare('SELECT * FROM orders ORDER BY created_at DESC').all();
-    res.json(orders);
+    const { keyword, status, page = '1', pageSize = '10' } = req.query;
+    const pageNum = parseInt(page as string, 10) || 1;
+    const pageSizeNum = parseInt(pageSize as string, 10) || 10;
+
+    let whereClauses: string[] = [];
+    let params: any[] = [];
+
+    if (keyword) {
+      whereClauses.push('(order_no LIKE ? OR customer_name LIKE ?)');
+      params.push(`%${keyword}%`, `%${keyword}%`);
+    }
+    if (status) {
+      whereClauses.push('status = ?');
+      params.push(status);
+    }
+
+    const whereStr = whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : '';
+
+    const total = (db.prepare(`SELECT COUNT(*) as count FROM orders ${whereStr}`).get(...params) as { count: number }).count;
+    const orders = db.prepare(`
+      SELECT o.*, d.name as driver_name
+      FROM orders o
+      LEFT JOIN drivers d ON o.assigned_driver_id = d.id
+      ${whereStr}
+      ORDER BY o.created_at DESC
+      LIMIT ? OFFSET ?
+    `).all(...params, pageSizeNum, (pageNum - 1) * pageSizeNum);
+
+    res.success({ list: orders, total, page: pageNum, pageSize: pageSizeNum });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch orders' });
+    res.error('Failed to fetch orders');
   }
 };
 
 export const getOrderById = (req: Request, res: Response) => {
   try {
-    const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id);
+    const order = db.prepare(`
+      SELECT o.*, d.name as driver_name
+      FROM orders o
+      LEFT JOIN drivers d ON o.assigned_driver_id = d.id
+      WHERE o.id = ?
+    `).get(req.params.id);
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return res.error('Order not found');
     }
-    res.json(order);
+    res.success(order);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch order' });
+    res.error('Failed to fetch order');
   }
 };
 
@@ -48,22 +80,26 @@ export const createOrder = (req: Request, res: Response) => {
     const {
       order_no, cargo_volume, cargo_weight, loading_requirement,
       time_window_start, time_window_end, customer_name, customer_phone,
-      pickup_address, delivery_address, pickup_lng, pickup_lat, delivery_lng, delivery_lat
+      customer_credit_score, pickup_address, delivery_address,
+      pickup_lng, pickup_lat, delivery_lng, delivery_lat
     } = req.body;
 
+    const generatedOrderNo = order_no || `ORD${Date.now()}`;
+
     const info = db.prepare(`
-      INSERT INTO orders (order_no, cargo_volume, cargo_weight, loading_requirement, time_window_start, time_window_end, customer_name, customer_phone, pickup_address, delivery_address, pickup_lng, pickup_lat, delivery_lng, delivery_lat)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO orders (order_no, cargo_volume, cargo_weight, loading_requirement, time_window_start, time_window_end, customer_name, customer_phone, customer_credit_score, pickup_address, delivery_address, pickup_lng, pickup_lat, delivery_lng, delivery_lat)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
-      order_no, cargo_volume, cargo_weight, loading_requirement,
+      generatedOrderNo, cargo_volume, cargo_weight, loading_requirement,
       time_window_start, time_window_end, customer_name, customer_phone,
-      pickup_address, delivery_address, pickup_lng, pickup_lat, delivery_lng, delivery_lat
+      customer_credit_score || 100, pickup_address, delivery_address,
+      pickup_lng, pickup_lat, delivery_lng, delivery_lat
     );
 
     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(info.lastInsertRowid);
-    res.status(201).json(order);
+    res.success(order);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create order' });
+    res.error('Failed to create order');
   }
 };
 
@@ -74,20 +110,25 @@ export const assignOrder = (req: Request, res: Response) => {
 
     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return res.error('Order not found');
     }
 
     const driver = db.prepare('SELECT * FROM drivers WHERE id = ?').get(driver_id);
     if (!driver) {
-      return res.status(404).json({ error: 'Driver not found' });
+      return res.error('Driver not found');
     }
 
     db.prepare('UPDATE orders SET assigned_driver_id = ?, status = ? WHERE id = ?').run(driver_id, 'assigned', id);
 
-    const updatedOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
-    res.json(updatedOrder);
+    const updatedOrder = db.prepare(`
+      SELECT o.*, d.name as driver_name
+      FROM orders o
+      LEFT JOIN drivers d ON o.assigned_driver_id = d.id
+      WHERE o.id = ?
+    `).get(id);
+    res.success(updatedOrder);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to assign order' });
+    res.error('Failed to assign order');
   }
 };
 
@@ -97,7 +138,7 @@ export const autoDispatchOrder = (req: Request, res: Response) => {
 
     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any;
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return res.error('Order not found');
     }
 
     const availableDrivers = db.prepare(`
@@ -108,7 +149,7 @@ export const autoDispatchOrder = (req: Request, res: Response) => {
     `).all() as any[];
 
     if (availableDrivers.length === 0) {
-      return res.status(400).json({ error: 'No available drivers' });
+      return res.error('No available drivers');
     }
 
     const scoredDrivers = availableDrivers.map((driver) => {
@@ -121,41 +162,59 @@ export const autoDispatchOrder = (req: Request, res: Response) => {
 
       const maxDistance = 50;
       const distanceScore = Math.max(0, 1 - distance / maxDistance);
-
       const onTimeRate = driver.on_time_rate || 90;
       const onTimeScore = onTimeRate / 100;
-
       const vehicleMatchScore = getVehicleTypeMatchScore(order.loading_requirement, driver.vehicle_type);
-
       const serviceScore = (driver.service_score || 4.0) / 5;
-
       const totalScore = distanceScore * 0.4 + onTimeScore * 0.25 + vehicleMatchScore * 0.2 + serviceScore * 0.15;
 
       return {
         ...driver,
         distance: parseFloat(distance.toFixed(2)),
-        distance_score: parseFloat(distanceScore.toFixed(4)),
-        on_time_score: parseFloat(onTimeScore.toFixed(4)),
-        vehicle_match_score: parseFloat(vehicleMatchScore.toFixed(4)),
-        service_score_factor: parseFloat(serviceScore.toFixed(4)),
         total_score: parseFloat(totalScore.toFixed(4)),
       };
     });
 
     scoredDrivers.sort((a, b) => b.total_score - a.total_score);
+    const bestDriver = scoredDrivers[0];
 
-    res.json({
-      order_id: order.id,
-      recommended_drivers: scoredDrivers,
-      algorithm: {
-        distance_weight: 0.4,
-        on_time_rate_weight: 0.25,
-        vehicle_match_weight: 0.2,
-        service_score_weight: 0.15,
-      },
-    });
+    db.prepare('UPDATE orders SET assigned_driver_id = ?, status = ? WHERE id = ?').run(bestDriver.id, 'assigned', id);
+    db.prepare('UPDATE drivers SET status = ? WHERE id = ?').run('busy', bestDriver.id);
+
+    const updatedOrder = db.prepare(`
+      SELECT o.*, d.name as driver_name
+      FROM orders o
+      LEFT JOIN drivers d ON o.assigned_driver_id = d.id
+      WHERE o.id = ?
+    `).get(id);
+    res.success(updatedOrder);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to auto dispatch order' });
+    res.error('Failed to auto dispatch order');
+  }
+};
+
+export const autoDispatch = (_req: Request, res: Response) => {
+  try {
+    const pendingOrders = db.prepare("SELECT * FROM orders WHERE status = 'pending'").all() as any[];
+    const availableDrivers = db.prepare("SELECT * FROM drivers WHERE status = 'available'").all() as any[];
+
+    let success = 0;
+    let failed = 0;
+
+    const assignTransaction = db.transaction(() => {
+      for (let i = 0; i < Math.min(pendingOrders.length, availableDrivers.length); i++) {
+        db.prepare('UPDATE orders SET assigned_driver_id = ?, status = ? WHERE id = ?').run(availableDrivers[i].id, 'assigned', pendingOrders[i].id);
+        db.prepare('UPDATE drivers SET status = ? WHERE id = ?').run('busy', availableDrivers[i].id);
+        success++;
+      }
+      failed = pendingOrders.length - success;
+    });
+
+    assignTransaction();
+
+    res.success({ success, failed, message: `批量派单完成：成功${success}个，失败${failed}个` });
+  } catch (error) {
+    res.error('Failed to auto dispatch');
   }
 };
 
@@ -166,66 +225,70 @@ export const acceptOrder = (req: Request, res: Response) => {
 
     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any;
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return res.error('Order not found');
     }
-
     if (order.status !== 'pending' && order.status !== 'assigned') {
-      return res.status(400).json({ error: 'Order cannot be accepted' });
+      return res.error('Order cannot be accepted');
     }
-
     if (order.assigned_driver_id && order.assigned_driver_id !== driver_id) {
-      return res.status(400).json({ error: 'Order already assigned to another driver' });
+      return res.error('Order already assigned to another driver');
     }
 
     db.prepare('UPDATE orders SET assigned_driver_id = ?, status = ? WHERE id = ?').run(driver_id, 'accepted', id);
-
     const updatedOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
-    res.json(updatedOrder);
+    res.success(updatedOrder);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to accept order' });
+    res.error('Failed to accept order');
   }
 };
 
 export const pickupOrder = (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any;
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return res.error('Order not found');
     }
-
     if (order.status !== 'accepted') {
-      return res.status(400).json({ error: 'Order cannot be picked up' });
+      return res.error('Order cannot be picked up');
     }
-
     db.prepare('UPDATE orders SET status = ? WHERE id = ?').run('in_transit', id);
-
     const updatedOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
-    res.json(updatedOrder);
+    res.success(updatedOrder);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to pickup order' });
+    res.error('Failed to pickup order');
   }
 };
 
 export const deliverOrder = (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any;
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return res.error('Order not found');
     }
-
     if (order.status !== 'in_transit') {
-      return res.status(400).json({ error: 'Order cannot be delivered' });
+      return res.error('Order cannot be delivered');
     }
-
     db.prepare("UPDATE orders SET status = ?, finished_at = datetime('now') WHERE id = ?").run('completed', id);
-
     const updatedOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
-    res.json(updatedOrder);
+    res.success(updatedOrder);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to deliver order' });
+    res.error('Failed to deliver order');
+  }
+};
+
+export const getPendingOrders = (_req: Request, res: Response) => {
+  try {
+    const orders = db.prepare(`
+      SELECT o.*, d.name as driver_name
+      FROM orders o
+      LEFT JOIN drivers d ON o.assigned_driver_id = d.id
+      WHERE o.status = 'pending'
+      ORDER BY o.created_at DESC
+    `).all();
+    res.success({ list: orders, total: orders.length });
+  } catch (error) {
+    res.error('Failed to fetch pending orders');
   }
 };
