@@ -23,6 +23,8 @@ const features = [
   },
 ];
 
+const communityMembers = ['林', '周', '苏', '陈'];
+
 export function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -84,16 +86,13 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           <div className="relative z-10 mt-12">
             <div className="flex items-center gap-4">
               <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
+                {communityMembers.map((name) => (
                   <div
-                    key={i}
-                    className="w-10 h-10 rounded-full border-2 border-midnight-800 bg-gradient-to-br from-rose-400 to-sapphire-400"
-                    style={{
-                      backgroundImage: `url(https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent('professional portrait headshot')}&image_size=square)`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  />
+                    key={name}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-midnight-800 bg-gradient-to-br from-rose-400 to-sapphire-400 text-sm font-semibold text-white"
+                  >
+                    {name}
+                  </div>
                 ))}
               </div>
               <div>

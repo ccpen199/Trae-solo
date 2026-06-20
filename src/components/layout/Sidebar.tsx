@@ -57,7 +57,7 @@ const getNavSections = (role: UserRole | undefined): NavSection[] => {
       title: '工作台',
       items: [
         {
-          href: '/',
+          href: '/dashboard',
           label: '仪表盘',
           icon: <LayoutDashboard className="w-5 h-5" />,
           roles: allRoles,
@@ -232,9 +232,6 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   })).filter((section) => section.items.length > 0);
 
   const isActive = (href: string) => {
-    if (href === '/') {
-      return location.pathname === '/';
-    }
     return location.pathname === href || location.pathname.startsWith(href + '/');
   };
 

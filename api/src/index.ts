@@ -13,6 +13,7 @@ import securityRoutes from './routes/security';
 import agencyRoutes from './routes/agency';
 
 const app: Express = express();
+const HOST = '127.0.0.1';
 const PORT = process.env.API_PORT ? parseInt(process.env.API_PORT, 10) : 3001;
 
 app.use(helmet({
@@ -109,10 +110,10 @@ app.use((err: ApiError, _req: Request, res: Response, _next: NextFunction): void
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`\n🚀 Talent Platform API Server`);
-  console.log(`📡 服务器运行在: http://localhost:${PORT}`);
-  console.log(`🏥 健康检查: http://localhost:${PORT}/api/health`);
+  console.log(`📡 服务器运行在: http://${HOST}:${PORT}`);
+  console.log(`🏥 健康检查: http://${HOST}:${PORT}/api/health`);
   console.log(`🌍 环境: ${process.env.NODE_ENV || 'development'}`);
   console.log(`⏰ 启动时间: ${new Date().toLocaleString()}\n`);
 });

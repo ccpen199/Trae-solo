@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useNavigate, Link } from "react-router-dom"
@@ -142,6 +142,7 @@ const Register = () => {
   const {
     register: registerStep1,
     handleSubmit: handleStep1Submit,
+    control: step1Control,
     formState: { errors: step1Errors },
     watch: watchStep1,
     reset: resetStep1,
@@ -168,6 +169,7 @@ const Register = () => {
   const {
     register: registerStep3,
     handleSubmit: handleStep3Submit,
+    control: step3Control,
     formState: { errors: step3Errors },
     reset: resetStep3,
   } = useForm<Step3Values>({
@@ -230,7 +232,7 @@ const Register = () => {
     })
 
     if (success) {
-      navigate("/")
+      navigate("/dashboard")
     }
   }
 
@@ -323,21 +325,27 @@ const Register = () => {
                   <label className="block text-sm font-medium text-midnight-200">
                     选择角色
                   </label>
-                  <RadioGroup
-                    defaultValue="artist"
-                    className="grid grid-cols-1 gap-2"
-                    {...registerStep1("role")}
-                  >
-                    {roleOptions.map((option) => (
-                      <RadioGroupItem
-                        key={option.value}
-                        value={option.value}
-                        label={option.label}
-                        description={option.description}
-                        icon={option.icon}
-                      />
-                    ))}
-                  </RadioGroup>
+                  <Controller
+                    name="role"
+                    control={step1Control}
+                    render={({ field }) => (
+                      <RadioGroup
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        className="grid grid-cols-1 gap-2"
+                      >
+                        {roleOptions.map((option) => (
+                          <RadioGroupItem
+                            key={option.value}
+                            value={option.value}
+                            label={option.label}
+                            description={option.description}
+                            icon={option.icon}
+                          />
+                        ))}
+                      </RadioGroup>
+                    )}
+                  />
                   {step1Errors.role && (
                     <p className="text-sm text-red-400 animate-fade-in">
                       {step1Errors.role.message}
@@ -460,17 +468,24 @@ const Register = () => {
                   {...registerStep1("confirmPassword")}
                 />
 
-                <Checkbox
-                  label="我已阅读并同意"
-                  description={
-                    <span>
-                      <Link to="/terms" className="text-rose-400 hover:text-rose-300">服务条款</Link>
-                      {" 和 "}
-                      <Link to="/privacy" className="text-rose-400 hover:text-rose-300">隐私政策</Link>
-                    </span>
-                  }
-                  error={step1Errors.agreeTerms?.message}
-                  {...registerStep1("agreeTerms")}
+                <Controller
+                  name="agreeTerms"
+                  control={step1Control}
+                  render={({ field }) => (
+                    <Checkbox
+                      label="我已阅读并同意"
+                      description={
+                        <span>
+                          <Link to="/terms" className="text-rose-400 hover:text-rose-300">服务条款</Link>
+                          {" 和 "}
+                          <Link to="/privacy" className="text-rose-400 hover:text-rose-300">隐私政策</Link>
+                        </span>
+                      }
+                      error={step1Errors.agreeTerms?.message}
+                      checked={Boolean(field.value)}
+                      onCheckedChange={(checked) => field.onChange(Boolean(checked))}
+                    />
+                  )}
                 />
 
                 <Button type="submit" size="lg" className="w-full" loading={isLoading}>
@@ -637,11 +652,18 @@ const Register = () => {
                   </div>
                 </div>
 
-                <Checkbox
-                  label="我同意进行实名认证"
-                  description="本人确认所提供的身份信息真实有效，并同意平台依法依规进行身份核验"
-                  error={step3Errors.agreeVerification?.message}
-                  {...registerStep3("agreeVerification")}
+                <Controller
+                  name="agreeVerification"
+                  control={step3Control}
+                  render={({ field }) => (
+                    <Checkbox
+                      label="我同意进行实名认证"
+                      description="本人确认所提供的身份信息真实有效，并同意平台依法依规进行身份核验"
+                      error={step3Errors.agreeVerification?.message}
+                      checked={Boolean(field.value)}
+                      onCheckedChange={(checked) => field.onChange(Boolean(checked))}
+                    />
+                  )}
                 />
 
                 <div className="flex gap-4">
@@ -667,7 +689,7 @@ const Register = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-midnight-400">
               已有账户？{" "}
-              <Link to="/auth/login" className="text-rose-400 hover:text-rose-300 font-medium">
+              <Link to="/login" className="text-rose-400 hover:text-rose-300 font-medium">
                 立即登录
               </Link>
             </p>
