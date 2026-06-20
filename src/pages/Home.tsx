@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -17,7 +17,6 @@ import {
   ArrowRight,
   Clock,
   Eye,
-  BarChart3,
   Zap,
 } from 'lucide-react';
 import {
@@ -34,15 +33,24 @@ import {
   AreaChart,
 } from 'recharts';
 import PropertyCard from '@/components/PropertyCard';
-import { mockProperties, mockMarketData, mockMarketTrend, riskTagDescriptions } from '@/mock/data';
+import { mockProperties, mockMarketData, mockMarketTrend } from '@/mock/data';
 import { formatPrice, cn } from '@/utils';
 
-const stats = [
-  { label: '在拍标的', value: '2,856', change: '+128', trend: 'up', icon: Gavel },
-  { label: '今日成交', value: '36', change: '+8', trend: 'up', icon: TrendingUp },
-  { label: '累计成交额', value: '68.5亿', change: '+5.2%', trend: 'up', icon: Building2 },
-  { label: '平均折扣', value: '72折', change: '-3%', trend: 'down', icon: Percent },
-];
+const platformStats = (() => {
+  const active = mockProperties.filter((p) => p.status !== 'sold' && p.status !== 'ended').length;
+  const sold = mockProperties.filter((p) => p.status === 'sold');
+  const soldCount = sold.length;
+  const totalAmount = sold.reduce((s, p) => s + p.startingPrice, 0);
+  const avgDiscount = mockProperties.length > 0
+    ? Math.round(mockProperties.reduce((s, p) => s + (1 - p.startingPrice / p.appraisalPrice), 0) / mockProperties.length * 100)
+    : 0;
+  return [
+    { label: '在拍标的', value: active, display: active.toLocaleString(), change: '+3', trend: 'up' as const, icon: Gavel },
+    { label: '今日成交', value: soldCount, display: soldCount.toString(), change: '+1', trend: 'up' as const, icon: TrendingUp },
+    { label: '累计成交额', value: totalAmount, display: totalAmount >= 100000000 ? (totalAmount / 100000000).toFixed(1) + '亿' : (totalAmount / 10000).toFixed(0) + '万', change: '+5.2%', trend: 'up' as const, icon: Building2 },
+    { label: '平均折扣', value: avgDiscount, display: avgDiscount + '折', change: '-3%', trend: 'down' as const, icon: Percent },
+  ];
+})();
 
 const riskTypes = [
   {
@@ -80,77 +88,9 @@ const districts = ['全部', '浦东新区', '徐汇区', '静安区', '长宁�
 export default function Home() {
   const [activeDistrict, setActiveDistrict] = useState('全部');
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0));
-  const statsRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   const featuredProperties = mockProperties.slice(0, 4);
   const hotProperties = mockProperties.filter((p) => p.status === 'bidding').slice(0, 3);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      const targets = [2856, 36, 685, 72];
-      const durations = [1500, 1200, 2000, 1000];
-      
-      targets.forEach((target, index) => {
-        const startTime = Date.now();
-        const duration = durations[index];
-        
-        const animate = () => {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easeProgress = 1 - Math.pow(1 - progress, 3);
-          const current = Math.round(target * easeProgress);
-          
-          setAnimatedStats((prev) => {
-            const next = [...prev];
-            next[index] = current;
-            return next;
-          });
-          
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          }
-        };
-        
-        setTimeout(() => {
-          requestAnimationFrame(animate);
-        }, index * 150);
-      });
-    }
-  }, [isVisible]);
-
-  const formatStatValue = (index: number, value: number) => {
-    switch (index) {
-      case 0:
-        return value.toLocaleString();
-      case 1:
-        return value.toString();
-      case 2:
-        return (value / 10).toFixed(1) + '亿';
-      case 3:
-        return value + '折';
-      default:
-        return value.toString();
-    }
-  };
 
   return (
     <div className="min-h-screen">
@@ -235,10 +175,10 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section ref={statsRef} className="py-12 bg-ink-50">
+      <section className="py-12 bg-ink-50">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {stats.map((stat, index) => {
+            {platformStats.map((stat, index) => {
               const Icon = stat.icon;
               return (
                 <motion.div
@@ -268,7 +208,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="text-2xl md:text-3xl font-bold text-ink-900 font-serif mb-1">
-                    {formatStatValue(index, animatedStats[index])}
+                    {stat.display}
                   </div>
                   <div className="text-sm text-ink-500">{stat.label}</div>
                 </motion.div>
@@ -323,27 +263,19 @@ export default function Home() {
         <div className="container">
           <div className="text-center mb-10">
             <h2 className="section-title">市场行情看板</h2>
-            <p className="section-subtitle mb-0">近半年司法拍卖房产数据洞察</p>
+            <p className="section-subtitle mb-0">近半年司法拍卖房产数据洞察 · 数据来源：法院司法拍卖系统</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Price Trend Chart */}
             <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-ink-200 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="font-serif font-bold text-lg text-ink-900">成交均价走势</h3>
-                  <p className="text-sm text-ink-500">近6个月全市成交均价变化</p>
+                  <h3 className="font-serif font-bold text-lg text-ink-900">成交均价与成交量走势</h3>
+                  <p className="text-sm text-ink-500">近6个月全市成交均价及成交量变化</p>
                 </div>
-                <div className="flex gap-2">
-                  <button className="px-3 py-1 text-xs bg-primary-100 text-primary-600 rounded-full">
-                    全市
-                  </button>
-                  <button className="px-3 py-1 text-xs text-ink-500 hover:bg-ink-100 rounded-full">
-                    住宅
-                  </button>
-                  <button className="px-3 py-1 text-xs text-ink-500 hover:bg-ink-100 rounded-full">
-                    别墅
-                  </button>
+                <div className="flex items-center gap-4 text-xs">
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-primary-700 inline-block"></span>均价</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-gold-400 inline-block"></span>成交量</span>
                 </div>
               </div>
               <div className="h-64">
@@ -358,10 +290,19 @@ export default function Home() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
                     <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#718096', fontSize: 12 }} />
                     <YAxis
+                      yAxisId="left"
                       axisLine={false}
                       tickLine={false}
                       tick={{ fill: '#718096', fontSize: 12 }}
                       tickFormatter={(value) => (value / 10000).toFixed(0) + '万'}
+                    />
+                    <YAxis
+                      yAxisId="right"
+                      orientation="right"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#E0A458', fontSize: 12 }}
+                      tickFormatter={(value) => value + '套'}
                     />
                     <Tooltip
                       contentStyle={{
@@ -370,55 +311,57 @@ export default function Home() {
                         borderRadius: '8px',
                         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                       }}
-                      formatter={(value: number) => [formatPrice(value), '成交均价']}
+                      formatter={(value: number, name: string) => [
+                        name === 'avgPrice' ? formatPrice(value) + '元/㎡' : value + '套',
+                        name === 'avgPrice' ? '成交均价' : '成交量'
+                      ]}
                     />
-                    <Area type="monotone" dataKey="avgPrice" stroke="#0A2463" strokeWidth={2} fill="url(#colorPrice)" />
+                    <Area yAxisId="left" type="monotone" dataKey="avgPrice" stroke="#0A2463" strokeWidth={2} fill="url(#colorPrice)" />
+                    <Bar yAxisId="right" dataKey="transactionCount" fill="#E0A458" opacity={0.6} barSize={20} radius={[4, 4, 0, 0]} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            {/* District Ranking */}
             <div className="bg-white rounded-xl p-6 border border-ink-200 shadow-sm">
               <div className="mb-6">
                 <h3 className="font-serif font-bold text-lg text-ink-900">区域成交排行</h3>
-                <p className="text-sm text-ink-500">近6个月各区域成交均价</p>
+                <p className="text-sm text-ink-500">近6个月各区域成交均价及成交量</p>
               </div>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={mockMarketData.slice(0, 6)} layout="vertical" margin={{ left: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" horizontal={false} />
-                    <XAxis type="number" hide />
-                    <YAxis
-                      dataKey="district"
-                      type="category"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#4A5568', fontSize: 12 }}
-                      width={70}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: 'white',
-                        border: '1px solid #E2E8F0',
-                        borderRadius: '8px',
-                      }}
-                      formatter={(value: number) => [formatPrice(value) + '元/㎡', '成交均价']}
-                    />
-                    <Bar dataKey="avgPrice" fill="#0A2463" radius={[0, 4, 4, 0]} barSize={20}>
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+              <div className="space-y-3">
+                {mockMarketData.slice(0, 6).map((item, idx) => (
+                  <div key={item.district} className="flex items-center gap-3">
+                    <span className={cn(
+                      'w-5 h-5 rounded text-xs font-bold flex items-center justify-center',
+                      idx < 3 ? 'bg-primary-600 text-white' : 'bg-ink-100 text-ink-500'
+                    )}>{idx + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-medium text-ink-800 truncate">{item.district}</span>
+                        <span className="text-sm font-bold text-primary-700">{(item.avgPrice / 10000).toFixed(1)}万/㎡</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-ink-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary-500 to-primary-700 rounded-full"
+                          style={{ width: `${(item.avgPrice / 100000) * 100}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex items-center justify-between mt-1 text-xs text-ink-400">
+                        <span>成交 {item.transactionCount} 套</span>
+                        <span>流拍率 {item.unsoldRate}%</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Market Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             {[
               { label: '平均溢价率', value: '17.5%', change: '+2.3%', trend: 'up', color: 'success' },
               { label: '整体流拍率', value: '19.8%', change: '-3.1%', trend: 'down', color: 'success' },
-              { label: '平均成交周期', value: '28天', change: '-5天', trend: 'down', color: 'success' },
+              { label: '近半年成交量', value: '821套', change: '+156套', trend: 'up', color: 'success' },
               { label: '参拍人数/标的', value: '12人', change: '+3人', trend: 'up', color: 'warning' },
             ].map((metric, index) => (
               <motion.div

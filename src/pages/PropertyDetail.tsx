@@ -279,7 +279,7 @@ export default function PropertyDetail() {
                 <div className="flex items-center gap-2">
                   <Home className="w-4 h-4 text-ink-400" />
                   <span className="text-ink-600 text-sm">
-                    <span className="text-ink-400">户型</span> {property.rooms}室
+                    <span className="text-ink-400">户型</span> {property.rooms}室{property.halls}厅
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -337,7 +337,7 @@ export default function PropertyDetail() {
                           { label: '所在区域', value: property.district },
                           { label: '详细地址', value: property.address },
                           { label: '建筑面积', value: property.area + '㎡' },
-                          { label: '房屋户型', value: property.rooms + '室2厅1厨2卫' },
+                          { label: '房屋户型', value: property.rooms + '室' + property.halls + '厅1厨2卫' },
                           { label: '所在楼层', value: property.floor },
                           { label: '建筑朝向', value: property.orientation },
                           { label: '装修情况', value: property.decoration || '简装' },

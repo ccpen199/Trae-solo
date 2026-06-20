@@ -22,6 +22,9 @@ import {
   Calculator,
   Clock,
   Sparkles,
+  Wallet,
+  UserCheck,
+  Stamp,
 } from 'lucide-react';
 import {
   RadarChart,
@@ -30,10 +33,6 @@ import {
   PolarRadiusAxis,
   Radar,
   ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
   Tooltip,
 } from 'recharts';
 import { useCompareStore } from '@/store';
@@ -79,9 +78,52 @@ const compareDimensions = [
   ]},
 ];
 
+function CandidateCard({ property, isFull, onAdd }: { property: Property; isFull: boolean; onAdd: () => void }) {
+  return (
+    <div
+      className={cn(
+        'border rounded-lg overflow-hidden transition-all',
+        isFull
+          ? 'opacity-50 cursor-not-allowed'
+          : 'hover:border-primary-300 hover:shadow-md cursor-pointer'
+      )}
+      onClick={() => { if (!isFull) onAdd(); }}
+    >
+      <div className="flex">
+        <div className="w-24 h-24 flex-shrink-0">
+          <img
+            src={property.images[0]}
+            alt={property.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="p-3 flex-1 min-w-0">
+          <h4 className="font-medium text-ink-900 text-sm line-clamp-2 mb-1">
+            {property.title}
+          </h4>
+          <p className="text-xs text-ink-500 line-clamp-1 mb-1">
+            {property.address}
+          </p>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs text-ink-400">{property.district}</span>
+            <span className="text-xs text-ink-300">|</span>
+            <span className="text-xs text-ink-400">{property.rooms}室{property.halls}厅</span>
+            <span className="text-xs text-ink-300">|</span>
+            <span className="text-xs text-ink-400">{property.area}㎡</span>
+          </div>
+          <div className="text-primary-600 font-bold font-serif">
+            ¥{formatPrice(property.startingPrice)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Compare() {
   const { compareList, removeFromCompare, addToCompare, clearCompare, maxCompare } = useCompareStore();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['basic', 'price', 'auction', 'risk']);
 
   const toggleCategory = (key: string) => {
@@ -90,9 +132,29 @@ export default function Compare() {
     );
   };
 
-  const availableProperties = mockProperties.filter(
+  const primaryDistrict = compareList.length > 0 ? compareList[0].district : null;
+
+  const allAvailable = mockProperties.filter(
     (p) => !compareList.find((c) => c.id === p.id)
   );
+
+  const sameDistrictProperties = useMemo(() => {
+    if (!primaryDistrict) return allAvailable;
+    return allAvailable.filter((p) => p.district === primaryDistrict);
+  }, [allAvailable, primaryDistrict]);
+
+  const otherDistrictProperties = useMemo(() => {
+    if (!primaryDistrict) return [];
+    return allAvailable.filter((p) => p.district !== primaryDistrict);
+  }, [allAvailable, primaryDistrict]);
+
+  const displayedAvailable = selectedDistrict
+    ? allAvailable.filter((p) => p.district === selectedDistrict)
+    : allAvailable;
+
+  const districtsInAvailable = [...new Set(allAvailable.map((p) => p.district))];
+
+  const gridCols = compareList.length >= maxCompare ? compareList.length + 1 : compareList.length + 2;
 
   const scores = useMemo(() => {
     return compareList.map((p) => calculateScore(p));
@@ -127,7 +189,7 @@ export default function Compare() {
       case 'area':
         return `${property.area}㎡`;
       case 'rooms':
-        return `${property.rooms}室2厅`;
+        return `${property.rooms}室${property.halls}厅`;
       case 'buildingAge':
         return property.buildingAge ? `${property.buildingAge}年` : '-';
       case 'decoration':
@@ -285,8 +347,7 @@ export default function Compare() {
 
         {/* Compare Matrix */}
         <div className="bg-white rounded-xl border border-ink-200 overflow-hidden">
-          {/* Property Headers */}
-          <div className="grid grid-cols-4 border-b border-ink-200 bg-ink-50">
+          <div className="border-b border-ink-200 bg-ink-50" style={{ display: 'grid', gridTemplateColumns: `repeat(${gridCols}, 1fr)` }}>
             <div className="p-4 font-medium text-ink-700 sticky left-0 bg-ink-50 z-10">
               对比维度
             </div>
@@ -341,7 +402,8 @@ export default function Compare() {
               <div key={category.key} className="border-b border-ink-100 last:border-b-0">
                 <button
                   onClick={() => toggleCategory(category.key)}
-                  className="w-full grid grid-cols-4 bg-ink-50/50 hover:bg-ink-50 transition-colors"
+                  className="w-full bg-ink-50/50 hover:bg-ink-50 transition-colors"
+                  style={{ display: 'grid', gridTemplateColumns: `repeat(${gridCols}, 1fr)` }}
                 >
                   <div className="p-3 font-medium text-ink-800 flex items-center gap-2">
                     {isExpanded ? (
@@ -351,7 +413,7 @@ export default function Compare() {
                     )}
                     {category.label}
                   </div>
-                  <div className="col-span-3"></div>
+                  <div style={{ gridColumn: `span ${gridCols - 1}` }}></div>
                 </button>
 
                 {isExpanded && category.items.map((item, itemIndex) => {
@@ -361,9 +423,10 @@ export default function Compare() {
                     <div
                       key={item.key}
                       className={cn(
-                        'grid grid-cols-4 hover:bg-ink-50/30 transition-colors',
+                        'hover:bg-ink-50/30 transition-colors',
                         itemIndex % 2 === 0 ? 'bg-white' : 'bg-ink-50/20'
                       )}
+                      style={{ display: 'grid', gridTemplateColumns: `repeat(${gridCols}, 1fr)` }}
                     >
                       <div className="p-3 text-sm text-ink-600 flex items-center gap-2">
                         <Icon className="w-4 h-4 text-ink-400" />
@@ -420,6 +483,88 @@ export default function Compare() {
         </div>
 
         {/* Empty State */}
+        {compareList.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mt-6 bg-white rounded-xl border border-ink-200 p-6"
+          >
+            <h2 className="font-serif font-bold text-xl text-ink-900 mb-6 flex items-center gap-2">
+              <Gavel className="w-5 h-5 text-primary-600" />
+              交易流程闭环
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Wallet,
+                  title: '保证金监管',
+                  status: compareList.some((p) => p.status === 'deposit' || p.status === 'bidding') ? 'active' : 'pending',
+                  desc: '保证金通过银行第三方监管账户冻结，确保资金安全。竞拍未成功则全额退还。',
+                  detail: compareList.filter((p) => p.status === 'deposit' || p.status === 'bidding').length > 0
+                    ? `${compareList.filter((p) => p.status === 'deposit' || p.status === 'bidding').length}套标的需缴纳保证金`
+                    : '暂无待缴纳保证金标的',
+                },
+                {
+                  icon: UserCheck,
+                  title: '资质审核',
+                  status: 'pending',
+                  desc: '竞买人需提供资金证明、征信报告，通过平台审核后方可参与竞价。',
+                  detail: '请前往竞买中心完成资质认证',
+                },
+                {
+                  icon: Stamp,
+                  title: '成交确认',
+                  status: compareList.some((p) => p.status === 'sold') ? 'active' : 'pending',
+                  desc: '竞价成功后签署成交确认书，法院出具执行裁定书，完成过户登记。',
+                  detail: compareList.some((p) => p.status === 'sold') ? '已有标的成交' : '暂无成交标的',
+                },
+              ].map((step, idx) => {
+                const Icon = step.icon;
+                return (
+                  <div
+                    key={step.title}
+                    className={cn(
+                      'rounded-lg p-5 border-2 transition-all',
+                      step.status === 'active'
+                        ? 'border-primary-200 bg-primary-50/50'
+                        : 'border-ink-100 bg-ink-50/30'
+                    )}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={cn(
+                        'w-10 h-10 rounded-lg flex items-center justify-center',
+                        step.status === 'active' ? 'bg-primary-600 text-white' : 'bg-ink-100 text-ink-400'
+                      )}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-ink-900">{step.title}</h3>
+                        <span className={cn(
+                          'text-xs',
+                          step.status === 'active' ? 'text-primary-600' : 'text-ink-400'
+                        )}>
+                          {step.status === 'active' ? '进行中' : '待办理'}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-ink-500 mb-2 leading-relaxed">{step.desc}</p>
+                    <p className="text-xs text-ink-400">{step.detail}</p>
+                    <Link
+                      to="/auction"
+                      className="mt-3 inline-flex items-center text-xs text-primary-600 hover:text-primary-700 font-medium"
+                    >
+                      前往办理
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
         {compareList.length === 0 && (
           <div className="bg-white rounded-xl border border-ink-200 py-16 text-center">
             <div className="w-20 h-20 bg-ink-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -446,7 +591,6 @@ export default function Compare() {
         )}
       </div>
 
-      {/* Add Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <motion.div
@@ -455,9 +599,17 @@ export default function Compare() {
             className="bg-white rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden"
           >
             <div className="p-6 border-b border-ink-200 flex items-center justify-between">
-              <h3 className="font-serif font-bold text-xl text-ink-900">
-                添加对比标的
-              </h3>
+              <div>
+                <h3 className="font-serif font-bold text-xl text-ink-900">
+                  添加对比标的
+                </h3>
+                {primaryDistrict && (
+                  <p className="text-sm text-ink-500 mt-1">
+                    当前对比主区域：<span className="text-primary-600 font-medium">{primaryDistrict}</span>
+                    · 推荐优先选择同区域标的
+                  </p>
+                )}
+              </div>
               <button
                 onClick={() => setShowAddModal(false)}
                 className="text-ink-400 hover:text-ink-600"
@@ -466,61 +618,80 @@ export default function Compare() {
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto max-h-[60vh]">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {availableProperties.map((property) => {
-                  const isFull = compareList.length >= maxCompare;
-                  return (
-                    <div
-                      key={property.id}
-                      className={cn(
-                        'border rounded-lg overflow-hidden transition-all',
-                        isFull
-                          ? 'opacity-50 cursor-not-allowed'
-                          : 'hover:border-primary-300 hover:shadow-md cursor-pointer'
-                      )}
-                      onClick={() => {
-                        if (!isFull) {
-                          addToCompare(property);
-                          if (compareList.length + 1 >= maxCompare) {
-                            setShowAddModal(false);
-                          }
-                        }
-                      }}
-                    >
-                      <div className="flex">
-                        <div className="w-24 h-24 flex-shrink-0">
-                          <img
-                            src={property.images[0]}
-                            alt={property.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="p-3 flex-1 min-w-0">
-                          <h4 className="font-medium text-ink-900 text-sm line-clamp-2 mb-1">
-                            {property.title}
-                          </h4>
-                          <p className="text-xs text-ink-500 line-clamp-1 mb-2">
-                            {property.address}
-                          </p>
-                          <div className="text-primary-600 font-bold font-serif">
-                            ¥{formatPrice(property.startingPrice)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="px-6 pt-4 flex gap-2 flex-wrap">
+              <button
+                onClick={() => setSelectedDistrict(null)}
+                className={cn(
+                  'px-3 py-1.5 text-xs rounded-full transition-colors',
+                  !selectedDistrict ? 'bg-primary-600 text-white' : 'bg-ink-50 text-ink-600 hover:bg-ink-100'
+                )}
+              >
+                全部区域
+              </button>
+              {districtsInAvailable.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => setSelectedDistrict(d)}
+                  className={cn(
+                    'px-3 py-1.5 text-xs rounded-full transition-colors',
+                    selectedDistrict === d ? 'bg-primary-600 text-white' : d === primaryDistrict ? 'bg-gold-50 text-gold-700 border border-gold-200' : 'bg-ink-50 text-ink-600 hover:bg-ink-100'
+                  )}
+                >
+                  {d}
+                  {d === primaryDistrict && <span className="ml-1">★</span>}
+                </button>
+              ))}
+            </div>
 
-              {availableProperties.length === 0 && (
+            <div className="p-6 overflow-y-auto max-h-[55vh]">
+              {primaryDistrict && sameDistrictProperties.length > 0 && !selectedDistrict && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium text-ink-800 mb-3 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-primary-600" />
+                    同区域推荐 · {primaryDistrict}
+                    <span className="text-xs text-ink-400">（对比更直观）</span>
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {sameDistrictProperties.map((property) => (
+                      <CandidateCard key={property.id} property={property} isFull={compareList.length >= maxCompare} onAdd={() => {
+                        addToCompare(property);
+                        if (compareList.length + 1 >= maxCompare) setShowAddModal(false);
+                      }} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {(selectedDistrict ? displayedAvailable : otherDistrictProperties).length > 0 && (
+                <div>
+                  {primaryDistrict && !selectedDistrict && (
+                    <h4 className="text-sm font-medium text-ink-800 mb-3 flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-ink-400" />
+                      其他区域
+                    </h4>
+                  )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {(selectedDistrict ? displayedAvailable : otherDistrictProperties).map((property) => (
+                      <CandidateCard key={property.id} property={property} isFull={compareList.length >= maxCompare} onAdd={() => {
+                        addToCompare(property);
+                        if (compareList.length + 1 >= maxCompare) setShowAddModal(false);
+                      }} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {displayedAvailable.length === 0 && (
                 <div className="text-center py-8 text-ink-500">
                   暂无可添加的标的
                 </div>
               )}
             </div>
 
-            <div className="p-4 bg-ink-50 border-t border-ink-200 flex justify-end">
+            <div className="p-4 bg-ink-50 border-t border-ink-200 flex items-center justify-between">
+              <span className="text-sm text-ink-500">
+                已选 {compareList.length} / {maxCompare} 套
+              </span>
               <button
                 onClick={() => setShowAddModal(false)}
                 className="btn-primary"

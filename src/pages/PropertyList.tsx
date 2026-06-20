@@ -163,7 +163,7 @@ export default function PropertyList() {
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">
               全部标的
             </h1>
-            <p className="text-primary-200">共找到 <span className="text-gold-400 font-medium">{mockProperties.length}</span> 套司法拍卖房产</p>
+            <p className="text-primary-200">共找到 <span className="text-gold-400 font-medium">{filteredProperties.length}</span> 套司法拍卖房产</p>
           </motion.div>
         </div>
       </div>
@@ -506,7 +506,7 @@ export default function PropertyList() {
                         <div className="flex flex-wrap gap-3 text-sm text-ink-600">
                           <span>{property.district}</span>
                           <span className="text-ink-300">|</span>
-                          <span>{property.rooms}室</span>
+                          <span>{property.rooms}室{property.halls}厅</span>
                           <span className="text-ink-300">|</span>
                           <span>{property.area}㎡</span>
                           <span className="text-ink-300">|</span>

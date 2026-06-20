@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Eye, Users, Clock, Plus, Check, AlertTriangle } from 'lucide-react';
+import { Eye, Users, Clock, Plus, Check, AlertTriangle, Shield, Camera, Calculator, FileSearch } from 'lucide-react';
 import type { Property } from '@/types';
 import { formatPrice, getAuctionStatusLabel, getAuctionStatusClass, getCountdown, cn, getRiskLevelLabel, getRiskLevelClass } from '@/utils';
 import { useCompareStore } from '@/store';
 import { useState, useEffect } from 'react';
+import { getPropertyReport } from '@/mock/data';
 
 interface PropertyCardProps {
   property: Property;
@@ -104,7 +105,7 @@ export default function PropertyCard({ property, variant = 'default' }: Property
         </p>
 
         <div className="flex items-center gap-4 text-sm text-ink-600 mb-3">
-          <span>{property.rooms}室{Math.floor(property.area / property.rooms)}厅</span>
+          <span>{property.rooms}室{property.halls}厅</span>
           <span className="text-ink-300">|</span>
           <span>{property.area}㎡</span>
           <span className="text-ink-300">|</span>
@@ -123,6 +124,32 @@ export default function PropertyCard({ property, variant = 'default' }: Property
             </span>
           </div>
           <span>{property.court.slice(0, 6)}...</span>
+        </div>
+
+        <div className="mt-3 pt-3 border-t border-ink-100 grid grid-cols-4 gap-1">
+          {[
+            { icon: Shield, label: '产权报告', color: getPropertyReport(property.id) ? 'text-primary-600 bg-primary-50' : 'text-ink-400 bg-ink-50', href: `/detail/${property.id}?tab=report` },
+            { icon: Camera, label: 'VR全景', color: 'text-gold-600 bg-gold-50', href: `/detail/${property.id}?tab=vr` },
+            { icon: Calculator, label: '税费测算', color: 'text-success-600 bg-success-50', href: `/detail/${property.id}?tab=tax` },
+            { icon: FileSearch, label: '尽调文档', color: 'text-ink-600 bg-ink-50', href: `/detail/${property.id}?tab=docs` },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                to={item.href}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                className={cn(
+                  'flex flex-col items-center gap-0.5 py-1.5 rounded-md text-xs transition-colors',
+                  item.color,
+                  'hover:opacity-80'
+                )}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </div>
 
         {(property.status === 'bidding' || property.status === 'deposit') && !countdown.isEnded && (

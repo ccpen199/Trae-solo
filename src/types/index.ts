@@ -9,6 +9,7 @@ export interface Property {
   district: string;
   area: number;
   rooms: number;
+  halls: number;
   floor: string;
   orientation: string;
   startingPrice: number;
