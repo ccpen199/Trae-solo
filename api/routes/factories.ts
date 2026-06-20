@@ -32,4 +32,17 @@ router.post('/:id/whitelist-status', (req: Request, res: Response) => {
   res.json({ success: true, data: updated });
 });
 
+// PATCH /api/factories/:id/whitelist-status - 更新工厂白名单状态 (别名
+router.patch('/:id/whitelist-status', (req: Request, res: Response) => {
+  const { status } = req.body;
+  if (!['whitelist', 'graylist', 'blacklist'].includes(status)) {
+    return res.status(400).json({ success: false, error: '无效的白名单状态' });
+  }
+  const updated = repo.updateFactoryWhitelist(req.params.id, status as any);
+  if (!updated) {
+    return res.status(404).json({ success: false, error: '工厂不存在' });
+  }
+  res.json({ success: true, data: updated });
+});
+
 export default router;

@@ -17,8 +17,9 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
 import JobCard from '@/components/JobCard';
-import type { Job, Factory } from '@shared/types';
+import type { Job, Factory, Worker } from '@shared/types';
 
 type SortType = 'distance' | 'salary' | 'rating';
 
@@ -26,11 +27,11 @@ interface MatchedJob extends Job {
   factory?: Factory;
 }
 
-const MOCK_WORKER_ID = 'w-001';
+const WORKER_ID = 'w-001';
 
 export default function WorkerHome() {
   const navigate = useNavigate();
-  const [location, setLocation] = useState('苏州工业园·湖东');
+  const [location, setLocation] = useState('定位中...');
   const [isLocating, setIsLocating] = useState(false);
   const [jobs, setJobs] = useState<MatchedJob[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,72 +57,25 @@ export default function WorkerHome() {
   const fetchJobs = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/jobs/match?lat=31.3&lng=120.6&radius=50');
-      const json = await res.json();
-      if (json.success && json.data) {
-        const enriched = await Promise.all(
-          json.data.map(async (job: Job) => {
-            try {
-              const jRes = await fetch(`/api/jobs/${job.id}`);
-              const jJson = await jRes.json();
-              if (jJson.success) {
-                return { ...job, factory: jJson.data.factory };
-              }
-            } catch {}
-            return job;
-          })
-        );
-        setJobs(enriched);
+      const workerRes = await get<Worker>(`/workers/${WORKER_ID}`);
+      let lat = 31.3;
+      let lng = 120.6;
+      let regionName = '苏州工业园';
+      
+      if (workerRes.success && workerRes.data) {
+        lat = workerRes.data.currentLocation.lat;
+        lng = workerRes.data.currentLocation.lng;
+        regionName = workerRes.data.currentLocation.region;
+      }
+      
+      setLocation(`${regionName}·周边`);
+      
+      const res = await get<MatchedJob[]>(`/jobs/match?lat=${lat}&lng=${lng}&radius=50`);
+      if (res.success && res.data) {
+        setJobs(res.data);
       }
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
-      const mockJobs: MatchedJob[] = Array.from({ length: 10 }, (_, i) => ({
-        id: `job_mock_${i}`,
-        factoryId: `f_${(i % 3) + 1}`,
-        title: ['电子厂普工', '流水线操作工', '仓库分拣员', '品检QC', '装配工人', '物料员', 'CNC学徒', '包装工', '注塑机手', '焊工'][i],
-        salaryRange: {
-          min: 5000 + Math.floor(i * 300),
-          max: 7500 + Math.floor(i * 400),
-        },
-        workHours: i % 2 === 0 ? '两班倒·8H' : '长白班·10H',
-        overtimeRule: '工作日1.5倍 / 周末2倍 / 节假日3倍',
-        overtimeRate: { weekday: 1.5, weekend: 2, holiday: 3 },
-        board: { provided: i % 2 === 0, costPerMonth: i % 3 === 0 ? 0 : 300 },
-        lodging: { provided: true, costPerMonth: 0, roomType: '4-6人间' },
-        processNodes: [],
-        requirements: ['18-45岁', '身体健康', '吃苦耐劳'],
-        benefits: ['五险一金', '包吃住', '节日礼品', '年终奖', '免费体检'].slice(0, 3 + (i % 3)),
-        status: 'published',
-        vacancy: 5 + (i % 10) * 2,
-        distanceKm: 0.5 + i * 1.2,
-        createdAt: new Date().toISOString(),
-        urgent: i % 4 === 0,
-        highSubsidy: i % 3 === 0,
-        factory: {
-          id: `f_${(i % 3) + 1}`,
-          name: ['苏州立讯电子', '昆山仁宝科技', '苏州博世汽车'][i % 3],
-          logo: '',
-          region: '苏州',
-          address: '苏州工业园区xxx路xxx号',
-          ehsRating: (['A', 'B', 'A'] as const)[i % 3],
-          ehsScore: 95 - i * 2,
-          dailyCapacity: 100000,
-          capacityUtilization: 85,
-          seasonNote: '6-8月为旺季，订单稳定',
-          interviewSummaries: [{
-            id: 's1', keywords: ['管理规范', '环境好', '伙食棒'],
-            satisfaction: (5 - (i % 2)) as 1 | 2 | 3 | 4 | 5,
-            summary: '工厂整体不错，管理规范，住宿条件好。',
-            recordedAt: new Date().toISOString()
-          }],
-          safetyRecords: [],
-          whitelistStatus: 'whitelist',
-          createdAt: new Date().toISOString(),
-          industry: ['电子制造', '精密加工', '汽车零部件'][i % 3],
-          scale: ['1000人以上', '500-1000人', '1000人以上'][i % 3],
-        },
-      }));
-      setJobs(mockJobs);
     } finally {
       setLoading(false);
     }
@@ -133,8 +87,9 @@ export default function WorkerHome() {
 
   const handleRefreshLocation = () => {
     setIsLocating(true);
+    setLocation('正在定位...');
     setTimeout(() => {
-      setLocation('苏州工业园·湖东（已刷新）');
+      fetchJobs();
       setIsLocating(false);
     }, 1000);
   };
@@ -154,6 +109,7 @@ export default function WorkerHome() {
   const filteredJobs = sortedJobs.filter(job => {
     if (keyword && !job.title.includes(keyword)) return false;
     if (salaryMin && job.salaryRange.max < parseInt(salaryMin)) return false;
+    if (region !== '全部' && job.factory?.region && !job.factory.region.includes(region) && !region.includes(job.factory.region)) return false;
     return true;
   });
 
@@ -294,10 +250,16 @@ export default function WorkerHome() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button className="flex-1 py-2 rounded-xl text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <button 
+                    onClick={() => { setKeyword(''); setSalaryMin(''); setRegion('全部'); }}
+                    className="flex-1 py-2 rounded-xl text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  >
                     重置
                   </button>
-                  <button className="flex-1 py-2 rounded-xl text-sm text-white bg-brand-500 hover:bg-brand-600 transition-colors shadow-sm">
+                  <button 
+                    onClick={fetchJobs}
+                    className="flex-1 py-2 rounded-xl text-sm text-white bg-brand-500 hover:bg-brand-600 transition-colors shadow-sm"
+                  >
                     应用筛选
                   </button>
                 </div>
@@ -349,7 +311,7 @@ export default function WorkerHome() {
               </div>
               <p className="text-gray-500 text-sm">没有找到匹配的岗位</p>
               <button
-                onClick={() => { setKeyword(''); setSalaryMin(''); }}
+                onClick={() => { setKeyword(''); setSalaryMin(''); setRegion('全部'); }}
                 className="mt-3 text-brand-500 text-sm font-medium"
               >
                 清除筛选条件

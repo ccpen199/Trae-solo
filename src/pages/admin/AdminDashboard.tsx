@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 import type { CreditDistribution, InterviewOrder, ResignWarning } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
 
 const COLORS = ['#10B981', '#3B82F6', '#F59E0B', '#FF7A00', '#EF4444'];
 
@@ -17,50 +18,10 @@ interface DashboardSummary {
   workers: { total: number; verified: number; employed: number; avgCreditScore: number };
   orders: { total: number; today: number; employed: number; passed: number; successRate: number };
   warnings: { total: number; high: number; recentResignTotal: number };
+  market?: { totalVacancy: number; totalSeekers: number; avgSaturation: number; avgSalary: number };
 }
 
 interface BrokerRank { rank: number; name: string; rating: number; orders: number; region: string; }
-
-const mockSuccessRate = [
-  { month: '1月', rate: 68, count: 120 },
-  { month: '2月', rate: 72, count: 135 },
-  { month: '3月', rate: 65, count: 98 },
-  { month: '4月', rate: 78, count: 156 },
-  { month: '5月', rate: 82, count: 189 },
-  { month: '6月', rate: 76, count: 167 },
-];
-
-const mockRegionSupply = [
-  { region: '苏州', vacancy: 320, seekers: 280 },
-  { region: '昆山', vacancy: 256, seekers: 310 },
-  { region: '无锡', vacancy: 189, seekers: 175 },
-  { region: '上海', vacancy: 412, seekers: 380 },
-  { region: '杭州', vacancy: 198, seekers: 220 },
-  { region: '宁波', vacancy: 145, seekers: 130 },
-];
-
-const mockBrokerRanks: BrokerRank[] = [
-  { rank: 1, name: '张伟', rating: 4.9, orders: 156, region: '苏州工业园' },
-  { rank: 2, name: '李娜', rating: 4.8, orders: 142, region: '昆山高新区' },
-  { rank: 3, name: '王磊', rating: 4.7, orders: 128, region: '无锡新区' },
-  { rank: 4, name: '赵敏', rating: 4.6, orders: 115, region: '上海松江' },
-  { rank: 5, name: '刘强', rating: 4.5, orders: 102, region: '杭州余杭' },
-];
-
-const mockLatestOrders: (InterviewOrder & { workerAvatar?: string })[] = [
-  { id: 'ORD001', workerId: 'W001', workerName: '陈建国', workerPhone: '138****1234', jobId: 'J001', jobTitle: '电子装配工', factoryId: 'F001', factoryName: '富士康科技', scheduledDate: '2026-06-19', status: 'interviewing', timeline: [], createdAt: '2026-06-19T08:30:00Z', serviceFee: 150 },
-  { id: 'ORD002', workerId: 'W002', workerName: '刘美丽', workerPhone: '139****5678', jobId: 'J002', jobTitle: '品检员', factoryId: 'F002', factoryName: '立讯精密', scheduledDate: '2026-06-19', status: 'arrived', timeline: [], createdAt: '2026-06-19T09:15:00Z', serviceFee: 180 },
-  { id: 'ORD003', workerId: 'W003', workerName: '王志强', workerPhone: '137****9012', jobId: 'J003', jobTitle: '叉车司机', factoryId: 'F003', factoryName: '顺丰仓储', scheduledDate: '2026-06-19', status: 'passed', timeline: [], createdAt: '2026-06-19T10:00:00Z', serviceFee: 220 },
-  { id: 'ORD004', workerId: 'W004', workerName: '张秀兰', workerPhone: '136****3456', jobId: 'J004', jobTitle: '包装工', factoryId: 'F004', factoryName: '宝洁日化', scheduledDate: '2026-06-19', status: 'training_done', timeline: [], createdAt: '2026-06-19T10:45:00Z', serviceFee: 130 },
-  { id: 'ORD005', workerId: 'W005', workerName: '李海峰', workerPhone: '135****7890', jobId: 'J005', jobTitle: 'CNC操作员', factoryId: 'F005', factoryName: '比亚迪汽车', scheduledDate: '2026-06-19', status: 'pickup_scheduled', timeline: [], createdAt: '2026-06-19T11:30:00Z', serviceFee: 250 },
-  { id: 'ORD006', workerId: 'W006', workerName: '周桂英', workerPhone: '134****1122', jobId: 'J006', jobTitle: '缝纫工', factoryId: 'F006', factoryName: '申洲针织', scheduledDate: '2026-06-19', status: 'documents_copied', timeline: [], createdAt: '2026-06-19T12:15:00Z', serviceFee: 160 },
-];
-
-const mockWarnings: ResignWarning[] = [
-  { id: 'WRN001', factoryId: 'F001', factoryName: '富士康科技（昆山）', riskLevel: 'high', riskScore: 87, recentResignCount: 23, resignRate: 15.2, trend: 'up', topReasons: [{ reason: '加班强度大', count: 12 }, { reason: '管理方式', count: 8 }], keywords: ['加班多', '态度差', '罚款'], suggestion: '建议立即约谈工厂HR负责人，必要时降级处理', reportedAt: '2026-06-19T07:00:00Z' },
-  { id: 'WRN002', factoryId: 'F002', factoryName: '某某电子（苏州）', riskLevel: 'medium', riskScore: 65, recentResignCount: 14, resignRate: 9.8, trend: 'stable', topReasons: [{ reason: '薪资待遇', count: 7 }, { reason: '住宿条件', count: 5 }], keywords: ['工资低', '宿舍差'], suggestion: '建议关注后续两周离职数据，与工厂沟通改善方案', reportedAt: '2026-06-18T18:30:00Z' },
-  { id: 'WRN003', factoryId: 'F003', factoryName: '某某机械（无锡）', riskLevel: 'medium', riskScore: 58, recentResignCount: 9, resignRate: 7.5, trend: 'down', topReasons: [{ reason: '交通不便', count: 6 }], keywords: ['偏远', '无班车'], suggestion: '可协调增加交通补贴或安排集中接送', reportedAt: '2026-06-18T14:20:00Z' },
-];
 
 function StatCard({ icon: Icon, label, value, subValue, color, bgClass }: {
   icon: typeof Building2; label: string; value: string | number; subValue?: string; color: string; bgClass: string;
@@ -97,20 +58,48 @@ function getStatusBadge(status: string) {
   return <span className={cn('badge', cfg.cls)}>{cfg.label}</span>;
 }
 
+interface SuccessRateItem { month: string; rate: number; count: number; }
+interface RegionSupplyItem { region: string; vacancy: number; seekers: number; }
+
 export default function AdminDashboard() {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [creditDist, setCreditDist] = useState<CreditDistribution | null>(null);
+  const [latestOrders, setLatestOrders] = useState<InterviewOrder[]>([]);
+  const [warnings, setWarnings] = useState<ResignWarning[]>([]);
+  const [successRateData, setSuccessRateData] = useState<SuccessRateItem[]>([]);
+  const [regionSupplyData, setRegionSupplyData] = useState<RegionSupplyItem[]>([]);
+  const [brokerRanks, setBrokerRanks] = useState<BrokerRank[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      fetch('/api/dashboard/summary').then(r => r.json()),
-      fetch('/api/workers/credit-distribution').then(r => r.json()),
-    ]).then(([sumRes, cdRes]) => {
-      if (sumRes.success) setSummary(sumRes.data);
-      if (cdRes.success) setCreditDist(cdRes.data);
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    async function loadData() {
+      try {
+        const [sumRes, cdRes, ordersRes, warningsRes, srRes, rsRes, brRes] = await Promise.all([
+          get<DashboardSummary>('/dashboard/summary'),
+          get<CreditDistribution>('/workers/credit-distribution'),
+          get<InterviewOrder[]>('/interviews'),
+          get<ResignWarning[]>('/warnings/resign'),
+          get<SuccessRateItem[]>('/dashboard/success-rate-trend'),
+          get<RegionSupplyItem[]>('/dashboard/region-supply'),
+          get<BrokerRank[]>('/dashboard/broker-ranking'),
+        ]);
+
+        if (sumRes.success) setSummary(sumRes.data);
+        if (cdRes.success) setCreditDist(cdRes.data);
+        if (ordersRes.success && Array.isArray(ordersRes.data)) {
+          setLatestOrders(ordersRes.data.slice(0, 6));
+        }
+        if (warningsRes.success && Array.isArray(warningsRes.data)) {
+          setWarnings(warningsRes.data.slice(0, 3));
+        }
+        if (srRes.success && Array.isArray(srRes.data)) setSuccessRateData(srRes.data);
+        if (rsRes.success && Array.isArray(rsRes.data)) setRegionSupplyData(rsRes.data);
+        if (brRes.success && Array.isArray(brRes.data)) setBrokerRanks(brRes.data.slice(0, 5));
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
   }, []);
 
   const pieData = creditDist ? [
@@ -134,7 +123,7 @@ export default function AdminDashboard() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">管理后台</h1>
-          <p className="text-gray-500 text-sm mt-1">实时数据总览 · 2026年6月19日 周五</p>
+          <p className="text-gray-500 text-sm mt-1">实时数据总览 · {new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}</p>
         </div>
         <div className="flex items-center gap-3">
           <button className="btn-ghost gap-2">
@@ -166,7 +155,7 @@ export default function AdminDashboard() {
         <StatCard
           icon={CalendarCheck}
           label="今日预约面试"
-          value={mockLatestOrders.length}
+          value={summary?.orders.today ?? '--'}
           subValue={`本月成功率 ${summary?.orders.successRate ?? '--'}% · 通过 ${summary?.orders.passed ?? '--'} 人`}
           color="text-accent-600"
           bgClass="bg-accent-50"
@@ -212,7 +201,7 @@ export default function AdminDashboard() {
           </h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={mockSuccessRate}>
+              <LineChart data={successRateData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="#94A3B8" />
                 <YAxis tick={{ fontSize: 11 }} stroke="#94A3B8" />
@@ -231,7 +220,7 @@ export default function AdminDashboard() {
           </h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={mockRegionSupply}>
+              <BarChart data={regionSupplyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
                 <XAxis dataKey="region" tick={{ fontSize: 11 }} stroke="#94A3B8" />
                 <YAxis tick={{ fontSize: 11 }} stroke="#94A3B8" />
@@ -249,7 +238,7 @@ export default function AdminDashboard() {
             <Award className="w-5 h-5 text-yellow-500" /> 经纪人服务评分 TOP5
           </h3>
           <div className="space-y-3">
-            {mockBrokerRanks.map((b) => (
+            {brokerRanks.map((b) => (
               <div key={b.rank} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition">
                 <div className={cn(
                   'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shrink-0',
@@ -294,7 +283,10 @@ export default function AdminDashboard() {
           </div>
           <div className="overflow-x-auto -mx-2 px-2">
             <div className="min-w-[600px] space-y-2 max-h-[380px] overflow-y-auto pr-1">
-              {mockLatestOrders.map((o) => (
+              {latestOrders.length === 0 && (
+                <div className="text-center text-gray-400 py-12">暂无订单数据</div>
+              )}
+              {latestOrders.map((o) => (
                 <div key={o.id} className="flex items-center gap-4 p-3 rounded-xl border border-gray-100 hover:border-brand-100 hover:bg-brand-50/30 transition">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-semibold text-sm shrink-0">
                     {o.workerName.charAt(0)}
@@ -312,7 +304,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="text-right shrink-0">
                     {getStatusBadge(o.status)}
-                    <div className="text-xs text-gray-400 mt-1.5">{o.createdAt.slice(11, 16)}</div>
+                    <div className="text-xs text-gray-400 mt-1.5">{new Date(o.createdAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</div>
                   </div>
                 </div>
               ))}
@@ -330,7 +322,10 @@ export default function AdminDashboard() {
             </button>
           </div>
           <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
-            {mockWarnings.map((w) => (
+            {warnings.length === 0 && (
+              <div className="text-center text-gray-400 py-12">暂无预警数据</div>
+            )}
+            {warnings.map((w) => (
               <div key={w.id} className="p-4 rounded-xl border border-gray-100 hover:shadow-soft transition">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2">
@@ -349,7 +344,7 @@ export default function AdminDashboard() {
                       {w.trend === 'up' ? '↑ 上升' : w.trend === 'down' ? '↓ 下降' : '→ 稳定'}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-400">{w.reportedAt.slice(5, 16).replace('T', ' ')}</span>
+                  <span className="text-xs text-gray-400">{new Date(w.reportedAt).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
                 <div className="font-semibold text-gray-900 mb-1">{w.factoryName}</div>
                 <div className="flex items-center gap-4 text-xs text-gray-500 mb-2">

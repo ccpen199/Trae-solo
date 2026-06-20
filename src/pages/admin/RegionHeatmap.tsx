@@ -6,6 +6,15 @@ import {
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { RegionHeatmap as RegionHeatmapType } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
+
+interface RegionSummary {
+  totalRegions: number;
+  totalVacancy: number;
+  totalSeekers: number;
+  avgSalary: number;
+  avgSaturation: number;
+}
 
 interface RegionData extends RegionHeatmapType {
   regionName: string;
@@ -17,32 +26,16 @@ interface RegionData extends RegionHeatmapType {
   y: number;
 }
 
-const mockRegions: RegionData[] = [
-  { regionCode: 'R01', regionName: '苏州工业园', saturation: 92, vacancyCount: 420, jobSeekerCount: 380, avgSalary: 7200, x: 420, y: 220 },
-  { regionCode: 'R02', regionName: '苏州高新区', saturation: 78, vacancyCount: 285, jobSeekerCount: 310, avgSalary: 6800, x: 360, y: 250 },
-  { regionCode: 'R03', regionName: '苏州吴中区', saturation: 65, vacancyCount: 198, jobSeekerCount: 220, avgSalary: 6200, x: 400, y: 290 },
-  { regionCode: 'R04', regionName: '苏州相城区', saturation: 48, vacancyCount: 145, jobSeekerCount: 180, avgSalary: 5800, x: 380, y: 180 },
-  { regionCode: 'R05', regionName: '昆山陆家镇', saturation: 88, vacancyCount: 356, jobSeekerCount: 290, avgSalary: 7000, x: 510, y: 260 },
-  { regionCode: 'R06', regionName: '昆山张浦镇', saturation: 75, vacancyCount: 245, jobSeekerCount: 260, avgSalary: 6500, x: 500, y: 310 },
-  { regionCode: 'R07', regionName: '昆山高新区', saturation: 82, vacancyCount: 312, jobSeekerCount: 285, avgSalary: 6800, x: 470, y: 230 },
-  { regionCode: 'R08', regionName: '无锡新区', saturation: 58, vacancyCount: 178, jobSeekerCount: 165, avgSalary: 6400, x: 240, y: 220 },
-  { regionCode: 'R09', regionName: '无锡锡山区', saturation: 45, vacancyCount: 125, jobSeekerCount: 140, avgSalary: 6000, x: 270, y: 180 },
-  { regionCode: 'R10', regionName: '上海松江', saturation: 95, vacancyCount: 520, jobSeekerCount: 410, avgSalary: 7800, x: 620, y: 340 },
-  { regionCode: 'R11', regionName: '上海青浦', saturation: 85, vacancyCount: 385, jobSeekerCount: 320, avgSalary: 7500, x: 580, y: 300 },
-  { regionCode: 'R12', regionName: '上海嘉定', saturation: 90, vacancyCount: 445, jobSeekerCount: 390, avgSalary: 7600, x: 600, y: 240 },
-  { regionCode: 'R13', regionName: '上海闵行', saturation: 72, vacancyCount: 298, jobSeekerCount: 305, avgSalary: 7200, x: 640, y: 280 },
-  { regionCode: 'R14', regionName: '杭州钱塘区', saturation: 68, vacancyCount: 230, jobSeekerCount: 250, avgSalary: 6900, x: 380, y: 400 },
-  { regionCode: 'R15', regionName: '杭州余杭区', saturation: 55, vacancyCount: 168, jobSeekerCount: 190, avgSalary: 6700, x: 320, y: 380 },
-  { regionCode: 'R16', regionName: '杭州萧山区', saturation: 62, vacancyCount: 195, jobSeekerCount: 215, avgSalary: 6600, x: 360, y: 430 },
-  { regionCode: 'R17', regionName: '宁波北仑区', saturation: 70, vacancyCount: 258, jobSeekerCount: 240, avgSalary: 6800, x: 520, y: 420 },
-  { regionCode: 'R18', regionName: '宁波鄞州区', saturation: 52, vacancyCount: 152, jobSeekerCount: 168, avgSalary: 6400, x: 490, y: 380 },
-  { regionCode: 'R19', regionName: '宁波慈溪市', saturation: 42, vacancyCount: 118, jobSeekerCount: 150, avgSalary: 6000, x: 460, y: 440 },
-  { regionCode: 'R20', regionName: '常熟市', saturation: 60, vacancyCount: 175, jobSeekerCount: 185, avgSalary: 6300, x: 440, y: 150 },
-  { regionCode: 'R21', regionName: '张家港市', saturation: 50, vacancyCount: 142, jobSeekerCount: 155, avgSalary: 6200, x: 320, y: 130 },
-  { regionCode: 'R22', regionName: '太仓市', saturation: 38, vacancyCount: 98, jobSeekerCount: 130, avgSalary: 6100, x: 500, y: 160 },
-  { regionCode: 'R23', regionName: '江阴市', saturation: 56, vacancyCount: 165, jobSeekerCount: 170, avgSalary: 6500, x: 200, y: 160 },
-  { regionCode: 'R24', regionName: '宜兴市', saturation: 32, vacancyCount: 82, jobSeekerCount: 115, avgSalary: 5900, x: 160, y: 280 },
-];
+const regionCoords: Record<string, { x: number; y: number }> = {
+  '苏州工业园': { x: 420, y: 220 }, '苏州高新区': { x: 360, y: 250 }, '苏州吴中区': { x: 400, y: 290 },
+  '苏州相城区': { x: 380, y: 180 }, '昆山陆家镇': { x: 510, y: 260 }, '昆山张浦镇': { x: 500, y: 310 },
+  '昆山高新区': { x: 470, y: 230 }, '无锡新区': { x: 240, y: 220 }, '无锡锡山区': { x: 270, y: 180 },
+  '上海松江': { x: 620, y: 340 }, '上海青浦': { x: 580, y: 300 }, '上海嘉定': { x: 600, y: 240 },
+  '上海闵行': { x: 640, y: 280 }, '杭州钱塘区': { x: 380, y: 400 }, '杭州余杭区': { x: 320, y: 380 },
+  '杭州萧山区': { x: 360, y: 430 }, '宁波北仑区': { x: 520, y: 420 }, '宁波鄞州区': { x: 490, y: 380 },
+  '宁波慈溪市': { x: 460, y: 440 }, '常熟市': { x: 440, y: 150 }, '张家港市': { x: 320, y: 130 },
+  '太仓市': { x: 500, y: 160 }, '江阴市': { x: 200, y: 160 }, '宜兴市': { x: 160, y: 280 },
+};
 
 function getSaturationColor(s: number) {
   if (s >= 85) return '#EF4444';
@@ -64,46 +57,41 @@ function getSaturationLabel(s: number) {
 
 export default function RegionHeatmap() {
   const [regions, setRegions] = useState<RegionData[]>([]);
-  const [summary, setSummary] = useState<{ totalRegions: number; totalVacancy: number; totalSeekers: number; avgSalary: number; avgSaturation: number } | null>(null);
+  const [summary, setSummary] = useState<RegionSummary | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<RegionData | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState<'saturation' | 'vacancy' | 'seekers'>('saturation');
 
   useEffect(() => {
-    fetch('/api/heatmap/regions')
-      .then(r => r.json())
-      .then(res => {
-        if (res.success && res.data.length > 0) {
-          setRegions(res.data.map((r: RegionHeatmapType, i: number) => ({
+    async function loadData() {
+      try {
+        const res = await get<RegionHeatmapType[]>('/heatmap/regions');
+        if (res.success && Array.isArray(res.data)) {
+          const regionsWithCoords = res.data.map(r => ({
             ...r,
-            x: r.x ?? mockRegions[i]?.x ?? 400,
-            y: r.y ?? mockRegions[i]?.y ?? 300,
-          })));
-          setSummary(res.summary);
-        } else {
-          setRegions(mockRegions);
-          setSummary({
-            totalRegions: mockRegions.length,
-            totalVacancy: mockRegions.reduce((s, r) => s + r.vacancyCount, 0),
-            totalSeekers: mockRegions.reduce((s, r) => s + r.jobSeekerCount, 0),
-            avgSalary: Math.round(mockRegions.reduce((s, r) => s + r.avgSalary, 0) / mockRegions.length),
-            avgSaturation: Math.round(mockRegions.reduce((s, r) => s + r.saturation, 0) / mockRegions.length),
-          });
+            x: r.x ?? regionCoords[r.regionName]?.x ?? 400,
+            y: r.y ?? regionCoords[r.regionName]?.y ?? 300,
+          })) as RegionData[];
+          setRegions(regionsWithCoords);
+          const summaryData = (res as any).summary as RegionSummary | undefined;
+          if (summaryData) {
+            setSummary(summaryData);
+          } else {
+            setSummary({
+              totalRegions: regionsWithCoords.length,
+              totalVacancy: regionsWithCoords.reduce((s, r) => s + r.vacancyCount, 0),
+              totalSeekers: regionsWithCoords.reduce((s, r) => s + r.jobSeekerCount, 0),
+              avgSalary: Math.round(regionsWithCoords.reduce((s, r) => s + r.avgSalary, 0) / regionsWithCoords.length),
+              avgSaturation: Math.round(regionsWithCoords.reduce((s, r) => s + r.saturation, 0) / regionsWithCoords.length),
+            });
+          }
         }
+      } finally {
         setLoading(false);
-      })
-      .catch(() => {
-        setRegions(mockRegions);
-        setSummary({
-          totalRegions: mockRegions.length,
-          totalVacancy: mockRegions.reduce((s, r) => s + r.vacancyCount, 0),
-          totalSeekers: mockRegions.reduce((s, r) => s + r.jobSeekerCount, 0),
-          avgSalary: Math.round(mockRegions.reduce((s, r) => s + r.avgSalary, 0) / mockRegions.length),
-          avgSaturation: Math.round(mockRegions.reduce((s, r) => s + r.saturation, 0) / mockRegions.length),
-        });
-        setLoading(false);
-      });
+      }
+    }
+    loadData();
   }, []);
 
   const chartData = [...regions]

@@ -32,6 +32,7 @@ import {
   AreaChart
 } from 'recharts';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
 import JobCard from '@/components/JobCard';
 import type { Factory, Job, SafetyRecord } from '@shared/types';
 
@@ -50,6 +51,7 @@ export default function FactoryDetail() {
   const [factory, setFactory] = useState<Factory | null>(null);
   const [jobs, setJobs] = useState<(Job & { factory?: Factory })[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const mockCapacityData = Array.from({ length: 12 }, (_, i) => {
     const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
@@ -133,119 +135,29 @@ export default function FactoryDetail() {
 
   const fetchData = async () => {
     setLoading(true);
+    setError('');
     try {
-      const fRes = await fetch(`/api/factories/${id}`);
-      const fJson = await fRes.json();
-      if (fJson.success) {
-        setFactory(fJson.data);
+      const [fRes, jRes] = await Promise.all([
+        get<Factory>(`/factories/${id}`),
+        get<Job[]>(`/jobs?factoryId=${id}`),
+      ]);
+
+      if (fRes.success && fRes.data) {
+        setFactory(fRes.data);
+      } else {
+        throw new Error(fRes.error || '加载工厂详情失败');
       }
 
-      const jRes = await fetch(`/api/jobs?factoryId=${id}`);
-      const jJson = await jRes.json();
-      if (jJson.success && jJson.data) {
-        const enriched = jJson.data.map((j: Job) => ({
+      if (jRes.success && jRes.data) {
+        const enriched = jRes.data.map((j: Job) => ({
           ...j,
-          factory: fJson.success ? fJson.data : undefined,
+          factory: fRes.success ? fRes.data : undefined,
         }));
         setJobs(enriched);
       }
     } catch (e) {
       console.error(e);
-      const mockFactory: Factory = {
-        id: id || 'f_demo',
-        name: '苏州立讯精密电子有限公司',
-        logo: '',
-        region: '苏州工业园',
-        address: '苏州工业园区星湖街218号',
-        ehsRating: 'A',
-        ehsScore: 96,
-        dailyCapacity: 150000,
-        capacityUtilization: 92,
-        seasonNote: '6-9月为生产旺季，加班多工时稳定，月综合工资可达8500+；2-4月为淡季，工时相对较少，适合想轻松过渡的工友。全年订单稳中有升，常年在招。',
-        interviewSummaries: [{
-          id: 's1',
-          keywords: ['管理规范', '环境好', '伙食棒', '宿舍干净', '加班多', '工资准时', '领导好', '老员工带', '车间恒温'],
-          satisfaction: 5,
-          summary: '我在这个厂做了快两年了，整体非常满意！管理很规范，从来不乱罚款，车间24小时中央空调恒温，夏天一点都不热。食堂是自助的，8菜2汤随便选，味道也不错。最关键是工资每月10号准时发，从来没有拖过！旺季加班多的时候一个月能拿9000多，强烈推荐想赚钱的工友来！',
-          recordedAt: '2025-06-10'
-        }],
-        safetyRecords: [
-          { id: 'r1', date: '2025-06-05', type: 'audit', level: 'normal', description: '月度EHS综合审计，消防、用电、机械防护全部达标，评分96分' },
-          { id: 'r2', date: '2025-05-28', type: 'training', level: 'normal', description: '全员消防安全培训+应急疏散演练，参与率100%' },
-          { id: 'r3', date: '2025-05-15', type: 'audit', level: 'normal', description: '职业健康专项检查，车间粉尘、噪音均符合国家标准' },
-          { id: 'r4', date: '2025-04-20', type: 'training', level: 'normal', description: '新员工EHS岗前培训，共计培训5批次120人' },
-          { id: 'r5', date: '2025-03-10', type: 'audit', level: 'normal', description: '特种设备年度检测：叉车、电梯、压力容器全部合格' },
-        ],
-        whitelistStatus: 'whitelist',
-        createdAt: new Date().toISOString(),
-        industry: '电子制造 / 消费电子',
-        scale: '5000人以上',
-      };
-      setFactory(mockFactory);
-
-      const mockJobs: (Job & { factory?: Factory })[] = [
-        {
-          id: 'job_fd_1',
-          factoryId: mockFactory.id,
-          title: '电子厂普工（包吃住）',
-          salaryRange: { min: 5800, max: 8200 },
-          workHours: '两班倒·8H',
-          overtimeRule: '1.5/2/3倍',
-          overtimeRate: { weekday: 1.5, weekend: 2, holiday: 3 },
-          board: { provided: true, costPerMonth: 0 },
-          lodging: { provided: true, costPerMonth: 0, roomType: '4-6人间' },
-          processNodes: [],
-          requirements: ['18-45岁'],
-          benefits: ['五险一金', '包吃住', '节日礼品'],
-          status: 'published',
-          vacancy: 50,
-          distanceKm: 2.8,
-          createdAt: new Date().toISOString(),
-          urgent: true,
-          highSubsidy: true,
-          factory: mockFactory,
-        },
-        {
-          id: 'job_fd_2',
-          factoryId: mockFactory.id,
-          title: '品检QC（坐班）',
-          salaryRange: { min: 6200, max: 8500 },
-          workHours: '长白班·10H',
-          overtimeRule: '1.5/2/3倍',
-          overtimeRate: { weekday: 1.5, weekend: 2, holiday: 3 },
-          board: { provided: true },
-          lodging: { provided: true, roomType: '4人间' },
-          processNodes: [],
-          requirements: ['18-40岁', '有经验优先'],
-          benefits: ['五险一金', '全勤奖', '岗位津贴'],
-          status: 'published',
-          vacancy: 20,
-          distanceKm: 2.8,
-          createdAt: new Date().toISOString(),
-          factory: mockFactory,
-        },
-        {
-          id: 'job_fd_3',
-          factoryId: mockFactory.id,
-          title: '物料员（需叉车证）',
-          salaryRange: { min: 6500, max: 8800 },
-          workHours: '两班倒·8H',
-          overtimeRule: '1.5/2/3倍',
-          overtimeRate: { weekday: 1.5, weekend: 2, holiday: 3 },
-          board: { provided: true },
-          lodging: { provided: true },
-          processNodes: [],
-          requirements: ['持有效叉车证'],
-          benefits: ['五险一金', '技能补贴', '高温补贴'],
-          status: 'published',
-          vacancy: 8,
-          distanceKm: 2.8,
-          createdAt: new Date().toISOString(),
-          highSubsidy: true,
-          factory: mockFactory,
-        },
-      ];
-      setJobs(mockJobs);
+      setError('加载工厂详情失败，请稍后重试');
     } finally {
       setLoading(false);
     }
@@ -255,10 +167,26 @@ export default function FactoryDetail() {
     if (id) fetchData();
   }, [id]);
 
-  if (loading || !factory) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Loader2 size={40} className="text-brand-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!factory || error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+        <AlertTriangle size={48} className="text-danger-500 mb-4" />
+        <h2 className="text-lg font-bold text-gray-800 mb-2">工厂不存在</h2>
+        <p className="text-sm text-gray-500 mb-4">{error || '该工厂可能已下架'}</p>
+        <button
+          onClick={() => navigate('/worker/home')}
+          className="px-6 py-2.5 rounded-xl bg-brand-500 text-white text-sm font-medium"
+        >
+          返回首页
+        </button>
       </div>
     );
   }

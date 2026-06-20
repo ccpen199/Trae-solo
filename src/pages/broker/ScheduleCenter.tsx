@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ChevronLeft, ChevronRight, Calendar as CalendarIcon, Navigation, FileText,
-  Award, CheckCircle, MapPin, Phone, Clock, Plus
+  Award, CheckCircle, MapPin, Phone, Clock, Plus, User
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
+import type { InterviewOrder } from '@shared/types';
+
+const BROKER_ID = 'b-001';
 
 interface ScheduleTask {
   id: string;
@@ -18,35 +22,6 @@ interface ScheduleTask {
   note?: string;
 }
 
-const monthTasks: Record<string, { count: number; types: string[] }> = {
-  '2026-06-02': { count: 3, types: ['pickup'] },
-  '2026-06-03': { count: 5, types: ['pickup', 'document'] },
-  '2026-06-05': { count: 2, types: ['training'] },
-  '2026-06-06': { count: 4, types: ['pickup', 'training'] },
-  '2026-06-09': { count: 6, types: ['pickup', 'document', 'training'] },
-  '2026-06-10': { count: 3, types: ['pickup'] },
-  '2026-06-12': { count: 5, types: ['pickup', 'document'] },
-  '2026-06-13': { count: 4, types: ['training'] },
-  '2026-06-16': { count: 7, types: ['pickup', 'document', 'training'] },
-  '2026-06-17': { count: 4, types: ['pickup', 'training'] },
-  '2026-06-18': { count: 5, types: ['pickup', 'document'] },
-  '2026-06-19': { count: 8, types: ['pickup', 'document', 'training'] },
-  '2026-06-20': { count: 3, types: ['pickup'] },
-  '2026-06-23': { count: 6, types: ['pickup', 'training'] },
-  '2026-06-25': { count: 4, types: ['pickup', 'document'] },
-  '2026-06-27': { count: 5, types: ['pickup', 'training'] },
-  '2026-06-30': { count: 3, types: ['pickup'] },
-};
-
-const todayTasks: ScheduleTask[] = [
-  { id: 'T1', time: '07:30', type: 'pickup', title: '车接车送', workerName: '刘铁柱', workerPhone: '139****1111', location: '地铁1号线钟南街站1号口集合', factoryName: '立讯精密（苏州）', completed: true, note: '车牌号：苏E·88888，王师傅 137****2222' },
-  { id: 'T2', time: '08:15', type: 'pickup', title: '车接车送', workerName: '钱小花等5人', workerPhone: '135****4444', location: '东环路大润发门口', factoryName: '富士康科技（昆山）', completed: true, note: '有2人携带大件行李，预留后备箱' },
-  { id: 'T3', time: '09:30', type: 'document', title: '证件复印办理', workerName: '刘铁柱', workerPhone: '139****1111', location: '立讯精密行政楼201室', factoryName: '立讯精密（苏州）', completed: true, note: '身份证+学历证复印件各3份，一寸照片6张' },
-  { id: 'T4', time: '10:30', type: 'training', title: '岗前培训签到', workerName: '刘铁柱等3人', workerPhone: '139****1111', location: '立讯精密培训中心A教室', factoryName: '立讯精密（苏州）', completed: false, note: 'EHS安全培训4小时 + 岗位技能培训2小时' },
-  { id: 'T5', time: '13:30', type: 'pickup', title: '车接车送', workerName: '孙大伟', workerPhone: '136****3333', location: '唯亭镇政府公交站', factoryName: '顺丰仓储（青浦）', completed: false, note: '带好叉车证原件' },
-  { id: 'T6', time: '16:00', type: 'document', title: '入职手续办理', workerName: '刘铁柱等3人', workerPhone: '139****1111', location: '立讯精密行政服务中心', factoryName: '立讯精密（苏州）', completed: false, note: '签订劳动合同+领取厂牌+安排宿舍' },
-];
-
 function getTaskStyle(type: string) {
   return {
     pickup: { bg: 'bg-success-50', border: 'border-success-200', text: 'text-success-700', header: 'bg-success-500', label: '车接车送', icon: Navigation },
@@ -55,16 +30,134 @@ function getTaskStyle(type: string) {
   }[type] || { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-700', header: 'bg-gray-500', label: type, icon: Clock };
 }
 
+function ordersToMonthTasks(orders: InterviewOrder[]): Record<string, { count: number; types: string[] }> {
+  const result: Record<string, { count: number; types: string[] }> = {};
+  
+  orders.forEach(order => {
+    const dateKey = new Date(order.scheduledDate).toISOString().split('T')[0];
+    if (!result[dateKey]) {
+      result[dateKey] = { count: 0, types: [] };
+    }
+    result[dateKey].count += 1;
+    
+    const types: string[] = ['pickup'];
+    if (['documents_copied', 'training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status)) {
+      types.push('document');
+    }
+    if (['training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status)) {
+      types.push('training');
+    }
+    
+    types.forEach(t => {
+      if (!result[dateKey].types.includes(t)) {
+        result[dateKey].types.push(t);
+      }
+    });
+  });
+  
+  return result;
+}
+
+function ordersToDayTasks(orders: InterviewOrder[], dateStr: string): ScheduleTask[] {
+  const tasks: ScheduleTask[] = [];
+  const dayOrders = orders.filter(o => {
+    const orderDate = new Date(o.scheduledDate).toISOString().split('T')[0];
+    return orderDate === dateStr;
+  });
+
+  dayOrders.forEach(order => {
+    const pickupTime = order.pickupInfo?.pickupTime
+      ? new Date(order.pickupInfo.pickupTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+      : '08:00';
+    
+    tasks.push({
+      id: `${order.id}-pickup`,
+      time: pickupTime,
+      type: 'pickup',
+      title: '车接车送',
+      workerName: order.workerName,
+      workerPhone: order.workerPhone,
+      location: order.pickupInfo?.pickupPoint || '工厂门口',
+      factoryName: order.factoryName,
+      completed: ['arrived', 'documents_copied', 'training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status),
+      note: order.pickupInfo ? `车牌号：${order.pickupInfo.carPlate}，司机：${order.pickupInfo.driverName}` : undefined,
+    });
+
+    if (['documents_copied', 'training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status)) {
+      tasks.push({
+        id: `${order.id}-document`,
+        time: '09:30',
+        type: 'document',
+        title: '证件复印办理',
+        workerName: order.workerName,
+        workerPhone: order.workerPhone,
+        location: `${order.factoryName} 行政楼`,
+        factoryName: order.factoryName,
+        completed: ['documents_copied', 'training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status),
+      });
+    }
+
+    if (['training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status)) {
+      tasks.push({
+        id: `${order.id}-training`,
+        time: '10:30',
+        type: 'training',
+        title: '岗前培训签到',
+        workerName: order.workerName,
+        workerPhone: order.workerPhone,
+        location: `${order.factoryName} 培训中心`,
+        factoryName: order.factoryName,
+        completed: ['training_done', 'interviewing', 'passed', 'failed', 'employed'].includes(order.status),
+        note: 'EHS安全+岗位技能培训',
+      });
+    }
+  });
+
+  return tasks.sort((a, b) => a.time.localeCompare(b.time));
+}
+
+function formatDateStr(d: Date) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export default function ScheduleCenter() {
-  const [currentDate, setCurrentDate] = useState(new Date(2026, 5, 1));
-  const [selectedDate, setSelectedDate] = useState('2026-06-19');
-  const [tasks, setTasks] = useState<ScheduleTask[]>(todayTasks);
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+  const [selectedDate, setSelectedDate] = useState(formatDateStr(today));
+  const [tasks, setTasks] = useState<ScheduleTask[]>([]);
+  const [monthTasks, setMonthTasks] = useState<Record<string, { count: number; types: string[] }>>({});
+  const [orders, setOrders] = useState<InterviewOrder[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await get<InterviewOrder[]>(`/brokers/${BROKER_ID}/orders`);
+        if (res.success && res.data) {
+          setOrders(res.data);
+          const monthData = ordersToMonthTasks(res.data);
+          setMonthTasks(monthData);
+          const dayTasks = ordersToDayTasks(res.data, selectedDate);
+          setTasks(dayTasks);
+        }
+      } catch (err) {
+        console.error('加载数据失败', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date(2026, 5, 19);
 
   const calendarDays: (number | null)[] = [];
   for (let i = 0; i < firstDay; i++) calendarDays.push(null);
@@ -80,6 +173,16 @@ export default function ScheduleCenter() {
 
   const prevMonth = () => setCurrentDate(new Date(year, month - 1, 1));
   const nextMonth = () => setCurrentDate(new Date(year, month + 1, 1));
+
+  const handleDateSelect = (dateStr: string) => {
+    setSelectedDate(dateStr);
+    const dayTasks = ordersToDayTasks(orders, dateStr);
+    setTasks(dayTasks.length > 0 ? dayTasks : []);
+  };
+
+  const pickupCount = Object.values(monthTasks).filter(t => t.types.includes('pickup')).length;
+  const documentCount = Object.values(monthTasks).filter(t => t.types.includes('document')).length;
+  const trainingCount = Object.values(monthTasks).filter(t => t.types.includes('training')).length;
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -123,7 +226,7 @@ export default function ScheduleCenter() {
               const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === d;
               return (
                 <button key={d}
-                  onClick={() => setSelectedDate(dateStr)}
+                  onClick={() => handleDateSelect(dateStr)}
                   className={cn(
                     'aspect-square p-1.5 rounded-xl border-2 text-left transition-all relative group',
                     isSelected
@@ -158,15 +261,15 @@ export default function ScheduleCenter() {
 
           <div className="mt-5 pt-5 border-t border-gray-100 grid grid-cols-3 gap-3 text-center">
             <div className="p-3 rounded-xl bg-success-50 border border-success-100">
-              <div className="text-2xl font-bold text-success-600">{Object.values(monthTasks).filter(t => t.types.includes('pickup')).length}</div>
+              <div className="text-2xl font-bold text-success-600">{pickupCount}</div>
               <div className="text-xs text-success-700 mt-0.5">本月接车排班</div>
             </div>
             <div className="p-3 rounded-xl bg-blue-50 border border-blue-100">
-              <div className="text-2xl font-bold text-blue-600">{Object.values(monthTasks).filter(t => t.types.includes('document')).length}</div>
+              <div className="text-2xl font-bold text-blue-600">{documentCount}</div>
               <div className="text-xs text-blue-700 mt-0.5">证件办理日</div>
             </div>
             <div className="p-3 rounded-xl bg-accent-50 border border-accent-100">
-              <div className="text-2xl font-bold text-accent-600">{Object.values(monthTasks).filter(t => t.types.includes('training')).length}</div>
+              <div className="text-2xl font-bold text-accent-600">{trainingCount}</div>
               <div className="text-xs text-accent-700 mt-0.5">培训签到日</div>
             </div>
           </div>
@@ -183,13 +286,25 @@ export default function ScheduleCenter() {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-20 h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-brand-500 to-accent-500 rounded-full" style={{ width: `${(completedCount / tasks.length) * 100}%` }} />
+                <div className="h-full bg-gradient-to-r from-brand-500 to-accent-500 rounded-full" style={{ width: tasks.length ? `${(completedCount / tasks.length) * 100}%` : '0%' }} />
               </div>
-              <span className="text-xs font-bold text-brand-600">{Math.round((completedCount / tasks.length) * 100)}%</span>
+              <span className="text-xs font-bold text-brand-600">{tasks.length ? Math.round((completedCount / tasks.length) * 100) : 0}%</span>
             </div>
           </div>
 
           <div className="space-y-3 max-h-[640px] overflow-y-auto pr-1">
+            {loading && tasks.length === 0 && (
+              <div className="py-12 text-center text-gray-400">
+                <div className="animate-spin w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full mx-auto mb-3" />
+                <p>加载中...</p>
+              </div>
+            )}
+            {!loading && tasks.length === 0 && (
+              <div className="py-12 text-center text-gray-400">
+                <CalendarIcon className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>当日暂无排班任务</p>
+              </div>
+            )}
             {tasks.map(task => {
               const style = getTaskStyle(task.type);
               const TaskIcon = style.icon;
@@ -229,7 +344,7 @@ export default function ScheduleCenter() {
                     </div>
                     <div className="bg-white/60 rounded-lg p-3 border border-white/80 space-y-1.5 text-xs">
                       <div className="flex items-center gap-2">
-                        <User_ className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                        <User className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                         <span className="text-gray-700 font-medium">{task.workerName}</span>
                         <span className="flex items-center gap-0.5 text-gray-500"><Phone className="w-3 h-3" />{task.workerPhone}</span>
                       </div>
@@ -259,9 +374,6 @@ export default function ScheduleCenter() {
   );
 }
 
-function User_(props: { className?: string }) {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={props.className}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>;
-}
 function BuildingIcon(props: { className?: string }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={props.className}><rect x="4" y="2" width="16" height="20" rx="2" /><path d="M9 22v-4h6v4" /><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01" /></svg>;
 }

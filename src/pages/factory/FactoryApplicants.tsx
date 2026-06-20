@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import {
   Search, User, Phone, Star, Briefcase, Clock, CheckCircle, XCircle,
   Calendar, FileText, ArrowLeft, ChevronRight, Award, TrendingUp,
-  MapPin, Shield, X, Send, Filter, Download
+  MapPin, Shield, X, Send, Filter, Download, Loader2
 } from 'lucide-react';
-import type { Worker } from '@shared/types';
+import type { InterviewOrder, Job, Worker } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get, post } from '@/lib/api';
+
+const FACTORY_ID = 'f-001';
 
 type StatusTab = 'pending' | 'passed' | 'hired';
 
@@ -45,92 +48,84 @@ interface ApplicantDetail {
   emergencyContact?: { name: string; relation: string; phone: string };
 }
 
-const mockApplicants: ApplicantDetail[] = [
-  {
-    id: 'A001', workerId: 'W401', name: '李明华', gender: 'male', age: 28, phone: '138****2345', idCardVerified: true,
-    creditScore: 88, skills: [
-      { name: '电子装配', issuer: '富士康', certifiedAt: '2024-03' },
-      { name: 'SMT操作', issuer: '职业技能中心', certifiedAt: '2023-08' },
-      { name: '电焊基础', issuer: '安监部门', certifiedAt: '2024-01' },
+function interviewStatusToApplicantStatus(status: InterviewOrder['status']): ApplicantDetail['status'] {
+  const map: Record<string, ApplicantDetail['status']> = {
+    pending: 'pending',
+    broker_assigned: 'pending',
+    pickup_scheduled: 'interview_scheduled',
+    arrived: 'interview_scheduled',
+    documents_copied: 'interviewed',
+    training_done: 'interviewed',
+    interviewing: 'interviewed',
+    passed: 'passed',
+    failed: 'rejected',
+    employed: 'hired',
+  };
+  return map[status] || 'pending';
+}
+
+function buildApplicantDetail(
+  interview: InterviewOrder,
+  worker: Worker | null,
+  jobMap: Map<string, Job>
+): ApplicantDetail {
+  const job = jobMap.get(interview.jobId);
+  const status = interviewStatusToApplicantStatus(interview.status);
+  const salaryRange = job
+    ? `${job.salaryRange.min}-${job.salaryRange.max}`
+    : '面议';
+
+  const skills = worker?.skills?.map(s => ({
+    name: s.name,
+    issuer: s.issuer,
+    certifiedAt: s.certifiedAt,
+  })) || [];
+
+  const performanceHistory = worker?.performanceHistory?.map(p => ({
+    factoryName: p.factoryName,
+    jobTitle: p.jobTitle,
+    startDate: p.startDate,
+    endDate: p.endDate,
+    daysWorked: p.daysWorked,
+    leaveType: p.leaveType,
+    managerComment: '',
+  })) || [];
+
+  const matchScore = (interview as unknown as { matchScore?: number }).matchScore ||
+    Math.min(95, Math.max(70, (worker?.creditScore || 70) + 5));
+
+  return {
+    id: interview.id,
+    workerId: interview.workerId,
+    name: interview.workerName,
+    avatar: worker?.avatar,
+    gender: worker?.gender || 'male',
+    age: worker?.age || 28,
+    phone: interview.workerPhone,
+    idCardVerified: worker?.idCardVerified || false,
+    creditScore: worker?.creditScore || 70,
+    skills,
+    status,
+    appliedAt: interview.createdAt,
+    jobId: interview.jobId,
+    jobTitle: interview.jobTitle,
+    salaryRange,
+    interviewTime: interview.scheduledDate,
+    matchScore,
+    expectedSalary: job ? job.salaryRange.min : 6000,
+    hometown: worker?.currentLocation?.region || '',
+    experienceYears: worker?.performanceHistory?.length || 0,
+    education: '',
+    languages: [],
+    performanceHistory,
+    resumeHighlights: [
+      ...skills.slice(0, 2).map(s => `精通${s.name}`),
+      `有${performanceHistory.length}段工作经历`,
+      worker?.idCardVerified ? '已实名认证' : '待实名认证',
     ],
-    status: 'pending', appliedAt: '2026-06-19T08:30:00Z', jobId: 'J401', jobTitle: '电子装配工', salaryRange: '6500-8500',
-    matchScore: 92, expectedSalary: 7500, hometown: '安徽阜阳', experienceYears: 5, education: '高中', languages: ['普通话(流利)'],
-    performanceHistory: [
-      { factoryName: '富士康科技（昆山）', jobTitle: '装配员', startDate: '2025-01-15', endDate: '2025-08-20', daysWorked: 186, leaveType: 'normal', managerComment: '工作认真，服从管理，出勤稳定' },
-      { factoryName: '比亚迪汽车（西安）', jobTitle: '普工', startDate: '2024-03-10', endDate: '2024-12-30', daysWorked: 295, leaveType: 'normal', managerComment: '优秀员工，技能熟练' },
-    ],
-    resumeHighlights: ['5年电子厂工作经验', '3家大厂稳定履约', '无不良离职记录', '会操作SMT机台', '接受两班倒'],
-    emergencyContact: { name: '李建国', relation: '父亲', phone: '139****8888' },
-  },
-  {
-    id: 'A002', workerId: 'W402', name: '王桂芳', gender: 'female', age: 35, phone: '139****6789', idCardVerified: true,
-    creditScore: 95, skills: [
-      { name: '品检(QC)', issuer: '立讯精密', certifiedAt: '2023-05' },
-      { name: '电子测试', issuer: '内部认证', certifiedAt: '2023-09' },
-      { name: '质量记录', issuer: 'ISO培训', certifiedAt: '2024-02' },
-    ],
-    status: 'pending', appliedAt: '2026-06-19T09:15:00Z', jobId: 'J402', jobTitle: '品检员（QC）', salaryRange: '7000-9000',
-    matchScore: 96, expectedSalary: 8000, hometown: '河南周口', experienceYears: 8, education: '中专', languages: ['普通话(流利)', '粤语(基础)'],
-    performanceHistory: [
-      { factoryName: '立讯精密（深圳）', jobTitle: '品检员', startDate: '2023-06-01', endDate: '2025-04-15', daysWorked: 684, leaveType: 'normal', managerComment: '金牌员工，连续两年零投诉，质量意识强' },
-      { factoryName: '蓝思科技（东莞）', jobTitle: 'QC', startDate: '2022-02-20', endDate: '2023-05-20', daysWorked: 455, leaveType: 'normal', managerComment: '技能扎实，可培养为线长' },
-    ],
-    resumeHighlights: ['8年品检工作经验', '连续3年优秀员工', '零质量事故记录', '熟悉ISO流程', '长白班/两班倒均可'],
-  },
-  {
-    id: 'A003', workerId: 'W403', name: '张铁柱', gender: 'male', age: 42, phone: '137****1234', idCardVerified: true,
-    creditScore: 76, skills: [
-      { name: '仓储管理', issuer: '顺丰', certifiedAt: '2023-11' },
-      { name: '叉车驾驶(有证)', issuer: '质监局', certifiedAt: '2022-07' },
-    ],
-    status: 'pending', appliedAt: '2026-06-18T14:20:00Z', jobId: 'J403', jobTitle: '仓库管理员', salaryRange: '6000-7500',
-    matchScore: 88, expectedSalary: 6800, hometown: '江苏徐州', experienceYears: 12, education: '初中', languages: ['普通话(流利)'],
-    performanceHistory: [
-      { factoryName: '顺丰仓储（苏州）', jobTitle: '仓管', startDate: '2024-01-10', endDate: '2025-08-10', daysWorked: 578, leaveType: 'normal', managerComment: '工作勤勉，叉车技术熟练，账务准确' },
-    ],
-    resumeHighlights: ['12年仓储经验', '持有有效叉车证', '会基本电脑操作', '熟悉货物进出库流程', '可接受加班'],
-  },
-  {
-    id: 'A004', workerId: 'W404', name: '赵小花', gender: 'female', age: 24, phone: '136****5678', idCardVerified: true,
-    creditScore: 82, skills: [{ name: '电子装配' }],
-    status: 'passed', appliedAt: '2026-06-18T10:00:00Z', jobId: 'J401', jobTitle: '电子装配工', salaryRange: '6500-8500',
-    interviewTime: '2026-06-19 14:00',
-    matchScore: 85, expectedSalary: 7000, hometown: '贵州毕节', experienceYears: 2, education: '高中', languages: ['普通话(流利)'],
-    performanceHistory: [
-      { factoryName: '歌尔股份（潍坊）', jobTitle: '装配员', startDate: '2025-03-01', endDate: '2026-05-20', daysWorked: 446, leaveType: 'normal', managerComment: '手脚麻利，学习能力强' },
-    ],
-    resumeHighlights: ['年轻学习快', '手脚灵活', '可接受两班倒', '稳定性好'],
-  },
-  {
-    id: 'A005', workerId: 'W405', name: '孙大强', gender: 'male', age: 31, phone: '135****9012', idCardVerified: true,
-    creditScore: 90, skills: [
-      { name: 'SMT操作', issuer: 'JUKI认证', certifiedAt: '2023-02' },
-      { name: '设备维护', issuer: '松下', certifiedAt: '2024-06' },
-    ],
-    status: 'hired', appliedAt: '2026-06-17T16:30:00Z', jobId: 'J404', jobTitle: 'SMT操作员', salaryRange: '7500-9500',
-    matchScore: 94, expectedSalary: 8500, hometown: '山东菏泽', experienceYears: 7, education: '中专', languages: ['普通话(流利)'],
-    performanceHistory: [
-      { factoryName: '纬创资通（昆山）', jobTitle: 'SMT技术员', startDate: '2023-08-15', endDate: '2026-06-10', daysWorked: 1030, leaveType: 'normal', managerComment: '核心技术骨干，精通松下NPM系列' },
-    ],
-    resumeHighlights: ['7年SMT经验', '精通松下JUKI机台', '可带新人', '零重大设备事故'],
-    emergencyContact: { name: '孙秀琴', relation: '妻子', phone: '134****6666' },
-  },
-  {
-    id: 'A006', workerId: 'W406', name: '吴秀兰', gender: 'female', age: 29, phone: '133****7890', idCardVerified: true,
-    creditScore: 86, skills: [
-      { name: '品检', issuer: '申洲', certifiedAt: '2023-10' },
-      { name: '电子装配' },
-      { name: '流水线作业' },
-    ],
-    status: 'passed', appliedAt: '2026-06-19T10:45:00Z', jobId: 'J401', jobTitle: '电子装配工', salaryRange: '6500-8500',
-    interviewTime: '2026-06-20 09:30',
-    matchScore: 90, expectedSalary: 7200, hometown: '四川南充', experienceYears: 6, education: '初中', languages: ['普通话(流利)', '四川话'],
-    performanceHistory: [
-      { factoryName: '申洲针织（宁波）', jobTitle: '检验员', startDate: '2024-02-20', endDate: '2026-05-15', daysWorked: 815, leaveType: 'normal', managerComment: '检验仔细，返工率极低' },
-    ],
-    resumeHighlights: ['品检+装配双经验', '6年稳定工龄', '手脚快，效率高'],
-  },
-];
+    emergencyContact: undefined,
+  };
+}
 
 const tabs: { key: StatusTab; label: string; icon: typeof Clock; color: string }[] = [
   { key: 'pending', label: '待面试', icon: Clock, color: 'warning' },
@@ -161,43 +156,123 @@ export default function FactoryApplicants() {
   const [scheduleFor, setScheduleFor] = useState<ApplicantDetail | null>(null);
   const [scheduleForm, setScheduleForm] = useState({ date: '', time: '09:30', note: '' });
   const [batchSelect, setBatchSelect] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [interviewsRes, jobsRes] = await Promise.all([
+        get<InterviewOrder[]>(`/interviews?factoryId=${FACTORY_ID}`),
+        get<Job[]>(`/jobs?factoryId=${FACTORY_ID}`),
+      ]);
+
+      const interviews = interviewsRes.data || [];
+      const jobsData = jobsRes.data || [];
+      setJobs(jobsData);
+      const jobMap = new Map(jobsData.map(j => [j.id, j]));
+
+      const workerIds = Array.from(new Set(interviews.map(iv => iv.workerId)));
+      const workerResults = await Promise.all(
+        workerIds.map(wid => get<Worker>(`/workers/${wid}`))
+      );
+      const workerMap = new Map<string, Worker>();
+      workerResults.forEach((res, i) => {
+        if (res.success && res.data) {
+          workerMap.set(workerIds[i], res.data);
+        }
+      });
+
+      const applicantList: ApplicantDetail[] = interviews.map(iv =>
+        buildApplicantDetail(iv, workerMap.get(iv.workerId) || null, jobMap)
+      );
+
+      setApplicants(applicantList);
+    } catch (err) {
+      console.error('加载数据失败', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetch('/api/factories/F401/applicants')
-      .then(r => r.json())
-      .then(res => { if (res.success && res.data?.length) setApplicants(res.data); else setApplicants(mockApplicants); })
-      .catch(() => setApplicants(mockApplicants));
+    fetchData();
   }, []);
 
   const filtered = applicants.filter(a => {
-    const matchTab = a.status === activeTab;
+    let matchTab = false;
+    if (activeTab === 'pending') {
+      matchTab = a.status === 'pending' || a.status === 'interview_scheduled' || a.status === 'interviewed';
+    } else {
+      matchTab = a.status === activeTab;
+    }
     const matchSearch = !search || a.name.includes(search) || a.phone.includes(search) || a.jobTitle.includes(search);
     const matchJob = jobFilter === 'all' || a.jobId === jobFilter;
     return matchTab && matchSearch && matchJob;
   });
 
-  const jobList = Array.from(new Set(applicants.map(a => ({ id: a.jobId, title: a.jobTitle }))));
+  const jobList = jobs.map(j => ({ id: j.id, title: j.title }));
 
   const stats = {
-    pending: applicants.filter(a => a.status === 'pending').length,
+    pending: applicants.filter(a => a.status === 'pending' || a.status === 'interview_scheduled').length,
     passed: applicants.filter(a => a.status === 'passed').length,
     hired: applicants.filter(a => a.status === 'hired').length,
     avgCredit: applicants.length ? Math.round(applicants.reduce((s, a) => s + a.creditScore, 0) / applicants.length) : 0,
   };
 
-  const submitSchedule = () => {
-    if (!scheduleFor) return;
-    setApplicants(prev => prev.map(a => a.id === scheduleFor.id ? { ...a, status: 'interview_scheduled', interviewTime: `${scheduleForm.date} ${scheduleForm.time}` } : a));
-    setScheduleFor(null);
-    setScheduleForm({ date: '', time: '09:30', note: '' });
+  const submitSchedule = async () => {
+    if (!scheduleFor || actionLoading) return;
+    setActionLoading(true);
+    try {
+      const res = await post<InterviewOrder>(`/interviews/${scheduleFor.id}/schedule`, {
+        scheduledDate: `${scheduleForm.date} ${scheduleForm.time}`,
+        note: scheduleForm.note,
+      });
+      if (res.success) {
+        setApplicants(prev => prev.map(a =>
+          a.id === scheduleFor.id
+            ? { ...a, status: 'interview_scheduled', interviewTime: `${scheduleForm.date} ${scheduleForm.time}` }
+            : a
+        ));
+      }
+    } catch (err) {
+      console.error('安排面试失败', err);
+    } finally {
+      setActionLoading(false);
+      setScheduleFor(null);
+      setScheduleForm({ date: '', time: '09:30', note: '' });
+    }
   };
 
-  const markPassed = (id: string) => {
-    setApplicants(prev => prev.map(a => a.id === id ? { ...a, status: 'passed' } : a));
+  const markPassed = async (id: string) => {
+    if (actionLoading) return;
+    setActionLoading(true);
+    try {
+      const res = await post<InterviewOrder>(`/interviews/${id}/pass`, {});
+      if (res.success) {
+        setApplicants(prev => prev.map(a => a.id === id ? { ...a, status: 'passed' } : a));
+      }
+    } catch (err) {
+      console.error('标记通过失败', err);
+    } finally {
+      setActionLoading(false);
+    }
   };
 
-  const markHired = (id: string) => {
-    setApplicants(prev => prev.map(a => a.id === id ? { ...a, status: 'hired' } : a));
+  const markHired = async (id: string) => {
+    if (actionLoading) return;
+    setActionLoading(true);
+    try {
+      const res = await post<InterviewOrder>(`/interviews/${id}/hire`, {});
+      if (res.success) {
+        setApplicants(prev => prev.map(a => a.id === id ? { ...a, status: 'hired' } : a));
+      }
+    } catch (err) {
+      console.error('确认入职失败', err);
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   return (
@@ -329,23 +404,30 @@ export default function FactoryApplicants() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-          {filtered.map(app => {
-            const sc = getScoreColor(app.creditScore);
-            const checked = batchSelect.has(app.id);
-            return (
-              <div key={app.id} className="card overflow-hidden hover:shadow-lg transition-all group">
-                <div className={cn('h-1.5', app.status === 'pending' ? 'bg-warning-500' : app.status === 'passed' ? 'bg-success-500' : 'bg-brand-600')} />
-                <div className="p-5">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="relative">
-                      <div className={cn('w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-2xl ring-4', app.gender === 'female' ? 'bg-gradient-to-br from-pink-400 to-pink-600 ring-pink-100' : 'bg-gradient-to-br from-blue-400 to-blue-600 ring-blue-100')}>
-                        {app.name.charAt(0)}
-                      </div>
-                      {app.idCardVerified && (
-                        <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-success-500 flex items-center justify-center ring-2 ring-white">
-                          <Shield className="w-3.5 h-3.5 text-white" />
-                        </div>
+        {loading ? (
+          <div className="card py-20 text-center">
+            <Loader2 className="w-12 h-12 mx-auto mb-4 text-brand-500 animate-spin" />
+            <p className="text-lg text-gray-500">加载中...</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+              {filtered.map(app => {
+                const sc = getScoreColor(app.creditScore);
+                const checked = batchSelect.has(app.id);
+                return (
+                  <div key={app.id} className="card overflow-hidden hover:shadow-lg transition-all group">
+                    <div className={cn('h-1.5', app.status === 'pending' ? 'bg-warning-500' : app.status === 'passed' ? 'bg-success-500' : 'bg-brand-600')} />
+                    <div className="p-5">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="relative">
+                          <div className={cn('w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-2xl ring-4', app.gender === 'female' ? 'bg-gradient-to-br from-pink-400 to-pink-600 ring-pink-100' : 'bg-gradient-to-br from-blue-400 to-blue-600 ring-blue-100')}>
+                            {app.name.charAt(0)}
+                          </div>
+                          {app.idCardVerified && (
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-success-500 flex items-center justify-center ring-2 ring-white">
+                              <Shield className="w-3.5 h-3.5 text-white" />
+                            </div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -494,15 +576,17 @@ export default function FactoryApplicants() {
                 </div>
               </div>
             );
-          })}
-        </div>
+              })}
+            </div>
 
-        {filtered.length === 0 && (
-          <div className="card py-20 text-center">
-            <User className="w-20 h-20 mx-auto mb-4 text-gray-300" />
-            <p className="text-xl font-semibold text-gray-500">暂无{tabs.find(t => t.key === activeTab)?.label}应聘者</p>
-            <p className="text-sm text-gray-400 mt-1">请切换其他状态或修改筛选条件</p>
-          </div>
+            {filtered.length === 0 && (
+              <div className="card py-20 text-center">
+                <User className="w-20 h-20 mx-auto mb-4 text-gray-300" />
+                <p className="text-xl font-semibold text-gray-500">暂无{tabs.find(t => t.key === activeTab)?.label}应聘者</p>
+                <p className="text-sm text-gray-400 mt-1">请切换其他状态或修改筛选条件</p>
+              </div>
+            )}
+          </>
         )}
       </div>
 

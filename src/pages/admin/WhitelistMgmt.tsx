@@ -6,51 +6,13 @@ import {
 } from 'lucide-react';
 import type { Factory, WhitelistStatus, EhsRating, SafetyRecord, InterviewSummary } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get, patch } from '@/lib/api';
 
 interface PendingFactory {
   id: string; name: string; industry: string; scale: string; region: string;
   contact: string; phone: string; applyDate: string; ehsMaterials: boolean;
   businessLicense: boolean; siteInspection: boolean;
 }
-
-const pendingFactories: PendingFactory[] = [
-  { id: 'NEW001', name: '苏州精密切削科技有限公司', industry: '精密加工', scale: '50-100人', region: '苏州·吴中区', contact: '王经理', phone: '138****1234', applyDate: '2026-06-17', ehsMaterials: true, businessLicense: true, siteInspection: false },
-  { id: 'NEW002', name: '昆山华丰电子有限公司', industry: '电子制造', scale: '200-500人', region: '昆山·张浦镇', contact: '李总', phone: '139****5678', applyDate: '2026-06-16', ehsMaterials: true, businessLicense: true, siteInspection: true },
-  { id: 'NEW003', name: '无锡恒远机械制造', industry: '机械制造', scale: '100-200人', region: '无锡·新区', contact: '赵主管', phone: '137****9012', applyDate: '2026-06-15', ehsMaterials: false, businessLicense: true, siteInspection: false },
-];
-
-const mockFactories: Factory[] = [
-  { id: 'F001', name: '富士康科技集团（昆山）', logo: '🏭', region: '昆山·陆家镇', address: '昆山市陆家镇金阳路88号', ehsRating: 'A', ehsScore: 92, dailyCapacity: 5000, capacityUtilization: 85, seasonNote: 'Q3旺季需大量用工', whitelistStatus: 'whitelist', createdAt: '2025-08-15', industry: '电子制造', scale: '10000+人',
-    interviewSummaries: [
-      { id: 's1', keywords: ['规范', '专业'], satisfaction: 5, summary: '厂区规范，HR专业，待遇透明，工人满意度高', recordedAt: '2026-06-10' },
-      { id: 's2', keywords: ['环境好', '伙食棒'], satisfaction: 5, summary: '车间环境整洁，食堂伙食不错，住宿条件良好', recordedAt: '2026-05-28' },
-    ],
-    safetyRecords: [
-      { id: 'r1', date: '2026-04-15', type: 'audit', level: 'normal', description: '季度EHS审核通过，无重大隐患' },
-      { id: 'r2', date: '2026-03-20', type: 'training', level: 'normal', description: '全员消防安全培训，参训率98%' },
-    ] },
-  { id: 'F002', name: '立讯精密（苏州）有限公司', logo: '🏢', region: '苏州·工业园区', address: '苏州工业园区星龙街168号', ehsRating: 'A', ehsScore: 88, dailyCapacity: 3000, capacityUtilization: 78, seasonNote: '常年稳定用工', whitelistStatus: 'whitelist', createdAt: '2025-06-20', industry: '电子制造', scale: '5000-10000人',
-    interviewSummaries: [{ id: 's1', keywords: ['准时', '高效'], satisfaction: 4, summary: '面试流程高效，入职手续规范', recordedAt: '2026-06-12' }],
-    safetyRecords: [{ id: 'r1', date: '2026-05-10', type: 'audit', level: 'normal', description: '月度安全巡检合格' }] },
-  { id: 'F003', name: '顺丰仓储配送中心（上海）', logo: '📦', region: '上海·青浦区', address: '上海市青浦区华新镇顺丰路1号', ehsRating: 'B', ehsScore: 78, dailyCapacity: 2000, capacityUtilization: 90, seasonNote: '618/双11大促期间急招', whitelistStatus: 'graylist', createdAt: '2025-11-05', industry: '物流仓储', scale: '500-1000人',
-    interviewSummaries: [{ id: 's1', keywords: ['强度大', '收入高'], satisfaction: 3, summary: '劳动强度较大，但薪资和补贴比较丰厚', recordedAt: '2026-06-05' }],
-    safetyRecords: [{ id: 'r1', date: '2026-05-28', type: 'incident', level: 'minor', description: '搬运过程轻微扭伤，已送医处理' }] },
-  { id: 'F004', name: '比亚迪汽车（杭州）基地', logo: '🚗', region: '杭州·钱塘区', address: '杭州市钱塘区前进工业园', ehsRating: 'A', ehsScore: 90, dailyCapacity: 1500, capacityUtilization: 95, seasonNote: '新能源扩产，持续招人', whitelistStatus: 'whitelist', createdAt: '2025-09-10', industry: '汽车制造', scale: '5000-10000人',
-    interviewSummaries: [{ id: 's1', keywords: ['大厂', '稳定'], satisfaction: 5, summary: '大厂品牌，管理规范，员工福利完善', recordedAt: '2026-06-08' }],
-    safetyRecords: [{ id: 'r1', date: '2026-06-01', type: 'training', level: 'normal', description: '新员工安全生产培训' }] },
-  { id: 'F005', name: '某某问题工厂（无锡）', logo: '⚠️', region: '无锡·锡山区', address: '无锡市锡山区安镇街道', ehsRating: 'D', ehsScore: 45, dailyCapacity: 800, capacityUtilization: 60, seasonNote: '异常工厂，暂停合作', whitelistStatus: 'blacklist', createdAt: '2025-12-01', industry: '五金加工', scale: '100-200人',
-    interviewSummaries: [{ id: 's1', keywords: ['管理差', '拖欠工资'], satisfaction: 1, summary: '管理混乱，存在拖欠工资现象，已列入黑名单', recordedAt: '2026-05-15' }],
-    safetyRecords: [
-      { id: 'r1', date: '2026-04-20', type: 'incident', level: 'major', description: '机械伤害事故，造成1人重伤，安全生产许可证暂扣' },
-      { id: 'r2', date: '2026-03-10', type: 'audit', level: 'major', description: '消防验收不合格，存在重大火灾隐患' },
-    ] },
-  { id: 'F006', name: '申洲国际针织（宁波）', logo: '🧵', region: '宁波·北仑区', address: '宁波市北仑区甬江路88号', ehsRating: 'B', ehsScore: 80, dailyCapacity: 4000, capacityUtilization: 70, seasonNote: '秋冬订单旺季', whitelistStatus: 'whitelist', createdAt: '2026-01-15', industry: '纺织服装', scale: '2000-5000人',
-    interviewSummaries: [{ id: 's1', keywords: ['环境尚可'], satisfaction: 4, summary: '车间有空调，管理比较规范', recordedAt: '2026-06-01' }],
-    safetyRecords: [{ id: 'r1', date: '2026-05-20', type: 'audit', level: 'normal', description: '职业健康检查通过' }] },
-  { id: 'F007', name: '宁波某某注塑厂', logo: '🏭', region: '宁波·慈溪市', address: '慈溪市周巷镇开发路', ehsRating: 'C', ehsScore: 62, dailyCapacity: 500, capacityUtilization: 55, seasonNote: '订单不稳定', whitelistStatus: 'graylist', createdAt: '2026-02-20', industry: '塑胶制品', scale: '50-100人',
-    interviewSummaries: [{ id: 's1', keywords: ['车间热'], satisfaction: 2, summary: '注塑车间夏季温度较高，流动性较大', recordedAt: '2026-05-25' }],
-    safetyRecords: [{ id: 'r1', date: '2026-04-10', type: 'incident', level: 'minor', description: '模具夹伤手指，轻微工伤' }] },
-];
 
 function getStatusConfig(status: WhitelistStatus) {
   const map = {
@@ -83,6 +45,7 @@ function getSafetyTypeLabel(type: string) {
 
 export default function WhitelistMgmt() {
   const [factories, setFactories] = useState<Factory[]>([]);
+  const [pendingFactories, setPendingFactories] = useState<PendingFactory[]>([]);
   const [activeTab, setActiveTab] = useState<WhitelistStatus | 'pending'>('whitelist');
   const [search, setSearch] = useState('');
   const [selectedFactory, setSelectedFactory] = useState<Factory | null>(null);
@@ -91,14 +54,23 @@ export default function WhitelistMgmt() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/factories')
-      .then(r => r.json())
-      .then(res => {
-        if (res.success && res.data.length > 0) setFactories(res.data);
-        else setFactories(mockFactories);
+    async function loadData() {
+      try {
+        const [factoriesRes, pendingRes] = await Promise.all([
+          get<Factory[]>('/factories'),
+          get<PendingFactory[]>('/factories/pending'),
+        ]);
+        if (factoriesRes.success && Array.isArray(factoriesRes.data)) {
+          setFactories(factoriesRes.data);
+        }
+        if (pendingRes.success && Array.isArray(pendingRes.data)) {
+          setPendingFactories(pendingRes.data);
+        }
+      } finally {
         setLoading(false);
-      })
-      .catch(() => { setFactories(mockFactories); setLoading(false); });
+      }
+    }
+    loadData();
   }, []);
 
   const filteredFactories = factories.filter(f => {
@@ -112,19 +84,10 @@ export default function WhitelistMgmt() {
   const handleStatusChange = async () => {
     if (!changingStatus) return;
     const { factory, newStatus } = changingStatus;
-    try {
-      const res = await fetch(`/api/factories/${factory.id}/whitelist-status`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setFactories(prev => prev.map(f => f.id === factory.id ? { ...f, whitelistStatus: newStatus } : f));
-        if (selectedFactory?.id === factory.id) setSelectedFactory({ ...factory, whitelistStatus: newStatus });
-      }
-    } catch {
+    const res = await patch<Factory>(`/factories/${factory.id}/whitelist-status`, { status: newStatus });
+    if (res.success) {
       setFactories(prev => prev.map(f => f.id === factory.id ? { ...f, whitelistStatus: newStatus } : f));
+      if (selectedFactory?.id === factory.id) setSelectedFactory({ ...factory, whitelistStatus: newStatus });
     }
     setChangingStatus(null);
   };

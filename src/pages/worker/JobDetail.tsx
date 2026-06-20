@@ -26,9 +26,10 @@ import {
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import type { Job, Factory, ProcessNode } from '@shared/types';
+import { get, post } from '@/lib/api';
+import type { Job, Factory, ProcessNode, Worker, InterviewOrder } from '@shared/types';
 
-const MOCK_WORKER_ID = 'w-001';
+const WORKER_ID = 'w-001';
 
 const benefitColors = [
   'bg-brand-50 text-brand-600 border-brand-100',
@@ -55,6 +56,7 @@ export default function JobDetail() {
   const { id } = useParams();
   const [job, setJob] = useState<Job | null>(null);
   const [factory, setFactory] = useState<Factory | null>(null);
+  const [worker, setWorker] = useState<Worker | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -88,80 +90,25 @@ export default function JobDetail() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`/api/jobs/${id}`);
-      const json = await res.json();
-      if (json.success) {
-        setJob(json.data.job);
-        setFactory(json.data.factory);
+      const [jobRes, workerRes] = await Promise.all([
+        get<{ job: Job; factory: Factory }>(`/jobs/${id}`),
+        get<Worker>(`/workers/${WORKER_ID}`),
+      ]);
+      
+      if (jobRes.success && jobRes.data) {
+        setJob(jobRes.data.job);
+        setFactory(jobRes.data.factory);
         setSelectedDate(futureDates[0].iso);
       } else {
-        throw new Error(json.error || '加载失败');
+        throw new Error(jobRes.error || '加载岗位详情失败');
+      }
+      
+      if (workerRes.success && workerRes.data) {
+        setWorker(workerRes.data);
       }
     } catch (e) {
       console.error(e);
-      setError('加载岗位详情失败，使用演示数据');
-      const mockJob: Job = {
-        id: id || 'job_demo',
-        factoryId: 'f_1',
-        title: '电子厂普工 · 包吃住 · 五险一金',
-        salaryRange: { min: 5800, max: 8200 },
-        workHours: '两班倒·8H',
-        overtimeRule: '工作日1.5倍/周末2倍/节假日3倍',
-        overtimeRate: { weekday: 1.5, weekend: 2, holiday: 3 },
-        board: { provided: true, costPerMonth: 0 },
-        lodging: { provided: true, costPerMonth: 0, roomType: '4-6人间·空调热水器' },
-        processNodes: defaultProcessNodes,
-        requirements: [
-          '年龄18-45周岁，男女不限',
-          '身体健康，无色盲色弱，无传染病',
-          '持有效二代身份证原件',
-          '能吃苦耐劳，适应倒班，服从管理',
-          '有无经验均可，老员工一对一带教',
-          '无大面积纹身，无犯罪记录',
-        ],
-        benefits: [
-          '五险一金', '免费三餐', '免费住宿', '节日福利', '年终奖',
-          '带薪年假', '免费体检', '夫妻房', '子女教育补贴', '技能培训',
-          '全勤奖', '高温补贴', '生日礼物', '团建活动', '夜班补贴'
-        ],
-        status: 'published',
-        vacancy: 50,
-        distanceKm: 2.8,
-        createdAt: new Date().toISOString(),
-        urgent: true,
-        highSubsidy: true,
-      };
-      const mockFactory: Factory = {
-        id: 'f_1',
-        name: '苏州立讯精密电子有限公司',
-        logo: '',
-        region: '苏州工业园',
-        address: '苏州工业园区星湖街218号',
-        ehsRating: 'A',
-        ehsScore: 96,
-        dailyCapacity: 150000,
-        capacityUtilization: 92,
-        seasonNote: '6-9月为生产旺季，加班稳定；2-4月为淡季，工时较少',
-        interviewSummaries: [{
-          id: 's1',
-          keywords: ['管理规范', '环境好', '伙食棒', '宿舍干净', '加班多'],
-          satisfaction: 5,
-          summary: '工厂整体非常不错，管理很规范，宿舍是新装修的4人间，食堂菜品丰富口味好，旺季加班多工资高，强烈推荐！',
-          recordedAt: '2025-06-10'
-        }],
-        safetyRecords: [
-          { id: 'r1', date: '2025-06-01', type: 'audit', level: 'normal', description: '月度EHS审计：全部达标' },
-          { id: 'r2', date: '2025-05-15', type: 'training', level: 'normal', description: '消防应急演练，全员参与' },
-          { id: 'r3', date: '2025-04-20', type: 'audit', level: 'normal', description: '职业健康检查：合格率100%' },
-        ],
-        whitelistStatus: 'whitelist',
-        createdAt: new Date().toISOString(),
-        industry: '电子制造 / 消费电子',
-        scale: '5000人以上',
-      };
-      setJob(mockJob);
-      setFactory(mockFactory);
-      setSelectedDate(futureDates[0].iso);
+      setError('加载岗位详情失败，请稍后重试');
     } finally {
       setLoading(false);
     }
@@ -172,27 +119,25 @@ export default function JobDetail() {
   }, [id]);
 
   const handleSubmit = async () => {
-    if (!selectedDate || !job) return;
+    if (!selectedDate || !job || !worker) return;
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/interviews', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          workerId: MOCK_WORKER_ID,
-          jobId: job.id,
-          scheduledDate: selectedDate,
-        }),
+      const res = await post<InterviewOrder>('/interviews', {
+        workerId: WORKER_ID,
+        workerName: worker.name,
+        workerPhone: worker.phone,
+        jobId: job.id,
+        factoryId: job.factoryId,
+        scheduledDate: selectedDate,
       });
-      const json = await res.json();
-      if (json.success) {
+      if (res.success) {
         setShowSuccessModal(true);
       } else {
-        throw new Error(json.error || '预约失败');
+        throw new Error(res.error || '预约失败');
       }
     } catch (e) {
       console.error(e);
-      setShowSuccessModal(true);
+      setError('预约失败，请稍后重试');
     } finally {
       setIsSubmitting(false);
     }
@@ -202,6 +147,22 @@ export default function JobDetail() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Loader2 size={40} className="text-brand-500 animate-spin mb-4" />
+      </div>
+    );
+  }
+
+  if (!job || !factory) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+        <AlertCircle size={48} className="text-danger-500 mb-4" />
+        <h2 className="text-lg font-bold text-gray-800 mb-2">岗位不存在</h2>
+        <p className="text-sm text-gray-500 mb-4">{error || '该岗位可能已下架'}</p>
+        <button
+          onClick={() => navigate('/worker/home')}
+          className="px-6 py-2.5 rounded-xl bg-brand-500 text-white text-sm font-medium"
+        >
+          返回首页
+        </button>
       </div>
     );
   }
@@ -248,36 +209,36 @@ export default function JobDetail() {
 
           <div className="relative">
             <div className="flex items-center gap-2 mb-2">
-              {job?.urgent && (
+              {job.urgent && (
                 <span className="bg-white/25 backdrop-blur px-2.5 py-0.5 rounded-full text-xs font-medium flex items-center gap-1">
                   <Sparkles size={12} />
                   急招
                 </span>
               )}
-              {job?.highSubsidy && (
+              {job.highSubsidy && (
                 <span className="bg-success-500/90 px-2.5 py-0.5 rounded-full text-xs font-medium flex items-center gap-1">
                   <Award size={12} />
-                  入职补贴¥1500
+                  入职补贴高
                 </span>
               )}
             </div>
-            <h1 className="text-2xl font-bold leading-tight mb-1">{job?.title}</h1>
+            <h1 className="text-2xl font-bold leading-tight mb-1">{job.title}</h1>
             <div className="flex items-baseline gap-1 mt-2">
               <span className="text-4xl font-extrabold tracking-tight">
-                ¥{job?.salaryRange.min.toLocaleString()}
+                ¥{job.salaryRange.min.toLocaleString()}
               </span>
               <span className="text-2xl font-light text-white/80">-</span>
               <span className="text-4xl font-extrabold tracking-tight">
-                {job?.salaryRange.max.toLocaleString()}
+                {job.salaryRange.max.toLocaleString()}
               </span>
               <span className="ml-2 text-sm text-white/80 font-medium">/月</span>
             </div>
             <div className="flex items-center gap-4 mt-3 text-sm text-white/90">
               <span className="flex items-center gap-1">
                 <Users size={14} />
-                招 {job?.vacancy} 人
+                招 {job.vacancy} 人
               </span>
-              {job?.distanceKm !== undefined && (
+              {job.distanceKm !== undefined && (
                 <span className="flex items-center gap-1">
                   <MapPin size={14} />
                   {job.distanceKm}km
@@ -285,7 +246,7 @@ export default function JobDetail() {
               )}
             </div>
             <div className="text-xs text-white/70 mt-2">
-              💡 月均实际到手参考：综合加班后{Math.round((job?.salaryRange.max || 8000) * 1.15)}元以上
+              💡 月均实际到手参考：综合加班后{Math.round(job.salaryRange.max * 1.15)}元以上
             </div>
           </div>
         </div>
@@ -340,7 +301,7 @@ export default function JobDetail() {
                 <Clock size={20} className="text-brand-500" />
               </div>
               <div className="text-xs text-gray-500 mb-1">工时制度</div>
-              <div className="text-sm font-semibold text-gray-900 leading-tight">{job?.workHours}</div>
+              <div className="text-sm font-semibold text-gray-900 leading-tight">{job.workHours}</div>
             </div>
             <div className="bg-white rounded-2xl shadow-card p-3.5 text-center hover:shadow-card-hover transition-shadow">
               <div className="w-10 h-10 mx-auto rounded-xl bg-accent-50 flex items-center justify-center mb-2">
@@ -348,7 +309,7 @@ export default function JobDetail() {
               </div>
               <div className="text-xs text-gray-500 mb-1">加班规则</div>
               <div className="text-sm font-semibold text-gray-900 leading-tight">
-                {job?.overtimeRate.weekday}倍起
+                {job.overtimeRate.weekday}倍起
               </div>
             </div>
             <div className="bg-white rounded-2xl shadow-card p-3.5 text-center hover:shadow-card-hover transition-shadow">
@@ -358,7 +319,7 @@ export default function JobDetail() {
               </div>
               <div className="text-xs text-gray-500 mb-1">食宿条件</div>
               <div className="text-sm font-semibold text-gray-900 leading-tight">
-                {job?.board.provided && job?.lodging.provided ? '包吃住' : job?.board.provided ? '包吃' : job?.lodging.provided ? '包住' : '自理'}
+                {job.board.provided && job.lodging.provided ? '包吃住' : job.board.provided ? '包吃' : job.lodging.provided ? '包住' : '自理'}
               </div>
             </div>
           </div>
@@ -374,7 +335,7 @@ export default function JobDetail() {
               <span className="text-xs text-gray-400">全程约半天</span>
             </div>
             <div className="relative pl-1">
-              {(job?.processNodes?.length ? job.processNodes : defaultProcessNodes).map((node, idx, arr) => (
+              {(job.processNodes?.length ? job.processNodes : defaultProcessNodes).map((node, idx, arr) => (
                 <div key={idx} className="relative pl-8 pb-6 last:pb-0">
                   {idx < arr.length - 1 && (
                     <div className="absolute left-[11px] top-6 bottom-0 w-0.5 bg-gradient-to-b from-brand-300 via-brand-200 to-gray-100" />
@@ -407,7 +368,7 @@ export default function JobDetail() {
               ✅ 应聘要求
             </h2>
             <ul className="space-y-2.5">
-              {job?.requirements?.map((req, i) => (
+              {job.requirements?.map((req, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-gray-700 leading-relaxed">
                   <CheckCircle2 size={18} className="text-brand-500 flex-shrink-0 mt-0.5" />
                   <span>{req}</span>
@@ -424,7 +385,7 @@ export default function JobDetail() {
               🎁 福利待遇
             </h2>
             <div className="flex flex-wrap gap-2">
-              {job?.benefits?.map((b, i) => (
+              {job.benefits?.map((b, i) => (
                 <span
                   key={i}
                   className={cn(

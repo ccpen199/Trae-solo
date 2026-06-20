@@ -25,29 +25,15 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
 import type { InterviewOrder } from '@shared/types';
 
-const MOCK_WORKER_ID = 'w-001';
-
-interface ReferralBonus {
-  id: string;
-  referrerName: string;
-  referrerPhone: string;
-  factoryName: string;
-  jobTitle: string;
-  amount: number;
-  daysRequired: number;
-  daysCompleted: number;
-  status: 'pending' | 'paid';
-  createdAt: string;
-  paidAt?: string;
-}
+const WORKER_ID = 'w-001';
 
 export default function Onboarding() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<InterviewOrder[]>([]);
-  const [referrals, setReferrals] = useState<ReferralBonus[]>([]);
   const [stepIndex, setStepIndex] = useState(1);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawSuccess, setWithdrawSuccess] = useState(false);
@@ -63,82 +49,12 @@ export default function Onboarding() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/interviews?workerId=${MOCK_WORKER_ID}&status=employed`);
-      const json = await res.json();
-      if (json.success && json.data?.length > 0) {
-        setOrders(json.data);
-      } else {
-        throw new Error('no data');
+      const res = await get<InterviewOrder[]>(`/interviews?workerId=${WORKER_ID}&status=employed`);
+      if (res.success && res.data) {
+        setOrders(res.data);
       }
     } catch (e) {
       console.error(e);
-      const mockOrders: InterviewOrder[] = [
-        {
-          id: 'iv_003_employed',
-          workerId: MOCK_WORKER_ID,
-          workerName: '张师傅',
-          workerPhone: '138****8888',
-          jobId: 'job_3',
-          jobTitle: '仓库分拣员 · 五险一金',
-          factoryId: 'f_3',
-          factoryName: '苏州博世汽车零部件',
-          brokerId: 'b_1',
-          brokerName: '王经理',
-          scheduledDate: '2025-06-10',
-          status: 'employed',
-          timeline: [],
-          subsidy: {
-            triggered: true,
-            amount: 1500,
-            daysRequired: 7,
-            daysCompleted: 3,
-            paidAt: undefined,
-          },
-          createdAt: '2025-06-08T10:00:00Z',
-        },
-      ];
-      setOrders(mockOrders);
-
-      const mockReferrals: ReferralBonus[] = [
-        {
-          id: 'ref_001',
-          referrerName: '李大哥',
-          referrerPhone: '139****1234',
-          factoryName: '苏州立讯精密电子',
-          jobTitle: '电子厂普工',
-          amount: 800,
-          daysRequired: 7,
-          daysCompleted: 7,
-          status: 'paid',
-          createdAt: '2025-05-01',
-          paidAt: '2025-05-15',
-        },
-        {
-          id: 'ref_002',
-          referrerName: '王姐',
-          referrerPhone: '137****5678',
-          factoryName: '昆山仁宝科技',
-          jobTitle: '品检QC · 长白班',
-          amount: 1000,
-          daysRequired: 7,
-          daysCompleted: 4,
-          status: 'pending',
-          createdAt: '2025-06-12',
-        },
-        {
-          id: 'ref_003',
-          referrerName: '表弟小明',
-          referrerPhone: '136****9012',
-          factoryName: '吴江某包装厂',
-          jobTitle: '包装工',
-          amount: 600,
-          daysRequired: 7,
-          daysCompleted: 1,
-          status: 'pending',
-          createdAt: '2025-06-15',
-        },
-      ];
-      setReferrals(mockReferrals);
     } finally {
       setLoading(false);
     }
@@ -150,9 +66,9 @@ export default function Onboarding() {
 
   const currentOrder = orders.find(o => o.status === 'employed');
   const subsidy = currentOrder?.subsidy;
-  const daysCompleted = subsidy?.daysCompleted ?? 3;
+  const daysCompleted = subsidy?.daysCompleted ?? 0;
   const daysRequired = subsidy?.daysRequired ?? 7;
-  const subsidyProgress = Math.min(100, (daysCompleted / daysRequired) * 100);
+  const subsidyProgress = Math.min(100, daysRequired > 0 ? (daysCompleted / daysRequired) * 100 : 0);
   const remainingDays = Math.max(0, daysRequired - daysCompleted);
 
   const today = new Date();
@@ -174,14 +90,6 @@ export default function Onboarding() {
       setWithdrawSuccess(true);
     }, 1500);
   };
-
-  const totalEarned = referrals
-    .filter(r => r.status === 'paid')
-    .reduce((s, r) => s + r.amount, 0);
-
-  const totalPending = referrals
-    .filter(r => r.status === 'pending')
-    .reduce((s, r) => s + r.amount, 0);
 
   if (loading) {
     return (
@@ -206,7 +114,7 @@ export default function Onboarding() {
               >
                 <ArrowLeft size={20} />
               </button>
-              <h1 className="text-xl font-bold">入职 & 补贴中心</h1>
+              <h1 className="text-xl font-bold">入职 &amp; 补贴中心</h1>
             </div>
 
             {currentOrder ? (
@@ -263,7 +171,7 @@ export default function Onboarding() {
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
                     <div className="text-xs text-white/80 flex items-center gap-1">
                       <CalendarDays size={11} />
-                      预计发放：<b className="text-white">{payDateStr}</b>
+                      预计发放：<b className="text-white">{subsidy?.paidAt ? new Date(subsidy.paidAt).toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' }) : payDateStr}</b>
                     </div>
                     {subsidyProgress >= 100 && !subsidy?.paidAt ? (
                       <button
@@ -375,7 +283,7 @@ export default function Onboarding() {
             <div className="px-5 pt-5 pb-3 flex items-center justify-between">
               <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
                 <span className="w-1 h-5 rounded-full bg-purple-500" />
-                💰 补贴 & 奖金概览
+                💰 补贴 &amp; 奖金概览
               </h2>
             </div>
 
@@ -386,7 +294,7 @@ export default function Onboarding() {
                   <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">稳岗补贴</span>
                 </div>
                 <div className="text-2xl font-black text-accent-600 tabular-nums">
-                  ¥{subsidyProgress >= 100 ? (subsidy?.amount || 1500).toLocaleString() : '---'}
+                  ¥{subsidyProgress >= 100 ? (subsidy?.amount || 0).toLocaleString() : '---'}
                 </div>
                 <div className="text-[10px] text-gray-500 mt-1">
                   {subsidyProgress >= 100 ? '已达成，可提现' : `还差${remainingDays}天`}
@@ -398,10 +306,10 @@ export default function Onboarding() {
                   <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">推荐奖金</span>
                 </div>
                 <div className="text-2xl font-black text-success-600 tabular-nums">
-                  ¥{(totalEarned + totalPending).toLocaleString()}
+                  ¥0
                 </div>
                 <div className="text-[10px] text-gray-500 mt-1">
-                  已到账 ¥{totalEarned.toLocaleString()}
+                  暂无推荐记录
                 </div>
               </div>
             </div>
@@ -421,79 +329,13 @@ export default function Onboarding() {
               </button>
             </div>
 
-            {referrals.length === 0 ? (
-              <div className="py-10 text-center">
-                <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gray-50 flex items-center justify-center">
-                  <Users size={26} className="text-gray-300" />
-                </div>
-                <p className="text-sm text-gray-500">暂无推荐记录</p>
-                <p className="text-xs text-gray-400 mt-1">推荐工友入职即可获得现金奖励</p>
+            <div className="py-10 text-center">
+              <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gray-50 flex items-center justify-center">
+                <Users size={26} className="text-gray-300" />
               </div>
-            ) : (
-              <div className="space-y-3">
-                {referrals.map(r => {
-                  const progress = Math.min(100, (r.daysCompleted / r.daysRequired) * 100);
-                  const paid = r.status === 'paid';
-                  return (
-                    <div
-                      key={r.id}
-                      className={cn(
-                        'rounded-2xl p-4 border transition-all',
-                        paid
-                          ? 'bg-success-50/50 border-success-100'
-                          : 'bg-gray-50/50 border-gray-100 hover:border-brand-200'
-                      )}
-                    >
-                      <div className="flex items-start justify-between gap-3 mb-3">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <span className="font-bold text-sm text-gray-900">{r.referrerName}</span>
-                            <span className="text-[10px] text-gray-400 tabular-nums">{r.referrerPhone}</span>
-                          </div>
-                          <div className="text-xs text-gray-500 truncate">
-                            {r.factoryName} · {r.jobTitle}
-                          </div>
-                          <div className="text-[10px] text-gray-400 mt-0.5 tabular-nums">
-                            入职日期：{r.createdAt}
-                          </div>
-                        </div>
-                        <div className="text-right flex-shrink-0">
-                          <div className={cn(
-                            'text-xl font-black tabular-nums',
-                            paid ? 'text-success-600' : 'text-accent-500'
-                          )}>
-                            ¥{r.amount.toLocaleString()}
-                          </div>
-                          {paid && r.paidAt && (
-                            <div className="text-[10px] text-success-500 mt-0.5 flex items-center justify-end gap-0.5">
-                              <CheckCircle size={10} />
-                              {r.paidAt}到账
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {!paid && (
-                        <>
-                          <div className="flex justify-between text-[10px] text-gray-500 mb-1.5">
-                            <span>在岗进度</span>
-                            <span className="tabular-nums font-medium">
-                              {r.daysCompleted}/{r.daysRequired}天 ({Math.round(progress)}%)
-                            </span>
-                          </div>
-                          <div className="w-full h-2 bg-white rounded-full overflow-hidden border border-gray-100">
-                            <div
-                              className="h-full bg-gradient-to-r from-accent-400 to-accent-500 rounded-full transition-all duration-500"
-                              style={{ width: `${progress}%` }}
-                            />
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+              <p className="text-sm text-gray-500">暂无推荐记录</p>
+              <p className="text-xs text-gray-400 mt-1">推荐工友入职即可获得现金奖励</p>
+            </div>
           </div>
         </div>
 
@@ -509,7 +351,7 @@ export default function Onboarding() {
             )}
           >
             <Wallet size={20} />
-            {subsidyProgress >= 100 ? `申请提现 ¥${(subsidy?.amount || 1500).toLocaleString()}` : `还需在岗 ${remainingDays} 天可提现`}
+            {subsidyProgress >= 100 ? `申请提现 ¥${(subsidy?.amount || 0).toLocaleString()}` : `还需在岗 ${remainingDays} 天可提现`}
             {subsidyProgress >= 100 && <ArrowUpRight size={18} />}
           </button>
 
@@ -541,7 +383,7 @@ export default function Onboarding() {
                     <Sparkles size={14} className="text-accent-500" />
                   </div>
                   <div className="text-5xl font-black text-center text-accent-600 tabular-nums tracking-tight mb-3">
-                    ¥{(subsidy?.amount || 1500).toLocaleString()}
+                    ¥{(subsidy?.amount || 0).toLocaleString()}
                   </div>
                   <div className="flex items-center justify-between text-xs pt-3 border-t border-accent-100/50 text-gray-500">
                     <span>收款账户</span>
@@ -576,7 +418,7 @@ export default function Onboarding() {
                 </div>
                 <h3 className="text-2xl font-bold text-center text-gray-900 mb-2">🎉 提现申请已提交！</h3>
                 <p className="text-center text-sm text-gray-500 leading-relaxed mb-6">
-                  补贴金额 <b className="text-accent-600">¥{(subsidy?.amount || 1500).toLocaleString()}</b><br/>
+                  补贴金额 <b className="text-accent-600">¥{(subsidy?.amount || 0).toLocaleString()}</b><br/>
                   将在1-3个工作日内到账至您的银行卡
                 </p>
                 <div className="space-y-2.5 mb-6">
@@ -598,7 +440,7 @@ export default function Onboarding() {
                     </div>
                     <div className="text-xs text-gray-600">
                       <div className="font-bold text-gray-800">到账后可查看明细</div>
-                      <div>可在"我的钱包"查看完整流水</div>
+                      <div>可在&quot;我的钱包&quot;查看完整流水</div>
                     </div>
                     <ChevronRight size={16} className="ml-auto text-gray-300" />
                   </div>

@@ -6,19 +6,15 @@ import {
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import type { ResignWarning as ResignWarningType } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get } from '@/lib/api';
 
-const mockWarnings: ResignWarningType[] = [
-  { id: 'WRN001', factoryId: 'F001', factoryName: '富士康科技集团（昆山）', riskLevel: 'high', riskScore: 92, recentResignCount: 45, resignRate: 18.5, trend: 'up', topReasons: [{ reason: '加班强度过大', count: 18 }, { reason: '管理方式粗暴', count: 14 }, { reason: '薪资低于预期', count: 8 }, { reason: '住宿条件差', count: 5 }], keywords: ['加班多', '骂员工', '工资低', '流水线快', '罚款多', '环境吵', '站班累', '不批假'], suggestion: '建议立即约谈工厂HR总监，安排驻场工作人员实地核查近一周离职访谈记录，同时启动白名单降级评估流程，暂停新订单接入直至整改完成。', reportedAt: '2026-06-19T07:00:00Z' },
-  { id: 'WRN002', factoryId: 'F002', factoryName: '某某电子科技（苏州）', riskLevel: 'high', riskScore: 85, recentResignCount: 32, resignRate: 14.2, trend: 'up', topReasons: [{ reason: '食堂伙食差', count: 11 }, { reason: '工资发放不准时', count: 9 }, { reason: '班组长态度差', count: 7 }, { reason: '强制加班', count: 5 }], keywords: ['菜难吃', '拖欠工资', '骂脏话', '义务加班', '夜班多', '请假难', '扣费多'], suggestion: '建议一周内安排二次核查，重点关注薪资发放记录和基层管理人员培训记录，如无改善则从白名单降至灰名单。', reportedAt: '2026-06-18T18:30:00Z' },
-  { id: 'WRN003', factoryId: 'F003', factoryName: '顺丰仓储（上海青浦）', riskLevel: 'medium', riskScore: 72, recentResignCount: 21, resignRate: 11.8, trend: 'stable', topReasons: [{ reason: '体力消耗大', count: 10 }, { reason: '夜班辛苦', count: 7 }, { reason: '交通不便', count: 4 }], keywords: ['搬货重', '熬夜', '偏远', '无班车', '吃饭贵', '休息少'], suggestion: '建议与工厂协商增加夜班补贴和交通接驳车，可暂时维持灰名单观察，持续收集工人反馈。', reportedAt: '2026-06-18T14:20:00Z' },
-  { id: 'WRN004', factoryId: 'F004', factoryName: '某某机械制造（无锡）', riskLevel: 'medium', riskScore: 64, recentResignCount: 15, resignRate: 9.5, trend: 'down', topReasons: [{ reason: '夏天车间太热', count: 8 }, { reason: '安全培训不足', count: 4 }, { reason: '试用期太长', count: 3 }], keywords: ['太热', '没空调', '安全差', '转正慢', '噪音大'], suggestion: '风险呈下降趋势，可加强夏季防暑措施落实情况的督促，鼓励工厂增加降温设备投入。', reportedAt: '2026-06-17T09:10:00Z' },
-  { id: 'WRN005', factoryId: 'F005', factoryName: '比亚迪汽车（杭州钱塘）', riskLevel: 'medium', riskScore: 58, recentResignCount: 18, resignRate: 6.2, trend: 'stable', topReasons: [{ reason: '个人发展原因', count: 8 }, { reason: '通勤距离远', count: 6 }, { reason: '回老家发展', count: 4 }], keywords: ['想换工作', '离家远', '回老家', '学技术', '创业'], suggestion: '离职原因多为个人因素，属正常范围，建议继续保持常规监测频率即可。', reportedAt: '2026-06-16T16:45:00Z' },
-  { id: 'WRN006', factoryId: 'F006', factoryName: '申洲针织（宁波北仑）', riskLevel: 'low', riskScore: 42, recentResignCount: 9, resignRate: 3.8, trend: 'down', topReasons: [{ reason: '季节性返乡', count: 5 }, { reason: '家庭原因', count: 4 }], keywords: ['收麦子', '带孩子', '家人病', '秋收', '过年'], suggestion: '属行业季节性正常波动，无需特殊处理，待用工旺季到来后自动恢复。', reportedAt: '2026-06-15T11:30:00Z' },
-  { id: 'WRN007', factoryId: 'F007', factoryName: '宝洁日化（苏州吴中）', riskLevel: 'low', riskScore: 35, recentResignCount: 6, resignRate: 2.5, trend: 'stable', topReasons: [{ reason: '正常合同到期', count: 4 }, { reason: '结婚生子', count: 2 }], keywords: ['合同到期', '结婚', '怀孕', '换城市'], suggestion: '人员稳定性很好，建议作为优秀合作案例宣传推广。', reportedAt: '2026-06-14T13:20:00Z' },
-  { id: 'WRN008', factoryId: 'F008', factoryName: '某某注塑厂（宁波慈溪）', riskLevel: 'high', riskScore: 81, recentResignCount: 28, resignRate: 22.3, trend: 'up', topReasons: [{ reason: '车间气味大', count: 12 }, { reason: '工资太低', count: 9 }, { reason: '没有社保', count: 7 }], keywords: ['有毒味', '没保险', '工资低', '两班倒', '没休息日', '乱扣钱'], suggestion: '强烈建议立即启动黑名单评估流程，此类严重侵害工人权益的工厂应立即下架所有岗位并终止合作。', reportedAt: '2026-06-17T20:00:00Z' },
-  { id: 'WRN009', factoryId: 'F009', factoryName: '立讯精密（昆山高新区）', riskLevel: 'low', riskScore: 38, recentResignCount: 7, resignRate: 2.1, trend: 'down', topReasons: [{ reason: '提升学历', count: 3 }, { reason: '技术转岗', count: 2 }, { reason: '自主创业', count: 2 }], keywords: ['考大专', '学编程', '开网店', '跑外卖', '开滴滴'], suggestion: '离职均为正向选择，工厂管理规范，可继续深化合作，优先推荐高信用分工人。', reportedAt: '2026-06-15T15:00:00Z' },
-  { id: 'WRN010', factoryId: 'F010', factoryName: '某某五金加工厂（无锡锡山）', riskLevel: 'medium', riskScore: 68, recentResignCount: 16, resignRate: 12.5, trend: 'up', topReasons: [{ reason: '工伤事故频发', count: 7 }, { reason: '防护用品不足', count: 5 }, { reason: '罚款制度不合理', count: 4 }], keywords: ['受工伤', '手套破', '口罩差', '扣工资', '没培训'], suggestion: '安全问题突出，建议立即联合安监部门抽查，如不合格直接拉黑处理，避免更大事故。', reportedAt: '2026-06-18T10:00:00Z' },
-];
+interface WarningSummary {
+  total: number;
+  highCount: number;
+  mediumCount: number;
+  lowCount: number;
+  totalAffected: number;
+}
 
 function getRiskColor(score: number) {
   if (score >= 80) return { bg: 'from-danger-500 to-danger-600', text: 'text-danger-600', light: 'bg-danger-50', badge: 'bg-danger-100 text-danger-600', border: 'border-danger-200' };
@@ -34,29 +30,35 @@ function TrendIcon({ trend }: { trend: string }) {
 
 export default function ResignWarning() {
   const [warnings, setWarnings] = useState<ResignWarningType[]>([]);
-  const [summary, setSummary] = useState<{ total: number; highCount: number; totalAffected: number } | null>(null);
+  const [summary, setSummary] = useState<WarningSummary | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [followedIds, setFollowedIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/warnings/resign')
-      .then(r => r.json())
-      .then(res => {
-        if (res.success && res.data.length > 0) {
-          setWarnings(res.data.sort((a: ResignWarningType, b: ResignWarningType) => b.riskScore - a.riskScore));
-          setSummary(res.summary);
-        } else {
-          setWarnings(mockWarnings);
-          setSummary({ total: mockWarnings.length, highCount: mockWarnings.filter(w => w.riskLevel === 'high').length, totalAffected: mockWarnings.reduce((s, w) => s + w.recentResignCount, 0) });
+    async function loadData() {
+      try {
+        const res = await get<ResignWarningType[]>('/warnings/resign');
+        if (res.success && Array.isArray(res.data)) {
+          setWarnings(res.data.sort((a, b) => b.riskScore - a.riskScore));
+          const summaryData = (res as any).summary;
+          if (summaryData) {
+            setSummary(summaryData);
+          } else {
+            setSummary({
+              total: res.data.length,
+              highCount: res.data.filter(w => w.riskLevel === 'high').length,
+              mediumCount: res.data.filter(w => w.riskLevel === 'medium').length,
+              lowCount: res.data.filter(w => w.riskLevel === 'low').length,
+              totalAffected: res.data.reduce((sum, w) => sum + w.recentResignCount, 0),
+            });
+          }
         }
+      } finally {
         setLoading(false);
-      })
-      .catch(() => {
-        setWarnings(mockWarnings);
-        setSummary({ total: mockWarnings.length, highCount: mockWarnings.filter(w => w.riskLevel === 'high').length, totalAffected: mockWarnings.reduce((s, w) => s + w.recentResignCount, 0) });
-        setLoading(false);
-      });
+      }
+    }
+    loadData();
   }, []);
 
   const top10 = warnings.slice(0, 10);
@@ -157,7 +159,7 @@ export default function ResignWarning() {
                                 <span className={cn('badge', colors.badge)}>
                                   {w.riskLevel === 'high' ? '高风险' : w.riskLevel === 'medium' ? '中风险' : '低风险'}
                                 </span>
-                                <span className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" />{w.reportedAt.slice(5, 16).replace('T', ' ')}</span>
+                                <span className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" />{new Date(w.reportedAt).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>
                               </div>
                             </div>
                           </div>
@@ -319,7 +321,7 @@ export default function ResignWarning() {
                 </div>
                 <div className="pt-3 border-t border-gray-100">
                   <div className="text-xs text-gray-500 mb-1.5">最近更新时间</div>
-                  <div className="text-sm text-gray-700">{w.reportedAt.replace('T', ' ').slice(0, 19)}</div>
+                  <div className="text-sm text-gray-700">{new Date(w.reportedAt).toLocaleString('zh-CN')}</div>
                 </div>
               </div>
             </div>

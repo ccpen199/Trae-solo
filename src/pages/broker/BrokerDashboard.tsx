@@ -3,14 +3,11 @@ import {
   User, MapPin, Phone, Star, Award, CheckCircle, Clock, Briefcase,
   DollarSign, Calendar, Navigation, ChevronRight, Handshake
 } from 'lucide-react';
-import type { InterviewOrder, Broker } from '@shared/types';
+import type { InterviewOrder, Broker, Worker } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get, post } from '@/lib/api';
 
-const mockBroker: Broker = {
-  id: 'B001', name: '张伟', phone: '138****8888', bindRegion: '苏州工业园',
-  serviceRating: 4.9, orderWeight: 95, totalOrders: 268, completedOrders: 245,
-  tags: ['金牌经纪人', '接单王', '工人好评'],
-};
+const BROKER_ID = 'b-001';
 
 interface PendingOrder extends InterviewOrder {
   distanceKm: number;
@@ -19,36 +16,7 @@ interface PendingOrder extends InterviewOrder {
   workerSkills: string[];
 }
 
-const mockPendingOrders: PendingOrder[] = [
-  { id: 'ORD101', workerId: 'W01', workerName: '刘铁柱', workerPhone: '139****1111', workerCreditScore: 88, workerSkills: ['电子装配', '电焊'],
-    jobId: 'J01', jobTitle: '电子装配工', factoryId: 'F01', factoryName: '立讯精密', scheduledDate: '2026-06-19',
-    status: 'pending', distanceKm: 3.2, serviceFee: 180, timeline: [], createdAt: '2026-06-19T06:30:00Z', pickupInfo: { carPlate: '苏E·88888', driverName: '王师傅', driverPhone: '137****2222', pickupTime: '07:30', pickupPoint: '苏州园区地铁站1号口' },
-  },
-  { id: 'ORD102', workerId: 'W02', workerName: '孙大伟', workerPhone: '136****3333', workerCreditScore: 76, workerSkills: ['叉车驾驶'],
-    jobId: 'J02', jobTitle: '叉车司机', factoryId: 'F02', factoryName: '顺丰仓储', scheduledDate: '2026-06-19',
-    status: 'pending', distanceKm: 8.5, serviceFee: 240, timeline: [], createdAt: '2026-06-19T06:45:00Z', pickupInfo: { carPlate: '苏E·88888', driverName: '王师傅', driverPhone: '137****2222', pickupTime: '08:00', pickupPoint: '东环路大润发门口' },
-  },
-  { id: 'ORD103', workerId: 'W03', workerName: '钱小花', workerPhone: '135****4444', workerCreditScore: 92, workerSkills: ['品检', '质量检验'],
-    jobId: 'J03', jobTitle: '品检员', factoryId: 'F03', factoryName: '富士康科技', scheduledDate: '2026-06-19',
-    status: 'pending', distanceKm: 5.8, serviceFee: 160, timeline: [], createdAt: '2026-06-19T07:00:00Z', pickupInfo: { carPlate: '苏E·88888', driverName: '王师傅', driverPhone: '137****2222', pickupTime: '08:30', pickupPoint: '钟南街邻里中心' },
-  },
-  { id: 'ORD104', workerId: 'W04', workerName: '赵德胜', workerPhone: '134****5555', workerCreditScore: 68, workerSkills: [],
-    jobId: 'J04', jobTitle: '包装工', factoryId: 'F04', factoryName: '宝洁日化', scheduledDate: '2026-06-19',
-    status: 'pending', distanceKm: 12.3, serviceFee: 200, timeline: [], createdAt: '2026-06-19T07:15:00Z', pickupInfo: { carPlate: '苏E·88888', driverName: '王师傅', driverPhone: '137****2222', pickupTime: '09:00', pickupPoint: '唯亭镇政府公交站' },
-  },
-];
-
 interface TodayTask { time: string; type: 'pickup' | 'document' | 'training' | 'interview' | 'result'; title: string; factoryName: string; workerName: string; location: string; completed: boolean; note?: string; }
-
-const todayTasks: TodayTask[] = [
-  { time: '07:30', type: 'pickup', title: '车接车送', factoryName: '立讯精密', workerName: '刘铁柱等3人', location: '地铁1号线钟南街站', completed: true },
-  { time: '08:30', type: 'pickup', title: '车接车送', factoryName: '富士康科技', workerName: '钱小花等5人', location: '东环路公交站', completed: true },
-  { time: '09:30', type: 'document', title: '证件复印办理', factoryName: '立讯精密', workerName: '刘铁柱', location: '工厂行政楼201室', completed: true, note: '身份证+学历证共6份' },
-  { time: '10:30', type: 'training', title: '岗前培训签到', factoryName: '立讯精密', workerName: '刘铁柱等3人', location: '培训中心A教室', completed: false, note: 'EHS安全+岗位技能' },
-  { time: '13:30', type: 'interview', title: '带工人面试', factoryName: '顺丰仓储', workerName: '孙大伟', location: 'HR会议室', completed: false },
-  { time: '15:00', type: 'result', title: '确认面试结果', factoryName: '宝洁日化', workerName: '赵德胜', location: '前台等候区', completed: false },
-  { time: '16:30', type: 'document', title: '入职手续办理', factoryName: '立讯精密', workerName: '刘铁柱等3人', location: '行政服务中心', completed: false, note: '预计3人全部通过' },
-];
 
 function getTaskStyle(type: string) {
   return {
@@ -69,33 +37,104 @@ function getScoreColor(s: number) {
   return 'text-danger-600 bg-danger-50';
 }
 
+function ordersToTasks(orders: InterviewOrder[]): TodayTask[] {
+  const tasks: TodayTask[] = [];
+  const statusMap: Record<string, { type: TodayTask['type']; title: string; completed: boolean }[]> = {
+    pickup_scheduled: [{ type: 'pickup', title: '车接车送', completed: false }],
+    arrived: [{ type: 'pickup', title: '车接车送', completed: true }, { type: 'document', title: '证件复印办理', completed: false }],
+    documents_copied: [{ type: 'pickup', title: '车接车送', completed: true }, { type: 'document', title: '证件复印办理', completed: true }, { type: 'training', title: '岗前培训签到', completed: false }],
+    training_done: [{ type: 'pickup', title: '车接车送', completed: true }, { type: 'document', title: '证件复印办理', completed: true }, { type: 'training', title: '岗前培训签到', completed: true }, { type: 'interview', title: '带工人面试', completed: false }],
+    interviewing: [{ type: 'pickup', title: '车接车送', completed: true }, { type: 'document', title: '证件复印办理', completed: true }, { type: 'training', title: '岗前培训签到', completed: true }, { type: 'interview', title: '带工人面试', completed: true }, { type: 'result', title: '确认面试结果', completed: false }],
+  };
+
+  orders.forEach(order => {
+    const taskTemplates = statusMap[order.status] || [];
+    taskTemplates.forEach(tpl => {
+      const time = order.pickupInfo?.pickupTime 
+        ? new Date(order.pickupInfo.pickupTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+        : '09:00';
+      tasks.push({
+        time,
+        type: tpl.type,
+        title: tpl.title,
+        completed: tpl.completed,
+        factoryName: order.factoryName,
+        workerName: order.workerName,
+        location: order.pickupInfo?.pickupPoint || '工厂门口',
+        note: order.pickupInfo ? `车牌号：${order.pickupInfo.carPlate}，司机：${order.pickupInfo.driverName}` : undefined,
+      });
+    });
+  });
+
+  return tasks.sort((a, b) => a.time.localeCompare(b.time));
+}
+
 export default function BrokerDashboard() {
   const [broker, setBroker] = useState<Broker | null>(null);
   const [pendingOrders, setPendingOrders] = useState<PendingOrder[]>([]);
+  const [myOrders, setMyOrders] = useState<InterviewOrder[]>([]);
   const [acceptingId, setAcceptingId] = useState<string | null>(null);
-  const [tasks, setTasks] = useState<TodayTask[]>(todayTasks);
+  const [tasks, setTasks] = useState<TodayTask[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/brokers/B001')
-      .then(r => r.json())
-      .then(res => { if (res.success) setBroker(res.data); else setBroker(mockBroker); })
-      .catch(() => setBroker(mockBroker));
-    setPendingOrders(mockPendingOrders);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [brokerRes, pendingRes, myOrdersRes, workersRes] = await Promise.all([
+          get<Broker>(`/brokers/${BROKER_ID}`),
+          get<InterviewOrder[]>('/interviews?status=pending'),
+          get<InterviewOrder[]>(`/brokers/${BROKER_ID}/orders`),
+          get<Worker[]>('/workers'),
+        ]);
+
+        if (brokerRes.success && brokerRes.data) {
+          setBroker(brokerRes.data);
+        }
+
+        if (pendingRes.success && pendingRes.data && workersRes.success && workersRes.data) {
+          const workers = workersRes.data;
+          const pendingWithDetails: PendingOrder[] = pendingRes.data.map(order => {
+            const worker = workers.find(w => w.id === order.workerId);
+            return {
+              ...order,
+              distanceKm: Math.round(Math.random() * 15 + 2),
+              workerCreditScore: worker?.creditScore || 70,
+              workerSkills: worker?.skills?.map(s => s.name) || [],
+            };
+          });
+          setPendingOrders(pendingWithDetails);
+        }
+
+        if (myOrdersRes.success && myOrdersRes.data) {
+          const todayOrders = myOrdersRes.data.filter(o => {
+            const orderDate = new Date(o.scheduledDate).toDateString();
+            const today = new Date().toDateString();
+            return orderDate === today;
+          });
+          setMyOrders(myOrdersRes.data);
+          const todayTasks = ordersToTasks(todayOrders);
+          setTasks(todayTasks);
+        }
+      } catch (err) {
+        console.error('加载数据失败', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const acceptOrder = async (orderId: string) => {
     setAcceptingId(orderId);
     try {
-      const res = await fetch(`/api/interviews/${orderId}/assign-broker`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ brokerId: broker?.id || 'B001' }),
-      });
-      const data = await res.json();
-      if (data.success) {
+      const res = await post(`/interviews/${orderId}/assign-broker`, { brokerId: BROKER_ID });
+      if (res.success) {
         setPendingOrders(prev => prev.filter(o => o.id !== orderId));
       }
-    } catch {
-      setPendingOrders(prev => prev.filter(o => o.id !== orderId));
+    } catch (err) {
+      console.error('接单失败', err);
     }
     setAcceptingId(null);
   };
@@ -121,19 +160,19 @@ export default function BrokerDashboard() {
           <div className="flex items-center gap-5 shrink-0">
             <div className="relative">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center text-3xl font-bold border-4 border-white/20 shadow-lg">
-                {broker?.name?.charAt(0) || '张'}
+                {broker?.name?.charAt(0) || '王'}
               </div>
               <div className="absolute -bottom-1 -right-1 bg-accent-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow">VIP</div>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-2xl font-bold">{broker?.name || '张伟'}</h2>
+                <h2 className="text-2xl font-bold">{broker?.name || '王建国'}</h2>
                 {broker?.tags?.slice(0, 2).map((t, i) => (
                   <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">{t}</span>
                 ))}
               </div>
               <div className="flex items-center gap-4 text-white/80 text-sm">
-                <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" />{broker?.phone || '138****8888'}</span>
+                <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" />{broker?.phone || '139****5566'}</span>
                 <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" />负责区域：{broker?.bindRegion || '苏州工业园'}</span>
               </div>
               <div className="flex items-center gap-1 mt-2">
@@ -153,7 +192,7 @@ export default function BrokerDashboard() {
           <div className="flex-1 w-full grid grid-cols-3 gap-3 lg:ml-6 lg:border-l lg:border-white/10 lg:pl-6">
             <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 p-4 text-center">
               <div className="flex items-center justify-center gap-1.5 mb-1 text-white/70 text-xs"><CheckCircle className="w-3.5 h-3.5" />本月已完成</div>
-              <div className="text-3xl font-bold">{broker?.completedOrders || 24}</div>
+              <div className="text-3xl font-bold">{broker?.completedOrders || 0}</div>
               <div className="text-xs text-white/60 mt-0.5">单</div>
             </div>
             <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 p-4 text-center">
@@ -179,7 +218,13 @@ export default function BrokerDashboard() {
             </button>
           </div>
           <div className="space-y-3">
-            {pendingOrders.length === 0 && (
+            {loading && pendingOrders.length === 0 && (
+              <div className="py-16 text-center text-gray-400">
+                <div className="animate-spin w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full mx-auto mb-3" />
+                <p>加载中...</p>
+              </div>
+            )}
+            {!loading && pendingOrders.length === 0 && (
               <div className="py-16 text-center text-gray-400">
                 <Handshake className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>暂无新订单，继续加油！</p>
@@ -206,7 +251,7 @@ export default function BrokerDashboard() {
                         <span className="text-accent-600 font-medium">{o.jobTitle}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {o.workerSkills.map(s => <span key={s} className="tag border-brand-200 bg-brand-50 text-brand-600 text-[10px]">{s}</span>)}
+                        {o.workerSkills.slice(0, 3).map(s => <span key={s} className="tag border-brand-200 bg-brand-50 text-brand-600 text-[10px]">{s}</span>)}
                       </div>
                     </div>
                   </div>

@@ -4,7 +4,7 @@ import repo from '../services/repository.js';
 const router = Router();
 
 // GET /api/warnings/resign - 获取异常离职预警列表
-router.get('/resign', (_req: Request, res: Response) => {
+router.get('/warnings/resign', (_req: Request, res: Response) => {
   const data = repo.getResignWarnings();
   const summary = {
     total: data.length,

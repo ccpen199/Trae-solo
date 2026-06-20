@@ -31,7 +31,7 @@ import { get, post } from '@/lib/api';
 import CreditGauge from '@/components/CreditGauge';
 import type { Worker, SkillCert, PerformanceRecord, LeaveType } from '@shared/types';
 
-const MOCK_WORKER_ID = 'w-001';
+const WORKER_ID = 'w-001';
 
 export default function WorkerProfile() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function WorkerProfile() {
   const fetchWorker = async () => {
     setLoading(true);
     try {
-      const res = await get<Worker>(`/workers/${MOCK_WORKER_ID}`);
+      const res = await get<Worker>(`/workers/${WORKER_ID}`);
       if (res.success && res.data) {
         setWorker(res.data);
       } else {
@@ -66,7 +66,7 @@ export default function WorkerProfile() {
     setOcrSuccess(false);
     setOcrLoading(true);
     setTimeout(async () => {
-      const res = await post<Worker>(`/workers/${MOCK_WORKER_ID}/verify-idcard`, {
+      const res = await post<Worker>(`/workers/${WORKER_ID}/verify-idcard`, {
         name: '张伟',
         idNumber: '3205021992******12',
         address: '江苏省苏州市姑苏区观前街100号',

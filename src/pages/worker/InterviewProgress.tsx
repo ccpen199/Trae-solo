@@ -23,9 +23,10 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { get, post } from '@/lib/api';
 import type { InterviewOrder, InterviewStatus } from '@shared/types';
 
-const MOCK_WORKER_ID = 'w-001';
+const WORKER_ID = 'w-001';
 
 type TabType = 'active' | 'employed' | 'failed';
 
@@ -53,7 +54,7 @@ export default function InterviewProgress() {
   const [activeTab, setActiveTab] = useState<TabType>('active');
   const [orders, setOrders] = useState<InterviewOrder[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showResultModal, setShowResultModal] = useState<{ show: boolean; passed: boolean }>({ show: false, passed: true });
+  const [showResultModal, setShowResultModal] = useState<{ show: boolean; passed: boolean; orderId?: string }>({ show: false, passed: true });
 
   const tabs: { key: TabType; label: string; badge?: string }[] = [
     { key: 'active', label: '进行中' },
@@ -64,119 +65,12 @@ export default function InterviewProgress() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/interviews?workerId=${MOCK_WORKER_ID}`);
-      const json = await res.json();
-      if (json.success && json.data?.length > 0) {
-        setOrders(json.data);
-      } else {
-        throw new Error('no data');
+      const res = await get<InterviewOrder[]>(`/interviews?workerId=${WORKER_ID}`);
+      if (res.success && res.data) {
+        setOrders(res.data);
       }
     } catch (e) {
       console.error(e);
-      const mockOrders: InterviewOrder[] = [
-        {
-          id: 'iv_001',
-          workerId: MOCK_WORKER_ID,
-          workerName: '张师傅',
-          workerPhone: '138****8888',
-          jobId: 'job_1',
-          jobTitle: '电子厂普工 · 包吃住',
-          factoryId: 'f_1',
-          factoryName: '苏州立讯精密电子',
-          brokerId: 'b_1',
-          brokerName: '王经理',
-          scheduledDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-          status: 'arrived',
-          pickupInfo: {
-            carPlate: '苏E·88888',
-            driverName: '李师傅',
-            driverPhone: '139****6666',
-            pickupTime: '明天 上午 08:30',
-            pickupPoint: '苏州工业园地铁站2号口',
-          },
-          timeline: [
-            { time: '06-19 09:15', type: '预约成功', description: '提交面试预约申请，等待经纪人联系' },
-            { time: '06-19 09:40', type: '经纪人匹配', description: '王经理已接单，正在为您安排车接服务', operator: '系统' },
-            { time: '06-19 10:20', type: '车接已安排', description: '车牌号苏E·88888，李师傅 139****6666', operator: '王经理' },
-            { time: '06-20 08:35', type: '已出发', description: '车辆已从集合点出发，预计25分钟到达工厂' },
-            { time: '06-20 09:02', type: '到达工厂', description: '已到达工厂门卫室，完成身份登记', operator: '李师傅' },
-          ],
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-        },
-        {
-          id: 'iv_002',
-          workerId: MOCK_WORKER_ID,
-          workerName: '张师傅',
-          workerPhone: '138****8888',
-          jobId: 'job_2',
-          jobTitle: '品检QC · 长白班',
-          factoryId: 'f_2',
-          factoryName: '昆山仁宝科技',
-          brokerId: 'b_2',
-          brokerName: '刘主管',
-          scheduledDate: new Date().toISOString().split('T')[0],
-          status: 'training_done',
-          pickupInfo: {
-            carPlate: '苏E·66666',
-            driverName: '陈师傅',
-            driverPhone: '137****5555',
-            pickupTime: '今天 上午 07:50',
-            pickupPoint: '昆山南站东出口',
-          },
-          timeline: [
-            { time: '06-18 14:20', type: '预约成功', description: '提交面试预约申请' },
-            { time: '06-18 14:50', type: '经纪人匹配', description: '刘主管已接单', operator: '系统' },
-            { time: '06-19 07:30', type: '车接已安排', description: '陈师傅的车辆已安排', operator: '刘主管' },
-            { time: '06-19 08:45', type: '到达工厂', description: '已到达并完成登记' },
-            { time: '06-19 09:10', type: '证件复印', description: '身份证、学历证复印件已收集，照片6张已备齐', operator: '工厂HR' },
-            { time: '06-19 10:30', type: '岗前培训', description: 'EHS安全+岗位技能培训完成，已签到确认', operator: '培训师张老师' },
-          ],
-          createdAt: new Date(Date.now() - 172800000).toISOString(),
-        },
-        {
-          id: 'iv_003',
-          workerId: MOCK_WORKER_ID,
-          workerName: '张师傅',
-          workerPhone: '138****8888',
-          jobId: 'job_00_old1',
-          jobTitle: '仓库分拣员',
-          factoryId: 'f_3',
-          factoryName: '苏州博世汽车零部件',
-          brokerId: 'b_1',
-          brokerName: '王经理',
-          scheduledDate: '2025-05-10',
-          status: 'employed',
-          timeline: [
-            { time: '05-08 10:00', type: '预约成功', description: '' },
-            { time: '05-10 09:00', type: '到达工厂', description: '' },
-            { time: '05-10 11:30', type: '面试通过', description: '面试表现优秀，当场通过！' },
-            { time: '05-10 14:00', type: '入职手续', description: '签订劳动合同，已办理入职' },
-          ],
-          subsidy: { triggered: true, amount: 1500, daysRequired: 7, daysCompleted: 3, paidAt: undefined },
-          createdAt: '2025-05-08T10:00:00Z',
-        },
-        {
-          id: 'iv_004',
-          workerId: MOCK_WORKER_ID,
-          workerName: '张师傅',
-          workerPhone: '138****8888',
-          jobId: 'job_00_old2',
-          jobTitle: '包装工',
-          factoryId: 'f_4',
-          factoryName: '吴江某包装材料厂',
-          brokerId: 'b_3',
-          brokerName: '赵老师',
-          scheduledDate: '2025-04-15',
-          status: 'failed',
-          timeline: [
-            { time: '04-14 15:30', type: '预约成功', description: '' },
-            { time: '04-15 10:00', type: '到达工厂', description: '' },
-            { time: '04-15 11:00', type: '面试未通过', description: '暂不符合岗位要求：该岗位需要有包装机操作经验' },
-          ],
-          createdAt: '2025-04-14T15:30:00Z',
-        },
-      ];
-      setOrders(mockOrders);
     } finally {
       setLoading(false);
     }
@@ -197,35 +91,14 @@ export default function InterviewProgress() {
     }
   };
 
-  const updateStatus = async (orderId: string, endpoint: string, body: any, newStatus?: InterviewStatus) => {
+  const updateStatus = async (orderId: string, endpoint: string, body: any) => {
     try {
-      const res = await fetch(`/api/interviews/${orderId}/${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body || {}),
-      });
-      const json = await res.json();
-      if (json.success) {
-        setOrders(prev => prev.map(o => o.id === orderId ? json.data : o));
-      } else {
-        throw new Error(json.error);
+      const res = await post<InterviewOrder>(`/interviews/${orderId}/${endpoint}`, body || {});
+      if (res.success && res.data) {
+        setOrders(prev => prev.map(o => o.id === orderId ? res.data! : o));
       }
     } catch (e) {
-      if (newStatus) {
-        setOrders(prev => prev.map(o => {
-          if (o.id !== orderId) return o;
-          return {
-            ...o,
-            status: newStatus,
-            timeline: [...o.timeline, {
-              time: new Date().toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'),
-              type: '状态更新',
-              description: body?.description || '状态已更新',
-              operator: '工人操作'
-            }]
-          };
-        }));
-      }
+      console.error(e);
     }
   };
 
@@ -236,12 +109,17 @@ export default function InterviewProgress() {
     failed: orders.filter(o => o.status === 'failed').length,
   };
 
+  const formatTime = (isoString: string) => {
+    const d = new Date(isoString);
+    return `${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+  };
+
   const renderActiveCard = (order: InterviewOrder) => {
     const stepIdx = getStepIndex(order.status);
     const canArrive = stepIdx < 2 && ['pending', 'broker_assigned', 'pickup_scheduled'].includes(order.status);
     const canDocument = stepIdx === 2 || order.status === 'arrived';
     const canTraining = stepIdx === 3 || order.status === 'documents_copied';
-    const canResult = stepIdx >= 4 && order.status !== 'passed' && order.status !== 'failed';
+    const canResult = stepIdx >= 4 && order.status !== 'passed' && order.status !== 'failed' && order.status !== 'employed';
 
     return (
       <div key={order.id} className="bg-white rounded-3xl shadow-card overflow-hidden mb-4 border border-gray-100">
@@ -332,7 +210,7 @@ export default function InterviewProgress() {
               <div className="space-y-2 mb-3 text-xs text-gray-600">
                 <div className="flex items-start gap-2">
                   <Clock size={12} className="text-accent-500 mt-0.5 flex-shrink-0" />
-                  <span className="font-medium">{order.pickupInfo.pickupTime}</span>
+                  <span className="font-medium">{formatTime(order.pickupInfo.pickupTime)}</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <MapPin size={12} className="text-brand-500 mt-0.5 flex-shrink-0" />
@@ -371,12 +249,12 @@ export default function InterviewProgress() {
                   <div className="flex items-center gap-1.5 text-xs text-gray-500">
                     <div className="flex">
                       {[1,2,3,4,5].map(s => (
-                        <Star key={s} size={10} className={s <= 4.8 ? 'text-warning-400 fill-warning-400' : 'text-gray-200'} />
+                        <Star key={s} size={10} className={s <= 4.5 ? 'text-warning-400 fill-warning-400' : 'text-gray-200'} />
                       ))}
                     </div>
                     <span className="font-medium text-gray-700">4.8</span>
                     <span>·</span>
-                    <span className="bg-white px-1.5 py-0.5 rounded text-accent-600">服务368人</span>
+                    <span className="bg-white px-1.5 py-0.5 rounded text-accent-600">服务专业</span>
                   </div>
                 </div>
               </div>
@@ -409,7 +287,7 @@ export default function InterviewProgress() {
                 onClick={() => updateStatus(order.id, 'arrived', {
                   description: '已到达工厂门卫，完成身份登记签到',
                   operator: order.workerName
-                }, 'arrived')}
+                })}
                 className="col-span-2 py-3.5 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
               >
                 <MapPin size={18} />
@@ -421,7 +299,7 @@ export default function InterviewProgress() {
                 onClick={() => updateStatus(order.id, 'check-document', {
                   description: '身份证、学历证复印件已收集，照片6张已备齐',
                   operator: order.workerName
-                }, 'documents_copied')}
+                })}
                 className="py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-600 text-white font-bold shadow-md flex items-center justify-center gap-1.5 text-sm active:scale-[0.98] transition-all"
               >
                 <FileText size={16} />
@@ -430,7 +308,7 @@ export default function InterviewProgress() {
             )}
             {canTraining && (
               <button
-                onClick={() => updateStatus(order.id, 'sign-training', { operator: order.workerName }, 'training_done')}
+                onClick={() => updateStatus(order.id, 'sign-training', { operator: order.workerName })}
                 className="py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-cyan-600 text-white font-bold shadow-md flex items-center justify-center gap-1.5 text-sm active:scale-[0.98] transition-all"
               >
                 <GraduationCap size={16} />
@@ -440,14 +318,14 @@ export default function InterviewProgress() {
             {canResult && (
               <>
                 <button
-                  onClick={() => setShowResultModal({ show: true, passed: true })}
+                  onClick={() => setShowResultModal({ show: true, passed: true, orderId: order.id })}
                   className="py-3 rounded-2xl bg-gradient-to-r from-success-500 to-success-600 text-white font-bold shadow-md flex items-center justify-center gap-1.5 text-sm active:scale-[0.98] transition-all"
                 >
                   <CheckCircle2 size={16} />
                   面试通过
                 </button>
                 <button
-                  onClick={() => setShowResultModal({ show: true, passed: false })}
+                  onClick={() => setShowResultModal({ show: true, passed: false, orderId: order.id })}
                   className="py-3 rounded-2xl bg-gradient-to-r from-danger-500 to-danger-600 text-white font-bold shadow-md flex items-center justify-center gap-1.5 text-sm active:scale-[0.98] transition-all"
                 >
                   <XCircle size={16} />
@@ -474,7 +352,7 @@ export default function InterviewProgress() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 mb-0.5">
                       <span className="text-xs font-semibold text-gray-800">{event.type}</span>
-                      <span className="text-[10px] text-gray-400 flex-shrink-0 tabular-nums">{event.time}</span>
+                      <span className="text-[10px] text-gray-400 flex-shrink-0 tabular-nums">{formatTime(event.time)}</span>
                     </div>
                     {event.description && (
                       <p className="text-xs text-gray-500 leading-relaxed">{event.description}</p>
@@ -504,7 +382,7 @@ export default function InterviewProgress() {
               <span className="truncate">{order.factoryName}</span>
             </div>
             <div className="text-[10px] text-gray-400 mt-0.5 tabular-nums">
-              预约日期：{order.scheduledDate}
+              预约日期：{order.scheduledDate?.split('T')[0]}
             </div>
           </div>
           <div className={cn(
@@ -683,18 +561,17 @@ export default function InterviewProgress() {
               </button>
               <button
                 onClick={() => {
-                  const orderId = currentOrders.find(o => o.status !== 'employed' && o.status !== 'failed')?.id;
-                  if (orderId) {
-                    updateStatus(orderId, 'result', {
+                  if (showResultModal.orderId) {
+                    updateStatus(showResultModal.orderId, 'result', {
                       passed: showResultModal.passed,
                       remark: showResultModal.passed ? '工人确认面试通过，准备入职' : '工人反馈面试未通过',
                       operator: '工人操作'
-                    }, showResultModal.passed ? 'passed' : 'failed');
+                    });
+                    if (showResultModal.passed) {
+                      navigate('/worker/onboarding');
+                    }
                   }
                   setShowResultModal({ show: false, passed: true });
-                  if (showResultModal.passed) {
-                    navigate('/worker/onboarding');
-                  }
                 }}
                 className={cn(
                   'flex-1 py-3 rounded-2xl text-white font-bold shadow-lg active:scale-[0.98] transition-all',

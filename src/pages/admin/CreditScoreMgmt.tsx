@@ -6,93 +6,13 @@ import {
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import type { Worker, CreditDistribution, PerformanceRecord } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { get, patch } from '@/lib/api';
 
 interface CreditRecord { id: string; date: string; type: 'add' | 'deduct'; score: number; reason: string; operator: string; }
 
 interface WorkerExt extends Worker {
   creditRecords?: CreditRecord[];
 }
-
-const mockWorkers: WorkerExt[] = [
-  { id: 'W001', name: '陈建国', phone: '138****1234', avatar: '', idCardVerified: true, gender: 'male', age: 32,
-    skills: [{ name: '电子装配', issuer: '人社局', certifiedAt: '2023-05-10' }, { name: '电焊操作', issuer: '安监局', certifiedAt: '2024-01-20' }],
-    performanceHistory: [
-      { factoryId: 'F001', factoryName: '富士康科技', jobId: 'J001', jobTitle: '电子装配工', startDate: '2025-09-01', endDate: '2026-01-15', daysWorked: 120, leaveType: 'normal', leaveReason: '春节返乡' },
-      { factoryId: 'F002', factoryName: '立讯精密', jobId: 'J002', jobTitle: '品检员', startDate: '2026-02-20', daysWorked: 115 },
-    ],
-    creditScore: 92, currentLocation: { lat: 31.2, lng: 120.7, region: '苏州' }, status: 'employed', createdAt: '2025-08-01',
-    creditRecords: [
-      { id: 'c1', date: '2026-06-10', type: 'add', score: 3, reason: '提前到岗，表现优秀', operator: '经纪人张伟' },
-      { id: 'c2', date: '2026-05-25', type: 'add', score: 5, reason: '完整履约4个月，按时在岗', operator: '系统' },
-      { id: 'c3', date: '2026-04-12', type: 'deduct', score: 2, reason: '面试迟到30分钟', operator: '经纪人李娜' },
-      { id: 'c4', date: '2026-03-01', type: 'add', score: 2, reason: '身份认证完成', operator: '系统' },
-    ]
-  },
-  { id: 'W002', name: '刘美丽', phone: '139****5678', avatar: '', idCardVerified: true, gender: 'female', age: 28,
-    skills: [{ name: '质量检验', issuer: 'ISO认证中心', certifiedAt: '2023-08-15' }],
-    performanceHistory: [
-      { factoryId: 'F002', factoryName: '立讯精密', jobId: 'J002', jobTitle: '品检员', startDate: '2025-11-01', endDate: '2026-05-30', daysWorked: 180, leaveType: 'normal', leaveReason: '合同到期' },
-    ],
-    creditScore: 88, currentLocation: { lat: 31.3, lng: 120.9, region: '昆山' }, status: 'idle', createdAt: '2025-10-15',
-    creditRecords: [
-      { id: 'c1', date: '2026-06-01', type: 'add', score: 8, reason: '完成6个月履约，无投诉', operator: '系统' },
-      { id: 'c2', date: '2026-03-15', type: 'add', score: 2, reason: '推荐优质工人入职', operator: '系统' },
-    ]
-  },
-  { id: 'W003', name: '王志强', phone: '137****9012', avatar: '', idCardVerified: true, gender: 'male', age: 35,
-    skills: [{ name: '叉车驾驶', issuer: '质监局', certifiedAt: '2022-06-01' }, { name: '仓储管理', issuer: '物流协会', certifiedAt: '2023-11-10' }],
-    performanceHistory: [
-      { factoryId: 'F003', factoryName: '顺丰仓储', jobId: 'J003', jobTitle: '叉车司机', startDate: '2026-01-10', daysWorked: 140 },
-    ],
-    creditScore: 76, currentLocation: { lat: 31.1, lng: 121.2, region: '上海' }, status: 'employed', createdAt: '2025-12-20',
-    creditRecords: [
-      { id: 'c1', date: '2026-05-20', type: 'deduct', score: 5, reason: '旷工1天，未提前请假', operator: '工厂HR' },
-      { id: 'c2', date: '2026-04-05', type: 'add', score: 3, reason: '大促期间加班支持', operator: '经纪人王磊' },
-    ]
-  },
-  { id: 'W004', name: '张秀兰', phone: '136****3456', avatar: '', idCardVerified: true, gender: 'female', age: 40,
-    skills: [],
-    performanceHistory: [
-      { factoryId: 'F004', factoryName: '宝洁日化', jobId: 'J004', jobTitle: '包装工', startDate: '2026-03-01', endDate: '2026-05-20', daysWorked: 65, leaveType: 'abnormal', leaveReason: '不告而别' },
-    ],
-    creditScore: 54, currentLocation: { lat: 30.3, lng: 120.2, region: '杭州' }, status: 'resigned', createdAt: '2026-02-10',
-    creditRecords: [
-      { id: 'c1', date: '2026-05-22', type: 'deduct', score: 20, reason: '异常离职，未办理手续', operator: '系统' },
-      { id: 'c2', date: '2026-04-18', type: 'deduct', score: 3, reason: '与工友发生口角', operator: '工厂主管' },
-    ]
-  },
-  { id: 'W005', name: '李海峰', phone: '135****7890', avatar: '', idCardVerified: true, gender: 'male', age: 30,
-    skills: [{ name: 'CNC操作', issuer: '机械工程学会', certifiedAt: '2021-03-20' }, { name: '模具维修', issuer: '行业协会', certifiedAt: '2022-09-15' }, { name: '机械识图', issuer: '培训中心', certifiedAt: '2020-12-01' }],
-    performanceHistory: [
-      { factoryId: 'F005', factoryName: '比亚迪汽车', jobId: 'J005', jobTitle: 'CNC操作员', startDate: '2025-07-01', daysWorked: 280 },
-    ],
-    creditScore: 95, currentLocation: { lat: 30.2, lng: 120.5, region: '杭州' }, status: 'employed', createdAt: '2025-06-15',
-    creditRecords: [
-      { id: 'c1', date: '2026-06-15', type: 'add', score: 5, reason: '获得工厂月度优秀员工', operator: '工厂HR' },
-      { id: 'c2', date: '2026-05-01', type: 'add', score: 10, reason: '连续在岗满10个月', operator: '系统' },
-    ]
-  },
-  { id: 'W006', name: '周桂英', phone: '134****1122', avatar: '', idCardVerified: false, gender: 'female', age: 42,
-    skills: [],
-    performanceHistory: [
-      { factoryId: 'F006', factoryName: '申洲针织', jobId: 'J006', jobTitle: '缝纫工', startDate: '2026-04-01', daysWorked: 55 },
-    ],
-    creditScore: 62, currentLocation: { lat: 29.9, lng: 121.8, region: '宁波' }, status: 'interviewing', createdAt: '2026-03-20',
-    creditRecords: [
-      { id: 'c1', date: '2026-05-30', type: 'deduct', score: 3, reason: '培训签到迟到', operator: '经纪人赵敏' },
-    ]
-  },
-  { id: 'W007', name: '赵小飞', phone: '133****3344', avatar: '', idCardVerified: true, gender: 'male', age: 25,
-    skills: [],
-    performanceHistory: [
-      { factoryId: 'F007', factoryName: '某电子厂', jobId: 'J007', jobTitle: '流水线工', startDate: '2026-03-10', endDate: '2026-03-15', daysWorked: 3, leaveType: 'fired', leaveReason: '打架斗殴' },
-    ],
-    creditScore: 35, currentLocation: { lat: 31.5, lng: 120.3, region: '无锡' }, status: 'resigned', createdAt: '2026-02-28',
-    creditRecords: [
-      { id: 'c1', date: '2026-03-16', type: 'deduct', score: 40, reason: '严重违纪，打架斗殴被开除', operator: '平台管理员' },
-    ]
-  },
-];
 
 function getScoreColor(score: number) {
   if (score >= 85) return 'text-success-600 bg-success-50';
@@ -151,15 +71,24 @@ export default function CreditScoreMgmt() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      fetch('/api/workers').then(r => r.json()).catch(() => ({ success: false })),
-      fetch('/api/workers/credit-distribution').then(r => r.json()).catch(() => ({ success: false })),
-    ]).then(([wRes, cdRes]) => {
-      if (wRes.success && wRes.data.length > 0) setWorkers(wRes.data.map((w: Worker) => ({ ...w, creditRecords: mockWorkers.find(mw => mw.id === w.id)?.creditRecords || [] })));
-      else setWorkers(mockWorkers);
-      if (cdRes.success) setCreditDist(cdRes.data);
-      setLoading(false);
-    });
+    async function loadData() {
+      try {
+        const [wRes, cdRes] = await Promise.all([
+          get<Worker[]>('/workers'),
+          get<CreditDistribution>('/workers/credit-distribution'),
+        ]);
+
+        if (wRes.success && Array.isArray(wRes.data)) {
+          setWorkers(wRes.data.map(w => ({ ...w, creditRecords: [] })));
+        }
+        if (cdRes.success) {
+          setCreditDist(cdRes.data);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
   }, []);
 
   const filteredWorkers = workers.filter(w => {
@@ -188,25 +117,21 @@ export default function CreditScoreMgmt() {
     if (!adjustModal || !adjustReason.trim()) return;
     const { worker, type } = adjustModal;
     const delta = type === 'add' ? adjustScore : -adjustScore;
-    try {
-      const res = await fetch(`/api/workers/${worker.id}/credit-score`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ score: worker.creditScore + delta, reason: adjustReason }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setWorkers(prev => prev.map(w => {
-          if (w.id !== worker.id) return w;
-          const newRecord: CreditRecord = { id: 'c' + Date.now(), date: new Date().toISOString().slice(0, 10), type, score: adjustScore, reason: adjustReason, operator: '管理员' };
-          return { ...w, creditScore: w.creditScore + delta, creditRecords: [newRecord, ...(w.creditRecords || [])] };
-        }));
-      }
-    } catch {
+    const newScore = Math.max(0, Math.min(100, worker.creditScore + delta));
+
+    const res = await patch<Worker>(`/workers/${worker.id}/credit-score`, { score: newScore, reason: adjustReason });
+    if (res.success) {
       setWorkers(prev => prev.map(w => {
         if (w.id !== worker.id) return w;
-        const newRecord: CreditRecord = { id: 'c' + Date.now(), date: new Date().toISOString().slice(0, 10), type, score: adjustScore, reason: adjustReason, operator: '管理员' };
-        return { ...w, creditScore: w.creditScore + delta, creditRecords: [newRecord, ...(w.creditRecords || [])] };
+        const newRecord: CreditRecord = {
+          id: 'c' + Date.now(),
+          date: new Date().toISOString().slice(0, 10),
+          type,
+          score: adjustScore,
+          reason: adjustReason,
+          operator: '管理员'
+        };
+        return { ...w, creditScore: newScore, creditRecords: [newRecord, ...(w.creditRecords || [])] };
       }));
     }
     setAdjustModal(null);
@@ -458,7 +383,7 @@ export default function CreditScoreMgmt() {
                 <div className="text-2xl font-bold text-gray-300">→</div>
                 <div className={cn('text-2xl font-bold w-14 h-14 rounded-xl flex items-center justify-center',
                   getScoreColor(adjustModal.type === 'add' ? adjustModal.worker.creditScore + adjustScore : adjustModal.worker.creditScore - adjustScore))}>
-                  {adjustModal.type === 'add' ? adjustModal.worker.creditScore + adjustScore : adjustModal.worker.creditScore - adjustScore}
+                  {adjustModal.type === 'add' ? adjustModal.worker.creditScore + adjustScore : Math.max(0, adjustModal.worker.creditScore - adjustScore)}
                 </div>
               </div>
             </div>
