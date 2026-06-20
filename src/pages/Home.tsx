@@ -53,7 +53,7 @@ const entryAction = (label: string, cases: CaseItem[], activeStyle: string) => {
 export default function Home() {
   const location = useLocation()
   const [heroIndex, setHeroIndex] = useState(0)
-  const [activeStyle, setActiveStyle] = useState<string>(STYLES[0])
+  const [activeStyle, setActiveStyle] = useState<string>('')
   const [houseType, setHouseType] = useState<string>('')
   const [areaRange, setAreaRange] = useState<string>('')
   const [budgetRange, setBudgetRange] = useState<string>('')
@@ -172,6 +172,16 @@ export default function Home() {
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl font-bold text-sand-900">热门风格</h2>
           <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
+            <button
+              onClick={() => setActiveStyle('')}
+              className={`flex-shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+                !activeStyle
+                  ? 'bg-sand-400 text-white'
+                  : 'bg-white text-sand-900/70 hover:bg-sand-200'
+              }`}
+            >
+              全部风格
+            </button>
             {STYLES.map((style) => (
               <button
                 key={style}
@@ -195,7 +205,7 @@ export default function Home() {
             <h2 className="font-display text-2xl font-bold text-sand-900">精选案例</h2>
             <div className="flex items-center gap-4">
               <button
-                onClick={() => { setActiveStyle(STYLES[0]); setHouseType(''); setAreaRange(''); setBudgetRange('') }}
+                onClick={() => { setActiveStyle(''); setHouseType(''); setAreaRange(''); setBudgetRange('') }}
                 className="text-xs text-sand-900/50 transition-colors hover:text-sand-400"
               >
                 重置筛选
@@ -247,7 +257,7 @@ export default function Home() {
                 {BUDGET_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
-            {(houseType || areaRange || budgetRange) && (
+            {(activeStyle || houseType || areaRange || budgetRange) && (
               <div className="flex items-center gap-1 text-xs text-sand-900/60">
                 筛选结果 {cases.length} 条
               </div>
@@ -264,7 +274,7 @@ export default function Home() {
                 <div className="col-span-full py-16 text-center">
                   <p className="font-display text-lg text-sand-900/40">该条件下暂无案例</p>
                   <button
-                    onClick={() => { setActiveStyle(STYLES[0]); setHouseType(''); setAreaRange(''); setBudgetRange('') }}
+                    onClick={() => { setActiveStyle(''); setHouseType(''); setAreaRange(''); setBudgetRange('') }}
                     className="mt-3 text-sm text-sand-400 hover:underline"
                   >
                     清除筛选条件
