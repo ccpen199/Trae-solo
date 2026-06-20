@@ -2,54 +2,44 @@ import { useState, useEffect, useRef } from 'react';
 import { 
   Building2, Users, Package, CheckCircle, 
   AlertTriangle, DollarSign, TrendingUp,
-  RefreshCw, Clock, MapPin, Activity
+  RefreshCw, Clock, MapPin, Activity,
+  UserCheck, XCircle, RotateCcw, UserPlus,
+  Loader2, Search
 } from 'lucide-react';
 import dayjs from 'dayjs';
-import { get as apiGet } from '@/utils/api';
+import { get as apiGet, post as apiPost } from '@/utils/api';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, 
   Tooltip, ResponsiveContainer, BarChart, Bar,
   AreaChart, Area
 } from 'recharts';
-import type { GlobalDashboardData } from 'shared/types';
+import { useAuthStore } from '@/store/auth';
+import { useAppStore } from '@/store/app';
+import { Modal, ModalFooter } from '@/components/Modal';
+import type { User } from 'shared/types';
 import { cn } from '@/lib/utils';
 
-const mockData: GlobalDashboardData = {
-  totalOutlets: 156,
-  totalCouriers: 892,
-  totalTasksToday: 3842,
-  completedTasksToday: 3256,
-  pendingTasks: 486,
-  exceptionTasks: 32,
-  totalRevenueToday: 128560.5,
-  averagePickupTime: 38,
-  outletRankings: [
-    { outletId: '1', outletName: '北京朝阳区建国路网点', completedTasks: 486, totalRevenue: 18560 },
-    { outletId: '2', outletName: '北京海淀区中关村网点', completedTasks: 412, totalRevenue: 15820 },
-    { outletId: '3', outletName: '上海浦东新区陆家嘴网点', completedTasks: 398, totalRevenue: 15240 },
-    { outletId: '4', outletName: '广州天河区珠江新城网点', completedTasks: 356, totalRevenue: 13680 },
-    { outletId: '5', outletName: '深圳南山区科技园网点', completedTasks: 342, totalRevenue: 13120 },
-    { outletId: '6', outletName: '杭州西湖区文三路网点', completedTasks: 318, totalRevenue: 12180 },
-    { outletId: '7', outletName: '成都高新区天府大道网点', completedTasks: 296, totalRevenue: 11340 },
-    { outletId: '8', outletName: '武汉武昌区东湖路网点', completedTasks: 284, totalRevenue: 10880 },
-    { outletId: '9', outletName: '南京鼓楼区中山路网点', completedTasks: 276, totalRevenue: 10560 },
-    { outletId: '10', outletName: '西安雁塔区长安路网点', completedTasks: 258, totalRevenue: 9880 },
-  ],
-  hourlyTrend: Array.from({ length: 24 }, (_, i) => ({
-    hour: `${String(i).padStart(2, '0')}:00`,
-    tasks: Math.floor(Math.random() * 300) + 50
-  })),
-  recentExceptions: [
-    { taskId: '1', orderNo: 'ORD202401150001', reason: '客户不在家，无法联系', createdAt: '2024-01-15T15:30:00Z' },
-    { taskId: '2', orderNo: 'ORD202401150002', reason: '地址错误，无法找到', createdAt: '2024-01-15T15:15:00Z' },
-    { taskId: '3', orderNo: 'ORD202401150003', reason: '重量差异较大，客户拒付', createdAt: '2024-01-15T14:45:00Z' },
-    { taskId: '4', orderNo: 'ORD202401150004', reason: '物品破损，需要处理', createdAt: '2024-01-15T14:20:00Z' },
-    { taskId: '5', orderNo: 'ORD202401150005', reason: '客户取消订单', createdAt: '2024-01-15T13:50:00Z' },
-    { taskId: '6', orderNo: 'ORD202401150006', reason: '天气原因，延迟揽收', createdAt: '2024-01-15T13:30:00Z' },
-    { taskId: '7', orderNo: 'ORD202401150007', reason: '快递员车辆故障', createdAt: '2024-01-15T12:45:00Z' },
-    { taskId: '8', orderNo: 'ORD202401150008', reason: '系统分配错误', createdAt: '2024-01-15T12:10:00Z' },
-  ]
-};
+interface ExceptionItem {
+  id: string;
+  orderNo: string;
+  outletName: string;
+  courierName: string;
+  exceptionReason: string;
+  createdAt: string;
+  status: string;
+}
+
+interface DashboardData {
+  totalTasks: number;
+  pending: number;
+  exception: number;
+  totalRevenue: number;
+  totalCouriers: number;
+  totalOutlets: number;
+  recentExceptions: ExceptionItem[];
+  hourlyTrend: { hour: string; tasks: number }[];
+  outletRankings: { outletId: string; outletName: string; completedTasks: number; totalRevenue: number }[];
+}
 
 const provinceData = [
   { name: '北京', value: 486, x: 82, y: 35 },
@@ -97,8 +87,13 @@ const getHeatColor = (value: number, max: number) => {
   return '#65a30d';
 };
 
+type InterveneAction = 'mark_completed' | 'mark_exception' | 'cancel' | 'reassign';
+
 export default function GlobalDashboard() {
-  const [data, setData] = useState<GlobalDashboardData | null>(null);
+  const hasRole = useAuthStore(state => state.hasRole);
+  const addNotification = useAppStore(state => state.addNotification);
+  const isOperator = hasRole(['operator']);
+  const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -106,15 +101,52 @@ export default function GlobalDashboard() {
   const scrollOffset = useRef(0);
   const animationRef = useRef<number>();
 
+  const [isInterveneModalOpen, setIsInterveneModalOpen] = useState(false);
+  const [isReassignModalOpen, setIsReassignModalOpen] = useState(false);
+  const [selectedException, setSelectedException] = useState<ExceptionItem | null>(null);
+  const [selectedAction, setSelectedAction] = useState<InterveneAction | null>(null);
+  const [interveneReason, setInterveneReason] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [couriers, setCouriers] = useState<User[]>([]);
+  const [selectedCourierId, setSelectedCourierId] = useState('');
+  const [courierSearch, setCourierSearch] = useState('');
+  const [loadingCouriers, setLoadingCouriers] = useState(false);
+
+  const transformExceptions = (raw: any[]): ExceptionItem[] => {
+    return raw.map((item) => ({
+      id: item.taskId || item.id,
+      orderNo: item.orderNo,
+      outletName: item.outletName || '-',
+      courierName: item.courierName || '-',
+      exceptionReason: item.exceptionReason || item.reason || '-',
+      createdAt: item.createdAt,
+      status: item.status || 'exception',
+    }));
+  };
+
   const fetchData = async (showRefresh = false) => {
     if (showRefresh) setIsRefreshing(true);
     setLoading(true);
     try {
-      const result = await apiGet<GlobalDashboardData>('/dashboard/global');
-      setData(result);
-    } catch (error) {
-      console.error('Fetch global dashboard error:', error);
-      setData(mockData);
+      const result = await apiGet<any>('/dashboard/global');
+      const transformed: DashboardData = {
+        totalTasks: result.totalTasksToday || 0,
+        pending: result.pendingTasks || 0,
+        exception: result.exceptionTasks || 0,
+        totalRevenue: result.totalRevenueToday || 0,
+        totalCouriers: result.totalCouriers || 0,
+        totalOutlets: result.totalOutlets || 0,
+        recentExceptions: transformExceptions(result.recentExceptions || []),
+        hourlyTrend: result.hourlyTrend || [],
+        outletRankings: result.outletRankings || [],
+      };
+      setData(transformed);
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取全局数据失败',
+      });
     } finally {
       setLoading(false);
       setIsRefreshing(false);
@@ -150,6 +182,133 @@ export default function GlobalDashboard() {
     };
   }, [data]);
 
+  const openInterveneModal = (exception: ExceptionItem, action: InterveneAction) => {
+    setSelectedException(exception);
+    setSelectedAction(action);
+    setInterveneReason('');
+    if (action === 'reassign') {
+      openReassignModal(exception);
+    } else {
+      setIsInterveneModalOpen(true);
+    }
+  };
+
+  const openReassignModal = (exception: ExceptionItem) => {
+    setSelectedException(exception);
+    setSelectedAction('reassign');
+    setSelectedCourierId('');
+    setCourierSearch('');
+    setIsReassignModalOpen(true);
+    fetchCouriers();
+  };
+
+  const fetchCouriers = async () => {
+    try {
+      setLoadingCouriers(true);
+      const result = await apiGet<{ list: User[]; total: number }>('/couriers', {
+        params: { pageSize: 100 },
+      });
+      setCouriers(result.list || []);
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取快递员列表失败',
+      });
+    } finally {
+      setLoadingCouriers(false);
+    }
+  };
+
+  const handleIntervene = async () => {
+    if (!selectedException || !selectedAction) return;
+
+    if (selectedAction !== 'mark_completed' && selectedAction !== 'mark_exception' && selectedAction !== 'cancel' && !interveneReason.trim()) {
+      addNotification({
+        type: 'error',
+        title: '参数错误',
+        message: '请输入干预原因',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await apiPost(`/tasks/${selectedException.id}/intervene`, {
+        action: selectedAction,
+        reason: interveneReason || undefined,
+      });
+      addNotification({
+        type: 'success',
+        title: '操作成功',
+        message: `已成功${getActionLabel(selectedAction)}`,
+      });
+      setIsInterveneModalOpen(false);
+      setInterveneReason('');
+      fetchData();
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '操作失败',
+        message: error.message || '干预操作失败',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReassign = async () => {
+    if (!selectedException || !selectedCourierId) {
+      addNotification({
+        type: 'error',
+        title: '参数错误',
+        message: '请选择要重新指派的快递员',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await apiPost(`/tasks/${selectedException.id}/intervene`, {
+        action: 'reassign',
+        reason: interveneReason || '重新指派快递员',
+        courierId: selectedCourierId,
+      });
+      addNotification({
+        type: 'success',
+        title: '操作成功',
+        message: '已成功重新指派快递员',
+      });
+      setIsReassignModalOpen(false);
+      setSelectedCourierId('');
+      setInterveneReason('');
+      fetchData();
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '操作失败',
+        message: error.message || '重新指派失败',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getActionLabel = (action: InterveneAction) => {
+    const labels: Record<InterveneAction, string> = {
+      mark_completed: '标记为完成',
+      mark_exception: '标记为异常',
+      cancel: '取消任务',
+      reassign: '重新指派',
+    };
+    return labels[action];
+  };
+
+  const filteredCouriers = couriers.filter(c =>
+    c.name.toLowerCase().includes(courierSearch.toLowerCase()) ||
+    c.phone.includes(courierSearch)
+  );
+
   if (loading || !data) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
@@ -162,7 +321,9 @@ export default function GlobalDashboard() {
   }
 
   const maxValue = Math.max(...provinceData.map(p => p.value));
-  const completionRate = ((data.completedTasksToday / data.totalTasksToday) * 100).toFixed(1);
+  const completionRate = data.totalTasks > 0
+    ? (((data.totalTasks - data.pending - data.exception) / data.totalTasks) * 100).toFixed(1)
+    : '0.0';
 
   const metricCards = [
     { 
@@ -181,7 +342,7 @@ export default function GlobalDashboard() {
     },
     { 
       label: '今日任务', 
-      value: data.totalTasksToday, 
+      value: data.totalTasks, 
       icon: Package, 
       color: 'from-amber-500 to-orange-500',
       suffix: '单'
@@ -195,14 +356,14 @@ export default function GlobalDashboard() {
     },
     { 
       label: '待处理异常', 
-      value: data.exceptionTasks, 
+      value: data.exception, 
       icon: AlertTriangle, 
       color: 'from-red-500 to-rose-500',
       suffix: '单'
     },
     { 
       label: '今日营收', 
-      value: `¥${(data.totalRevenueToday / 10000).toFixed(2)}`, 
+      value: `¥${(data.totalRevenue / 10000).toFixed(2)}`, 
       icon: DollarSign, 
       color: 'from-purple-500 to-violet-500',
       suffix: '万'
@@ -465,26 +626,241 @@ export default function GlobalDashboard() {
             </h3>
             <div 
               ref={scrollRef}
-              className="h-[280px] overflow-hidden space-y-2"
+              className="h-[520px] overflow-hidden space-y-2"
             >
               {[...data.recentExceptions, ...data.recentExceptions].map((exception, index) => (
                 <div
-                  key={`${exception.taskId}-${index}`}
+                  key={`${exception.id}-${index}`}
                   className="bg-slate-700/30 rounded-xl p-3 border border-slate-600/30 hover:border-red-500/50 transition-colors"
                 >
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="font-mono text-sm text-blue-400">{exception.orderNo}</span>
                     <span className="text-xs text-gray-400">
                       {dayjs(exception.createdAt).format('HH:mm')}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-300 line-clamp-1">{exception.reason}</p>
+                  <div className="grid grid-cols-2 gap-2 mb-2 text-xs">
+                    <div className="flex items-center gap-1 text-gray-400">
+                      <MapPin className="w-3 h-3" />
+                      <span className="truncate">{exception.outletName}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-gray-400">
+                      <Users className="w-3 h-3" />
+                      <span className="truncate">{exception.courierName}</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-300 line-clamp-2 mb-3">{exception.exceptionReason}</p>
+                  {isOperator && (
+                    <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-600/30">
+                      <button
+                        onClick={() => openInterveneModal(exception, 'mark_completed')}
+                        className="flex items-center gap-1 px-2 py-1.5 text-xs bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors"
+                      >
+                        <UserCheck className="w-3 h-3" />
+                        标记完成
+                      </button>
+                      <button
+                        onClick={() => openInterveneModal(exception, 'mark_exception')}
+                        className="flex items-center gap-1 px-2 py-1.5 text-xs bg-amber-500/20 text-amber-400 rounded-lg hover:bg-amber-500/30 transition-colors"
+                      >
+                        <AlertTriangle className="w-3 h-3" />
+                        标记异常
+                      </button>
+                      <button
+                        onClick={() => openInterveneModal(exception, 'cancel')}
+                        className="flex items-center gap-1 px-2 py-1.5 text-xs bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors"
+                      >
+                        <XCircle className="w-3 h-3" />
+                        取消任务
+                      </button>
+                      <button
+                        onClick={() => openReassignModal(exception)}
+                        className="flex items-center gap-1 px-2 py-1.5 text-xs bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors"
+                      >
+                        <UserPlus className="w-3 h-3" />
+                        重新指派
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isInterveneModalOpen}
+        onClose={() => setIsInterveneModalOpen(false)}
+        title={selectedAction ? getActionLabel(selectedAction) : '任务干预'}
+        size="md"
+      >
+        <div className="space-y-4">
+          {selectedException && (
+            <div className="bg-slate-50 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono font-semibold text-gray-900">{selectedException.orderNo}</span>
+                <span className="text-sm text-gray-500">
+                  {dayjs(selectedException.createdAt).format('YYYY-MM-DD HH:mm')}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">{selectedException.exceptionReason}</p>
+            </div>
+          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              干预原因
+            </label>
+            <textarea
+              value={interveneReason}
+              onChange={(e) => setInterveneReason(e.target.value)}
+              placeholder="请输入干预原因..."
+              rows={3}
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            />
+          </div>
+        </div>
+
+        <ModalFooter>
+          <button
+            onClick={() => setIsInterveneModalOpen(false)}
+            className="px-6 py-2.5 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+          >
+            取消
+          </button>
+          <button
+            onClick={handleIntervene}
+            disabled={isSubmitting}
+            className="px-8 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                处理中...
+              </>
+            ) : (
+              <>
+                <RotateCcw className="w-4 h-4" />
+                确认操作
+              </>
+            )}
+          </button>
+        </ModalFooter>
+      </Modal>
+
+      <Modal
+        isOpen={isReassignModalOpen}
+        onClose={() => setIsReassignModalOpen(false)}
+        title="重新指派快递员"
+        size="lg"
+      >
+        <div className="space-y-4">
+          {selectedException && (
+            <div className="bg-slate-50 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono font-semibold text-gray-900">{selectedException.orderNo}</span>
+                <span className="text-sm text-gray-500">
+                  当前快递员: {selectedException.courierName}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">{selectedException.exceptionReason}</p>
+            </div>
+          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              干预原因
+            </label>
+            <input
+              type="text"
+              value={interveneReason}
+              onChange={(e) => setInterveneReason(e.target.value)}
+              placeholder="请输入干预原因（选填）"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              选择快递员
+            </label>
+            <div className="relative mb-3">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                value={courierSearch}
+                onChange={(e) => setCourierSearch(e.target.value)}
+                placeholder="搜索快递员姓名或手机号"
+                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="border border-gray-200 rounded-xl overflow-hidden max-h-64 overflow-y-auto">
+              {loadingCouriers ? (
+                <div className="p-8 flex justify-center">
+                  <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />
+                </div>
+              ) : filteredCouriers.length === 0 ? (
+                <div className="p-8 text-center text-gray-400">
+                  暂无匹配的快递员
+                </div>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {filteredCouriers.map((courier) => (
+                    <button
+                      key={courier.id}
+                      type="button"
+                      onClick={() => setSelectedCourierId(courier.id)}
+                      className={cn(
+                        'w-full p-3 flex items-center gap-3 text-left transition-colors hover:bg-blue-50',
+                        selectedCourierId === courier.id && 'bg-blue-50'
+                      )}
+                    >
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-medium">
+                        {courier.name.charAt(0)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900">{courier.name}</p>
+                        <p className="text-sm text-gray-500 truncate">
+                          {courier.phone} · {courier.outletName || '未分配网点'}
+                        </p>
+                      </div>
+                      {selectedCourierId === courier.id && (
+                        <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <ModalFooter>
+          <button
+            onClick={() => setIsReassignModalOpen(false)}
+            className="px-6 py-2.5 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+          >
+            取消
+          </button>
+          <button
+            onClick={handleReassign}
+            disabled={isSubmitting || !selectedCourierId}
+            className="px-8 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                指派中...
+              </>
+            ) : (
+              <>
+                <UserPlus className="w-4 h-4" />
+                确认指派
+              </>
+            )}
+          </button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }

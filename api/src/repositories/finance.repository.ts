@@ -103,8 +103,15 @@ function rowToWithdrawRecord(row: WithdrawRecordRow): WithdrawRecord {
 
 export const financeRepository = {
   getDailyFinances(outletId: string, startDate?: string, endDate?: string, page: number = 1, pageSize: number = 30): { list: DailyFinance[]; total: number } {
-    let whereSql = 'WHERE outlet_id = ?';
-    const params: any[] = [outletId];
+    let whereSql = '';
+    const params: any[] = [];
+
+    if (outletId) {
+      whereSql = 'WHERE outlet_id = ?';
+      params.push(outletId);
+    } else {
+      whereSql = 'WHERE 1=1';
+    }
 
     if (startDate) {
       whereSql += ' AND date >= date(?)';
@@ -133,13 +140,19 @@ export const financeRepository = {
   },
 
   getBankCards(outletId: string): BankCard[] {
-    const rows = db.prepare(`
-      SELECT * FROM bank_cards 
-      WHERE outlet_id = ?
-      ORDER BY is_default DESC, created_at DESC
-    `).all(outletId) as BankCardRow[];
-
+    let sql = 'SELECT * FROM bank_cards ';
+    const params: any[] = [];
+    if (outletId) {
+      sql += 'WHERE outlet_id = ? ';
+      params.push(outletId);
+    }
+    sql += 'ORDER BY is_default DESC, created_at DESC';
+    const rows = db.prepare(sql).all(...params) as BankCardRow[];
     return rows.map(rowToBankCard);
+  },
+
+  listBankCards(outletId: string): BankCard[] {
+    return financeRepository.getBankCards(outletId);
   },
 
   addBankCard(cardData: Omit<BankCard, 'id' | 'createdAt' | 'isDefault' | 'verified'> & { outletId: string }): BankCard {
@@ -200,8 +213,15 @@ export const financeRepository = {
   },
 
   getWithdrawRecords(outletId: string, status?: WithdrawStatus, page: number = 1, pageSize: number = 10): { list: WithdrawRecord[]; total: number } {
-    let whereSql = 'WHERE outlet_id = ?';
-    const params: any[] = [outletId];
+    let whereSql = '';
+    const params: any[] = [];
+
+    if (outletId) {
+      whereSql = 'WHERE outlet_id = ?';
+      params.push(outletId);
+    } else {
+      whereSql = 'WHERE 1=1';
+    }
 
     if (status) {
       whereSql += ' AND status = ?';
@@ -223,6 +243,15 @@ export const financeRepository = {
       list: rows.map(rowToWithdrawRecord),
       total: countRow.total,
     };
+  },
+
+  listWithdrawRecords(filters: { outletId?: string; status?: WithdrawStatus; page?: number; pageSize?: number }): { list: WithdrawRecord[]; total: number } {
+    return financeRepository.getWithdrawRecords(
+      filters.outletId || '',
+      filters.status,
+      filters.page || 1,
+      filters.pageSize || 10
+    );
   },
 
   auditWithdraw(recordId: string, status: 'approved' | 'rejected', auditorId: string, auditorName: string, remark?: string): WithdrawRecord | null {

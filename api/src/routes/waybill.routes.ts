@@ -103,4 +103,30 @@ router.put('/template', authMiddleware, requireRole('admin'), (req: Request, res
   }
 });
 
+router.put('/threshold', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
+  try {
+    if (!req.user || !req.user.outletId) {
+      throw new AppError('未登录或网点信息不存在', 401);
+    }
+
+    const { threshold } = req.body;
+    if (threshold === undefined || threshold === null) {
+      throw new AppError('告警阈值不能为空', 400);
+    }
+
+    const account = waybillService.updateLowBalanceThreshold(
+      req.user.outletId,
+      parseFloat(threshold)
+    );
+
+    res.json({
+      code: 200,
+      message: '告警阈值更新成功',
+      data: account,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

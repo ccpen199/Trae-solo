@@ -1,40 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   Upload,
-  X,
   Save,
   Loader2,
-  CheckCircle,
   Settings,
   Image,
   Eye,
   FileText,
-  TrendingUp
+  TrendingUp,
+  Lock
 } from 'lucide-react';
 import { get, put } from '@/utils/api';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/store/auth';
+import { useAppStore } from '@/store/app';
 import type { WaybillAccount } from 'shared/types';
-
-const mockAccount: WaybillAccount = {
-  id: '1',
-  outletId: '1',
-  outletName: '东门网点',
-  balance: 856.50,
-  frozenBalance: 200.00,
-  totalRecharged: 15000.00,
-  totalUsed: 14143.50,
-  templateConfig: {
-    templateId: 'tpl001',
-    templateName: '标准面单模板',
-    paperSize: '100x150',
-    fontSize: 'medium',
-    showLogo: true,
-    logoUrl: '',
-  },
-  lowBalanceThreshold: 1000,
-  createdAt: '2026-01-01T00:00:00Z',
-  updatedAt: '2026-06-18T10:30:00Z',
-};
 
 const paperSizeOptions = [
   { value: '100x150', label: '100mm × 150mm', description: '标准快递面单' },
@@ -57,9 +37,11 @@ interface TemplateForm {
 }
 
 export default function WaybillTemplate() {
+  const hasRole = useAuthStore(state => state.hasRole);
+  const addNotification = useAppStore(state => state.addNotification);
+  const isAdmin = hasRole(['admin']);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState<TemplateForm>({
     templateName: '',
     paperSize: '100x150',
@@ -87,16 +69,12 @@ export default function WaybillTemplate() {
         logoUrl: config.logoUrl || '',
       });
       setLogoPreview(config.logoUrl || '');
-    } catch {
-      const config = mockAccount.templateConfig;
-      setFormData({
-        templateName: config.templateName,
-        paperSize: config.paperSize,
-        fontSize: config.fontSize,
-        showLogo: config.showLogo,
-        logoUrl: config.logoUrl || '',
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取模板配置失败',
       });
-      setLogoPreview(config.logoUrl || '');
     } finally {
       setLoading(false);
     }
@@ -106,7 +84,11 @@ export default function WaybillTemplate() {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert('图片大小不能超过2MB');
+        addNotification({
+          type: 'error',
+          title: '图片过大',
+          message: '图片大小不能超过2MB',
+        });
         return;
       }
       const reader = new FileReader();
@@ -129,19 +111,28 @@ export default function WaybillTemplate() {
 
   const handleSubmit = async () => {
     if (!formData.templateName.trim()) {
-      alert('请输入模板名称');
+      addNotification({
+        type: 'error',
+        title: '参数错误',
+        message: '请输入模板名称',
+      });
       return;
     }
 
     setSaving(true);
     try {
       await put('/waybill/template', formData);
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
-    } catch {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
+      addNotification({
+        type: 'success',
+        title: '保存成功',
+        message: '面单模板配置已更新',
+      });
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '保存失败',
+        message: error.message || '保存模板配置失败',
+      });
     } finally {
       setSaving(false);
     }
@@ -189,45 +180,45 @@ export default function WaybillTemplate() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">面单模板配置</h1>
-            <p className="text-gray-500 mt-1">自定义电子面单的打印样式</p>
+            <p className="text-gray-500 mt-1">
+              {isAdmin ? '自定义电子面单的打印样式' : '查看电子面单的打印样式配置'}
+            </p>
           </div>
-          <div className="flex gap-3">
-            <button
-              onClick={fetchTemplate}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-colors"
-            >
-              <Settings className="w-5 h-5" />
-              重置
-            </button>
-            <button
-              onClick={handleSubmit}
-              disabled={saving}
-              className="flex items-center gap-2 px-6 py-2 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {saving ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  保存中...
-                </>
-              ) : (
-                <>
-                  <Save className="w-5 h-5" />
-                  保存配置
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {showSuccess && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3 animate-slide-down">
-            <CheckCircle className="w-6 h-6 text-green-500" />
-            <div>
-              <p className="font-medium text-green-800">配置保存成功</p>
-              <p className="text-sm text-green-600">您的面单模板配置已更新</p>
+          {isAdmin && (
+            <div className="flex gap-3">
+              <button
+                onClick={fetchTemplate}
+                className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+              >
+                <Settings className="w-5 h-5" />
+                重置
+              </button>
+              <button
+                onClick={handleSubmit}
+                disabled={saving}
+                className="flex items-center gap-2 px-6 py-2 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {saving ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    保存中...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-5 h-5" />
+                    保存配置
+                  </>
+                )}
+              </button>
             </div>
-          </div>
-        )}
+          )}
+          {!isAdmin && (
+            <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-500 rounded-xl font-medium">
+              <Lock className="w-5 h-5" />
+              只读模式
+            </div>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -347,14 +338,18 @@ export default function WaybillTemplate() {
               <div className="p-6 space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    模板名称 <span className="text-red-500">*</span>
+                    模板名称 {isAdmin && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     type="text"
                     value={formData.templateName}
                     onChange={(e) => setFormData(prev => ({ ...prev, templateName: e.target.value }))}
                     placeholder="请输入模板名称"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    disabled={!isAdmin}
+                    className={cn(
+                      'w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all',
+                      !isAdmin && 'bg-gray-50 cursor-not-allowed'
+                    )}
                   />
                 </div>
 
@@ -367,12 +362,14 @@ export default function WaybillTemplate() {
                       <button
                         key={option.value}
                         type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, paperSize: option.value as any }))}
+                        onClick={() => isAdmin && setFormData(prev => ({ ...prev, paperSize: option.value as any }))}
+                        disabled={!isAdmin}
                         className={cn(
                           'p-4 rounded-xl border-2 text-left transition-all',
                           formData.paperSize === option.value
                             ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-200 hover:border-blue-300'
+                            : 'border-gray-200 hover:border-blue-300',
+                          !isAdmin && 'opacity-70 cursor-not-allowed hover:border-gray-200'
                         )}
                       >
                         <p className={cn(
@@ -396,12 +393,14 @@ export default function WaybillTemplate() {
                       <button
                         key={option.value}
                         type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, fontSize: option.value as any }))}
+                        onClick={() => isAdmin && setFormData(prev => ({ ...prev, fontSize: option.value as any }))}
+                        disabled={!isAdmin}
                         className={cn(
                           'p-4 rounded-xl border-2 text-left transition-all',
                           formData.fontSize === option.value
                             ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-200 hover:border-blue-300'
+                            : 'border-gray-200 hover:border-blue-300',
+                          !isAdmin && 'opacity-70 cursor-not-allowed hover:border-gray-200'
                         )}
                       >
                         <p className={cn(
@@ -432,10 +431,12 @@ export default function WaybillTemplate() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, showLogo: !prev.showLogo }))}
+                    onClick={() => isAdmin && setFormData(prev => ({ ...prev, showLogo: !prev.showLogo }))}
+                    disabled={!isAdmin}
                     className={cn(
                       'relative w-14 h-8 rounded-full transition-colors duration-200',
-                      formData.showLogo ? 'bg-blue-500' : 'bg-gray-300'
+                      formData.showLogo ? 'bg-blue-500' : 'bg-gray-300',
+                      !isAdmin && 'opacity-70 cursor-not-allowed'
                     )}
                   >
                     <div
@@ -448,7 +449,7 @@ export default function WaybillTemplate() {
                 </div>
 
                 {formData.showLogo && (
-                  <div className="animate-slide-down">
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">
                       上传Logo
                     </label>
@@ -461,24 +462,26 @@ export default function WaybillTemplate() {
                             className="max-w-full max-h-full object-contain"
                           />
                         </div>
-                        <div className="flex gap-2">
-                          <button
-                            type="button"
-                            onClick={() => fileInputRef.current?.click()}
-                            className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                          >
-                            更换
-                          </button>
-                          <button
-                            type="button"
-                            onClick={removeLogo}
-                            className="px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors text-sm"
-                          >
-                            删除
-                          </button>
-                        </div>
+                        {isAdmin && (
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => fileInputRef.current?.click()}
+                              className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                            >
+                              更换
+                            </button>
+                            <button
+                              type="button"
+                              onClick={removeLogo}
+                              className="px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors text-sm"
+                            >
+                              删除
+                            </button>
+                          </div>
+                        )}
                       </div>
-                    ) : (
+                    ) : isAdmin ? (
                       <div
                         onClick={() => fileInputRef.current?.click()}
                         className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all"
@@ -489,14 +492,20 @@ export default function WaybillTemplate() {
                         <p className="text-gray-600 font-medium">点击上传Logo</p>
                         <p className="text-sm text-gray-400 mt-1">支持 JPG、PNG 格式，不超过 2MB</p>
                       </div>
+                    ) : (
+                      <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center bg-gray-50">
+                        <p className="text-gray-400 font-medium">暂未上传Logo</p>
+                      </div>
                     )}
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/jpeg,image/png"
-                      onChange={handleLogoUpload}
-                      className="hidden"
-                    />
+                    {isAdmin && (
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/jpeg,image/png"
+                        onChange={handleLogoUpload}
+                        className="hidden"
+                      />
+                    )}
                   </div>
                 )}
               </div>
@@ -512,8 +521,14 @@ export default function WaybillTemplate() {
                   <ul className="mt-2 space-y-1 text-sm text-gray-600">
                     <li>• 建议使用透明背景的 PNG 格式 Logo</li>
                     <li>• Logo 宽度建议在 200-400 像素之间</li>
-                    <li>• 保存后配置将立即生效</li>
-                    <li>• 可以随时返回此页面调整设置</li>
+                    {isAdmin ? (
+                      <>
+                        <li>• 保存后配置将立即生效</li>
+                        <li>• 可以随时返回此页面调整设置</li>
+                      </>
+                    ) : (
+                      <li>• 如需修改配置，请联系管理员</li>
+                    )}
                   </ul>
                 </div>
               </div>

@@ -190,13 +190,30 @@ export interface BankCard {
   createdAt: string;
 }
 
+export interface FinanceOverview {
+  totalBalance: number;
+  frozenBalance: number;
+  availableBalance: number;
+  pendingWithdraw: number;
+  totalIncome: number;
+  totalWithdrawn: number;
+  totalWaybillUsed: number;
+  unsettledAmount: number;
+  defaultCard?: BankCard;
+  bankCardCount: number;
+}
+
 export interface GlobalDashboardData {
   totalOutlets: number;
   totalCouriers: number;
+  totalTasks: number;
   totalTasksToday: number;
   completedTasksToday: number;
   pendingTasks: number;
+  pending: number;
   exceptionTasks: number;
+  exception: number;
+  totalRevenue: number;
   totalRevenueToday: number;
   averagePickupTime: number;
   outletRankings: Array<{
@@ -210,9 +227,14 @@ export interface GlobalDashboardData {
     tasks: number;
   }>;
   recentExceptions: Array<{
+    id: string;
     taskId: string;
     orderNo: string;
     reason: string;
+    exceptionReason: string;
+    status: string;
+    outletName: string;
+    courierName: string;
     createdAt: string;
   }>;
 }

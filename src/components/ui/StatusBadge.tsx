@@ -1,18 +1,26 @@
 import { cn } from '@/lib/utils';
-import type { TaskStatus, OrderStatus, MessageType } from 'shared/types';
+import type { TaskStatus, OrderStatus, MessageType, WithdrawStatus } from 'shared/types';
 
-type StatusType = TaskStatus | OrderStatus | MessageType;
+type StatusType = TaskStatus | OrderStatus | MessageType | WithdrawStatus;
 
 type StatusBadgeSize = 'sm' | 'md' | 'lg';
 
 interface StatusBadgeProps {
-  status: StatusType;
-  type?: 'task' | 'order' | 'message';
+  status: StatusType | string;
+  type?: 'task' | 'order' | 'message' | 'withdraw';
   size?: StatusBadgeSize;
   className?: string;
 }
 
-const statusConfig: Record<StatusType, { label: string; className: string }> = {
+const withdrawStatusConfig: Record<string, { label: string; className: string }> = {
+  pending: { label: '待审核', className: 'bg-yellow-100 text-yellow-800' },
+  approved: { label: '已通过', className: 'bg-blue-100 text-blue-800' },
+  rejected: { label: '已拒绝', className: 'bg-red-100 text-red-800' },
+  transferred: { label: '已转账', className: 'bg-green-100 text-green-800' },
+  failed: { label: '失败', className: 'bg-gray-100 text-gray-800' },
+};
+
+const statusConfig: Record<string, { label: string; className: string }> = {
   pending: { label: '待处理', className: 'bg-yellow-100 text-yellow-800' },
   assigned: { label: '已分配', className: 'bg-blue-100 text-blue-800' },
   picked: { label: '已揽收', className: 'bg-green-100 text-green-800' },
@@ -28,6 +36,10 @@ const statusConfig: Record<StatusType, { label: string; className: string }> = {
   suspension_notice: { label: '停运通知', className: 'bg-red-100 text-red-800' },
   system_announcement: { label: '系统公告', className: 'bg-blue-100 text-blue-800' },
   exception_alert: { label: '异常预警', className: 'bg-red-100 text-red-800' },
+  approved: { label: '已通过', className: 'bg-blue-100 text-blue-800' },
+  rejected: { label: '已拒绝', className: 'bg-red-100 text-red-800' },
+  transferred: { label: '已转账', className: 'bg-green-100 text-green-800' },
+  failed: { label: '失败', className: 'bg-gray-100 text-gray-800' },
 };
 
 const sizeClasses: Record<StatusBadgeSize, string> = {
@@ -38,13 +50,16 @@ const sizeClasses: Record<StatusBadgeSize, string> = {
 
 export const StatusBadge = ({
   status,
+  type,
   size = 'md',
   className,
 }: StatusBadgeProps) => {
-  const config = statusConfig[status] || {
-    label: status,
-    className: 'bg-gray-100 text-gray-800',
-  };
+  const config = type === 'withdraw'
+    ? withdrawStatusConfig[status]
+    : statusConfig[status] || {
+        label: status,
+        className: 'bg-gray-100 text-gray-800',
+      };
 
   return (
     <span

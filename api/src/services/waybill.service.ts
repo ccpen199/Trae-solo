@@ -61,4 +61,14 @@ export const waybillService = {
     }
     return waybillRepository.updateTemplate(outletId, templateConfig);
   },
+
+  updateLowBalanceThreshold(outletId: string, threshold: number): WaybillAccount | null {
+    if (!outletId) {
+      throw new AppError('网点ID不能为空', 400);
+    }
+    if (threshold < 0) {
+      throw new AppError('告警阈值不能小于0', 400);
+    }
+    return waybillRepository.updateLowBalanceThreshold(outletId, threshold);
+  },
 };

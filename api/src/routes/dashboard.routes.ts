@@ -6,6 +6,26 @@ import { dashboardService } from '../services/dashboard.service';
 
 const router = Router();
 
+router.get('/', authMiddleware, (req: Request, res: Response, next) => {
+  try {
+    if (!req.user) {
+      throw new AppError('未登录', 401);
+    }
+    const data = dashboardService.getOverview(
+      req.user.userId,
+      req.user.role,
+      req.user.outletId
+    );
+    res.json({
+      code: 200,
+      message: 'success',
+      data
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/overview', authMiddleware, (req: Request, res: Response, next) => {
   try {
     if (!req.user) {

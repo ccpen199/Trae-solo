@@ -156,4 +156,12 @@ export const messageRepository = {
 
     return messageRepository.findById(id)!;
   },
+
+  findForUser(courierId?: string, outletId?: string, filters?: Partial<MessageFilters>): { list: Message[]; total: number } {
+    return messageRepository.findAll({
+      courierId,
+      outletId,
+      ...filters,
+    });
+  },
 };

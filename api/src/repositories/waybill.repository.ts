@@ -83,6 +83,10 @@ export const waybillRepository = {
     return row ? rowToAccount(row) : null;
   },
 
+  findByOutletId(outletId: string): WaybillAccount | null {
+    return waybillRepository.getAccount(outletId);
+  },
+
   getAccountById(accountId: string): WaybillAccount | null {
     const row = db.prepare(`
       SELECT * FROM waybill_accounts WHERE id = ?
@@ -166,6 +170,14 @@ export const waybillRepository = {
 
     db.prepare(`UPDATE waybill_accounts SET ${setClauses.join(', ')} WHERE outlet_id = ?`).run(...params);
 
+    return waybillRepository.getAccount(outletId);
+  },
+
+  updateLowBalanceThreshold(outletId: string, threshold: number): WaybillAccount | null {
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    db.prepare(
+      'UPDATE waybill_accounts SET low_balance_threshold = ?, updated_at = ? WHERE outlet_id = ?'
+    ).run(threshold, now, outletId);
     return waybillRepository.getAccount(outletId);
   },
 };

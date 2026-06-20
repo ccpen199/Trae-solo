@@ -83,34 +83,43 @@ export const taskRepository = {
     const params: any[] = [];
 
     if (courierId) {
-      whereSql += ' AND courier_id = ?';
+      whereSql += ' AND pt.courier_id = ?';
       params.push(courierId);
     }
     if (outletId) {
-      whereSql += ' AND outlet_id = ?';
+      whereSql += ' AND pt.outlet_id = ?';
       params.push(outletId);
     }
     if (status) {
-      whereSql += ' AND status = ?';
+      whereSql += ' AND pt.status = ?';
       params.push(status);
     }
     if (startDate) {
-      whereSql += ' AND date(created_at) >= date(?)';
+      whereSql += ' AND date(pt.created_at) >= date(?)';
       params.push(startDate);
     }
     if (endDate) {
-      whereSql += ' AND date(created_at) <= date(?)';
+      whereSql += ' AND date(pt.created_at) <= date(?)';
       params.push(endDate);
     }
 
     const countRow = db.prepare(`
-      SELECT COUNT(*) as total FROM pickup_tasks ${whereSql}
+      SELECT COUNT(*) as total FROM pickup_tasks pt ${whereSql}
     `).get(...params) as { total: number };
 
     const offset = (page - 1) * pageSize;
     const rows = db.prepare(`
-      SELECT * FROM pickup_tasks ${whereSql}
-      ORDER BY created_at DESC
+      SELECT pt.id, pt.task_no, pt.order_id, pt.order_no, pt.courier_id,
+             u.name as courier_name,
+             pt.outlet_id, pt.pickup_code, pt.sender_address, pt.sender_phone,
+             pt.item_type, pt.estimated_weight, pt.actual_weight, pt.appointment_time,
+             pt.weight_check_rule, pt.weight_tolerance, pt.freight, pt.payment_method,
+             pt.photos, pt.waybill_no, pt.printed_at, pt.status, pt.exception_reason,
+             pt.synced, pt.picked_at, pt.completed_at, pt.created_at, pt.updated_at
+      FROM pickup_tasks pt
+      LEFT JOIN users u ON u.id = pt.courier_id
+      ${whereSql}
+      ORDER BY pt.created_at DESC
       LIMIT ? OFFSET ?
     `).all(...params, pageSize, offset) as TaskRow[];
 

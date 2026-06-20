@@ -13,116 +13,21 @@ import {
   Smartphone,
   Building2,
   Wallet,
-  Send,
-  X
+  Send
 } from 'lucide-react';
 import dayjs from 'dayjs';
 import { get, post } from '@/utils/api';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/store/auth';
+import { useAppStore } from '@/store/app';
 import { Modal, ModalFooter } from '@/components/Modal';
-import type { RechargeRecord, PaginatedResponse } from 'shared/types';
-
-const mockRechargeRecords: RechargeRecord[] = [
-  {
-    id: '1',
-    accountId: '1',
-    amount: 5000,
-    paymentMethod: 'wechat',
-    transactionId: 'WX202606180001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-18T10:30:00Z',
-    completedAt: '2026-06-18T10:30:05Z',
-  },
-  {
-    id: '2',
-    accountId: '1',
-    amount: 3000,
-    paymentMethod: 'alipay',
-    transactionId: 'ALI202606150001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-15T14:20:00Z',
-    completedAt: '2026-06-15T14:20:10Z',
-  },
-  {
-    id: '3',
-    accountId: '1',
-    amount: 2000,
-    paymentMethod: 'wechat',
-    transactionId: 'WX202606100001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-10T09:15:00Z',
-    completedAt: '2026-06-10T09:15:30Z',
-  },
-  {
-    id: '4',
-    accountId: '1',
-    amount: 5000,
-    paymentMethod: 'bank',
-    transactionId: 'BANK202606050001',
-    status: 'pending',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-05T16:45:00Z',
-  },
-  {
-    id: '5',
-    accountId: '1',
-    amount: 1000,
-    paymentMethod: 'wechat',
-    status: 'failed',
-    operatorId: '1',
-    operatorName: '张三',
-    remark: '支付超时',
-    createdAt: '2026-06-01T11:30:00Z',
-  },
-  {
-    id: '6',
-    accountId: '1',
-    amount: 10000,
-    paymentMethod: 'bank',
-    transactionId: 'BANK202605280001',
-    status: 'success',
-    operatorId: '2',
-    operatorName: '李四',
-    createdAt: '2026-05-28T09:00:00Z',
-    completedAt: '2026-05-28T14:30:00Z',
-  },
-  {
-    id: '7',
-    accountId: '1',
-    amount: 2000,
-    paymentMethod: 'alipay',
-    transactionId: 'ALI202605200001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-05-20T16:20:00Z',
-    completedAt: '2026-05-20T16:20:05Z',
-  },
-  {
-    id: '8',
-    accountId: '1',
-    amount: 3000,
-    paymentMethod: 'wechat',
-    transactionId: 'WX202605150001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-05-15T11:10:00Z',
-    completedAt: '2026-05-15T11:10:15Z',
-  },
-];
+import type { RechargeRecord, WaybillAccount } from 'shared/types';
 
 const paymentMethodLabels: Record<string, { label: string; icon: any; color: string; bgColor: string }> = {
   wechat: { label: '微信支付', icon: Smartphone, color: 'text-green-600', bgColor: 'bg-green-50' },
   alipay: { label: '支付宝', icon: CreditCard, color: 'text-blue-600', bgColor: 'bg-blue-50' },
   bank: { label: '银行卡转账', icon: Building2, color: 'text-purple-600', bgColor: 'bg-purple-50' },
+  account: { label: '账户余额', icon: Wallet, color: 'text-amber-600', bgColor: 'bg-amber-50' },
 };
 
 const rechargeStatusConfig: Record<string, { label: string; className: string; icon: any }> = {
@@ -134,7 +39,11 @@ const rechargeStatusConfig: Record<string, { label: string; className: string; i
 const quickAmounts = [1000, 2000, 5000, 10000, 20000, 50000];
 
 export default function WaybillRecharge() {
+  const hasRole = useAuthStore(state => state.hasRole);
+  const addNotification = useAppStore(state => state.addNotification);
+  const isAdmin = hasRole(['admin']);
   const [loading, setLoading] = useState(true);
+  const [account, setAccount] = useState<WaybillAccount | null>(null);
   const [records, setRecords] = useState<RechargeRecord[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
@@ -158,21 +67,35 @@ export default function WaybillRecharge() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const result = await get<PaginatedResponse<RechargeRecord>>('/waybill/recharge-records', {
-        params: { page, pageSize, ...filters },
+      const [accountData, recordsData] = await Promise.all([
+        get<WaybillAccount>('/waybill/account'),
+        get<{ list: RechargeRecord[]; total: number; page: number; pageSize: number }>('/waybill/recharge-records', {
+          params: { page, pageSize, ...filters },
+        }),
+      ]);
+      setAccount(accountData);
+      setRecords(recordsData.list || []);
+      setTotal(recordsData.total || 0);
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取充值记录失败',
       });
-      setRecords(result.data.list);
-      setTotal(result.data.total);
-    } catch {
-      setRecords(mockRechargeRecords);
-      setTotal(mockRechargeRecords.length);
     } finally {
       setLoading(false);
     }
   };
 
   const handleRecharge = async () => {
-    if (!rechargeAmount || Number(rechargeAmount) <= 0) return;
+    if (!rechargeAmount || Number(rechargeAmount) <= 0) {
+      addNotification({
+        type: 'error',
+        title: '参数错误',
+        message: '请输入有效的充值金额',
+      });
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -180,16 +103,21 @@ export default function WaybillRecharge() {
         amount: Number(rechargeAmount),
         paymentMethod: selectedPaymentMethod,
       });
+      addNotification({
+        type: 'success',
+        title: '充值成功',
+        message: `已成功充值 ¥${Number(rechargeAmount).toFixed(2)}`,
+      });
       setIsRechargeModalOpen(false);
       setRechargeAmount('');
       setSelectedPaymentMethod('wechat');
       fetchData();
-    } catch {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setIsRechargeModalOpen(false);
-      setRechargeAmount('');
-      setSelectedPaymentMethod('wechat');
-      fetchData();
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '充值失败',
+        message: error.message || '充值操作失败',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -205,14 +133,36 @@ export default function WaybillRecharge() {
             <h1 className="text-2xl font-bold text-gray-900">面单充值记录</h1>
             <p className="text-gray-500 mt-1">查看所有面单充值记录和状态</p>
           </div>
-          <button
-            onClick={() => setIsRechargeModalOpen(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-all hover:shadow-lg"
-          >
-            <Plus className="w-5 h-5" />
-            充值
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => setIsRechargeModalOpen(true)}
+              className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-all hover:shadow-lg"
+            >
+              <Plus className="w-5 h-5" />
+              充值
+            </button>
+          )}
         </div>
+
+        {account && (
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
+                  <Wallet className="w-7 h-7" />
+                </div>
+                <div>
+                  <p className="text-white/80 text-sm">当前账户余额</p>
+                  <p className="text-4xl font-bold mt-1">¥{account.balance.toFixed(2)}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-white/80 text-sm">冻结金额</p>
+                <p className="text-2xl font-semibold mt-1">¥{account.frozenBalance.toFixed(2)}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
@@ -310,7 +260,7 @@ export default function WaybillRecharge() {
             <div className="p-16 flex flex-col items-center justify-center text-gray-400">
               <Wallet className="w-16 h-16 mb-4 opacity-50" />
               <p className="text-lg font-medium">暂无充值记录</p>
-              <p className="text-sm mt-1">点击上方充值按钮进行充值</p>
+              {isAdmin && <p className="text-sm mt-1">点击上方充值按钮进行充值</p>}
             </div>
           ) : (
             <>

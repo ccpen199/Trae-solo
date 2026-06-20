@@ -2,60 +2,20 @@ import { useState, useEffect } from 'react';
 import {
   CreditCard,
   Plus,
-  Edit3,
-  Trash2,
   Star,
   Phone,
   User,
   Building2,
   Loader2,
   CheckCircle,
-  X,
   Send
 } from 'lucide-react';
-import { get, post, del, put } from '@/utils/api';
+import { get, post, put } from '@/utils/api';
 import { cn } from '@/lib/utils';
 import { Modal, ModalFooter } from '@/components/Modal';
+import { useAuthStore } from '@/store/auth';
+import { useAppStore } from '@/store/app';
 import type { BankCard } from 'shared/types';
-
-const mockBankCards: BankCard[] = [
-  {
-    id: '1',
-    outletId: '1',
-    bankName: '中国工商银行',
-    bankBranch: '深圳市分行东门支行',
-    cardNumber: '6222021234567891234',
-    cardHolder: '张三',
-    phone: '138****1234',
-    isDefault: true,
-    verified: true,
-    createdAt: '2026-01-15T10:30:00Z',
-  },
-  {
-    id: '2',
-    outletId: '1',
-    bankName: '中国建设银行',
-    bankBranch: '深圳市分行南山支行',
-    cardNumber: '6217001234567895678',
-    cardHolder: '张三',
-    phone: '138****1234',
-    isDefault: false,
-    verified: true,
-    createdAt: '2026-03-20T14:20:00Z',
-  },
-  {
-    id: '3',
-    outletId: '1',
-    bankName: '招商银行',
-    bankBranch: '深圳市分行福田支行',
-    cardNumber: '6225881234567899012',
-    cardHolder: '李四',
-    phone: '139****5678',
-    isDefault: false,
-    verified: false,
-    createdAt: '2026-05-10T09:15:00Z',
-  },
-];
 
 const bankColors: Record<string, string> = {
   '中国工商银行': 'bg-gradient-to-br from-red-500 to-red-700',
@@ -72,7 +32,6 @@ interface FormData {
   cardNumber: string;
   cardHolder: string;
   phone: string;
-  verifyCode: string;
 }
 
 interface FormErrors {
@@ -81,44 +40,43 @@ interface FormErrors {
   cardNumber?: string;
   cardHolder?: string;
   phone?: string;
-  verifyCode?: string;
 }
 
 export default function BankCardManage() {
+  const { hasRole } = useAuthStore();
+  const { addNotification } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState<BankCard[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingCard, setEditingCard] = useState<BankCard | null>(null);
   const [formData, setFormData] = useState<FormData>({
     bankName: '',
     bankBranch: '',
     cardNumber: '',
     cardHolder: '',
     phone: '',
-    verifyCode: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [countdown, setCountdown] = useState(0);
+
+  const isAdmin = hasRole(['admin']);
+  const isOperator = hasRole(['operator']);
+  const canAdd = isAdmin;
 
   useEffect(() => {
     fetchCards();
   }, []);
-
-  useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown]);
 
   const fetchCards = async () => {
     try {
       setLoading(true);
       const result = await get<BankCard[]>('/finance/bank-cards');
       setCards(result);
-    } catch {
-      setCards(mockBankCards);
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取银行卡列表失败'
+      });
     } finally {
       setLoading(false);
     }
@@ -127,18 +85,6 @@ export default function BankCardManage() {
   const maskCardNumber = (number: string) => {
     if (number.length <= 8) return number;
     return `${number.slice(0, 4)}****${number.slice(-4)}`;
-  };
-
-  const sendVerifyCode = () => {
-    if (!formData.phone) {
-      setErrors(prev => ({ ...prev, phone: '请先输入手机号' }));
-      return;
-    }
-    if (!/^1[3-9]\d{9}$/.test(formData.phone)) {
-      setErrors(prev => ({ ...prev, phone: '请输入正确的手机号' }));
-      return;
-    }
-    setCountdown(60);
   };
 
   const validateForm = (): boolean => {
@@ -163,11 +109,6 @@ export default function BankCardManage() {
     } else if (!/^1[3-9]\d{9}$/.test(formData.phone)) {
       newErrors.phone = '请输入正确的手机号';
     }
-    if (!editingCard && !formData.verifyCode.trim()) {
-      newErrors.verifyCode = '请输入验证码';
-    } else if (!editingCard && formData.verifyCode.length !== 6) {
-      newErrors.verifyCode = '验证码为6位数字';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -179,25 +120,23 @@ export default function BankCardManage() {
     setIsSubmitting(true);
     try {
       const cardNumber = formData.cardNumber.replace(/\s/g, '');
-      if (editingCard) {
-        await put(`/finance/bank-cards/${editingCard.id}`, {
-          ...formData,
-          cardNumber,
-        });
-      } else {
-        await post('/finance/bank-cards', {
-          ...formData,
-          cardNumber,
-        });
-      }
+      await post('/finance/bank-cards', {
+        bankName: formData.bankName,
+        bankBranch: formData.bankBranch,
+        cardNumber,
+        cardHolder: formData.cardHolder,
+        phone: formData.phone,
+      });
+      addNotification({ type: 'success', title: '添加成功', message: '银行卡已添加' });
       setIsModalOpen(false);
       resetForm();
       fetchCards();
-    } catch {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setIsModalOpen(false);
-      resetForm();
-      fetchCards();
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '添加失败',
+        message: error.message || '银行卡添加失败'
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -210,35 +149,14 @@ export default function BankCardManage() {
         ...card,
         isDefault: card.id === cardId,
       })));
-    } catch {
-      setCards(prev => prev.map(card => ({
-        ...card,
-        isDefault: card.id === cardId,
-      })));
+      addNotification({ type: 'success', title: '设置成功', message: '已设为默认银行卡' });
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '设置失败',
+        message: error.message || '设置默认银行卡失败'
+      });
     }
-  };
-
-  const handleDelete = async (cardId: string) => {
-    if (!confirm('确定要删除这张银行卡吗？')) return;
-    try {
-      await del(`/finance/bank-cards/${cardId}`);
-      setCards(prev => prev.filter(card => card.id !== cardId));
-    } catch {
-      setCards(prev => prev.filter(card => card.id !== cardId));
-    }
-  };
-
-  const handleEdit = (card: BankCard) => {
-    setEditingCard(card);
-    setFormData({
-      bankName: card.bankName,
-      bankBranch: card.bankBranch,
-      cardNumber: card.cardNumber,
-      cardHolder: card.cardHolder,
-      phone: card.phone.replace(/\*/g, '0'),
-      verifyCode: '',
-    });
-    setIsModalOpen(true);
   };
 
   const resetForm = () => {
@@ -248,11 +166,8 @@ export default function BankCardManage() {
       cardNumber: '',
       cardHolder: '',
       phone: '',
-      verifyCode: '',
     });
     setErrors({});
-    setEditingCard(null);
-    setCountdown(0);
   };
 
   const openAddModal = () => {
@@ -266,15 +181,17 @@ export default function BankCardManage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">银行卡管理</h1>
-            <p className="text-gray-500 mt-1">管理您的提现银行卡</p>
+            <p className="text-gray-500 mt-1">{isOperator ? '查看所有网点银行卡' : '管理您的提现银行卡'}</p>
           </div>
-          <button
-            onClick={openAddModal}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-all hover:shadow-lg"
-          >
-            <Plus className="w-5 h-5" />
-            添加银行卡
-          </button>
+          {canAdd && (
+            <button
+              onClick={openAddModal}
+              className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-all hover:shadow-lg"
+            >
+              <Plus className="w-5 h-5" />
+              添加银行卡
+            </button>
+          )}
         </div>
 
         {loading ? (
@@ -286,7 +203,7 @@ export default function BankCardManage() {
           <div className="bg-white rounded-2xl p-16 flex flex-col items-center justify-center text-gray-400 border border-gray-100">
             <CreditCard className="w-20 h-20 mb-4 opacity-50" />
             <p className="text-lg font-medium">暂无绑定银行卡</p>
-            <p className="text-sm mt-1">点击上方按钮添加您的第一张银行卡</p>
+            <p className="text-sm mt-1">{canAdd ? '点击上方按钮添加您的第一张银行卡' : '暂无银行卡数据'}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -352,7 +269,7 @@ export default function BankCardManage() {
                     )}
 
                     <div className="flex gap-2">
-                      {!card.isDefault && (
+                      {canAdd && !card.isDefault && (
                         <button
                           onClick={() => handleSetDefault(card.id)}
                           className="flex-1 px-4 py-2 bg-white/20 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition-colors"
@@ -360,18 +277,6 @@ export default function BankCardManage() {
                           设为默认
                         </button>
                       )}
-                      <button
-                        onClick={() => handleEdit(card)}
-                        className="p-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors"
-                      >
-                        <Edit3 className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(card.id)}
-                        className="p-2 bg-red-500/80 text-white rounded-lg hover:bg-red-500 transition-colors"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -384,7 +289,7 @@ export default function BankCardManage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingCard ? '编辑银行卡' : '添加银行卡'}
+        title="添加银行卡"
         size="lg"
       >
         <div className="space-y-5">
@@ -483,43 +388,6 @@ export default function BankCardManage() {
               {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
             </div>
           </div>
-
-          {!editingCard && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                验证码 <span className="text-red-500">*</span>
-              </label>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  placeholder="请输入6位验证码"
-                  value={formData.verifyCode}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
-                    setFormData(prev => ({ ...prev, verifyCode: value }));
-                  }}
-                  className={cn(
-                    'flex-1 px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all',
-                    errors.verifyCode ? 'border-red-300 bg-red-50' : 'border-gray-200'
-                  )}
-                />
-                <button
-                  type="button"
-                  onClick={sendVerifyCode}
-                  disabled={countdown > 0}
-                  className={cn(
-                    'px-6 py-2.5 rounded-lg font-medium transition-all whitespace-nowrap',
-                    countdown > 0
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
-                  )}
-                >
-                  {countdown > 0 ? `${countdown}s后重发` : '发送验证码'}
-                </button>
-              </div>
-              {errors.verifyCode && <p className="text-red-500 text-xs mt-1">{errors.verifyCode}</p>}
-            </div>
-          )}
         </div>
 
         <ModalFooter>
@@ -542,7 +410,7 @@ export default function BankCardManage() {
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                {editingCard ? '保存修改' : '添加银行卡'}
+                添加银行卡
               </>
             )}
           </button>

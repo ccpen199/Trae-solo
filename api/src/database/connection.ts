@@ -29,6 +29,17 @@ function initTables() {
   if (!tablesExist) {
     db.exec(schema);
   }
+
+  try {
+    const cols = db.prepare("PRAGMA table_info(pickup_tasks)").all() as { name: string }[];
+    const names = new Set(cols.map(c => c.name));
+    if (!names.has('courier_name')) {
+      db.prepare("ALTER TABLE pickup_tasks ADD COLUMN courier_name TEXT").run();
+    }
+    if (!names.has('updated_by')) {
+      db.prepare("ALTER TABLE pickup_tasks ADD COLUMN updated_by TEXT").run();
+    }
+  } catch {}
 }
 
 initTables();

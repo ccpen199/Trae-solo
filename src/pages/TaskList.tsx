@@ -11,8 +11,9 @@ import {
   UserPlus,
   AlertCircle,
   Loader2,
+  Truck,
 } from 'lucide-react';
-import type { PickupTask, TaskStatus } from 'shared/types';
+import type { PickupTask, TaskStatus, User } from 'shared/types';
 import { TaskCard } from '@/components/TaskCard';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Table } from '@/components/ui/Table';
@@ -20,6 +21,7 @@ import { Modal, ModalFooter } from '@/components/Modal';
 import { useTaskStore } from '@/store/task';
 import { useAuthStore } from '@/store/auth';
 import { useAppStore } from '@/store/app';
+import { get as apiGet } from '@/utils/api';
 import { cn } from '@/lib/utils';
 import dayjs from 'dayjs';
 
@@ -44,12 +46,6 @@ const timeSlotOptions = [
   { key: 'evening', label: '晚上 (18:00-21:00)' },
 ];
 
-const mockCouriers = [
-  { id: '1', name: '张快递' },
-  { id: '2', name: '李配送' },
-  { id: '3', name: '王揽收' },
-];
-
 const TaskList: React.FC = () => {
   const navigate = useNavigate();
   const {
@@ -69,7 +65,7 @@ const TaskList: React.FC = () => {
     batchAssignTasks,
   } = useTaskStore();
 
-  const { hasRole } = useAuthStore();
+  const { hasRole, user } = useAuthStore();
   const { addNotification } = useAppStore();
   const isAdmin = hasRole(['admin', 'operator']);
 
@@ -79,10 +75,28 @@ const TaskList: React.FC = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [searchCode, setSearchCode] = useState('');
+  const [courierList, setCourierList] = useState<User[]>([]);
+  const [courierLoading, setCourierLoading] = useState(false);
 
   useEffect(() => {
     fetchTasks();
   }, [filters]);
+
+  useEffect(() => {
+    if (!isAdmin) return;
+    const loadCouriers = async () => {
+      setCourierLoading(true);
+      try {
+        const data = await apiGet<any>('/couriers?pageSize=100');
+        setCourierList(data.list || []);
+      } catch (err: any) {
+        addNotification({ type: 'error', title: '加载快递员失败', message: err.message });
+      } finally {
+        setCourierLoading(false);
+      }
+    };
+    loadCouriers();
+  }, [isAdmin]);
 
   const handleStatusTabClick = (status: TaskStatus | 'all') => {
     setFilters({ status, page: 1 });
@@ -286,8 +300,16 @@ const TaskList: React.FC = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="mb-6 animate-slide-down">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">揽收任务列表</h1>
-        <p className="text-gray-500">管理和处理所有揽收任务</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          {user?.role === 'courier' ? '我的揽收任务' : '揽收任务列表'}
+        </h1>
+        <p className="text-gray-500">
+          {user?.role === 'courier'
+            ? '查看和处理指派给您的揽收任务，共 ' + total + ' 条'
+            : user?.role === 'admin'
+            ? `管理本网点所有揽收任务，共 ${total} 条`
+            : `全局揽收任务管理，共 ${total} 条`}
+        </p>
       </div>
 
       {error && (
@@ -604,7 +626,18 @@ const TaskList: React.FC = () => {
             已选择 <span className="font-semibold text-primary">{selectedTaskIds.length}</span> 个任务，请选择要分配的快递员：
           </p>
           <div className="space-y-2">
-            {mockCouriers.map((courier) => (
+            {courierLoading && (
+              <div className="flex items-center justify-center py-6 text-gray-400">
+                <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                正在加载快递员列表...
+              </div>
+            )}
+            {!courierLoading && courierList.length === 0 && (
+              <div className="text-center py-6 text-gray-400 text-sm">
+                暂无快递员，请先在【快递员管理】中添加
+              </div>
+            )}
+            {courierList.map((courier) => (
               <label
                 key={courier.id}
                 className={cn(
@@ -622,9 +655,23 @@ const TaskList: React.FC = () => {
                   onChange={() => setSelectedCourier(courier.id)}
                   className="w-4 h-4 text-primary"
                 />
-                <div>
-                  <p className="font-medium text-gray-900">{courier.name}</p>
-                  <p className="text-sm text-gray-500">快递员</p>
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white font-medium">
+                    {courier.name?.slice(0, 1) || '快'}
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900 flex items-center gap-2">
+                      {courier.name}
+                      <span className="text-xs text-gray-400 font-normal">@{courier.username}</span>
+                    </p>
+                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                      <Truck className="w-3 h-3" />
+                      {courier.phone || '未设置手机号'}
+                      {courier.certificationStatus === 'approved' && (
+                        <span className="text-emerald-600 ml-1">·已认证</span>
+                      )}
+                    </p>
+                  </div>
                 </div>
               </label>
             ))}

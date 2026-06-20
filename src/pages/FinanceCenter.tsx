@@ -20,80 +20,17 @@ import {
 import dayjs from 'dayjs';
 import { get } from '@/utils/api';
 import { cn } from '@/lib/utils';
-import type { DailyFinance } from 'shared/types';
-
-const mockDailyFinance: DailyFinance[] = [
-  {
-    date: '2026-06-18',
-    outletId: '1',
-    outletName: '东门网点',
-    totalOrders: 128,
-    totalWeight: 325.5,
-    totalFreight: 8920.50,
-    waybillCost: 1280.00,
-    platformFee: 446.03,
-    netIncome: 7194.47,
-    detail: [
-      { taskId: '1', orderNo: 'KD202606180001', weight: 2.5, freight: 68, waybillCost: 10, platformFee: 3.4 },
-      { taskId: '2', orderNo: 'KD202606180002', weight: 5.2, freight: 142, waybillCost: 10, platformFee: 7.1 },
-    ]
-  },
-  {
-    date: '2026-06-17',
-    outletId: '1',
-    outletName: '东门网点',
-    totalOrders: 156,
-    totalWeight: 412.3,
-    totalFreight: 11256.80,
-    waybillCost: 1560.00,
-    platformFee: 562.84,
-    netIncome: 9133.96,
-    detail: [
-      { taskId: '3', orderNo: 'KD202606170001', weight: 3.8, freight: 98, waybillCost: 10, platformFee: 4.9 },
-    ]
-  },
-  {
-    date: '2026-06-16',
-    outletId: '1',
-    outletName: '东门网点',
-    totalOrders: 98,
-    totalWeight: 256.8,
-    totalFreight: 7123.40,
-    waybillCost: 980.00,
-    platformFee: 356.17,
-    netIncome: 5787.23,
-    detail: []
-  },
-  {
-    date: '2026-06-15',
-    outletId: '1',
-    outletName: '东门网点',
-    totalOrders: 142,
-    totalWeight: 378.9,
-    totalFreight: 10234.50,
-    waybillCost: 1420.00,
-    platformFee: 511.73,
-    netIncome: 8302.77,
-    detail: []
-  },
-  {
-    date: '2026-06-14',
-    outletId: '1',
-    outletName: '东门网点',
-    totalOrders: 110,
-    totalWeight: 289.4,
-    totalFreight: 7890.20,
-    waybillCost: 1100.00,
-    platformFee: 394.51,
-    netIncome: 6395.69,
-    detail: []
-  },
-];
+import { useAuthStore } from '@/store/auth';
+import { useAppStore } from '@/store/app';
+import type { DailyFinance, FinanceOverview } from 'shared/types';
 
 export default function FinanceCenter() {
   const navigate = useNavigate();
+  const { user, hasRole } = useAuthStore();
+  const { addNotification } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DailyFinance[]>([]);
+  const [overview, setOverview] = useState<FinanceOverview | null>(null);
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [dateRange, setDateRange] = useState({
     start: dayjs().subtract(7, 'day').format('YYYY-MM-DD'),
@@ -107,10 +44,20 @@ export default function FinanceCenter() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const result = await get<DailyFinance[]>('/finance/daily');
-      setData(result);
-    } catch {
-      setData(mockDailyFinance);
+      const [dailyResult, overviewResult] = await Promise.all([
+        get<{ list: DailyFinance[]; total: number }>('/finance/daily', {
+          params: { pageSize: 100, startDate: dateRange.start, endDate: dateRange.end }
+        }),
+        get<FinanceOverview>('/finance/overview')
+      ]);
+      setData(dailyResult.list);
+      setOverview(overviewResult);
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取财务数据失败'
+      });
     } finally {
       setLoading(false);
     }
@@ -142,16 +89,18 @@ export default function FinanceCenter() {
     totalNetIncome: 0,
   });
 
-  const accountBalance = 125680.50;
-  const frozenAmount = 15000.00;
-  const availableAmount = accountBalance - frozenAmount;
+  const accountBalance = overview?.totalBalance ?? 0;
+  const frozenAmount = overview?.frozenBalance ?? 0;
+  const availableAmount = overview?.availableBalance ?? 0;
+
+  const pageTitle = hasRole(['operator']) ? '全局财务总览' : '本网点财务';
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">财务对账中心</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{pageTitle}</h1>
             <p className="text-gray-500 mt-1">查看每日对账明细和账户余额</p>
           </div>
         </div>
@@ -187,7 +136,7 @@ export default function FinanceCenter() {
             </div>
             <div className="flex flex-col gap-3">
               <button
-                onClick={() => navigate('/withdraw')}
+                onClick={() => navigate('/waybill-recharge')}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-xl font-medium hover:bg-gray-100 transition-colors"
               >
                 <Plus className="w-5 h-5" />
@@ -265,6 +214,9 @@ export default function FinanceCenter() {
                   <tr>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-10"></th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">日期</th>
+                    {hasRole(['operator']) && (
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">网点</th>
+                    )}
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">订单数</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总重量</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">总运费</th>
@@ -294,6 +246,11 @@ export default function FinanceCenter() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="text-sm font-medium text-gray-900">{row.date}</span>
                         </td>
+                        {hasRole(['operator']) && (
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="text-sm text-gray-600">{row.outletName}</span>
+                          </td>
+                        )}
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="text-sm text-gray-600">{row.totalOrders} 单</span>
                         </td>
@@ -327,7 +284,7 @@ export default function FinanceCenter() {
                       </tr>
                       {expandedRows.has(row.date) && (
                         <tr className="bg-gray-50 animate-fade-in">
-                          <td colSpan={9} className="px-6 py-4">
+                          <td colSpan={hasRole(['operator']) ? 10 : 9} className="px-6 py-4">
                             {row.detail.length === 0 ? (
                               <p className="text-center text-gray-400 py-4">暂无订单详情</p>
                             ) : (

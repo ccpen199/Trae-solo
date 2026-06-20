@@ -85,6 +85,10 @@ router.get('/:id', authMiddleware, requireRole('admin', 'operator'), (req: Reque
       throw new AppError('快递员不存在', 404);
     }
 
+    if (req.user?.role === 'admin' && req.user.outletId && courier.outletId !== req.user.outletId) {
+      throw new AppError('无权访问其他网点的快递员', 403);
+    }
+
     res.json({
       code: 200,
       message: '获取成功',
@@ -98,6 +102,13 @@ router.get('/:id', authMiddleware, requireRole('admin', 'operator'), (req: Reque
 router.get('/:id/stats', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
   try {
     const { id } = req.params;
+
+    if (req.user?.role === 'admin') {
+      const courier = courierService.get(id);
+      if (courier && req.user.outletId && courier.outletId !== req.user.outletId) {
+        throw new AppError('无权访问其他网点的快递员', 403);
+      }
+    }
 
     const stats = courierService.getStats(id);
 

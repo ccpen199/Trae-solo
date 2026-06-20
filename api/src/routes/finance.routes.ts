@@ -7,16 +7,35 @@ import type { WithdrawStatus } from '../../../shared/types';
 
 const router = Router();
 
+router.get('/overview', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
+  try {
+    if (!req.user) {
+      throw new AppError('未登录', 401);
+    }
+
+    const data = financeService.getOverview(req.user.outletId, req.user.role);
+
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/daily', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
   try {
-    if (!req.user || !req.user.outletId) {
-      throw new AppError('未登录或网点信息不存在', 401);
+    if (!req.user) {
+      throw new AppError('未登录', 401);
     }
 
     const { startDate, endDate, page, pageSize } = req.query;
+    const outletId = req.user.role === 'operator' ? undefined : req.user.outletId;
 
     const result = financeService.getDailyFinances(
-      req.user.outletId,
+      outletId || '',
       startDate as string,
       endDate as string,
       page ? parseInt(page as string, 10) : undefined,
@@ -40,11 +59,12 @@ router.get('/daily', authMiddleware, requireRole('admin', 'operator'), (req: Req
 
 router.get('/bank-cards', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
   try {
-    if (!req.user || !req.user.outletId) {
-      throw new AppError('未登录或网点信息不存在', 401);
+    if (!req.user) {
+      throw new AppError('未登录', 401);
     }
 
-    const cards = financeService.getBankCards(req.user.outletId);
+    const outletId = req.user.role === 'operator' ? undefined : req.user.outletId;
+    const cards = financeService.getBankCards(outletId || '');
 
     res.json({
       code: 200,
@@ -127,14 +147,15 @@ router.post('/withdraw', authMiddleware, requireRole('admin'), (req: Request, re
 
 router.get('/withdraw-records', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
   try {
-    if (!req.user || !req.user.outletId) {
-      throw new AppError('未登录或网点信息不存在', 401);
+    if (!req.user) {
+      throw new AppError('未登录', 401);
     }
 
     const { status, page, pageSize } = req.query;
+    const outletId = req.user.role === 'operator' ? undefined : req.user.outletId;
 
     const result = financeService.getWithdrawRecords(
-      req.user.outletId,
+      outletId || '',
       status as WithdrawStatus,
       page ? parseInt(page as string, 10) : undefined,
       pageSize ? parseInt(pageSize as string, 10) : undefined

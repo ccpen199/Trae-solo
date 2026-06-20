@@ -13,99 +13,22 @@ import {
   XCircle,
   FileText,
   CreditCard,
-  Smartphone
+  Smartphone,
+  Pencil
 } from 'lucide-react';
 import dayjs from 'dayjs';
-import { get } from '@/utils/api';
+import { get, put } from '@/utils/api';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/store/auth';
+import { useAppStore } from '@/store/app';
+import { Modal, ModalFooter } from '@/components/Modal';
 import type { WaybillAccount as WaybillAccountType, RechargeRecord } from 'shared/types';
-
-const mockAccount: WaybillAccountType = {
-  id: '1',
-  outletId: '1',
-  outletName: '东门网点',
-  balance: 856.50,
-  frozenBalance: 200.00,
-  totalRecharged: 15000.00,
-  totalUsed: 14143.50,
-  templateConfig: {
-    templateId: 'tpl001',
-    templateName: '标准面单模板',
-    paperSize: '100x150',
-    fontSize: 'medium',
-    showLogo: true,
-    logoUrl: 'https://example.com/logo.png',
-  },
-  lowBalanceThreshold: 1000,
-  createdAt: '2026-01-01T00:00:00Z',
-  updatedAt: '2026-06-18T10:30:00Z',
-};
-
-const mockRechargeRecords: RechargeRecord[] = [
-  {
-    id: '1',
-    accountId: '1',
-    amount: 5000,
-    paymentMethod: 'wechat',
-    transactionId: 'WX202606180001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-18T10:30:00Z',
-    completedAt: '2026-06-18T10:30:05Z',
-  },
-  {
-    id: '2',
-    accountId: '1',
-    amount: 3000,
-    paymentMethod: 'alipay',
-    transactionId: 'ALI202606150001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-15T14:20:00Z',
-    completedAt: '2026-06-15T14:20:10Z',
-  },
-  {
-    id: '3',
-    accountId: '1',
-    amount: 2000,
-    paymentMethod: 'wechat',
-    transactionId: 'WX202606100001',
-    status: 'success',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-10T09:15:00Z',
-    completedAt: '2026-06-10T09:15:30Z',
-  },
-  {
-    id: '4',
-    accountId: '1',
-    amount: 5000,
-    paymentMethod: 'bank',
-    transactionId: 'BANK202606050001',
-    status: 'pending',
-    operatorId: '1',
-    operatorName: '张三',
-    createdAt: '2026-06-05T16:45:00Z',
-  },
-  {
-    id: '5',
-    accountId: '1',
-    amount: 1000,
-    paymentMethod: 'wechat',
-    status: 'failed',
-    operatorId: '1',
-    operatorName: '张三',
-    remark: '支付超时',
-    createdAt: '2026-06-01T11:30:00Z',
-  },
-];
 
 const paymentMethodLabels: Record<string, { label: string; icon: any; color: string }> = {
   wechat: { label: '微信支付', icon: Smartphone, color: 'text-green-500' },
   alipay: { label: '支付宝', icon: CreditCard, color: 'text-blue-500' },
   bank: { label: '银行卡', icon: CreditCard, color: 'text-purple-500' },
+  account: { label: '账户余额', icon: Wallet, color: 'text-amber-500' },
 };
 
 const rechargeStatusConfig: Record<string, { label: string; className: string; icon: any }> = {
@@ -128,9 +51,15 @@ const fontSizeLabels: Record<string, string> = {
 
 export default function WaybillAccount() {
   const navigate = useNavigate();
+  const hasRole = useAuthStore(state => state.hasRole);
+  const addNotification = useAppStore(state => state.addNotification);
+  const isAdmin = hasRole(['admin']);
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState<WaybillAccountType | null>(null);
   const [recentRecords, setRecentRecords] = useState<RechargeRecord[]>([]);
+  const [isThresholdModalOpen, setIsThresholdModalOpen] = useState(false);
+  const [thresholdInput, setThresholdInput] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -141,16 +70,55 @@ export default function WaybillAccount() {
       setLoading(true);
       const result = await get<WaybillAccountType>('/waybill/account');
       setAccount(result);
-      const recordsResult = await get<RechargeRecord[]>('/waybill/recharge-records', {
+      const recordsResult = await get<{ list: RechargeRecord[]; total: number }>('/waybill/recharge-records', {
         params: { pageSize: 10 },
       });
-      setRecentRecords(Array.isArray(recordsResult) ? recordsResult : (recordsResult as any).data?.list || []);
-    } catch {
-      setAccount(mockAccount);
-      setRecentRecords(mockRechargeRecords);
+      setRecentRecords(recordsResult.list || []);
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '加载失败',
+        message: error.message || '获取账户信息失败',
+      });
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleUpdateThreshold = async () => {
+    if (!thresholdInput || Number(thresholdInput) < 0) {
+      addNotification({
+        type: 'error',
+        title: '参数错误',
+        message: '请输入有效的告警阈值',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await put('/waybill/threshold', { threshold: Number(thresholdInput) });
+      addNotification({
+        type: 'success',
+        title: '更新成功',
+        message: '低余额告警阈值已更新',
+      });
+      setIsThresholdModalOpen(false);
+      fetchData();
+    } catch (error: any) {
+      addNotification({
+        type: 'error',
+        title: '更新失败',
+        message: error.message || '更新告警阈值失败',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openThresholdModal = () => {
+    setThresholdInput(String(account?.lowBalanceThreshold || 0));
+    setIsThresholdModalOpen(true);
   };
 
   if (loading) {
@@ -183,13 +151,15 @@ export default function WaybillAccount() {
               <Settings className="w-5 h-5" />
               模板配置
             </button>
-            <button
-              onClick={() => navigate('/waybill-recharge')}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors"
-            >
-              <FileText className="w-5 h-5" />
-              充值记录
-            </button>
+            {isAdmin && (
+              <button
+                onClick={() => navigate('/waybill-recharge')}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors"
+              >
+                <FileText className="w-5 h-5" />
+                充值记录
+              </button>
+            )}
           </div>
         </div>
 
@@ -262,15 +232,25 @@ export default function WaybillAccount() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <button
-                  onClick={() => navigate('/waybill-recharge')}
-                  className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-emerald-600 rounded-xl font-semibold hover:bg-gray-100 transition-all hover:shadow-lg text-lg"
-                >
-                  <Plus className="w-6 h-6" />
-                  立即充值
-                </button>
-                <div className="text-center text-white/70 text-sm">
-                  低余额预警：¥{account?.lowBalanceThreshold.toFixed(2)}
+                {isAdmin && (
+                  <button
+                    onClick={() => navigate('/waybill-recharge')}
+                    className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-emerald-600 rounded-xl font-semibold hover:bg-gray-100 transition-all hover:shadow-lg text-lg"
+                  >
+                    <Plus className="w-6 h-6" />
+                    立即充值
+                  </button>
+                )}
+                <div className="flex items-center justify-center gap-2 text-white/70 text-sm">
+                  <span>低余额预警：¥{account?.lowBalanceThreshold.toFixed(2)}</span>
+                  {isAdmin && (
+                    <button
+                      onClick={openThresholdModal}
+                      className="p-1 rounded hover:bg-white/20 transition-colors"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -400,17 +380,70 @@ export default function WaybillAccount() {
                 </div>
               )}
 
-              <button
-                onClick={() => navigate('/waybill-template')}
-                className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-xl font-medium hover:bg-blue-100 transition-colors"
-              >
-                <Settings className="w-5 h-5" />
-                编辑模板配置
-              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => navigate('/waybill-template')}
+                  className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-600 rounded-xl font-medium hover:bg-blue-100 transition-colors"
+                >
+                  <Settings className="w-5 h-5" />
+                  编辑模板配置
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isThresholdModalOpen}
+        onClose={() => setIsThresholdModalOpen(false)}
+        title="修改低余额告警阈值"
+        size="md"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              告警阈值（元）
+            </label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">¥</span>
+              <input
+                type="number"
+                placeholder="0.00"
+                value={thresholdInput}
+                onChange={(e) => setThresholdInput(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 text-xl font-bold border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              />
+            </div>
+            <p className="text-sm text-gray-500 mt-2">
+              当账户余额低于此阈值时，系统将发送告警通知。
+            </p>
+          </div>
+        </div>
+
+        <ModalFooter>
+          <button
+            onClick={() => setIsThresholdModalOpen(false)}
+            className="px-6 py-2.5 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+          >
+            取消
+          </button>
+          <button
+            onClick={handleUpdateThreshold}
+            disabled={isSubmitting || !thresholdInput || Number(thresholdInput) < 0}
+            className="px-8 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                保存中...
+              </>
+            ) : (
+              '确认修改'
+            )}
+          </button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }

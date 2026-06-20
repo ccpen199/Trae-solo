@@ -206,6 +206,61 @@ router.post('/calculate', authMiddleware, (req: Request, res: Response, next) =>
   }
 });
 
+router.post('/batch-assign', authMiddleware, requireRole('admin', 'operator'), (req: Request, res: Response, next) => {
+  try {
+    if (!req.user) {
+      throw new AppError('未登录', 401);
+    }
+
+    const { taskIds, courierId } = req.body;
+    const count = taskService.batchAssign(
+      taskIds,
+      courierId,
+      req.user.role,
+      req.user.outletId
+    );
+
+    res.json({
+      code: 200,
+      message: `已成功分配 ${count} 个任务`,
+      data: { count },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/:id/intervene', authMiddleware, requireRole('operator'), (req: Request, res: Response, next) => {
+  try {
+    if (!req.user) {
+      throw new AppError('未登录', 401);
+    }
+
+    const { id } = req.params;
+    const { action, reason, courierId } = req.body;
+
+    if (!action) {
+      throw new AppError('请选择干预动作', 400);
+    }
+
+    const task = taskService.intervene(
+      id,
+      action,
+      req.user.userId,
+      req.user.username,
+      { reason, courierId }
+    );
+
+    res.json({
+      code: 200,
+      message: '干预成功',
+      data: task,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/:id/print', authMiddleware, (req: Request, res: Response, next) => {
   try {
     if (!req.user) {
@@ -219,7 +274,7 @@ router.post('/:id/print', authMiddleware, (req: Request, res: Response, next) =>
       throw new AppError('运单号不能为空', 400);
     }
 
-    taskService.recordPrint(
+    const result = taskService.recordPrint(
       id,
       waybillNo,
       printerName || '默认打印机',
@@ -229,8 +284,8 @@ router.post('/:id/print', authMiddleware, (req: Request, res: Response, next) =>
 
     res.json({
       code: 200,
-      message: '打印记录已保存',
-      data: null,
+      message: '打印成功',
+      data: result,
     });
   } catch (error) {
     next(error);
