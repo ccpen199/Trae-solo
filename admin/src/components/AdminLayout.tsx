@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Avatar, Dropdown, Button, Tag, Typography } from 'antd';
+import type { MenuProps } from 'antd';
 import {
   DashboardOutlined, FormOutlined, AuditOutlined, FileDoneOutlined,
   SettingOutlined, FileTextOutlined, AppstoreOutlined,
   LogoutOutlined, UserOutlined, DatabaseOutlined, SafetyOutlined
 } from '@ant-design/icons';
-import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAdminStore } from '../store/adminStore';
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -18,15 +19,17 @@ const AdminLayout: React.FC = () => {
   const logout = useAdminStore(s => s.logout);
   const [collapsed, setCollapsed] = useState(false);
 
-  const items = [
-    { key: '/dashboard', icon: <DashboardOutlined />, label: <Link to="/dashboard">审批总览看板</Link> },
-    { key: '/assign', icon: <AuditOutlined />, label: <Link to="/assign">审核事项指派</Link> },
-    { key: '/review', icon: <FormOutlined />, label: <Link to="/review">分级审核台</Link> },
-    { key: '/items', icon: <AppstoreOutlined />, label: <Link to="/items">登记事项配置</Link> },
-    { key: '/templates', icon: <FileTextOutlined />, label: <Link to="/templates">表单动态配置</Link> },
-    { key: '/tracking', icon: <FileDoneOutlined />, label: <Link to="/tracking">全流程追踪</Link> },
-    { key: '/evidence', icon: <SafetyOutlined />, label: <Link to="/evidence">证据包/档案</Link> },
-    { key: '/system', icon: <SettingOutlined />, label: <Link to="/system">系统管理</Link> },
+  const items: MenuProps['items'] = [
+    { key: '/dashboard', icon: <DashboardOutlined />, label: '审批总览看板' },
+    { key: '/assign', icon: <AuditOutlined />, label: '审核事项指派' },
+    { key: '/review', icon: <FormOutlined />, label: '分级审核台' },
+    { key: '/items', icon: <AppstoreOutlined />, label: '登记事项配置' },
+    { key: '/templates', icon: <FileTextOutlined />, label: '表单动态配置' },
+    { key: '/tracking', icon: <FileDoneOutlined />, label: '全流程追踪' },
+    { key: '/evidence', icon: <SafetyOutlined />, label: '证据包/档案' },
+    { key: '/audit', icon: <AuditOutlined />, label: '🧾 审计存证' },
+    { key: '/archive-verify', icon: <DatabaseOutlined />, label: '📦 档案核验' },
+    { key: '/system', icon: <SettingOutlined />, label: '系统管理' },
   ];
 
   const userMenu = {
@@ -57,6 +60,7 @@ const AdminLayout: React.FC = () => {
           selectedKeys={[location.pathname]}
           style={{ borderRight: 0, padding: '12px 8px' }}
           items={items}
+          onClick={({ key }) => navigate(key)}
         />
       </Sider>
       <Layout>
@@ -66,8 +70,12 @@ const AdminLayout: React.FC = () => {
           boxShadow: '0 1px 4px rgba(0,0,0,0.06)', borderBottom: '1px solid #f0f0f0'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Button type="text" onClick={() => setCollapsed(!collapsed)}>
-              {collapsed ? '☰ 展开' : '◀ 收起'}
+            <Button
+              type="text"
+              aria-label={collapsed ? '展开' : '收起'}
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              {collapsed ? '展开' : '收起'}
             </Button>
             <Text strong style={{ fontSize: 16 }}>后台管理系统</Text>
             <Tag color="blue" style={{ fontSize: 11 }}>国密合规</Tag>

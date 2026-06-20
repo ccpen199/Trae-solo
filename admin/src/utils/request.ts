@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { message } from 'antd';
 
 interface ApiResp<T = any> {
@@ -13,9 +13,9 @@ const instance: AxiosInstance = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
-instance.interceptors.request.use((config: AxiosRequestConfig) => {
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = localStorage.getItem('admin_token');
-  if (token && config.headers) {
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
@@ -26,7 +26,7 @@ instance.interceptors.response.use(
     const data = res.data as ApiResp;
     if (data && typeof data === 'object' && 'code' in data) {
       if (data.code === 0) {
-        return Promise.resolve(data);
+        return res;
       }
       if (data.code === 401) {
         localStorage.removeItem('admin_token');
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
       message.error(data.message || '操作失败');
       return Promise.reject(data);
     }
-    return Promise.resolve(res);
+    return res;
   },
   (err) => {
     const info = err.response?.data?.message || err.message || '网络错误';
@@ -58,20 +58,20 @@ instance.interceptors.response.use(
 
 export const http = {
   get: async <T = any>(url: string, params?: any) => {
-    const r = await instance.get<any, ApiResp<T>>(url, { params });
-    return r.data as T;
+    const r = await instance.get<ApiResp<T>>(url, { params });
+    return (r.data as ApiResp<T>).data as T;
   },
   post: async <T = any>(url: string, data?: any) => {
-    const r = await instance.post<any, ApiResp<T>>(url, data);
-    return r.data as T;
+    const r = await instance.post<ApiResp<T>>(url, data);
+    return (r.data as ApiResp<T>).data as T;
   },
   put: async <T = any>(url: string, data?: any) => {
-    const r = await instance.put<any, ApiResp<T>>(url, data);
-    return r.data as T;
+    const r = await instance.put<ApiResp<T>>(url, data);
+    return (r.data as ApiResp<T>).data as T;
   },
   delete: async <T = any>(url: string) => {
-    const r = await instance.delete<any, ApiResp<T>>(url);
-    return r.data as T;
+    const r = await instance.delete<ApiResp<T>>(url);
+    return (r.data as ApiResp<T>).data as T;
   }
 };
 

@@ -1,0 +1,2217 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-20T09:10:32.491Z",
+  "order": "may-89276",
+  "roundIndex": 2,
+  "captureId": "may-89276-round-2-final",
+  "url": "http://127.0.0.1:49276/",
+  "initialUrl": "http://127.0.0.1:49276/",
+  "finalUrl": "http://127.0.0.1:49276/dashboard",
+  "status": 200,
+  "title": "省级市场监管电子政务工作台 · 后台管理",
+  "initialTitle": "省级市场监管电子政务工作台 · 后台管理",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49276/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49276/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49276/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49276/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49276/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49276/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "preset"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:审批总览看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部 →",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部 →:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看证据链",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 15
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看证据链:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:审核事项指派",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49276/dashboard",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "立即前往处理 →",
+          "查看全部 →",
+          "查看证据链",
+          "知道了"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项名称",
+              "申请人",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项名称 申请人 状态 操作 孙七 draft 查看证据链 孙七 待受理 查看证据链 李四 审核中 查看证据链 王五 审核中 查看证据链 王五 待受理 查看证据链 赵六 驳回 查看证据链 张三 已通过 查看证据链 张三 审核中 查看证据链 李四 已通过 查看证据链 孙七 审核中 查看证据链 周八 已通过 查看证据链 周八 completed 查看证据链 赵六 已通过 查看证据链 赵六 completed 查看证据链 周八 驳回 查看证据链"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员待办审核提醒：当前有待办审核 6 件，请尽快处理立即前往处理 →累计申请总数18待审核中6已审批通过8已驳回3今日新增3平均审批时长4.60工作日 电子签名与CA认证累计签署次数28所有电子签名操作记录生物特征核验28人脸识别 + 指纹核验CA证书在用4/4省级CA签发 · SM2国密电子档案归集8/8政务云归档完成率 快捷业务入口多步骤签署流程引导CA证书预置管理人脸识别核验通道指纹核验通道审批分级工作台待签署申请列表法律效力声明查看证据包一键下载📈 七日申请与审批趋势🥧 业务类别分布👥 审核人员工作量 🎯 最近受理的申请查看全部 →申请ID事项名称申请人状态操作孙七draft查看证据链孙七待受理查看证据链李四审核中查看证据链王五审核中查看证据链王五待受理查看证据链赵六驳回查看证据链张三已通过查看证据链张三审核中查看证据链李四已通过查看证据链孙七审核中查看证据链周八已通过查看证据链周八completed查看证据链赵六已通过查看证据链赵六completed查看证据链周八驳回查看证据链🔒合规安全保障• 符合《电子签名法》《密码法》《政务云安全规范》 • 全程使用 SM2/SM3/SM4 国家商用密码算法 • 对接省级可信时间戳 (TSA)，签署证据可固化 • 审计日志全量保留，支持司法举证省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计 待办审核提醒待办审核提醒当前有待办审核 6 件，请尽快处理知道了",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2234,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49276/dashboard",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.png",
+          "elementCount": 651,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "立即前往处理 →",
+            "查看全部 →",
+            "查看证据链",
+            "待办审核提醒 当前有待办审核 6 件，请尽快处理 知道了",
+            "知道了"
+          ]
+        }
+      },
+      {
+        "label": "导航:审批总览看板",
+        "url": "http://127.0.0.1:49276/dashboard",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "立即前往处理 →",
+          "查看全部 →",
+          "查看证据链"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项名称",
+              "申请人",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项名称 申请人 状态 操作 孙七 draft 查看证据链 孙七 待受理 查看证据链 李四 审核中 查看证据链 王五 审核中 查看证据链 王五 待受理 查看证据链 赵六 驳回 查看证据链 张三 已通过 查看证据链 张三 审核中 查看证据链 李四 已通过 查看证据链 孙七 审核中 查看证据链 周八 已通过 查看证据链 周八 completed 查看证据链 赵六 已通过 查看证据链 赵六 completed 查看证据链 周八 驳回 查看证据链"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员待办审核提醒：当前有待办审核 6 件，请尽快处理立即前往处理 →累计申请总数18待审核中6已审批通过8已驳回3今日新增3平均审批时长4.60工作日 电子签名与CA认证累计签署次数28所有电子签名操作记录生物特征核验28人脸识别 + 指纹核验CA证书在用4/4省级CA签发 · SM2国密电子档案归集8/8政务云归档完成率 快捷业务入口多步骤签署流程引导CA证书预置管理人脸识别核验通道指纹核验通道审批分级工作台待签署申请列表法律效力声明查看证据包一键下载📈 七日申请与审批趋势🥧 业务类别分布👥 审核人员工作量 🎯 最近受理的申请查看全部 →申请ID事项名称申请人状态操作孙七draft查看证据链孙七待受理查看证据链李四审核中查看证据链王五审核中查看证据链王五待受理查看证据链赵六驳回查看证据链张三已通过查看证据链张三审核中查看证据链李四已通过查看证据链孙七审核中查看证据链周八已通过查看证据链周八completed查看证据链赵六已通过查看证据链赵六completed查看证据链周八驳回查看证据链🔒合规安全保障• 符合《电子签名法》《密码法》《政务云安全规范》 • 全程使用 SM2/SM3/SM4 国家商用密码算法 • 对接省级可信时间戳 (TSA)，签署证据可固化 • 审计日志全量保留，支持司法举证省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2234,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-02-导航-审批总览看板",
+          "label": "导航:审批总览看板",
+          "finalUrl": "http://127.0.0.1:49276/dashboard",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.png",
+          "elementCount": 628,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "立即前往处理 →",
+            "查看全部 →",
+            "查看证据链"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部 →",
+        "url": "http://127.0.0.1:49276/tracking",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "展开行",
+          "详情",
+          "证据包"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "申请ID/事项/申请人",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项编码",
+              "事项名称",
+              "申请人/企业",
+              "进度",
+              "状态",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项编码 事项名称 申请人/企业 进度 状态 申请时间 操作 APP20240500100 DJ-IND-001 个体工商户设立 张三 40% 第 2 / 5 环节 审核中 2024-05-10 09:10:00 详情 APP20240500101 DJ-ENT-001 有限公司设立 王五 盛景餐饮有限公司 第 5 / 5 环节 已通过 2024-05-11 09:13:00 详情 证据包 APP20240500102 XK-FOOD-001 食品经营许可 李四 华瑞商贸有限公司 75% 第 3 / 4 环节 审核中 2024-05-12 09:16:00 详情 APP2024050"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员全部申请15审核中9已通过5已驳回1您有 3 条未读待办 系统通知：今日待处理事项汇总 政策提醒：新版市场主体登记系统升级 证照到期提醒：123份营业执照本月到期 不见面审批 · 全流程追踪看板全部申请ID事项编码事项名称申请人/企业进度状态申请时间操作APP20240500100DJ-IND-001个体工商户设立张三40%第 2 / 5 环节审核中2024-05-10 09:10:00详情APP20240500101DJ-ENT-001有限公司设立王五盛景餐饮有限公司第 5 / 5 环节已通过2024-05-11 09:13:00详情证据包APP20240500102XK-FOOD-001食品经营许可李四华瑞商贸有限公司75%第 3 / 4 环节审核中2024-05-12 09:16:00详情APP20240500103BG-IND-001变更登记赵六66%第 2 / 3 环节审核中2024-05-13 09:19:00详情APP20240500104NJ-001年报公示孙七蓝天医疗有限公司80%第 4 / 5 环节审核中2024-05-14 09:22:00详情APP20240500105ZX-IND-001注销登记周八绿源食品有限公司第 5 / 4 环节已通过2024-05-10 09:25:00详情证据包APP20240500106XK-FOOD-002餐饮许可吴九第 5 / 5 环节驳回2024-05-11 09:28:00详情APP20240500107DJ-ENT-000名称预核准郑十亿达餐饮有限公司66%第 2 / 3 环节审核中2024-05-12 09:31:00详情128 条/页省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-03-操作-查看全部",
+          "label": "操作:查看全部 →",
+          "finalUrl": "http://127.0.0.1:49276/tracking",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.png",
+          "elementCount": 493,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "申请ID/事项/申请人",
+            "展开行",
+            "详情",
+            "证据包",
+            "1",
+            "2",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部 →->详情",
+        "url": "http://127.0.0.1:49276/tracking",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "展开行",
+          "详情",
+          "证据包",
+          "关闭",
+          "查看法律效力声明",
+          "下载标准证据包（可用于司法举证）"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "申请ID/事项/申请人",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项编码",
+              "事项名称",
+              "申请人/企业",
+              "进度",
+              "状态",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项编码 事项名称 申请人/企业 进度 状态 申请时间 操作 APP20240500100 DJ-IND-001 个体工商户设立 张三 40% 第 2 / 5 环节 审核中 2024-05-10 09:10:00 详情 APP20240500101 DJ-ENT-001 有限公司设立 王五 盛景餐饮有限公司 第 5 / 5 环节 已通过 2024-05-11 09:13:00 详情 证据包 APP20240500102 XK-FOOD-001 食品经营许可 李四 华瑞商贸有限公司 75% 第 3 / 4 环节 审核中 2024-05-12 09:16:00 详情 APP2024050"
+          },
+          {
+            "headers": [
+              "申请ID",
+              "事项",
+              "申请人",
+              "企业",
+              "当前状态",
+              "进度",
+              "提交时间",
+              "最后更新"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "申请ID APP20240500100 事项 个体工商户设立（DJ-IND-001） 申请人 张三 企业 个体工商户（个人） 当前状态 审核中 进度 2/5 提交时间 2024-05-10 09:10:00 最后更新 2024-05-12 16:20:00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员全部申请15审核中9已通过5已驳回1您有 3 条未读待办 系统通知：今日待处理事项汇总 政策提醒：新版市场主体登记系统升级 证照到期提醒：123份营业执照本月到期 不见面审批 · 全流程追踪看板全部申请ID事项编码事项名称申请人/企业进度状态申请时间操作APP20240500100DJ-IND-001个体工商户设立张三40%第 2 / 5 环节审核中2024-05-10 09:10:00详情APP20240500101DJ-ENT-001有限公司设立王五盛景餐饮有限公司第 5 / 5 环节已通过2024-05-11 09:13:00详情证据包APP20240500102XK-FOOD-001食品经营许可李四华瑞商贸有限公司75%第 3 / 4 环节审核中2024-05-12 09:16:00详情APP20240500103BG-IND-001变更登记赵六66%第 2 / 3 环节审核中2024-05-13 09:19:00详情APP20240500104NJ-001年报公示孙七蓝天医疗有限公司80%第 4 / 5 环节审核中2024-05-14 09:22:00详情APP20240500105ZX-IND-001注销登记周八绿源食品有限公司第 5 / 4 环节已通过2024-05-10 09:25:00详情证据包APP20240500106XK-FOOD-002餐饮许可吴九第 5 / 5 环节驳回2024-05-11 09:28:00详情APP20240500107DJ-ENT-000名称预核准郑十亿达餐饮有限公司66%第 2 / 3 环节审核中2024-05-12 09:31:00详情128 条/页省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计 审批详情 · APP20240500100📋 申请概要申请IDAPP20240500100事项个体工商户设立（DJ-IND-001）申请人张三企业个体工商户（个人）当前状态审核中进度2/5提交时间2024-05-10 09:10:00最后更新2024-05-12 16:20:00🔀 审批节点时间线2024-05-10 14:30:00 · 王审核L1 · 受理受理员2024-05-11 14:31:00 · 赵复审L2 · 初审初审员尚未到达 · 王审核L3 · 复审复审员尚未到达L4 · 核准核准员尚未到达L5 · 发证发证员 证据链与法律效力✓ 本审批全流程受《电子签名法》保护，具有等同纸质材料的法律效力✓ 签署日志：共 7 条 · 包含操作人/设备/IP/时间戳✓ 时间戳服务：省级TSA · 哈希算法 SHA-256✓ 证书：省级CA签发的SM2国密证书，可随时下载验证✓ 电子档案：已自动归集至省级政务云归档✓ 证据包标准：司法举证适用（ZIP/6项内容）查看法律效力声明下载标准证据包（可用于司法举证）",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-04-二层操作-查看全部-详情",
+          "label": "二层操作:查看全部 →->详情",
+          "finalUrl": "http://127.0.0.1:49276/tracking",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.png",
+          "elementCount": 637,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "申请ID/事项/申请人",
+            "展开行",
+            "详情",
+            "证据包",
+            "1",
+            "2",
+            "下一页",
+            "页码",
+            "关闭",
+            "查看法律效力声明",
+            "下载标准证据包（可用于司法举证）"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看证据链",
+        "url": "http://127.0.0.1:49276/tracking?applyId=undefined",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "展开行",
+          "详情",
+          "证据包"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "申请ID/事项/申请人",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项编码",
+              "事项名称",
+              "申请人/企业",
+              "进度",
+              "状态",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项编码 事项名称 申请人/企业 进度 状态 申请时间 操作 APP20240500100 DJ-IND-001 个体工商户设立 张三 40% 第 2 / 5 环节 审核中 2024-05-10 09:10:00 详情 APP20240500101 DJ-ENT-001 有限公司设立 王五 盛景餐饮有限公司 第 5 / 5 环节 已通过 2024-05-11 09:13:00 详情 证据包 APP20240500102 XK-FOOD-001 食品经营许可 李四 华瑞商贸有限公司 75% 第 3 / 4 环节 审核中 2024-05-12 09:16:00 详情 APP2024050"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员全部申请15审核中9已通过5已驳回1您有 3 条未读待办 系统通知：今日待处理事项汇总 政策提醒：新版市场主体登记系统升级 证照到期提醒：123份营业执照本月到期 不见面审批 · 全流程追踪看板全部申请ID事项编码事项名称申请人/企业进度状态申请时间操作APP20240500100DJ-IND-001个体工商户设立张三40%第 2 / 5 环节审核中2024-05-10 09:10:00详情APP20240500101DJ-ENT-001有限公司设立王五盛景餐饮有限公司第 5 / 5 环节已通过2024-05-11 09:13:00详情证据包APP20240500102XK-FOOD-001食品经营许可李四华瑞商贸有限公司75%第 3 / 4 环节审核中2024-05-12 09:16:00详情APP20240500103BG-IND-001变更登记赵六66%第 2 / 3 环节审核中2024-05-13 09:19:00详情APP20240500104NJ-001年报公示孙七蓝天医疗有限公司80%第 4 / 5 环节审核中2024-05-14 09:22:00详情APP20240500105ZX-IND-001注销登记周八绿源食品有限公司第 5 / 4 环节已通过2024-05-10 09:25:00详情证据包APP20240500106XK-FOOD-002餐饮许可吴九第 5 / 5 环节驳回2024-05-11 09:28:00详情APP20240500107DJ-ENT-000名称预核准郑十亿达餐饮有限公司66%第 2 / 3 环节审核中2024-05-12 09:31:00详情128 条/页省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-05-操作-查看证据链",
+          "label": "操作:查看证据链",
+          "finalUrl": "http://127.0.0.1:49276/tracking?applyId=undefined",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.png",
+          "elementCount": 493,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "申请ID/事项/申请人",
+            "展开行",
+            "详情",
+            "证据包",
+            "1",
+            "2",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看证据链->详情",
+        "url": "http://127.0.0.1:49276/tracking?applyId=undefined",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "展开行",
+          "详情",
+          "证据包",
+          "关闭",
+          "查看法律效力声明",
+          "下载标准证据包（可用于司法举证）"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "申请ID/事项/申请人",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项编码",
+              "事项名称",
+              "申请人/企业",
+              "进度",
+              "状态",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项编码 事项名称 申请人/企业 进度 状态 申请时间 操作 APP20240500100 DJ-IND-001 个体工商户设立 张三 40% 第 2 / 5 环节 审核中 2024-05-10 09:10:00 详情 APP20240500101 DJ-ENT-001 有限公司设立 王五 盛景餐饮有限公司 第 5 / 5 环节 已通过 2024-05-11 09:13:00 详情 证据包 APP20240500102 XK-FOOD-001 食品经营许可 李四 华瑞商贸有限公司 75% 第 3 / 4 环节 审核中 2024-05-12 09:16:00 详情 APP2024050"
+          },
+          {
+            "headers": [
+              "申请ID",
+              "事项",
+              "申请人",
+              "企业",
+              "当前状态",
+              "进度",
+              "提交时间",
+              "最后更新"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "申请ID APP20240500100 事项 个体工商户设立（DJ-IND-001） 申请人 张三 企业 个体工商户（个人） 当前状态 审核中 进度 2/5 提交时间 2024-05-10 09:10:00 最后更新 2024-05-12 16:20:00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员全部申请15审核中9已通过5已驳回1您有 3 条未读待办 系统通知：今日待处理事项汇总 政策提醒：新版市场主体登记系统升级 证照到期提醒：123份营业执照本月到期 不见面审批 · 全流程追踪看板全部申请ID事项编码事项名称申请人/企业进度状态申请时间操作APP20240500100DJ-IND-001个体工商户设立张三40%第 2 / 5 环节审核中2024-05-10 09:10:00详情APP20240500101DJ-ENT-001有限公司设立王五盛景餐饮有限公司第 5 / 5 环节已通过2024-05-11 09:13:00详情证据包APP20240500102XK-FOOD-001食品经营许可李四华瑞商贸有限公司75%第 3 / 4 环节审核中2024-05-12 09:16:00详情APP20240500103BG-IND-001变更登记赵六66%第 2 / 3 环节审核中2024-05-13 09:19:00详情APP20240500104NJ-001年报公示孙七蓝天医疗有限公司80%第 4 / 5 环节审核中2024-05-14 09:22:00详情APP20240500105ZX-IND-001注销登记周八绿源食品有限公司第 5 / 4 环节已通过2024-05-10 09:25:00详情证据包APP20240500106XK-FOOD-002餐饮许可吴九第 5 / 5 环节驳回2024-05-11 09:28:00详情APP20240500107DJ-ENT-000名称预核准郑十亿达餐饮有限公司66%第 2 / 3 环节审核中2024-05-12 09:31:00详情128 条/页省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计 审批详情 · APP20240500100📋 申请概要申请IDAPP20240500100事项个体工商户设立（DJ-IND-001）申请人张三企业个体工商户（个人）当前状态审核中进度2/5提交时间2024-05-10 09:10:00最后更新2024-05-12 16:20:00🔀 审批节点时间线2024-05-10 14:30:00 · 王审核L1 · 受理受理员2024-05-11 14:31:00 · 赵复审L2 · 初审初审员尚未到达 · 王审核L3 · 复审复审员尚未到达L4 · 核准核准员尚未到达L5 · 发证发证员 证据链与法律效力✓ 本审批全流程受《电子签名法》保护，具有等同纸质材料的法律效力✓ 签署日志：共 7 条 · 包含操作人/设备/IP/时间戳✓ 时间戳服务：省级TSA · 哈希算法 SHA-256✓ 证书：省级CA签发的SM2国密证书，可随时下载验证✓ 电子档案：已自动归集至省级政务云归档✓ 证据包标准：司法举证适用（ZIP/6项内容）查看法律效力声明下载标准证据包（可用于司法举证）",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-06-二层操作-查看证据链-详情",
+          "label": "二层操作:查看证据链->详情",
+          "finalUrl": "http://127.0.0.1:49276/tracking?applyId=undefined",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.png",
+          "elementCount": 635,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "申请ID/事项/申请人",
+            "展开行",
+            "详情",
+            "证据包",
+            "1",
+            "2",
+            "下一页",
+            "页码",
+            "关闭",
+            "查看法律效力声明",
+            "下载标准证据包（可用于司法举证）"
+          ]
+        }
+      },
+      {
+        "label": "导航:审核事项指派",
+        "url": "http://127.0.0.1:49276/assign",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "headings": [],
+        "navLabels": [
+          "审批总览看板",
+          "dashboard",
+          "审核事项指派",
+          "audit",
+          "分级审核台",
+          "form",
+          "登记事项配置",
+          "appstore",
+          "表单动态配置",
+          "file-text",
+          "全流程追踪",
+          "file-done",
+          "证据包/档案",
+          "safety",
+          "审计存证",
+          "档案核验",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "收起",
+          "批量指派给所选审核员",
+          "CA证书",
+          "指派"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请ID",
+              "事项",
+              "申请人",
+              "环节",
+              "分级",
+              "当前处理人",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "申请ID 事项 申请人 环节 分级 当前处理人 状态 操作 APP202405005 企业年度报告公示 孙七 填报提交 L1 暂未指派 待指派 CA证书 指派 APP202405005 企业年度报告公示 孙七 公示登记 L2 暂未指派 待指派 CA证书 指派 APP202405012 个体工商户名称申报 孙七 核准 L2 暂未指派 待指派 CA证书 指派 APP202405003 食品经营许可证核发 王五 现场核查 L2 暂未指派 待指派 CA证书 指派 APP202405008 个体工商户注销登记 王五 注销审核 L2 暂未指派 待指派 CA证书 指派 APP202405003 食品经营许可"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省局电子政务平台审批总览看板审核事项指派分级审核台登记事项配置表单动态配置全流程追踪证据包/档案🧾 审计存证📦 档案核验系统管理收起后台管理系统国密合规TSA对接政务云2026年6月20日星期六管理员 审核事项分级指派按《审核分级规范》指派 L1~L5📋 批量指派已选择 0 项 （待指派共 22 项）请选择审核员批量指派给所选审核员申请ID事项申请人环节分级当前处理人状态操作APP202405005企业年度报告公示孙七填报提交L1暂未指派待指派CA证书指派APP202405005企业年度报告公示孙七公示登记L2暂未指派待指派CA证书指派APP202405012个体工商户名称申报孙七核准L2暂未指派待指派CA证书指派APP202405003食品经营许可证核发王五现场核查L2暂未指派待指派CA证书指派APP202405008个体工商户注销登记王五注销审核L2暂未指派待指派CA证书指派APP202405003食品经营许可证核发王五复审L3暂未指派待指派CA证书指派APP202405008个体工商户注销登记王五注销登记L3暂未指派待指派CA证书指派APP202405004个体工商户变更登记赵六复审L3暂未指派待指派CA证书指派APP202405007食品经营许可证核发张三复审L3暂未指派待指派CA证书指派APP202405018个体工商户设立登记孙七复审L3暂未指派待指派CA证书指派123省级市场监督管理局 · 电子签名政务平台 v1.0 | 符合《电子签名法》《密码法》 | 服务端：SM2/SM3/SM4 | © 2024 政务云 · 全部操作受审计",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89276-round-2-final-structure-07-导航-审核事项指派",
+          "label": "导航:审核事项指派",
+          "finalUrl": "http://127.0.0.1:49276/assign",
+          "title": "省级市场监管电子政务工作台 · 后台管理",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.png",
+          "elementCount": 531,
+          "interactiveCount": 54,
+          "interactiveLabels": [
+            "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+            "审批总览看板",
+            "审核事项指派",
+            "分级审核台",
+            "登记事项配置",
+            "表单动态配置",
+            "全流程追踪",
+            "证据包/档案",
+            "审计存证",
+            "档案核验",
+            "系统管理",
+            "收起",
+            "批量指派给所选审核员",
+            "on",
+            "CA证书",
+            "指派",
+            "1",
+            "2",
+            "3",
+            "下一页"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "审批总览看板",
+        "label": "查看全部 →",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "审批总览看板",
+        "label": "查看全部 →->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "审批总览看板",
+        "label": "查看证据链",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "审批总览看板",
+        "label": "查看证据链->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49276/dashboard",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.png",
+        "elementCount": 651,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "立即前往处理 →",
+          "查看全部 →",
+          "查看证据链",
+          "待办审核提醒 当前有待办审核 6 件，请尽快处理 知道了",
+          "知道了"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-02-导航-审批总览看板",
+        "label": "导航:审批总览看板",
+        "finalUrl": "http://127.0.0.1:49276/dashboard",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.png",
+        "elementCount": 628,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "立即前往处理 →",
+          "查看全部 →",
+          "查看证据链"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部 →",
+        "finalUrl": "http://127.0.0.1:49276/tracking",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.png",
+        "elementCount": 493,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-04-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部 →->详情",
+        "finalUrl": "http://127.0.0.1:49276/tracking",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.png",
+        "elementCount": 637,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "关闭",
+          "查看法律效力声明",
+          "下载标准证据包（可用于司法举证）"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-05-操作-查看证据链",
+        "label": "操作:查看证据链",
+        "finalUrl": "http://127.0.0.1:49276/tracking?applyId=undefined",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.png",
+        "elementCount": 493,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-06-二层操作-查看证据链-详情",
+        "label": "二层操作:查看证据链->详情",
+        "finalUrl": "http://127.0.0.1:49276/tracking?applyId=undefined",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.png",
+        "elementCount": 635,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "关闭",
+          "查看法律效力声明",
+          "下载标准证据包（可用于司法举证）"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-07-导航-审核事项指派",
+        "label": "导航:审核事项指派",
+        "finalUrl": "http://127.0.0.1:49276/assign",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.png",
+        "elementCount": 531,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "批量指派给所选审核员",
+          "on",
+          "CA证书",
+          "指派",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49276/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49276/dashboard",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-01-首屏.png",
+        "elementCount": 651,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "立即前往处理 →",
+          "查看全部 →",
+          "查看证据链",
+          "待办审核提醒 当前有待办审核 6 件，请尽快处理 知道了",
+          "知道了"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-02-导航-审批总览看板",
+        "label": "导航:审批总览看板",
+        "finalUrl": "http://127.0.0.1:49276/dashboard",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-02-导航-审批总览看板.png",
+        "elementCount": 628,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "立即前往处理 →",
+          "查看全部 →",
+          "查看证据链"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部 →",
+        "finalUrl": "http://127.0.0.1:49276/tracking",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-03-操作-查看全部.png",
+        "elementCount": 493,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-04-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部 →->详情",
+        "finalUrl": "http://127.0.0.1:49276/tracking",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-04-二层操作-查看全部-详情.png",
+        "elementCount": 637,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "关闭",
+          "查看法律效力声明",
+          "下载标准证据包（可用于司法举证）"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-05-操作-查看证据链",
+        "label": "操作:查看证据链",
+        "finalUrl": "http://127.0.0.1:49276/tracking?applyId=undefined",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-05-操作-查看证据链.png",
+        "elementCount": 493,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-06-二层操作-查看证据链-详情",
+        "label": "二层操作:查看证据链->详情",
+        "finalUrl": "http://127.0.0.1:49276/tracking?applyId=undefined",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-06-二层操作-查看证据链-详情.png",
+        "elementCount": 635,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "申请ID/事项/申请人",
+          "展开行",
+          "详情",
+          "证据包",
+          "1",
+          "2",
+          "下一页",
+          "页码",
+          "关闭",
+          "查看法律效力声明",
+          "下载标准证据包（可用于司法举证）"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89276-round-2-final-structure-07-导航-审核事项指派",
+        "label": "导航:审核事项指派",
+        "finalUrl": "http://127.0.0.1:49276/assign",
+        "title": "省级市场监管电子政务工作台 · 后台管理",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89276/browser-check-final/may-89276-round-2-final-structure-07-导航-审核事项指派.png",
+        "elementCount": 531,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "审批总览看板 审核事项指派 分级审核台 登记事项配置 表单动态配置 全流程追踪 证据包/档案 🧾 审计存证 📦 档案核验 系统管理",
+          "审批总览看板",
+          "审核事项指派",
+          "分级审核台",
+          "登记事项配置",
+          "表单动态配置",
+          "全流程追踪",
+          "证据包/档案",
+          "审计存证",
+          "档案核验",
+          "系统管理",
+          "收起",
+          "批量指派给所选审核员",
+          "on",
+          "CA证书",
+          "指派",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 2216
+  },
+  "initialBodyTextPreview": "省级市场监管 · 后台管理\n电子签名 · 国密合规 · 不见面审批平台\n账号\n密码\n记住登录状态\n安全登录\n🔐 本系统符合《电子签名法》《密码法》及国家商用密码管理规范； 所有操作均被审计记录，登录即表示同意《后台操作承诺书》。",
+  "bodyTextPreview": "省局电子政务平台\n审批总览看板\n审核事项指派\n分级审核台\n登记事项配置\n表单动态配置\n全流程追踪\n证据包/档案\n🧾 审计存证\n📦 档案核验\n系统管理\n收起\n后台管理系统\n国密合规\nTSA对接\n政务云\n2026年6月20日星期六\n管理员\n待办审核提醒：当前有待办审核 6 件，请尽快处理\n立即前往处理 →\n累计申请总数\n18\n待审核中\n6\n已审批通过\n8\n已驳回\n3\n今日新增\n3\n平均审批时长\n4.60工作日\n 电子签名与CA认证\n累计签署次数\n28\n所有电子签名操作记录\n生物特征核验\n28\n人脸识别 + 指纹核验\nCA证书在用\n4/4\n省级CA签发 · SM2国密\n电子档案归集\n8/8\n政务云归档完成率\n 快捷业务入口\n多步骤签署流程引导\nCA证书预置管理\n人脸识别核验通道\n指纹核验通道\n审批分级工作台\n待签署申请列表\n法律效力声明查看\n证据包一键下载\n📈 七日申请与审批趋势\n🥧 业务类别分布\n👥 审核人员工作量\n 🎯 最近受理的申请\n查看全部 →\n申请ID\t事项名称\t申请人\t状态\t操作\n\t\t孙七\tdraft\t\n查看证据链\n\n\t\t孙七\t待受理\t\n查看证据链\n\n\t\t李四\t审核中\t\n查看证据链\n\n\t\t王五\t审核中\t\n查看证据链\n\n\t\t王五\t待受理\t\n查看证据链\n\n\t\t赵六\t驳回\t\n查看证据链\n\n\t\t张三\t已通过\t\n查看证据链\n\n\t\t张三\t审核中\t\n查看证据链\n\n\t\t李四\t已通过\t\n查看证据链\n\n\t\t孙七\t审核中\t\n查看证据链\n\n\t\t周八\t已通过\t\n查看证据链\n\n\t\t周八\tcompleted\t\n查看证据链\n\n\t\t赵六\t已通过\t\n查看证据链\n\n\t\t赵六\tcompleted\t\n查看证据链\n\n\t\t周八\t驳回\t\n查看证据链\n🔒\n合规安全保障\n• 符合《电子签名法》《密码法》《政务云安全规范》   • 全程使用 SM2/SM3/SM4 国家商用密码算法   • 对接省级可信时间戳 (TSA)，签署证据可固化   • 审计日志全量保留，支持司法举证\n省级市场监督管理局 · 电子签名政务平台 v1.0  |  符合《电子签名法》《密码法》 |  服务端：SM2/SM3/SM4  |  © 2024 政务云 · 全部操作受审计\n待办审核提醒\n当前有待办审核 6 件，请尽快处理\n知道了",
+  "apiBase": "http://127.0.0.1:59276",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/tracking/todos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/tracking/todos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/tracking/todos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/tracking/todos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/assignments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/reviewers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/assignments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/reviewers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49276/api/admin/recent-applies"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"status\":\"healthy\",\"timestamp\":\"2026-06-20T09:10:26.057Z\",\"db\":true,\"version\":\"1.0.0\",\"env\":\"development\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.218Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.233Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/admin/recent-applies",
+      "path": "/api/admin/recent-applies",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.256Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/tracking/todos",
+      "path": "/api/tracking/todos",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.287Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/admin/assignments",
+      "path": "/api/admin/assignments",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.311Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/admin/reviewers",
+      "path": "/api/admin/reviewers",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.324Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":401,\"message\":\"未授权访问\",\"timestamp\":\"2026-06-20T09:10:26.359Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在: GET /api/users/profile\",\"timestamp\":\"2026-06-20T09:10:26.392Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59276/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在: GET /api/user/profile\",\"timestamp\":\"2026-06-20T09:10:26.417Z\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-7J52FMRE.js?v=ce5f9572",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49276/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49276/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49276/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-7J52FMRE.js?v=ce5f9572",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-7J52FMRE.js?v=ce5f9572",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-7J52FMRE.js?v=ce5f9572",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-7J52FMRE.js?v=ce5f9572",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/react-router-dom.js?v=ce5f9572",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49276/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49276/node_modules/.vite/deps/chunk-CFZ35AZ5.js?v=ce5f9572",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

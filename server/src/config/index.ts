@@ -14,12 +14,12 @@ const findEnv = () => {
   }
   return candidates[0];
 };
-dotenv.config({ path: findEnv() });
+dotenv.config({ path: findEnv(), override: true });
 
 export const config = {
   server: {
     port: parseInt(process.env.SERVER_PORT || '3000'),
-    host: process.env.SERVER_HOST || '0.0.0.0',
+    host: process.env.SERVER_HOST || '127.0.0.1',
     env: process.env.NODE_ENV || 'development'
   },
   db: {

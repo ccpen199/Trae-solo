@@ -1,9 +1,66 @@
-import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
 import config from '../config';
 
-let db: Database.Database;
+const { DatabaseSync } = require('node:sqlite');
+
+class StatementWrapper {
+  private statement: any;
+
+  constructor(statement: any) {
+    this.statement = statement;
+  }
+
+  get(...params: any[]) {
+    return this.statement.get(...params);
+  }
+
+  all(...params: any[]) {
+    return this.statement.all(...params);
+  }
+
+  run(...params: any[]) {
+    return this.statement.run(...params);
+  }
+}
+
+class DatabaseWrapper {
+  private database: any;
+
+  constructor(database: any) {
+    this.database = database;
+  }
+
+  pragma(sql: string) {
+    this.database.exec(`PRAGMA ${sql}`);
+  }
+
+  exec(sql: string) {
+    return this.database.exec(sql);
+  }
+
+  prepare(sql: string) {
+    return new StatementWrapper(this.database.prepare(sql));
+  }
+
+  transaction<T>(fn: () => T) {
+    return () => {
+      this.database.exec('BEGIN');
+      try {
+        const result = fn();
+        this.database.exec('COMMIT');
+        return result;
+      } catch (err) {
+        try {
+          this.database.exec('ROLLBACK');
+        } catch {}
+        throw err;
+      }
+    };
+  }
+}
+
+let db: DatabaseWrapper;
 
 export const getDb = () => {
   if (!db) {
@@ -11,7 +68,7 @@ export const getDb = () => {
     if (!fs.existsSync(dbDir)) {
       fs.mkdirSync(dbDir, { recursive: true });
     }
-    db = new Database(path.resolve(config.db.path));
+    db = new DatabaseWrapper(new DatabaseSync(path.resolve(config.db.path)));
     db.pragma('journal_mode = WAL');
     db.pragma('foreign_keys = ON');
   }
@@ -115,6 +172,11 @@ export const initDatabase = () => {
       require_signer_count INTEGER DEFAULT 1,
       status TEXT DEFAULT 'pending',
       deadline TEXT,
+      signer_name TEXT,
+      signed_at TEXT,
+      tsa_hash TEXT,
+      tsa_serial TEXT,
+      signature_data TEXT,
       created_at TEXT DEFAULT (datetime('now'))
     );
 
@@ -192,13 +254,18 @@ export const initDatabase = () => {
     CREATE TABLE IF NOT EXISTS archives (
       id TEXT PRIMARY KEY,
       apply_id TEXT NOT NULL REFERENCES apply_records(id),
+      archive_no TEXT,
       archive_name TEXT,
-      file_hash TEXT,
+      archive_type TEXT DEFAULT '永久',
+      file_size INTEGER DEFAULT 0,
+      items_count INTEGER DEFAULT 0,
+      items_json TEXT,
+      evidence_hash TEXT,
+      sync_status TEXT DEFAULT 'pending',
+      oss_key TEXT,
       file_path TEXT,
-      file_size INTEGER,
-      items TEXT,
-      cloud_storage_key TEXT,
-      archived_at TEXT DEFAULT (datetime('now'))
+      archived_at TEXT DEFAULT (datetime('now')),
+      created_at TEXT DEFAULT (datetime('now'))
     );
 
     CREATE INDEX IF NOT EXISTS idx_apply_applicant ON apply_records(applicant_id);

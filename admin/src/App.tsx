@@ -11,6 +11,8 @@ import TemplatesPage from './pages/Templates';
 import TrackingPage from './pages/Tracking';
 import EvidencePage from './pages/Evidence';
 import SystemPage from './pages/System';
+import AuditLogsPage from './pages/AuditLogs';
+import ArchiveVerifyPage from './pages/ArchiveVerify';
 import AdminLayout from './components/AdminLayout';
 import { useAdminStore } from './store/adminStore';
 
@@ -51,6 +53,8 @@ const App: React.FC = () => (
               <Route path="/templates" element={<TemplatesPage />} />
               <Route path="/tracking" element={<TrackingPage />} />
               <Route path="/evidence" element={<EvidencePage />} />
+              <Route path="/audit" element={<AuditLogsPage />} />
+              <Route path="/archive-verify" element={<ArchiveVerifyPage />} />
               <Route path="/system" element={<SystemPage />} />
             </Route>
           </Route>

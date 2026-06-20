@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 
-const BASE_URL = process.env.TARO_APP_API_BASE || 'http://localhost:3002/api';
+const BASE_URL = process.env.TARO_APP_API_BASE || 'http://localhost:59276/api';
 
 interface RequestOptions {
   url: string;
