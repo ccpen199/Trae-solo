@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-white font-body antialiased;
+    font-family: 'Inter', ui-sans-serif, system-ui;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    font-family: 'Playfair Display', ui-serif, Georgia;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-glass-gradient backdrop-blur-md border border-white/10;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-primary text-white px-6 py-3 rounded-lg font-medium shadow-button
+           hover:shadow-button-hover hover:-translate-y-0.5 active:scale-[0.98]
+           transition-all duration-300;
+  }
+
+  .btn-secondary {
+    @apply bg-gradient-secondary text-white px-6 py-3 rounded-lg font-medium
+           hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
+  }
+}
