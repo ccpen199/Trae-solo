@@ -26,7 +26,7 @@ interface MatchedJob extends Job {
   factory?: Factory;
 }
 
-const MOCK_WORKER_ID = 'w_001';
+const MOCK_WORKER_ID = 'w-001';
 
 export default function WorkerHome() {
   const navigate = useNavigate();

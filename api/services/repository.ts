@@ -86,7 +86,7 @@ class DataRepository {
   updateWorkerCreditScore(id: string, score: number, reason?: string): Worker | undefined {
     const idx = this.workers.findIndex(w => w.id === id);
     if (idx >= 0) {
-      this.workers[idx] = { ...this.workers[idx], creditScore: Math.max(350, Math.min(950, score)) };
+      this.workers[idx] = { ...this.workers[idx], creditScore: Math.max(0, Math.min(100, score)) };
       return this.workers[idx];
     }
     return undefined;
@@ -103,11 +103,11 @@ class DataRepository {
 
   getCreditDistribution(): CreditDistribution {
     const ranges = [
-      { label: '优秀(850-950)', min: 850, max: 950, count: 0 },
-      { label: '良好(700-849)', min: 700, max: 849, count: 0 },
-      { label: '一般(600-699)', min: 600, max: 699, count: 0 },
-      { label: '较差(450-599)', min: 450, max: 599, count: 0 },
-      { label: '很差(350-449)', min: 350, max: 449, count: 0 },
+      { label: '优秀(85-100)', min: 85, max: 100, count: 0 },
+      { label: '良好(70-84)', min: 70, max: 84, count: 0 },
+      { label: '一般(55-69)', min: 55, max: 69, count: 0 },
+      { label: '较差(40-54)', min: 40, max: 54, count: 0 },
+      { label: '很差(0-39)', min: 0, max: 39, count: 0 },
     ];
     for (const w of this.workers) {
       for (const r of ranges) {

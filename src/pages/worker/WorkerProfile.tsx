@@ -27,10 +27,11 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { get, post } from '@/lib/api';
 import CreditGauge from '@/components/CreditGauge';
 import type { Worker, SkillCert, PerformanceRecord, LeaveType } from '@shared/types';
 
-const MOCK_WORKER_ID = 'w_001';
+const MOCK_WORKER_ID = 'w-001';
 
 export default function WorkerProfile() {
   const navigate = useNavigate();
@@ -43,79 +44,14 @@ export default function WorkerProfile() {
   const fetchWorker = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/workers/${MOCK_WORKER_ID}`);
-      const json = await res.json();
-      if (json.success) {
-        setWorker(json.data);
+      const res = await get<Worker>(`/workers/${MOCK_WORKER_ID}`);
+      if (res.success && res.data) {
+        setWorker(res.data);
       } else {
         throw new Error('no data');
       }
     } catch (e) {
       console.error(e);
-      const mockWorker: Worker = {
-        id: MOCK_WORKER_ID,
-        name: '张建国',
-        phone: '138****8888',
-        avatar: '',
-        idCardVerified: false,
-        idCardOcrData: undefined,
-        skills: [
-          { name: '电子装配上岗证', issuer: '苏州市人力资源和社会保障局', certifiedAt: '2023-06-15' },
-          { name: '叉车操作证N1', issuer: '江苏省市场监督管理局', certifiedAt: '2022-11-20' },
-          { name: '低压电工证', issuer: '国家应急管理部', certifiedAt: '2024-03-08' },
-          { name: '安全生产培训合格证', issuer: '苏州工业园应急管理局', certifiedAt: '2025-01-10' },
-        ],
-        performanceHistory: [
-          {
-            factoryId: 'f_3',
-            factoryName: '苏州博世汽车零部件',
-            jobId: 'job_old1',
-            jobTitle: '仓库分拣员',
-            startDate: '2025-05-12',
-            daysWorked: 38,
-          },
-          {
-            factoryId: 'f_1',
-            factoryName: '苏州立讯精密电子',
-            jobId: 'job_old2',
-            jobTitle: '流水线操作工',
-            startDate: '2024-09-01',
-            endDate: '2025-04-20',
-            daysWorked: 225,
-            leaveType: 'normal' as LeaveType,
-            leaveReason: '个人原因回家处理事务',
-          },
-          {
-            factoryId: 'f_2',
-            factoryName: '昆山仁宝科技',
-            jobId: 'job_old3',
-            jobTitle: '品检QC',
-            startDate: '2023-11-15',
-            endDate: '2024-08-10',
-            daysWorked: 265,
-            leaveType: 'normal' as LeaveType,
-            leaveReason: '合同到期，正常离职',
-          },
-          {
-            factoryId: 'f_4',
-            factoryName: '吴江某电子厂',
-            jobId: 'job_old4',
-            jobTitle: '普工',
-            startDate: '2023-02-10',
-            endDate: '2023-10-05',
-            daysWorked: 178,
-            leaveType: 'abnormal' as LeaveType,
-            leaveReason: '未办理手续离岗（已补说明：家中急事）',
-          },
-        ],
-        creditScore: 88,
-        currentLocation: { lat: 31.3, lng: 120.6, region: '苏州工业园' },
-        status: 'employed',
-        createdAt: '2022-08-01',
-        gender: 'male',
-        age: 32,
-      };
-      setWorker(mockWorker);
     } finally {
       setLoading(false);
     }
@@ -129,19 +65,18 @@ export default function WorkerProfile() {
     setShowOcrModal(true);
     setOcrSuccess(false);
     setOcrLoading(true);
-    setTimeout(() => {
-      setWorker(prev => prev ? {
-        ...prev,
-        idCardVerified: true,
-        idCardOcrData: {
-          name: '张建国',
-          idNumber: '3205**********1234',
-          address: '江苏省苏州市吴中区XX路XX号',
-        }
-      } : prev);
+    setTimeout(async () => {
+      const res = await post<Worker>(`/workers/${MOCK_WORKER_ID}/verify-idcard`, {
+        name: '张伟',
+        idNumber: '3205021992******12',
+        address: '江苏省苏州市姑苏区观前街100号',
+      });
+      if (res.success && res.data) {
+        setWorker(res.data);
+        setOcrSuccess(true);
+      }
       setOcrLoading(false);
-      setOcrSuccess(true);
-    }, 2500);
+    }, 2000);
   };
 
   const statusConfig = (status: Worker['status']) => {

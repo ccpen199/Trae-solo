@@ -28,7 +28,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import type { Job, Factory, ProcessNode } from '@shared/types';
 
-const MOCK_WORKER_ID = 'w_001';
+const MOCK_WORKER_ID = 'w-001';
 
 const benefitColors = [
   'bg-brand-50 text-brand-600 border-brand-100',
