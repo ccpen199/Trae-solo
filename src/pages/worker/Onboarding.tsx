@@ -6,22 +6,19 @@ import {
   IdCard,
   MonitorCog,
   CheckCircle2,
-  Circle,
   Clock,
   Gift,
   Wallet,
   Users,
   Building2,
   CalendarDays,
-  Sparkles,
   Loader2,
   CheckCircle,
-  AlertCircle,
-  Share2,
   Briefcase,
-  ChevronRight,
   Coins,
-  ArrowUpRight
+  ArrowUpRight,
+  AlertCircle,
+  Share2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -29,6 +26,13 @@ import { get } from '@/lib/api';
 import type { InterviewOrder } from '@shared/types';
 
 const WORKER_ID = 'w-001';
+
+const onboardingSteps = [
+  { key: 'document', icon: FileText, label: '证件复印', desc: '身份证+学历证复印件+照片' },
+  { key: 'training', icon: GraduationCap, label: '岗前培训签到', desc: 'EHS安全+岗位技能培训' },
+  { key: 'badge', icon: IdCard, label: '领工牌工服', desc: '领取工牌、工服、鞋柜钥匙' },
+  { key: 'station', icon: MonitorCog, label: '分配工位', desc: '车间主管带往工位并介绍' },
+];
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -38,13 +42,6 @@ export default function Onboarding() {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawSuccess, setWithdrawSuccess] = useState(false);
   const [withdrawProcessing, setWithdrawProcessing] = useState(false);
-
-  const onboardingSteps = [
-    { key: 'document', icon: FileText, label: '证件复印', desc: '身份证+学历证复印件+照片' },
-    { key: 'training', icon: GraduationCap, label: '岗前培训签到', desc: 'EHS安全+岗位技能培训' },
-    { key: 'badge', icon: IdCard, label: '领工牌工服', desc: '领取工牌、工服、鞋柜钥匙' },
-    { key: 'station', icon: MonitorCog, label: '分配工位', desc: '车间主管带往工位并介绍' },
-  ];
 
   const fetchData = async () => {
     setLoading(true);
@@ -66,15 +63,12 @@ export default function Onboarding() {
 
   const currentOrder = orders.find(o => o.status === 'employed');
   const subsidy = currentOrder?.subsidy;
+  const referralBonus = currentOrder?.referralBonus;
+  const serviceFee = currentOrder?.serviceFee;
   const daysCompleted = subsidy?.daysCompleted ?? 0;
   const daysRequired = subsidy?.daysRequired ?? 7;
   const subsidyProgress = Math.min(100, daysRequired > 0 ? (daysCompleted / daysRequired) * 100 : 0);
   const remainingDays = Math.max(0, daysRequired - daysCompleted);
-
-  const today = new Date();
-  const payDate = new Date(today);
-  payDate.setDate(payDate.getDate() + remainingDays);
-  const payDateStr = `${payDate.getMonth() + 1}月${payDate.getDate()}日`;
 
   const handleStepAction = (idx: number) => {
     if (idx === stepIndex) {
@@ -108,10 +102,7 @@ export default function Onboarding() {
 
           <div className="relative">
             <div className="flex items-center gap-3 mb-6">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/20 active:scale-95 transition-transform"
-              >
+              <button onClick={() => navigate(-1)} className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/20 active:scale-95 transition-transform">
                 <ArrowLeft size={20} />
               </button>
               <h1 className="text-xl font-bold">入职 &amp; 补贴中心</h1>
@@ -122,15 +113,13 @@ export default function Onboarding() {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="text-xs text-white/70 mb-1 flex items-center gap-1">
-                      <Building2 size={11} />
-                      当前入职工厂
+                      <Building2 size={11} />当前入职工厂
                     </div>
                     <h2 className="text-lg font-bold">{currentOrder.factoryName}</h2>
                     <p className="text-sm text-white/80 mt-0.5">{currentOrder.jobTitle}</p>
                   </div>
                   <div className="px-3 py-1.5 rounded-full bg-success-500/90 text-xs font-bold shadow-md flex items-center gap-1">
-                    <CheckCircle size={12} />
-                    在职中
+                    <CheckCircle size={12} />在职中
                   </div>
                 </div>
 
@@ -147,7 +136,7 @@ export default function Onboarding() {
                     </div>
                     <div className="text-right">
                       <div className="text-4xl font-black tabular-nums tracking-tight">
-                        ¥{(subsidy?.amount || 1500).toLocaleString()}
+                        ¥{(subsidy?.amount ?? 0).toLocaleString()}
                       </div>
                     </div>
                   </div>
@@ -159,10 +148,7 @@ export default function Onboarding() {
                       <span className="font-medium">{Math.round(subsidyProgress)}%</span>
                     </div>
                     <div className="w-full h-3 bg-white/20 rounded-full overflow-hidden border border-white/10">
-                      <div
-                        className="h-full bg-gradient-to-r from-accent-500 via-accent-400 to-orange-300 rounded-full shadow-inner transition-all duration-700 relative"
-                        style={{ width: `${subsidyProgress}%` }}
-                      >
+                      <div className="h-full bg-gradient-to-r from-accent-500 via-accent-400 to-orange-300 rounded-full shadow-inner transition-all duration-700 relative" style={{ width: `${subsidyProgress}%` }}>
                         <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-transparent" />
                       </div>
                     </div>
@@ -171,25 +157,20 @@ export default function Onboarding() {
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
                     <div className="text-xs text-white/80 flex items-center gap-1">
                       <CalendarDays size={11} />
-                      预计发放：<b className="text-white">{subsidy?.paidAt ? new Date(subsidy.paidAt).toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' }) : payDateStr}</b>
+                      {subsidy?.paidAt ? (
+                        <span>已于 <b className="text-white">{subsidy.paidAt.slice(0, 10)}</b> 发放</span>
+                      ) : (
+                        <span>达标后自动发放</span>
+                      )}
                     </div>
                     {subsidyProgress >= 100 && !subsidy?.paidAt ? (
-                      <button
-                        onClick={() => setShowWithdrawModal(true)}
-                        className="px-4 py-1.5 rounded-xl bg-white text-accent-600 text-xs font-bold shadow-md flex items-center gap-1 active:scale-95 transition-transform"
-                      >
-                        <Wallet size={12} />
-                        立即提现
+                      <button onClick={() => setShowWithdrawModal(true)} className="px-4 py-1.5 rounded-xl bg-white text-accent-600 text-xs font-bold shadow-md flex items-center gap-1 active:scale-95 transition-transform">
+                        <Wallet size={12} />立即提现
                       </button>
                     ) : subsidy?.paidAt ? (
-                      <span className="px-3 py-1 rounded-xl bg-success-500/90 text-xs font-bold shadow-md">
-                        ✓ 已发放
-                      </span>
+                      <span className="px-3 py-1 rounded-xl bg-success-500/90 text-xs font-bold shadow-md">已发放</span>
                     ) : (
-                      <span className="text-[10px] text-white/60 flex items-center gap-1">
-                        <Clock size={10} />
-                        倒计时中
-                      </span>
+                      <span className="text-[10px] text-white/60 flex items-center gap-1"><Clock size={10} />倒计时中</span>
                     )}
                   </div>
                 </div>
@@ -201,10 +182,7 @@ export default function Onboarding() {
                 </div>
                 <h3 className="font-bold text-lg mb-1">暂无入职记录</h3>
                 <p className="text-xs text-white/70 mb-4">完成面试后即可查看入职进度和补贴</p>
-                <button
-                  onClick={() => navigate('/worker/home')}
-                  className="px-5 py-2.5 rounded-xl bg-white text-accent-600 text-sm font-bold shadow-md active:scale-95 transition-transform"
-                >
+                <button onClick={() => navigate('/worker')} className="px-5 py-2.5 rounded-xl bg-white text-accent-600 text-sm font-bold shadow-md active:scale-95 transition-transform">
                   去找岗位
                 </button>
               </div>
@@ -218,7 +196,7 @@ export default function Onboarding() {
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
                   <span className="w-1 h-5 rounded-full bg-brand-500" />
-                  📋 入职确认步骤
+                  入职确认步骤
                 </h2>
                 <span className="text-[10px] text-brand-500 bg-brand-50 px-2 py-1 rounded-full font-bold">
                   {stepIndex + 1}/{onboardingSteps.length}
@@ -232,43 +210,20 @@ export default function Onboarding() {
                   return (
                     <div key={step.key} className="relative flex items-start gap-4 pb-5 last:pb-0">
                       {idx < onboardingSteps.length - 1 && (
-                        <div
-                          className={cn(
-                            'absolute left-[17px] top-10 w-0.5 h-[calc(100%-12px)]',
-                            done ? 'bg-gradient-to-b from-success-400 to-success-500' : 'bg-gray-100'
-                          )}
-                        />
+                        <div className={cn('absolute left-[17px] top-10 w-0.5 h-[calc(100%-12px)]', done ? 'bg-gradient-to-b from-success-400 to-success-500' : 'bg-gray-100')} />
                       )}
-
-                      <div
-                        onClick={() => handleStepAction(idx)}
-                        className={cn(
-                          'w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 relative z-10 transition-all cursor-pointer',
-                          done && 'bg-gradient-to-br from-success-400 to-success-500 text-white shadow-md shadow-success-500/30',
-                          current && 'bg-gradient-to-br from-accent-400 to-accent-500 text-white shadow-md shadow-accent-500/30 ring-4 ring-accent-100 animate-pulse',
-                          !done && !current && 'bg-gray-100 text-gray-400'
-                        )}
-                      >
+                      <div onClick={() => handleStepAction(idx)} className={cn('w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 relative z-10 transition-all cursor-pointer', done && 'bg-gradient-to-br from-success-400 to-success-500 text-white shadow-md shadow-success-500/30', current && 'bg-gradient-to-br from-accent-400 to-accent-500 text-white shadow-md shadow-accent-500/30 ring-4 ring-accent-100 animate-pulse', !done && !current && 'bg-gray-100 text-gray-400')}>
                         {done ? <CheckCircle2 size={18} /> : <step.icon size={16} />}
                       </div>
-
                       <div className="flex-1 min-w-0 pt-1">
                         <div className="flex items-center justify-between gap-2 mb-0.5">
-                          <h3 className={cn(
-                            'font-bold text-sm',
-                            done ? 'text-success-600' : current ? 'text-gray-900' : 'text-gray-400'
-                          )}>
+                          <h3 className={cn('font-bold text-sm', done ? 'text-success-600' : current ? 'text-gray-900' : 'text-gray-400')}>
                             {step.label}
-                            {done && <span className="ml-1 text-[10px] font-normal">✓ 已完成</span>}
+                            {done && <span className="ml-1 text-[10px] font-normal">已完成</span>}
                             {current && <span className="ml-1 text-[10px] font-normal text-accent-500 bg-accent-50 px-1.5 py-0.5 rounded-full">进行中</span>}
                           </h3>
                         </div>
-                        <p className={cn(
-                          'text-xs leading-relaxed',
-                          done || current ? 'text-gray-500' : 'text-gray-300'
-                        )}>
-                          {step.desc}
-                        </p>
+                        <p className={cn('text-xs leading-relaxed', done || current ? 'text-gray-500' : 'text-gray-300')}>{step.desc}</p>
                       </div>
                     </div>
                   );
@@ -283,7 +238,7 @@ export default function Onboarding() {
             <div className="px-5 pt-5 pb-3 flex items-center justify-between">
               <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
                 <span className="w-1 h-5 rounded-full bg-purple-500" />
-                💰 补贴 &amp; 奖金概览
+                补贴 &amp; 奖金概览
               </h2>
             </div>
 
@@ -294,10 +249,10 @@ export default function Onboarding() {
                   <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">稳岗补贴</span>
                 </div>
                 <div className="text-2xl font-black text-accent-600 tabular-nums">
-                  ¥{subsidyProgress >= 100 ? (subsidy?.amount || 0).toLocaleString() : '---'}
+                  ¥{subsidyProgress >= 100 ? (subsidy?.amount ?? 0).toLocaleString() : (subsidy?.amount ?? 0).toLocaleString()}
                 </div>
                 <div className="text-[10px] text-gray-500 mt-1">
-                  {subsidyProgress >= 100 ? '已达成，可提现' : `还差${remainingDays}天`}
+                  {subsidyProgress >= 100 ? '已达标' : `还差${remainingDays}天`}
                 </div>
               </div>
               <div className="bg-gradient-to-br from-success-50 to-emerald-50 rounded-2xl p-4 border border-success-100">
@@ -306,13 +261,23 @@ export default function Onboarding() {
                   <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">推荐奖金</span>
                 </div>
                 <div className="text-2xl font-black text-success-600 tabular-nums">
-                  ¥0
+                  ¥{(referralBonus?.amount ?? 0).toLocaleString()}
                 </div>
                 <div className="text-[10px] text-gray-500 mt-1">
-                  暂无推荐记录
+                  {referralBonus ? (referralBonus.triggered ? '已触发' : '未触发') : '暂无推荐记录'}
                 </div>
+                {referralBonus?.paidAt && <div className="text-[10px] text-success-600 mt-0.5">已于 {referralBonus.paidAt.slice(0, 10)} 发放</div>}
               </div>
             </div>
+
+            {serviceFee !== undefined && serviceFee > 0 && (
+              <div className="px-5 pb-5">
+                <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between">
+                  <span className="text-xs text-gray-500">服务费</span>
+                  <span className="text-sm font-bold text-gray-700">¥{serviceFee.toLocaleString()}</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -321,21 +286,36 @@ export default function Onboarding() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
                 <span className="w-1 h-5 rounded-full bg-success-500" />
-                🤝 推荐奖金记录
+                推荐奖金记录
               </h2>
               <button className="text-xs text-brand-500 font-medium bg-brand-50 px-3 py-1 rounded-full flex items-center gap-1 hover:bg-brand-100 transition-colors">
-                <Share2 size={11} />
-                去推荐
+                <Share2 size={11} />去推荐
               </button>
             </div>
 
-            <div className="py-10 text-center">
-              <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gray-50 flex items-center justify-center">
-                <Users size={26} className="text-gray-300" />
+            {referralBonus ? (
+              <div className="bg-gradient-to-br from-success-50 to-emerald-50 rounded-2xl p-4 border border-success-100">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-gray-900">推荐奖金</span>
+                  <span className="text-lg font-black text-success-600">¥{referralBonus.amount.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-gray-500">
+                  <span>触发状态：{referralBonus.triggered ? '已触发' : '未触发'}</span>
+                  {referralBonus.paidAt && <span>发放日期：{referralBonus.paidAt.slice(0, 10)}</span>}
+                </div>
+                {referralBonus.referrerName && (
+                  <div className="text-xs text-gray-400 mt-1">推荐人：{referralBonus.referrerName}</div>
+                )}
               </div>
-              <p className="text-sm text-gray-500">暂无推荐记录</p>
-              <p className="text-xs text-gray-400 mt-1">推荐工友入职即可获得现金奖励</p>
-            </div>
+            ) : (
+              <div className="py-10 text-center">
+                <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gray-50 flex items-center justify-center">
+                  <Users size={26} className="text-gray-300" />
+                </div>
+                <p className="text-sm text-gray-500">暂无推荐记录</p>
+                <p className="text-xs text-gray-400 mt-1">推荐工友入职即可获得现金奖励</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -351,7 +331,7 @@ export default function Onboarding() {
             )}
           >
             <Wallet size={20} />
-            {subsidyProgress >= 100 ? `申请提现 ¥${(subsidy?.amount || 0).toLocaleString()}` : `还需在岗 ${remainingDays} 天可提现`}
+            {subsidyProgress >= 100 ? `申请提现 ¥${(subsidy?.amount ?? 0).toLocaleString()}` : `还需在岗 ${remainingDays} 天可提现`}
             {subsidyProgress >= 100 && <ArrowUpRight size={18} />}
           </button>
 
@@ -365,25 +345,20 @@ export default function Onboarding() {
       </div>
 
       {showWithdrawModal && (
-        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white w-full sm:max-w-md sm:rounded-3xl rounded-t-3xl p-6 animate-in slide-in-from-bottom-10 fade-in duration-300">
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white w-full sm:max-w-md sm:rounded-3xl rounded-t-3xl p-6">
             {!withdrawSuccess ? (
               <>
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent-400 to-accent-500 flex items-center justify-center shadow-xl shadow-accent-500/30">
                   <Wallet size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-center text-gray-900 mb-1">确认提现补贴？</h3>
-                <p className="text-center text-sm text-gray-500 mb-5">
-                  提现金额将在 <b className="text-gray-700">1-3个工作日</b> 内到账
-                </p>
+                <p className="text-center text-sm text-gray-500 mb-5">提现金额将在1-3个工作日内到账</p>
 
                 <div className="bg-gradient-to-br from-accent-50 to-orange-50 rounded-2xl p-5 mb-5 border border-accent-100">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs text-gray-500 font-medium">提现金额</span>
-                    <Sparkles size={14} className="text-accent-500" />
-                  </div>
+                  <div className="text-xs text-gray-500 font-medium mb-2">提现金额</div>
                   <div className="text-5xl font-black text-center text-accent-600 tabular-nums tracking-tight mb-3">
-                    ¥{(subsidy?.amount || 0).toLocaleString()}
+                    ¥{(subsidy?.amount ?? 0).toLocaleString()}
                   </div>
                   <div className="flex items-center justify-between text-xs pt-3 border-t border-accent-100/50 text-gray-500">
                     <span>收款账户</span>
@@ -392,66 +367,23 @@ export default function Onboarding() {
                 </div>
 
                 <div className="flex gap-3">
-                  <button
-                    onClick={() => setShowWithdrawModal(false)}
-                    className="flex-1 py-3.5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-colors"
-                  >
-                    取消
-                  </button>
-                  <button
-                    onClick={handleWithdraw}
-                    disabled={withdrawProcessing}
-                    className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-accent-500 to-accent-400 text-white font-bold shadow-lg shadow-accent-500/30 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2"
-                  >
-                    {withdrawProcessing ? (
-                      <><Loader2 size={16} className="animate-spin" />处理中...</>
-                    ) : (
-                      <>✓ 确认提现</>
-                    )}
+                  <button onClick={() => setShowWithdrawModal(false)} className="flex-1 py-3.5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-colors">取消</button>
+                  <button onClick={handleWithdraw} disabled={withdrawProcessing} className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-accent-500 to-accent-400 text-white font-bold shadow-lg shadow-accent-500/30 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                    {withdrawProcessing ? <><Loader2 size={16} className="animate-spin" />处理中...</> : <>确认提现</>}
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <div className="w-20 h-20 mx-auto mb-5 rounded-full bg-gradient-to-br from-success-400 to-success-600 flex items-center justify-center shadow-xl shadow-success-500/30 animate-in zoom-in-95 fade-in duration-500">
+                <div className="w-20 h-20 mx-auto mb-5 rounded-full bg-gradient-to-br from-success-400 to-success-600 flex items-center justify-center shadow-xl shadow-success-500/30">
                   <CheckCircle2 size={48} className="text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-center text-gray-900 mb-2">🎉 提现申请已提交！</h3>
+                <h3 className="text-2xl font-bold text-center text-gray-900 mb-2">提现申请已提交！</h3>
                 <p className="text-center text-sm text-gray-500 leading-relaxed mb-6">
-                  补贴金额 <b className="text-accent-600">¥{(subsidy?.amount || 0).toLocaleString()}</b><br/>
+                  补贴金额 <b className="text-accent-600">¥{(subsidy?.amount ?? 0).toLocaleString()}</b><br/>
                   将在1-3个工作日内到账至您的银行卡
                 </p>
-                <div className="space-y-2.5 mb-6">
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-brand-50 border border-brand-100">
-                    <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center flex-shrink-0">
-                      <Clock size={16} className="text-white" />
-                    </div>
-                    <div className="text-xs text-gray-600">
-                      <div className="font-bold text-gray-800">预计到账时间</div>
-                      <div className="tabular-nums">
-                        {new Date(Date.now() + 86400000 * 2).toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' })} 前
-                      </div>
-                    </div>
-                    <ChevronRight size={16} className="ml-auto text-gray-300" />
-                  </div>
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-success-50 border border-success-100">
-                    <div className="w-8 h-8 rounded-lg bg-success-500 flex items-center justify-center flex-shrink-0">
-                      <Coins size={16} className="text-white" />
-                    </div>
-                    <div className="text-xs text-gray-600">
-                      <div className="font-bold text-gray-800">到账后可查看明细</div>
-                      <div>可在&quot;我的钱包&quot;查看完整流水</div>
-                    </div>
-                    <ChevronRight size={16} className="ml-auto text-gray-300" />
-                  </div>
-                </div>
-                <button
-                  onClick={() => {
-                    setShowWithdrawModal(false);
-                    setWithdrawSuccess(false);
-                  }}
-                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold shadow-lg shadow-brand-500/25 active:scale-[0.98] transition-all"
-                >
+                <button onClick={() => { setShowWithdrawModal(false); setWithdrawSuccess(false); }} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold shadow-lg shadow-brand-500/25 active:scale-[0.98] transition-all">
                   我知道了
                 </button>
               </>

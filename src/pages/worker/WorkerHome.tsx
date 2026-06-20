@@ -2,24 +2,27 @@ import { useState, useEffect } from 'react';
 import {
   MapPin,
   Search,
-  SlidersHorizontal,
+  RefreshCw,
   Calendar,
   FileText,
   TrendingUp,
   Gift,
-  RefreshCw,
   Loader2,
   Filter,
   ChevronDown,
   Bell,
   User,
-  Sparkles
+  Sparkles,
+  ShieldCheck,
+  ShieldAlert,
+  Star,
+  BadgeCheck
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { get } from '@/lib/api';
 import JobCard from '@/components/JobCard';
-import type { Job, Factory, Worker } from '@shared/types';
+import type { Job, Factory, Worker, WorkerStatus } from '@shared/types';
 
 type SortType = 'distance' | 'salary' | 'rating';
 
@@ -29,8 +32,17 @@ interface MatchedJob extends Job {
 
 const WORKER_ID = 'w-001';
 
+const workerStatusMap: Record<WorkerStatus, { text: string; color: string; bg: string }> = {
+  idle: { text: '待业中', color: 'text-warning-600', bg: 'bg-warning-50' },
+  interviewing: { text: '面试中', color: 'text-brand-600', bg: 'bg-brand-50' },
+  onboarding: { text: '入职中', color: 'text-accent-600', bg: 'bg-accent-50' },
+  employed: { text: '在职中', color: 'text-success-600', bg: 'bg-success-50' },
+  resigned: { text: '已离职', color: 'text-gray-600', bg: 'bg-gray-50' },
+};
+
 export default function WorkerHome() {
   const navigate = useNavigate();
+  const [worker, setWorker] = useState<Worker | null>(null);
   const [location, setLocation] = useState('定位中...');
   const [isLocating, setIsLocating] = useState(false);
   const [jobs, setJobs] = useState<MatchedJob[]>([]);
@@ -48,9 +60,9 @@ export default function WorkerHome() {
   ];
 
   const quickActions = [
-    { icon: Calendar, label: '一键预约', color: 'bg-accent-500', desc: '快速预约面试', action: () => navigate('/worker/interview-progress') },
+    { icon: Calendar, label: '一键预约', color: 'bg-accent-500', desc: '快速预约面试', action: () => navigate('/worker/interview') },
     { icon: FileText, label: '我的简历', color: 'bg-brand-500', desc: '完善求职信息', action: () => navigate('/worker/profile') },
-    { icon: TrendingUp, label: '入职进度', color: 'bg-success-500', desc: '查看面试状态', action: () => navigate('/worker/interview-progress') },
+    { icon: TrendingUp, label: '入职进度', color: 'bg-success-500', desc: '查看面试状态', action: () => navigate('/worker/interview') },
     { icon: Gift, label: '补贴中心', color: 'bg-purple-500', desc: '稳岗·推荐奖金', action: () => navigate('/worker/onboarding') },
   ];
 
@@ -61,15 +73,16 @@ export default function WorkerHome() {
       let lat = 31.3;
       let lng = 120.6;
       let regionName = '苏州工业园';
-      
+
       if (workerRes.success && workerRes.data) {
+        setWorker(workerRes.data);
         lat = workerRes.data.currentLocation.lat;
         lng = workerRes.data.currentLocation.lng;
         regionName = workerRes.data.currentLocation.region;
       }
-      
+
       setLocation(`${regionName}·周边`);
-      
+
       const res = await get<MatchedJob[]>(`/jobs/match?lat=${lat}&lng=${lng}&radius=50`);
       if (res.success && res.data) {
         setJobs(res.data);
@@ -113,6 +126,8 @@ export default function WorkerHome() {
     return true;
   });
 
+  const ws = worker ? workerStatusMap[worker.status] : null;
+
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
       <div className="max-w-md mx-auto">
@@ -120,38 +135,68 @@ export default function WorkerHome() {
           <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl" />
           <div className="absolute -bottom-20 -left-10 w-56 h-56 bg-accent-400/20 rounded-full blur-3xl" />
 
-          <div className="relative flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/30">
-                <Sparkles size={20} />
-              </div>
-              <div>
-                <div className="text-xs text-white/70">早上好</div>
-                <div className="font-semibold">找一份好工作 ✨</div>
+          {worker && (
+            <div className="relative bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/30">
+                  <User size={22} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="font-bold text-lg truncate">{worker.name}</span>
+                    {ws && (
+                      <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-bold', ws.bg, ws.color)}>
+                        {ws.text}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-white/80">
+                    <span className="flex items-center gap-1">
+                      <Star size={11} className="text-warning-300 fill-warning-300" />
+                      信用分 <b className="text-white">{worker.creditScore}</b>
+                    </span>
+                    <span className="flex items-center gap-1">
+                      {worker.idCardVerified ? (
+                        <><BadgeCheck size={12} />已实名</>
+                      ) : (
+                        <><ShieldAlert size={12} />未实名</>
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => navigate('/worker/profile')}
+                  className="px-3 py-1.5 bg-white/20 rounded-lg text-xs font-medium hover:bg-white/30 transition-colors active:scale-95"
+                >
+                  查看档案
+                </button>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/30 relative transition-transform active:scale-95">
-                <Bell size={18} />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent-400 rounded-full" />
-              </button>
-              <button
-                onClick={() => navigate('/worker/profile')}
-                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/30 transition-transform active:scale-95"
-              >
-                <User size={18} />
+          )}
+
+          <div className="relative flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/30">
+                <Sparkles size={16} />
+              </div>
+              <span className="font-semibold text-sm">找一份好工作 ✨</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button className="w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center border border-white/30 relative transition-transform active:scale-95">
+                <Bell size={16} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-accent-400 rounded-full" />
               </button>
             </div>
           </div>
 
-          <div className="relative bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition-colors">
+          <div className="relative bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
                   <MapPin size={22} className="text-accent-300" />
                 </div>
                 <div>
-                  <div className="text-xs text-white/70 mb-1">📍 当前定位</div>
+                  <div className="text-xs text-white/70 mb-1">当前定位</div>
                   <div className="font-semibold text-lg leading-tight">{location}</div>
                   <div className="text-xs text-white/60 mt-1">覆盖周边50km热门厂区</div>
                 </div>
@@ -229,7 +274,7 @@ export default function WorkerHome() {
             </div>
 
             {showFilter && (
-              <div className="pt-3 border-t border-gray-100 space-y-3 animate-in slide-in-from-top-2 fade-in duration-200">
+              <div className="pt-3 border-t border-gray-100 space-y-3">
                 <div>
                   <div className="text-xs font-medium text-gray-500 mb-2">选择地区</div>
                   <div className="flex flex-wrap gap-2">
@@ -250,13 +295,13 @@ export default function WorkerHome() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button 
+                  <button
                     onClick={() => { setKeyword(''); setSalaryMin(''); setRegion('全部'); }}
                     className="flex-1 py-2 rounded-xl text-sm text-gray-500 bg-gray-50 hover:bg-gray-100 transition-colors"
                   >
                     重置
                   </button>
-                  <button 
+                  <button
                     onClick={fetchJobs}
                     className="flex-1 py-2 rounded-xl text-sm text-white bg-brand-500 hover:bg-brand-600 transition-colors shadow-sm"
                   >
@@ -270,7 +315,7 @@ export default function WorkerHome() {
 
         <div className="px-4 mt-4">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-900">🔥 热门岗位</h2>
+            <h2 className="text-lg font-bold text-gray-900">热门岗位</h2>
             <button
               onClick={fetchJobs}
               className="text-xs text-brand-500 font-medium flex items-center gap-1 hover:text-brand-600"
