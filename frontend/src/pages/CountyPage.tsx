@@ -53,12 +53,13 @@ const CountyPage: React.FC = () => {
   };
 
   const loadData = async () => {
+    if (!id) return;
     setLoading(true);
     try {
       const [statsRes, jobsRes, gradsRes, schoolsRes, policiesRes] = await Promise.all([
         apiEndpoints.stats.getSummary({ admin_division_id: id }) as Promise<ApiResponse>,
         apiEndpoints.jobs.getList({ admin_division_id: id, pageSize: 8 }) as Promise<ApiResponse>,
-        apiEndpoints.graduates.getList({ pageSize: 8 }) as Promise<ApiResponse>,
+        apiEndpoints.graduates.getList({ admin_division_id: id, pageSize: 8 }) as Promise<ApiResponse>,
         apiEndpoints.schools.getList({ admin_division_id: id }) as Promise<ApiResponse>,
         apiEndpoints.policies.getList({ admin_division_id: id, pageSize: 5 }) as Promise<ApiResponse>,
       ]);

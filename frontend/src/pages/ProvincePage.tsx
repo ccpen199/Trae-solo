@@ -28,16 +28,17 @@ const ProvincePage: React.FC = () => {
   }, [currentDivision]);
 
   const loadData = async () => {
+    if (!currentDivision?.id) return;
     setLoading(true);
     try {
       const [statsRes, jobsRes, companiesRes, fairsRes, policiesRes, zonesRes, prosperityRes] = await Promise.all([
-        apiEndpoints.stats.getSummary({ admin_division_id: currentDivision?.id }) as Promise<ApiResponse>,
-        apiEndpoints.jobs.getList({ pageSize: 8 }) as Promise<ApiResponse>,
-        apiEndpoints.companies.getList({ pageSize: 6 }) as Promise<ApiResponse>,
-        apiEndpoints.fairs.getList({ pageSize: 5, is_live: false }) as Promise<ApiResponse>,
-        apiEndpoints.policies.getList({ pageSize: 5 }) as Promise<ApiResponse>,
+        apiEndpoints.stats.getSummary({ admin_division_id: currentDivision.id }) as Promise<ApiResponse>,
+        apiEndpoints.jobs.getList({ admin_division_id: currentDivision.id, pageSize: 8 }) as Promise<ApiResponse>,
+        apiEndpoints.companies.getList({ admin_division_id: currentDivision.id, pageSize: 6 }) as Promise<ApiResponse>,
+        apiEndpoints.fairs.getList({ admin_division_id: currentDivision.id, pageSize: 5, is_live: false }) as Promise<ApiResponse>,
+        apiEndpoints.policies.getList({ admin_division_id: currentDivision.id, pageSize: 5 }) as Promise<ApiResponse>,
         apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
-        apiEndpoints.prosperity.getCurrent({ admin_division_id: currentDivision?.id, period_type: 'monthly' }) as Promise<ApiResponse>,
+        apiEndpoints.prosperity.getCurrent({ admin_division_id: currentDivision.id, period_type: 'monthly' }) as Promise<ApiResponse>,
       ]);
 
       setStats(statsRes.data);
@@ -56,13 +57,23 @@ const ProvincePage: React.FC = () => {
 
   const handleSearch = async (value: string) => {
     setKeyword(value);
-    const res = await apiEndpoints.jobs.getList({ keyword: value, industry_zone: selectedZone, pageSize: 8 }) as ApiResponse;
+    const res = await apiEndpoints.jobs.getList({
+      admin_division_id: currentDivision?.id,
+      keyword: value,
+      industry_zone: selectedZone,
+      pageSize: 8,
+    }) as ApiResponse;
     setJobs(res.data || []);
   };
 
   const handleZoneChange = async (value: string | undefined) => {
     setSelectedZone(value);
-    const res = await apiEndpoints.jobs.getList({ keyword, industry_zone: value, pageSize: 8 }) as ApiResponse;
+    const res = await apiEndpoints.jobs.getList({
+      admin_division_id: currentDivision?.id,
+      keyword,
+      industry_zone: value,
+      pageSize: 8,
+    }) as ApiResponse;
     setJobs(res.data || []);
   };
 

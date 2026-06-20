@@ -233,8 +233,11 @@ router.get('/fairs', (req, res) => {
   const params: any[] = [];
 
   if (admin_division_id) {
-    whereSql += ' AND admin_division_id = ?';
-    params.push(admin_division_id);
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
+      whereSql += ' AND f.admin_division_id IN (SELECT id FROM admin_divisions WHERE code LIKE ?)';
+      params.push(divisionPattern);
+    }
   }
   if (status) {
     whereSql += ' AND status = ?';
@@ -245,7 +248,7 @@ router.get('/fairs', (req, res) => {
     params.push(is_live === 'true' ? 1 : 0);
   }
 
-  const total = db.prepare(`SELECT COUNT(*) as count FROM job_fairs ${whereSql}`).get(...params) as { count: number };
+  const total = db.prepare(`SELECT COUNT(*) as count FROM job_fairs f ${whereSql}`).get(...params) as { count: number };
   const fairs = db.prepare(`
     SELECT f.*, d.name as division_name, d.full_path as division_path
     FROM job_fairs f
@@ -276,26 +279,33 @@ router.get('/fairs/:id', (req, res) => {
 
 router.get('/graduates', (req, res) => {
   const db = getDb();
-  const { page = 1, pageSize = 10, school, major, employment_status } = req.query;
+  const { page = 1, pageSize = 10, school, major, employment_status, admin_division_id } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
-  let whereSql = 'WHERE verification_status = ?';
+  let whereSql = 'WHERE g.verification_status = ?';
   const params: any[] = ['verified'];
 
+  if (admin_division_id) {
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
+      whereSql += ' AND g.admin_division_id IN (SELECT id FROM admin_divisions WHERE code LIKE ?)';
+      params.push(divisionPattern);
+    }
+  }
   if (school) {
-    whereSql += ' AND school = ?';
+    whereSql += ' AND g.school = ?';
     params.push(school);
   }
   if (major) {
-    whereSql += ' AND major = ?';
+    whereSql += ' AND g.major = ?';
     params.push(major);
   }
   if (employment_status) {
-    whereSql += ' AND employment_status = ?';
+    whereSql += ' AND g.employment_status = ?';
     params.push(employment_status);
   }
 
-  const total = db.prepare(`SELECT COUNT(*) as count FROM graduates ${whereSql}`).get(...params) as { count: number };
+  const total = db.prepare(`SELECT COUNT(*) as count FROM graduates g ${whereSql}`).get(...params) as { count: number };
   const graduates = db.prepare(`
     SELECT g.*, d.name as division_name
     FROM graduates g
@@ -349,8 +359,11 @@ router.get('/policies', (req, res) => {
   const params: any[] = [];
 
   if (admin_division_id) {
-    whereSql += ' AND admin_division_id = ?';
-    params.push(admin_division_id);
+    const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
+    if (divisionPattern) {
+      whereSql += ' AND p.admin_division_id IN (SELECT id FROM admin_divisions WHERE code LIKE ?)';
+      params.push(divisionPattern);
+    }
   }
   if (policy_type) {
     whereSql += ' AND policy_type = ?';
@@ -361,7 +374,7 @@ router.get('/policies', (req, res) => {
     params.push(target_group);
   }
 
-  const total = db.prepare(`SELECT COUNT(*) as count FROM policies ${whereSql}`).get(...params) as { count: number };
+  const total = db.prepare(`SELECT COUNT(*) as count FROM policies p ${whereSql}`).get(...params) as { count: number };
   const policies = db.prepare(`
     SELECT p.*, d.name as division_name
     FROM policies p
@@ -429,8 +442,8 @@ router.get('/prosperity/ranking', (req, res) => {
   const rankings = cities.map(city => {
     const index = getLatestProsperityIndex(city.id, period_type as any);
     return {
-      city_id: city.id,
-      city_name: city.name,
+      division_id: city.id,
+      division_name: city.name,
       prosperity_score: index?.prosperity_score || 0,
       total_jobs: index?.total_jobs || 0,
       total_applications: index?.total_applications || 0,
@@ -533,10 +546,18 @@ router.get('/schools', (req, res) => {
     LIMIT ? OFFSET ?
   `).all(...params, Number(pageSize), offset);
 
-  const result = schools.map(s => ({
-    ...s,
-    majors: JSON.parse(s.majors || '[]'),
-  }));
+  const result = schools.map((s: any) => {
+    const majors = JSON.parse(s.majors || '[]');
+    const studentCount = db.prepare('SELECT COUNT(*) as count FROM graduates WHERE school = ?').get(s.name) as { count: number };
+
+    return {
+      ...s,
+      majors,
+      key_majors: majors.join(','),
+      location_name: s.division_name,
+      student_count: studentCount.count,
+    };
+  });
 
   res.json({ success: true, data: result, total: total.count });
 });
@@ -624,7 +645,13 @@ router.get('/stats/summary', (req, res) => {
     const divisionPattern = getDivisionCodePattern(db, String(admin_division_id));
     if (divisionPattern) {
       divisionFilter = 'AND d.code LIKE ?';
-      params.push(divisionPattern);
+      params.push(
+        divisionPattern,
+        divisionPattern,
+        divisionPattern,
+        divisionPattern,
+        divisionPattern
+      );
     }
   }
 

@@ -18,6 +18,7 @@ const CityPage: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [fairs, setFairs] = useState<any[]>([]);
   const [liveFairs, setLiveFairs] = useState<any[]>([]);
+  const [industryZones, setIndustryZones] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [selectedZone, setSelectedZone] = useState<string | undefined>();
@@ -58,14 +59,16 @@ const CityPage: React.FC = () => {
   };
 
   const loadData = async () => {
+    if (!id) return;
     setLoading(true);
     try {
-      const [statsRes, jobsRes, fairsRes, liveFairsRes, prosperityRes] = await Promise.all([
+      const [statsRes, jobsRes, fairsRes, liveFairsRes, prosperityRes, zonesRes] = await Promise.all([
         apiEndpoints.stats.getSummary({ admin_division_id: id }) as Promise<ApiResponse>,
         apiEndpoints.jobs.getList({ admin_division_id: id, pageSize: 10 }) as Promise<ApiResponse>,
         apiEndpoints.fairs.getList({ admin_division_id: id, pageSize: 5 }) as Promise<ApiResponse>,
         apiEndpoints.fairs.getList({ admin_division_id: id, is_live: true }) as Promise<ApiResponse>,
         apiEndpoints.prosperity.getCurrent({ admin_division_id: id, period_type: 'monthly' }) as Promise<ApiResponse>,
+        apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
       ]);
 
       setStats(statsRes.data);
@@ -73,6 +76,7 @@ const CityPage: React.FC = () => {
       setFairs(fairsRes.data || []);
       setLiveFairs(liveFairsRes.data || []);
       setProsperity(prosperityRes.data);
+      setIndustryZones(zonesRes.data || []);
     } catch (error) {
       console.error('加载数据失败:', error);
     } finally {
@@ -269,10 +273,9 @@ const CityPage: React.FC = () => {
                 onChange={handleZoneChange}
                 value={selectedZone}
               >
-                <Option value="dianzhong_manufacturing">滇中制造</Option>
-                <Option value="puer_tea">普洱茶业</Option>
-                <Option value="xishuangbanna_tourism">西双版纳旅游</Option>
-                <Option value="kunming_it">昆明信息产业</Option>
+                {industryZones.map(zone => (
+                  <Option key={zone.key} value={zone.key}>{zone.label}</Option>
+                ))}
               </Select>
             </Space>
             <Table

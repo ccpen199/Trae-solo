@@ -44,10 +44,16 @@ export function calculateProsperityIndex(
     FROM jobs 
     WHERE location_id IN (${placeholders}) 
       AND status = 'published'
-      AND created_at >= ? AND created_at <= ?
-  `).get([...descendantIds, periodStart.toISOString(), periodEnd.toISOString()]) as { total: number; applications: number; avg_salary: number };
+  `).get(descendantIds) as { total: number; applications: number; avg_salary: number };
 
-  const prevPeriodStart = new Date(periodStart.getTime() - (periodEnd.getTime() - periodStart.getTime()));
+  const newJobsInPeriod = db.prepare(`
+    SELECT COUNT(*) as total
+    FROM jobs 
+    WHERE location_id IN (${placeholders}) 
+      AND status = 'published'
+      AND publish_date >= ? AND publish_date <= ?
+  `).get([...descendantIds, periodStart.toISOString(), periodEnd.toISOString()]) as { total: number };
+
   const prevJobsResult = db.prepare(`
     SELECT 
       COUNT(*) as total,
@@ -55,8 +61,8 @@ export function calculateProsperityIndex(
     FROM jobs 
     WHERE location_id IN (${placeholders}) 
       AND status = 'published'
-      AND created_at >= ? AND created_at <= ?
-  `).get([...descendantIds, prevPeriodStart.toISOString(), periodStart.toISOString()]) as { total: number; applications: number };
+      AND publish_date < ?
+  `).get([...descendantIds, periodStart.toISOString()]) as { total: number; applications: number };
 
   const jobGrowthRate = prevJobsResult.total > 0 
     ? ((jobsResult.total - prevJobsResult.total) / prevJobsResult.total) * 100 
@@ -71,8 +77,7 @@ export function calculateProsperityIndex(
     WHERE location_id IN (${placeholders}) 
       AND status = 'published'
       AND salary_min IS NOT NULL
-      AND created_at >= ? AND created_at <= ?
-  `).all([...descendantIds, periodStart.toISOString(), periodEnd.toISOString()]) as { salary_min: number; salary_max: number }[];
+  `).all(descendantIds) as { salary_min: number; salary_max: number }[];
 
   const allSalaries = salaries.flatMap(s => [s.salary_min, s.salary_max || s.salary_min]).filter(s => s > 0);
   allSalaries.sort((a, b) => a - b);
@@ -88,8 +93,7 @@ export function calculateProsperityIndex(
       WHERE location_id IN (${placeholders}) 
         AND status = 'published'
         AND industry_zone = ?
-        AND created_at >= ? AND created_at <= ?
-    `).get([...descendantIds, zone, periodStart.toISOString(), periodEnd.toISOString()]) as { jobs: number; applications: number };
+    `).get([...descendantIds, zone]) as { jobs: number; applications: number };
     industryZones[zone] = { jobs: result.jobs, applications: result.applications };
   });
 

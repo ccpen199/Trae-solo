@@ -3,12 +3,14 @@ import { Card, Row, Col, Table, Select, Button, Space, Statistic, Tag, Tabs, Too
 import { Line, Bar, Pie } from '@ant-design/charts';
 import { ReloadOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { apiEndpoints, ApiResponse } from '../api';
+import { useAppStore } from '../store';
 import { formatDate, getIndustryZoneLabel, getIndustryZoneClass, getProsperityLevelClass } from '../utils';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
 
 const ProsperityPage: React.FC = () => {
+  const { currentDivision } = useAppStore();
   const [currentIndex, setCurrentIndex] = useState<any>(null);
   const [historyData, setHistoryData] = useState<any[]>([]);
   const [rankingData, setRankingData] = useState<any[]>([]);
@@ -16,15 +18,18 @@ const ProsperityPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadData();
-  }, [periodType]);
+    if (currentDivision?.id) {
+      loadData();
+    }
+  }, [periodType, currentDivision]);
 
   const loadData = async () => {
+    if (!currentDivision?.id) return;
     setLoading(true);
     try {
       const [indexRes, historyRes, rankingRes] = await Promise.all([
-        apiEndpoints.prosperity.getCurrent({ admin_division_id: 'prov_yunnan', period_type: periodType }) as Promise<ApiResponse>,
-        apiEndpoints.prosperity.getHistory({ admin_division_id: 'prov_yunnan', period_type: periodType, limit: 12 }) as Promise<ApiResponse>,
+        apiEndpoints.prosperity.getCurrent({ admin_division_id: currentDivision.id, period_type: periodType }) as Promise<ApiResponse>,
+        apiEndpoints.prosperity.getHistory({ admin_division_id: currentDivision.id, period_type: periodType, limit: 12 }) as Promise<ApiResponse>,
         apiEndpoints.prosperity.getRanking({ period_type: periodType, limit: 16 }) as Promise<ApiResponse>,
       ]);
 

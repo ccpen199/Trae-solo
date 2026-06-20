@@ -52,6 +52,8 @@ const App: React.FC = () => {
           navigate(`/school/${res.data.related_id}`);
         } else if (res.data.role === 'company') {
           navigate(`/company-rpo`);
+        } else if (res.data.role === 'admin' || res.data.role === 'government') {
+          navigate('/province');
         }
       } else {
         message.error(res.message || '登录失败');
