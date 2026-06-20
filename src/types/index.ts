@@ -32,6 +32,7 @@ export interface Video {
   likes: number;
   subtitles?: Subtitle[];
   aiKeywords?: string[];
+  score?: number;
 }
 
 export interface Subtitle {

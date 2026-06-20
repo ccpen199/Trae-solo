@@ -1,12 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Search, Sparkles, Play, MapPin, Briefcase, TrendingUp, Video, Users, X } from 'lucide-react';
 import { companies, jobs, jobSeekers, interestTags } from '../data/mockData';
+import { useApp } from '../context/AppContext';
 
 const SearchPage = () => {
+  const location = useLocation();
+  const { addIndustryInterest } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState<'all' | 'videos' | 'jobs' | 'companies' | 'seekers'>('all');
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [activeSearch, setActiveSearch] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q');
+    if (q) {
+      setSearchTerm(q);
+      setActiveSearch(q);
+      setShowSuggestions(false);
+      addIndustryInterest(q);
+    }
+  }, [location.search, addIndustryInterest]);
 
   const hotSearches = ['咖啡师', '前端开发', '健身教练', '花艺师', '运营专员', 'UI设计', '产品经理', '兼职'];
 

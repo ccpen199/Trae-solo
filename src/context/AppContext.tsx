@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
-import { companies, jobs, jobSeekers } from '../data/mockData';
-import { Video, Job, Company, JobSeeker } from '../types';
+import { companies, jobs } from '../data/mockData';
+import { Video, Job } from '../types';
 
 interface UserPreferences {
   industryInterests: string[];

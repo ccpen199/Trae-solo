@@ -2,19 +2,21 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   MapPin, Play, Heart, Share2,
-  MessageSquare, BookOpen, Users, Briefcase
+  MessageSquare, BookOpen, Users, Briefcase,
+  Shield, CheckCircle, Map as MapIcon, FileText, Sparkles
 } from 'lucide-react';
 import { companies } from '../data/mockData';
 import { Video, Job } from '../types';
+import { useApp } from '../context/AppContext';
 
 const CompanyDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const company = companies.find(c => c.id === id);
+  const { isCompanyFollowed, toggleFollowCompany, isVideoLiked, isVideoBookmarked, markVideoWatched } = useApp();
 
   const [activeTab, setActiveTab] = useState('videos');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  const [isFollowing, setIsFollowing] = useState(false);
 
   if (!company) {
     return (
@@ -23,6 +25,8 @@ const CompanyDetailPage = () => {
       </div>
     );
   }
+
+  const isFollowing = isCompanyFollowed(company.id);
 
   const formatNumber = (num: number) => {
     if (num >= 10000) return (num / 10000).toFixed(1) + 'w';
@@ -100,7 +104,7 @@ const CompanyDetailPage = () => {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => setIsFollowing(!isFollowing)}
+                onClick={() => toggleFollowCompany(company.id)}
                 className={`px-5 py-2.5 rounded-full font-medium transition-all ${
                   isFollowing
                     ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -140,10 +144,13 @@ const CompanyDetailPage = () => {
             {activeTab === 'videos' && (
               <div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {company.videos.map(video => (
+                  {company.videos.map(video => {
+                    const liked = isVideoLiked(video.id);
+                    const bookmarked = isVideoBookmarked(video.id);
+                    return (
                     <div
                       key={video.id}
-                      onClick={() => setSelectedVideo(video)}
+                      onClick={() => { markVideoWatched(video.id); setSelectedVideo(video); }}
                       className="relative aspect-[9/16] rounded-xl overflow-hidden cursor-pointer group"
                     >
                       <img
@@ -157,6 +164,10 @@ const CompanyDetailPage = () => {
                           <Play className="w-6 h-6 text-white ml-0.5" fill="white" />
                         </div>
                       </div>
+                      <div className="absolute top-2 left-2 flex gap-1">
+                        {liked && <div className="w-6 h-6 bg-red-500/90 rounded-full flex items-center justify-center"><Heart className="w-3.5 h-3.5 text-white" fill="white" /></div>}
+                        {bookmarked && <div className="w-6 h-6 bg-amber-500/90 rounded-full flex items-center justify-center"><Sparkles className="w-3.5 h-3.5 text-white" /></div>}
+                      </div>
                       <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
                         <p className="text-white text-sm font-medium line-clamp-1">{video.title}</p>
                         <div className="flex items-center gap-2 mt-1 text-xs text-white/70">
@@ -169,7 +180,7 @@ const CompanyDetailPage = () => {
                         {video.type === 'office' ? '环境' : video.type === 'team' ? '团队' : video.type === 'job' ? '岗位' : '介绍'}
                       </div>
                     </div>
-                  ))}
+                  );})}
                 </div>
               </div>
             )}
@@ -202,6 +213,42 @@ const CompanyDetailPage = () => {
             {activeTab === 'about' && (
               <div className="space-y-6">
                 <div>
+                  <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-primary-500" />
+                    企业真实性核验
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        <span className="font-medium text-gray-800">工商信息</span>
+                      </div>
+                      <p className="text-sm text-gray-600">营业执照已核验，统一社会信用代码匹配</p>
+                      <p className="text-xs text-gray-400 mt-1">核验日期 2024-09-15</p>
+                    </div>
+                    <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        <span className="font-medium text-gray-800">办公地址</span>
+                      </div>
+                      <p className="text-sm text-gray-600">街景比对通过，实际经营地址一致</p>
+                      <p className="text-xs text-gray-400 mt-1">核验日期 2024-09-20</p>
+                    </div>
+                    <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        <span className="font-medium text-gray-800">法人身份</span>
+                      </div>
+                      <p className="text-sm text-gray-600">法人代表实名认证通过</p>
+                      <p className="text-xs text-gray-400 mt-1">核验日期 2024-09-15</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 p-3 bg-blue-50 rounded-lg flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-blue-600" />
+                    <span className="text-sm text-blue-700">全部招聘岗位已通过人工复审，内容合规可信</span>
+                  </div>
+                </div>
+                <div>
                   <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
                     <BookOpen className="w-5 h-5 text-primary-500" />
                     企业介绍
@@ -214,8 +261,10 @@ const CompanyDetailPage = () => {
                     公司地址
                   </h3>
                   <p className="text-gray-600">{company.address}</p>
-                  <div className="mt-3 h-40 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <span className="text-gray-400">地图位置</span>
+                  <div onClick={() => navigate('/map')} className="mt-3 h-40 bg-gradient-to-br from-blue-100 to-primary-100 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:from-blue-200 hover:to-primary-200 transition-colors">
+                    <MapIcon className="w-10 h-10 text-primary-600 mb-2" />
+                    <span className="text-primary-700 font-medium">查看通勤热力图与附近岗位</span>
+                    <span className="text-xs text-primary-500 mt-1">点击进入15分钟通勤圈</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
