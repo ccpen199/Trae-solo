@@ -53,7 +53,7 @@ const typeMap: Record<string, { label: string; icon: any }> = {
 
 export default function Editor() {
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
-  const [activeTab, setActiveTab] = useState<'list' | 'edit' | 'review'>('list');
+  const [activeTab, setActiveTab] = useState<'list' | 'edit' | 'review' | 'create' | 'profile'>('list');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchText, setSearchText] = useState('');
 
@@ -73,13 +73,46 @@ export default function Editor() {
     setActiveTab('review');
   };
 
+  const createNews = () => {
+    const emptyNews: NewsItem = {
+      id: 'new',
+      title: '新建稿件',
+      content: '',
+      type: 'mixed',
+      status: 'draft',
+      author: currentUser.name,
+      department: currentUser.department,
+      tags: [],
+      cover: '',
+      views: 0,
+      likes: 0,
+      shares: 0,
+      comments: 0,
+      createdAt: new Date().toLocaleDateString('zh-CN'),
+      updatedAt: new Date().toLocaleDateString('zh-CN'),
+      copyright: '原创',
+      channels: [],
+      reviewHistory: []
+    };
+    setSelectedNews(emptyNews);
+    setActiveTab('create');
+  };
+
+  const openProfile = () => {
+    setActiveTab('profile');
+  };
+
   const goBack = () => {
     setActiveTab('list');
     setSelectedNews(null);
   };
 
-  if (activeTab === 'edit' && selectedNews) {
-    return <EditorDetail news={selectedNews} onBack={goBack} />;
+  if (activeTab === 'profile') {
+    return <ProfilePage onBack={goBack} />;
+  }
+
+  if ((activeTab === 'edit' || activeTab === 'create') && selectedNews) {
+    return <EditorDetail news={selectedNews} onBack={goBack} isCreate={activeTab === 'create'} />;
   }
 
   if (activeTab === 'review' && selectedNews) {
@@ -116,7 +149,7 @@ export default function Editor() {
             ))}
           </div>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
+        <button onClick={createNews} className="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
           <Plus className="w-4 h-4" />
           新建稿件
         </button>
@@ -209,10 +242,11 @@ export default function Editor() {
   );
 }
 
-function EditorDetail({ news, onBack }: { news: NewsItem; onBack: () => void }) {
-  const [title, setTitle] = useState(news.title);
+function EditorDetail({ news, onBack, isCreate = false }: { news: NewsItem; onBack: () => void; isCreate?: boolean }) {
+  const [title, setTitle] = useState(isCreate ? '' : news.title);
   const [content, setContent] = useState(news.content || '');
   const [selectedChannels, setSelectedChannels] = useState<string[]>(news.channels || []);
+  const [showTypeSelector, setShowTypeSelector] = useState(isCreate);
 
   const toggleChannel = (channelId: string) => {
     setSelectedChannels(prev => 
@@ -221,6 +255,65 @@ function EditorDetail({ news, onBack }: { news: NewsItem; onBack: () => void }) 
         : [...prev, channelId]
     );
   };
+
+  if (showTypeSelector) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <button onClick={onBack} className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
+            <ArrowLeft className="w-5 h-5 text-slate-600" />
+          </button>
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800">新建稿件</h2>
+            <p className="text-sm text-slate-500">请选择稿件类型</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {Object.entries(typeMap).map(([key, value]) => {
+            const TypeIcon = value.icon;
+            return (
+              <button
+                key={key}
+                onClick={() => setShowTypeSelector(false)}
+                className="p-6 bg-white rounded-xl border border-slate-200 hover:border-primary-500 hover:bg-primary-50 transition-all group"
+              >
+                <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-slate-100 group-hover:bg-primary-100 flex items-center justify-center transition-colors">
+                  <TypeIcon className="w-6 h-6 text-slate-600 group-hover:text-primary-600" />
+                </div>
+                <p className="text-center font-medium text-slate-800">{value.label}稿件</p>
+                <p className="text-center text-xs text-slate-400 mt-1">
+                  {key === 'text' && '纯文字新闻报道'}
+                  {key === 'image' && '图集+文字说明'}
+                  {key === 'video' && '视频+文字解说'}
+                  {key === 'audio' && '音频+文字稿'}
+                  {key === 'mixed' && '文图视音频混排'}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 className="font-semibold text-slate-800 mb-4">快速开始</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 bg-blue-50 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors">
+              <div className="text-blue-600 font-medium mb-1">从模板创建</div>
+              <div className="text-sm text-blue-500">使用预设稿件模板快速开始</div>
+            </div>
+            <div className="p-4 bg-green-50 rounded-lg cursor-pointer hover:bg-green-100 transition-colors">
+              <div className="text-green-600 font-medium mb-1">从素材导入</div>
+              <div className="text-sm text-green-500">从素材库选择内容创建</div>
+            </div>
+            <div className="p-4 bg-purple-50 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors">
+              <div className="text-purple-600 font-medium mb-1">AI智能撰稿</div>
+              <div className="text-sm text-purple-500">输入关键词AI自动生成</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -561,6 +654,282 @@ function ReviewDetail({ news, onBack }: { news: NewsItem; onBack: () => void }) 
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProfilePage({ onBack }: { onBack: () => void }) {
+  const [activeTab, setActiveTab] = useState<'info' | 'review' | 'distribution' | 'work'>('info');
+
+  const reviewRecords = [
+    { id: 1, title: '昌平区2026年经济工作会议召开', type: '初审', result: '通过', time: '2026-06-18 14:30', comment: '内容准确，结构清晰，同意通过初审' },
+    { id: 2, title: '回天地区三年行动计划成果显著', type: '复审', result: '通过', time: '2026-06-17 10:15', comment: '数据详实，建议补充更多案例' },
+    { id: 3, title: '中关村昌平园创新企业走访纪实', type: '初审', result: '退回', time: '2026-06-16 16:45', comment: '标题需要修改，内容需补充采访对象背景' },
+    { id: 4, title: '明十三陵文化遗产保护新进展', type: '终审', result: '通过', time: '2026-06-15 09:20', comment: '符合发布要求，同意发布' },
+    { id: 5, title: '昌平区夏季旅游攻略发布', type: '一校', result: '通过', time: '2026-06-14 11:30', comment: '校对完成，修改错别字3处' },
+  ];
+
+  const distributionStats = [
+    { name: '昌平报', count: 156, type: '报纸' },
+    { name: '昌平电视台', count: 89, type: '电视' },
+    { name: '昌平广播', count: 124, type: '广播' },
+    { name: '昌平新闻网', count: 312, type: '网站' },
+    { name: '北京昌平APP', count: 278, type: 'APP' },
+    { name: '微信公众号', count: 425, type: '微信' },
+    { name: '官方微博', count: 356, type: '微博' },
+    { name: '抖音号', count: 189, type: '抖音' },
+    { name: '快手号', count: 145, type: '快手' },
+  ];
+
+  const workStats = [
+    { label: '本月发稿', value: 42, unit: '篇' },
+    { label: '审核通过', value: 38, unit: '篇' },
+    { label: '平均审核时长', value: 2.5, unit: '小时' },
+    { label: '分发渠道', value: 9, unit: '个' },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <button onClick={onBack} className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
+          <ArrowLeft className="w-5 h-5 text-slate-600" />
+        </button>
+        <div>
+          <h2 className="text-lg font-semibold text-slate-800">个人中心</h2>
+          <p className="text-sm text-slate-500">管理您的账户和工作设置</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="text-center">
+              <img 
+                src={currentUser.avatar} 
+                alt="" 
+                className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-primary-100"
+              />
+              <h3 className="font-semibold text-lg text-slate-800">{currentUser.name}</h3>
+              <p className="text-sm text-slate-500">{currentUser.roleName}</p>
+              <p className="text-xs text-slate-400 mt-1">{currentUser.department}</p>
+            </div>
+            <div className="mt-6 pt-6 border-t border-slate-100 space-y-3">
+              {[
+                { key: 'info', label: '基本信息', icon: User },
+                { key: 'work', label: '工作统计', icon: FileText },
+                { key: 'review', label: '审核留痕', icon: CheckCircle },
+                { key: 'distribution', label: '分发配置', icon: Share2 },
+              ].map(item => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.key}
+                    onClick={() => setActiveTab(item.key as any)}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                      activeTab === item.key 
+                        ? 'bg-primary-50 text-primary-600 font-medium' 
+                        : 'text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="lg:col-span-3">
+          {activeTab === 'info' && (
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+              <h3 className="font-semibold text-slate-800 mb-6">基本信息</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-sm text-slate-500 block mb-2">姓名</label>
+                  <input type="text" defaultValue={currentUser.name} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-500 block mb-2">工号</label>
+                  <input type="text" defaultValue="CP2024001" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-500" readOnly />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-500 block mb-2">部门</label>
+                  <input type="text" defaultValue={currentUser.department} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-500" readOnly />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-500 block mb-2">职位</label>
+                  <input type="text" defaultValue={currentUser.roleName} className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-500" readOnly />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-500 block mb-2">手机号</label>
+                  <input type="text" defaultValue="138****5678" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
+                <div>
+                  <label className="text-sm text-slate-500 block mb-2">邮箱</label>
+                  <input type="email" defaultValue="zhangbianji@changping.gov.cn" className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-slate-100 flex justify-end gap-3">
+                <button className="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">
+                  取消
+                </button>
+                <button className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
+                  保存修改
+                </button>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'work' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {workStats.map(stat => (
+                  <div key={stat.label} className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                    <div className="text-2xl font-bold text-slate-800">
+                      {stat.value}<span className="text-sm font-normal text-slate-400 ml-1">{stat.unit}</span>
+                    </div>
+                    <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-800 mb-4">我的稿件</h3>
+                <div className="space-y-3">
+                  {newsList.slice(0, 5).map(news => (
+                    <div key={news.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-primary-500" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-800 line-clamp-1">{news.title}</p>
+                          <p className="text-xs text-slate-400">{news.createdAt}</p>
+                        </div>
+                      </div>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusMap[news.status].color}`}>
+                        {statusMap[news.status].label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'review' && (
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+              <h3 className="font-semibold text-slate-800 mb-6">审核留痕记录</h3>
+              <div className="space-y-4">
+                {reviewRecords.map(record => (
+                  <div key={record.id} className="border border-slate-200 rounded-lg p-4 hover:border-primary-200 transition-colors">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h4 className="font-medium text-slate-800">{record.title}</h4>
+                        <p className="text-xs text-slate-400 mt-1">审核时间：{record.time}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-xs">
+                          {record.type}
+                        </span>
+                        <span className={`px-2.5 py-1 rounded text-xs font-medium ${
+                          record.result === '通过' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
+                        }`}>
+                          {record.result}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="bg-slate-50 rounded-lg p-3">
+                      <p className="text-sm text-slate-600">
+                        <span className="font-medium text-slate-700">审核意见：</span>
+                        {record.comment}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-6 border-t border-slate-100">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-500">共 {reviewRecords.length} 条审核记录</span>
+                  <button className="text-primary-600 hover:text-primary-700">查看全部 →</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'distribution' && (
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-800 mb-6">分发渠道配置</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {distributionStats.map(channel => (
+                    <div key={channel.name} className="border border-slate-200 rounded-lg p-4 hover:border-primary-300 hover:shadow-md transition-all">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                            <Share2 className="w-4 h-4 text-primary-600" />
+                          </div>
+                          <span className="font-medium text-slate-800 text-sm">{channel.name}</span>
+                        </div>
+                        <span className="text-xs text-slate-400">{channel.type}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-slate-500">已分发</span>
+                        <span className="text-lg font-bold text-slate-800">{channel.count}<span className="text-xs font-normal text-slate-400">篇</span></span>
+                      </div>
+                      <div className="mt-3">
+                        <label className="flex items-center justify-between cursor-pointer">
+                          <span className="text-xs text-slate-600">启用分发</span>
+                          <div className={`w-10 h-5 rounded-full transition-colors relative ${
+                            channel.count > 0 ? 'bg-primary-500' : 'bg-slate-300'
+                          }`}>
+                            <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all ${
+                              channel.count > 0 ? 'right-0.5' : 'left-0.5'
+                            }`}></div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 className="font-semibold text-slate-800 mb-4">分发规则设置</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div>
+                      <p className="text-sm font-medium text-slate-800">自动同步至新媒体平台</p>
+                      <p className="text-xs text-slate-500 mt-0.5">稿件通过终审后自动分发至微信、微博等平台</p>
+                    </div>
+                    <div className="w-10 h-5 bg-primary-500 rounded-full relative cursor-pointer">
+                      <div className="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full shadow"></div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div>
+                      <p className="text-sm font-medium text-slate-800">发布前人工确认</p>
+                      <p className="text-xs text-slate-500 mt-0.5">自动分发前需要运营人员确认</p>
+                    </div>
+                    <div className="w-10 h-5 bg-slate-300 rounded-full relative cursor-pointer">
+                      <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow"></div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div>
+                      <p className="text-sm font-medium text-slate-800">定时发布</p>
+                      <p className="text-xs text-slate-500 mt-0.5">支持设置定时发布时间</p>
+                    </div>
+                    <div className="w-10 h-5 bg-primary-500 rounded-full relative cursor-pointer">
+                      <div className="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full shadow"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
