@@ -1,4 +1,4 @@
-export type UserRole = 'artist' | 'agency_admin' | 'company_hr' | 'admin';
+export type UserRole = 'artist' | 'agency_admin' | 'company_hr' | 'admin' | 'platform' | 'ops';
 export type ContractStatus = 'available' | 'signed' | 'exclusive' | 'unavailable';
 export type ScheduleStatus = 'available' | 'booked' | 'pending' | 'unavailable';
 export type CastingStatus = 'draft' | 'published' | 'closed' | 'completed';

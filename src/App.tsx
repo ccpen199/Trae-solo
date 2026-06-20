@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastProvider } from '@/components/ui/Toast';
 import { AppLayout, AuthLayout } from '@/components/layout';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 
@@ -28,54 +29,56 @@ import Settings from '@/pages/Settings';
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+    <ToastProvider>
+      <Router>
+        <Routes>
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
 
-        <Route
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="/" element={<Dashboard />} />
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/" element={<Dashboard />} />
 
-          <Route path="/artists" element={<ArtistList />} />
-          <Route path="/artists/:id" element={<ArtistDetail />} />
-          <Route path="/artists/:id/edit" element={<ArtistEdit />} />
+            <Route path="/artists" element={<ArtistList />} />
+            <Route path="/artists/:id" element={<ArtistDetail />} />
+            <Route path="/artists/:id/edit" element={<ArtistEdit />} />
 
-          <Route path="/profile" element={<ArtistDetail isProfile />} />
-          <Route path="/profile/schedule" element={<ScheduleCalendar />} />
+            <Route path="/profile" element={<ArtistDetail isProfile />} />
+            <Route path="/profile/schedule" element={<ScheduleCalendar />} />
 
-          <Route path="/model-cards" element={<ModelCardList />} />
-          <Route path="/model-cards/create" element={<ModelCardEditor />} />
+            <Route path="/model-cards" element={<ModelCardList />} />
+            <Route path="/model-cards/create" element={<ModelCardEditor />} />
 
-          <Route path="/castings" element={<CastingList />} />
-          <Route path="/castings/create" element={<CastingCreate />} />
-          <Route path="/castings/:id" element={<CastingDetail />} />
-          <Route path="/castings/:id/applications" element={<ApplicationList />} />
+            <Route path="/castings" element={<CastingList />} />
+            <Route path="/castings/create" element={<CastingCreate />} />
+            <Route path="/castings/:id" element={<CastingDetail />} />
+            <Route path="/castings/:id/applications" element={<ApplicationList />} />
 
-          <Route path="/search" element={<TalentSearch />} />
+            <Route path="/search" element={<TalentSearch />} />
 
-          <Route path="/agency" element={<AgencyDashboard />} />
-          <Route path="/agency/artists" element={<AgencyArtistList />} />
-          <Route path="/agency/team" element={<AgencyTeam />} />
-          <Route path="/agency/contacts" element={<ContactRecords />} />
+            <Route path="/agency" element={<AgencyDashboard />} />
+            <Route path="/agency/artists" element={<AgencyArtistList />} />
+            <Route path="/agency/team" element={<AgencyTeam />} />
+            <Route path="/agency/contacts" element={<ContactRecords />} />
 
-          <Route path="/security" element={<SecurityCenter />} />
-          <Route path="/security/authorizations" element={<AuthorizationList />} />
-          <Route path="/security/logs" element={<DataAccessLog />} />
-          <Route path="/security/data" element={<DataExportDelete />} />
+            <Route path="/security" element={<SecurityCenter />} />
+            <Route path="/security/authorizations" element={<AuthorizationList />} />
+            <Route path="/security/logs" element={<DataAccessLog />} />
+            <Route path="/security/data" element={<DataExportDelete />} />
 
-          <Route path="/settings" element={<Settings />} />
-        </Route>
+            <Route path="/settings" element={<Settings />} />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </ToastProvider>
   );
 }

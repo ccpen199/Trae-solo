@@ -1,5 +1,4 @@
-
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Search,
@@ -15,10 +14,17 @@ import {
   ChevronRight,
   Sparkles,
   LogOut,
+  Building2,
+  FileText,
+  Database,
+  LineChart,
+  BookOpen,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useToast } from '@/components/ui/Toast';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 import type { UserRole } from '@shared/types';
 
 interface NavItem {
@@ -26,6 +32,7 @@ interface NavItem {
   label: string;
   icon: React.ReactNode;
   roles?: UserRole[];
+  badge?: string | number;
 }
 
 interface NavSection {
@@ -38,41 +45,171 @@ const roleLabels: Record<UserRole, string> = {
   agency_admin: '经纪公司',
   company_hr: '企业 HR',
   admin: '管理员',
+  platform: '平台运营',
+  ops: '运维人员',
 };
 
-const navSections: NavSection[] = [
-  {
-    title: 'Main',
+const getNavSections = (role: UserRole | undefined): NavSection[] => {
+  const allRoles: UserRole[] = ['artist', 'agency_admin', 'company_hr', 'admin', 'platform', 'ops'];
+
+  const navSections: NavSection[] = [
+    {
+      title: '工作台',
+      items: [
+        {
+          href: '/',
+          label: '仪表盘',
+          icon: <LayoutDashboard className="w-5 h-5" />,
+          roles: allRoles,
+        },
+        {
+          href: '/search',
+          label: '人才搜索',
+          icon: <Search className="w-5 h-5" />,
+          roles: ['agency_admin', 'company_hr', 'admin'],
+          badge: '智能匹配',
+        },
+        {
+          href: '/castings',
+          label: '通告中心',
+          icon: <Megaphone className="w-5 h-5" />,
+          roles: allRoles,
+        },
+      ],
+    },
+  ];
+
+  if (role === 'artist') {
+    navSections.push({
+      title: '我的资料',
+      items: [
+        {
+          href: '/profile',
+          label: '个人档案',
+          icon: <User className="w-5 h-5" />,
+          roles: ['artist'],
+        },
+        {
+          href: '/profile/schedule',
+          label: '档期日历',
+          icon: <Calendar className="w-5 h-5" />,
+          roles: ['artist'],
+        },
+        {
+          href: '/model-cards',
+          label: '模卡制作',
+          icon: <CreditCard className="w-5 h-5" />,
+          roles: ['artist'],
+          badge: 'AI 抠图',
+        },
+      ],
+    });
+  }
+
+  if (role === 'agency_admin' || role === 'admin' || role === 'platform' || role === 'ops') {
+    navSections.push({
+      title: '机构管理',
+      items: [
+        {
+          href: '/agency',
+          label: '机构概览',
+          icon: <Building2 className="w-5 h-5" />,
+          roles: ['agency_admin', 'admin'],
+        },
+        {
+          href: '/agency/artists',
+          label: '签约艺人',
+          icon: <Users className="w-5 h-5" />,
+          roles: ['agency_admin', 'admin'],
+        },
+        {
+          href: '/castings/create',
+          label: '发布通告',
+          icon: <PlusCircle className="w-5 h-5" />,
+          roles: ['agency_admin', 'admin'],
+        },
+        {
+          href: '/agency/team',
+          label: '团队管理',
+          icon: <Users className="w-5 h-5" />,
+          roles: ['agency_admin', 'admin'],
+        },
+        {
+          href: '/agency/contacts',
+          label: '联系记录',
+          icon: <BookOpen className="w-5 h-5" />,
+          roles: ['agency_admin', 'admin'],
+        },
+      ],
+    });
+  }
+
+  if (role === 'company_hr') {
+    navSections.push({
+      title: '企业管理',
+      items: [
+        {
+          href: '/castings/create',
+          label: '发布招聘',
+          icon: <PlusCircle className="w-5 h-5" />,
+          roles: ['company_hr'],
+        },
+        {
+          href: '/search',
+          label: '人才库',
+          icon: <Database className="w-5 h-5" />,
+          roles: ['company_hr'],
+        },
+      ],
+    });
+  }
+
+  if (role === 'admin' || role === 'platform' || role === 'ops') {
+    navSections.push({
+      title: '系统管理',
+      items: [
+        {
+          href: '/search',
+          label: '用户审核',
+          icon: <Shield className="w-5 h-5" />,
+          roles: ['admin'],
+        },
+        {
+          href: '/security/logs',
+          label: '操作日志',
+          icon: <FileText className="w-5 h-5" />,
+          roles: ['admin'],
+        },
+        {
+          href: '/agency',
+          label: '数据统计',
+          icon: <LineChart className="w-5 h-5" />,
+          roles: ['admin'],
+        },
+      ],
+    });
+  }
+
+  navSections.push({
+    title: '设置',
     items: [
-      { href: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
-      { href: '/talent-search', label: 'Talent Search', icon: <Search className="w-5 h-5" /> },
-      { href: '/castings', label: 'Castings', icon: <Megaphone className="w-5 h-5" /> },
+      {
+        href: '/security',
+        label: '数据安全',
+        icon: <Shield className="w-5 h-5" />,
+        roles: allRoles,
+      },
+      {
+        href: '/settings',
+        label: '系统设置',
+        icon: <Settings className="w-5 h-5" />,
+        roles: allRoles,
+      },
     ],
-  },
-  {
-    title: 'Artist',
-    items: [
-      { href: '/profile', label: 'My Profile', icon: <User className="w-5 h-5" />, roles: ['artist'] },
-      { href: '/schedule', label: 'My Schedule', icon: <Calendar className="w-5 h-5" />, roles: ['artist'] },
-      { href: '/model-cards', label: 'Model Cards', icon: <CreditCard className="w-5 h-5" />, roles: ['artist'] },
-    ],
-  },
-  {
-    title: 'Agency',
-    items: [
-      { href: '/artists', label: 'My Artists', icon: <Users className="w-5 h-5" />, roles: ['agency_admin', 'admin'] },
-      { href: '/publish-casting', label: 'Publish Casting', icon: <PlusCircle className="w-5 h-5" />, roles: ['agency_admin', 'admin'] },
-      { href: '/team', label: 'Team', icon: <Users className="w-5 h-5" />, roles: ['agency_admin', 'admin'] },
-    ],
-  },
-  {
-    title: 'Settings',
-    items: [
-      { href: '/security', label: 'Security', icon: <Shield className="w-5 h-5" /> },
-      { href: '/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
-    ],
-  },
-];
+  });
+
+  return navSections;
+};
 
 interface SidebarProps {
   collapsed: boolean;
@@ -81,7 +218,11 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, artistProfile, logout } = useAuthStore();
+  const toast = useToast();
+
+  const navSections = getNavSections(user?.role);
 
   const filteredSections = navSections.map((section) => ({
     ...section,
@@ -91,11 +232,20 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   })).filter((section) => section.items.length > 0);
 
   const isActive = (href: string) => {
+    if (href === '/') {
+      return location.pathname === '/';
+    }
     return location.pathname === href || location.pathname.startsWith(href + '/');
   };
 
-  const displayName = artistProfile?.stageName || user?.email?.split('@')[0] || 'User';
+  const displayName = artistProfile?.stageName || user?.email?.split('@')[0] || '用户';
   const avatarUrl = artistProfile?.mediaAssets?.find((m) => m.isPrimary)?.url;
+
+  const handleLogout = () => {
+    logout();
+    toast.success('已退出登录', '期待您的再次归来');
+    navigate('/login', { replace: true });
+  };
 
   return (
     <aside
@@ -139,7 +289,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 ease-out-expo group',
+                  'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 ease-out-expo group relative',
                   collapsed && 'justify-center px-0',
                   isActive(item.href)
                     ? 'bg-gradient-primary text-white shadow-button'
@@ -153,9 +303,28 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                   {item.icon}
                 </span>
                 {!collapsed && (
-                  <span className="font-medium text-sm whitespace-nowrap animate-fade-in">
+                  <div className="flex-1 flex items-center justify-between min-w-0">
+                    <span className="font-medium text-sm whitespace-nowrap animate-fade-in">
+                      {item.label}
+                    </span>
+                    {item.badge && (
+                      <Badge
+                        variant={isActive(item.href) ? 'default' : 'secondary'}
+                        size="sm"
+                        className="ml-2"
+                      >
+                        {item.badge}
+                      </Badge>
+                    )}
+                  </div>
+                )}
+                {collapsed && (
+                  <div className="absolute left-full ml-2 px-2 py-1 rounded-md bg-midnight-800 text-white text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-lg border border-midnight-700">
                     {item.label}
-                  </span>
+                    {item.badge && (
+                      <span className="ml-2 text-xs text-sapphire-400">{item.badge}</span>
+                    )}
+                  </div>
                 )}
               </NavLink>
             ))}
@@ -187,17 +356,32 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
               <div className="flex-1 min-w-0 animate-fade-in">
                 <p className="text-sm font-semibold text-white truncate">{displayName}</p>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <Badge variant="primary" size="sm" dot>
+                  <Badge
+                    variant={['admin', 'platform', 'ops'].includes(user?.role as string) ? 'danger' : 'primary'}
+                    size="sm"
+                    dot
+                  >
                     {user?.role ? roleLabels[user.role] : 'Guest'}
                   </Badge>
                 </div>
               </div>
             )}
-            {!collapsed && (
+            {!collapsed ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                className="p-2 text-midnight-400 hover:text-rose-400 hover:bg-midnight-700"
+                title="退出登录"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            ) : (
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="p-2 text-midnight-400 hover:text-rose-400 hover:bg-midnight-700 rounded-lg transition-all duration-300"
-                title="Logout"
+                title="退出登录"
               >
                 <LogOut className="w-4 h-4" />
               </button>

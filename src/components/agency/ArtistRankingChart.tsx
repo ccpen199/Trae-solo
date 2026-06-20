@@ -11,11 +11,166 @@ import {
 } from 'recharts';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
 import { Trophy } from 'lucide-react';
-import type { ArtistRanking } from '@/store/useAgencyStore';
+import type { ArtistRanking, AgencyArtist } from '@/store/useAgencyStore';
 import { cn } from '@/lib/utils';
 
+const generateMockRankings = (): ArtistRanking[] => {
+  const mockArtists: AgencyArtist[] = [
+    {
+      id: 'artist-1',
+      userId: 'user-artist-1',
+      realName: '林雨婷',
+      stageName: 'Yuting',
+      age: 24,
+      gender: 'female',
+      height: 175,
+      weight: 52,
+      bust: 85,
+      waist: 60,
+      hips: 88,
+      eyeColor: '棕色',
+      hairColor: '黑色',
+      languages: ['中文', '英语'],
+      skills: ['T台走秀', '平面拍摄'],
+      location: '上海市',
+      latitude: 31.2304,
+      longitude: 121.4737,
+      contractStatus: 'exclusive',
+      mediaAssets: [],
+      tags: [],
+      contractType: 'exclusive',
+      artistStatus: 'active',
+      department: 'fashion',
+      upcomingBookings: 8,
+      revenueGenerated: 286000,
+    },
+    {
+      id: 'artist-2',
+      userId: 'user-artist-2',
+      realName: '陈浩然',
+      stageName: 'Haoran',
+      age: 26,
+      gender: 'male',
+      height: 188,
+      weight: 75,
+      bust: 96,
+      waist: 80,
+      hips: 94,
+      eyeColor: '黑色',
+      hairColor: '黑色',
+      languages: ['中文', '英语'],
+      skills: ['T台走秀', '影视表演'],
+      location: '北京市',
+      latitude: 39.9042,
+      longitude: 116.4074,
+      contractStatus: 'signed',
+      mediaAssets: [],
+      tags: [],
+      contractType: 'signed',
+      artistStatus: 'active',
+      department: 'fashion',
+      upcomingBookings: 6,
+      revenueGenerated: 198000,
+    },
+    {
+      id: 'artist-3',
+      userId: 'user-artist-3',
+      realName: '王思琪',
+      stageName: 'Siqi',
+      age: 23,
+      gender: 'female',
+      height: 172,
+      weight: 50,
+      bust: 82,
+      waist: 58,
+      hips: 86,
+      eyeColor: '棕色',
+      hairColor: '棕色',
+      languages: ['中文'],
+      skills: ['平面拍摄', '电商模特'],
+      location: '杭州市',
+      latitude: 30.2741,
+      longitude: 120.1551,
+      contractStatus: 'exclusive',
+      mediaAssets: [],
+      tags: [],
+      contractType: 'exclusive',
+      artistStatus: 'active',
+      department: 'commercial',
+      upcomingBookings: 12,
+      revenueGenerated: 245000,
+    },
+    {
+      id: 'artist-4',
+      userId: 'user-artist-4',
+      realName: '刘美娜',
+      stageName: 'Meina',
+      age: 25,
+      gender: 'female',
+      height: 178,
+      weight: 54,
+      bust: 86,
+      waist: 61,
+      hips: 89,
+      eyeColor: '黑色',
+      hairColor: '黑色',
+      languages: ['中文', '法语'],
+      skills: ['T台走秀', '高级定制'],
+      location: '上海市',
+      latitude: 31.2304,
+      longitude: 121.4737,
+      contractStatus: 'exclusive',
+      mediaAssets: [],
+      tags: [],
+      contractType: 'exclusive',
+      artistStatus: 'active',
+      department: 'fashion',
+      upcomingBookings: 5,
+      revenueGenerated: 168000,
+    },
+    {
+      id: 'artist-5',
+      userId: 'user-artist-5',
+      realName: '张明辉',
+      stageName: 'Minghui',
+      age: 27,
+      gender: 'male',
+      height: 185,
+      weight: 72,
+      bust: 94,
+      waist: 78,
+      hips: 92,
+      eyeColor: '棕色',
+      hairColor: '黑色',
+      languages: ['中文', '英语', '韩语'],
+      skills: ['影视表演', '平面拍摄'],
+      location: '广州市',
+      latitude: 23.1291,
+      longitude: 113.2644,
+      contractStatus: 'signed',
+      mediaAssets: [],
+      tags: [],
+      contractType: 'signed',
+      artistStatus: 'active',
+      department: 'acting',
+      upcomingBookings: 4,
+      revenueGenerated: 132000,
+    },
+  ];
+
+  return mockArtists
+    .map((a) => ({
+      artist: a,
+      bookingCount: a.upcomingBookings,
+      revenue: a.revenueGenerated,
+    }))
+    .sort((a, b) => b.bookingCount - a.bookingCount);
+};
+
+const defaultMockRankings = generateMockRankings();
+
 export interface ArtistRankingChartProps {
-  data: ArtistRanking[];
+  data?: ArtistRanking[];
   className?: string;
 }
 
@@ -65,7 +220,7 @@ function CustomTooltip({ active, payload }: any) {
   return null;
 }
 
-export function ArtistRankingChart({ data, className }: ArtistRankingChartProps) {
+export function ArtistRankingChart({ data = defaultMockRankings, className }: ArtistRankingChartProps) {
   const chartData = data.map((item, index) => ({
     ...item,
     rank: index + 1,
