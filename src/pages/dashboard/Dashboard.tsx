@@ -467,6 +467,8 @@ const getDashboardConfig = (
       };
 
     case 'admin':
+    case 'platform':
+    case 'ops':
       return {
         welcomeTitle: '系统管理后台',
         stats: [

@@ -156,13 +156,7 @@ export const useAuthStore = create<AuthStore>()(
             return false;
           }
 
-          const isAdminTypeRole = (r: UserRole) => ['admin', 'platform', 'ops'].includes(r);
-          
-          const roleMismatch = role === 'admin' 
-            ? !isAdminTypeRole(matchedUser.role)
-            : matchedUser.role !== role;
-
-          if (roleMismatch) {
+          if (matchedUser.role !== role) {
             const roleNames: Record<UserRole, string> = {
               artist: '艺人/模特',
               agency_admin: '经纪公司',
@@ -173,7 +167,7 @@ export const useAuthStore = create<AuthStore>()(
             };
             set({
               isLoading: false,
-              error: `该账号不属于「${roleNames[role]}」角色，请选择正确的登录角色`,
+              error: `该账号属于「${roleNames[matchedUser.role]}」角色，但您选择了「${roleNames[role]}」，请选择正确的登录角色`,
             });
             return false;
           }

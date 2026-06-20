@@ -111,7 +111,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </label>
           )}
           {rightIcon && (
-            <span className={cn("absolute text-midnight-400 pointer-events-none", rightIconSizes[size])}>
+            <span className={cn("absolute text-midnight-400", rightIconSizes[size])}>
               {rightIcon}
             </span>
           )}
