@@ -4,7 +4,7 @@ import { ArrowLeft, Star, ShieldCheck, Calendar, FileText, X } from 'lucide-reac
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CaseCard from '@/components/CaseCard'
-import { STYLES, LEVELS, CERT_LABELS, CERT_COLORS } from '@/lib/types'
+import { STYLES, LEVELS, CERT_LABELS, CERT_COLORS, CERT_BG, CERT_DETAILS } from '@/lib/types'
 import { fetchApi } from '@/lib/api'
 import { formatPrice } from '@/lib/utils'
 import { useAppStore } from '@/hooks/useAppStore'
@@ -291,12 +291,12 @@ export default function DesignerDetail() {
                   <ShieldCheck size={16} />{CERT_LABELS[data.certification]}
                 </span>
               </div>
-              <p className="mt-1 text-sm text-sand-900/60">{data.region}</p>
+              <p className="mt-1 text-sm text-sand-900/60">{data.region} · {data.company} · {data.title}</p>
               <div className="mt-2 flex items-center gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} size={16} className={i < Math.round(data.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-sand-200'} />
                 ))}
-                <span className="ml-1 text-sm text-sand-900/60">{data.rating}</span>
+                <span className="ml-1 text-sm text-sand-900/60">{data.rating} 评分 · {data.casesCount} 个作品 · {data.experience}年经验</span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-sand-900/70">{data.description}</p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -319,14 +319,44 @@ export default function DesignerDetail() {
           </div>
         </div>
 
+        {CERT_DETAILS[data.certification] && (
+          <div className="mt-8 rounded-2xl border border-sand-200 bg-white p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl ${CERT_BG[data.certification]}`}>
+                <ShieldCheck size={28} className={CERT_COLORS[data.certification]} />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-display text-lg font-bold text-sand-900">
+                  {CERT_DETAILS[data.certification].label}
+                </h3>
+                <p className="mt-1 text-sm text-sand-900/60">
+                  {CERT_DETAILS[data.certification].desc}
+                </p>
+                <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                  {CERT_DETAILS[data.certification].requirements.map((req) => (
+                    <div key={req} className="flex items-center gap-2 text-sm text-sand-900/70">
+                      <div className={`h-1.5 w-1.5 rounded-full ${CERT_COLORS[data.certification].replace('text-', 'bg-')}`} />
+                      {req}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="mt-10">
-          <h2 className="font-display text-xl font-bold text-sand-900">作品集</h2>
-          <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mb-4 flex items-end justify-between">
+            <h2 className="font-display text-xl font-bold text-sand-900">作品集</h2>
+            <span className="text-sm text-sand-900/50">共 {cases.length} 个案例</span>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cases.map((c) => <CaseCard key={c.id} item={c} />)}
           </div>
           {cases.length === 0 && (
             <div className="py-16 text-center text-sand-900/40">
               <p className="font-display text-lg">暂无作品</p>
+              <p className="mt-2 text-sm">该设计师作品正在审核中，请稍后查看</p>
             </div>
           )}
         </div>

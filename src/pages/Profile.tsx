@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { User, Heart, Calendar, FileText, Settings, LogOut, ChevronRight, Home, Briefcase } from 'lucide-react'
+import { User, Heart, Calendar, FileText, Settings, LogOut, ChevronRight, Home, Briefcase, Lightbulb, Sparkles } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import CaseCard from '@/components/CaseCard'
+import DesignerCard from '@/components/DesignerCard'
 import { useAppStore } from '@/hooks/useAppStore'
+import { fetchApi } from '@/lib/api'
+import type { CaseItem, DesignerItem } from '@/lib/types'
 
 const MENU_ITEMS = [
   { icon: Heart, label: '我的收藏', to: '/favorites', count: 0 },
@@ -16,6 +20,33 @@ const MENU_ITEMS = [
 export default function Profile() {
   const { currentUserId, favorites } = useAppStore()
   const [activeTab, setActiveTab] = useState<'overview' | 'appointments' | 'quotes' | 'history'>('overview')
+  const [recCases, setRecCases] = useState<CaseItem[]>([])
+  const [recDesigners, setRecDesigners] = useState<DesignerItem[]>([])
+  const [recLoading, setRecLoading] = useState(true)
+
+  useEffect(() => {
+    setRecLoading(true)
+    const favCaseStyles = new Set<string>()
+    const favDesignerRegions = new Set<string>()
+    favorites.forEach((f) => {
+      if (f.type === 'case' && f.style) favCaseStyles.add(f.style)
+      if (f.type === 'designer' && f.region) favDesignerRegions.add(f.region)
+    })
+
+    const casePromise = fetchApi<{ items: CaseItem[] }>(
+      `/api/cases?limit=3${favCaseStyles.size ? `&style=${encodeURIComponent(Array.from(favCaseStyles)[0])}` : ''}`
+    ).then(d => d.items).catch(() => [])
+
+    const designerPromise = fetchApi<{ items: DesignerItem[] }>(
+      `/api/designers?limit=3${favDesignerRegions.size ? `&region=${encodeURIComponent(Array.from(favDesignerRegions)[0])}` : ''}`
+    ).then(d => d.items).catch(() => [])
+
+    Promise.all([casePromise, designerPromise]).then(([c, d]) => {
+      setRecCases(c)
+      setRecDesigners(d)
+      setRecLoading(false)
+    })
+  }, [favorites])
 
   const userInfo = {
     id: currentUserId,
@@ -148,11 +179,65 @@ export default function Profile() {
                   </div>
 
                   <div className="mt-8 rounded-xl bg-sand-50 p-6">
-                    <h4 className="font-display text-base font-semibold text-sand-900">装修小贴士</h4>
+                    <h4 className="flex items-center gap-2 font-display text-base font-semibold text-sand-900">
+                      <Lightbulb size={18} className="text-sage-600" /> 装修小贴士
+                    </h4>
                     <p className="mt-2 text-sm text-sand-900/70 leading-relaxed">
                       装修前建议先浏览30+个同户型案例，确定自己喜欢的风格。可以使用收藏功能保存喜欢的案例，
                       预约3位以上设计师进行量房对比，这样能更准确地把握装修预算和效果。
                     </p>
+                  </div>
+
+                  <div className="mt-8">
+                    <div className="mb-4 flex items-end justify-between">
+                      <h3 className="flex items-center gap-2 font-display text-lg font-semibold text-sand-900">
+                        <Sparkles size={18} className="text-sand-500" />
+                        为您推荐
+                      </h3>
+                      <span className="text-xs text-sand-900/40">
+                        {favorites.length > 0 ? '基于您的收藏偏好推荐' : '热门精选'}
+                      </span>
+                    </div>
+                    <div className="space-y-6">
+                      <div>
+                        <div className="mb-3 flex items-center justify-between">
+                          <h4 className="text-sm font-medium text-sand-900/70">推荐案例</h4>
+                          <Link to="/cases" className="text-xs text-sand-400 hover:underline">查看更多</Link>
+                        </div>
+                        {recLoading ? (
+                          <div className="grid gap-4 sm:grid-cols-3">
+                            {Array.from({ length: 3 }).map((_, i) => (
+                              <div key={i} className="aspect-[4/3] animate-pulse rounded-xl bg-sand-200" />
+                            ))}
+                          </div>
+                        ) : recCases.length > 0 ? (
+                          <div className="grid gap-4 sm:grid-cols-3">
+                            {recCases.map((c) => <CaseCard key={c.id} item={c} />)}
+                          </div>
+                        ) : (
+                          <div className="py-8 text-center text-sand-900/40 text-sm">暂无推荐案例</div>
+                        )}
+                      </div>
+                      <div>
+                        <div className="mb-3 flex items-center justify-between">
+                          <h4 className="text-sm font-medium text-sand-900/70">推荐设计师</h4>
+                          <Link to="/designers" className="text-xs text-sand-400 hover:underline">查看更多</Link>
+                        </div>
+                        {recLoading ? (
+                          <div className="grid gap-4 sm:grid-cols-3">
+                            {Array.from({ length: 3 }).map((_, i) => (
+                              <div key={i} className="h-32 animate-pulse rounded-xl bg-sand-200" />
+                            ))}
+                          </div>
+                        ) : recDesigners.length > 0 ? (
+                          <div className="grid gap-4 sm:grid-cols-3">
+                            {recDesigners.map((d) => <DesignerCard key={d.id} designer={d} showActions={false} />)}
+                          </div>
+                        ) : (
+                          <div className="py-8 text-center text-sand-900/40 text-sm">暂无推荐设计师</div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

@@ -53,7 +53,7 @@ export default function CaseCard({ item }: { item: CaseItem }) {
           onClick={(e: React.MouseEvent) => {
             e.preventDefault()
             e.stopPropagation()
-            toggleFavorite(item.id, 'case')
+            toggleFavorite(item.id, 'case', { style: item.style })
           }}
           className="absolute top-3 right-3 z-10 rounded-full bg-white/20 p-2 backdrop-blur-sm transition-colors hover:bg-white/40"
         >

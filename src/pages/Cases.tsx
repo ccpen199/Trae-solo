@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { SlidersHorizontal, X, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CaseCard from '@/components/CaseCard'
@@ -10,6 +10,22 @@ import { cn } from '@/lib/utils'
 import type { CaseItem } from '@/lib/types'
 
 const PAGE_SIZE = 9
+
+const AREA_OPTIONS = [
+  { label: '60㎡以下', min: '0', max: '60' },
+  { label: '60-90㎡', min: '60', max: '90' },
+  { label: '90-120㎡', min: '90', max: '120' },
+  { label: '120-150㎡', min: '120', max: '150' },
+  { label: '150㎡以上', min: '150', max: '' },
+]
+
+const BUDGET_OPTIONS = [
+  { label: '10万以下', min: '0', max: '10' },
+  { label: '10-20万', min: '10', max: '20' },
+  { label: '20-40万', min: '20', max: '40' },
+  { label: '40-80万', min: '40', max: '80' },
+  { label: '80万以上', min: '80', max: '' },
+]
 
 interface CasesResponse {
   items: CaseItem[]
@@ -187,6 +203,47 @@ export default function Cases() {
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
 
+  const activeFilters = getFilters()
+  const hasFilters = Object.values(activeFilters).some(v => v !== '')
+
+  const getActiveFilterTags = () => {
+    const tags: Array<{ key: string; label: string }> = []
+    if (activeFilters.style) tags.push({ key: 'style', label: `风格：${activeFilters.style}` })
+    if (activeFilters.houseType) tags.push({ key: 'houseType', label: `户型：${activeFilters.houseType}` })
+    if (activeFilters.areaMin || activeFilters.areaMax) {
+      const matched = AREA_OPTIONS.find(o =>
+        (!activeFilters.areaMin || o.min === activeFilters.areaMin) &&
+        (!activeFilters.areaMax || o.max === activeFilters.areaMax)
+      )
+      tags.push({ key: 'area', label: matched ? `面积：${matched.label}` : `面积：${activeFilters.areaMin || 0}-${activeFilters.areaMax || '∞'}㎡` })
+    }
+    if (activeFilters.budgetMin || activeFilters.budgetMax) {
+      const matched = BUDGET_OPTIONS.find(o =>
+        (!activeFilters.budgetMin || o.min === activeFilters.budgetMin) &&
+        (!activeFilters.budgetMax || o.max === activeFilters.budgetMax)
+      )
+      tags.push({ key: 'budget', label: matched ? `预算：${matched.label}` : `预算：${activeFilters.budgetMin || 0}-${activeFilters.budgetMax || '∞'}万` })
+    }
+    return tags
+  }
+
+  const filterTags = getActiveFilterTags()
+
+  const clearFilter = (key: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (key === 'area') { params.delete('areaMin'); params.delete('areaMax') }
+    else if (key === 'budget') { params.delete('budgetMin'); params.delete('budgetMax') }
+    else { params.delete(key) }
+    params.set('page', '1')
+    setSearchParams(params)
+  }
+
+  const clearAllFilters = () => {
+    setLocalFilters({ style: '', houseType: '', areaMin: '', areaMax: '', budgetMin: '', budgetMax: '' })
+    setSearchParams({})
+    setDrawerOpen(false)
+  }
+
   return (
     <div className="min-h-screen bg-sand-100">
       <Navbar />
@@ -213,8 +270,42 @@ export default function Cases() {
           </aside>
 
           <main className="min-w-0 flex-1">
-            <div className="mb-4 text-sm text-sand-900/60">
-              {loading ? '加载中…' : `共 ${total} 个案例`}
+            {filterTags.length > 0 && (
+              <div className="mb-4 rounded-xl border border-sand-200 bg-white p-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold tracking-wider text-sand-900/60 uppercase">当前筛选：</span>
+                  {filterTags.map((tag) => (
+                    <button
+                      key={tag.key}
+                      onClick={() => clearFilter(tag.key)}
+                      className="inline-flex items-center gap-1 rounded-full bg-sand-400/10 px-3 py-1 text-xs text-sand-600 transition-colors hover:bg-sand-400/20"
+                    >
+                      {tag.label}
+                      <X size={12} />
+                    </button>
+                  ))}
+                  <button
+                    onClick={clearAllFilters}
+                    className="inline-flex items-center gap-1 text-xs text-sand-900/40 transition-colors hover:text-sand-400"
+                  >
+                    <RotateCcw size={12} /> 全部清除
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className="mb-4 flex items-center justify-between">
+              <div className="text-sm text-sand-900/60">
+                {loading
+                  ? '加载中…'
+                  : hasFilters
+                  ? `命中 ${total} 个案例${total > 0 ? `，为您推荐以下${total === 1 ? '方案' : '方案组合'}` : ''}`
+                  : `共 ${total} 个精选案例`}
+              </div>
+              {hasFilters && !loading && (
+                <div className="text-xs text-sage-600">
+                  {total > 0 ? `已筛选出 ${total} 个匹配方案` : '暂无符合条件的方案'}
+                </div>
+              )}
             </div>
 
             {loading ? (

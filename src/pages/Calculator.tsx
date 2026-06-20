@@ -25,6 +25,9 @@ interface CalcResponse {
   area: number
   style: string
   quality: string
+  houseType?: string
+  constructionTimeline?: Array<{ name: string; phase: string; duration_days: number; description: string; order_num: number }>
+  recommendedMaterials?: Array<{ name: string; category: string; brand: string; unit: string; price: number }>
 }
 
 export default function Calculator() {
@@ -187,6 +190,64 @@ export default function Calculator() {
                     </BarChart>
                   </div>
                 </div>
+
+                {result.constructionTimeline && result.constructionTimeline.length > 0 && (
+                  <div className="rounded-2xl border border-sand-200 bg-white p-6">
+                    <div className="mb-4 flex items-end justify-between">
+                      <h3 className="font-display text-lg font-semibold text-sand-900">施工工期规划</h3>
+                      <span className="text-sm text-sand-900/50">
+                        总工期 {result.constructionTimeline.reduce((s, n) => s + (n.duration_days || 0), 0)} 天
+                      </span>
+                    </div>
+                    <div className="relative py-3">
+                      <div className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 bg-sand-200" />
+                      <div className="relative flex items-start justify-between gap-2 overflow-x-auto">
+                        {result.constructionTimeline.map((node) => (
+                          <div key={node.order_num} className="flex flex-shrink-0 flex-col items-center" style={{ minWidth: 110 }}>
+                            <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-sand-400 bg-sand-100">
+                              <span className="text-xs font-semibold text-sand-600">{node.order_num}</span>
+                            </div>
+                            <div className="mt-3 text-center">
+                              <p className="text-sm font-medium text-sand-900">{node.name}</p>
+                              <p className="mt-0.5 text-xs text-sage-600">{node.duration_days}天</p>
+                              <p className="mt-1 text-xs text-sand-900/50 line-clamp-2">{node.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {result.recommendedMaterials && result.recommendedMaterials.length > 0 && (
+                  <div className="rounded-2xl border border-sand-200 bg-white p-6">
+                    <h3 className="mb-4 font-display text-lg font-semibold text-sand-900">推荐材料清单</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-sand-200 bg-sand-50">
+                            <th className="px-4 py-3 text-left font-medium text-sand-900/60">材料</th>
+                            <th className="px-4 py-3 text-left font-medium text-sand-900/60">分类</th>
+                            <th className="px-4 py-3 text-left font-medium text-sand-900/60">品牌</th>
+                            <th className="px-4 py-3 text-right font-medium text-sand-900/60">单价</th>
+                            <th className="px-4 py-3 text-right font-medium text-sand-900/60">单位</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {result.recommendedMaterials.map((m, i) => (
+                            <tr key={i} className="border-b border-sand-100 last:border-0">
+                              <td className="px-4 py-3 font-medium text-sand-900">{m.name}</td>
+                              <td className="px-4 py-3 text-sand-900/60">{m.category}</td>
+                              <td className="px-4 py-3 text-sand-900/60">{m.brand}</td>
+                              <td className="px-4 py-3 text-right text-sand-900">¥{formatPrice(m.price)}</td>
+                              <td className="px-4 py-3 text-right text-sand-900/60">{m.unit}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

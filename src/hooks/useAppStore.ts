@@ -1,9 +1,12 @@
 import { create } from 'zustand'
 import { fetchApi } from '@/lib/api'
+import type { CaseItem, DesignerItem } from '@/lib/types'
 
 interface FavoriteItem {
   id: string
   type: 'case' | 'designer'
+  style?: string
+  region?: string
 }
 
 interface AppState {
@@ -11,7 +14,7 @@ interface AppState {
   favorites: FavoriteItem[]
   loading: boolean
   initFavorites: (userId: string) => Promise<void>
-  toggleFavorite: (targetId: string, type: 'case' | 'designer') => Promise<void>
+  toggleFavorite: (targetId: string, type: 'case' | 'designer', meta?: { style?: string; region?: string }) => Promise<void>
   isFavorite: (targetId: string) => boolean
   getFavoritesByType: (type: 'case' | 'designer') => string[]
 }
@@ -25,12 +28,12 @@ export const useAppStore = create<AppState>((set, get) => ({
     set({ loading: true })
     try {
       const [caseFavs, designerFavs] = await Promise.all([
-        fetchApi<Array<{ id: string }>>(`/api/favorites?user_id=${userId}&type=case`),
-        fetchApi<Array<{ id: string }>>(`/api/favorites?user_id=${userId}&type=designer`),
+        fetchApi<CaseItem[]>(`/api/favorites?user_id=${userId}&type=case`),
+        fetchApi<DesignerItem[]>(`/api/favorites?user_id=${userId}&type=designer`),
       ])
       const favs: FavoriteItem[] = [
-        ...(Array.isArray(caseFavs) ? caseFavs.map(f => ({ id: f.id, type: 'case' as const })) : []),
-        ...(Array.isArray(designerFavs) ? designerFavs.map(f => ({ id: f.id, type: 'designer' as const })) : []),
+        ...(Array.isArray(caseFavs) ? caseFavs.map(f => ({ id: f.id, type: 'case' as const, style: f.style })) : []),
+        ...(Array.isArray(designerFavs) ? designerFavs.map(f => ({ id: f.id, type: 'designer' as const, region: f.region })) : []),
       ]
       set({ favorites: favs })
     } catch {
@@ -40,7 +43,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  toggleFavorite: async (targetId: string, type: 'case' | 'designer') => {
+  toggleFavorite: async (targetId: string, type: 'case' | 'designer', meta?: { style?: string; region?: string }) => {
     const { currentUserId, favorites, initFavorites } = get()
     const existing = favorites.find(f => f.id === targetId && f.type === type)
 
@@ -64,7 +67,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         })
         if (resp.success) {
           set({
-            favorites: [...favorites, { id: targetId, type }],
+            favorites: [...favorites, { id: targetId, type, style: meta?.style, region: meta?.region }],
           })
         }
       }

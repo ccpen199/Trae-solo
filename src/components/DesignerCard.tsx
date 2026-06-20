@@ -71,7 +71,7 @@ export default function DesignerCard({ designer, showActions = true }: { designe
           onClick={(e: React.MouseEvent) => {
             e.preventDefault()
             e.stopPropagation()
-            toggleFavorite(designer.id, 'designer')
+            toggleFavorite(designer.id, 'designer', { region: designer.region })
           }}
           className="absolute top-0 right-0 z-10 rounded-full bg-white/20 p-1.5 backdrop-blur-sm transition-colors hover:bg-white/40"
         >

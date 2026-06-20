@@ -43,10 +43,14 @@ export interface DesignerItem {
   id: string
   name: string
   avatar: string
+  title?: string
+  company?: string
   certification: 'gold' | 'silver' | 'bronze'
   region: string
+  experience?: number
   styles: string[]
   rating: number
+  casesCount?: number
   description: string
   priceMin: number
   priceMax: number
@@ -106,4 +110,46 @@ export const CERT_COLORS: Record<string, string> = {
   gold: 'text-yellow-500',
   silver: 'text-gray-400',
   bronze: 'text-amber-700',
+}
+
+export const CERT_BG: Record<string, string> = {
+  gold: 'bg-yellow-500/10',
+  silver: 'bg-gray-400/10',
+  bronze: 'bg-amber-700/10',
+}
+
+export const CERT_DETAILS: Record<string, { label: string; desc: string; requirements: string[] }> = {
+  gold: {
+    label: '金牌认证设计师',
+    desc: '最高等级认证，从业10年以上，服务超500位业主，0投诉记录',
+    requirements: [
+      '从业年限 ≥ 10年',
+      '已完成案例 ≥ 100个',
+      '业主好评率 ≥ 98%',
+      '近3年零投诉记录',
+      '持有注册室内设计师资格证',
+    ],
+  },
+  silver: {
+    label: '银牌认证设计师',
+    desc: '高级认证，从业5年以上，服务超200位业主，口碑优良',
+    requirements: [
+      '从业年限 ≥ 5年',
+      '已完成案例 ≥ 50个',
+      '业主好评率 ≥ 95%',
+      '近1年无有效投诉',
+      '具备专业设计资质',
+    ],
+  },
+  bronze: {
+    label: '铜牌认证设计师',
+    desc: '初级认证，从业2年以上，服务超50位业主，平台审核通过',
+    requirements: [
+      '从业年限 ≥ 2年',
+      '已完成案例 ≥ 15个',
+      '业主好评率 ≥ 90%',
+      '平台身份信息核验通过',
+      '提交作品集审核通过',
+    ],
+  },
 }
