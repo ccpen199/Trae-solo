@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   User, MapPin, Phone, Star, Award, CheckCircle, Clock, Briefcase,
-  DollarSign, Calendar, Navigation, ChevronRight, Handshake
+  DollarSign, Calendar, Navigation, ChevronRight, Handshake, TrendingUp
 } from 'lucide-react';
 import type { InterviewOrder, Broker, Worker } from '@shared/types';
 import { cn } from '@/lib/utils';
@@ -144,7 +144,10 @@ export default function BrokerDashboard() {
   };
 
   const completed = tasks.filter(t => t.completed).length;
-  const totalEarning = tasks.filter(t => t.completed).length * 50 + 1280;
+  const totalOrders = broker?.totalOrders || 0;
+  const completedOrders = broker?.completedOrders || 0;
+  const completionRate = totalOrders > 0 ? Math.round(completedOrders / totalOrders * 100) : 0;
+  const totalEarning = myOrders.reduce((sum, o) => sum + (o.serviceFee || 0), 0);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -189,21 +192,26 @@ export default function BrokerDashboard() {
               </div>
             </div>
           </div>
-          <div className="flex-1 w-full grid grid-cols-3 gap-3 lg:ml-6 lg:border-l lg:border-white/10 lg:pl-6">
+          <div className="flex-1 w-full grid grid-cols-4 gap-3 lg:ml-6 lg:border-l lg:border-white/10 lg:pl-6">
             <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 p-4 text-center">
-              <div className="flex items-center justify-center gap-1.5 mb-1 text-white/70 text-xs"><CheckCircle className="w-3.5 h-3.5" />本月已完成</div>
-              <div className="text-3xl font-bold">{broker?.completedOrders || 0}</div>
+              <div className="flex items-center justify-center gap-1.5 mb-1 text-white/70 text-xs"><Briefcase className="w-3.5 h-3.5" />总订单</div>
+              <div className="text-3xl font-bold">{totalOrders}</div>
               <div className="text-xs text-white/60 mt-0.5">单</div>
             </div>
             <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 p-4 text-center">
-              <div className="flex items-center justify-center gap-1.5 mb-1 text-white/70 text-xs"><Clock className="w-3.5 h-3.5" />进行中</div>
-              <div className="text-3xl font-bold">{tasks.length - completed}</div>
-              <div className="text-xs text-white/60 mt-0.5">单 · 今日</div>
+              <div className="flex items-center justify-center gap-1.5 mb-1 text-white/70 text-xs"><CheckCircle className="w-3.5 h-3.5" />已完成</div>
+              <div className="text-3xl font-bold">{completedOrders}</div>
+              <div className="text-xs text-white/60 mt-0.5">单</div>
+            </div>
+            <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 p-4 text-center">
+              <div className="flex items-center justify-center gap-1.5 mb-1 text-white/70 text-xs"><TrendingUp className="w-3.5 h-3.5" />完成率</div>
+              <div className="text-3xl font-bold">{completionRate}%</div>
+              <div className="text-xs text-white/60 mt-0.5">{completedOrders}/{totalOrders}</div>
             </div>
             <div className="rounded-xl bg-gradient-to-br from-accent-500/80 to-accent-600/80 backdrop-blur-sm border border-accent-400/30 p-4 text-center">
               <div className="flex items-center justify-center gap-1.5 mb-1 text-white/90 text-xs"><DollarSign className="w-3.5 h-3.5" />本月总收入</div>
               <div className="text-3xl font-bold">¥{totalEarning.toLocaleString()}</div>
-              <div className="text-xs text-white/70 mt-0.5">服务费+奖励</div>
+              <div className="text-xs text-white/70 mt-0.5">服务费累计</div>
             </div>
           </div>
         </div>
@@ -241,19 +249,22 @@ export default function BrokerDashboard() {
                       <div className={cn('absolute -bottom-1 -right-1 text-[10px] font-bold rounded-md px-1.5 py-0.5 shadow', getScoreColor(o.workerCreditScore))}>{o.workerCreditScore}分</div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="font-semibold text-gray-900">{o.workerName}</span>
-                        <span className="text-xs text-gray-400">{o.workerPhone}</span>
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="font-semibold text-gray-900">{o.workerName}</span>
+                          <span className="text-xs text-gray-400">{o.workerPhone}</span>
+                        </div>
+                        <div className="text-sm">
+                          <span className="text-brand-600 font-medium">{o.factoryName}</span>
+                          <span className="mx-1 text-gray-300">·</span>
+                          <span className="text-accent-600 font-medium">{o.jobTitle}</span>
+                        </div>
+                        <div className="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />面试时间：{new Date(o.scheduledDate).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {o.workerSkills.slice(0, 3).map(s => <span key={s} className="tag border-brand-200 bg-brand-50 text-brand-600 text-[10px]">{s}</span>)}
+                        </div>
                       </div>
-                      <div className="text-sm">
-                        <span className="text-brand-600 font-medium">{o.factoryName}</span>
-                        <span className="mx-1 text-gray-300">·</span>
-                        <span className="text-accent-600 font-medium">{o.jobTitle}</span>
-                      </div>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {o.workerSkills.slice(0, 3).map(s => <span key={s} className="tag border-brand-200 bg-brand-50 text-brand-600 text-[10px]">{s}</span>)}
-                      </div>
-                    </div>
                   </div>
                   <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-end lg:items-end gap-3 lg:gap-2 shrink-0 w-full lg:w-auto">
                     <div className="flex items-center gap-4 lg:gap-6 justify-between sm:justify-end">

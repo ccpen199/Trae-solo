@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import {
   Search, Plus, Edit2, Trash2, Eye, Users, DollarSign, MapPin,
   Briefcase, X, Check, Clock, Star, TrendingUp, AlertCircle,
-  ChevronRight, Settings, Copy, Tag, Zap, Calendar
+  ChevronRight, ChevronDown, Settings, Copy, Tag, Zap, Calendar, Building2,
+  MessageSquare, ListChecks, Home, UtensilsCrossed, Timer
 } from 'lucide-react';
-import type { Job, InterviewOrder, Factory, Worker } from '@shared/types';
+import type { Job, InterviewOrder, Factory, Worker, ProcessNode } from '@shared/types';
 import { cn } from '@/lib/utils';
 import { get, post, patch } from '@/lib/api';
+import EhsBadge from '@/components/ui/EhsBadge';
+import WhitelistBadge from '@/components/ui/WhitelistBadge';
 
 const FACTORY_ID = 'f-001';
 
@@ -134,6 +137,7 @@ export default function FactoryJobsMgmt() {
     boardProvided: true, lodgingProvided: true, urgent: false,
   });
   const [actionLoading, setActionLoading] = useState(false);
+  const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -336,6 +340,85 @@ export default function FactoryJobsMgmt() {
           </button>
         </div>
 
+        {factory && (
+          <div className="card p-6 mb-8">
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
+              <div className="flex items-start gap-4 flex-shrink-0">
+                <div className="w-16 h-16 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-4xl">{factory.logo}</div>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h2 className="text-2xl font-bold text-gray-900">{factory.name}</h2>
+                    <WhitelistBadge status={factory.whitelistStatus} />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+                    <span className="flex items-center gap-1"><Building2 className="w-4 h-4 text-gray-400" />{factory.industry}</span>
+                    <span className="flex items-center gap-1"><Users className="w-4 h-4 text-gray-400" />{factory.scale}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-gray-400" />{factory.region}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-1 w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-gray-50 rounded-xl p-4">
+                  <div className="text-xs text-gray-500 mb-2">EHS评级</div>
+                  <EhsBadge rating={factory.ehsRating} score={factory.ehsScore} showScore size="sm" />
+                  <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-brand-500 to-accent-500 rounded-full" style={{ width: `${factory.ehsScore}%` }} />
+                  </div>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-4">
+                  <div className="text-xs text-gray-500 mb-1">日产能</div>
+                  <div className="text-xl font-bold text-gray-900">{factory.dailyCapacity.toLocaleString()}</div>
+                  <div className="text-xs text-brand-600 font-medium mt-1">利用率 {factory.capacityUtilization}%</div>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-4 col-span-2">
+                  <div className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+                    <MessageSquare className="w-3.5 h-3.5" />员工访谈（{factory.interviewSummaries.length}条）
+                  </div>
+                  {factory.interviewSummaries.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <svg key={i} className={cn('w-3.5 h-3.5', i < (factory.interviewSummaries[factory.interviewSummaries.length - 1]?.satisfaction || 0) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200')} viewBox="0 0 20 20">
+                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                          </svg>
+                        ))}
+                        <span className="text-xs text-gray-500 ml-1">最近满意度</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {(factory.interviewSummaries[factory.interviewSummaries.length - 1]?.keywords || []).slice(0, 5).map(k => (
+                          <span key={k} className="tag border-accent-200 bg-accent-50 text-accent-600 text-[10px]">{k}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {factory.seasonNote && (
+                    <div className="mt-2 text-xs text-gray-500 bg-accent-50 rounded-lg p-2 border-l-3 border-accent-500">{factory.seasonNote}</div>
+                  )}
+                </div>
+              </div>
+            </div>
+            {factory.safetyRecords.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-warning-500" />近期安全记录（{factory.safetyRecords.length}条）
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {factory.safetyRecords.slice(0, 4).map(r => (
+                    <span key={r.id} className={cn(
+                      'text-xs px-2.5 py-1 rounded-full border',
+                      r.level === 'major' ? 'bg-danger-50 text-danger-600 border-danger-200' :
+                      r.level === 'minor' ? 'bg-warning-50 text-warning-600 border-warning-200' :
+                      'bg-success-50 text-success-600 border-success-200'
+                    )}>
+                      {r.date} · {{ incident: '安全事故', audit: 'EHS审核', training: '安全培训' }[r.type] || r.type}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-5 gap-6 mb-8">
           <div className="card p-6 border-l-4 border-brand-600">
             <div className="text-sm text-gray-500 mb-2">全部岗位</div>
@@ -431,6 +514,7 @@ export default function FactoryJobsMgmt() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="text-left px-4 py-4 w-8"></th>
                     <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">岗位信息</th>
                     <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">薪资范围</th>
                     <th className="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">空缺/申请</th>
@@ -444,32 +528,43 @@ export default function FactoryJobsMgmt() {
                   {filteredJobs.map(job => {
                     const badge = getJobStatusBadge(job.status);
                     const convRate = job.applicantCount ? Math.round((job.hiredCount || 0) / job.applicantCount * 100) : 0;
+                    const isExpanded = expandedJobId === job.id;
                     return (
-                      <tr key={job.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-5">
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-semibold text-gray-900 text-base">{job.title}</span>
-                              {job.urgent && <span className="px-2 py-0.5 bg-danger-50 text-danger-600 rounded text-[11px] font-medium flex items-center gap-1"><Zap className="w-3 h-3" />急招</span>}
-                              {job.highSubsidy && <span className="px-2 py-0.5 bg-accent-50 text-accent-600 rounded text-[11px] font-medium flex items-center gap-1"><Tag className="w-3 h-3" />高补贴</span>}
+                      <Fragment key={job.id}>
+                        <tr className={cn('hover:bg-gray-50 transition-colors cursor-pointer', isExpanded && 'bg-gray-50')} onClick={() => setExpandedJobId(isExpanded ? null : job.id)}>
+                          <td className="px-4 py-5">
+                            {isExpanded ? <ChevronDown className="w-4 h-4 text-gray-400" /> : <ChevronRight className="w-4 h-4 text-gray-400" />}
+                          </td>
+                          <td className="px-6 py-5">
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-semibold text-gray-900 text-base">{job.title}</span>
+                                {job.urgent && <span className="px-2 py-0.5 bg-danger-50 text-danger-600 rounded text-[11px] font-medium flex items-center gap-1"><Zap className="w-3 h-3" />急招</span>}
+                                {job.highSubsidy && <span className="px-2 py-0.5 bg-accent-50 text-accent-600 rounded text-[11px] font-medium flex items-center gap-1"><Tag className="w-3 h-3" />高补贴</span>}
+                              </div>
+                              <div className="flex items-center gap-4 text-xs text-gray-500">
+                                <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{job.workHours}</span>
+                                <span className="flex items-center gap-1">
+                                  <UtensilsCrossed className="w-3.5 h-3.5" />
+                                  {job.board.provided
+                                    ? <span className="text-success-600 font-medium">包吃{job.board.costPerMonth ? `(¥${job.board.costPerMonth}/月)` : ''}</span>
+                                    : <span className="text-gray-400">不包吃</span>}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Home className="w-3.5 h-3.5" />
+                                  {job.lodging.provided
+                                    ? <span className="text-success-600 font-medium">包住{job.lodging.costPerMonth ? `(¥${job.lodging.costPerMonth}/月)` : ''}{job.lodging.roomType ? ` · ${job.lodging.roomType}` : ''}</span>
+                                    : <span className="text-gray-400">不包住</span>}
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-1.5 mt-2">
+                                {job.benefits.slice(0, 4).map(b => (
+                                  <span key={b} className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-[11px]">{b}</span>
+                                ))}
+                                {job.benefits.length > 4 && <span className="text-[11px] text-gray-400 self-end">+{job.benefits.length - 4}</span>}
+                              </div>
                             </div>
-                            <div className="flex items-center gap-4 text-xs text-gray-500">
-                              <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{job.workHours}</span>
-                              <span className="flex items-center gap-1">
-                                {job.board.provided ? <><Check className="w-3.5 h-3.5 text-success-500" />包吃</> : <><X className="w-3.5 h-3.5 text-gray-400" />不包吃</>}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                {job.lodging.provided ? <><Check className="w-3.5 h-3.5 text-success-500" />包住</> : <><X className="w-3.5 h-3.5 text-gray-400" />不包住</>}
-                              </span>
-                            </div>
-                            <div className="flex flex-wrap gap-1.5 mt-2">
-                              {job.benefits.slice(0, 4).map(b => (
-                                <span key={b} className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-[11px]">{b}</span>
-                              ))}
-                              {job.benefits.length > 4 && <span className="text-[11px] text-gray-400 self-end">+{job.benefits.length - 4}</span>}
-                            </div>
-                          </div>
-                        </td>
+                          </td>
                         <td className="px-6 py-5">
                           <div className="flex items-center gap-1">
                             <DollarSign className="w-4 h-4 text-accent-500" />
@@ -513,7 +608,7 @@ export default function FactoryJobsMgmt() {
                           </span>
                         </td>
                         <td className="px-6 py-5 text-sm text-gray-600">{job.createdAt}</td>
-                        <td className="px-6 py-5">
+                        <td className="px-6 py-5" onClick={e => e.stopPropagation()}>
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => { setActiveTab('applicants'); setViewingApplicantsJob(job); }}
@@ -540,6 +635,74 @@ export default function FactoryJobsMgmt() {
                           </div>
                         </td>
                       </tr>
+                      {isExpanded && (
+                        <tr className="bg-gray-50/60">
+                          <td colSpan={8} className="px-6 py-5 border-b border-gray-100">
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                              <div>
+                                <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2"><Timer className="w-4 h-4 text-accent-600" />加班规则</h4>
+                                <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-2">
+                                  <div className="text-sm text-gray-700 font-medium">{job.overtimeRule}</div>
+                                  <div className="grid grid-cols-3 gap-2 text-xs">
+                                    <div className="bg-gray-50 rounded-lg p-2 text-center">
+                                      <div className="text-gray-500">工作日</div>
+                                      <div className="font-bold text-brand-600 mt-0.5">×{job.overtimeRate.weekday}</div>
+                                    </div>
+                                    <div className="bg-gray-50 rounded-lg p-2 text-center">
+                                      <div className="text-gray-500">周末</div>
+                                      <div className="font-bold text-accent-600 mt-0.5">×{job.overtimeRate.weekend}</div>
+                                    </div>
+                                    <div className="bg-gray-50 rounded-lg p-2 text-center">
+                                      <div className="text-gray-500">节假日</div>
+                                      <div className="font-bold text-warning-600 mt-0.5">×{job.overtimeRate.holiday}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2"><ListChecks className="w-4 h-4 text-brand-600" />岗位要求</h4>
+                                <div className="bg-white rounded-xl border border-gray-100 p-4">
+                                  {job.requirements.length === 0 ? (
+                                    <div className="text-sm text-gray-400 text-center py-2">暂无要求</div>
+                                  ) : (
+                                    <ul className="space-y-1.5">
+                                      {job.requirements.map((r, i) => (
+                                        <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
+                                          <Check className="w-4 h-4 text-success-500 mt-0.5 flex-shrink-0" />
+                                          <span>{r}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </div>
+                              </div>
+                              <div>
+                                <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2"><Briefcase className="w-4 h-4 text-success-600" />入职流程（{job.processNodes.length}步）</h4>
+                                <div className="bg-white rounded-xl border border-gray-100 p-4">
+                                  {job.processNodes.length === 0 ? (
+                                    <div className="text-sm text-gray-400 text-center py-2">暂无流程</div>
+                                  ) : (
+                                    <div className="relative pl-5 space-y-3">
+                                      <div className="absolute left-1.5 top-1 bottom-1 w-0.5 bg-gray-200 rounded-full" />
+                                      {job.processNodes.map((node: ProcessNode, i: number) => (
+                                        <div key={node.step} className="relative">
+                                          <div className={cn(
+                                            'absolute -left-[18px] top-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold text-white',
+                                            i === 0 ? 'bg-brand-500' : i === job.processNodes.length - 1 ? 'bg-success-500' : 'bg-gray-400'
+                                          )}>{node.step}</div>
+                                          <div className="text-sm font-medium text-gray-900">{node.name}</div>
+                                          <div className="text-xs text-gray-500 mt-0.5">{node.description} · {node.duration}</div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                      </Fragment>
                     );
                   })}
                 </tbody>
