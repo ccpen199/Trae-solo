@@ -20,6 +20,11 @@ const inputCls = 'w-full rounded-lg border border-sand-200 bg-white px-3 py-2 te
 
 function AppointmentModal({ designerId, onClose }: { designerId: string; onClose: () => void }) {
   const { currentUserId } = useAppStore()
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [houseType, setHouseType] = useState(HOUSE_TYPES[2])
+  const [area, setArea] = useState('')
+  const [budget, setBudget] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState(TIME_SLOTS[0])
   const [notes, setNotes] = useState('')
@@ -27,12 +32,22 @@ function AppointmentModal({ designerId, onClose }: { designerId: string; onClose
   const [success, setSuccess] = useState(false)
 
   const onSubmit = async () => {
-    if (!date) return
+    if (!name || !phone || !date) return
     setSubmitting(true)
     try {
       await fetchApi(`/api/designers/${designerId}/appointment`, {
         method: 'POST',
-        body: JSON.stringify({ user_id: currentUserId, preferred_date: date, preferred_time: time, message: notes }),
+        body: JSON.stringify({
+          user_id: currentUserId,
+          contact_name: name,
+          contact_phone: phone,
+          house_type: houseType,
+          area: area ? Number(area) : null,
+          budget: budget ? Number(budget) : null,
+          preferred_date: date,
+          preferred_time: time,
+          message: notes,
+        }),
       })
       setSuccess(true)
     } catch { } finally { setSubmitting(false) }
@@ -40,33 +55,67 @@ function AppointmentModal({ designerId, onClose }: { designerId: string; onClose
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between">
           <h3 className="font-display text-xl font-semibold text-sand-900">预约量房</h3>
           <button onClick={onClose} className="text-sand-900/40 hover:text-sand-900"><X size={20} /></button>
         </div>
         {success ? (
           <div className="py-8 text-center">
-            <p className="font-display text-lg text-sand-900">预约成功！</p>
-            <p className="mt-2 text-sm text-sand-900/60">设计师将在24小时内与您联系</p>
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-sage-400/10">
+              <ShieldCheck size={24} className="text-sage-600" />
+            </div>
+            <p className="font-display text-lg text-sand-900">预约提交成功！</p>
+            <p className="mt-2 text-sm text-sand-900/60">设计师将在24小时内与您联系确认量房时间</p>
+            <button onClick={onClose} className="mt-6 rounded-lg bg-sand-400 px-6 py-2 text-sm font-medium text-white hover:bg-sand-500">
+              完成
+            </button>
           </div>
         ) : (
           <div className="mt-4 space-y-4">
-            <div>
-              <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">日期</label>
-              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">姓名 *</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="请输入您的姓名" className={inputCls} />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">手机号 *</label>
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="138****8888" className={inputCls} />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">户型</label>
+                <select value={houseType} onChange={(e) => setHouseType(e.target.value)} className={inputCls}>
+                  {HOUSE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">面积 (㎡)</label>
+                <input type="number" value={area} onChange={(e) => setArea(e.target.value)} placeholder="100" className={inputCls} />
+              </div>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">时间段</label>
-              <select value={time} onChange={(e) => setTime(e.target.value)} className={inputCls}>
-                {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
+              <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">预算 (万元)</label>
+              <input type="number" value={budget} onChange={(e) => setBudget(e.target.value)} placeholder="30" className={inputCls} />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">量房日期 *</label>
+                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">时间段</label>
+                <select value={time} onChange={(e) => setTime(e.target.value)} className={inputCls}>
+                  {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">备注</label>
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className={cn(inputCls, 'resize-none')} placeholder="请描述您的需求…" />
+              <label className="mb-1 block text-xs font-semibold tracking-wider text-sand-900/60 uppercase">需求描述</label>
+              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className={cn(inputCls, 'resize-none')} placeholder="请描述您的装修需求或特殊要求…" />
             </div>
-            <button onClick={onSubmit} disabled={!date || submitting} className="w-full rounded-lg bg-sand-400 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sand-500 disabled:opacity-50">
+            <button onClick={onSubmit} disabled={!name || !phone || !date || submitting} className="w-full rounded-lg bg-sand-400 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sand-500 disabled:opacity-50">
               {submitting ? '提交中…' : '提交预约'}
             </button>
           </div>

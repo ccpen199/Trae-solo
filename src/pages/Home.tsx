@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Calculator, Glasses, Ruler, Palette, ChevronRight, MapPin, Tag } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import { Calculator, Glasses, Ruler, Palette, ChevronRight, MapPin, Tag, Home as HomeIcon, Grid3X3, Banknote } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CaseCard from '@/components/CaseCard'
 import DesignerCard from '@/components/DesignerCard'
 import type { CaseItem, DesignerItem } from '@/lib/types'
-import { STYLES, REGIONS } from '@/lib/types'
+import { STYLES, REGIONS, HOUSE_TYPES } from '@/lib/types'
 import { fetchApi } from '@/lib/api'
 
 const HERO_IMAGES = [
@@ -22,6 +22,24 @@ const QUICK_ENTRIES = [
   { icon: Palette, label: '风格测试', to: '/cases', color: 'text-sage-400' },
 ]
 
+const AREA_OPTIONS = [
+  { label: '不限', value: '' },
+  { label: '60㎡以下', value: '0,60' },
+  { label: '60-90㎡', value: '60,90' },
+  { label: '90-120㎡', value: '90,120' },
+  { label: '120-150㎡', value: '120,150' },
+  { label: '150㎡以上', value: '150,9999' },
+]
+
+const BUDGET_OPTIONS = [
+  { label: '不限', value: '' },
+  { label: '10万以下', value: '0,10' },
+  { label: '10-20万', value: '10,20' },
+  { label: '20-40万', value: '20,40' },
+  { label: '40-80万', value: '40,80' },
+  { label: '80万以上', value: '80,9999' },
+]
+
 const entryAction = (label: string, cases: CaseItem[], activeStyle: string) => {
   if (label === 'VR体验' && cases.length > 0) {
     return `/cases/${cases[0].id}?vr=1`
@@ -33,8 +51,12 @@ const entryAction = (label: string, cases: CaseItem[], activeStyle: string) => {
 }
 
 export default function Home() {
+  const location = useLocation()
   const [heroIndex, setHeroIndex] = useState(0)
   const [activeStyle, setActiveStyle] = useState<string>(STYLES[0])
+  const [houseType, setHouseType] = useState<string>('')
+  const [areaRange, setAreaRange] = useState<string>('')
+  const [budgetRange, setBudgetRange] = useState<string>('')
   const [cases, setCases] = useState<CaseItem[]>([])
   const [designers, setDesigners] = useState<DesignerItem[]>([])
   const [casesLoading, setCasesLoading] = useState(true)
@@ -50,17 +72,37 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
+    if (location.pathname === '/' && !location.search) {
+      setActiveStyle(STYLES[0])
+      setHouseType('')
+      setAreaRange('')
+      setBudgetRange('')
+      setDesignerRegion('')
+      setDesignerStyle('')
+    }
+  }, [location.pathname, location.search])
+
+  useEffect(() => {
     setCasesLoading(true)
     const params = new URLSearchParams()
     params.set('limit', '4')
-    if (activeStyle && activeStyle !== '') {
-      params.set('style', activeStyle)
+    if (activeStyle) params.set('style', activeStyle)
+    if (houseType) params.set('houseType', houseType)
+    if (areaRange) {
+      const [min, max] = areaRange.split(',')
+      params.set('areaMin', min)
+      params.set('areaMax', max)
+    }
+    if (budgetRange) {
+      const [min, max] = budgetRange.split(',')
+      params.set('budgetMin', min)
+      params.set('budgetMax', max)
     }
     fetchApi<{ items: CaseItem[] }>(`/api/cases?${params.toString()}`)
       .then((data) => setCases(data.items))
       .catch(() => setCases([]))
       .finally(() => setCasesLoading(false))
-  }, [activeStyle])
+  }, [activeStyle, houseType, areaRange, budgetRange])
 
   useEffect(() => {
     setDesignersLoading(true)
@@ -151,19 +193,84 @@ export default function Home() {
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-2xl font-bold text-sand-900">精选案例</h2>
-            <Link
-              to={`/cases${activeStyle ? `?style=${encodeURIComponent(activeStyle)}` : ''}`}
-              className="flex items-center gap-1 text-sm text-sand-400 transition-colors hover:text-sand-500"
-            >
-              查看更多 <ChevronRight size={16} />
-            </Link>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => { setActiveStyle(STYLES[0]); setHouseType(''); setAreaRange(''); setBudgetRange('') }}
+                className="text-xs text-sand-900/50 transition-colors hover:text-sand-400"
+              >
+                重置筛选
+              </button>
+              <Link
+                to={`/cases?${(() => {
+                  const p = new URLSearchParams()
+                  if (activeStyle) p.set('style', activeStyle)
+                  if (houseType) p.set('houseType', houseType)
+                  if (areaRange) { const [mn, mx] = areaRange.split(','); p.set('areaMin', mn); p.set('areaMax', mx) }
+                  if (budgetRange) { const [mn, mx] = budgetRange.split(','); p.set('budgetMin', mn); p.set('budgetMax', mx) }
+                  return p.toString()
+                })()}`}
+                className="flex items-center gap-1 text-sm text-sand-400 transition-colors hover:text-sand-500"
+              >
+                查看更多 <ChevronRight size={16} />
+              </Link>
+            </div>
           </div>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 flex flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <HomeIcon size={16} className="text-sand-500" />
+              <select
+                value={houseType}
+                onChange={(e) => setHouseType(e.target.value)}
+                className="rounded-lg border border-sand-200 bg-white px-3 py-1.5 text-sm text-sand-900 outline-none focus:border-sand-400"
+              >
+                <option value="">全部户型</option>
+                {HOUSE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+              <Grid3X3 size={16} className="text-sage-400" />
+              <select
+                value={areaRange}
+                onChange={(e) => setAreaRange(e.target.value)}
+                className="rounded-lg border border-sand-200 bg-white px-3 py-1.5 text-sm text-sand-900 outline-none focus:border-sand-400"
+              >
+                {AREA_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+              <Banknote size={16} className="text-sand-600" />
+              <select
+                value={budgetRange}
+                onChange={(e) => setBudgetRange(e.target.value)}
+                className="rounded-lg border border-sand-200 bg-white px-3 py-1.5 text-sm text-sand-900 outline-none focus:border-sand-400"
+              >
+                {BUDGET_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </div>
+            {(houseType || areaRange || budgetRange) && (
+              <div className="flex items-center gap-1 text-xs text-sand-900/60">
+                筛选结果 {cases.length} 条
+              </div>
+            )}
+          </div>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {casesLoading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="aspect-[4/3] animate-pulse rounded-xl bg-sand-200" />
                 ))
-              : cases.map((c) => <CaseCard key={c.id} item={c} />)}
+              : cases.length > 0
+              ? cases.map((c) => <CaseCard key={c.id} item={c} />)
+              : (
+                <div className="col-span-full py-16 text-center">
+                  <p className="font-display text-lg text-sand-900/40">该条件下暂无案例</p>
+                  <button
+                    onClick={() => { setActiveStyle(STYLES[0]); setHouseType(''); setAreaRange(''); setBudgetRange('') }}
+                    className="mt-3 text-sm text-sand-400 hover:underline"
+                  >
+                    清除筛选条件
+                  </button>
+                </div>
+              )}
           </div>
         </div>
       </section>

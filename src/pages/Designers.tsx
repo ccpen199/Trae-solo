@@ -97,7 +97,7 @@ export default function Designers() {
       })
       .catch(() => { setDesigners([]); setTotal(0) })
       .finally(() => setLoading(false))
-  }, [searchParams, page, region, style, priceMin, priceMax, sort])
+  }, [page, region, style, priceMin, priceMax, sort])
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
