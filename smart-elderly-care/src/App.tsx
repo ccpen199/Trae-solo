@@ -17,7 +17,7 @@ import ElectronicSignature from './pages/institution/ElectronicSignature'
 import ElderProfile from './pages/shared/ElderProfile'
 import ServiceOrder from './pages/shared/ServiceOrder'
 import SmartScheduling from './pages/shared/SmartScheduling'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { AuthProvider, useAuth, entryPaths } from './context/AuthContext'
 import type { Role } from './types'
 
 function RoleLayout({ role, children }: { role: Role; children: React.ReactNode }) {
@@ -101,11 +101,7 @@ function AppContent() {
   }
 
   const userRole = currentUser?.role as Role
-  const entryPath = {
-    government: '/government/dashboard',
-    institution: '/institution/overview',
-    family: '/family/overview',
-  }[userRole]
+  const entryPath = entryPaths[userRole]
 
   return (
     <Routes>

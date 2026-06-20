@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth, entryPaths } from '../context/AuthContext'
 import type { Role } from '../types'
 
 interface ProtectedRouteProps {
@@ -16,11 +16,6 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   }
 
   if (allowedRoles && currentUser && !allowedRoles.includes(currentUser.role as Role)) {
-    const entryPaths: Record<Role, string> = {
-      government: '/government/dashboard',
-      institution: '/institution/overview',
-      family: '/family/overview',
-    }
     return <Navigate to={entryPaths[currentUser.role as Role]} replace />
   }
 

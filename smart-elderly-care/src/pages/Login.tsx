@@ -1,107 +1,69 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth, testAccounts } from '../context/AuthContext'
-import { Shield, Briefcase, Heart, AlertCircle, ChevronRight, Lock, User as UserIcon } from 'lucide-react'
+import { useAuth, testAccounts, entryPaths } from '../context/AuthContext'
+import { Shield, Briefcase, Heart, ChevronRight, CheckCircle2, User as UserIcon, Building2, Home } from 'lucide-react'
 import type { Role } from '../types'
 
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const [selectedRole, setSelectedRole] = useState<Role>('government')
-  const [username, setUsername] = useState('admin_gov')
-  const [password, setPassword] = useState('gov123456')
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [loggingInAccount, setLoggingInAccount] = useState<string | null>(null)
 
-  const roleConfig: Record<Role, { label: string; subLabel: string; icon: React.ReactNode; color: string; hoverColor: string; bgColor: string; accounts: typeof testAccounts }> = {
+  const roleConfig: Record<Role, {
+    label: string
+    subLabel: string
+    icon: React.ReactNode
+    color: string
+    bgGradient: string
+    borderColor: string
+    textColor: string
+    accounts: typeof testAccounts
+  }> = {
     government: {
-      label: '民政监管',
-      subLabel: '监管看板 · 穿透审计 · 补贴追踪 · 投诉闭环',
-      icon: <Shield className="w-7 h-7" />,
+      label: '民政监管（G端）',
+      subLabel: '区域监管看板 · 穿透式审计 · 补贴资金追踪 · 投诉闭环管理',
+      icon: <Shield className="w-8 h-8" />,
       color: 'from-gov-500 to-gov-600',
-      hoverColor: 'hover:bg-gov-50 hover:border-gov-300',
-      bgColor: 'bg-gov-500',
-      accounts: testAccounts.filter(a => a.role === 'government'),
+      bgGradient: 'from-gov-50 to-white',
+      borderColor: 'border-gov-200 hover:border-gov-400',
+      textColor: 'text-gov-700',
+      accounts: testAccounts.filter((a) => a.role === 'government'),
     },
     institution: {
-      label: '机构管理',
-      subLabel: '护理计划 · 床位管理 · 电子签名 · 星级评定',
-      icon: <Briefcase className="w-7 h-7" />,
+      label: '机构管理（B端）',
+      subLabel: '护理计划执行 · 床位实时管理 · 电子签名归档 · 星级评定',
+      icon: <Briefcase className="w-8 h-8" />,
       color: 'from-primary-500 to-primary-600',
-      hoverColor: 'hover:bg-primary-50 hover:border-primary-300',
-      bgColor: 'bg-primary-500',
-      accounts: testAccounts.filter(a => a.role === 'institution'),
+      bgGradient: 'from-primary-50 to-white',
+      borderColor: 'border-primary-200 hover:border-primary-400',
+      textColor: 'text-primary-700',
+      accounts: testAccounts.filter((a) => a.role === 'institution'),
     },
     family: {
-      label: '家庭端',
-      subLabel: '用药追踪 · 异常预警 · 紧急联系人 · 居家服务',
-      icon: <Heart className="w-7 h-7" />,
+      label: '家庭端（C端）',
+      subLabel: '用药依从追踪 · 跌倒异常预警 · 紧急联系人联动 · 居家服务工单',
+      icon: <Heart className="w-8 h-8" />,
       color: 'from-elderly-500 to-elderly-400',
-      hoverColor: 'hover:bg-elderly-50 hover:border-elderly-300',
-      bgColor: 'bg-elderly-500',
-      accounts: testAccounts.filter(a => a.role === 'family'),
+      bgGradient: 'from-elderly-50 to-white',
+      borderColor: 'border-elderly-200 hover:border-elderly-400',
+      textColor: 'text-elderly-700',
+      accounts: testAccounts.filter((a) => a.role === 'family'),
     },
   }
 
-  const handleRoleSelect = (role: Role) => {
-    setSelectedRole(role)
-    const account = roleConfig[role].accounts[0]
-    setUsername(account.username)
-    setPassword(account.password)
-    setError('')
-  }
-
-  const handleQuickLogin = async (account: typeof testAccounts[0]) => {
-    setError('')
-    setIsLoading(true)
-    setUsername(account.username)
-    setPassword(account.password)
-    setSelectedRole(account.role)
+  const handleQuickLogin = async (account: (typeof testAccounts)[0]) => {
+    console.log('[Login] 点击一键登录:', account.name, account.username)
+    setLoggingInAccount(account.username)
 
     const result = await login(account.username, account.password)
-    setIsLoading(false)
+    setLoggingInAccount(null)
 
-    if (result.success) {
-      const entryPaths: Record<Role, string> = {
-        government: '/government/dashboard',
-        institution: '/institution/overview',
-        family: '/family/overview',
-      }
-      navigate(entryPaths[account.role], { replace: true })
+    if (result.success && result.user) {
+      console.log('[Login] 登录成功，跳转到:', entryPaths[result.user.role])
+      navigate(entryPaths[result.user.role], { replace: true })
     } else {
-      setError(result.message || '登录失败')
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
-
-    if (!username.trim()) {
-      setError('请输入账号')
-      setIsLoading(false)
-      return
-    }
-    if (!password.trim()) {
-      setError('请输入密码')
-      setIsLoading(false)
-      return
-    }
-
-    const result = await login(username.trim(), password.trim())
-    setIsLoading(false)
-
-    if (result.success) {
-      const userRole = selectedRole
-      const entryPaths: Record<Role, string> = {
-        government: '/government/dashboard',
-        institution: '/institution/overview',
-        family: '/family/overview',
-      }
-      navigate(entryPaths[userRole], { replace: true })
-    } else {
-      setError(result.message || '登录失败')
+      console.error('[Login] 登录失败:', result.message)
     }
   }
 
@@ -116,7 +78,7 @@ export default function LoginPage() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl">
-        <div className="flex flex-col lg:flex-row gap-8 items-center">
+        <div className="flex flex-col lg:flex-row gap-10 items-center">
           <div className="flex-1 text-white lg:pr-8">
             <div className="mb-8">
               <div className="w-20 h-20 bg-white/10 backdrop-blur rounded-2xl flex items-center justify-center mb-6 border border-white/10">
@@ -127,7 +89,7 @@ export default function LoginPage() {
                 <br />
                 <span className="text-primary-300">综合服务平台</span>
               </h1>
-              <p className="text-slate-300 text-lg">GBC三端协同 · 以民政监管为底座</p>
+              <p className="text-slate-300 text-lg">GBC 三端协同 · 以民政监管为底座</p>
             </div>
             <div className="space-y-3 text-slate-300 text-sm">
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
@@ -135,21 +97,25 @@ export default function LoginPage() {
                 <span><b className="text-gov-300">G端·民政监管：</b>区域老龄化率、补贴发放精准度、投诉闭环率、穿透式审计</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                <Briefcase className="w-5 h-5 text-primary-400 shrink-0" />
-                <span><b className="text-primary-300">B端·机构管理：</b>老人档案、床位余量、护理计划执行、电子签名归档</span>
+                <Building2 className="w-5 h-5 text-primary-400 shrink-0" />
+                <span><b className="text-primary-300">B端·机构管理：</b>老人数字档案、床位实时余量、护理计划执行、电子签名归档</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                <Heart className="w-5 h-5 text-elderly-400 shrink-0" />
-                <span><b className="text-elderly-300">C端·家庭端：</b>用药依从性、跌倒预警、紧急联系人、居家服务工单</span>
+                <Home className="w-5 h-5 text-elderly-400 shrink-0" />
+                <span><b className="text-elderly-300">C端·家庭端：</b>用药依从性、跌倒异常预警、紧急联系人、居家服务工单</span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
+                <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
+                <span><b className="text-green-300">服务调度：</b>健康等级×地理位置×紧迫度三维智能匹配</span>
               </div>
             </div>
           </div>
 
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-lg">
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-              <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-6 py-4">
-                <h2 className="text-lg font-bold text-white">选择角色并登录</h2>
-                <p className="text-xs text-slate-400 mt-0.5">点击下方测试账号可快速登录体验</p>
+              <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-6 py-5">
+                <h2 className="text-xl font-bold text-white">选择身份，一键登录</h2>
+                <p className="text-xs text-slate-400 mt-1">点击下方账号卡片即可直接进入对应工作台，无需输入密码</p>
               </div>
 
               <div className="p-6 space-y-5">
@@ -161,108 +127,79 @@ export default function LoginPage() {
                       <button
                         key={role}
                         type="button"
-                        onClick={() => handleRoleSelect(role)}
+                        onClick={() => setSelectedRole(role)}
                         className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all ${
                           isSelected
                             ? `border-slate-800 bg-slate-50 shadow-md`
-                            : `border-slate-200 bg-slate-50/50 ${cfg.hoverColor}`
+                            : `border-slate-200 bg-slate-50/50 ${cfg.borderColor}`
                         }`}
                       >
                         <div className={isSelected ? 'text-slate-800' : 'text-slate-500'}>
                           {cfg.icon}
                         </div>
                         <span className={`text-xs font-semibold ${isSelected ? 'text-slate-800' : 'text-slate-500'}`}>
-                          {cfg.label}
+                          {cfg.label.split('（')[0]}
                         </span>
                       </button>
                     )
                   })}
                 </div>
 
-                <div className={`p-4 rounded-xl bg-gradient-to-r ${currentRole.color} text-white`}>
-                  <div className="flex items-center gap-3 mb-2">
-                    {currentRole.icon}
+                <div className={`p-5 rounded-xl bg-gradient-to-br ${currentRole.bgGradient} border-2 ${currentRole.borderColor.split(' ')[0]}`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`p-2.5 rounded-xl bg-gradient-to-r ${currentRole.color} text-white shadow-md`}>
+                      {currentRole.icon}
+                    </div>
                     <div>
-                      <div className="font-semibold">{currentRole.label}</div>
-                      <div className="text-xs opacity-80">{currentRole.subLabel}</div>
+                      <div className={`font-bold text-lg ${currentRole.textColor}`}>{currentRole.label}</div>
+                      <div className="text-xs text-slate-500 mt-0.5">{currentRole.subLabel}</div>
                     </div>
                   </div>
-                  <div className="pt-3 border-t border-white/20 space-y-1.5">
-                    <p className="text-xs font-medium opacity-90">测试账号（点击一键登录）：</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {currentRole.accounts.map((account) => (
+
+                  <div className="space-y-2.5">
+                    <p className="text-xs font-medium text-slate-600 mb-3">
+                      测试账号（点击直接登录）：
+                    </p>
+                    {currentRole.accounts.map((account) => {
+                      const isLoggingIn = loggingInAccount === account.username
+                      return (
                         <button
                           key={account.username}
                           type="button"
                           onClick={() => handleQuickLogin(account)}
-                          disabled={isLoading}
-                          className="flex items-center gap-1 text-xs px-2.5 py-1 bg-white/20 hover:bg-white/30 rounded-full transition-colors disabled:opacity-50"
+                          disabled={isLoggingIn || loggingInAccount !== null}
+                          className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all group ${
+                            isLoggingIn
+                              ? 'border-slate-300 bg-slate-100 opacity-70'
+                              : `border-slate-200 bg-white hover:bg-gradient-to-r hover:from-white hover:to-slate-50 hover:shadow-md hover:${currentRole.borderColor.split(' ')[1]}`
+                          } disabled:cursor-not-allowed`}
                         >
-                          {account.name}
-                          <ChevronRight className="w-3 h-3" />
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r ${currentRole.color} text-white shadow-md shrink-0`}>
+                            {isLoggingIn ? (
+                              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            ) : (
+                              <UserIcon className="w-6 h-6" />
+                            )}
+                          </div>
+                          <div className="flex-1 text-left">
+                            <div className="font-semibold text-slate-800 flex items-center gap-2">
+                              {account.name}
+                              <span className="text-xs font-normal text-slate-400">({account.username})</span>
+                            </div>
+                            <div className="text-xs text-slate-500 mt-0.5">{account.department}</div>
+                          </div>
+                          <div className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${currentRole.color} text-white transition-all ${isLoggingIn ? 'opacity-50' : 'group-hover:translate-x-0.5'}`}>
+                            {isLoggingIn ? '登录中...' : '立即登录'}
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </div>
                         </button>
-                      ))}
-                    </div>
+                      )
+                    })}
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-3">
-                  <div>
-                    <label className="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
-                      <UserIcon className="w-4 h-4 text-slate-400" />
-                      账号
-                    </label>
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="请输入账号"
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 outline-none transition-all text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="flex items-center gap-1.5 text-sm font-medium text-slate-700 mb-1.5">
-                      <Lock className="w-4 h-4 text-slate-400" />
-                      密码
-                    </label>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="请输入密码"
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 outline-none transition-all text-sm"
-                      onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)}
-                    />
-                  </div>
-
-                  {error && (
-                    <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg border border-red-100">
-                      <AlertCircle className="w-4 h-4 shrink-0" />
-                      {error}
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full py-3 px-4 bg-gradient-to-r ${currentRole.color} text-white rounded-lg font-semibold hover:opacity-90 transition-all disabled:opacity-70 flex items-center justify-center gap-2 shadow-md`}
-                  >
-                    {isLoading ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        登录中，请稍候...
-                      </>
-                    ) : (
-                      <>
-                        登录进入 {currentRole.label} 工作台
-                        <ChevronRight className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-                </form>
-
-                <div className="text-xs text-slate-400 text-center pt-2 border-t border-slate-100">
-                  💡 建议直接点击上方彩色卡片中的测试账号按钮，一键快速登录
+                <div className="text-center text-xs text-slate-400 pt-1">
+                  💡 点击上方「立即登录」按钮即可完成账号校验、角色分流，直接进入工作台
                 </div>
               </div>
             </div>
