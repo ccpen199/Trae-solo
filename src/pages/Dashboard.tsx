@@ -395,7 +395,7 @@ export default function Dashboard() {
         <StatCard icon={Eye} title="总阅读量" value={dashboardStats.totalViews} trend="up" trendValue="15.2%" color="#f59e0b" onClick={() => navigate('/sentiment')} />
         <StatCard icon={Share2} title="总转发" value={dashboardStats.totalShares} trend="up" trendValue="5.8%" color="#8b5cf6" onClick={() => navigate('/sentiment')} />
         <StatCard icon={Activity} title="传播力指数" value={dashboardStats.spreadIndex} trend="up" trendValue="3.2%" color="#06b6d4" onClick={() => navigate('/sentiment')} />
-        <StatCard icon={Globe} title="矩阵覆盖率" value={dashboardStats.matrixCoverage} unit="%" trend="up" trendValue="1.5%" color="#ec4899" onClick={() => navigate('/editor')} />
+        <StatCard icon={Globe} title="矩阵覆盖率" value={dashboardStats.matrixCoverage} unit="%" trend="up" trendValue="1.5%" color="#ec4899" onClick={() => navigate('/editor?tab=distribution')} />
       </div>
 
       <div className="mb-6">
@@ -407,7 +407,7 @@ export default function Dashboard() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <BusinessEntryCard 
-            icon={PenTool} 
+            icon={Share2} 
             title="编辑后台" 
             desc="稿件编辑·三审三校·一键分发" 
             color="#3b82f6" 
@@ -480,7 +480,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor?tab=distribution')}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-white">渠道传播分布</h3>
             <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
@@ -557,7 +557,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor?tab=distribution')}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-white">媒体矩阵效能</h3>
             <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
@@ -566,16 +566,16 @@ export default function Dashboard() {
             </button>
           </div>
           <div className="space-y-3">
-            <ChannelItem name="微信公众号" icon={MessageCircle} value={320000} total={500000} color="#07c160" onClick={() => navigate('/editor')} />
-            <ChannelItem name="抖音" icon={Tv} value={1250000} total={2000000} color="#000000" onClick={() => navigate('/editor')} />
-            <ChannelItem name="微博" icon={Activity} value={580000} total={1000000} color="#e6162d" onClick={() => navigate('/editor')} />
-            <ChannelItem name="APP" icon={Smartphone} value={450000} total={800000} color="#3b82f6" onClick={() => navigate('/editor')} />
+            <ChannelItem name="微信公众号" icon={MessageCircle} value={320000} total={500000} color="#07c160" onClick={() => navigate('/editor?tab=distribution')} />
+            <ChannelItem name="抖音" icon={Tv} value={1250000} total={2000000} color="#000000" onClick={() => navigate('/editor?tab=distribution')} />
+            <ChannelItem name="微博" icon={Activity} value={580000} total={1000000} color="#e6162d" onClick={() => navigate('/editor?tab=distribution')} />
+            <ChannelItem name="APP" icon={Smartphone} value={450000} total={800000} color="#3b82f6" onClick={() => navigate('/editor?tab=distribution')} />
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor?tab=stats')}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-white">各部门发稿统计</h3>
             <button className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1">
@@ -659,7 +659,7 @@ export default function Dashboard() {
           </div>
           <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
           
-          <div onClick={() => navigate('/editor')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+          <div onClick={() => navigate('/editor?tab=review')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
             <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
               <CheckCircle className="w-6 h-6 text-yellow-400" />
             </div>
@@ -669,7 +669,7 @@ export default function Dashboard() {
           </div>
           <div className="hidden sm:block w-px h-16 bg-slate-700/50 self-center"></div>
           
-          <div onClick={() => navigate('/editor')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
+          <div onClick={() => navigate('/editor?tab=distribution')} className="flex-1 min-w-[120px] flex flex-col items-center cursor-pointer group">
             <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
               <Send className="w-6 h-6 text-purple-400" />
             </div>
@@ -701,7 +701,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor?tab=review')}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-white flex items-center gap-2">
               <Clock className="w-5 h-5 text-yellow-400" />
@@ -722,7 +722,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor')}>
+        <div className="bg-dark-100 rounded-xl p-5 border border-slate-700/50 cursor-pointer hover:border-primary-500/50 transition-all" onClick={() => navigate('/editor?tab=distribution')}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-white flex items-center gap-2">
               <Send className="w-5 h-5 text-purple-400" />

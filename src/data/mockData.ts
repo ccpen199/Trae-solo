@@ -295,15 +295,16 @@ export const assets: Asset[] = [
 ];
 
 export const distributionChannels: DistributionChannel[] = [
-  { id: '1', name: '昌平报', icon: 'newspaper', type: 'newspaper', status: 'active', todayPosts: 8, todayViews: 12500 },
-  { id: '2', name: '昌平电视台', icon: 'tv', type: 'tv', status: 'active', todayPosts: 5, todayViews: 8900 },
-  { id: '3', name: '昌平广播电台', icon: 'radio', type: 'radio', status: 'active', todayPosts: 12, todayViews: 6700 },
-  { id: '4', name: '昌平政府网', icon: 'globe', type: 'website', status: 'active', todayPosts: 15, todayViews: 25600 },
-  { id: '5', name: '北京昌平微博', icon: 'twitter', type: 'weibo', status: 'active', followers: 580000, todayPosts: 23, todayViews: 45600 },
-  { id: '6', name: '北京昌平微信公众号', icon: 'message-circle', type: 'wechat', status: 'active', followers: 320000, todayPosts: 6, todayViews: 78900 },
-  { id: '7', name: '昌平融媒抖音号', icon: 'video', type: 'douyin', status: 'active', followers: 1250000, todayPosts: 8, todayViews: 156000 },
-  { id: '8', name: '昌平融媒快手号', icon: 'film', type: 'kuaishou', status: 'active', followers: 680000, todayPosts: 5, todayViews: 89000 },
-  { id: '9', name: '昌平融媒APP', icon: 'smartphone', type: 'app', status: 'active', followers: 450000, todayPosts: 30, todayViews: 234000 }
+  { id: 'site', name: '昌平政府网', icon: 'globe', type: 'website', category: '官方平台', status: 'active', todayPosts: 15, todayViews: 25600 },
+  { id: 'wechat', name: '北京昌平微信公众号', icon: 'message-circle', type: 'wechat', category: '新媒体', status: 'active', followers: 320000, todayPosts: 6, todayViews: 78900 },
+  { id: 'weibo', name: '北京昌平微博', icon: 'twitter', type: 'weibo', category: '新媒体', status: 'active', followers: 580000, todayPosts: 23, todayViews: 45600 },
+  { id: 'douyin', name: '昌平融媒抖音号', icon: 'video', type: 'douyin', category: '短视频', status: 'active', followers: 1250000, todayPosts: 8, todayViews: 156000 },
+  { id: 'kuaishou', name: '昌平融媒快手号', icon: 'film', type: 'kuaishou', category: '短视频', status: 'active', followers: 680000, todayPosts: 5, todayViews: 89000 },
+  { id: 'app', name: '昌平融媒APP', icon: 'smartphone', type: 'app', category: '官方平台', status: 'active', followers: 450000, todayPosts: 30, todayViews: 234000 },
+  { id: 'sph', name: '昌平视频号', icon: 'video', type: 'douyin', category: '短视频', status: 'active', followers: 180000, todayPosts: 4, todayViews: 32000 },
+  { id: 'paper', name: '昌平报', icon: 'newspaper', type: 'newspaper', category: '传统媒体', status: 'active', todayPosts: 8, todayViews: 12500 },
+  { id: 'tv', name: '昌平电视台', icon: 'tv', type: 'tv', category: '传统媒体', status: 'active', todayPosts: 5, todayViews: 8900 },
+  { id: 'radio', name: '昌平广播电台', icon: 'radio', type: 'radio', category: '传统媒体', status: 'active', todayPosts: 12, todayViews: 6700 }
 ];
 
 export const articleTrendData = [

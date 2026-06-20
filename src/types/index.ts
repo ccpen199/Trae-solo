@@ -169,6 +169,7 @@ export interface DistributionChannel {
   name: string;
   icon: string;
   type: 'newspaper' | 'tv' | 'radio' | 'website' | 'weibo' | 'wechat' | 'douyin' | 'kuaishou' | 'app';
+  category?: string;
   status: 'active' | 'inactive';
   followers?: number;
   todayPosts: number;
