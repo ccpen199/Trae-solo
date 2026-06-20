@@ -1,3 +1,5 @@
+export type Role = 'government' | 'institution' | 'family'
+
 export interface EmergencyContact {
   id: string;
   name: string;

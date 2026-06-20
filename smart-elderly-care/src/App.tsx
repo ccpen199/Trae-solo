@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute'
+import LoginPage from './pages/Login'
 import FamilyOverview from './pages/family/Overview'
 import MedicationTracker from './pages/family/MedicationTracker'
 import BehaviorAlert from './pages/family/BehaviorAlert'
@@ -16,143 +17,111 @@ import ElectronicSignature from './pages/institution/ElectronicSignature'
 import ElderProfile from './pages/shared/ElderProfile'
 import ServiceOrder from './pages/shared/ServiceOrder'
 import SmartScheduling from './pages/shared/SmartScheduling'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import type { Role } from './types'
 
-type Role = 'government' | 'institution' | 'family'
-
-function LoginPage({ onLogin }: { onLogin: (role: Role) => void }) {
-  const navigate = useNavigate()
-
-  const handleLogin = (role: Role) => {
-    onLogin(role)
-    const entryPaths: Record<Role, string> = {
-      government: '/government/dashboard',
-      institution: '/institution/overview',
-      family: '/family/overview',
-    }
-    navigate(entryPaths[role])
+function RoleLayout({ role, children }: { role: Role; children: React.ReactNode }) {
+  const handleRoleChange = (_newRole: Role) => {
+    // 角色切换由 Layout 内部处理
   }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-500 to-primary-800 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-2xl p-10 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-800">智慧养老综合服务平台</h1>
-          <p className="text-slate-400 mt-2">请选择登录角色</p>
-        </div>
-        <div className="space-y-3">
-          <button
-            onClick={() => handleLogin('government')}
-            className="w-full py-3 px-4 bg-gov-500 text-white rounded-lg font-medium hover:bg-gov-600 transition-colors"
-          >
-            G端 · 民政监管
-          </button>
-          <button
-            onClick={() => handleLogin('institution')}
-            className="w-full py-3 px-4 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-colors"
-          >
-            B端 · 机构管理
-          </button>
-          <button
-            onClick={() => handleLogin('family')}
-            className="w-full py-3 px-4 bg-elderly-500 text-white rounded-lg font-medium hover:bg-elderly-400 transition-colors"
-          >
-            C端 · 家庭端
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function RoleLayout({ role, onRoleChange, children }: { role: Role; onRoleChange: (role: Role) => void; children: React.ReactNode }) {
-  return (
-    <Layout currentRole={role} onRoleChange={onRoleChange}>
+    <Layout currentRole={role} onRoleChange={handleRoleChange}>
       {children}
     </Layout>
   )
 }
 
-function GovernmentRoutes({ onRoleChange }: { onRoleChange: (role: Role) => void }) {
+function GovernmentRoutes() {
   return (
-    <RoleLayout role="government" onRoleChange={onRoleChange}>
-      <Routes>
-        <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="audit" element={<AuditTrail />} />
-        <Route path="subsidy" element={<SubsidyTracking />} />
-        <Route path="complaints" element={<ComplaintManagement />} />
-        <Route path="elders" element={<ElderProfile />} />
-        <Route path="orders" element={<ServiceOrder />} />
-        <Route path="dispatch" element={<SmartScheduling />} />
-      </Routes>
-    </RoleLayout>
+    <ProtectedRoute allowedRoles={['government']}>
+      <RoleLayout role="government">
+        <Routes>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="audit" element={<AuditTrail />} />
+          <Route path="subsidy" element={<SubsidyTracking />} />
+          <Route path="complaints" element={<ComplaintManagement />} />
+          <Route path="elders" element={<ElderProfile />} />
+          <Route path="orders" element={<ServiceOrder />} />
+          <Route path="dispatch" element={<SmartScheduling />} />
+        </Routes>
+      </RoleLayout>
+    </ProtectedRoute>
   )
 }
 
-function InstitutionRoutes({ onRoleChange }: { onRoleChange: (role: Role) => void }) {
+function InstitutionRoutes() {
   return (
-    <RoleLayout role="institution" onRoleChange={onRoleChange}>
-      <Routes>
-        <Route index element={<Navigate to="overview" replace />} />
-        <Route path="overview" element={<Overview />} />
-        <Route path="care-plan" element={<NursingPlanPage />} />
-        <Route path="beds" element={<BedManagement />} />
-        <Route path="e-sign" element={<ElectronicSignature />} />
-        <Route path="elders" element={<ElderProfile />} />
-        <Route path="orders" element={<ServiceOrder />} />
-        <Route path="dispatch" element={<SmartScheduling />} />
-      </Routes>
-    </RoleLayout>
+    <ProtectedRoute allowedRoles={['institution']}>
+      <RoleLayout role="institution">
+        <Routes>
+          <Route index element={<Navigate to="overview" replace />} />
+          <Route path="overview" element={<Overview />} />
+          <Route path="care-plan" element={<NursingPlanPage />} />
+          <Route path="beds" element={<BedManagement />} />
+          <Route path="e-sign" element={<ElectronicSignature />} />
+          <Route path="elders" element={<ElderProfile />} />
+          <Route path="orders" element={<ServiceOrder />} />
+          <Route path="dispatch" element={<SmartScheduling />} />
+        </Routes>
+      </RoleLayout>
+    </ProtectedRoute>
   )
 }
 
-function FamilyRoutes({ onRoleChange }: { onRoleChange: (role: Role) => void }) {
+function FamilyRoutes() {
   return (
-    <RoleLayout role="family" onRoleChange={onRoleChange}>
-      <Routes>
-        <Route index element={<Navigate to="overview" replace />} />
-        <Route path="overview" element={<FamilyOverview />} />
-        <Route path="medication" element={<MedicationTracker />} />
-        <Route path="alerts" element={<BehaviorAlert />} />
-        <Route path="emergency" element={<EmergencyContacts />} />
-        <Route path="elders" element={<ElderProfile />} />
-        <Route path="orders" element={<ServiceOrder />} />
-        <Route path="dispatch" element={<SmartScheduling />} />
-      </Routes>
-    </RoleLayout>
+    <ProtectedRoute allowedRoles={['family']}>
+      <RoleLayout role="family">
+        <Routes>
+          <Route index element={<Navigate to="overview" replace />} />
+          <Route path="overview" element={<FamilyOverview />} />
+          <Route path="medication" element={<MedicationTracker />} />
+          <Route path="alerts" element={<BehaviorAlert />} />
+          <Route path="emergency" element={<EmergencyContacts />} />
+          <Route path="elders" element={<ElderProfile />} />
+          <Route path="orders" element={<ServiceOrder />} />
+          <Route path="dispatch" element={<SmartScheduling />} />
+        </Routes>
+      </RoleLayout>
+    </ProtectedRoute>
   )
 }
 
-export default function App() {
-  const [currentRole, setCurrentRole] = useState<Role>('government')
-  const location = useLocation()
+function AppContent() {
+  const { isAuthenticated, currentUser } = useAuth()
 
-  const handleRoleChange = (role: Role) => {
-    setCurrentRole(role)
-  }
-
-  const isLoggedIn = location.pathname !== '/'
-
-  if (!isLoggedIn) {
+  if (!isAuthenticated) {
     return (
       <Routes>
-        <Route path="/" element={<LoginPage onLogin={handleRoleChange} />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     )
   }
 
+  const userRole = currentUser?.role as Role
+  const entryPath = {
+    government: '/government/dashboard',
+    institution: '/institution/overview',
+    family: '/family/overview',
+  }[userRole]
+
   return (
     <Routes>
-      <Route path="/government/*" element={<GovernmentRoutes onRoleChange={handleRoleChange} />} />
-      <Route path="/institution/*" element={<InstitutionRoutes onRoleChange={handleRoleChange} />} />
-      <Route path="/family/*" element={<FamilyRoutes onRoleChange={handleRoleChange} />} />
-      <Route path="*" element={<Navigate to={`/${currentRole}`} replace />} />
+      <Route path="/" element={<Navigate to={entryPath} replace />} />
+      <Route path="/government/*" element={<GovernmentRoutes />} />
+      <Route path="/institution/*" element={<InstitutionRoutes />} />
+      <Route path="/family/*" element={<FamilyRoutes />} />
+      <Route path="*" element={<Navigate to={entryPath} replace />} />
     </Routes>
+  )
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
