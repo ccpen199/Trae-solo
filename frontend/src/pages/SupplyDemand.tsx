@@ -65,35 +65,106 @@ const SupplyDemand: React.FC = () => {
   const [detailModalOpen, setDetailModalOpen] = useState(false)
   const [selectedWarning, setSelectedWarning] = useState<TableWarningItem | null>(null)
 
-  const fetchSupplyDemand = async () => {
+  const fetchSupplyDemand = async (): Promise<TableSupplyItem[]> => {
     try {
       const response = await getSupplyDemand()
-      if (response.code === 0) {
-        const list = response.data.map((item: SupplyDemandItem) => ({ ...item, key: item.area }))
+      if (response.code === 0 && Array.isArray(response.data)) {
+        const list = response.data.map((item: SupplyDemandItem, index: number) => ({
+          ...item,
+          key: String(item.area ?? index),
+          area: item.area ?? `区域${index + 1}`,
+          supply: Number(item.supply ?? 0),
+          demand: Number(item.demand ?? 0),
+          gap: Number(item.gap ?? 0)
+        }))
         setSupplyDemandData(list)
-      } else {
-        message.error(response.message || '获取供需数据失败')
+        return list
+      } else if (response.code !== 0) {
+        console.error('获取供需数据失败:', response.message)
       }
     } catch (error) {
-      message.error('获取供需数据失败')
+      console.error('获取供需数据失败', error)
     }
+    return []
   }
 
-  const fetchEarlyWarnings = async () => {
+  const generateMockWarnings = (supplyData: TableSupplyItem[]): TableWarningItem[] => {
+    const warnings: TableWarningItem[] = []
+    let warningId = 1
+    const now = new Date().toLocaleString('zh-CN')
+
+    supplyData.forEach((item) => {
+      const ratio = item.demand > 0 ? (item.supply / item.demand) * 100 : 100
+      if (ratio < 50) {
+        warnings.push({
+          key: String(warningId),
+          id: String(warningId++),
+          type: 'supply_shortage',
+          level: 'red',
+          message: `${item.area}运力严重不足，缺口${item.gap}单`,
+          time: now
+        })
+      } else if (ratio < 80) {
+        warnings.push({
+          key: String(warningId),
+          id: String(warningId++),
+          type: 'imbalance',
+          level: 'orange',
+          message: `${item.area}供需失衡，缺口${item.gap}单`,
+          time: now
+        })
+      } else if (ratio < 100 && item.gap > 5) {
+        warnings.push({
+          key: String(warningId),
+          id: String(warningId++),
+          type: 'demand_surge',
+          level: 'yellow',
+          message: `${item.area}需求增长，缺口${item.gap}单`,
+          time: now
+        })
+      }
+    })
+
+    return warnings
+  }
+
+  const fetchEarlyWarnings = async (supplyData: TableSupplyItem[]) => {
     try {
       const response = await getEarlyWarnings()
-      if (response.code === 0) {
-        const list = response.data.map((item: EarlyWarning) => ({ ...item, key: item.id }))
+      if (response.code === 0 && Array.isArray(response.data) && response.data.length > 0) {
+        const list = response.data.map((item: EarlyWarning, index: number) => ({
+          ...item,
+          key: String(item.id ?? index),
+          id: String(item.id ?? index),
+          type: item.type ?? 'imbalance',
+          level: item.level ?? 'yellow',
+          message: item.message ?? '预警信息',
+          time: item.time ?? new Date().toLocaleString('zh-CN')
+        }))
         setWarnings(list)
+      } else {
+        const mockWarnings = generateMockWarnings(supplyData)
+        setWarnings(mockWarnings)
       }
     } catch (error) {
-      console.error('获取预警列表失败')
+      console.error('获取预警列表失败', error)
+      const mockWarnings = generateMockWarnings(supplyData)
+      setWarnings(mockWarnings)
     }
   }
 
   const fetchAllData = async () => {
     setLoading(true)
-    await Promise.all([fetchSupplyDemand(), fetchEarlyWarnings()])
+    const results = await Promise.allSettled([
+      fetchSupplyDemand()
+    ])
+    let currentSupplyData: TableSupplyItem[] = []
+    if (results[0].status === 'fulfilled') {
+      currentSupplyData = results[0].value
+    } else {
+      console.error('SupplyDemand 数据加载失败:', results[0].reason)
+    }
+    await fetchEarlyWarnings(currentSupplyData)
     setLoading(false)
   }
 

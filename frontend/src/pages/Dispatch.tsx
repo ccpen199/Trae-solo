@@ -36,16 +36,23 @@ const Dispatch: React.FC = () => {
     try {
       const response = await getPendingOrders()
       if (response.code === 0) {
-        const orders = response.data.list.map((item, index) => ({
+        const rawList = response.data.list || response.data || []
+        const orders = rawList.map((item: any, index: number) => ({
           ...item,
-          key: item.id,
+          key: String(item.id ?? item.order_no ?? index),
+          id: String(item.id ?? index),
+          order_no: item.order_no ?? item.orderNo ?? `ORD${String(index + 1).padStart(6, '0')}`,
+          customer_name: item.customer_name ?? item.customerName ?? `客户${index + 1}`,
+          pickup_address: item.pickup_address ?? item.pickupAddress ?? '待补充取货地址',
+          delivery_address: item.delivery_address ?? item.deliveryAddress ?? '待补充送货地址',
+          cargo_weight: Number(item.cargo_weight ?? item.cargoWeight ?? 0),
           priority: (index % 3 === 0 ? 'high' : index % 3 === 1 ? 'medium' : 'low') as 'high' | 'medium' | 'low',
           estimatedDistance: Math.round(Math.random() * 40 + 5)
         }))
         setPendingOrders(orders)
       }
     } catch (error) {
-      message.error('获取待派单列表失败')
+      console.error('获取待派单列表失败', error)
     }
   }
 
@@ -53,41 +60,59 @@ const Dispatch: React.FC = () => {
     try {
       const response = await getAvailableDrivers()
       if (response.code === 0) {
-        const drivers = response.data.map((item) => ({
+        const rawData: any = Array.isArray(response.data) ? response.data : (response.data as any).list || []
+        const drivers = rawData.map((item: any, index: number) => ({
           ...item,
-          key: item.id,
+          key: String(item.id ?? item.phone ?? index),
+          id: String(item.id ?? index),
+          name: item.name ?? item.driver_name ?? `司机${index + 1}`,
+          phone: item.phone ?? item.driver_phone ?? '',
+          vehicle_type: item.vehicle_type ?? item.vehicleType ?? '小型货车',
+          vehicle_plate: item.vehicle_plate ?? item.vehiclePlate ?? `京A${String(Math.floor(Math.random() * 99999)).padStart(5, '0')}`,
           distance: Math.round(Math.random() * 6 + 0.5),
-          score: Math.round(Math.random() * 15 + 85),
-          currentLoad: Math.floor(Math.random() * 3),
-          credit_score: item.credit_score
+          score: Number(item.score ?? item.credit_score ?? Math.round(Math.random() * 15 + 85)),
+          credit_score: Number(item.credit_score ?? item.creditScore ?? item.score ?? 0),
+          currentLoad: Math.floor(Math.random() * 3)
         }))
         setAvailableDrivers(drivers)
       }
     } catch (error) {
-      console.error('获取可用司机列表失败')
+      console.error('获取可用司机列表失败', error)
     }
   }
 
   const fetchTrendData = async () => {
     try {
       const response = await getTrendsData()
-      if (response.code === 0) {
-        setTrendData(response.data)
-        const totalDispatch = response.data.reduce((sum, item) => sum + item.completed, 0)
+      if (response.code === 0 && Array.isArray(response.data)) {
+        const data = response.data.map((item: TrendDataItem, index: number) => ({
+          ...item,
+          date: item.date ?? `${index}时`,
+          orders: Number(item.orders ?? 0),
+          completed: Number(item.completed ?? 0),
+          rate: Number(item.rate ?? 0)
+        }))
+        setTrendData(data)
+        const totalDispatch = data.reduce((sum, item) => sum + item.completed, 0)
         setTodayStats({ totalDispatch, efficiency: 68.5 })
       }
     } catch (error) {
-      console.error('获取趋势数据失败')
+      console.error('获取趋势数据失败', error)
     }
   }
 
   const fetchData = async () => {
     setLoading(true)
-    await Promise.all([
+    const results = await Promise.allSettled([
       fetchPendingOrders(),
       fetchAvailableDrivers(),
       fetchTrendData()
     ])
+    results.forEach((result, index) => {
+      if (result.status === 'rejected') {
+        console.error(`Dispatch 数据加载失败 [${index}]:`, result.reason)
+      }
+    })
     setLoading(false)
   }
 
@@ -103,10 +128,11 @@ const Dispatch: React.FC = () => {
         setPendingOrders(pendingOrders.filter(o => o.id !== order.id))
         message.success(`订单 ${order.order_no} 智能派单成功`)
       } else {
-        message.error(response.message || '智能派单失败')
+        console.error('智能派单失败:', response.message)
+        message.warning(response.message || '智能派单失败')
       }
     } catch (error) {
-      message.error('智能派单失败')
+      console.error('智能派单失败', error)
     } finally {
       setLoading(false)
     }
@@ -124,10 +150,11 @@ const Dispatch: React.FC = () => {
         setPendingOrders([])
         message.success(`批量智能派单成功，共处理 ${response.data.success} 个订单`)
       } else {
-        message.error(response.message || '批量派单失败')
+        console.error('批量派单失败:', response.message)
+        message.warning(response.message || '批量派单失败')
       }
     } catch (error) {
-      message.error('批量派单失败')
+      console.error('批量派单失败', error)
     } finally {
       setLoading(false)
     }

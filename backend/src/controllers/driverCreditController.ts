@@ -64,13 +64,34 @@ export const getDriverCredits = (req: Request, res: Response) => {
       LIMIT ? OFFSET ?
     `).all(...params, pageSizeNum, (pageNum - 1) * pageSizeNum) as any[];
 
-    credits = credits.map(credit => ({
-      ...credit,
-      level: getCreditLevel(credit.credit_score),
-      total_orders: 0,
-      completed_orders: 0,
-      complaint_count: 0,
-    }));
+    const orderStatsStmt = db.prepare(`
+      SELECT 
+        COUNT(*) as total_orders,
+        SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_orders
+      FROM orders 
+      WHERE assigned_driver_id = ?
+    `);
+
+    credits = credits.map(credit => {
+      const stats = orderStatsStmt.get(credit.driver_id) as { total_orders: number; completed_orders: number } | undefined;
+      return {
+        id: credit.id,
+        driver_id: credit.driver_id,
+        driver_name: credit.driver_name,
+        credit_score: credit.credit_score,
+        score: credit.credit_score,
+        level: getCreditLevel(credit.credit_score),
+        on_time_rate: credit.on_time_rate,
+        service_score: credit.service_score,
+        service_rating: credit.service_score,
+        violation_count: credit.violation_count,
+        complaint_count: 0,
+        total_orders: stats?.total_orders || 0,
+        completed_orders: stats?.completed_orders || 0,
+        updated_at: credit.updated_at,
+        last_updated: credit.updated_at,
+      };
+    });
 
     if (level) {
       credits = credits.filter((c: any) => c.level === level);
@@ -89,16 +110,35 @@ export const getDriverCreditByDriverId = (req: Request, res: Response) => {
       FROM driver_credit dc
       JOIN drivers d ON dc.driver_id = d.id
       WHERE dc.driver_id = ?
-    `).get(req.params.driverId);
+    `).get(req.params.driverId) as any;
     if (!credit) {
       return res.error('Driver credit not found');
     }
+
+    const stats = db.prepare(`
+      SELECT 
+        COUNT(*) as total_orders,
+        SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_orders
+      FROM orders 
+      WHERE assigned_driver_id = ?
+    `).get(credit.driver_id) as { total_orders: number; completed_orders: number } | undefined;
+
     const enriched = {
-      ...credit,
-      level: getCreditLevel((credit as any).credit_score),
-      total_orders: 0,
-      completed_orders: 0,
+      id: credit.id,
+      driver_id: credit.driver_id,
+      driver_name: credit.driver_name,
+      credit_score: credit.credit_score,
+      score: credit.credit_score,
+      level: getCreditLevel(credit.credit_score),
+      on_time_rate: credit.on_time_rate,
+      service_score: credit.service_score,
+      service_rating: credit.service_score,
+      violation_count: credit.violation_count,
       complaint_count: 0,
+      total_orders: stats?.total_orders || 0,
+      completed_orders: stats?.completed_orders || 0,
+      updated_at: credit.updated_at,
+      last_updated: credit.updated_at,
     };
     res.success(enriched);
   } catch (error) {
@@ -118,17 +158,34 @@ export const getCreditRanking = (req: Request, res: Response) => {
       LIMIT ?
     `).all(limit) as any[];
 
-    const rankings = allCredits.map((credit, index) => ({
-      ...credit,
-      rank: index + 1,
-      level: getCreditLevel(credit.credit_score),
-      on_time_rate: credit.on_time_rate,
-      service_rating: credit.service_score,
-      violation_count: credit.violation_count,
-      total_orders: 0,
-      completed_orders: 0,
-      complaint_count: 0,
-    }));
+    const orderStatsStmt = db.prepare(`
+      SELECT 
+        COUNT(*) as total_orders,
+        SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_orders
+      FROM orders 
+      WHERE assigned_driver_id = ?
+    `);
+
+    const rankings = allCredits.map((credit, index) => {
+      const stats = orderStatsStmt.get(credit.driver_id) as { total_orders: number; completed_orders: number } | undefined;
+      return {
+        rank: index + 1,
+        driver_id: String(credit.driver_id),
+        driver_name: credit.driver_name,
+        credit_score: credit.credit_score,
+        score: credit.credit_score,
+        level: getCreditLevel(credit.credit_score),
+        on_time_rate: credit.on_time_rate,
+        service_score: credit.service_score,
+        service_rating: credit.service_score,
+        violation_count: credit.violation_count,
+        complaint_count: 0,
+        total_orders: stats?.total_orders || 0,
+        completed_orders: stats?.completed_orders || 0,
+        vehicle_type: credit.vehicle_type,
+        vehicle_plate: credit.vehicle_plate,
+      };
+    });
 
     res.success(rankings);
   } catch (error) {
@@ -175,12 +232,30 @@ export const recalculateCredit = (req: Request, res: Response) => {
       WHERE dc.driver_id = ?
     `).get(driverId) as any;
 
+    const stats = db.prepare(`
+      SELECT 
+        COUNT(*) as total_orders,
+        SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_orders
+      FROM orders 
+      WHERE assigned_driver_id = ?
+    `).get(driverId) as { total_orders: number; completed_orders: number } | undefined;
+
     const enriched = {
-      ...updated,
+      id: updated.id,
+      driver_id: updated.driver_id,
+      driver_name: updated.driver_name,
+      credit_score: newScore,
+      score: newScore,
       level: getCreditLevel(newScore),
-      total_orders: 0,
-      completed_orders: 0,
+      on_time_rate: updated.on_time_rate,
+      service_score: updated.service_score,
+      service_rating: updated.service_score,
+      violation_count: updated.violation_count,
       complaint_count: 0,
+      total_orders: stats?.total_orders || 0,
+      completed_orders: stats?.completed_orders || 0,
+      updated_at: updated.updated_at,
+      last_updated: updated.updated_at,
     };
 
     res.success(enriched);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Card, Statistic, Table, Tag, Space, message } from 'antd'
+import { Row, Col, Card, Statistic, Table, Tag, Space } from 'antd'
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import {
@@ -31,34 +31,57 @@ const Dashboard: React.FC = () => {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const [metricsRes, trendsRes, supplyRes, creditRes] = await Promise.all([
+      const results = await Promise.allSettled([
         getFulfillmentMetrics(),
         getTrendsData(),
         getSupplyDemand(),
         getCreditRanking(5)
       ])
 
-      if (metricsRes.code === 0) {
-        setMetrics(metricsRes.data)
+      if (results[0].status === 'fulfilled') {
+        const metricsRes = results[0].value
+        if (metricsRes.code === 0) {
+          setMetrics(metricsRes.data)
+        }
+      } else {
+        console.error('获取履约指标失败', results[0].reason)
       }
-      if (trendsRes.code === 0) {
-        setTrendData(trendsRes.data)
+
+      if (results[1].status === 'fulfilled') {
+        const trendsRes = results[1].value
+        if (trendsRes.code === 0) {
+          setTrendData(trendsRes.data)
+        }
+      } else {
+        console.error('获取趋势数据失败', results[1].reason)
       }
-      if (supplyRes.code === 0) {
-        setSupplyDemandData(supplyRes.data)
+
+      if (results[2].status === 'fulfilled') {
+        const supplyRes = results[2].value
+        if (supplyRes.code === 0) {
+          setSupplyDemandData(supplyRes.data)
+        }
+      } else {
+        console.error('获取供需数据失败', results[2].reason)
       }
-      if (creditRes.code === 0) {
-        const drivers: TopDriver[] = creditRes.data.map((item: CreditRankingItem, index: number) => ({
-          key: item.driver_id,
-          rank: index + 1,
-          name: item.driver_name,
-          onTimeRate: item.on_time_rate,
-          credit: item.score
-        }))
-        setTopDrivers(drivers)
+
+      if (results[3].status === 'fulfilled') {
+        const creditRes = results[3].value
+        if (creditRes.code === 0 && Array.isArray(creditRes.data)) {
+          const drivers: TopDriver[] = creditRes.data.map((item: any, index: number) => ({
+            key: String(item.driver_id ?? item.driverId ?? index),
+            rank: index + 1,
+            name: item.driver_name ?? item.driverName ?? `司机${index + 1}`,
+            onTimeRate: Number(item.on_time_rate ?? item.onTimeRate ?? 0),
+            credit: Number(item.score ?? item.credit_score ?? item.creditScore ?? 0)
+          }))
+          setTopDrivers(drivers)
+        }
+      } else {
+        console.error('获取信用排名失败', results[3].reason)
       }
     } catch (error) {
-      message.error('获取看板数据失败')
+      console.error('获取看板数据异常', error)
     } finally {
       setLoading(false)
     }

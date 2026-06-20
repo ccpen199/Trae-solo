@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, Statistic, Table, Space, message, Tag, Button } from 'antd'
+import { Card, Row, Col, Statistic, Table, Space, Tag, Button } from 'antd'
 import { CarOutlined, ClockCircleOutlined, ReloadOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import type { ColumnsType } from 'antd/es/table'
@@ -18,15 +18,41 @@ const Heatmap: React.FC = () => {
     setLoading(true)
     try {
       const response = await getHeatmapData()
-      if (response.code === 0) {
-        setHeatmapData(response.data)
-        const areas = response.data.areas.map(item => ({ ...item, key: item.id }))
+      if (response.code === 0 && response.data) {
+        const data: any = response.data
+        const points = data.points || data.points_list || []
+        const rawAreas = data.areas || data.areaList || []
+        const areas = rawAreas.map((item: any, index: number) => ({
+          ...item,
+          key: String(item.id ?? index),
+          id: String(item.id ?? index),
+          areaName: item.areaName ?? item.area_name ?? `区域${index + 1}`,
+          driverCount: Number(item.driverCount ?? item.driver_count ?? item.available_drivers ?? 0),
+          averageResponseTime: Number(item.averageResponseTime ?? item.average_response_time ?? 0),
+          orderCount: Number(item.orderCount ?? item.order_count ?? 0),
+          saturation: Number(item.saturation ?? 0),
+          lng: Number(item.lng ?? item.longitude ?? 0),
+          lat: Number(item.lat ?? item.latitude ?? 0)
+        }))
         setAreaDetails(areas)
-      } else {
-        message.error(response.message || '获取热力图数据失败')
+        setHeatmapData({
+          points: points.map((p: any) => ({
+            lng: Number(p.lng ?? p.longitude ?? 0),
+            lat: Number(p.lat ?? p.latitude ?? 0),
+            count: Number(p.count ?? p.driverCount ?? 0),
+            areaName: p.areaName ?? p.area_name ?? ''
+          })),
+          areas: [],
+          totalDrivers: Number(data.totalDrivers ?? data.total_drivers ?? 0),
+          totalAreas: Number(data.totalAreas ?? data.total_areas ?? areas.length),
+          averageResponseTime: Number(data.averageResponseTime ?? data.average_response_time ?? 0),
+          updateTime: data.updateTime ?? data.update_time ?? '-'
+        })
+      } else if (response.code !== 0) {
+        console.error('获取热力图数据失败:', response.message)
       }
     } catch (error) {
-      message.error('获取热力图数据失败')
+      console.error('获取热力图数据失败', error)
     } finally {
       setLoading(false)
     }

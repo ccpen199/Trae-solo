@@ -78,12 +78,21 @@ const Credit: React.FC = () => {
   const fetchRanking = async () => {
     try {
       const response = await getCreditRanking(10)
-      if (response.code === 0) {
-        const list = response.data.map((item: CreditRankingItem) => ({ ...item, key: item.driver_id }))
+      if (response.code === 0 && Array.isArray(response.data)) {
+        const list = response.data.map((item: any, index: number) => ({
+          ...item,
+          key: String(item.driver_id ?? item.driverId ?? index),
+          driver_name: item.driver_name ?? item.driverName ?? `司机${index + 1}`,
+          score: Number(item.score ?? item.credit_score ?? 0),
+          on_time_rate: Number(item.on_time_rate ?? item.onTimeRate ?? 0),
+          service_rating: Number(item.service_rating ?? item.serviceRating ?? 0),
+          violation_count: Number(item.violation_count ?? item.violationCount ?? 0),
+          level: (item.level ?? 'B') as CreditLevel
+        }))
         setRankingList(list)
       }
     } catch (error) {
-      console.error('获取信用排名失败')
+      console.error('获取信用排名失败', error)
     }
   }
 
@@ -92,14 +101,29 @@ const Credit: React.FC = () => {
     try {
       const response = await getDriverCredits(params)
       if (response.code === 0) {
-        const list = response.data.list.map((item: DriverCredit) => ({ ...item, key: item.id }))
+        const respData: any = response.data
+        const data = respData.list || respData || []
+        const list = data.map((item: any, index: number) => ({
+          ...item,
+          key: String(item.id ?? item.driver_id ?? index),
+          score: Number(item.score ?? item.credit_score ?? 0),
+          service_rating: Number(item.service_rating ?? item.service_score ?? 0),
+          last_updated: item.last_updated ?? item.updated_at ?? '',
+          driver_name: item.driver_name ?? item.driverName ?? `司机${index + 1}`,
+          on_time_rate: Number(item.on_time_rate ?? item.onTimeRate ?? 0),
+          completed_orders: Number(item.completed_orders ?? item.completedOrders ?? 0),
+          total_orders: Number(item.total_orders ?? item.totalOrders ?? 0),
+          complaint_count: Number(item.complaint_count ?? item.complaintCount ?? 0),
+          violation_count: Number(item.violation_count ?? item.violationCount ?? 0),
+          level: (item.level ?? 'B') as CreditLevel
+        }))
         setCreditList(list)
-        setTotal(response.data.total)
+        setTotal(respData.total ?? data.length)
       } else {
-        message.error(response.message || '获取信用分列表失败')
+        console.error('获取信用分列表失败:', response.message)
       }
     } catch (error) {
-      message.error('获取信用分列表失败')
+      console.error('获取信用分列表失败', error)
     } finally {
       setLoading(false)
     }
@@ -108,21 +132,31 @@ const Credit: React.FC = () => {
   const fetchCreditModel = async () => {
     try {
       const response = await getCreditModel()
-      if (response.code === 0) {
-        setCreditModel(response.data)
+      if (response.code === 0 && response.data) {
+        const data = response.data
+        setCreditModel({
+          factors: data.factors || [],
+          formula: data.formula || '信用分 = Σ(指标得分 × 指标权重)',
+          description: data.description || '信用分综合考量司机的准时率、服务评分、违规次数等多个维度'
+        })
       }
     } catch (error) {
-      console.error('获取信用分模型失败')
+      console.error('获取信用分模型失败', error)
     }
   }
 
   const fetchAllData = async () => {
     setLoading(true)
-    await Promise.all([
+    const results = await Promise.allSettled([
       fetchRanking(),
       fetchCreditList({ page: 1, pageSize: 10 }),
       fetchCreditModel()
     ])
+    results.forEach((result, index) => {
+      if (result.status === 'rejected') {
+        console.error(`Credit 数据加载失败 [${index}]:`, result.reason)
+      }
+    })
     setLoading(false)
   }
 
@@ -148,10 +182,11 @@ const Credit: React.FC = () => {
         fetchCreditList({ page: pagination.page, pageSize: pagination.pageSize })
         fetchRanking()
       } else {
-        message.error(response.message || '重新计算失败')
+        console.error('重新计算失败:', response.message)
+        message.warning(response.message || '重新计算失败')
       }
     } catch (error) {
-      message.error('重新计算失败')
+      console.error('重新计算失败', error)
     }
   }
 
