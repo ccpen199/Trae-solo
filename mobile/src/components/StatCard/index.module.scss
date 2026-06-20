@@ -1,0 +1,67 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.iconWrap {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  @include flex-center;
+  flex-shrink: 0;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+}
+
+.primary .iconWrap {
+  background: linear-gradient(135deg, rgba(30, 93, 171, 0.12), rgba(58, 123, 213, 0.08));
+  color: $color-primary;
+}
+.success .iconWrap {
+  background: linear-gradient(135deg, rgba(0, 180, 42, 0.12), rgba(0, 180, 42, 0.06));
+  color: $color-success;
+}
+.warning .iconWrap {
+  background: linear-gradient(135deg, rgba(255, 125, 0, 0.12), rgba(255, 125, 0, 0.06));
+  color: $color-warning;
+}
+.error .iconWrap {
+  background: linear-gradient(135deg, rgba(245, 63, 63, 0.12), rgba(245, 63, 63, 0.06));
+  color: $color-error;
+}
+.info .iconWrap {
+  background: linear-gradient(135deg, rgba(134, 144, 156, 0.12), rgba(134, 144, 156, 0.06));
+  color: $color-text-secondary;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.value {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-xs;
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}

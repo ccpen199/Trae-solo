@@ -1,0 +1,419 @@
+@use '@/styles/variables.scss' as *;
+
+.topBar {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.docTitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.docIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, rgba(30, 93, 171, 0.12), rgba(58, 123, 213, 0.06));
+  @include flex-center;
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+
+.docInfo { flex: 1; min-width: 0; }
+
+.docTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 6rpx;
+  @include text-ellipsis;
+}
+
+.docMeta {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  line-height: 1.6;
+}
+
+.signerTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.signerTag {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 10rpx 20rpx;
+  background: $color-bg-page;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  border: 2rpx solid transparent;
+  transition: all $transition-base;
+}
+
+.signerTagDone {
+  background: rgba(0, 180, 42, 0.06);
+  border-color: rgba(0, 180, 42, 0.2);
+}
+
+.signerTagCurrent {
+  background: rgba(30, 93, 171, 0.08);
+  border-color: rgba(30, 93, 171, 0.3);
+}
+
+.signerStatusDot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: $radius-round;
+  background: $color-text-disabled;
+}
+
+.signerTagDone .signerStatusDot { background: $color-success; }
+.signerTagCurrent .signerStatusDot { background: $color-primary; }
+
+.signerText {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.signerTagCurrent .signerText { color: $color-primary; font-weight: $font-weight-medium; }
+.signerTagDone .signerText { color: $color-success; }
+
+.stepCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.stepTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+.docPreview {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%);
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  border: 2rpx solid $color-divider;
+  min-height: 400rpx;
+  position: relative;
+}
+
+.docPageHeader {
+  text-align: center;
+  padding-bottom: $spacing-md;
+  border-bottom: 2rpx solid $color-divider;
+  margin-bottom: $spacing-md;
+}
+
+.docPageTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.docPageSubtitle {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.docPageContent {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+  text-align: justify;
+  margin-bottom: $spacing-lg;
+}
+
+.signatureBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: $spacing-xl;
+  padding-top: $spacing-md;
+}
+
+.signArea {
+  min-width: 200rpx;
+  min-height: 120rpx;
+  border: 2rpx dashed rgba(30, 93, 171, 0.3);
+  border-radius: $radius-sm;
+  @include flex-center;
+  position: relative;
+}
+
+.signAreaActive {
+  border-color: $color-primary;
+  background: rgba(30, 93, 171, 0.04);
+  border-style: solid;
+}
+
+.signAreaDone {
+  border: none;
+  background: transparent;
+}
+
+.signPlaceholder {
+  font-size: $font-size-xs;
+  color: $color-text-disabled;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.signPlaceholderActive {
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.signatureImage {
+  width: 180rpx;
+  height: 80rpx;
+  object-fit: contain;
+}
+
+.sealBlock {
+  width: 160rpx;
+  height: 160rpx;
+  border: 3rpx dashed rgba(198, 40, 40, 0.4);
+  border-radius: $radius-round;
+  @include flex-center;
+  position: relative;
+}
+
+.sealBlockDone {
+  border: 4rpx solid $color-seal;
+  background: rgba(198, 40, 40, 0.04);
+}
+
+.sealText {
+  font-size: $font-size-xs;
+  color: $color-seal;
+  opacity: 0.6;
+  text-align: center;
+  font-weight: $font-weight-semibold;
+}
+
+.sealTextDone {
+  opacity: 1;
+  font-size: $font-size-md;
+}
+
+.verifyCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.verifyMethods {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+}
+
+.methodCard {
+  background: $color-bg-page;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  border: 2rpx solid transparent;
+  text-align: center;
+  transition: all $transition-base;
+
+  &:active { transform: scale(0.97); }
+}
+
+.methodCardActive {
+  background: rgba(30, 93, 171, 0.06);
+  border-color: rgba(30, 93, 171, 0.3);
+}
+
+.methodCardDone {
+  background: rgba(0, 180, 42, 0.06);
+  border-color: rgba(0, 180, 42, 0.3);
+}
+
+.methodIcon {
+  font-size: 56rpx;
+  margin-bottom: $spacing-sm;
+}
+
+.methodName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 6rpx;
+}
+
+.methodDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  line-height: 1.4;
+}
+
+.methodStatus {
+  display: inline-block;
+  margin-top: $spacing-sm;
+  padding: 6rpx 16rpx;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.statusTodo {
+  background: rgba(134, 144, 156, 0.08);
+  color: $color-text-tertiary;
+}
+
+.statusDoing {
+  background: rgba(30, 93, 171, 0.12);
+  color: $color-primary;
+}
+
+.statusDone {
+  background: rgba(0, 180, 42, 0.12);
+  color: $color-success;
+}
+
+.logSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.logTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.logIcon { font-size: $font-size-lg; }
+
+.logItem {
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+  border-left: 3rpx solid $color-border;
+  padding-left: $spacing-md;
+  margin-left: 8rpx;
+  position: relative;
+
+  &:last-child { border-bottom: none; }
+}
+
+.logItemActive {
+  border-left-color: $color-primary;
+}
+
+.logItemDone {
+  border-left-color: $color-success;
+}
+
+.logDot {
+  position: absolute;
+  left: -11rpx;
+  top: $spacing-md;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: $radius-round;
+  background: $color-border;
+}
+
+.logItemActive .logDot { background: $color-primary; }
+.logItemDone .logDot { background: $color-success; }
+
+.logAction {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.logTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.logDetails {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  background: $color-bg-page;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-xs;
+  margin-top: $spacing-xs;
+}
+
+.hashText {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 20rpx;
+  color: $color-encrypt;
+  word-break: break-all;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(#{$spacing-md} + constant(safe-area-inset-bottom));
+  padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.mainBtn {
+  @include button-reset;
+  width: 100%;
+  height: $button-height-lg;
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(30, 93, 171, 0.3);
+
+  &:active { transform: scale(0.98); opacity: 0.95; }
+  &.disabled { opacity: 0.5; pointer-events: none; box-shadow: none; }
+}
+
+.secondaryBtn {
+  @include button-reset;
+  width: 100%;
+  height: $button-height-md;
+  background: rgba(30, 93, 171, 0.08);
+  color: $color-primary;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  border: none;
+  margin-top: $spacing-sm;
+
+  &:active { transform: scale(0.98); opacity: 0.9; }
+}
+
+.contentPadding { padding-bottom: 280rpx; }

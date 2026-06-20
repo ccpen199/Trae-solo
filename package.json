@@ -1,0 +1,30 @@
+{
+  "name": "provincial-e-government-workbench",
+  "version": "1.0.0",
+  "private": true,
+  "description": "省级市场监管移动端电子政务工作台",
+  "workspaces": [
+    "mobile",
+    "server",
+    "admin"
+  ],
+  "scripts": {
+    "dev:mobile": "cd mobile && npm run dev:weapp",
+    "dev:server": "cd server && npm run dev",
+    "dev:admin": "cd admin && npm run dev",
+    "build:mobile": "cd mobile && npm run build:weapp",
+    "build:server": "cd server && npm run build",
+    "build:admin": "cd admin && npm run build",
+    "install:all": "npm install && cd mobile && npm install && cd ../server && npm install && cd ../admin && npm install",
+    "init:db": "cd server && npm run init:db"
+  },
+  "keywords": [
+    "e-government",
+    "electronic-signature",
+    "market-regulation",
+    "taro",
+    "mini-program"
+  ],
+  "author": "",
+  "license": "MIT"
+}

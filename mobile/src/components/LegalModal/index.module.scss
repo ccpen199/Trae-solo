@@ -1,0 +1,153 @@
+@use '@/styles/variables.scss' as *;
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  @include flex-center;
+  padding: $spacing-lg;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 686rpx;
+  max-height: 85vh;
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-popup;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  padding: $spacing-xl $spacing-lg $spacing-lg;
+  text-align: center;
+  border-bottom: 1rpx solid $color-divider;
+  background: linear-gradient(135deg, rgba(30, 93, 171, 0.06), transparent);
+}
+
+.sealIcon {
+  font-size: 64rpx;
+  color: $color-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.content {
+  flex: 1;
+  padding: $spacing-lg $spacing-lg $spacing-sm;
+  max-height: 50vh;
+}
+
+.section {
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.paragraph {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+  text-align: justify;
+}
+
+.endTip {
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  padding: $spacing-lg 0;
+}
+
+.footer {
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  border-top: 1rpx solid $color-divider;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid $color-border;
+  border-radius: $radius-xs;
+  @include flex-center;
+  flex-shrink: 0;
+  transition: all $transition-fast;
+}
+
+.checked {
+  background: $color-primary;
+  border-color: $color-primary;
+}
+
+.checkMark {
+  color: $color-text-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+}
+
+.agreeText {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
+}
+
+.agreeText.disabled {
+  color: $color-text-disabled;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.buttons {
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg $spacing-lg;
+}
+
+.btn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  border: none;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.btnCancel {
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+}
+
+.btnConfirm {
+  background: $color-primary-gradient;
+  color: $color-text-white;
+}

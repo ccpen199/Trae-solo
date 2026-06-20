@@ -1,0 +1,268 @@
+@use '@/styles/variables.scss' as *;
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.statBlock {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md $spacing-sm;
+  box-shadow: $shadow-card;
+  text-align: center;
+  transition: all $transition-base;
+
+  &:active { transform: scale(0.97); }
+}
+
+.statNum {
+  font-size: 40rpx;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: 6rpx;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.statusFilter {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.filterItem {
+  padding: 12rpx 28rpx;
+  border-radius: $radius-button;
+  background: $color-bg-card;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.04);
+  transition: all $transition-base;
+
+  &:active { transform: scale(0.96); }
+}
+
+.filterItemActive {
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+  box-shadow: 0 4rpx 12rpx rgba(30, 93, 171, 0.25);
+}
+
+.trackCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+
+  &:active { transform: scale(0.99); }
+}
+
+.trackHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+}
+
+.trackInfo { flex: 1; min-width: 0; margin-right: $spacing-md; }
+
+.trackName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 6rpx;
+  @include text-ellipsis;
+}
+
+.trackMeta {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.trackStatus {
+  padding: 8rpx 20rpx;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.statusDraft { background: rgba(134, 144, 156, 0.1); color: $color-text-tertiary; }
+.statusSubmitted { background: rgba(30, 93, 171, 0.08); color: $color-primary; }
+.statusReviewing { background: rgba(255, 125, 0, 0.08); color: $color-warning; }
+.statusRejected { background: rgba(245, 63, 63, 0.08); color: $color-error; }
+.statusApproved { background: rgba(0, 180, 42, 0.08); color: $color-success; }
+.statusCompleted { background: rgba(0, 180, 42, 0.08); color: $color-success; }
+
+.progressWrap {
+  padding: $spacing-md 0;
+  border-top: 1rpx solid $color-divider;
+  border-bottom: 1rpx solid $color-divider;
+  margin-bottom: $spacing-md;
+}
+
+.progressBar {
+  height: 16rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-bottom: $spacing-sm;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-primary-gradient;
+  border-radius: $radius-round;
+  transition: width $transition-slow;
+  position: relative;
+}
+
+.progressNodes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8rpx;
+  pointer-events: none;
+}
+
+.nodeDot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.progressText {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  flex: 1;
+  text-align: center;
+
+  &.active { color: $color-primary; font-weight: $font-weight-semibold; }
+  &.done { color: $color-success; }
+}
+
+.rejectBar {
+  background: linear-gradient(135deg, rgba(245, 63, 63, 0.06), rgba(245, 63, 63, 0.02));
+  border-radius: $radius-sm;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-md;
+  border-left: 4rpx solid $color-error;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+}
+
+.rejectIcon {
+  font-size: $font-size-lg;
+  color: $color-error;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+}
+
+.rejectContent { flex: 1; min-width: 0; }
+
+.rejectLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-error;
+  margin-bottom: 4rpx;
+}
+
+.rejectMsg {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  @include text-ellipsis-multi(2);
+}
+
+.approvedBar {
+  background: linear-gradient(135deg, rgba(0, 180, 42, 0.06), rgba(0, 180, 42, 0.02));
+  border-radius: $radius-sm;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  border-left: 4rpx solid $color-success;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.approvedInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.approvedIcon {
+  font-size: 48rpx;
+}
+
+.approvedText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-success;
+  display: block;
+}
+
+.approvedTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.downloadBtn {
+  padding: 12rpx 24rpx;
+  background: $color-success;
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  flex-shrink: 0;
+}
+
+.cardActions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.actionBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-sm;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border: none;
+
+  &:active { transform: scale(0.97); opacity: 0.9; }
+}
+
+.btnDetail { background: rgba(30, 93, 171, 0.08); color: $color-primary; }
+.btnResubmit { background: $color-primary-gradient; color: $color-text-white; }
+.btnEvidence { background: rgba(106, 27, 154, 0.08); color: #6A1B9A; }

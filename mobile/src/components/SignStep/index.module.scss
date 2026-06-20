@@ -1,0 +1,115 @@
+@use '@/styles/variables.scss' as *;
+
+.wrapper {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: $spacing-xl;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.node {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  border: 4rpx solid $color-border;
+  @include flex-center;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: all $transition-base;
+}
+
+.stepNum {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-tertiary;
+}
+
+.completed .node {
+  background: $color-success;
+  border-color: $color-success;
+}
+
+.current .node {
+  background: $color-primary;
+  border-color: $color-primary;
+}
+
+.error .node {
+  background: $color-error;
+  border-color: $color-error;
+}
+
+.checkIcon {
+  color: $color-text-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+.errorIcon {
+  color: $color-text-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+.current .stepNum,
+.error .stepNum {
+  color: $color-text-white;
+}
+
+.line {
+  position: absolute;
+  left: 26rpx;
+  top: 56rpx;
+  width: 4rpx;
+  height: calc(100% - 56rpx);
+  background: $color-border;
+}
+
+.lineDone {
+  background: $color-success;
+}
+
+.label {
+  margin-left: $spacing-md;
+  flex: 1;
+  padding-top: 4rpx;
+}
+
+.title {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.desc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  display: block;
+  line-height: $line-height-normal;
+}
+
+.completed .title {
+  color: $color-text-secondary;
+}
+
+.current .title {
+  color: $color-primary;
+}
+
+.error .title {
+  color: $color-error;
+}

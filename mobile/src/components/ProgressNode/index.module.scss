@@ -1,0 +1,174 @@
+@use '@/styles/variables.scss' as *;
+
+.wrapper {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.node {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: $spacing-xl;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.lineWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 56rpx;
+  flex-shrink: 0;
+}
+
+.circle {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  border: 4rpx solid $color-border;
+  @include flex-center;
+  z-index: 1;
+  transition: all $transition-base;
+}
+
+.circleActive {
+  background: $color-success;
+  border-color: $color-success;
+}
+
+.circleCurrent {
+  background: $color-primary;
+  border-color: $color-primary;
+  box-shadow: 0 0 0 8rpx rgba(30, 93, 171, 0.15);
+}
+
+.circleRejected {
+  background: $color-error;
+  border-color: $color-error;
+}
+
+.level {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-tertiary;
+}
+
+.checkIcon {
+  color: $color-text-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+.rejectIcon {
+  color: $color-text-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+}
+
+.circleCurrent .level {
+  color: $color-text-white;
+}
+
+.line {
+  position: absolute;
+  top: 56rpx;
+  width: 4rpx;
+  height: calc(100% - 56rpx + #{$spacing-xl});
+  background: $color-border;
+}
+
+.lineActive {
+  background: $color-success;
+}
+
+.lineRejected {
+  background: $color-error;
+}
+
+.content {
+  margin-left: $spacing-md;
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+  gap: $spacing-sm;
+}
+
+.name {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-secondary;
+  @include text-ellipsis;
+}
+
+.nameCurrent {
+  color: $color-primary;
+}
+
+.nameRejected {
+  color: $color-error;
+}
+
+.statusTag {
+  font-size: $font-size-xs;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.statusApproved {
+  background: rgba(0, 180, 42, 0.1);
+  color: $color-success;
+}
+
+.statusProcessing {
+  background: rgba(30, 93, 171, 0.1);
+  color: $color-primary;
+}
+
+.statusPending {
+  background: rgba(134, 144, 156, 0.1);
+  color: $color-text-tertiary;
+}
+
+.statusRejected {
+  background: rgba(245, 63, 63, 0.1);
+  color: $color-error;
+}
+
+.role {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.comment {
+  background: $color-bg-page;
+  border-radius: $radius-sm;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-sm;
+}
+
+.commentText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.time {
+  font-size: $font-size-xs;
+  color: $color-text-disabled;
+}

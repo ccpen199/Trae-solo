@@ -1,0 +1,387 @@
+@use '@/styles/variables.scss' as *;
+
+.statusBanner {
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  color: $color-text-white;
+  position: relative;
+  overflow: hidden;
+
+  &.reviewing {
+    background: linear-gradient(135deg, #FF7D00 0%, #FFA94D 100%);
+  }
+  &.approved {
+    background: linear-gradient(135deg, #00B42A 0%, #34D399 100%);
+  }
+  &.rejected {
+    background: linear-gradient(135deg, #F53F3F 0%, #F87171 100%);
+  }
+  &.submitted {
+    background: linear-gradient(135deg, #1E5DAB 0%, #3A7BD5 100%);
+  }
+}
+
+.statusBannerIcon {
+  font-size: 56rpx;
+  margin-bottom: $spacing-sm;
+}
+
+.statusBannerTitle {
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-xs;
+}
+
+.statusBannerDesc {
+  font-size: $font-size-sm;
+  opacity: 0.9;
+  line-height: $line-height-normal;
+}
+
+.statusBadgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.smallBadge {
+  font-size: $font-size-xs;
+  padding: 6rpx 16rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-xs;
+  backdrop-filter: blur(4px);
+}
+
+.infoCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 2rpx solid $color-divider;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  padding: $spacing-xs 0;
+}
+
+.infoLabel {
+  width: 180rpx;
+  flex-shrink: 0;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.infoValue {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
+  font-weight: $font-weight-medium;
+}
+
+.rejectCard {
+  background: linear-gradient(135deg, rgba(245, 63, 63, 0.06), rgba(245, 63, 63, 0.02));
+  border: 2rpx solid rgba(245, 63, 63, 0.2);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.rejectHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.rejectIcon {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  background: rgba(245, 63, 63, 0.12);
+  @include flex-center;
+  font-size: 28rpx;
+}
+
+.rejectTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-error;
+}
+
+.rejectOperator {
+  margin-left: auto;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.rejectCategory {
+  padding: $spacing-md;
+  background: rgba(245, 63, 63, 0.06);
+  border-radius: $radius-md;
+  margin-bottom: $spacing-md;
+}
+
+.rejectCategoryLabel {
+  font-size: $font-size-xs;
+  color: $color-error;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-xs;
+}
+
+.rejectCategoryName {
+  font-size: $font-size-md;
+  color: $color-error;
+  font-weight: $font-weight-semibold;
+}
+
+.reasonItem {
+  padding: $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  border-left: 4rpx solid $color-error;
+  margin-bottom: $spacing-sm;
+}
+
+.reasonField {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 6rpx;
+}
+
+.reasonMsg {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  margin-bottom: 6rpx;
+}
+
+.reasonSuggestion {
+  font-size: $font-size-xs;
+  color: $color-success;
+  line-height: $line-height-normal;
+  padding-top: 6rpx;
+  border-top: 1rpx dashed $color-divider;
+}
+
+.rejectRemark {
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-sm;
+  margin-top: $spacing-md;
+}
+
+.rejectRemarkLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: 6rpx;
+}
+
+.rejectRemarkText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 40rpx;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8rpx;
+  top: 0;
+  bottom: 0;
+  width: 4rpx;
+  background: $color-border;
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: $spacing-xl;
+
+  &:last-child { padding-bottom: 0; }
+}
+
+.timelineDot {
+  position: absolute;
+  left: -36rpx;
+  top: 4rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: $radius-round;
+  background: $color-text-disabled;
+  border: 4rpx solid $color-bg-card;
+  box-shadow: 0 0 0 2rpx $color-border;
+  z-index: 1;
+}
+
+.timelineItem.done .timelineDot {
+  background: $color-success;
+  box-shadow: 0 0 0 2rpx $color-success;
+}
+
+.timelineItem.current .timelineDot {
+  background: $color-primary;
+  box-shadow: 0 0 0 8rpx rgba(30, 93, 171, 0.15);
+}
+
+.timelineItem.rejected .timelineDot {
+  background: $color-error;
+  box-shadow: 0 0 0 2rpx $color-error;
+}
+
+.timelineContent {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.timelineHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+}
+
+.timelineTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.timelineStatusTag {
+  font-size: $font-size-xs;
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  font-weight: $font-weight-medium;
+}
+
+.timelineTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.timelineDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.timelineAssignee {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  margin-top: 6rpx;
+}
+
+.downloadBar {
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: linear-gradient(135deg, rgba(106, 27, 154, 0.06), rgba(30, 93, 171, 0.04));
+  border-radius: $radius-md;
+  border: 2rpx solid rgba(106, 27, 154, 0.15);
+  margin-top: $spacing-md;
+  align-items: center;
+}
+
+.downloadBarIcon { font-size: 40rpx; }
+
+.downloadBarInfo { flex: 1; }
+
+.downloadBarTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: #6A1B9A;
+  margin-bottom: 4rpx;
+}
+
+.downloadBarDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.downloadBarBtn {
+  @include button-reset;
+  padding: 0 $spacing-lg;
+  height: $button-height-md;
+  background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+  color: $color-text-white;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border: none;
+
+  &:active { transform: scale(0.98); opacity: 0.9; }
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(#{$spacing-md} + constant(safe-area-inset-bottom));
+  padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+}
+
+.barBtn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  border: none;
+
+  &:active { transform: scale(0.98); opacity: 0.9; }
+}
+
+.btnOutline {
+  background: $color-bg-card;
+  color: $color-text-secondary;
+  border: 2rpx solid $color-border;
+  flex: 0.6;
+}
+
+.btnPrimary {
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  box-shadow: 0 8rpx 20rpx rgba(30, 93, 171, 0.3);
+  flex: 1.4;
+}
+
+.contentPadding { padding-bottom: 180rpx; }
