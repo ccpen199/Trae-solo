@@ -20,6 +20,7 @@ export function initDb(): Database.Database {
   db.pragma('foreign_keys = ON');
 
   createTables();
+  migrateTables();
   createIndexes();
 
   return db;
@@ -34,7 +35,6 @@ export function getDb(): Database.Database {
 
 function createTables() {
   if (!db) return;
-
   db.exec(`
     CREATE TABLE IF NOT EXISTS admin_divisions (
       id TEXT PRIMARY KEY,
@@ -170,6 +170,8 @@ function createTables() {
       period_end TEXT NOT NULL,
       total_jobs INTEGER DEFAULT 0,
       total_applications INTEGER DEFAULT 0,
+      active_companies INTEGER DEFAULT 0,
+      supply_demand_ratio REAL DEFAULT 0,
       salary_median INTEGER DEFAULT 0,
       salary_average INTEGER DEFAULT 0,
       prosperity_score REAL DEFAULT 0,
@@ -254,6 +256,24 @@ function createTables() {
       created_at TEXT NOT NULL
     );
   `);
+}
+
+function migrateTables() {
+  if (!db) return;
+
+  try {
+    const cols = db.prepare("PRAGMA table_info(prosperity_indices)").all() as { name: string }[];
+    const colNames = cols.map(c => c.name);
+    
+    if (!colNames.includes('active_companies')) {
+      db.exec('ALTER TABLE prosperity_indices ADD COLUMN active_companies INTEGER DEFAULT 0');
+    }
+    if (!colNames.includes('supply_demand_ratio')) {
+      db.exec('ALTER TABLE prosperity_indices ADD COLUMN supply_demand_ratio REAL DEFAULT 0');
+    }
+  } catch (e) {
+    console.error('Migration error:', e);
+  }
 }
 
 function createIndexes() {

@@ -46,6 +46,15 @@ export function calculateProsperityIndex(
       AND status = 'published'
   `).get(descendantIds) as { total: number; applications: number; avg_salary: number };
 
+  const activeCompanies = db.prepare(`
+    SELECT COUNT(DISTINCT c.id) as count
+    FROM companies c
+    INNER JOIN jobs j ON j.company_id = c.id
+    WHERE j.location_id IN (${placeholders})
+      AND j.status = 'published'
+      AND c.verified = 1
+  `).get(descendantIds) as { count: number };
+
   const newJobsInPeriod = db.prepare(`
     SELECT COUNT(*) as total
     FROM jobs 
@@ -110,6 +119,8 @@ export function calculateProsperityIndex(
     period_end: periodEnd.toISOString(),
     total_jobs: jobsResult.total,
     total_applications: jobsResult.applications,
+    active_companies: activeCompanies.count,
+    supply_demand_ratio: jobsResult.total > 0 ? Number((jobsResult.applications / jobsResult.total).toFixed(2)) : 0,
     salary_median: median,
     salary_average: Math.round(jobsResult.avg_salary),
     prosperity_score: prosperityScore,
@@ -127,11 +138,13 @@ export function saveProsperityIndex(index: ProsperityIndex): void {
   db.prepare(`
     INSERT INTO prosperity_indices (
       id, admin_division_id, period_type, period_start, period_end,
-      total_jobs, total_applications, salary_median, salary_average,
+      total_jobs, total_applications, active_companies, supply_demand_ratio,
+      salary_median, salary_average,
       prosperity_score, job_growth_rate, application_growth_rate, industry_zones, created_at
     ) VALUES (
       @id, @admin_division_id, @period_type, @period_start, @period_end,
-      @total_jobs, @total_applications, @salary_median, @salary_average,
+      @total_jobs, @total_applications, @active_companies, @supply_demand_ratio,
+      @salary_median, @salary_average,
       @prosperity_score, @job_growth_rate, @application_growth_rate, @industry_zones, @created_at
     )
   `).run({ ...index, industry_zones: JSON.stringify(index.industry_zones) });

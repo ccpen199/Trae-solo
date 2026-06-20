@@ -447,6 +447,8 @@ router.get('/prosperity/ranking', (req, res) => {
       prosperity_score: index?.prosperity_score || 0,
       total_jobs: index?.total_jobs || 0,
       total_applications: index?.total_applications || 0,
+      active_companies: index?.active_companies || 0,
+      supply_demand_ratio: index?.supply_demand_ratio || 0,
       salary_median: index?.salary_median || 0,
       job_growth_rate: index?.job_growth_rate || 0,
     };

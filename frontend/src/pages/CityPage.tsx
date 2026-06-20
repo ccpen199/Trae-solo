@@ -13,7 +13,7 @@ const { TabPane } = Tabs;
 const CityPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { setCurrentDivision } = useAppStore();
+  const { setCurrentLevel, setCurrentDivision } = useAppStore();
   const [stats, setStats] = useState<any>({});
   const [jobs, setJobs] = useState<any[]>([]);
   const [fairs, setFairs] = useState<any[]>([]);
@@ -50,6 +50,7 @@ const CityPage: React.FC = () => {
         const division = findDivision(res.data, id);
         if (division) {
           setDivisionInfo(division);
+          setCurrentLevel('city');
           setCurrentDivision(division);
         }
       }

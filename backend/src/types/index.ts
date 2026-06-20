@@ -166,6 +166,8 @@ export interface ProsperityIndex {
   period_end: string;
   total_jobs: number;
   total_applications: number;
+  active_companies: number;
+  supply_demand_ratio: number;
   salary_median: number;
   salary_average: number;
   prosperity_score: number;

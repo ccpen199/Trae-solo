@@ -22,32 +22,47 @@ const ProvincePage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
   const [selectedZone, setSelectedZone] = useState<string | undefined>();
   const [prosperity, setProsperity] = useState<any>(null);
+  const [jobsPage, setJobsPage] = useState(1);
+  const [jobsTotal, setJobsTotal] = useState(0);
+  const [companiesPage, setCompaniesPage] = useState(1);
+  const [companiesTotal, setCompaniesTotal] = useState(0);
+  const [showAllJobs, setShowAllJobs] = useState(false);
+  const [showAllCompanies, setShowAllCompanies] = useState(false);
+  const [cities, setCities] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
-  }, [currentDivision]);
+  }, [currentDivision, showAllJobs, showAllCompanies, jobsPage, companiesPage]);
 
   const loadData = async () => {
     if (!currentDivision?.id) return;
     setLoading(true);
     try {
-      const [statsRes, jobsRes, companiesRes, fairsRes, policiesRes, zonesRes, prosperityRes] = await Promise.all([
+      const jobsPageSize = showAllJobs ? 100 : 8;
+      const companiesPageSize = showAllCompanies ? 100 : 6;
+      const [statsRes, jobsRes, companiesRes, fairsRes, policiesRes, zonesRes, prosperityRes, divisionsRes] = await Promise.all([
         apiEndpoints.stats.getSummary({ admin_division_id: currentDivision.id }) as Promise<ApiResponse>,
-        apiEndpoints.jobs.getList({ admin_division_id: currentDivision.id, pageSize: 8 }) as Promise<ApiResponse>,
-        apiEndpoints.companies.getList({ admin_division_id: currentDivision.id, pageSize: 6 }) as Promise<ApiResponse>,
+        apiEndpoints.jobs.getList({ admin_division_id: currentDivision.id, pageSize: jobsPageSize, page: jobsPage }) as Promise<ApiResponse>,
+        apiEndpoints.companies.getList({ admin_division_id: currentDivision.id, pageSize: companiesPageSize, page: companiesPage }) as Promise<ApiResponse>,
         apiEndpoints.fairs.getList({ admin_division_id: currentDivision.id, pageSize: 5, is_live: false }) as Promise<ApiResponse>,
         apiEndpoints.policies.getList({ admin_division_id: currentDivision.id, pageSize: 5 }) as Promise<ApiResponse>,
         apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
         apiEndpoints.prosperity.getCurrent({ admin_division_id: currentDivision.id, period_type: 'monthly' }) as Promise<ApiResponse>,
+        apiEndpoints.divisions.getTree() as Promise<ApiResponse>,
       ]);
 
       setStats(statsRes.data);
       setJobs(jobsRes.data || []);
+      setJobsTotal(jobsRes.total || 0);
       setCompanies(companiesRes.data || []);
+      setCompaniesTotal(companiesRes.total || 0);
       setFairs(fairsRes.data || []);
       setPolicies(policiesRes.data || []);
       setIndustryZones(zonesRes.data || []);
       setProsperity(prosperityRes.data);
+      if (divisionsRes.success && divisionsRes.data?.[0]?.children) {
+        setCities(divisionsRes.data[0].children);
+      }
     } catch (error) {
       console.error('加载数据失败:', error);
     } finally {
@@ -57,24 +72,42 @@ const ProvincePage: React.FC = () => {
 
   const handleSearch = async (value: string) => {
     setKeyword(value);
+    setJobsPage(1);
+    setShowAllJobs(true);
     const res = await apiEndpoints.jobs.getList({
       admin_division_id: currentDivision?.id,
       keyword: value,
       industry_zone: selectedZone,
-      pageSize: 8,
+      pageSize: 100,
+      page: 1,
     }) as ApiResponse;
     setJobs(res.data || []);
+    setJobsTotal(res.total || 0);
   };
 
   const handleZoneChange = async (value: string | undefined) => {
     setSelectedZone(value);
+    setJobsPage(1);
+    setShowAllJobs(true);
     const res = await apiEndpoints.jobs.getList({
       admin_division_id: currentDivision?.id,
       keyword,
       industry_zone: value,
-      pageSize: 8,
+      pageSize: 100,
+      page: 1,
     }) as ApiResponse;
     setJobs(res.data || []);
+    setJobsTotal(res.total || 0);
+  };
+
+  const handleShowAllJobs = () => {
+    setShowAllJobs(true);
+    setJobsPage(1);
+  };
+
+  const handleShowAllCompanies = () => {
+    setShowAllCompanies(true);
+    setCompaniesPage(1);
   };
 
   const jobColumns = [
@@ -224,7 +257,7 @@ const ProvincePage: React.FC = () => {
           <Card
             title="最新招聘岗位"
             extra={
-              <Button type="link" onClick={() => navigate('/province')}>
+              <Button type="link" onClick={handleShowAllJobs}>
                 查看更多 <ArrowRightOutlined />
               </Button>
             }
@@ -255,7 +288,12 @@ const ProvincePage: React.FC = () => {
               columns={jobColumns}
               dataSource={jobs}
               rowKey="id"
-              pagination={false}
+              pagination={showAllJobs ? {
+                current: jobsPage,
+                pageSize: 10,
+                total: jobsTotal,
+                onChange: (page) => setJobsPage(page),
+              } : false}
               loading={loading}
               size="small"
             />
@@ -299,30 +337,50 @@ const ProvincePage: React.FC = () => {
           >
             <List
               dataSource={fairs}
-              renderItem={fair => (
-                <List.Item
-                  className={`fair-card ${fair.is_live ? 'live' : ''}`}
-                  style={{ padding: '8px 0' }}
-                >
-                  <List.Item.Meta
-                    title={
-                      <Space>
-                        <a onClick={() => navigate(`/fair/${fair.id}`)} style={{ fontWeight: 500 }}>
-                          {fair.title}
-                        </a>
-                        {fair.is_live && <Tag color="red" className="live-tag">直播中</Tag>}
-                        <Tag color={getFairStatusColor(fair.status)}>{getFairStatusLabel(fair.status)}</Tag>
-                      </Space>
-                    }
-                    description={
-                      <div style={{ fontSize: 12, color: '#888' }}>
-                        <div>{fair.organizer}</div>
-                        <div>{formatDate(fair.start_time)} · {fair.location}</div>
-                      </div>
-                    }
-                  />
-                </List.Item>
-              )}
+              renderItem={fair => {
+                const companyProgress = fair.max_companies > 0 ? Math.round((fair.registered_companies / fair.max_companies) * 100) : 0;
+                const visitorProgress = fair.max_visitors > 0 ? Math.round((fair.registered_visitors / fair.max_visitors) * 100) : 0;
+                return (
+                  <List.Item
+                    className={`fair-card ${fair.is_live ? 'live' : ''}`}
+                    style={{ padding: '8px 0' }}
+                  >
+                    <List.Item.Meta
+                      title={
+                        <Space>
+                          <a onClick={() => navigate(`/fair/${fair.id}`)} style={{ fontWeight: 500 }}>
+                            {fair.title}
+                          </a>
+                          {fair.is_live && <Tag color="red" className="live-tag">直播中</Tag>}
+                          <Tag color={getFairStatusColor(fair.status)}>{getFairStatusLabel(fair.status)}</Tag>
+                        </Space>
+                      }
+                      description={
+                        <div style={{ fontSize: 12, color: '#888' }}>
+                          <div>{fair.organizer}</div>
+                          <div>{formatDate(fair.start_time)} · {fair.location}</div>
+                          <div style={{ marginTop: 4 }}>
+                            <Space>
+                              <span>企业: {fair.registered_companies}/{fair.max_companies}</span>
+                              <div style={{
+                                width: 60, height: 6, background: '#f0f0f0', borderRadius: 3, overflow: 'hidden', display: 'inline-block'
+                              }}>
+                                <div style={{ width: `${companyProgress}%`, height: '100%', background: '#1890ff' }} />
+                              </div>
+                              <span>预约: {fair.registered_visitors}/{fair.max_visitors}</span>
+                              <div style={{
+                                width: 60, height: 6, background: '#f0f0f0', borderRadius: 3, overflow: 'hidden', display: 'inline-block'
+                              }}>
+                                <div style={{ width: `${visitorProgress}%`, height: '100%', background: '#52c41a' }} />
+                              </div>
+                            </Space>
+                          </div>
+                        </div>
+                      }
+                    />
+                  </List.Item>
+                );
+              }}
             />
           </Card>
 
@@ -348,7 +406,7 @@ const ProvincePage: React.FC = () => {
       <Card
         title="优质企业"
         extra={
-          <Button type="link" onClick={() => {}}>
+          <Button type="link" onClick={handleShowAllCompanies}>
             查看更多 <ArrowRightOutlined />
           </Button>
         }
@@ -398,6 +456,68 @@ const ProvincePage: React.FC = () => {
                 </div>
               </Card>
             </Col>
+          ))}
+        </Row>
+      </Card>
+
+      <Card
+        title="州市站点"
+        size="small"
+        style={{ marginTop: 16 }}
+      >
+        <Row gutter={[12, 12]}>
+          {cities.map(city => (
+            <Col xs={12} sm={8} md={6} lg={4} xl={3} key={city.id}>
+              <Card
+                hoverable
+                size="small"
+                className="job-card"
+                onClick={() => navigate(`/city/${city.id}`)}
+                style={{ textAlign: 'center', cursor: 'pointer' }}
+                bodyStyle={{ padding: 12 }}
+              >
+                <div style={{ fontWeight: 500, marginBottom: 4 }}>{city.name}</div>
+                <div style={{ fontSize: 12, color: '#888' }}>
+                  {city.children?.length || 0} 个区县
+                </div>
+                <Button type="link" size="small" style={{ padding: 0, marginTop: 4 }}>
+                  进入站点 <ArrowRightOutlined />
+                </Button>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Card>
+
+      <Card
+        title="区县校园就业指导"
+        size="small"
+        style={{ marginTop: 16 }}
+      >
+        <Row gutter={[12, 12]}>
+          {cities.slice(0, 8).map(city => (
+            city.children?.slice(0, 2).map((county: any) => (
+              <Col xs={12} sm={8} md={6} lg={4} key={county.id}>
+                <Card
+                  hoverable
+                  size="small"
+                  className="job-card"
+                  onClick={() => navigate(`/county/${county.id}`)}
+                  style={{ cursor: 'pointer' }}
+                  bodyStyle={{ padding: 12 }}
+                >
+                  <div style={{ fontWeight: 500, marginBottom: 4, fontSize: 13 }}>
+                    {county.name}就业指导服务站
+                  </div>
+                  <div style={{ fontSize: 12, color: '#888' }}>
+                    {city.name} · 校园招聘服务点
+                  </div>
+                  <Button type="link" size="small" style={{ padding: 0, marginTop: 4 }}>
+                    进入 <ArrowRightOutlined />
+                  </Button>
+                </Card>
+              </Col>
+            ))
           ))}
         </Row>
       </Card>
