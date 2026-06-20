@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Card, Row, Col, Steps, Tag, Button, Modal, Form, Input, message, Tabs, Descriptions, Alert } from 'antd';
-import { SafetyCertificateOutlined, UserSwitchOutlined, FileSearchOutlined, PhoneOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react';
+import { Card, Row, Col, Steps, Tag, Button, Modal, Form, Input, message, Tabs, Descriptions, Alert, Statistic, Table, Space, Badge, Empty, List } from 'antd';
+import { SafetyCertificateOutlined, UserSwitchOutlined, FileSearchOutlined, PhoneOutlined, WarningOutlined, CheckCircleOutlined, ClockCircleOutlined, FileProtectOutlined } from '@ant-design/icons';
 import api from '../utils/request';
 
 interface Props {
@@ -13,6 +13,114 @@ export default function Governance({ user }: Props) {
   const [form] = Form.useForm();
   const [confirmForm] = Form.useForm();
   const [verifyCode, setVerifyCode] = useState('');
+  const [stats, setStats] = useState<any>(null);
+  const [agentRecords, setAgentRecords] = useState<any[]>([]);
+  const [priceWarnings, setPriceWarnings] = useState<any[]>([]);
+  const [ownerConfirmations, setOwnerConfirmations] = useState<any[]>([]);
+  const [imageDuplicates, setImageDuplicates] = useState<any[]>([]);
+  const [regulatoryRecords, setRegulatoryRecords] = useState<any[]>([]);
+  const [verifyStatus, setVerifyStatus] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('system');
+
+  useEffect(() => {
+    loadStats();
+    loadPriceWarnings();
+    loadImageDuplicates();
+    if (user?.role === 'agent') {
+      loadAgentVerifyStatus();
+      loadAgentRecords();
+    }
+    if (user?.role === 'user' || user?.role === 'agent' || user?.role === 'admin') {
+      loadOwnerConfirmations();
+    }
+    if (user?.role === 'admin') {
+      loadRegulatoryRecords();
+      loadAgentRecords();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (activeTab === 'agent' && user?.role === 'agent') {
+      loadAgentVerifyStatus();
+      loadAgentRecords();
+    }
+    if (activeTab === 'warning') {
+      loadPriceWarnings();
+    }
+    if (activeTab === 'duplicate') {
+      loadImageDuplicates();
+    }
+    if (activeTab === 'owner' && user) {
+      loadOwnerConfirmations();
+    }
+    if (activeTab === 'compliance' && user?.role === 'admin') {
+      loadRegulatoryRecords();
+      loadAgentRecords();
+    }
+  }, [activeTab, user]);
+
+  const loadStats = async () => {
+    try {
+      const res: any = await api.get('/governance/stats');
+      setStats(res);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadAgentVerifyStatus = async () => {
+    try {
+      const res: any = await api.get('/governance/agent/verify-status');
+      setVerifyStatus(res.agent);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadAgentRecords = async () => {
+    try {
+      const res: any = await api.get('/governance/agent/verify-records');
+      setAgentRecords(res.list || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadPriceWarnings = async () => {
+    try {
+      const res: any = await api.get('/governance/price-warnings');
+      setPriceWarnings(res.list || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadOwnerConfirmations = async () => {
+    try {
+      const res: any = await api.get('/governance/owner-confirmations');
+      setOwnerConfirmations(res.list || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadImageDuplicates = async () => {
+    try {
+      const res: any = await api.get('/governance/image-duplicates');
+      setImageDuplicates(res.list || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadRegulatoryRecords = async () => {
+    try {
+      const res: any = await api.get('/governance/regulatory-records?pageSize=10');
+      setRegulatoryRecords(res.list || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleAgentVerify = async () => {
     try {
@@ -20,6 +128,8 @@ export default function Governance({ user }: Props) {
       await api.post('/governance/agent/verify', values);
       message.success('认证信息已提交，等待审核');
       setVerifyModal(false);
+      loadAgentVerifyStatus();
+      loadAgentRecords();
     } catch (e: any) {
       message.error(e.message || '提交失败');
     }
@@ -42,40 +152,65 @@ export default function Governance({ user }: Props) {
       await api.post('/governance/owner-confirm/verify', values);
       message.success('业主确认成功');
       setConfirmModal(false);
+      setVerifyCode('');
+      confirmForm.resetFields();
+      loadOwnerConfirmations();
     } catch (e: any) {
       message.error(e.message || '验证失败');
     }
   };
 
   const steps = [
-    {
-      title: '经纪人实名绑定',
-      description: '身份证+从业资格证双重验证',
-      icon: <UserSwitchOutlined />,
-    },
-    {
-      title: '房源图片AI去重',
-      description: '智能识别重复图片，防止一房多发',
-      icon: <FileSearchOutlined />,
-    },
-    {
-      title: '挂牌价偏离度预警',
-      description: '对比区域均价，异常价格自动预警',
-      icon: <SafetyCertificateOutlined />,
-    },
-    {
-      title: '业主直连确认机制',
-      description: '验证码验证业主身份，确保房源真实',
-      icon: <PhoneOutlined />,
-    },
+    { title: '经纪人实名绑定', description: '身份证+从业资格证双重验证', icon: <UserSwitchOutlined /> },
+    { title: '房源图片AI去重', description: '智能识别重复图片，防止一房多发', icon: <FileSearchOutlined /> },
+    { title: '挂牌价偏离度预警', description: '对比区域均价，异常价格自动预警', icon: <SafetyCertificateOutlined /> },
+    { title: '业主直连确认机制', description: '验证码验证业主身份，确保房源真实', icon: <PhoneOutlined /> },
   ];
+
+  const getStatusBadge = (status: number) => {
+    if (status === 1) return <Badge status="success" text="已认证" />;
+    if (status === 0) return <Badge status="processing" text="审核中" />;
+    return <Badge status="warning" text="待提交" />;
+  };
+
+  const getConfirmBadge = (confirmed: number) => {
+    if (confirmed === 1) return <Badge status="success" text="已确认" />;
+    return <Badge status="warning" text="待确认" />;
+  };
+
+  const statsCardStyle = { borderRadius: 8, textAlign: 'center' as const };
 
   const tabItems = [
     {
       key: 'system',
-      label: '治理体系介绍',
+      label: '治理体系总览',
       children: (
         <div>
+          {stats && (
+            <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+              <Col span={6}>
+                <Card style={statsCardStyle}>
+                  <Statistic title="认证经纪人" value={stats.agents.verified} suffix={`/ ${stats.agents.total}`} />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card style={statsCardStyle}>
+                  <Statistic title="真房源认证" value={stats.properties.verified} suffix={`/ ${stats.properties.total}`} />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card style={statsCardStyle}>
+                  <Statistic title="价格预警" value={stats.properties.priceWarnings} valueStyle={{ color: '#fa8c16' }} />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card style={statsCardStyle}>
+                  <Statistic title="监管备案" value={stats.transactions.synced} suffix={`/ ${stats.transactions.total}`} />
+                </Card>
+              </Col>
+            </Row>
+          )}
+
           <Alert
             message="真房源保障体系"
             description="平台建立四重真房源治理机制，确保每一套房源真实可靠，让您放心交易。"
@@ -103,6 +238,10 @@ export default function Governance({ user }: Props) {
                   所有经纪人必须完成实名认证，提交身份证和经纪资格证书，
                   审核通过后方可发布房源，确保服务专业性。
                 </p>
+                <div style={{ marginTop: 12 }}>
+                  <Tag color="green">已认证 {stats?.agents.verified || 0} 人</Tag>
+                  <Tag color="orange">待审核 {stats?.agents.pending || 0} 人</Tag>
+                </div>
               </Card>
             </Col>
             <Col span={8}>
@@ -113,16 +252,22 @@ export default function Governance({ user }: Props) {
                   利用AI图像识别技术，自动检测重复房源图片，
                   有效防止一房多发、虚假房源等问题。
                 </p>
+                <div style={{ marginTop: 12 }}>
+                  <Tag color="blue">检测到 {imageDuplicates.length} 套重复图片房源</Tag>
+                </div>
               </Card>
             </Col>
             <Col span={8}>
               <Card style={{ textAlign: 'center', borderRadius: 8 }}>
-                <SafetyCertificateOutlined style={{ fontSize: 48, color: '#faad14' }} />
+                <WarningOutlined style={{ fontSize: 48, color: '#faad14' }} />
                 <h3 style={{ marginTop: 12 }}>挂牌价偏离度预警</h3>
                 <p style={{ color: '#666', fontSize: 13, lineHeight: 1.8 }}>
                   基于区域市场均价，自动计算挂牌价偏离度，
                   超过±15%自动预警，保护买卖双方利益。
                 </p>
+                <div style={{ marginTop: 12 }}>
+                  <Tag color="orange">当前预警 {stats?.properties.priceWarnings || 0} 套</Tag>
+                </div>
               </Card>
             </Col>
           </Row>
@@ -134,26 +279,178 @@ export default function Governance({ user }: Props) {
       label: '经纪人实名认证',
       children: (
         <div>
-          <Card style={{ borderRadius: 8 }}>
-            <Descriptions title="认证要求" column={1} style={{ marginBottom: 24 }}>
-              <Descriptions.Item label="真实姓名">与身份证一致的真实姓名</Descriptions.Item>
-              <Descriptions.Item label="身份证号">18位有效身份证号码</Descriptions.Item>
-              <Descriptions.Item label="经纪资格证">房地产经纪人从业资格证书编号</Descriptions.Item>
-              <Descriptions.Item label="所属机构">执业的房产经纪机构名称</Descriptions.Item>
-              <Descriptions.Item label="联系电话">常用手机号，用于接收验证码</Descriptions.Item>
-            </Descriptions>
-            
-            {user?.role === 'agent' ? (
-              <Button type="primary" size="large" onClick={() => setVerifyModal(true)}>
-                提交认证申请
-              </Button>
-            ) : (
+          {user?.role === 'agent' && verifyStatus && (
+            <Card style={{ marginBottom: 16, borderRadius: 8, background: verifyStatus.verified ? '#f6ffed' : '#fff7e6' }}>
+              <Row gutter={16} align="middle">
+                <Col span={18}>
+                  <Descriptions column={2} size="small">
+                    <Descriptions.Item label="真实姓名">{verifyStatus.real_name}</Descriptions.Item>
+                    <Descriptions.Item label="身份证号">{verifyStatus.id_card?.replace(/(\d{6})\d{8}(\d{4})/, '$1********$2')}</Descriptions.Item>
+                    <Descriptions.Item label="资格证号">{verifyStatus.license_no}</Descriptions.Item>
+                    <Descriptions.Item label="所属机构">{verifyStatus.agency}</Descriptions.Item>
+                    <Descriptions.Item label="联系电话">{verifyStatus.phone}</Descriptions.Item>
+                    <Descriptions.Item label="认证状态">{getStatusBadge(verifyStatus.verified)}</Descriptions.Item>
+                  </Descriptions>
+                </Col>
+                <Col span={6} style={{ textAlign: 'right' }}>
+                  <Button type="primary" onClick={() => setVerifyModal(true)}>更新认证信息</Button>
+                </Col>
+              </Row>
+            </Card>
+          )}
+
+          {user?.role === 'agent' && !verifyStatus && (
+            <Card style={{ marginBottom: 16, borderRadius: 8 }}>
               <Alert
-                message="请以经纪人身份登录"
-                description="经纪人实名认证仅限经纪人账号使用，请先注册或切换至经纪人账号。"
+                message="尚未提交实名认证"
+                description="请完成实名认证后才能发布房源和进行交易。"
                 type="warning"
                 showIcon
+                action={<Button type="primary" onClick={() => setVerifyModal(true)}>立即认证</Button>}
               />
+            </Card>
+          )}
+
+          {user?.role !== 'agent' && user?.role !== 'admin' && (
+            <Alert
+              message="请以经纪人身份登录"
+              description="经纪人实名认证仅限经纪人账号使用，请先注册或切换至经纪人账号。"
+              type="warning"
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+          )}
+
+          {agentRecords.length > 0 && (user?.role === 'agent' || user?.role === 'admin') && (
+            <Card title="认证审核记录" style={{ borderRadius: 8 }}>
+              <Table
+                dataSource={agentRecords}
+                rowKey="id"
+                size="small"
+                columns={[
+                  { title: '经纪人', dataIndex: 'real_name', key: 'real_name' },
+                  { title: '所属机构', dataIndex: 'agency', key: 'agency' },
+                  { title: '联系电话', dataIndex: 'phone', key: 'phone' },
+                  { title: '资格证号', dataIndex: 'license_no', key: 'license_no' },
+                  {
+                    title: '认证状态',
+                    key: 'verified',
+                    render: (_, record: any) => getStatusBadge(record.verified),
+                  },
+                  { title: '提交时间', dataIndex: 'created_at', key: 'created_at' },
+                ]}
+              />
+            </Card>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: 'duplicate',
+      label: '图片AI去重',
+      children: (
+        <div>
+          <Alert
+            message="AI图片去重系统"
+            description="平台采用深度学习图像识别技术，自动检测重复房源图片，防止一房多发、盗用图片等违规行为。"
+            type="info"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+          <Card title={`去重检测记录（${imageDuplicates.length}套）`} style={{ borderRadius: 8 }}>
+            {imageDuplicates.length > 0 ? (
+              <Table
+                dataSource={imageDuplicates}
+                rowKey="property_id"
+                size="small"
+                columns={[
+                  { title: '房源ID', dataIndex: 'property_id', key: 'property_id' },
+                  { title: '房源标题', dataIndex: 'title', key: 'title' },
+                  { title: '区域', dataIndex: 'district', key: 'district' },
+                  { title: '图片总数', dataIndex: 'total_images', key: 'total_images' },
+                  {
+                    title: '重复图片',
+                    dataIndex: 'duplicate_count',
+                    key: 'duplicate_count',
+                    render: (val: number) => <Tag color="red">{val}张</Tag>,
+                  },
+                  {
+                    title: '处理状态',
+                    key: 'status',
+                    render: () => <Tag color="orange">待处理</Tag>,
+                  },
+                ]}
+              />
+            ) : (
+              <Empty description="暂无重复图片记录" />
+            )}
+          </Card>
+        </div>
+      ),
+    },
+    {
+      key: 'warning',
+      label: '价格偏离预警',
+      children: (
+        <div>
+          <Alert
+            message="价格偏离度预警机制"
+            description="系统自动对比区域市场均价，挂牌价偏离超过±15%的房源将被标记预警，保护买卖双方利益。"
+            type="warning"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+          <Card title={`价格预警房源（${priceWarnings.length}套）`} style={{ borderRadius: 8 }}>
+            {priceWarnings.length > 0 ? (
+              <Table
+                dataSource={priceWarnings}
+                rowKey="id"
+                size="small"
+                columns={[
+                  { title: '房源ID', dataIndex: 'id', key: 'id' },
+                  { title: '房源标题', dataIndex: 'title', key: 'title' },
+                  { title: '区域', dataIndex: 'district', key: 'district' },
+                  {
+                    title: '挂牌价',
+                    key: 'price',
+                    render: (_, record: any) => (
+                      <span>{record.price}万</span>
+                    ),
+                  },
+                  {
+                    title: '区域均价',
+                    key: 'avg_price',
+                    render: (_, record: any) => (
+                      <span>{record.avg_price?.toLocaleString() || '-'}元/㎡</span>
+                    ),
+                  },
+                  {
+                    title: '房源单价',
+                    key: 'unit_price',
+                    render: (_, record: any) => (
+                      <span>{record.unitPrice?.toLocaleString() || '-'}元/㎡</span>
+                    ),
+                  },
+                  {
+                    title: '偏离度',
+                    key: 'deviation',
+                    render: (_, record: any) => (
+                      <Tag color={Math.abs(record.deviation) > 20 ? 'red' : 'orange'}>
+                        {record.deviation > 0 ? '+' : ''}{record.deviation}%
+                      </Tag>
+                    ),
+                  },
+                  {
+                    title: '真房源认证',
+                    key: 'verified',
+                    render: (_, record: any) => (
+                      record.is_verified ? <Tag color="green">已认证</Tag> : <Tag color="default">未认证</Tag>
+                    ),
+                  },
+                ]}
+              />
+            ) : (
+              <Empty description="暂无价格预警房源" />
             )}
           </Card>
         </div>
@@ -164,18 +461,18 @@ export default function Governance({ user }: Props) {
       label: '业主直连确认',
       children: (
         <div>
-          <Card style={{ borderRadius: 8 }}>
-            <Alert
-              message="业主直连确认机制"
-              description="为确保房源真实有效，业主需通过手机验证码确认房源信息，验证通过后将获得「真房源」认证标识。"
-              type="info"
-              showIcon
-              style={{ marginBottom: 24 }}
-            />
-            
-            {user ? (
-              <div>
-                <Form form={confirmForm} layout="vertical" style={{ maxWidth: 400 }}>
+          <Alert
+            message="业主直连确认机制"
+            description="为确保房源真实有效，业主需通过手机验证码确认房源信息，验证通过后将获得「真房源」认证标识。"
+            type="info"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+          
+          {user ? (
+            <div>
+              <Card title="发起业主确认" style={{ marginBottom: 16, borderRadius: 8 }}>
+                <Form form={confirmForm} layout="vertical" style={{ maxWidth: 500 }}>
                   <Form.Item name="propertyId" label="房源ID" rules={[{ required: true, message: '请输入房源ID' }]}>
                     <Input placeholder="请输入需要确认的房源ID" />
                   </Form.Item>
@@ -199,16 +496,44 @@ export default function Governance({ user }: Props) {
                     <span style={{ color: '#52c41a', fontSize: 13 }}>（实际项目中会发送短信到业主手机）</span>
                   </div>
                 )}
-              </div>
-            ) : (
-              <Alert
-                message="请先登录"
-                description="业主确认需要登录账号，请先登录后再进行操作。"
-                type="warning"
-                showIcon
-              />
-            )}
-          </Card>
+              </Card>
+
+              {ownerConfirmations.length > 0 && (
+                <Card title="业主确认记录" style={{ borderRadius: 8 }}>
+                  <List
+                    dataSource={ownerConfirmations}
+                    renderItem={(item: any) => (
+                      <List.Item
+                        actions={[getConfirmBadge(item.confirmed)]}
+                      >
+                        <List.Item.Meta
+                          title={item.property_title}
+                          description={
+                            <div>
+                              <span style={{ color: '#999' }}>
+                                业主: {item.owner_name} · {item.owner_phone} · {item.property_price}万 · {item.property_area}㎡ · {item.district}
+                              </span>
+                              <div style={{ marginTop: 4, fontSize: 12, color: '#999' }}>
+                                申请时间: {item.created_at}
+                                {item.confirmed_at && ` · 确认时间: ${item.confirmed_at}`}
+                              </div>
+                            </div>
+                          }
+                        />
+                      </List.Item>
+                    )}
+                  />
+                </Card>
+              )}
+            </div>
+          ) : (
+            <Alert
+              message="请先登录"
+              description="业主确认需要登录账号，请先登录后再进行操作。"
+              type="warning"
+              showIcon
+            />
+          )}
         </div>
       ),
     },
@@ -217,42 +542,82 @@ export default function Governance({ user }: Props) {
       label: '合规监管',
       children: (
         <div>
-          <Card style={{ borderRadius: 8 }}>
-            <div style={{ textAlign: 'center', marginBottom: 24 }}>
-              <SafetyCertificateOutlined style={{ fontSize: 64, color: '#52c41a' }} />
-              <h2 style={{ marginTop: 16 }}>地方住建监管平台对接</h2>
-              <p style={{ color: '#666' }}>所有交易数据实时同步至地方住建部门，确保网签备案合规</p>
-            </div>
+          <div style={{ textAlign: 'center', marginBottom: 24 }}>
+            <SafetyCertificateOutlined style={{ fontSize: 64, color: '#52c41a' }} />
+            <h2 style={{ marginTop: 16 }}>地方住建监管平台对接</h2>
+            <p style={{ color: '#666' }}>所有交易数据实时同步至地方住建部门，确保网签备案合规</p>
+          </div>
 
-            <Row gutter={[16, 16]}>
-              {[
-                { title: '网签备案', desc: '交易合同实时网签备案，自动生成备案号' },
-                { title: '资金监管', desc: '交易资金全程监管，保障资金安全' },
-                { title: '税费缴纳', desc: '税费自动测算，线上缴纳方便快捷' },
-                { title: '产权过户', desc: '过户进度全程可追踪，透明公开' },
-                { title: '数据上报', desc: '交易数据实时上报监管部门' },
-                { title: '信用体系', desc: '建立经纪人信用评价体系' },
-              ].map((item, idx) => (
-                <Col span={8} key={idx}>
-                  <div style={{ padding: 16, background: '#f5f5f5', borderRadius: 6, textAlign: 'center' }}>
-                    <h4 style={{ marginBottom: 8 }}>{item.title}</h4>
-                    <p style={{ color: '#666', fontSize: 13, marginBottom: 0 }}>{item.desc}</p>
-                  </div>
-                </Col>
-              ))}
-            </Row>
+          <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+            {[
+              { title: '网签备案', desc: '交易合同实时网签备案，自动生成备案号' },
+              { title: '资金监管', desc: '交易资金全程监管，保障资金安全' },
+              { title: '税费缴纳', desc: '税费自动测算，线上缴纳方便快捷' },
+              { title: '产权过户', desc: '过户进度全程可追踪，透明公开' },
+              { title: '数据上报', desc: '交易数据实时上报监管部门' },
+              { title: '信用体系', desc: '建立经纪人信用评价体系' },
+            ].map((item, idx) => (
+              <Col span={8} key={idx}>
+                <div style={{ padding: 16, background: '#f5f5f5', borderRadius: 6, textAlign: 'center' }}>
+                  <FileProtectOutlined style={{ fontSize: 28, color: '#1890ff' }} />
+                  <h4 style={{ marginBottom: 8, marginTop: 12 }}>{item.title}</h4>
+                  <p style={{ color: '#666', fontSize: 13, marginBottom: 0 }}>{item.desc}</p>
+                </div>
+              </Col>
+            ))}
+          </Row>
 
-            <div style={{ marginTop: 24, padding: 16, background: '#e6f7ff', borderRadius: 6 }}>
-              <h4 style={{ color: '#1890ff', marginTop: 0 }}>监管合规承诺</h4>
-              <ul style={{ color: '#0050b3', lineHeight: 2 }}>
-                <li>严格遵守《城市房地产管理法》等法律法规</li>
-                <li>所有房源信息真实有效，接受社会监督</li>
-                <li>交易资金纳入监管账户，专款专用</li>
-                <li>交易合同网签备案，保障双方权益</li>
-                <li>定期向住建部门报送交易统计数据</li>
-              </ul>
-            </div>
-          </Card>
+          {user?.role === 'admin' ? (
+            <Card title="监管备案记录" style={{ borderRadius: 8 }}>
+              {regulatoryRecords.length > 0 ? (
+                <Table
+                  dataSource={regulatoryRecords}
+                  rowKey="id"
+                  size="small"
+                  columns={[
+                    { title: '备案号', dataIndex: 'platform_ref_no', key: 'platform_ref_no' },
+                    { title: '房源', dataIndex: 'property_title', key: 'property_title' },
+                    { title: '交易编号', dataIndex: 'order_no', key: 'order_no' },
+                    { title: '记录类型', dataIndex: 'record_type', key: 'record_type' },
+                    { title: '买方', dataIndex: 'buyer_name', key: 'buyer_name' },
+                    { title: '卖方', dataIndex: 'seller_name', key: 'seller_name' },
+                    {
+                      title: '同步状态',
+                      key: 'status',
+                      render: (_, record: any) => (
+                        record.status === 'synced' ?
+                          <Tag color="success">已同步</Tag> :
+                          record.status === 'pending' ?
+                            <Tag color="orange">同步中</Tag> :
+                            <Tag color="red">同步失败</Tag>
+                      ),
+                    },
+                    { title: '同步时间', dataIndex: 'created_at', key: 'created_at' },
+                  ]}
+                />
+              ) : (
+                <Empty description="暂无监管备案记录" />
+              )}
+            </Card>
+          ) : (
+            <Alert
+              message="监管备案记录仅限管理员查看"
+              description="请使用管理员账号登录查看详细的监管备案记录。"
+              type="info"
+              showIcon
+            />
+          )}
+
+          <div style={{ marginTop: 24, padding: 16, background: '#e6f7ff', borderRadius: 6 }}>
+            <h4 style={{ color: '#1890ff', marginTop: 0 }}>监管合规承诺</h4>
+            <ul style={{ color: '#0050b3', lineHeight: 2, marginBottom: 0 }}>
+              <li>严格遵守《城市房地产管理法》等法律法规</li>
+              <li>所有房源信息真实有效，接受社会监督</li>
+              <li>交易资金纳入监管账户，专款专用</li>
+              <li>交易合同网签备案，保障双方权益</li>
+              <li>定期向住建部门报送交易统计数据</li>
+            </ul>
+          </div>
         </div>
       ),
     },
@@ -260,7 +625,7 @@ export default function Governance({ user }: Props) {
 
   return (
     <div className="page-container">
-      <Card 
+      <Card
         title={
           <span>
             <SafetyCertificateOutlined style={{ color: '#52c41a' }} /> 真房源治理体系
@@ -269,7 +634,11 @@ export default function Governance({ user }: Props) {
         style={{ borderRadius: 8 }}
         extra={<Tag color="green">已通过住建部门备案</Tag>}
       >
-        <Tabs items={tabItems} />
+        <Tabs
+          items={tabItems}
+          activeKey={activeTab}
+          onChange={setActiveTab}
+        />
       </Card>
 
       <Modal

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Row, Col, Card, Input, Select, Slider, Pagination, Button, Space, Tag, Empty } from 'antd';
+import { Row, Col, Card, Input, Select, Slider, Pagination, Button, Space, Tag, Empty, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import api from '../utils/request';
 
@@ -49,6 +49,8 @@ export default function PropertyList() {
   const [keyword, setKeyword] = useState('');
   const [district, setDistrict] = useState<string>('all');
   const [rooms, setRooms] = useState<string>('all');
+  const [category, setCategory] = useState<string>('all');
+  const [areaRange, setAreaRange] = useState<[number, number] | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
   const [sort, setSort] = useState('created_at');
   const [districts, setDistricts] = useState<string[]>([]);
@@ -59,7 +61,7 @@ export default function PropertyList() {
 
   useEffect(() => {
     loadList();
-  }, [type, page, district, rooms, sort, priceRange]);
+  }, [type, page, district, rooms, category, sort, priceRange, areaRange]);
 
   const loadDistricts = async () => {
     try {
@@ -82,9 +84,14 @@ export default function PropertyList() {
       };
       if (district && district !== 'all') params.district = district;
       if (rooms && rooms !== 'all') params.rooms = rooms;
+      if (category && category !== 'all') params.category = category;
       if (priceRange) {
         params.minPrice = priceRange[0];
         params.maxPrice = priceRange[1];
+      }
+      if (areaRange) {
+        params.minArea = areaRange[0];
+        params.maxArea = areaRange[1];
       }
       if (keyword) params.keyword = keyword;
 
@@ -102,7 +109,7 @@ export default function PropertyList() {
     loadList();
   };
 
-  const priceMax = type === 'rental' ? 20000 : type === 'commercial' ? 20000 : 2000;
+  const priceMax = type === 'rental' ? 20000 : type === 'commercial' ? 5000 : 2000;
   const priceStep = type === 'rental' ? 500 : type === 'commercial' ? 100 : 50;
 
   return (
@@ -134,20 +141,53 @@ export default function PropertyList() {
               </Select>
             </div>
 
-            <div style={{ marginBottom: 20 }}>
-              <div style={{ fontWeight: 500, marginBottom: 8 }}>户型</div>
-              <Select value={rooms} onChange={setRooms} style={{ width: '100%' }}>
-                <Option value="all">不限</Option>
-                <Option value="1">一居</Option>
-                <Option value="2">二居</Option>
-                <Option value="3">三居</Option>
-                <Option value="4">四居及以上</Option>
-              </Select>
-            </div>
+            {type !== 'commercial' && (
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ fontWeight: 500, marginBottom: 8 }}>户型</div>
+                <Select value={rooms} onChange={setRooms} style={{ width: '100%' }}>
+                  <Option value="all">不限</Option>
+                  <Option value="1">一居</Option>
+                  <Option value="2">二居</Option>
+                  <Option value="3">三居</Option>
+                  <Option value="4">四居及以上</Option>
+                </Select>
+              </div>
+            )}
+
+            {type === 'commercial' && (
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ fontWeight: 500, marginBottom: 8 }}>业态</div>
+                <Select value={category} onChange={setCategory} style={{ width: '100%' }}>
+                  <Option value="all">全部业态</Option>
+                  <Option value="office">写字楼</Option>
+                  <Option value="shop">商铺</Option>
+                  <Option value="building">办公楼</Option>
+                  <Option value="park">产业园区</Option>
+                  <Option value="hotel">酒店</Option>
+                </Select>
+              </div>
+            )}
+
+            {type === 'commercial' && (
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ fontWeight: 500, marginBottom: 8 }}>面积(㎡)</div>
+                <Slider
+                  range
+                  min={0}
+                  max={2000}
+                  step={50}
+                  value={areaRange || undefined}
+                  onChange={(v) => setAreaRange(v as [number, number])}
+                />
+                <div style={{ fontSize: 12, color: '#999', textAlign: 'center' }}>
+                  {areaRange ? `${areaRange[0]} - ${areaRange[1]}` : '0 - 2000'}
+                </div>
+              </div>
+            )}
 
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontWeight: 500, marginBottom: 8 }}>
-                价格{type === 'rental' ? '(元/月)' : '(万元)'}
+                价格{type === 'rental' ? '(元/月)' : type === 'commercial' ? '(万元)' : '(万元)'}
               </div>
               <Slider
                 range
@@ -171,7 +211,7 @@ export default function PropertyList() {
               </Select>
             </div>
 
-            <Button type="primary" block onClick={() => { setDistrict('all'); setRooms('all'); setPriceRange(null); setSort('created_at'); }}>
+            <Button type="primary" block onClick={() => { setDistrict('all'); setRooms('all'); setCategory('all'); setPriceRange(null); setAreaRange(null); setSort('created_at'); }}>
               重置筛选
             </Button>
           </Card>
@@ -187,6 +227,10 @@ export default function PropertyList() {
               <Row gutter={[16, 16]}>
                 {list.map(item => {
                   const images = item.images ? JSON.parse(item.images) : [];
+                  const categoryLabels: Record<string, string> = {
+                    office: '写字楼', shop: '商铺', building: '办公楼', park: '产业园', hotel: '酒店',
+                    apartment: '住宅', villa: '别墅'
+                  };
                   return (
                     <Col span={8} key={item.id}>
                       <Card
@@ -207,6 +251,9 @@ export default function PropertyList() {
                             {item.price_warning ? (
                               <Tag color="orange" style={{ position: 'absolute', top: 8, right: 8 }}>价格异常</Tag>
                             ) : null}
+                            {item.type === 'commercial' && (
+                              <Tag color="purple" style={{ position: 'absolute', bottom: 8, left: 8 }}>{categoryLabels[item.category] || '商业'}</Tag>
+                            )}
                           </div>
                         }
                         onClick={() => navigate(`/property/${item.id}`)}
@@ -221,9 +268,15 @@ export default function PropertyList() {
                             {item.price_unit === 'wan' ? '万' : item.price_unit === 'yuan/month' ? '元/月' : ''}
                           </span>
                         </div>
-                        <div style={{ fontSize: 12, color: '#999', marginTop: 6 }}>
-                          {item.room_count}室{item.hall_count}厅 · {item.area}㎡ · {item.district}
-                        </div>
+                        {item.type !== 'commercial' ? (
+                          <div style={{ fontSize: 12, color: '#999', marginTop: 6 }}>
+                            {item.room_count}室{item.hall_count}厅 · {item.area}㎡ · {item.district}
+                          </div>
+                        ) : (
+                          <div style={{ fontSize: 12, color: '#999', marginTop: 6 }}>
+                            {categoryLabels[item.category] || '商业'} · {item.area}㎡ · {item.district}
+                          </div>
+                        )}
                         <div style={{ fontSize: 12, color: '#999' }}>
                           {item.community}
                         </div>
@@ -232,6 +285,18 @@ export default function PropertyList() {
                             <Tag key={idx} color="blue" style={{ fontSize: 11, margin: 2 }}>{tag}</Tag>
                           ))}
                         </div>
+                        {item.type === 'commercial' && (
+                          <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #f0f0f0' }}>
+                            <Space size={4}>
+                              <Button size="small" type="link" style={{ padding: '0 4px', fontSize: 12 }} onClick={(e) => { e.stopPropagation(); message.info('预约看铺功能'); }}>
+                                预约看铺
+                              </Button>
+                              <Button size="small" type="link" style={{ padding: '0 4px', fontSize: 12 }} onClick={(e) => { e.stopPropagation(); message.info('商业贷款咨询'); }}>
+                                贷款咨询
+                              </Button>
+                            </Space>
+                          </div>
+                        )}
                       </Card>
                     </Col>
                   );

@@ -149,4 +149,145 @@ router.get('/compliance/transactions', authMiddleware, (req: AuthRequest, res) =
   res.json({ list, total: total.count, page: Number(page), pageSize: Number(pageSize) });
 });
 
+router.get('/stats', (req, res) => {
+  const totalAgents = db.prepare('SELECT COUNT(*) as count FROM agents').get() as { count: number };
+  const verifiedAgents = db.prepare('SELECT COUNT(*) as count FROM agents WHERE verified = 1').get() as { count: number };
+  const totalProperties = db.prepare("SELECT COUNT(*) as count FROM properties WHERE status = 'active'").get() as { count: number };
+  const verifiedProperties = db.prepare("SELECT COUNT(*) as count FROM properties WHERE status = 'active' AND is_verified > 0").get() as { count: number };
+  const priceWarnings = db.prepare("SELECT COUNT(*) as count FROM properties WHERE status = 'active' AND price_warning = 1").get() as { count: number };
+  const ownerConfirmed = db.prepare('SELECT COUNT(*) as count FROM owner_confirmations WHERE confirmed = 1').get() as { count: number };
+  const totalTransactions = db.prepare('SELECT COUNT(*) as count FROM transactions').get() as { count: number };
+  const syncedTransactions = db.prepare("SELECT COUNT(DISTINCT transaction_id) as count FROM regulatory_records WHERE status = 'synced'").get() as { count: number };
+
+  res.json({
+    agents: {
+      total: totalAgents.count,
+      verified: verifiedAgents.count,
+      pending: totalAgents.count - verifiedAgents.count,
+    },
+    properties: {
+      total: totalProperties.count,
+      verified: verifiedProperties.count,
+      priceWarnings: priceWarnings.count,
+      ownerConfirmed: ownerConfirmed.count,
+    },
+    transactions: {
+      total: totalTransactions.count,
+      synced: syncedTransactions.count,
+    },
+  });
+});
+
+router.get('/agent/verify-records', authMiddleware, (req: AuthRequest, res) => {
+  const isAdmin = req.user!.role === 'admin';
+  const params: any[] = [];
+  let where = '';
+
+  if (!isAdmin) {
+    where = 'WHERE a.user_id = ?';
+    params.push(req.user!.id);
+  }
+
+  const list = db.prepare(
+    `SELECT a.*, u.username, u.phone, u.email
+     FROM agents a
+     JOIN users u ON a.user_id = u.id
+     ${where}
+     ORDER BY a.created_at DESC`
+  ).all(...params);
+
+  res.json({ list });
+});
+
+router.get('/price-warnings', (req, res) => {
+  const list = db.prepare(
+    `SELECT p.id, p.title, p.price, p.area, p.district, p.community, p.images,
+            p.price_warning, p.is_verified,
+            m.avg_price, m.destocking_cycle
+     FROM properties p
+     LEFT JOIN market_data m ON p.district = m.district AND p.type = m.type
+     WHERE p.status = 'active' AND p.price_warning = 1
+     ORDER BY p.created_at DESC
+     LIMIT 50`
+  ).all();
+
+  const listWithDeviation = (list as any[]).map(p => {
+    if (p.avg_price && p.price_unit === 'wan') {
+      const unitPrice = p.price * 10000 / p.area;
+      const deviation = ((unitPrice - p.avg_price) / p.avg_price) * 100;
+      return { ...p, deviation: Math.round(deviation * 100) / 100, unitPrice: Math.round(unitPrice) };
+    }
+    return { ...p, deviation: 0, unitPrice: 0 };
+  });
+
+  res.json({ list: listWithDeviation });
+});
+
+router.get('/owner-confirmations', authMiddleware, (req: AuthRequest, res) => {
+  const isAdmin = req.user!.role === 'admin';
+  const params: any[] = [];
+  let where = '';
+
+  if (!isAdmin) {
+    where = 'WHERE oc.owner_id = ?';
+    params.push(req.user!.id);
+  }
+
+  const list = db.prepare(
+    `SELECT oc.*, p.title as property_title, p.price, p.area, p.district,
+            u.username as owner_name, u.phone as owner_phone
+     FROM owner_confirmations oc
+     JOIN properties p ON oc.property_id = p.id
+     JOIN users u ON oc.owner_id = u.id
+     ${where}
+     ORDER BY oc.created_at DESC
+     LIMIT 100`
+  ).all(...params);
+
+  res.json({ list });
+});
+
+router.get('/image-duplicates', (req, res) => {
+  const list = db.prepare(
+    `SELECT p.id as property_id, p.title, p.images, p.district,
+            COUNT(pi.id) as total_images,
+            SUM(CASE WHEN pi.is_duplicate = 1 THEN 1 ELSE 0 END) as duplicate_count
+     FROM properties p
+     LEFT JOIN property_images pi ON p.id = pi.property_id
+     WHERE p.status = 'active'
+     GROUP BY p.id
+     HAVING duplicate_count > 0
+     ORDER BY duplicate_count DESC
+     LIMIT 50`
+  ).all();
+
+  res.json({ list });
+});
+
+router.get('/regulatory-records', authMiddleware, (req: AuthRequest, res) => {
+  const { page = 1, pageSize = 20 } = req.query;
+  const offset = (Number(page) - 1) * Number(pageSize);
+
+  if (req.user!.role !== 'admin') {
+    res.status(403).json({ message: '权限不足' });
+    return;
+  }
+
+  const list = db.prepare(
+    `SELECT r.*, t.order_no, p.title as property_title,
+            b.username as buyer_name, s.username as seller_name
+     FROM regulatory_records r
+     JOIN transactions t ON r.transaction_id = t.id
+     JOIN properties p ON t.property_id = p.id
+     JOIN users b ON t.buyer_id = b.id
+     JOIN users s ON t.seller_id = s.id
+     ORDER BY r.created_at DESC
+     LIMIT ? OFFSET ?`
+  ).all(Number(pageSize), offset);
+
+  const total = db.prepare('SELECT COUNT(*) as count FROM regulatory_records').get() as { count: number };
+
+  res.json({ list, total: total.count, page: Number(page), pageSize: Number(pageSize) });
+});
+
 export default router;

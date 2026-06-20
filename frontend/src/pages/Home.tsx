@@ -24,11 +24,29 @@ export default function Home() {
   const navigate = useNavigate();
   const [hotProperties, setHotProperties] = useState<Property[]>([]);
   const [newProperties, setNewProperties] = useState<Property[]>([]);
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
     loadHotProperties();
     loadNewProperties();
+    if (savedUser) {
+      loadRecommendations();
+    }
   }, []);
+
+  const loadRecommendations = async () => {
+    try {
+      const res: any = await api.get('/user/recommendations?limit=4');
+      setRecommendations(res.list || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const loadHotProperties = async () => {
     try {
@@ -90,6 +108,50 @@ export default function Home() {
         </div>
         <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>
           {item.room_count}室{item.hall_count}厅 · {item.area}㎡ · {item.district} · {item.community}
+        </div>
+      </Card>
+    );
+  };
+
+  const renderRecommendCard = (item: any) => {
+    const images = item.images ? JSON.parse(item.images) : [];
+    return (
+      <Card
+        key={item.id}
+        hoverable
+        className="property-card"
+        style={{ borderRadius: 12, border: '1px solid #e6f7ff' }}
+        cover={
+          <div style={{ height: 180, overflow: 'hidden', position: 'relative' }}>
+            <img
+              alt={item.title}
+              src={images[0] || 'https://via.placeholder.com/400x180?text=No+Image'}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x180?text=No+Image'; }}
+            />
+            <Tag color="purple" style={{ position: 'absolute', top: 8, right: 8 }}>
+              智能推荐
+            </Tag>
+          </div>
+        }
+        onClick={() => navigate(`/property/${item.id}`)}
+        styles={{ body: { padding: 12 } }}
+      >
+        <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 8, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {item.title}
+        </div>
+        <div className="price-text">
+          {item.price}{item.price_unit === 'wan' ? '万' : item.price_unit === 'yuan/month' ? '元/月' : ''}
+        </div>
+        <div style={{ fontSize: 12, color: '#999', marginTop: 4, marginBottom: 8 }}>
+          {item.room_count ? `${item.room_count}室${item.hall_count}厅 · ` : ''}{item.area}㎡ · {item.district}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+          {item.reasons?.slice(0, 2).map((r: string, idx: number) => (
+            <Tag key={idx} color="blue" style={{ fontSize: 11, margin: 0 }}>
+              {r}
+            </Tag>
+          ))}
         </div>
       </Card>
     );
@@ -187,6 +249,25 @@ export default function Home() {
           </Row>
         </Card>
 
+        {user && recommendations.length > 0 && (
+          <Card 
+            title={<Title level={4} style={{ margin: 0 }}>🤖 为你推荐</Title>}
+            style={{ marginBottom: 24, borderRadius: 12, background: 'linear-gradient(135deg, #f0f5ff 0%, #e6f7ff 100%)' }}
+            extra={
+              <Space>
+                <Tag color="purple">基于您的浏览历史</Tag>
+                <Button type="link" onClick={() => navigate('/user')}>查看更多 →</Button>
+              </Space>
+            }
+          >
+            <Row gutter={[16, 16]}>
+              {recommendations.map(item => (
+                <Col span={6} key={item.id}>{renderRecommendCard(item)}</Col>
+              ))}
+            </Row>
+          </Card>
+        )}
+
         <Card 
           title={<Title level={4} style={{ margin: 0 }}>平台特色</Title>}
           style={{ marginBottom: 24, borderRadius: 12 }}
@@ -203,6 +284,169 @@ export default function Home() {
             ))}
           </Row>
         </Card>
+
+        {user && (
+          <Card 
+            title={<Title level={4} style={{ margin: 0 }}>
+              {user.role === 'agent' ? '👨💼 经纪人专属工作台' : 
+               user.role === 'developer' ? '🏗️ 开发商营销看板' : 
+               user.role === 'admin' ? '⚙️ 平台管理中心' : 
+               '👤 我的服务入口'}
+            </Title>}
+            style={{ marginBottom: 24, borderRadius: 12, 
+              background: user.role === 'agent' ? 'linear-gradient(135deg, #e6f7ff 0%, #f0f5ff 100%)' :
+                         user.role === 'developer' ? 'linear-gradient(135deg, #f9f0ff 0%, #f5e6ff 100%)' :
+                         user.role === 'admin' ? 'linear-gradient(135deg, #fff7e6 0%, #fff1e6 100%)' :
+                         'linear-gradient(135deg, #f6ffed 0%, #f0fff0 100%)' }}
+          >
+            <Row gutter={[16, 16]}>
+              {user.role === 'agent' && (
+                <>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }} 
+                         onClick={() => navigate('/agent/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#1890ff' }}>📊</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>业绩看板</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>查看本月业绩排行</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/agent/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#52c41a' }}>👥</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>客户管理</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>客户跟进记录</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/agent/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#722ed1' }}>📅</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>带看日志</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>记录每次带看情况</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/agent/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#faad14' }}>🏠</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>我的房源</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>管理代理房源</div>
+                    </div>
+                  </Col>
+                </>
+              )}
+              {user.role === 'developer' && (
+                <>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/developer/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#722ed1' }}>📈</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>去化分析</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>楼盘销售进度</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/developer/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#1890ff' }}>📊</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>渠道转化</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>各渠道转化漏斗</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/developer/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#52c41a' }}>🗺️</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>客户热力</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>客户来源分布图</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/developer/dashboard')}>
+                      <div style={{ fontSize: 32, color: '#faad14' }}>🏢</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>楼盘管理</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>维护楼盘信息</div>
+                    </div>
+                  </Col>
+                </>
+              )}
+              {user.role === 'admin' && (
+                <>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/governance')}>
+                      <div style={{ fontSize: 32, color: '#1890ff' }}>🔍</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>真房源治理</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>审核记录预警管理</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/transactions')}>
+                      <div style={{ fontSize: 32, color: '#52c41a' }}>📋</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>交易监管</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>全交易流程追踪</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/governance')}>
+                      <div style={{ fontSize: 32, color: '#722ed1' }}>🏛️</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>监管备案</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>住建平台对接</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/user')}>
+                      <div style={{ fontSize: 32, color: '#faad14' }}>👥</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>用户管理</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>平台用户管理</div>
+                    </div>
+                  </Col>
+                </>
+              )}
+              {user.role === 'user' && (
+                <>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/user')}>
+                      <div style={{ fontSize: 32, color: '#52c41a' }}>⭐</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>我的收藏</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>收藏的房源列表</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/user')}>
+                      <div style={{ fontSize: 32, color: '#1890ff' }}>👣</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>浏览足迹</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>历史浏览记录</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/transactions')}>
+                      <div style={{ fontSize: 32, color: '#722ed1' }}>📝</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>我的交易</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>交易进度追踪</div>
+                    </div>
+                  </Col>
+                  <Col span={6}>
+                    <div style={{ textAlign: 'center', padding: '20px', cursor: 'pointer', background: '#fff', borderRadius: 8 }}
+                         onClick={() => navigate('/user')}>
+                      <div style={{ fontSize: 32, color: '#faad14' }}>🤖</div>
+                      <div style={{ fontWeight: 600, marginTop: 8 }}>智能推荐</div>
+                      <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>为您精准匹配</div>
+                    </div>
+                  </Col>
+                </>
+              )}
+            </Row>
+          </Card>
+        )}
 
         <div style={{ background: '#e6f7ff', padding: '32px', borderRadius: 12, textAlign: 'center' }}>
           <Title level={3} style={{ color: '#1890ff', marginBottom: 8 }}>🏛️ 已接入地方住建监管平台</Title>

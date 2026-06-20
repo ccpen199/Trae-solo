@@ -8,11 +8,11 @@ router.get('/entrustments', authMiddleware, (req: AuthRequest, res) => {
   const { page = 1, pageSize = 20, status } = req.query;
   const offset = (Number(page) - 1) * Number(pageSize);
 
-  let where = 'WHERE owner_id = ?';
+  let where = 'WHERE e.owner_id = ?';
   let params: any[] = [req.user!.id];
 
   if (status && status !== 'all') {
-    where += ' AND status = ?';
+    where += ' AND e.status = ?';
     params.push(status);
   }
 
@@ -25,8 +25,9 @@ router.get('/entrustments', authMiddleware, (req: AuthRequest, res) => {
      LIMIT ? OFFSET ?`
   ).all(...params, Number(pageSize), offset);
 
+  const totalWhere = 'WHERE owner_id = ?' + (status && status !== 'all' ? ' AND status = ?' : '');
   const total = db.prepare(
-    `SELECT COUNT(*) as count FROM owner_entrustments ${where}`
+    `SELECT COUNT(*) as count FROM owner_entrustments ${totalWhere}`
   ).get(...params) as { count: number };
 
   res.json({ list, total: total.count, page: Number(page), pageSize: Number(pageSize) });
