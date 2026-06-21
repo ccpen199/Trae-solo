@@ -57,27 +57,6 @@ const TRANSPORT_TABS: TabsProps['items'] = [
   { key: 'drive', label: <span className="px-1"><CarOutlined className="mr-1" />驾车</span> },
 ];
 
-/** 三态核验类型 */
-type TriVerifyType = 'video' | 'vr' | 'onsite';
-
-/** 三态核验状态 */
-interface TriVerifyStatus {
-  video: VerifyState;
-  vr: VerifyState;
-  onsite: VerifyState;
-}
-
-/** 生成三态核验状态 */
-function generateTriVerify(property: Property): TriVerifyStatus {
-  const states: VerifyState[] = ['verified', 'verified', 'verifying', 'unverified', 'verification_failed'];
-  const seed = property.id.charCodeAt(0) + property.id.charCodeAt(property.id.length - 1);
-  return {
-    video: states[seed % 5],
-    vr: states[(seed + 1) % 5],
-    onsite: states[(seed + 2) % 5],
-  };
-}
-
 /** 推荐房源（带通勤得分） */
 interface RecommendedProperty extends Property {
   commuteMinutes: number;
@@ -129,10 +108,9 @@ export default function PropertySearch() {
           if (p.bedrooms < 4 && !selectedRooms.includes(p.bedrooms)) return false;
         } else if (!selectedRooms.includes(p.bedrooms)) return false;
       }
-      const tri = generateTriVerify(p);
-      if (mustHaveVideo && tri.video !== 'verified') return false;
-      if (mustHaveVR && tri.vr !== 'verified') return false;
-      if (mustHaveOnsite && tri.onsite !== 'verified') return false;
+      if (mustHaveVideo && p.videoVerify !== 'verified') return false;
+      if (mustHaveVR && p.vrVerify !== 'verified') return false;
+      if (mustHaveOnsite && p.onsiteVerify !== 'verified') return false;
       return true;
     });
 
@@ -151,8 +129,7 @@ export default function PropertySearch() {
       /** 通勤综合得分（满分100） */
       let commuteScore = Math.max(0, 100 - (commuteMinutes / maxCommuteTime) * 60);
       /** 真实性评分加成 */
-      const tri = generateTriVerify(p);
-      const verifiedCount = [tri.video, tri.vr, tri.onsite].filter(s => s === 'verified').length;
+      const verifiedCount = [p.videoVerify, p.vrVerify, p.onsiteVerify].filter(s => s === 'verified').length;
       commuteScore += verifiedCount * 5;
       /** 租金性价比加成 */
       const avgRent = (rentRange[0] + rentRange[1]) / 2;
@@ -849,16 +826,9 @@ export default function PropertySearch() {
                               {p.bedrooms}室{p.livingRooms}厅 · {p.buildingArea}㎡
                             </span>
                             <Space size={2}>
-                              {(() => {
-                                const tri = generateTriVerify(p);
-                                return (
-                                  <>
-                                    {tri.video === 'verified' && <Tag color="success" className="!m-0 !px-1.5 !py-0 !text-[10px]">视频</Tag>}
-                                    {tri.vr === 'verified' && <Tag color="processing" className="!m-0 !px-1.5 !py-0 !text-[10px]">VR</Tag>}
-                                    {tri.onsite === 'verified' && <Tag color="blue" className="!m-0 !px-1.5 !py-0 !text-[10px]">实地</Tag>}
-                                  </>
-                                );
-                              })()}
+                              {p.videoVerify === 'verified' && <Tag color="success" className="!m-0 !px-1.5 !py-0 !text-[10px]">视频</Tag>}
+                              {p.vrVerify === 'verified' && <Tag color="processing" className="!m-0 !px-1.5 !py-0 !text-[10px]">VR</Tag>}
+                              {p.onsiteVerify === 'verified' && <Tag color="blue" className="!m-0 !px-1.5 !py-0 !text-[10px]">实地</Tag>}
                             </Space>
                           </div>
 

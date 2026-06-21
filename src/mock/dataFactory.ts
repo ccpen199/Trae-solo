@@ -267,6 +267,19 @@ export function generateProperties(count: number = 30): Property[] {
       hasElevator: totalFloor > 7 ? true : random(0, 1) === 1,
       orientation: pick(ORIENTATIONS),
       decoration: pick(DECORATIONS),
+      decorationText: (() => {
+        const map: Record<string, string> = {
+          rough: '毛坯',
+          simple: '简装',
+          standard: '普装',
+          fine: '精装',
+          luxury: '豪装',
+        };
+        return map[decoration] || '普装';
+      })(),
+      videoVerify: pick(['verified', 'verified', 'verified', 'verifying', 'unverified', 'verification_failed']),
+      vrVerify: pick(['verified', 'verified', 'verifying', 'unverified', 'verification_failed']),
+      onsiteVerify: pick(['verified', 'verifying', 'unverified', 'verification_failed']),
       buildYear: random(1995, 2024),
       monthlyRent,
       depositMonths,

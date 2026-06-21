@@ -70,6 +70,39 @@ export default function Dashboard() {
     return arr;
   }
 
+  /** 热力数据增强：围绕种子点生成卫星点，形成连续热力分布 */
+  function enhanceHeatmapPoints(
+    points: typeof heatmapPoints,
+    layer: HeatmapLayer
+  ): [number, number, number][] {
+    const result: [number, number, number][] = [];
+    points.forEach((p) => {
+      const baseVal =
+        layer === 'property'
+          ? (p.count || 1) * 8
+          : layer === 'contract'
+          ? (p.weight || 50) * 0.6 + (p.count || 0) * 3
+          : Math.abs((p.value || 80) - 60) * 1.2;
+
+      result.push([p.lng, p.lat, baseVal]);
+
+      const count = 8 + Math.floor(Math.random() * 6);
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 0.005 + Math.random() * 0.025;
+        const lng = Number((p.lng + Math.cos(angle) * dist).toFixed(5));
+        const lat = Number((p.lat + Math.sin(angle) * dist * 0.7).toFixed(5));
+        const decay = 1 - dist / 0.03;
+        result.push([
+          lng,
+          lat,
+          Math.max(1, baseVal * decay * (0.5 + Math.random() * 0.5)),
+        ]);
+      }
+    });
+    return result;
+  }
+
   /** 从全局 store 取数 */
   const {
     dashboardMetrics,
@@ -151,6 +184,9 @@ export default function Dashboard() {
       value: [p.lng, p.lat, (p.count || 1) * 3 + 8],
     }));
 
+    /** 增强后的热力数据（数据点更多，热力更连续） */
+    const heatData = enhanceHeatmapPoints(filteredPoints, heatmapLayer);
+
     return {
       backgroundColor: '#FAFBFC',
       tooltip: {
@@ -194,8 +230,9 @@ export default function Dashboard() {
         orient: 'vertical',
         right: 16,
         bottom: 16,
-        min: 0,
-        max: heatmapLayer === 'property' ? 100 : heatmapLayer === 'contract' ? 80 : 60,
+        /** 缩小范围，增强色阶对比，让低值也有颜色 */
+        min: heatmapLayer === 'property' ? 5 : heatmapLayer === 'contract' ? 5 : 3,
+        max: heatmapLayer === 'property' ? 50 : heatmapLayer === 'contract' ? 40 : 30,
         text: [
           heatmapLayer === 'property' ? '密' : heatmapLayer === 'contract' ? '热' : '高',
           heatmapLayer === 'property' ? '疏' : heatmapLayer === 'contract' ? '冷' : '低',
@@ -218,27 +255,38 @@ export default function Dashboard() {
           name: heatmapLayer === 'property' ? '房源密度' : heatmapLayer === 'contract' ? '成交密度' : '租金梯度',
           type: 'heatmap',
           coordinateSystem: 'cartesian2d',
-          data: filteredPoints.map((p) => [
-            p.lng,
-            p.lat,
-            heatmapLayer === 'property'
-              ? (p.count || 1) * 10
-              : heatmapLayer === 'contract'
-              ? (p.weight || 50) * 0.8 + (p.count || 0) * 5
-              : Math.abs((p.value || 80) - 60) * 1.5,
-          ]),
+          data: heatData,
+          /** 注意：gradientColors 是 geo 坐标系 heatmap 专用参数，cartesian2d 下由 visualMap.inRange.color 控制颜色 */
           pointSize: 28,
           blurSize: 42,
           minOpacity: 0.18,
           maxOpacity: 0.92,
-          gradientColors: [
-            [0, heatmapLayer === 'rent' ? 'rgba(212, 165, 116, 0.05)' : heatmapLayer === 'contract' ? 'rgba(0, 168, 107, 0.05)' : 'rgba(15, 76, 129, 0.05)'],
-            [0.25, heatmapLayer === 'rent' ? 'rgba(255, 107, 53, 0.35)' : heatmapLayer === 'contract' ? 'rgba(105, 203, 159, 0.45)' : 'rgba(111, 165, 213, 0.45)'],
-            [0.5, heatmapLayer === 'rent' ? 'rgba(230, 57, 70, 0.65)' : heatmapLayer === 'contract' ? 'rgba(0, 168, 107, 0.75)' : 'rgba(15, 76, 129, 0.75)'],
-            [0.75, heatmapLayer === 'rent' ? 'rgba(212, 165, 116, 0.85)' : heatmapLayer === 'contract' ? 'rgba(15, 76, 129, 0.85)' : 'rgba(255, 107, 53, 0.85)'],
-            [1, heatmapLayer === 'rent' ? 'rgba(230, 57, 70, 1)' : heatmapLayer === 'contract' ? 'rgba(15, 76, 129, 1)' : 'rgba(230, 57, 70, 1)'],
-          ],
           z: 1,
+        },
+        /** 散点热力晕染层：增强视觉效果，形成光晕效果 */
+        {
+          name: '热力晕染',
+          type: 'scatter',
+          coordinateSystem: 'cartesian2d',
+          data: heatData.filter((_, i) => i % 3 === 0),
+          symbolSize: (val: number[]) => val[2] * 2.5,
+          itemStyle: {
+            color:
+              heatmapLayer === 'property'
+                ? 'rgba(15, 76, 129, 0.15)'
+                : heatmapLayer === 'contract'
+                ? 'rgba(0, 168, 107, 0.15)'
+                : 'rgba(212, 165, 116, 0.2)',
+            shadowBlur: 20,
+            shadowColor:
+              heatmapLayer === 'property'
+                ? 'rgba(15, 76, 129, 0.5)'
+                : heatmapLayer === 'contract'
+                ? 'rgba(0, 168, 107, 0.5)'
+                : 'rgba(255, 107, 53, 0.5)',
+          },
+          silent: true,
+          z: 1.5,
         },
         {
           name: '上海主要环线',

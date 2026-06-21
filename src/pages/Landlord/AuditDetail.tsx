@@ -319,6 +319,53 @@ export default function AuditDetail() {
     return landlordApplications.find((a) => a.id === id);
   }, [id, landlordApplications]);
 
+  /** 产权核验状态（兼容 propertyVerify 和 propertyVerifyResult 两种字段名） */
+  const propertyVerifyResult = useMemo(() => {
+    const raw = application?.propertyVerify ?? application?.propertyVerifyResult;
+    return (raw ?? {
+      status: 'pending' as const,
+      score: 0,
+      details: {},
+    }) as {
+      status: string;
+      score?: number;
+      details?: Record<string, any>;
+      ownerNameMatched?: boolean;
+      ownerCertNoMatched?: boolean;
+      propertyUnitNoValid?: boolean;
+      hasMortgage?: boolean;
+      hasSeizure?: boolean;
+      hasObjection?: boolean;
+      verifySource?: string;
+      verifyTime?: string;
+    };
+  }, [application]);
+
+  /** 人脸核验状态（兼容 faceVerify 和 faceVerifyResult 两种字段名） */
+  const faceVerifyResult = useMemo(() => {
+    const raw = application?.faceVerify ?? application?.faceVerifyResult;
+    return (raw ?? {
+      status: 'pending' as const,
+      score: 0,
+      matchScore: 0,
+      livenessScore: 0,
+      antiSpoofingPassed: false,
+    }) as {
+      status: string;
+      score?: number;
+      matchScore?: number;
+      livenessScore?: number;
+      antiSpoofingPassed?: boolean;
+      similarity?: number;
+      livenessPassed?: boolean;
+      channel?: string;
+      sessionId?: string;
+      verifyTime?: string;
+      idCardFaceUrl?: string;
+      liveFaceUrl?: string;
+    };
+  }, [application]);
+
   /** 产权证书图片列表（模拟） */
   const certImages = useMemo(() => {
     return application?.propertyCertImages?.length
@@ -334,18 +381,18 @@ export default function AuditDetail() {
   const faceImages = useMemo(
     () => ({
       idCard:
-        application?.faceVerifyResult?.idCardFaceUrl ||
+        faceVerifyResult.idCardFaceUrl ||
         `https://picsum.photos/seed/face-id-${id}/400/500`,
       live:
-        application?.faceVerifyResult?.liveFaceUrl ||
+        faceVerifyResult.liveFaceUrl ||
         `https://picsum.photos/seed/face-live-${id}/400/500`,
     }),
-    [application, id]
+    [faceVerifyResult, id]
   );
 
   /** 产权核验 4 个指标 */
   const propertyMetrics = useMemo<PropertyMetricItem[]>(() => {
-    const r = application?.propertyVerifyResult;
+    const r = propertyVerifyResult;
     return [
       {
         key: 'certNo',
@@ -372,11 +419,11 @@ export default function AuditDetail() {
         icon: <BankOutlined />,
       },
     ];
-  }, [application]);
+  }, [propertyVerifyResult]);
 
   /** 活体检测指标列表 */
   const livenessMetrics = useMemo<LivenessMetricItem[]>(() => {
-    const face = application?.faceVerifyResult;
+    const face = faceVerifyResult;
     const basePassed = face?.livenessPassed ?? true;
     return [
       {
@@ -404,10 +451,10 @@ export default function AuditDetail() {
         desc: '未检测到屏幕翻拍 / 面具 / 照片攻击',
       },
     ];
-  }, [application]);
+  }, [faceVerifyResult]);
 
   /** 人脸相似度 */
-  const similarity = application?.faceVerifyResult?.similarity ?? 85;
+  const similarity = faceVerifyResult.similarity ?? 85;
 
   /** 提交审核操作 */
   const handleAudit = async (action: AuditAction) => {
@@ -469,11 +516,6 @@ export default function AuditDetail() {
   })();
 
   const isFinal = application.status === 'approved' || application.status === 'rejected';
-
-  /** 产权核验状态 */
-  const propertyVerifyResult = application.propertyVerifyResult ?? { status: 'pending' as const };
-  /** 人脸核验状态 */
-  const faceVerifyResult = application.faceVerifyResult ?? { status: 'pending' as const };
 
   /** 产权核验状态文字映射 */
   const propertyStatusText: Record<string, string> = {
@@ -877,8 +919,8 @@ export default function AuditDetail() {
                 >
                   <span style={{ color: '#6B7280', fontSize: 13 }}>核验时间</span>
                   <span style={{ fontWeight: 500, color: '#1A1A2E' }}>
-                    {application.faceVerifyResult?.verifyTime
-                      ? dayjs(application.faceVerifyResult.verifyTime).format(
+                    {faceVerifyResult.verifyTime
+                      ? dayjs(faceVerifyResult.verifyTime).format(
                           'YYYY-MM-DD HH:mm'
                         )
                       : '—'}
@@ -896,11 +938,11 @@ export default function AuditDetail() {
                 >
                   <span style={{ color: '#6B7280', fontSize: 13 }}>核验渠道</span>
                   <Tag color="blue" style={{ margin: 0 }}>
-                    {application.faceVerifyResult?.channel === 'alipay'
+                    {faceVerifyResult.channel === 'alipay'
                       ? '支付宝刷脸'
-                      : application.faceVerifyResult?.channel === 'wechat'
+                      : faceVerifyResult.channel === 'wechat'
                       ? '微信刷脸'
-                      : application.faceVerifyResult?.channel === 'ctid'
+                      : faceVerifyResult.channel === 'ctid'
                       ? 'CTID 网证'
                       : '银行级核验'}
                   </Tag>
@@ -921,28 +963,28 @@ export default function AuditDetail() {
               extra={
                 <Tag
                   color={
-                    application.propertyVerifyResult?.status === 'passed'
+                    propertyVerifyResult.status === 'passed'
                       ? 'success'
-                      : application.propertyVerifyResult?.status === 'failed'
+                      : propertyVerifyResult.status === 'failed'
                       ? 'error'
-                      : application.propertyVerifyResult?.status === 'processing'
+                      : propertyVerifyResult.status === 'processing'
                       ? 'processing'
                       : 'warning'
                   }
                   style={{ margin: 0 }}
                 >
-                  {application.propertyVerifyResult?.status === 'passed'
+                  {propertyVerifyResult.status === 'passed'
                     ? '已通过'
-                    : application.propertyVerifyResult?.status === 'failed'
+                    : propertyVerifyResult.status === 'failed'
                     ? '未通过'
-                    : application.propertyVerifyResult?.status === 'processing'
+                    : propertyVerifyResult.status === 'processing'
                     ? '处理中'
                     : '待核验'}
                 </Tag>
               }
             >
               <PropertyMetricRow items={propertyMetrics} />
-              {application.propertyVerifyResult?.verifySource && (
+              {propertyVerifyResult.verifySource && (
                 <div
                   style={{
                     marginTop: 14,
@@ -952,9 +994,9 @@ export default function AuditDetail() {
                   }}
                 >
                   核验来源：
-                  {application.propertyVerifyResult.verifySource === 'government_api'
+                  {propertyVerifyResult.verifySource === 'government_api'
                     ? '不动产登记中心接口'
-                    : application.propertyVerifyResult.verifySource === 'third_party'
+                    : propertyVerifyResult.verifySource === 'third_party'
                     ? '第三方核验机构'
                     : '人工录入核验'}
                 </div>
@@ -974,17 +1016,17 @@ export default function AuditDetail() {
               extra={
                 <Tag
                   color={
-                    application.faceVerifyResult?.status === 'passed'
+                    faceVerifyResult.status === 'passed'
                       ? 'success'
-                      : application.faceVerifyResult?.status === 'failed'
+                      : faceVerifyResult.status === 'failed'
                       ? 'error'
                       : 'warning'
                   }
                   style={{ margin: 0 }}
                 >
-                  {application.faceVerifyResult?.status === 'passed'
+                  {faceVerifyResult.status === 'passed'
                     ? '比对通过'
-                    : application.faceVerifyResult?.status === 'failed'
+                    : faceVerifyResult.status === 'failed'
                     ? '比对失败'
                     : '待比对'}
                 </Tag>
@@ -1140,48 +1182,121 @@ export default function AuditDetail() {
             />
           </Form.Item>
 
-          {/* 前置核验警告横幅 */}
-          {!isFinal &&
-            (propertyVerifyResult.status !== 'passed' ||
-              faceVerifyResult.status !== 'passed') && (
-              <div style={{ marginBottom: 16 }}>
-                {propertyVerifyResult.status !== 'passed' &&
-                faceVerifyResult.status !== 'passed' ? (
+          {/* 前置核验状态横幅（更醒目的核验状态提示） */}
+          {!isFinal && (
+            <div style={{ marginBottom: 16 }}>
+              {/* 核验未完成（pending / processing） */}
+              {(propertyVerifyResult.status === 'pending' ||
+                propertyVerifyResult.status === 'processing' ||
+                faceVerifyResult.status === 'pending' ||
+                faceVerifyResult.status === 'processing') && (
+                <Alert
+                  type="info"
+                  showIcon
+                  message={
+                    <div>
+                      <div style={{ fontWeight: 600, marginBottom: 6 }}>
+                        ⏳ 前置核验进行中，请等待产权核验和人脸比对全部完成后再进行审批
+                      </div>
+                      <Space size={16} wrap>
+                        <span>
+                          产权核验：
+                          <span
+                            style={{
+                              color:
+                                propertyVerifyResult.status === 'passed'
+                                  ? '#00A86B'
+                                  : propertyVerifyResult.status === 'failed'
+                                  ? '#E63946'
+                                  : '#0F4C81',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {propertyStatusText[propertyVerifyResult.status] ?? '待核验'}
+                          </span>
+                        </span>
+                        <span>
+                          人脸比对：
+                          <span
+                            style={{
+                              color:
+                                faceVerifyResult.status === 'passed'
+                                  ? '#00A86B'
+                                  : faceVerifyResult.status === 'failed'
+                                  ? '#E63946'
+                                  : '#0F4C81',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {faceStatusText[faceVerifyResult.status] ?? '待比对'}
+                          </span>
+                        </span>
+                      </Space>
+                    </div>
+                  }
+                  style={{ borderRadius: 8 }}
+                />
+              )}
+
+              {/* 核验存在不通过项（failed） */}
+              {(propertyVerifyResult.status === 'failed' ||
+                faceVerifyResult.status === 'failed') &&
+                propertyVerifyResult.status !== 'pending' &&
+                propertyVerifyResult.status !== 'processing' &&
+                faceVerifyResult.status !== 'pending' &&
+                faceVerifyResult.status !== 'processing' && (
                   <Alert
-                    type="warning"
+                    type="error"
                     showIcon
                     message={
-                      <Space direction="vertical" size={2}>
-                        <div>
-                          ⚠️ 产权核验未完成（
-                          {propertyStatusText[propertyVerifyResult.status] ?? '待核验'}）
+                      <div>
+                        <div style={{ fontWeight: 600, marginBottom: 6 }}>
+                          ❌ 前置核验存在不通过项，需人工复核后谨慎审批
                         </div>
-                        <div>
-                          ⚠️ 人脸活体比对未完成（
-                          {faceStatusText[faceVerifyResult.status] ?? '待比对'}）
-                        </div>
-                      </Space>
+                        <Space size={16} wrap>
+                          {propertyVerifyResult.status === 'failed' && (
+                            <span style={{ color: '#E63946' }}>
+                              产权核验：{propertyStatusText.failed}
+                            </span>
+                          )}
+                          {faceVerifyResult.status === 'failed' && (
+                            <span style={{ color: '#E63946' }}>
+                              人脸比对：{faceStatusText.failed}
+                            </span>
+                          )}
+                        </Space>
+                      </div>
                     }
-                  />
-                ) : propertyVerifyResult.status !== 'passed' ? (
-                  <Alert
-                    type="warning"
-                    showIcon
-                    message={`⚠️ 产权核验未完成 · 当前状态：${
-                      propertyStatusText[propertyVerifyResult.status] ?? '待核验'
-                    }`}
-                  />
-                ) : (
-                  <Alert
-                    type="warning"
-                    showIcon
-                    message={`⚠️ 人脸活体比对未完成 · 当前状态：${
-                      faceStatusText[faceVerifyResult.status] ?? '待比对'
-                    }`}
+                    style={{ borderRadius: 8 }}
                   />
                 )}
-              </div>
-            )}
+
+              {/* 核验全部通过 */}
+              {propertyVerifyResult.status === 'passed' &&
+                faceVerifyResult.status === 'passed' && (
+                  <Alert
+                    type="success"
+                    showIcon
+                    message={
+                      <div>
+                        <span style={{ fontWeight: 600 }}>
+                          ✅ 前置核验全部通过，可进行最终审批
+                        </span>
+                        <Space size={16} wrap style={{ marginLeft: 12 }}>
+                          <span style={{ color: '#00A86B' }}>
+                            产权核验：{propertyStatusText.passed}
+                          </span>
+                          <span style={{ color: '#00A86B' }}>
+                            人脸比对：{faceStatusText.passed}
+                          </span>
+                        </Space>
+                      </div>
+                    }
+                    style={{ borderRadius: 8 }}
+                  />
+                )}
+            </div>
+          )}
 
           <div
             style={{
@@ -1201,29 +1316,46 @@ export default function AuditDetail() {
             </Button>
             {!isFinal && (
               <>
-                <Button
-                  size="large"
-                  danger
-                  icon={<CloseCircleFilled />}
-                  loading={submitting === 'reject'}
-                  disabled={!canReject}
-                  onClick={() =>
-                    Modal.confirm({
-                      title: '确认驳回该申请？',
-                      content:
-                        '驳回后将生成复核记录，房东将收到重新提交通知。请确认已填写驳回理由。',
-                      okText: '确认驳回',
-                      okButtonProps: { danger: true },
-                      cancelText: '取消',
-                      onOk: () => handleAudit('reject'),
-                    })
-                  }
-                  style={{ paddingInline: 28, fontWeight: 600 }}
-                >
-                  驳回申请
-                </Button>
+                {/* 驳回按钮：始终可用，核验未完成时显示提示 */}
                 <Tooltip
-                  title={canApprove ? '' : '前置核验未完成，请等待核验通过后再审批'}
+                  title={
+                    propertyVerifyResult.status === 'pending' ||
+                    propertyVerifyResult.status === 'processing' ||
+                    faceVerifyResult.status === 'pending' ||
+                    faceVerifyResult.status === 'processing'
+                      ? '核验未完成时驳回，房东可重新提交材料'
+                      : ''
+                  }
+                  placement="top"
+                >
+                  <Button
+                    size="large"
+                    danger
+                    icon={<CloseCircleFilled />}
+                    loading={submitting === 'reject'}
+                    disabled={!canReject}
+                    onClick={() =>
+                      Modal.confirm({
+                        title: '确认驳回该申请？',
+                        content:
+                          '驳回后将生成复核记录，房东将收到重新提交通知。请确认已填写驳回理由。',
+                        okText: '确认驳回',
+                        okButtonProps: { danger: true },
+                        cancelText: '取消',
+                        onOk: () => handleAudit('reject'),
+                      })
+                    }
+                    style={{ paddingInline: 28, fontWeight: 600 }}
+                  >
+                    驳回申请
+                  </Button>
+                </Tooltip>
+
+                {/* 通过按钮：只有两者都 passed 时才可用 */}
+                <Tooltip
+                  title={
+                    canApprove ? '' : '前置核验未全部通过，无法审批通过'
+                  }
                   placement="top"
                 >
                   <Button

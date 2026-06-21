@@ -47,24 +47,6 @@ const { Content } = Layout;
 /** 三态核验类型 */
 type TriVerifyType = 'video' | 'vr' | 'onsite';
 
-/** 三态核验状态 */
-interface TriVerifyStatus {
-  video: VerifyState;
-  vr: VerifyState;
-  onsite: VerifyState;
-}
-
-/** 生成三态核验状态（模拟数据） */
-function generateTriVerify(property: Property): TriVerifyStatus {
-  const states: VerifyState[] = ['verified', 'verified', 'verifying', 'unverified', 'verification_failed'];
-  const seed = property.id.charCodeAt(0) + property.id.charCodeAt(property.id.length - 1);
-  return {
-    video: states[seed % 5],
-    vr: states[(seed + 1) % 5],
-    onsite: states[(seed + 2) % 5],
-  };
-}
-
 /** 三态核验Tag组件 */
 function TriVerifyTag({ type, status }: { type: TriVerifyType; status: VerifyState }) {
   const labelMap: Record<TriVerifyType, string> = {
@@ -127,25 +109,24 @@ const TRANSPORT_LABEL: Record<string, string> = {
 /** 生成核验时间线数据 */
 function generateVerifyTimeline(property: Property) {
   const baseTime = dayjs(property.createTime);
-  const tri = generateTriVerify(property);
   return [
     {
       time: baseTime.add(1, 'hour').format('YYYY-MM-DD HH:mm'),
       title: '视频上传 → AI核验通过',
       description: '房源短视频上传成功，AI算法自动识别房屋结构、装修程度、采光情况，与房源描述信息匹配度 96.2%。',
-      status: tri.video === 'verified' ? 'success' as const : tri.video === 'verifying' ? 'processing' as const : tri.video === 'verification_failed' ? 'danger' as const : 'warning' as const,
+      status: property.videoVerify === 'verified' ? 'success' as const : property.videoVerify === 'verifying' ? 'processing' as const : property.videoVerify === 'verification_failed' ? 'danger' as const : 'warning' as const,
     },
     {
       time: baseTime.add(3, 'hour').format('YYYY-MM-DD HH:mm'),
       title: 'VR上传 → 完整性校验',
       description: 'VR全景上传共 12 个场景点，覆盖客厅、主卧、次卧、厨房、卫生间等关键区域，空间拓扑结构完整。',
-      status: tri.vr === 'verified' ? 'success' as const : tri.vr === 'verifying' ? 'processing' as const : tri.vr === 'verification_failed' ? 'danger' as const : 'warning' as const,
+      status: property.vrVerify === 'verified' ? 'success' as const : property.vrVerify === 'verifying' ? 'processing' as const : property.vrVerify === 'verification_failed' ? 'danger' as const : 'warning' as const,
     },
     {
       time: baseTime.add(1, 'day').format('YYYY-MM-DD HH:mm'),
       title: '管家勘验 → 定位+照片',
       description: `管家 王师傅 上门实地勘验，GPS定位与房源地址偏差 ${(Math.random() * 50).toFixed(1)}m，拍摄现场照片 28 张，关键设备状态已标注。`,
-      status: tri.onsite === 'verified' ? 'success' as const : tri.onsite === 'verifying' ? 'processing' as const : tri.onsite === 'verification_failed' ? 'danger' as const : 'warning' as const,
+      status: property.onsiteVerify === 'verified' ? 'success' as const : property.onsiteVerify === 'verifying' ? 'processing' as const : property.onsiteVerify === 'verification_failed' ? 'danger' as const : 'warning' as const,
     },
     {
       time: baseTime.add(2, 'day').format('YYYY-MM-DD HH:mm'),
@@ -206,6 +187,10 @@ export default function PropertyDetail() {
       title: r.title || r.communityName || `${r.district || '精选'}优质房源`,
       address: r.address || r.fullAddress || `${r.district || ''}${r.communityName || ''}${r.buildingNo ? r.buildingNo + '号楼' : ''}${r.roomNo || ''}`,
       propertyNo: r.propertyNo || `FY${String(r.id || '00000000').slice(-8).toUpperCase()}`,
+      decorationText: r.decorationText || DECORATION_MAP[r.decoration] || '普装',
+      videoVerify: r.videoVerify || r.videoVerifyStatus || 'unverified',
+      vrVerify: r.vrVerify || r.vrVerifyStatus || 'unverified',
+      onsiteVerify: r.onsiteVerify || r.onsiteVerifyStatus || 'unverified',
     } as any;
   }, [rawProperty]);
 
@@ -220,7 +205,11 @@ export default function PropertyDetail() {
   }
 
   /** 三态核验（防崩溃：即使property缺少必要字段也安全） */
-  const triVerify = property ? generateTriVerify(property) : { video: 'unverified' as VerifyState, vr: 'unverified' as VerifyState, onsite: 'unverified' as VerifyState };
+  const triVerify = {
+    video: (property?.videoVerify || 'unverified') as VerifyState,
+    vr: (property?.vrVerify || 'unverified') as VerifyState,
+    onsite: (property?.onsiteVerify || 'unverified') as VerifyState,
+  };
   /** 价格指数：无则用租金/面积做合理估算 */
   const safeBuildingArea = property?.buildingArea || 80;
   const safeMonthlyRent = property?.monthlyRent || 5000;
@@ -549,7 +538,7 @@ export default function PropertyDetail() {
                   <div>
                     <div className="text-xs text-ink-400">装修程度</div>
                     <div className="mt-0.5 text-base font-semibold text-ink-800">
-                      {DECORATION_MAP[property.decoration]}
+                      {property.decorationText}
                       <span className="ml-1 text-xs font-normal text-ink-400">
                         ({property.buildYear}年建)
                       </span>

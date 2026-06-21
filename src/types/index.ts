@@ -252,6 +252,14 @@ export interface Property {
   orientation: Orientation;
   /** 装修程度 */
   decoration: DecorationLevel;
+  /** 装修程度中文描述 */
+  decorationText: string;
+  /** 视频核验状态 */
+  videoVerify: VerifyState;
+  /** VR核验状态 */
+  vrVerify: VerifyState;
+  /** 实地核验状态 */
+  onsiteVerify: VerifyState;
   /** 建成年份 */
   buildYear: number;
   /** 月租金(元) */
