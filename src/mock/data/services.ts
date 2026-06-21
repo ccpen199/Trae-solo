@@ -711,5 +711,92 @@ export const mockServices: ServiceItem[] = [
     serviceType: 'convenience',
     createTime: '2023-01-01 00:00:00',
     updateTime: '2024-01-10 10:00:00'
+  },
+  {
+    id: 's_013',
+    departmentId: 'd_005',
+    departmentName: '抚州市交通运输局',
+    name: '公交卡年审',
+    shortName: '公交卡年审',
+    category: 'traffic',
+    status: 'active',
+    level: 'municipal',
+    icon: 'Bus',
+    description: '老年人、学生公交卡年度审验服务',
+    workDays: '即时办结',
+    chargeStandard: '免费',
+    hotLevel: 5,
+    viewCount: 18900,
+    applyCount: 6800,
+    satisfaction: 99.2,
+    materials: [
+      { id: 'm1', name: '身份证', required: true, format: '原件', description: '本人有效居民身份证' },
+      { id: 'm2', name: '公交卡', required: true, format: '原件', description: '待年审的公交IC卡' },
+      { id: 'm3', name: '学生证', required: false, format: '原件', description: '学生年审需提供' }
+    ],
+    steps: [
+      { step: 1, title: '提交材料', description: '携带身份证和公交卡到网点', duration: '5分钟' },
+      { step: 2, title: '审验', description: '工作人员审核并刷卡确认', duration: '即时' }
+    ],
+    conditions: [
+      '持有抚州市公交IC卡',
+      '卡种为老年卡或学生卡'
+    ],
+    notices: [
+      '老年卡每年生日当月可办理年审',
+      '学生卡每年9月1日至10月31日办理年审',
+      '可委托他人代办，需提供双方身份证'
+    ],
+    onlineApply: true,
+    appointment: true,
+    handleMethod: 'both',
+    promiseDays: 0,
+    isInstant: true,
+    serviceType: 'personal',
+    createTime: '2023-01-01 00:00:00',
+    updateTime: '2024-01-10 10:00:00'
+  },
+  {
+    id: 's_014',
+    departmentId: 'd_006',
+    departmentName: '抚州市文化广电新闻出版旅游局',
+    name: '景区预约',
+    shortName: '景区预约',
+    category: 'culture_tourism',
+    status: 'active',
+    level: 'municipal',
+    icon: 'Ticket',
+    description: '抚州市各大景区线上预约服务',
+    workDays: '即时办结',
+    chargeStandard: '免费',
+    hotLevel: 5,
+    viewCount: 45600,
+    applyCount: 28900,
+    satisfaction: 98.8,
+    materials: [
+      { id: 'm1', name: '身份证', required: true, format: '原件/电子版', description: '预约人有效身份证' }
+    ],
+    steps: [
+      { step: 1, title: '选择景区', description: '选择要预约的景区和日期', duration: '3分钟' },
+      { step: 2, title: '填写信息', description: '填写游客信息和联系方式', duration: '2分钟' },
+      { step: 3, title: '确认预约', description: '提交预约并获取预约码', duration: '即时' }
+    ],
+    conditions: [
+      '持有效身份证件',
+      '预约日期景区正常开放'
+    ],
+    notices: [
+      '部分热门景区需提前1-3天预约',
+      '预约成功后请按时入园，逾期未入园将影响后续预约',
+      '如需取消请提前2小时操作'
+    ],
+    onlineApply: true,
+    appointment: true,
+    handleMethod: 'online',
+    promiseDays: 0,
+    isInstant: true,
+    serviceType: 'convenience',
+    createTime: '2023-01-01 00:00:00',
+    updateTime: '2024-01-10 10:00:00'
   }
 ]

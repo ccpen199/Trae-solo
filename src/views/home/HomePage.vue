@@ -29,10 +29,28 @@ import {
   Clock,
   CheckCircle,
   LogIn,
+  ShieldCheck,
+  IdCard,
+  Wallet,
+  Calculator,
+  Ticket,
+  Flame,
+  MapPin,
+  Lightbulb,
+  AlertTriangle,
+  BarChart3,
+  Zap,
+  Sparkles,
+  FileText,
+  CreditCard,
+  BookOpen,
+  RefreshCw,
+  Settings,
 } from 'lucide-vue-next'
 import type { EChartsOption } from 'echarts'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { mockUserProfile } from '@/mock/data/profile'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -42,6 +60,23 @@ const doingCount = ref(5)
 const searchValue = ref('')
 const activeNoticeIndex = ref(0)
 const dataUpdateTime = '2026-06-20 10:30:00'
+
+const profileData = computed(() => {
+  if (userStore.userProfile) {
+    return userStore.userProfile
+  }
+  return mockUserProfile
+})
+
+const isAdminRole = computed(() => {
+  const role = userStore.userInfo?.role
+  return role === 'platform_admin' || role === 'department_admin' || role === 'platform_operate' || role === 'department_staff'
+})
+
+const verifiedLevel = computed(() => {
+  if (!userStore.userInfo?.verified) return 0
+  return 3
+})
 
 interface StatItem {
   label: string
@@ -480,6 +515,304 @@ function goToProfile() {
   router.push('/profile')
 }
 
+interface WorkbenchCard {
+  key: string
+  title: string
+  status: string
+  subInfo: string
+  icon: any
+  gradient: string
+  path: string
+  quickButton?: { text: string; path: string }
+}
+
+const workbenchCards: WorkbenchCard[] = [
+  {
+    key: 'social',
+    title: '社保',
+    status: '正常',
+    subInfo: '累计缴186月',
+    icon: ShieldCheck,
+    gradient: 'from-blue-500 to-blue-600',
+    path: '/profile?tab=social'
+  },
+  {
+    key: 'medical',
+    title: '医保',
+    status: '正常',
+    subInfo: '账户余额3.2万',
+    icon: Stethoscope,
+    gradient: 'from-emerald-500 to-teal-600',
+    path: '/profile?tab=medical'
+  },
+  {
+    key: 'fund',
+    title: '公积金',
+    status: '12.8万',
+    subInfo: '月缴存额2400元',
+    icon: Wallet,
+    gradient: 'from-amber-500 to-orange-600',
+    path: '/profile?tab=fund',
+    quickButton: { text: '贷款计算器', path: '/tools/calculator' }
+  },
+  {
+    key: 'education',
+    title: '学籍',
+    status: '在籍',
+    subInfo: '抚州一中高二',
+    icon: GraduationCap,
+    gradient: 'from-purple-500 to-violet-600',
+    path: '/profile?tab=education'
+  },
+  {
+    key: 'driving',
+    title: '驾照',
+    status: '有效',
+    subInfo: '下次验证日期',
+    icon: Car,
+    gradient: 'from-cyan-500 to-blue-600',
+    path: '/services?keyword=驾驶证'
+  },
+  {
+    key: 'licenses',
+    title: '证照',
+    status: '8张',
+    subInfo: '即将到期1张',
+    icon: CreditCard,
+    gradient: 'from-rose-500 to-pink-600',
+    path: '/profile?tab=licenses'
+  },
+  {
+    key: 'applications',
+    title: '我的办件',
+    status: '在办5 待评3',
+    subInfo: '',
+    icon: ClipboardList,
+    gradient: 'from-indigo-500 to-purple-600',
+    path: '/my-applications'
+  }
+]
+
+function handleWorkbenchClick(card: WorkbenchCard) {
+  router.push(card.path)
+}
+
+function handleQuickButton(path: string, event: Event) {
+  event.stopPropagation()
+  router.push(path)
+}
+
+interface HighFreqService {
+  key: string
+  title: string
+  desc: string
+  icon: any
+  gradient: string
+  applyPath: string
+  detailPath: string
+}
+
+const highFreqServices: HighFreqService[] = [
+  {
+    key: 's_001',
+    title: '社保证明开具',
+    desc: '一键生成PDF，可下载打印',
+    icon: FileText,
+    gradient: 'from-blue-500 to-indigo-600',
+    applyPath: '/apply/s_001',
+    detailPath: '/services/s_001'
+  },
+  {
+    key: 's_013',
+    title: '公交卡年审',
+    desc: '老年卡学生卡年度审验',
+    icon: Bus,
+    gradient: 'from-cyan-500 to-blue-600',
+    applyPath: '/apply/s_013',
+    detailPath: '/services/s_013'
+  },
+  {
+    key: 'venue',
+    title: '景区预约',
+    desc: '热门景区线上预约免排队',
+    icon: Ticket,
+    gradient: 'from-rose-500 to-pink-600',
+    applyPath: '/tools/venue',
+    detailPath: '/tools/venue'
+  },
+  {
+    key: 's_006',
+    title: '公积金提取',
+    desc: '购房租房等提取业务',
+    icon: Wallet,
+    gradient: 'from-amber-500 to-orange-600',
+    applyPath: '/apply/s_006',
+    detailPath: '/services/s_006'
+  },
+  {
+    key: 's_004',
+    title: '医保异地备案',
+    desc: '跨省异地就医直接结算',
+    icon: MapPin,
+    gradient: 'from-emerald-500 to-teal-600',
+    applyPath: '/apply/s_004',
+    detailPath: '/services/s_004'
+  },
+  {
+    key: 's_005',
+    title: '入学报名',
+    desc: '小学初中新生入学报名',
+    icon: School,
+    gradient: 'from-purple-500 to-violet-600',
+    applyPath: '/apply/s_005',
+    detailPath: '/services/s_005'
+  }
+]
+
+function handleApply(service: HighFreqService) {
+  router.push(service.applyPath)
+}
+
+function handleViewDetail(service: HighFreqService) {
+  router.push(service.detailPath)
+}
+
+interface ConvenienceTool {
+  key: string
+  title: string
+  desc: string
+  usedCount: string
+  icon: any
+  gradient: string
+  path: string
+}
+
+const convenienceTools: ConvenienceTool[] = [
+  {
+    key: 'calculator',
+    title: '公积金贷款计算器',
+    desc: '计算月供、还款计划、对比分析',
+    usedCount: '12,856人已使用',
+    icon: Calculator,
+    gradient: 'from-blue-500 to-cyan-600',
+    path: '/tools/calculator'
+  },
+  {
+    key: 'venue',
+    title: '场馆预约',
+    desc: '图书馆博物馆体育馆预约',
+    usedCount: '8,234人已使用',
+    icon: Landmark,
+    gradient: 'from-emerald-500 to-teal-600',
+    path: '/tools/venue'
+  },
+  {
+    key: 'policy-match',
+    title: '政策匹配测试',
+    desc: '智能匹配适合您的政策',
+    usedCount: '5,678人已使用',
+    icon: Lightbulb,
+    gradient: 'from-amber-500 to-orange-600',
+    path: '/tools/policy-match'
+  },
+  {
+    key: 'violation',
+    title: '违章查询',
+    desc: '机动车违章记录查询处理',
+    usedCount: '15,432人已使用',
+    icon: Car,
+    gradient: 'from-rose-500 to-pink-600',
+    path: '/tools/violation'
+  },
+  {
+    key: 'bus',
+    title: '公交查询',
+    desc: '实时公交到站时间查询',
+    usedCount: '23,567人已使用',
+    icon: Bus,
+    gradient: 'from-cyan-500 to-blue-600',
+    path: '/tools/bus'
+  },
+  {
+    key: 'scenic',
+    title: '景区客流',
+    desc: '景区实时客流拥挤度查询',
+    usedCount: '9,876人已使用',
+    icon: MapPin,
+    gradient: 'from-green-500 to-emerald-600',
+    path: '/tools/scenic'
+  }
+]
+
+function handleToolClick(tool: ConvenienceTool) {
+  router.push(tool.path)
+}
+
+interface AdminEntry {
+  key: string
+  title: string
+  stats: { label: string; value: string }[]
+  todayTip: string
+  icon: any
+  gradient: string
+  path: string
+}
+
+const adminEntries: AdminEntry[] = [
+  {
+    key: 'tickets',
+    title: '工单分拨',
+    stats: [
+      { label: '待分配', value: '12' },
+      { label: '处理中', value: '35' }
+    ],
+    todayTip: '今日新增 8 条',
+    icon: ClipboardList,
+    gradient: 'from-blue-500 to-indigo-600',
+    path: '/admin/tickets'
+  },
+  {
+    key: 'evaluations',
+    title: '差评整改跟踪',
+    stats: [
+      { label: '待整改', value: '5' },
+      { label: '整改中', value: '8' }
+    ],
+    todayTip: '本周差评 3 条待处理',
+    icon: AlertTriangle,
+    gradient: 'from-rose-500 to-pink-600',
+    path: '/admin/evaluations'
+  },
+  {
+    key: 'monitor',
+    title: '服务健康监控',
+    stats: [
+      { label: '正常服务', value: '42' },
+      { label: '异常服务', value: '2' }
+    ],
+    todayTip: '系统运行正常',
+    icon: Activity,
+    gradient: 'from-emerald-500 to-teal-600',
+    path: '/admin/monitor'
+  },
+  {
+    key: 'reports',
+    title: '月度效能分析',
+    stats: [
+      { label: '办件总量', value: '3.2万' },
+      { label: '满意度', value: '98.5%' }
+    ],
+    todayTip: '6月报告已生成',
+    icon: BarChart3,
+    gradient: 'from-amber-500 to-orange-600',
+    path: '/admin/reports'
+  }
+]
+
+function handleAdminEntry(entry: AdminEntry) {
+  router.push(entry.path)
+}
+
 let noticeTimer: number | null = null
 
 onMounted(() => {
@@ -597,10 +930,68 @@ onMounted(() => {
             </div>
           </div>
         </div>
+        </div>
+      </section>
+
+    <section v-if="userStore.isLoggedIn" class="container -mt-10 relative z-20">
+      <div class="card card-hover mb-6">
+        <div class="flex items-center justify-between mb-5 pb-4 border-b border-neutral-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+              <Sparkles class="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-neutral-800">
+                👋 早上好，{{ userStore.userInfo?.realName || '先生' }}</h3>
+              <p class="text-sm text-neutral-500">
+                <span class="inline-flex items-center gap-1">
+                  <ShieldCheck class="w-3.5 h-3.5 text-accent-green" />
+                  已实名认证 Lv.{{ verifiedLevel }}
+                </span>
+              </p>
+            </div>
+          </div>
+          <button 
+            @click="router.push('/dashboard')"
+            class="text-sm text-gov-blue hover:bg-gov-blue/10 px-4 py-2 rounded-lg hover:bg-gov-blue/20 transition-colors flex items-center gap-1"
+          >
+            我的工作台 <ChevronRight class="w-4 h-4" />
+          </button>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+          <div
+            v-for="card in workbenchCards"
+            :key="card.key"
+            class="group rounded-xl p-4 cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-neutral-100 hover:border-blue-200"
+            @click="handleWorkbenchClick(card)"
+          >
+            <div class="flex items-center gap-2 mb-2">
+              <div :class="['w-9 h-9 rounded-lg bg-gradient-to-br flex items-center justify-center flex-shrink-0', card.gradient]">
+                <component :is="card.icon" class="w-4.5 h-4.5 text-white" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-neutral-800 group-hover:text-gov-blue transition-colors">{{ card.title }}</p>
+              </div>
+            </div>
+            <p class="text-base font-bold text-neutral-800 mb-1">{{ card.status }}</p>
+            <p v-if="card.subInfo" class="text-xs text-neutral-500">{{ card.subInfo }}</p>
+            <div v-if="card.title === '我的办件'" class="flex flex-wrap gap-1 mt-2">
+              <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded">社保证明开</span>
+              <span class="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded">公交卡年审</span>
+            </div>
+            <button
+              v-if="card.quickButton"
+              class="mt-2 w-full text-xs text-white rounded-lg py-1.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:shadow-md transition-all"
+              @click.stop="handleQuickButton(card.quickButton.path, $event)"
+            >
+              {{ card.quickButton.text }}
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="container -mt-10 relative z-10">
+    <section class="container relative z-10">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div
           v-for="(stat, index) in stats"
@@ -624,6 +1015,7 @@ onMounted(() => {
             <span class="text-accent-green">较昨日 +12.5%</span>
           </div>
         </div>
+      </div>
       </div>
       <div class="flex justify-end mt-3">
         <p class="text-xs text-neutral-400">数据更新时间：{{ dataUpdateTime }}</p>
@@ -711,6 +1103,94 @@ onMounted(() => {
             </div>
             <span class="text-sm text-neutral-700 group-hover:text-gov-blue font-medium transition-colors">{{ service.name }}</span>
           </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pb-10">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+            <Zap class="w-4 h-4 text-white" />
+          </div>
+          <h3 class="section-title mb-0">高频事项一键直达</h3>
+        </div>
+        <span class="text-sm text-neutral-500">常用事项快速办理</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div
+          v-for="service in highFreqServices"
+          :key="service.key"
+          class="card card-hover group overflow-hidden relative"
+        >
+          <div :class="['absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br opacity-10 group-hover:opacity-20 transition-opacity', service.gradient]"></div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-4">
+              <div :class="['w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-md cursor-pointer', service.gradient]">
+                <component :is="service.icon" class="w-7 h-7 text-white" />
+              </div>
+              <div class="flex-1">
+                <h4 class="text-lg font-semibold text-neutral-800 group-hover:text-gov-blue transition-colors cursor-pointer" @click="handleViewDetail(service)">
+                  {{ service.title }}
+                </h4>
+                <p class="text-sm text-neutral-500 mt-1">{{ service.desc }}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                class="flex-1 text-sm font-medium text-white rounded-lg py-2.5 transition-all shadow-sm hover:shadow-md"
+                :class="`bg-gradient-to-r ${service.gradient}`"
+                @click="handleApply(service)"
+              >
+                立即办理
+              </button>
+              <button
+                class="flex-1 text-sm font-medium text-gov-blue bg-gov-blue/10 rounded-lg py-2.5 hover:bg-gov-blue/20 transition-colors"
+                @click="handleViewDetail(service)"
+              >
+                查看详情
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pb-10">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+            <Lightbulb class="w-4 h-4 text-white" />
+          </div>
+          <h3 class="section-title mb-0">便民工具集</h3>
+        </div>
+        <span class="text-sm text-neutral-500">生活服务便民利民</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div
+          v-for="tool in convenienceTools"
+          :key="tool.key"
+          class="card card-hover group cursor-pointer overflow-hidden relative"
+          @click="handleToolClick(tool)"
+        >
+          <div :class="['absolute inset-0 bg-gradient-to-br opacity-5 group-hover:opacity-10 transition-opacity', tool.gradient]"></div>
+          <div class="relative flex items-start gap-4">
+            <div :class="['w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-md', tool.gradient]">
+              <component :is="tool.icon" class="w-7 h-7 text-white" />
+            </div>
+            <div class="flex-1">
+              <h4 class="text-base font-semibold text-neutral-800 group-hover:text-gov-blue transition-colors">
+                {{ tool.title }}
+              </h4>
+              <p class="text-sm text-neutral-500 mt-1">{{ tool.desc }}</p>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-xs text-neutral-400">{{ tool.usedCount }}</span>
+                <span class="text-sm text-gov-blue flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  立即使用 <ChevronRight class="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -818,6 +1298,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      </div>
     </section>
 
     <section class="container pb-16">
@@ -865,6 +1346,52 @@ onMounted(() => {
               >
                 立即办理第一个
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section v-if="isAdminRole" class="container pb-16">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center">
+            <Settings class="w-4 h-4 text-white" />
+          </div>
+          <h3 class="section-title mb-0">业务管理快捷入口</h3>
+        </div>
+        <span class="text-sm text-neutral-500">管理后台快捷访问</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div
+          v-for="entry in adminEntries"
+          :key="entry.key"
+          class="card card-hover group cursor-pointer overflow-hidden relative"
+          @click="handleAdminEntry(entry)"
+        >
+          <div :class="['absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br opacity-10 group-hover:opacity-20 transition-opacity', entry.gradient]"></div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-4">
+              <div :class="['w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-md', entry.gradient]">
+                <component :is="entry.icon" class="w-7 h-7 text-white" />
+              </div>
+              <div class="flex-1">
+                <h4 class="text-lg font-semibold text-neutral-800 group-hover:text-gov-blue transition-colors">
+                  {{ entry.title }}
+                </h4>
+                <div class="flex items-center gap-4 mt-2">
+                  <div v-for="stat in entry.stats" :key="stat.label" class="flex items-center gap-2">
+                    <span class="text-sm text-neutral-500">{{ stat.label }}</span>
+                    <span class="text-lg font-bold text-neutral-800">{{ stat.value }}</span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between mt-3 pt-3 border-t border-neutral-100">
+                  <span class="text-xs text-neutral-400">{{ entry.todayTip }}</span>
+                  <span class="text-sm text-gov-blue flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    进入管理 <ChevronRight class="w-4 h-4" />
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
