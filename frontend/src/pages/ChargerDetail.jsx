@@ -205,11 +205,12 @@ function ChargerDetail() {
         try {
           const ordersRes = await API.orders.list({ charger_id: id, status: 'charging' });
           const ordersList = Array.isArray(ordersRes) ? ordersRes : (ordersRes.data || []);
-          const activeOrder = ordersList.find(o => o.status === 'charging' || o.status === 'processing');
+          const activeOrder = ordersList.find(o => o.status === 'charging');
           if (activeOrder) {
             setCurrentOrder(activeOrder);
-            setChargingDuration(activeOrder.duration_seconds || 0);
+            setChargingDuration(activeOrder.duration || 0);
             loadPowerData(activeOrder.id);
+            initCostBreakdown(activeOrder);
           }
         } catch (err) {
           console.error('加载订单失败:', err);
@@ -279,6 +280,32 @@ function ChargerDetail() {
     updateCostBreakdown(costBreakdown.totalEnergy + energyDelta);
   };
 
+  const initCostBreakdown = (order) => {
+    const peakEnergy = order.peak_energy ?? 0;
+    const flatEnergy = order.flat_energy ?? 0;
+    const valleyEnergy = order.valley_energy ?? 0;
+    const peakCost = order.peak_cost ?? 0;
+    const flatCost = order.flat_cost ?? 0;
+    const valleyCost = order.valley_cost ?? 0;
+    const serviceFee = order.service_fee ?? 0;
+    const totalEnergy = order.energy ?? (peakEnergy + flatEnergy + valleyEnergy);
+    const totalCost = order.total_amount ?? (peakCost + flatCost + valleyCost + serviceFee);
+
+    const peakPrice = peakEnergy > 0 ? peakCost / peakEnergy : 1.2;
+    const flatPrice = flatEnergy > 0 ? flatCost / flatEnergy : 0.8;
+    const valleyPrice = valleyEnergy > 0 ? valleyCost / valleyEnergy : 0.4;
+    const serviceFeeRate = totalEnergy > 0 ? serviceFee / totalEnergy : 0.6;
+
+    setCostBreakdown({
+      peak: { energy: peakEnergy, cost: peakCost, price: peakPrice },
+      flat: { energy: flatEnergy, cost: flatCost, price: flatPrice },
+      valley: { energy: valleyEnergy, cost: valleyCost, price: valleyPrice },
+      serviceFee: serviceFeeRate,
+      totalEnergy: totalEnergy,
+      totalCost: totalCost
+    });
+  };
+
   const updateCostBreakdown = (totalEnergy) => {
     const hour = new Date().getHours();
     let period = 'flat';
@@ -328,20 +355,9 @@ function ChargerDetail() {
       const orderData = res.data || res;
       setCurrentOrder(orderData);
       setCharging(true);
-      setChargingDuration(0);
-      setPowerHistory([]);
-      setVoltageHistory([]);
-      setCurrentHistory([]);
-      setSocHistory([]);
-      setTempHistory([]);
-      setCostBreakdown({
-        peak: { energy: 0, cost: 0, price: 1.2 },
-        flat: { energy: 0, cost: 0, price: 0.8 },
-        valley: { energy: 0, cost: 0, price: 0.4 },
-        serviceFee: 0.6,
-        totalEnergy: 0,
-        totalCost: 0
-      });
+      setChargingDuration(orderData.duration || 0);
+      loadPowerData(orderData.id);
+      initCostBreakdown(orderData);
     } catch (err) {
       console.error('开始充电失败:', err);
       alert('开始充电失败，请重试');
@@ -351,9 +367,11 @@ function ChargerDetail() {
   const handleStopCharging = async () => {
     if (!currentOrder) return;
     try {
-      await API.orders.stop(currentOrder.id, {
+      const res = await API.orders.stop(currentOrder.id, {
         endSoc: realtimeData.soc || 0
       });
+      const orderData = res.data || res;
+      setCurrentOrder(orderData);
       setCharging(false);
     } catch (err) {
       console.error('结束充电失败:', err);
@@ -684,11 +702,11 @@ function ChargerDetail() {
               <div className="charger-info mb-16">
                 <div className="charger-info-item">
                   <span className="label">累计充电量</span>
-                  <span className="value font-bold text-primary">{formatEnergy(costBreakdown.totalEnergy)}</span>
+                  <span className="value font-bold text-primary">{formatEnergy(currentOrder?.energy ?? costBreakdown.totalEnergy)}</span>
                 </div>
                 <div className="charger-info-item">
                   <span className="label">预计费用</span>
-                  <span className="value font-bold text-danger">{formatMoney(costBreakdown.totalCost)}</span>
+                  <span className="value font-bold text-danger">{formatMoney(currentOrder?.total_amount ?? costBreakdown.totalCost)}</span>
                 </div>
               </div>
 
@@ -808,7 +826,6 @@ function ChargerDetail() {
             <thead>
               <tr>
                 <th>时段</th>
-                <th>电价</th>
                 <th>充电量</th>
                 <th>电费</th>
               </tr>
@@ -818,37 +835,34 @@ function ChargerDetail() {
                 <td>
                   <span className="period-tag peak">峰时</span>
                 </td>
-                <td>{formatMoney(costBreakdown.peak.price)}/kWh</td>
-                <td>{formatEnergy(costBreakdown.peak.energy)}</td>
-                <td>{formatMoney(costBreakdown.peak.cost)}</td>
+                <td>{formatEnergy(currentOrder?.peak_energy ?? costBreakdown.peak.energy)}</td>
+                <td>{formatMoney(currentOrder?.peak_cost ?? costBreakdown.peak.cost)}</td>
               </tr>
               <tr>
                 <td>
                   <span className="period-tag flat">平时</span>
                 </td>
-                <td>{formatMoney(costBreakdown.flat.price)}/kWh</td>
-                <td>{formatEnergy(costBreakdown.flat.energy)}</td>
-                <td>{formatMoney(costBreakdown.flat.cost)}</td>
+                <td>{formatEnergy(currentOrder?.flat_energy ?? costBreakdown.flat.energy)}</td>
+                <td>{formatMoney(currentOrder?.flat_cost ?? costBreakdown.flat.cost)}</td>
               </tr>
               <tr>
                 <td>
                   <span className="period-tag valley">谷时</span>
                 </td>
-                <td>{formatMoney(costBreakdown.valley.price)}/kWh</td>
-                <td>{formatEnergy(costBreakdown.valley.energy)}</td>
-                <td>{formatMoney(costBreakdown.valley.cost)}</td>
+                <td>{formatEnergy(currentOrder?.valley_energy ?? costBreakdown.valley.energy)}</td>
+                <td>{formatMoney(currentOrder?.valley_cost ?? costBreakdown.valley.cost)}</td>
               </tr>
               <tr>
-                <td colSpan="2" style={{ fontWeight: 500 }}>服务费 ({formatMoney(costBreakdown.serviceFee)}/kWh)</td>
-                <td>{formatEnergy(costBreakdown.totalEnergy)}</td>
-                <td>{formatMoney(costBreakdown.totalEnergy * costBreakdown.serviceFee)}</td>
+                <td style={{ fontWeight: 500 }}>服务费</td>
+                <td>{formatEnergy(currentOrder?.energy ?? costBreakdown.totalEnergy)}</td>
+                <td>{formatMoney(currentOrder?.service_fee ?? (costBreakdown.totalEnergy * costBreakdown.serviceFee))}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr style={{ background: '#fafafa', fontWeight: 600 }}>
-                <td colSpan="2">合计</td>
-                <td style={{ color: '#1890ff' }}>{formatEnergy(costBreakdown.totalEnergy)}</td>
-                <td style={{ color: '#ff4d4f', fontSize: '16px' }}>{formatMoney(costBreakdown.totalCost)}</td>
+                <td>合计</td>
+                <td style={{ color: '#1890ff' }}>{formatEnergy(currentOrder?.energy ?? costBreakdown.totalEnergy)}</td>
+                <td style={{ color: '#ff4d4f', fontSize: '16px' }}>{formatMoney(currentOrder?.total_amount ?? costBreakdown.totalCost)}</td>
               </tr>
             </tfoot>
           </table>
@@ -892,11 +906,15 @@ function ChargerDetail() {
                 </div>
                 <div className="charger-info-item">
                   <span className="label">充电时长</span>
-                  <span className="value">{formatDuration(currentOrder.duration_seconds || chargingDuration)}</span>
+                  <span className="value">{formatDuration(currentOrder.duration || chargingDuration)}</span>
                 </div>
                 <div className="charger-info-item">
                   <span className="label">起始SOC</span>
                   <span className="value">{currentOrder.start_soc || 0}%</span>
+                </div>
+                <div className="charger-info-item">
+                  <span className="label">结束SOC</span>
+                  <span className="value">{currentOrder.end_soc ?? '-'}%</span>
                 </div>
               </div>
 
@@ -904,7 +922,7 @@ function ChargerDetail() {
                 <div className="flex-between">
                   <span className="text-muted">本次充电量</span>
                   <span className="font-bold text-primary font-large">
-                    {formatEnergy(currentOrder.total_energy !== undefined ? currentOrder.total_energy : costBreakdown.totalEnergy)}
+                    {formatEnergy(currentOrder.energy !== undefined ? currentOrder.energy : costBreakdown.totalEnergy)}
                   </span>
                 </div>
                 <div className="flex-between mt-8">

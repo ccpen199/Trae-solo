@@ -315,7 +315,7 @@ function Recommendation() {
                         </div>
                         <div>
                           <span className="text-muted text-small">车程</span>
-                          <div className="font-bold">{formatDuration(item.station.drive_time * 60)}</div>
+                          <div className="font-bold">{formatDuration(item.station.driveTime * 60)}</div>
                         </div>
                         <div>
                           <span className="text-muted text-small">充电桩类型</span>
@@ -398,14 +398,14 @@ function Recommendation() {
                             <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px dashed #d9f7be' }}>
                               <div className="text-muted text-small">费用明细:</div>
                               <div style={{ display: 'flex', gap: '16px', fontSize: '12px', marginTop: '4px', flexWrap: 'wrap' }}>
-                                {item.estimate.cost_detail.peak > 0 && (
-                                  <span>峰时费用: {formatMoney(item.estimate.cost_detail.peak)}</span>
+                                {item.estimate.cost_detail.peak_cost > 0 && (
+                                  <span>峰时费用: {formatMoney(item.estimate.cost_detail.peak_cost)}</span>
                                 )}
-                                {item.estimate.cost_detail.flat > 0 && (
-                                  <span>平时费用: {formatMoney(item.estimate.cost_detail.flat)}</span>
+                                {item.estimate.cost_detail.flat_cost > 0 && (
+                                  <span>平时费用: {formatMoney(item.estimate.cost_detail.flat_cost)}</span>
                                 )}
-                                {item.estimate.cost_detail.valley > 0 && (
-                                  <span>谷时费用: {formatMoney(item.estimate.cost_detail.valley)}</span>
+                                {item.estimate.cost_detail.valley_cost > 0 && (
+                                  <span>谷时费用: {formatMoney(item.estimate.cost_detail.valley_cost)}</span>
                                 )}
                                 <span>服务费: {formatMoney(item.estimate.cost_detail.service_fee)}</span>
                               </div>

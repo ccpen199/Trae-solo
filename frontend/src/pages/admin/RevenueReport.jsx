@@ -89,9 +89,7 @@ function RevenueReport() {
   };
 
   const getTrendOption = () => {
-    const trendRows = reportType === 'daily'
-      ? (reportData.chart_data || [])
-      : (reportData.list || []);
+    const trendRows = reportData.chart_data || [];
 
     return {
       tooltip: { trigger: 'axis' },
@@ -100,8 +98,8 @@ function RevenueReport() {
       xAxis: {
         type: 'category',
         data: trendRows.map(d => {
-          const dateValue = reportType === 'daily' ? d.date || d.report_date : d.report_month || d.date;
-          return reportType === 'daily' ? dateValue?.slice(5) : dateValue?.slice(0, 7);
+          const dateValue = d.date || '';
+          return reportType === 'daily' ? dateValue.slice(5) : dateValue.slice(0, 7);
         })
       },
       yAxis: [
@@ -184,10 +182,11 @@ function RevenueReport() {
   };
 
   const getStationStats = () => {
-    if (reportType === 'daily' && reportData.by_station?.length) {
+    if (reportData.by_station?.length) {
       return reportData.by_station
         .map((station) => ({
           station_name: station.station_name,
+          city: station.city || '',
           orders: station.total_orders || 0,
           energy: station.total_energy || 0,
           total_revenue: station.total_amount || 0,

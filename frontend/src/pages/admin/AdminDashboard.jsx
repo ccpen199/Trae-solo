@@ -23,8 +23,8 @@ function AdminDashboard() {
         API.alarms.list({ limit: 5 })
       ]);
       setSummary(summaryRes.data);
-      setDailyData(dailyRes.data?.chart_data || dailyRes.data?.list || []);
-      setStationData(dailyRes.data?.by_station || dailyRes.data?.list || []);
+      setDailyData(dailyRes.data?.chart_data || []);
+      setStationData(dailyRes.data?.by_station || []);
       setAlarms(alarmsRes.data || []);
     } catch (err) {
       console.error('加载数据失败:', err);
@@ -127,18 +127,18 @@ function AdminDashboard() {
           </div>
           <div className="stat-card orange">
             <div className="label">今日订单</div>
-            <div className="value">{todayData?.total_orders ?? summary.today_orders ?? 0}<span className="unit">单</span></div>
+            <div className="value">{todayData?.total_orders ?? summary.today?.total_orders ?? 0}<span className="unit">单</span></div>
             <div className="trend">充电中 {summary.charging_now} 辆</div>
           </div>
           <div className="stat-card red">
             <div className="label">今日电量</div>
-            <div className="value">{formatEnergy(todayData?.total_energy ?? summary.today_energy ?? 0)}</div>
+            <div className="value">{formatEnergy(todayData?.total_energy ?? summary.today?.total_energy ?? 0)}</div>
             <div className="trend">周电量 {formatEnergy(summary.weekly_energy || 0)}</div>
           </div>
           <div className="stat-card">
             <div className="label">今日收入</div>
-            <div className="value">{formatMoney(todayData?.total_amount ?? summary.today_revenue ?? 0)}</div>
-            <div className="trend">服务费 {formatMoney(todayData?.service_fee || 0)}</div>
+            <div className="value">{formatMoney(todayData?.total_amount ?? summary.today?.total_amount ?? 0)}</div>
+            <div className="trend">周收入 {formatMoney(summary.weekly_revenue || 0)}</div>
           </div>
           <div className="stat-card green">
             <div className="label">待处理告警</div>

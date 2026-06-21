@@ -53,7 +53,10 @@ export const API = {
   },
   pricing: {
     list: (params) => request.get('/pricing', { params }),
-    detail: (id) => request.get(`/pricing/${id}`)
+    detail: (id) => request.get(`/pricing/${id}`),
+    create: (data) => request.post('/pricing', data),
+    update: (id, data) => request.put(`/pricing/${id}`, data),
+    delete: (id) => request.delete(`/pricing/${id}`)
   }
 };
 

@@ -8,6 +8,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [summary, setSummary] = useState(null);
+  const [allStations, setAllStations] = useState([]);
   const [stations, setStations] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
   const [dailyData, setDailyData] = useState([]);
@@ -28,12 +29,15 @@ function Dashboard() {
         API.revenue.daily({ days: 7 })
       ]);
 
-      const dailyRevenue = summaryRes.data || {};
-      const trendData = dailyRes.data?.chart_data || dailyRes.data?.list || [];
+      const summaryData = summaryRes.data || {};
+      const stationsList = stationsRes.data || [];
+      const ordersList = ordersRes.data || [];
+      const trendData = dailyRes.data?.chart_data || [];
 
-      setSummary(dailyRevenue);
-      setStations((stationsRes.data || []).slice(0, 6));
-      setRecentOrders((ordersRes.data || []).slice(0, 5));
+      setSummary(summaryData);
+      setAllStations(stationsList);
+      setStations(stationsList.slice(0, 6));
+      setRecentOrders(ordersList.slice(0, 5));
       setDailyData(trendData);
     } catch (err) {
       console.error('加载数据失败:', err);
@@ -45,10 +49,13 @@ function Dashboard() {
 
   const getChargingTrendOption = () => {
     const chartData = dailyData && dailyData.length > 0 
-      ? dailyData.slice(-7).map(d => ({
-          date: d.date ? d.date.slice(5) : '',
-          energy: d.total_energy || 0
-        }))
+      ? [...dailyData]
+          .sort((a, b) => new Date(a.date || a.report_date) - new Date(b.date || b.report_date))
+          .slice(-7)
+          .map(d => ({
+            date: d.date ? d.date.slice(5) : (d.report_date ? d.report_date.slice(5) : ''),
+            energy: d.total_energy || 0
+          }))
       : [];
 
     const defaultData = [120, 150, 180, 165, 210, 280, 240];
@@ -107,7 +114,7 @@ function Dashboard() {
 
   const getStationDistributionOption = () => {
     const cityCount = {};
-    stations.forEach(s => {
+    allStations.forEach(s => {
       if (s.city) {
         cityCount[s.city] = (cityCount[s.city] || 0) + 1;
       }
@@ -174,17 +181,17 @@ function Dashboard() {
   };
 
   const getCityCount = () => {
-    const cities = new Set(stations.map(s => s.city).filter(Boolean));
+    const cities = new Set(allStations.map(s => s.city).filter(Boolean));
     return cities.size;
   };
 
   const getTodayEnergy = () => {
-    if (summary && summary.today_energy !== undefined) {
-      return summary.today_energy;
+    if (summary && summary.today && summary.today.total_energy !== undefined) {
+      return summary.today.total_energy;
     }
     if (dailyData && dailyData.length > 0) {
       const today = new Date().toISOString().split('T')[0];
-      const todayData = dailyData.find(d => d.date === today || d.date.startsWith(today));
+      const todayData = dailyData.find(d => d.date === today || d.report_date === today);
       if (todayData && todayData.total_energy !== undefined) {
         return todayData.total_energy;
       }
@@ -193,17 +200,21 @@ function Dashboard() {
   };
 
   const getTodayOrders = () => {
-    if (summary && summary.today_orders !== undefined) {
-      return summary.today_orders;
+    if (summary && summary.today && summary.today.total_orders !== undefined) {
+      return summary.today.total_orders;
     }
     if (dailyData && dailyData.length > 0) {
       const today = new Date().toISOString().split('T')[0];
-      const todayData = dailyData.find(d => d.date === today || d.date?.startsWith(today));
+      const todayData = dailyData.find(d => d.date === today || d.report_date === today);
       if (todayData && todayData.total_orders !== undefined) {
         return todayData.total_orders;
       }
     }
     return 0;
+  };
+
+  const getOrderEnergy = (order) => {
+    return order.energy !== undefined ? order.energy : (order.total_energy || 0);
   };
 
   if (loading) {
@@ -352,7 +363,7 @@ function Dashboard() {
                     <td style={{ fontFamily: 'monospace', fontSize: '12px' }}>{order.order_no}</td>
                     <td>{order.station_name || '-'}</td>
                     <td>{order.charger_code || '-'}</td>
-                    <td>{formatEnergy(order.total_energy)}</td>
+                    <td>{formatEnergy(getOrderEnergy(order))}</td>
                     <td>{formatMoney(order.total_amount)}</td>
                     <td>
                       <span className="status-badge" style={{

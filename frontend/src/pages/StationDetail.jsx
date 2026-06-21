@@ -49,6 +49,22 @@ function StationDetail() {
     return { available, charging, offline, total };
   };
 
+  const getChargerStatus = (charger) => {
+    if (charger.is_offline) return 'offline';
+    if (charger.fault_code) return 'fault';
+    if (charger.is_charging) return 'charging';
+    return 'available';
+  };
+
+  const hasRealtimeData = (charger) => {
+    if (charger.is_offline) return false;
+    return charger.voltage !== undefined && charger.voltage !== null
+      || charger.current !== undefined && charger.current !== null
+      || charger.power !== undefined && charger.power !== null
+      || charger.temperature !== undefined && charger.temperature !== null
+      || charger.soc !== undefined && charger.soc !== null;
+  };
+
   const getChargerIcon = (type) => {
     return type === 'fast' ? '⚡' : '🔌';
   };
@@ -71,6 +87,9 @@ function StationDetail() {
             <h2>{station.name}</h2>
             <div className="text-muted text-small mt-8">
               📍 {station.address}
+            </div>
+            <div className="text-muted text-small mt-8">
+              🏙️ 城市: {station.city}
             </div>
             <div className="text-muted text-small mt-8">
               🗺️ 坐标: {station.lat}, {station.lng}
@@ -122,88 +141,92 @@ function StationDetail() {
               <div className="empty">暂无充电桩</div>
             ) : (
               <div className="grid grid-cols-2">
-                {chargers.map(charger => (
-                  <div
-                    key={charger.id}
-                    className={`charger-card ${charger.status === 'offline' ? 'offline' : ''}`}
-                    onClick={() => navigate(`/chargers/${charger.id}`)}
-                  >
-                    <div className="charger-card-header">
-                      <div>
-                        <span className="font-bold font-large">
-                          {getChargerIcon(charger.type)} {charger.charger_code}
-                        </span>
-                      </div>
-                      <span
-                        className={`charger-type ${charger.type === 'fast' ? 'fast' : 'slow'}`}
-                      >
-                        {getChargerTypeText(charger.type)}
-                      </span>
-                    </div>
-
-                    <div className="flex-between mb-8">
-                      <div>
-                        <span className="text-muted text-small">额定功率</span>
-                        <div className="font-bold">{charger.power_rating || '--'} kW</div>
-                      </div>
-                      <div>
-                        <span className="text-muted text-small">状态</span>
+                {chargers.map(charger => {
+                  const status = getChargerStatus(charger);
+                  return (
+                    <div
+                      key={charger.id}
+                      className={`charger-card ${status === 'offline' ? 'offline' : ''}`}
+                      onClick={() => navigate(`/chargers/${charger.id}`)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className="charger-card-header">
                         <div>
-                          <span
-                            className="status-badge"
-                            style={{
-                              background: getStatusColor(charger.status) + '20',
-                              color: getStatusColor(charger.status)
-                            }}
-                          >
-                            {getStatusText(charger.status)}
+                          <span className="font-bold font-large">
+                            {getChargerIcon(charger.type)} {charger.charger_code}
                           </span>
                         </div>
+                        <span
+                          className={`charger-type ${charger.type === 'fast' ? 'fast' : 'slow'}`}
+                        >
+                          {getChargerTypeText(charger.type)}
+                        </span>
                       </div>
-                    </div>
 
-                    {(charger.voltage !== undefined || charger.current !== undefined || charger.power !== undefined || charger.temperature !== undefined || charger.soc !== undefined) && charger.status !== 'offline' && (
-                      <>
-                        <div className="charger-info">
-                          <div className="charger-info-item">
-                            <span className="label">电压</span>
-                            <span className="value">{charger.voltage !== undefined && charger.voltage !== null ? charger.voltage + ' V' : '--'}</span>
-                          </div>
-                          <div className="charger-info-item">
-                            <span className="label">电流</span>
-                            <span className="value">{charger.current !== undefined && charger.current !== null ? charger.current + ' A' : '--'}</span>
-                          </div>
-                          <div className="charger-info-item">
-                            <span className="label">实时功率</span>
-                            <span className="value">{formatEnergy(charger.power || 0)}/h</span>
-                          </div>
-                          <div className="charger-info-item">
-                            <span className="label">温度</span>
-                            <span className="value">{charger.temperature !== undefined && charger.temperature !== null ? charger.temperature + ' °C' : '--'}</span>
+                      <div className="flex-between mb-8">
+                        <div>
+                          <span className="text-muted text-small">额定功率</span>
+                          <div className="font-bold">{charger.power_rating || '--'} kW</div>
+                        </div>
+                        <div>
+                          <span className="text-muted text-small">状态</span>
+                          <div>
+                            <span
+                              className="status-badge"
+                              style={{
+                                background: getStatusColor(status) + '20',
+                                color: getStatusColor(status)
+                              }}
+                            >
+                              {getStatusText(status)}
+                            </span>
                           </div>
                         </div>
+                      </div>
 
-                        {charger.soc !== null && charger.soc !== undefined && (
-                          <div className="mt-16">
-                            <div className="flex-between mb-8">
-                              <span className="text-muted text-small">SOC</span>
-                              <span className="font-bold">{charger.soc}%</span>
+                      {hasRealtimeData(charger) && (
+                        <>
+                          <div className="charger-info">
+                            <div className="charger-info-item">
+                              <span className="label">电压</span>
+                              <span className="value">{charger.voltage !== undefined && charger.voltage !== null ? charger.voltage + ' V' : '--'}</span>
                             </div>
-                            <div className="progress-bar">
-                              <div
-                                className="progress"
-                                style={{
-                                  width: `${charger.soc}%`,
-                                  background: charger.soc > 80 ? '#52c41a' : charger.soc > 30 ? '#faad14' : '#ff4d4f'
-                                }}
-                              />
+                            <div className="charger-info-item">
+                              <span className="label">电流</span>
+                              <span className="value">{charger.current !== undefined && charger.current !== null ? charger.current + ' A' : '--'}</span>
+                            </div>
+                            <div className="charger-info-item">
+                              <span className="label">实时功率</span>
+                              <span className="value">{formatEnergy(charger.power || 0)}/h</span>
+                            </div>
+                            <div className="charger-info-item">
+                              <span className="label">温度</span>
+                              <span className="value">{charger.temperature !== undefined && charger.temperature !== null ? charger.temperature + ' °C' : '--'}</span>
                             </div>
                           </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                ))}
+
+                          {charger.soc !== null && charger.soc !== undefined && charger.soc > 0 && (
+                            <div className="mt-16">
+                              <div className="flex-between mb-8">
+                                <span className="text-muted text-small">SOC</span>
+                                <span className="font-bold">{charger.soc}%</span>
+                              </div>
+                              <div className="progress-bar">
+                                <div
+                                  className="progress"
+                                  style={{
+                                    width: `${charger.soc}%`,
+                                    background: charger.soc > 80 ? '#52c41a' : charger.soc > 30 ? '#faad14' : '#ff4d4f'
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

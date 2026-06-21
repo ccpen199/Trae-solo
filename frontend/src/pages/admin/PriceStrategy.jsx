@@ -10,7 +10,7 @@ function PriceStrategy() {
   const [editingStrategy, setEditingStrategy] = useState(null);
   const [expandedRows, setExpandedRows] = useState({});
   const [formData, setFormData] = useState({
-    name: '',
+    strategy_name: '',
     station_id: '',
     is_active: true,
     effective_date: '',
@@ -46,7 +46,7 @@ function PriceStrategy() {
   const handleAdd = () => {
     setEditingStrategy(null);
     setFormData({
-      name: '',
+      strategy_name: '',
       station_id: '',
       is_active: true,
       effective_date: '',
@@ -64,7 +64,7 @@ function PriceStrategy() {
   const handleEdit = (strategy) => {
     setEditingStrategy(strategy);
     setFormData({
-      name: strategy.name,
+      strategy_name: strategy.strategy_name || '',
       station_id: strategy.station_id || '',
       is_active: strategy.is_active !== undefined ? strategy.is_active : true,
       effective_date: strategy.effective_date || '',
@@ -80,7 +80,7 @@ function PriceStrategy() {
   };
 
   const handleSubmit = async () => {
-    if (!formData.name) {
+    if (!formData.strategy_name) {
       alert('请输入策略名称');
       return;
     }
@@ -212,7 +212,7 @@ function PriceStrategy() {
                         {expandedRows[strategy.id] ? '▼' : '▶'}
                       </button>
                     </td>
-                    <td className="font-bold">{strategy.name}</td>
+                    <td className="font-bold">{strategy.strategy_name}</td>
                     <td>{strategy.station_name || '全部充电站'}</td>
                     <td>
                       <span className="status-badge" style={{
@@ -284,7 +284,7 @@ function PriceStrategy() {
             </div>
             <div className="form-group">
               <label>策略名称 <span style={{ color: '#ff4d4f' }}>*</span></label>
-              <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="请输入策略名称" />
+              <input type="text" value={formData.strategy_name} onChange={(e) => setFormData({ ...formData, strategy_name: e.target.value })} placeholder="请输入策略名称" />
             </div>
             <div className="form-group">
               <label>适用充电站</label>

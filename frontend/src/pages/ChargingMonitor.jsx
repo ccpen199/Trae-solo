@@ -18,7 +18,6 @@ function ChargingMonitor() {
   const timerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
-  const [summary, setSummary] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -35,15 +34,13 @@ function ChargingMonitor() {
     };
   }, []);
 
+  const UNIT_PRICE = 1.4;
+
   const loadData = async () => {
     try {
       setLoading(true);
-      const [ordersRes, summaryRes] = await Promise.all([
-        API.orders.list({ status: 'charging' }),
-        API.revenue.summary()
-      ]);
+      const ordersRes = await API.orders.list({ status: 'charging' });
       const ordersList = Array.isArray(ordersRes) ? ordersRes : (ordersRes.data || []);
-      const summaryData = summaryRes.data || summaryRes;
 
       const ordersWithChargerData = await Promise.all(
         ordersList.map(async (order) => {
@@ -56,7 +53,7 @@ function ChargingMonitor() {
               current: chargerData.current,
               power: chargerData.power,
               temperature: chargerData.temperature,
-              current_soc: chargerData.soc,
+              soc: chargerData.soc,
               charger_type: chargerData.type
             };
           } catch (err) {
@@ -67,7 +64,7 @@ function ChargingMonitor() {
               current: 0,
               power: 0,
               temperature: 25,
-              current_soc: order.start_soc || 0,
+              soc: order.start_soc || 0,
               charger_type: 'fast'
             };
           }
@@ -75,7 +72,6 @@ function ChargingMonitor() {
       );
 
       setOrders(ordersWithChargerData);
-      setSummary(summaryData);
     } catch (err) {
       console.error('加载数据失败:', err);
     } finally {
@@ -116,14 +112,14 @@ function ChargingMonitor() {
       setOrders(prevOrders => 
         prevOrders.map(order => {
           if (order.status === 'charging') {
-            const updatedDuration = (order.duration_seconds || 0) + 1;
-            const updatedEnergy = (order.total_energy || 0) + ((order.power || 0) / 3600);
+            const updatedDuration = (order.duration || 0) + 1;
+            const updatedEnergy = (order.energy || 0) + ((order.power || 0) / 3600);
             const estimatedTime = calculateEstimatedTime(order);
             
             return {
               ...order,
-              duration_seconds: updatedDuration,
-              total_energy: updatedEnergy,
+              duration: updatedDuration,
+              energy: updatedEnergy,
               estimated_time: estimatedTime,
               total_amount: calculateCost(order, updatedEnergy)
             };
@@ -161,7 +157,7 @@ function ChargingMonitor() {
           if (payload.current !== undefined) updatedOrder.current = payload.current;
           if (payload.power !== undefined) updatedOrder.power = payload.power;
           if (payload.temperature !== undefined) updatedOrder.temperature = payload.temperature;
-          if (payload.soc !== undefined) updatedOrder.current_soc = payload.soc;
+          if (payload.soc !== undefined) updatedOrder.soc = payload.soc;
           if (payload.energy !== undefined) updatedOrder.energy = payload.energy;
           
           if (payload.soc !== undefined || payload.power !== undefined) {
@@ -195,7 +191,7 @@ function ChargingMonitor() {
   };
 
   const calculateEstimatedTime = (order) => {
-    const currentSoc = order.current_soc || 0;
+    const currentSoc = order.soc || 0;
     const targetSoc = 100;
     const power = order.power || 0;
     const batteryCapacity = 60;
@@ -210,11 +206,8 @@ function ChargingMonitor() {
     return Math.floor(hours * 3600);
   };
 
-  const calculateCost = (order, energy) => {
-    const electricityPrice = 0.8;
-    const serviceFee = 0.6;
-    const totalPrice = electricityPrice + serviceFee;
-    return energy * totalPrice;
+  const calculateCost = (_order, energy) => {
+    return energy * UNIT_PRICE;
   };
 
   const getAveragePower = () => {
@@ -275,50 +268,48 @@ function ChargingMonitor() {
         </div>
       </div>
 
-      {summary && (
-        <div className="grid grid-cols-4 mb-16">
-          <div className="stat-card green">
-            <div className="label">当前充电中</div>
-            <div className="value">
-              {orders.length}
-              <span className="unit">辆</span>
-            </div>
-            <div className="trend">
-              总功率 {orders.reduce((s, o) => s + (o.power || 0), 0).toFixed(1)} kW
-            </div>
+      <div className="grid grid-cols-4 mb-16">
+        <div className="stat-card green">
+          <div className="label">当前充电中</div>
+          <div className="value">
+            {orders.length}
+            <span className="unit">辆</span>
           </div>
-          <div className="stat-card blue">
-            <div className="label">今日充电总量</div>
-            <div className="value">
-              {formatEnergy(summary.today_energy || 0).replace(' kWh', '')}
-              <span className="unit">kWh</span>
-            </div>
-            <div className="trend">
-              较昨日 {summary.yoy_energy ? `+${summary.yoy_energy.toFixed(1)}%` : '-'}
-            </div>
-          </div>
-          <div className="stat-card orange">
-            <div className="label">今日充电总额</div>
-            <div className="value">
-              {formatMoney(summary.today_revenue || 0).replace('¥', '')}
-              <span className="unit">元</span>
-            </div>
-            <div className="trend">
-              订单数 {summary.today_orders || 0} 笔
-            </div>
-          </div>
-          <div className="stat-card purple">
-            <div className="label">平均充电功率</div>
-            <div className="value">
-              {getAveragePower().toFixed(1)}
-              <span className="unit">kW</span>
-            </div>
-            <div className="trend">
-              峰值功率 {Math.max(...orders.map(o => o.power || 0), 0).toFixed(1)} kW
-            </div>
+          <div className="trend">
+            总功率 {orders.reduce((s, o) => s + (o.power || 0), 0).toFixed(1)} kW
           </div>
         </div>
-      )}
+        <div className="stat-card blue">
+          <div className="label">今日充电总量</div>
+          <div className="value">
+            {orders.reduce((s, o) => s + (o.energy || 0), 0).toFixed(2)}
+            <span className="unit">kWh</span>
+          </div>
+          <div className="trend">
+            充电中订单累计
+          </div>
+        </div>
+        <div className="stat-card orange">
+          <div className="label">今日充电总额</div>
+          <div className="value">
+            {orders.reduce((s, o) => s + (o.total_amount || 0), 0).toFixed(2)}
+            <span className="unit">元</span>
+          </div>
+          <div className="trend">
+            充电中订单累计
+          </div>
+        </div>
+        <div className="stat-card purple">
+          <div className="label">平均充电功率</div>
+          <div className="value">
+            {getAveragePower().toFixed(1)}
+            <span className="unit">kW</span>
+          </div>
+          <div className="trend">
+            峰值功率 {Math.max(...orders.map(o => o.power || 0), 0).toFixed(1)} kW
+          </div>
+        </div>
+      </div>
 
       <div className="card">
         <div className="card-header">
@@ -416,13 +407,13 @@ function ChargingMonitor() {
                   <div className="progress-header">
                     <span className="text-muted text-small">充电进度</span>
                     <span className="font-bold">
-                      {Math.round(order.start_soc || 0)}% → {Math.round(order.current_soc || 0)}%
+                      {Math.round(order.start_soc || 0)}% → {Math.round(order.soc || 0)}%
                     </span>
                   </div>
                   <div className="progress-bar">
                     <div
                       className="progress-fill"
-                      style={getSOCProgressStyle(order.start_soc || 0, order.current_soc || 0)}
+                      style={getSOCProgressStyle(order.start_soc || 0, order.soc || 0)}
                     />
                   </div>
                   <div className="progress-labels">
@@ -437,13 +428,13 @@ function ChargingMonitor() {
                   <div className="stat-item">
                     <div className="stat-label">已充电量</div>
                     <div className="stat-value text-primary">
-                      {formatEnergy(order.total_energy || 0)}
+                      {formatEnergy(order.energy || 0)}
                     </div>
                   </div>
                   <div className="stat-item">
                     <div className="stat-label">已充时长</div>
                     <div className="stat-value">
-                      {formatDuration(order.duration_seconds || 0)}
+                      {formatDuration(order.duration || 0)}
                     </div>
                   </div>
                   <div className="stat-item">
@@ -469,7 +460,7 @@ function ChargingMonitor() {
                   </div>
                   <div className="cost-item">
                     <span className="cost-label text-small text-muted">
-                      电价 {formatMoney(0.8)}/kWh + 服务费 {formatMoney(0.6)}/kWh
+                      单价 {formatMoney(UNIT_PRICE)}/kWh
                     </span>
                   </div>
                 </div>
