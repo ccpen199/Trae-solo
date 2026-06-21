@@ -1,0 +1,122 @@
+/** @type {import('tailwindcss').Config} */
+
+export default {
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      },
+    },
+    extend: {
+      colors: {
+        jade: {
+          50: '#F0F4F1',
+          100: '#D9E2DB',
+          200: '#B3C5B9',
+          300: '#8DA897',
+          400: '#678B75',
+          500: '#416E53',
+          600: '#2D4A3E',
+          700: '#223830',
+          800: '#172621',
+          900: '#0D1412',
+        },
+        gold: {
+          50: '#FBF7EC',
+          100: '#F3E8CA',
+          200: '#E7D094',
+          300: '#DBB85E',
+          400: '#CFA53D',
+          500: '#C9A961',
+          600: '#A08544',
+          700: '#786433',
+          800: '#504322',
+          900: '#282111',
+        },
+        rice: {
+          50: '#FBF9F4',
+          100: '#F5F1E8',
+          200: '#E8DFCA',
+          300: '#DBCDAB',
+          400: '#CEBB8D',
+          500: '#C1A96E',
+          600: '#9A8758',
+          700: '#746542',
+          800: '#4D432C',
+          900: '#272216',
+        },
+        cinnabar: {
+          50: '#F7E7E6',
+          100: '#EBC4C2',
+          200: '#D78784',
+          300: '#C34B46',
+          400: '#A8302A',
+          500: '#8A2823',
+          600: '#691E1B',
+          700: '#471412',
+          800: '#260A09',
+          900: '#100404',
+        },
+        porcelain: {
+          50: '#EBF0F7',
+          100: '#C7D4EA',
+          200: '#8FA9D5',
+          300: '#577EC0',
+          400: '#2A4B7C',
+          500: '#213C63',
+          600: '#192D4A',
+          700: '#111E32',
+          800: '#0A131F',
+          900: '#04080C',
+        },
+      },
+      fontFamily: {
+        serif: ['"Noto Serif SC"', '"Source Han Serif SC"', '"思源宋体"', 'serif'],
+        sans: ['"Noto Sans SC"', '"Source Han Sans SC"', '"思源黑体"', 'system-ui', 'sans-serif'],
+      },
+      backgroundImage: {
+        'paper-texture': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E\")",
+        'ink-gradient': 'linear-gradient(135deg, #2D4A3E 0%, #172621 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #C9A961 0%, #A08544 100%)',
+      },
+      boxShadow: {
+        'seal': '0 2px 8px rgba(168, 48, 42, 0.3)',
+        'scroll': '0 8px 32px rgba(45, 74, 62, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08)',
+        'gold-glow': '0 0 20px rgba(201, 169, 97, 0.4)',
+      },
+      animation: {
+        'scroll-reveal': 'scrollReveal 0.8s ease-out forwards',
+        'ink-spread': 'inkSpread 1.5s ease-out forwards',
+        'seal-stamp': 'sealStamp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+        'shimmer': 'shimmer 2s linear infinite',
+      },
+      keyframes: {
+        scrollReveal: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        inkSpread: {
+          '0%': { transform: 'scale(0)', opacity: '0.8' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        sealStamp: {
+          '0%': { transform: 'scale(2) rotate(-10deg)', opacity: '0' },
+          '50%': { transform: 'scale(0.9) rotate(2deg)' },
+          '100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-1000px 0' },
+          '100%': { backgroundPosition: '1000px 0' },
+        },
+      },
+    },
+  },
+  plugins: [],
+};
