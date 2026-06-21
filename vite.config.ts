@@ -24,6 +24,28 @@ export default defineConfig({
     }), 
     tsconfigPaths(),
   ],
+  resolve: {
+    dedupe: ['react', 'react-dom', 'react-is', 'classnames'],
+  },
+  optimizeDeps: {
+    include: [
+      'react-is',
+      'classnames',
+      'antd',
+      'antd/es/config-provider',
+      'antd/es/app',
+      'antd/es/locale/zh_CN',
+      'antd/es/theme',
+      'antd-mobile',
+      'echarts',
+      'echarts-for-react',
+      'zustand',
+      'zustand/middleware',
+      'axios',
+      'dayjs',
+      'dayjs/locale/zh-cn',
+    ],
+  },
   server: {
     proxy: {
       '/api': {
