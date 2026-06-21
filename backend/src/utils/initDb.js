@@ -211,14 +211,14 @@ function seedData() {
   `);
 
   const outlets = [
-    { name: '渝中区政务服务中心', addr: '渝中区和平路1号', district: '渝中区', lng: 106.5758, lat: 29.5628, windows: 20, rating: 4.7 },
-    { name: '江北区政务服务中心', addr: '江北区金港新区16号', district: '江北区', lng: 106.5684, lat: 29.6316, windows: 18, rating: 4.6 },
-    { name: '南岸区政务服务中心', addr: '南岸区长生桥镇', district: '南岸区', lng: 106.5982, lat: 29.5287, windows: 15, rating: 4.5 },
-    { name: '九龙坡区政务服务中心', addr: '九龙坡区西郊路27号', district: '九龙坡区', lng: 106.5098, lat: 29.5007, windows: 16, rating: 4.4 },
-    { name: '沙坪坝区政务服务中心', addr: '沙坪坝区凤天大道8号', district: '沙坪坝区', lng: 106.4582, lat: 29.5563, windows: 17, rating: 4.6 },
-    { name: '渝北区政务服务中心', addr: '渝北区双龙大道153号', district: '渝北区', lng: 106.6291, lat: 29.7112, windows: 22, rating: 4.8 },
-    { name: '大渡口区政务服务中心', addr: '大渡口区春晖路街道', district: '大渡口区', lng: 106.4847, lat: 29.4826, windows: 12, rating: 4.3 },
-    { name: '巴南区政务服务中心', addr: '巴南区龙洲湾街道', district: '巴南区', lng: 106.5386, lat: 29.3922, windows: 14, rating: 4.5 },
+    { name: '渝中区政务服务中心', addr: '渝中区和平路1号', district: '渝中区', lng: 106.5548, lat: 29.5648, windows: 20, rating: 4.7 },
+    { name: '江北区政务服务中心', addr: '江北区金港新区16号', district: '江北区', lng: 106.5428, lat: 29.5882, windows: 18, rating: 4.6 },
+    { name: '南岸区政务服务中心', addr: '南岸区长生桥镇', district: '南岸区', lng: 106.5692, lat: 29.5497, windows: 15, rating: 4.5 },
+    { name: '九龙坡区政务服务中心', addr: '九龙坡区西郊路27号', district: '九龙坡区', lng: 106.5338, lat: 29.5501, windows: 16, rating: 4.4 },
+    { name: '沙坪坝区政务服务中心', addr: '沙坪坝区凤天大道8号', district: '沙坪坝区', lng: 106.5472, lat: 29.5853, windows: 17, rating: 4.6 },
+    { name: '渝北区政务服务中心', addr: '渝北区双龙大道153号', district: '渝北区', lng: 106.5821, lat: 29.5902, windows: 22, rating: 4.8 },
+    { name: '大渡口区政务服务中心', addr: '大渡口区春晖路街道', district: '大渡口区', lng: 106.5247, lat: 29.5316, windows: 12, rating: 4.3 },
+    { name: '巴南区政务服务中心', addr: '巴南区龙洲湾街道', district: '巴南区', lng: 106.5786, lat: 29.5262, windows: 14, rating: 4.5 },
   ];
 
   outlets.forEach(o => {
@@ -260,15 +260,27 @@ function seedData() {
     VALUES (?, ?, ?, ?, ?, ?)
   `);
 
-  for (let outletId = 1; outletId <= 8; outletId++) {
-    for (let i = 1; i <= 6; i++) {
+  const windowConfigs = [
+    { outlet: 1, queues: [8, 12, 5, 3, 7, 6] },
+    { outlet: 2, queues: [10, 6, 9, 4, 8, 3] },
+    { outlet: 3, queues: [5, 7, 3, 2, 6, 4] },
+    { outlet: 4, queues: [6, 4, 8, 3, 5, 2] },
+    { outlet: 5, queues: [9, 11, 6, 5, 7, 4] },
+    { outlet: 6, queues: [12, 8, 10, 6, 9, 5] },
+    { outlet: 7, queues: [3, 4, 2, 1, 5, 3] },
+    { outlet: 8, queues: [5, 6, 4, 3, 7, 2] },
+  ];
+
+  for (let oi = 0; oi < windowConfigs.length; oi++) {
+    const cfg = windowConfigs[oi];
+    for (let i = 0; i < cfg.queues.length; i++) {
       insertWindow.run(
-        outletId,
-        `${i}号窗口`,
+        cfg.outlet,
+        `${i + 1}号窗口`,
         ['综合业务', '证件办理', '社保业务', '不动产'][i % 4],
-        1,
-        Math.floor(Math.random() * 10),
-        10 + Math.floor(Math.random() * 20)
+        i < 5 ? 1 : 0,
+        cfg.queues[i],
+        8 + Math.floor(Math.random() * 18)
       );
     }
   }
@@ -280,14 +292,23 @@ function seedData() {
 
   const today = new Date().toISOString().split('T')[0];
   const timeSlots = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '14:00-15:00', '15:00-16:00', '16:00-17:00'];
-  
-  for (let outletId = 1; outletId <= 8; outletId++) {
-    timeSlots.forEach(slot => {
-      const predicted = Math.floor(Math.random() * 50) + 20;
+  const predictionConfigs = [
+    { outlet: 1, base: 45 }, { outlet: 2, base: 38 },
+    { outlet: 3, base: 30 }, { outlet: 4, base: 32 },
+    { outlet: 5, base: 42 }, { outlet: 6, base: 50 },
+    { outlet: 7, base: 22 }, { outlet: 8, base: 28 },
+  ];
+
+  for (const pc of predictionConfigs) {
+    timeSlots.forEach((slot, idx) => {
+      let factor = 0.6 + Math.random() * 0.8;
+      if (idx === 0 || idx === 3) factor *= 1.2;
+      if (idx === 2 || idx === 5) factor *= 0.7;
+      const predicted = Math.round(pc.base * factor);
+      const actual = Math.round(predicted * (0.7 + Math.random() * 0.5));
       insertPrediction.run(
-        outletId, today, slot, predicted,
-        Math.floor(predicted * (0.8 + Math.random() * 0.4)),
-        Math.ceil(predicted / 10)
+        pc.outlet, today, slot, predicted, actual,
+        Math.max(1, Math.min(6, Math.ceil(predicted / 12)))
       );
     });
   }
@@ -334,25 +355,29 @@ function seedData() {
   `);
 
   const logEntries = [
-    { uid: 1, op: '生成动态身份码', mod: 'identity' },
-    { uid: 1, op: '查询风险评估', mod: 'identity' },
-    { uid: 2, op: '进入长辈版模式', mod: 'identity' },
-    { uid: 1, op: '查询附近网点', mod: 'outlet' },
-    { uid: 1, op: '预约身份证补办', mod: 'outlet' },
-    { uid: 3, op: '创建代办授权', mod: 'agent' },
-    { uid: 4, op: '执行代办操作-社保查询', mod: 'agent' },
-    { uid: 1, op: '确认代办操作', mod: 'agent' },
-    { uid: 1, op: '调整窗口调度-渝中区', mod: 'window' },
-    { uid: 1, op: '生成明日热度预测', mod: 'window' },
-    { uid: 2, op: '语音输入办理社保', mod: 'identity' },
-    { uid: 1, op: '查看证件列表', mod: 'identity' },
-    { uid: 3, op: '查询附近网点', mod: 'outlet' },
-    { uid: 1, op: '撤销代办授权', mod: 'agent' },
-    { uid: 1, op: '导出运营数据', mod: 'window' },
+    { uid: 1, op: '生成动态身份码', mod: 'identity', hoursAgo: 1 },
+    { uid: 1, op: '查询风险评估', mod: 'identity', hoursAgo: 2 },
+    { uid: 2, op: '进入长辈版模式', mod: 'identity', hoursAgo: 3 },
+    { uid: 1, op: '查询附近网点', mod: 'outlet', hoursAgo: 4 },
+    { uid: 1, op: '预约身份证补办', mod: 'outlet', hoursAgo: 5 },
+    { uid: 3, op: '创建代办授权', mod: 'agent', hoursAgo: 6 },
+    { uid: 4, op: '执行代办操作-社保查询', mod: 'agent', hoursAgo: 3 },
+    { uid: 1, op: '确认代办操作', mod: 'agent', hoursAgo: 2 },
+    { uid: 1, op: '调整窗口调度-渝中区', mod: 'window', hoursAgo: 1 },
+    { uid: 1, op: '生成今日热度预测', mod: 'window', hoursAgo: 8 },
+    { uid: 2, op: '语音输入办理社保', mod: 'identity', hoursAgo: 4 },
+    { uid: 1, op: '查看证件列表', mod: 'identity', hoursAgo: 6 },
+    { uid: 3, op: '查询附近网点', mod: 'outlet', hoursAgo: 5 },
+    { uid: 1, op: '撤销代办授权', mod: 'agent', hoursAgo: 7 },
+    { uid: 1, op: '导出运营数据', mod: 'window', hoursAgo: 2 },
   ];
 
   logEntries.forEach(entry => {
-    insertLog.run(entry.uid, entry.op, entry.mod, '127.0.0.1', 'Mozilla/5.0');
+    const stmt = db.prepare(`
+      INSERT INTO operation_logs (user_id, operation, module, ip, user_agent, created_at)
+      VALUES (?, ?, ?, ?, ?, datetime('now', '-' || ? || ' hours'))
+    `);
+    stmt.run(entry.uid, entry.op, entry.mod, '127.0.0.1', 'Mozilla/5.0', entry.hoursAgo);
   });
 
   const insertAppt = db.prepare(`
