@@ -1,31 +1,47 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Home from "@/pages/Home";
-import DriverHome from "@/pages/driver/DriverHome";
-import DriverOrders from "@/pages/driver/DriverOrders";
-import DriverOrderDetail from "@/pages/driver/DriverOrderDetail";
-import DriverWallet from "@/pages/driver/DriverWallet";
-import DriverStations from "@/pages/driver/DriverStations";
-import DriverTrack from "@/pages/driver/DriverTrack";
-import DriverProfile from "@/pages/driver/DriverProfile";
+import { ConfigProvider, App as AntdApp, theme as AntTheme } from "antd";
+import zhCN from "antd/locale/zh_CN";
+import { RouterProvider } from "react-router-dom";
+import router from "@/router";
+
+const antdTheme = {
+  algorithm: AntTheme.defaultAlgorithm,
+  token: {
+    colorPrimary: "#FF6B1A",
+    colorInfo: "#3B82F6",
+    colorSuccess: "#10B981",
+    colorWarning: "#F59E0B",
+    colorError: "#EF4444",
+    borderRadius: 12,
+    fontFamily:
+      '"HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif',
+  },
+  components: {
+    Button: {
+      controlHeight: 40,
+      borderRadius: 12,
+      primaryShadow: "0 8px 20px -8px rgba(255,107,26,0.45)",
+    },
+    Card: {
+      borderRadiusLG: 16,
+    },
+    Table: {
+      headerBg: "#FAFBFC",
+      headerColor: "#475569",
+      rowHoverBg: "#FFF7F2",
+    },
+    Tabs: {
+      itemSelectedColor: "#FF6B1A",
+      inkBarColor: "#FF6B1A",
+    },
+  },
+};
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/driver/home" replace />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/driver/home" element={<DriverHome />} />
-        <Route path="/driver/orders" element={<DriverOrders />} />
-        <Route path="/driver/orders/:id" element={<DriverOrderDetail />} />
-        <Route path="/driver/wallet" element={<DriverWallet />} />
-        <Route path="/driver/stations" element={<DriverStations />} />
-        <Route path="/driver/track" element={<DriverTrack />} />
-        <Route path="/driver/profile" element={<DriverProfile />} />
-        <Route
-          path="/other"
-          element={<div className="text-center text-xl">Other Page - Coming Soon</div>}
-        />
-      </Routes>
-    </Router>
+    <ConfigProvider locale={zhCN} theme={antdTheme}>
+      <AntdApp>
+        <RouterProvider router={router} />
+      </AntdApp>
+    </ConfigProvider>
   );
 }

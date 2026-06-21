@@ -14,6 +14,13 @@ import DriverLayout from "@/layouts/DriverLayout";
 import ShipperLayout from "@/layouts/ShipperLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 import Redirector from "@/pages/Redirector";
+import DriverHome from "@/pages/driver/DriverHome";
+import DriverOrders from "@/pages/driver/DriverOrders";
+import DriverOrderDetail from "@/pages/driver/DriverOrderDetail";
+import DriverWallet from "@/pages/driver/DriverWallet";
+import DriverStations from "@/pages/driver/DriverStations";
+import DriverTrack from "@/pages/driver/DriverTrack";
+import DriverProfile from "@/pages/driver/DriverProfile";
 import ShipperDashboard from "@/pages/shipper/ShipperDashboard";
 import ShipperCreateOrder from "@/pages/shipper/ShipperCreateOrder";
 import ShipperOrders from "@/pages/shipper/ShipperOrders";
@@ -25,6 +32,7 @@ import AdminRisk from "@/pages/admin/AdminRisk";
 import AdminFund from "@/pages/admin/AdminFund";
 import AdminStations from "@/pages/admin/AdminStations";
 import AdminUsers from "@/pages/admin/AdminUsers";
+import TrackReplay from "@/pages/common/TrackReplay";
 
 interface GuardedRouteProps {
   children: React.ReactNode;
@@ -181,68 +189,35 @@ const driverRoutes: RouteObject = {
     },
     {
       path: "home",
-      element: (
-        <PagePlaceholder
-          variant="driver"
-          title="司机首页"
-          description="附近货源、推荐订单、收益概览"
-        />
-      ),
+      element: <DriverHome />,
     },
     {
       path: "orders",
-      element: (
-        <PagePlaceholder
-          variant="driver"
-          title="运单中心"
-          description="待接、进行中、已完成运单管理"
-        />
-      ),
       children: [
         { index: true, element: <Navigate to="list" replace /> },
-        {
-          path: "list",
-          element: (
-            <PagePlaceholder variant="driver" title="运单列表" />
-          ),
-        },
-        {
-          path: ":id",
-          element: (
-            <PagePlaceholder variant="driver" title="运单详情" />
-          ),
-        },
+        { path: "list", element: <DriverOrders /> },
+        { path: ":id", element: <DriverOrderDetail /> },
       ],
     },
     {
       path: "stations",
-      element: (
-        <PagePlaceholder
-          variant="driver"
-          title="合作油站"
-          description="附近油站导航、优惠油价、一键加油"
-        />
-      ),
+      element: <DriverStations />,
     },
     {
       path: "wallet",
-      element: (
-        <PagePlaceholder
-          variant="driver"
-          title="我的钱包"
-          description="账户余额、收支明细、提现管理"
-        />
-      ),
+      element: <DriverWallet />,
+    },
+    {
+      path: "track",
+      element: <DriverTrack />,
+    },
+    {
+      path: "track/replay",
+      element: <TrackReplay />,
     },
     {
       path: "profile",
-      element: (
-        <PagePlaceholder
-          variant="driver"
-          title="个人中心"
-          description="个人信息、车辆管理、设置"
-        />
-      ),
+      element: <DriverProfile />,
     },
     {
       path: "*",
