@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { authApi } from '@/lib/api.ts';
 import { useAuthStore } from '@/store/auth.ts';
 import type { UserRole } from '../../shared/types.js';
-import { Droplets, GraduationCap, Building2, Shield, Eye, EyeOff } from 'lucide-react';
+import { Droplets, GraduationCap, Building2, Shield, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react';
 
 const roles: { value: UserRole; label: string; icon: JSX.Element; description: string; testAccount: string }[] = [
   { value: 'student', label: '学生用户', icon: <GraduationCap size={24} />, description: '用水、充值、查账单', testAccount: '2021001 / student123' },
@@ -11,30 +11,55 @@ const roles: { value: UserRole; label: string; icon: JSX.Element; description: s
   { value: 'admin', label: '管理员', icon: <Shield size={24} />, description: '系统管理、数据监控', testAccount: 'admin / admin123' },
 ];
 
+function getErrorMessage(message: string, account: string, role: UserRole): { type: 'error' | 'warning' | 'info'; message: string } {
+  const lowerMsg = message.toLowerCase();
+  if (lowerMsg.includes('password') || lowerMsg.includes('密码') || lowerMsg.includes('invalid credential')) {
+    return { type: 'error', message: `密码错误，请检查您的密码。学生账号密码为 student123` };
+  }
+  if (lowerMsg.includes('account') || lowerMsg.includes('账号') || lowerMsg.includes('not found') || lowerMsg.includes('不存在')) {
+    return { type: 'error', message: `账号不存在，请确认账号是否正确。测试账号：${role === 'student' ? '2021001-2021005' : role === 'investor' ? 'investor' : 'admin'}` };
+  }
+  if (lowerMsg.includes('role') || lowerMsg.includes('角色')) {
+    return { type: 'warning', message: `账号角色不匹配，请确认您选择了正确的登录角色。当前账号 "${account}" 不属于 ${role === 'student' ? '学生' : role === 'investor' ? '投资商' : '管理员'} 角色` };
+  }
+  if (lowerMsg.includes('network') || lowerMsg.includes('网络') || lowerMsg.includes('failed to fetch')) {
+    return { type: 'error', message: '网络连接失败，请检查后端服务是否正常运行（端口 3002）' };
+  }
+  return { type: 'error', message };
+}
+
 export default function Login() {
   const navigate = useNavigate();
-  const { login, init, isAuthenticated, user } = useAuthStore();
+  const login = useAuthStore((s) => s.login);
+  const init = useAuthStore((s) => s.init);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
+  const isInitialized = useAuthStore((s) => s.isInitialized);
   const [selectedRole, setSelectedRole] = useState<UserRole>('student');
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<{ type: 'error' | 'warning' | 'info'; message: string } | null>(null);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    if (!isInitialized) init();
+  }, [isInitialized, init]);
 
   useEffect(() => {
-    if (isAuthenticated && user) {
-      if (user.role === 'student') navigate('/student');
-      else if (user.role === 'investor') navigate('/investor');
-      else if (user.role === 'admin') navigate('/admin');
+    if (isInitialized && isAuthenticated && user) {
+      const routes: Record<string, string> = {
+        student: '/student',
+        investor: '/investor',
+        admin: '/admin',
+      };
+      navigate(routes[user.role] || '/login', { replace: true });
     }
-  }, [isAuthenticated, user, navigate]);
+  }, [isInitialized, isAuthenticated, user, navigate]);
 
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
+    setError(null);
     const acc = role === 'student' ? '2021001' : role === 'investor' ? 'investor' : 'admin';
     const pwd = role === 'student' ? 'student123' : role === 'investor' ? 'invest123' : 'admin123';
     setAccount(acc);
@@ -43,17 +68,30 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!account || !password) {
-      setError('请输入账号和密码');
+    setError(null);
+
+    if (!account.trim()) {
+      setError({ type: 'warning', message: '请输入账号' });
       return;
     }
+    if (!password.trim()) {
+      setError({ type: 'warning', message: '请输入密码' });
+      return;
+    }
+
     setLoading(true);
-    setError('');
     try {
-      const result = await authApi.login({ account, password, role: selectedRole });
+      const result = await authApi.login({ account: account.trim(), password: password.trim(), role: selectedRole });
       login(result.token, result.user);
+      const routes: Record<string, string> = {
+        student: '/student',
+        investor: '/investor',
+        admin: '/admin',
+      };
+      navigate(routes[result.user.role] || '/student', { replace: true });
     } catch (err: any) {
-      setError(err.message || '登录失败');
+      const errMsg = getErrorMessage(err.message || '登录失败，请重试', account, selectedRole);
+      setError(errMsg);
     } finally {
       setLoading(false);
     }
@@ -139,18 +177,40 @@ export default function Login() {
             </div>
 
             {error && (
-              <div className="p-3 rounded-lg bg-vibrant-orange-500/20 border border-vibrant-orange-500/40 text-vibrant-orange-200 text-sm">
-                {error}
+              <div className={`p-3.5 rounded-xl text-sm flex items-start gap-2.5 ${
+                error.type === 'error'
+                  ? 'bg-vibrant-orange-500/20 border border-vibrant-orange-500/40 text-vibrant-orange-200'
+                  : error.type === 'warning'
+                  ? 'bg-yellow-500/20 border border-yellow-500/40 text-yellow-200'
+                  : 'bg-aqua-500/20 border border-aqua-500/40 text-aqua-200'
+              }`}>
+                <AlertCircle size={18} className="shrink-0 mt-0.5" />
+                <div className="leading-relaxed">
+                  <span className="font-semibold block mb-0.5">
+                    {error.type === 'error' ? '登录失败' : error.type === 'warning' ? '温馨提示' : '系统提示'}
+                  </span>
+                  {error.message}
+                </div>
               </div>
             )}
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-aqua-500 to-deep-blue-600 text-white font-semibold shadow-lg hover:shadow-glow-aqua hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              disabled={loading || !isInitialized}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-aqua-500 to-deep-blue-600 text-white font-semibold shadow-lg hover:shadow-glow-aqua hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2"
             >
-              {loading ? '登录中...' : '登 录'}
+              {loading ? (
+                <><Loader2 size={18} className="animate-spin" />登录中...</>
+              ) : !isInitialized ? (
+                <><Loader2 size={18} className="animate-spin" />加载中...</>
+              ) : (
+                '登 录'
+              )}
             </button>
+
+            <p className="text-center text-xs text-white/40 mt-4">
+              登录即表示同意《用户服务协议》和《隐私政策》
+            </p>
           </form>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useAuthStore } from "@/store/auth.ts";
 import Login from "@/pages/Login";
 import StudentHome from "@/pages/student/Home";
@@ -13,59 +13,92 @@ import InvestorAnalytics from "@/pages/investor/Analytics";
 import InvestorRevenue from "@/pages/investor/Revenue";
 import AdminHome from "@/pages/admin/Home";
 import AdminUsers from "@/pages/admin/Users";
+import { Loader2 } from 'lucide-react';
+
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen bg-water-texture-dark flex items-center justify-center">
+      <div className="text-center">
+        <Loader2 size={48} className="text-aqua-400 animate-spin mx-auto mb-4" />
+        <p className="text-aqua-200 font-medium">正在加载...</p>
+      </div>
+    </div>
+  );
+}
 
 function ProtectedRoute({ children, allowedRoles }: { children: JSX.Element; allowedRoles: string[] }) {
-  const { isAuthenticated, user, init } = useAuthStore();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
+  const isInitialized = useAuthStore((s) => s.isInitialized);
+  const init = useAuthStore((s) => s.init);
   const navigate = useNavigate();
 
   useEffect(() => {
-    init();
-  }, [init]);
+    if (!isInitialized) init();
+  }, [isInitialized, init]);
+
+  const checkAndRedirect = useCallback(() => {
+    if (!isInitialized) return;
+    if (!isAuthenticated) {
+      navigate('/login', { replace: true });
+      return;
+    }
+    if (user && !allowedRoles.includes(user.role)) {
+      const routes: Record<string, string> = {
+        student: '/student',
+        investor: '/investor',
+        admin: '/admin',
+      };
+      navigate(routes[user.role] || '/login', { replace: true });
+    }
+  }, [isInitialized, isAuthenticated, user, allowedRoles, navigate]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    } else if (user && !allowedRoles.includes(user.role)) {
-      if (user.role === 'student') navigate('/student');
-      else if (user.role === 'investor') navigate('/investor');
-      else if (user.role === 'admin') navigate('/admin');
-    }
-  }, [isAuthenticated, user, navigate, allowedRoles]);
+    checkAndRedirect();
+  }, [checkAndRedirect]);
 
-  if (!isAuthenticated || !user || !allowedRoles.includes(user.role)) {
-    return null;
-  }
-
+  if (!isInitialized) return <LoadingScreen />;
+  if (!isAuthenticated || !user || !allowedRoles.includes(user.role)) return null;
   return children;
 }
 
 function RoleRedirect() {
-  const { user, init } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const isInitialized = useAuthStore((s) => s.isInitialized);
+  const init = useAuthStore((s) => s.init);
   const navigate = useNavigate();
 
   useEffect(() => {
-    init();
-  }, [init]);
+    if (!isInitialized) init();
+  }, [isInitialized, init]);
 
   useEffect(() => {
-    if (user) {
-      if (user.role === 'student') navigate('/student');
-      else if (user.role === 'investor') navigate('/investor');
-      else if (user.role === 'admin') navigate('/admin');
+    if (!isInitialized) return;
+    if (isAuthenticated && user) {
+      const routes: Record<string, string> = {
+        student: '/student',
+        investor: '/investor',
+        admin: '/admin',
+      };
+      navigate(routes[user.role] || '/login', { replace: true });
     } else {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
-  }, [user, navigate]);
+  }, [isInitialized, isAuthenticated, user, navigate]);
 
-  return null;
+  return <LoadingScreen />;
 }
 
 export default function App() {
-  const { init } = useAuthStore();
+  const isInitialized = useAuthStore((s) => s.isInitialized);
+  const init = useAuthStore((s) => s.init);
 
   useEffect(() => {
     init();
   }, [init]);
+
+  if (!isInitialized) return <LoadingScreen />;
 
   return (
     <Router>

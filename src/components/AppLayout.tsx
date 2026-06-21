@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuthStore } from '@/store/auth.ts';
+import { useAuthShallow } from '@/store/auth.ts';
 import { Home, MapPin, Receipt, Wallet, LayoutDashboard, Cpu, BarChart3, Coins, LogOut, User, Users, Settings } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -32,7 +32,7 @@ const adminNavItems: NavItem[] = [
 export default function AppLayout({ children, role }: { children: ReactNode; role: 'student' | 'investor' | 'admin' }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout } = useAuthStore();
+  const { user, logout } = useAuthShallow((s) => ({ user: s.user, logout: s.logout }));
 
   const navItems = role === 'student' ? studentNavItems : role === 'investor' ? investorNavItems : adminNavItems;
   const title = role === 'student' ? '校园无感用水' : role === 'investor' ? '投资商管理平台' : '系统管理后台';
