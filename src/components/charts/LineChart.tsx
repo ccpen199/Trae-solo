@@ -22,6 +22,7 @@ interface LineChartProps {
   color?: string;
   height?: number;
   showArea?: boolean;
+  showGrid?: boolean;
   yAxisFormatter?: (value: number) => string;
 }
 
@@ -30,6 +31,7 @@ export default function LineChart({
   color = '#1a365d',
   height = 300,
   showArea = false,
+  showGrid = true,
   yAxisFormatter,
 }: LineChartProps) {
   const ChartComponent = showArea ? AreaChart : RechartsLineChart;
@@ -49,7 +51,7 @@ export default function LineChart({
               <stop offset="95%" stopColor={color} stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          {showGrid && <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />}
           <XAxis
             dataKey="name"
             stroke="#94a3b8"
