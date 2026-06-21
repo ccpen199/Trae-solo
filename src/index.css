@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #0A2540;
+  background-color: #F8F7F4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #F8F7F4;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(rgba(10, 37, 64, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 37, 64, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .bg-map-texture {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(10, 37, 64, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255, 107, 53, 0.04) 0%, transparent 40%),
+      linear-gradient(135deg, #E6EDF5 0%, #F5F0E8 100%);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-dark {
+    background: rgba(10, 37, 64, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #0A2540 0%, #FF6B35 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-primary {
+    @apply bg-accent hover:bg-accent-600 text-white font-medium rounded-xl2 px-6 py-3 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply bg-brand hover:bg-brand-600 text-white font-medium rounded-xl2 px-6 py-3 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply border-2 border-brand text-brand hover:bg-brand hover:text-white font-medium rounded-xl2 px-6 py-3 transition-all duration-300;
+  }
+
+  .card-base {
+    @apply bg-warm-surface rounded-3xl2 shadow-card border border-white/60;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #8FAAD1 transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #8FAAD1;
+    border-radius: 3px;
+  }
+}
