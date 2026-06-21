@@ -31,7 +31,7 @@ import {
   RocketOutlined,
 } from '@ant-design/icons';
 import { Footprints, Bike } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import ReactECharts from 'echarts-for-react';
 import dayjs from 'dayjs';
 import { useAppStore } from '@/store';
@@ -116,6 +116,14 @@ const DECORATION_MAP: Record<DecorationLevel, string> = {
   luxury: '豪装',
 };
 
+/** 交通方式中文映射 */
+const TRANSPORT_LABEL: Record<string, string> = {
+  walk: '步行',
+  bike: '骑行',
+  metro: '地铁',
+  drive: '驾车',
+};
+
 /** 生成核验时间线数据 */
 function generateVerifyTimeline(property: Property) {
   const baseTime = dayjs(property.createTime);
@@ -151,16 +159,55 @@ function generateVerifyTimeline(property: Property) {
 export default function PropertyDetail() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const location = useLocation() as {
+    state?: {
+      fromSearch?: boolean;
+      workAddress?: string;
+      transportMode?: string;
+      commuteScore?: number;
+      commuteMinutes?: number;
+    };
+  };
   const { properties, updateProperty } = useAppStore();
 
-  const [workAddress, setWorkAddress] = useState<string>('人民广场');
-  const [commuteCalculated, setCommuteCalculated] = useState<boolean>(true);
+  const [workAddress, setWorkAddress] = useState<string>(location.state?.workAddress || '人民广场');
+  const [commuteCalculated, setCommuteCalculated] = useState<boolean>(!!location.state?.fromSearch);
 
-  /** 当前房源 */
-  const property = useMemo(
+  /** 原始房源（从store中取） */
+  const rawProperty = useMemo(
     () => properties.find(p => p.id === id) || properties[0],
     [properties, id]
   );
+
+  /** 字段兼容规范化：同时支持dataFactory/PropertySearch/types三种命名 */
+  const property = useMemo(() => {
+    if (!rawProperty) return undefined;
+    const r = rawProperty as any;
+    return {
+      ...r,
+      latitude: r.latitude ?? r.geoLocation?.lat ?? r.lat,
+      longitude: r.longitude ?? r.geoLocation?.lng ?? r.lng,
+      buildingArea: r.buildingArea ?? r.area,
+      usableArea: r.usableArea ?? Math.round((r.buildingArea ?? r.area ?? 80) * 0.78),
+      bedrooms: r.bedrooms ?? r.layout?.bedrooms ?? 1,
+      livingRooms: r.livingRooms ?? r.layout?.livingRooms ?? 1,
+      bathrooms: r.bathrooms ?? r.layout?.bathrooms ?? 1,
+      floor: r.floor ?? r.floorInfo?.number ?? r.totalFloor ?? 8,
+      totalFloor: r.totalFloor ?? r.floorInfo?.total ?? 18,
+      depositMonths: r.depositMonths ?? r.depositMonth ?? 1,
+      paymentType: r.paymentType ?? r.payType ?? '押一付三',
+      buildYear: r.buildYear ?? r.constructionYear ?? 2015,
+      images: r.images?.length ? r.images : [
+        `https://picsum.photos/seed/p-${r.id}-1/900/500`,
+        `https://picsum.photos/seed/p-${r.id}-2/900/500`,
+        `https://picsum.photos/seed/p-${r.id}-3/900/500`,
+        `https://picsum.photos/seed/p-${r.id}-4/900/500`,
+      ],
+      title: r.title || r.communityName || `${r.district || '精选'}优质房源`,
+      address: r.address || r.fullAddress || `${r.district || ''}${r.communityName || ''}${r.buildingNo ? r.buildingNo + '号楼' : ''}${r.roomNo || ''}`,
+      propertyNo: r.propertyNo || `FY${String(r.id || '00000000').slice(-8).toUpperCase()}`,
+    } as any;
+  }, [rawProperty]);
 
   if (!property) {
     return (
@@ -172,15 +219,25 @@ export default function PropertyDetail() {
     );
   }
 
-  const triVerify = generateTriVerify(property);
-  const priceIndex = property.priceIndex;
+  /** 三态核验（防崩溃：即使property缺少必要字段也安全） */
+  const triVerify = property ? generateTriVerify(property) : { video: 'unverified' as VerifyState, vr: 'unverified' as VerifyState, onsite: 'unverified' as VerifyState };
+  /** 价格指数：无则用租金/面积做合理估算 */
+  const safeBuildingArea = property?.buildingArea || 80;
+  const safeMonthlyRent = property?.monthlyRent || 5000;
+  const estimatedUnitPrice = Math.round(safeMonthlyRent / safeBuildingArea * 10);
+  const priceIndex = property?.priceIndex ?? {
+    communityAvgPrice: estimatedUnitPrice,
+    areaAvgPrice: Math.round(estimatedUnitPrice * 1.05),
+    districtAvgPrice: Math.round(estimatedUnitPrice * 1.1),
+    yearOnYear: 2.3,
+  };
 
   /** 生成近12个月价格趋势数据 */
   const priceTrendData = useMemo(() => {
     const months: string[] = [];
     const communityPrices: number[] = [];
     const districtPrices: number[] = [];
-    const base = priceIndex?.communityAvgPrice || 120;
+    const base = priceIndex?.communityAvgPrice ?? estimatedUnitPrice;
     for (let i = 11; i >= 0; i--) {
       const month = dayjs().subtract(i, 'month').format('YY/MM');
       months.push(month);
@@ -189,7 +246,7 @@ export default function PropertyDetail() {
       districtPrices.push(Math.round(base * 0.95 + variation * 0.8 + (Math.random() - 0.5) * 5));
     }
     return { months, communityPrices, districtPrices };
-  }, [priceIndex]);
+  }, [priceIndex, estimatedUnitPrice]);
 
   /** ECharts 价格趋势折线图配置 */
   const priceChartOption = {
@@ -265,30 +322,51 @@ export default function PropertyDetail() {
     ],
   };
 
-  /** 价格区间数据 */
+  /** 价格区间数据（NaN保护） */
   const priceRangeData = useMemo(() => {
-    const avg = priceIndex?.communityAvgPrice || 120;
+    const avg = priceIndex?.communityAvgPrice ?? estimatedUnitPrice;
     const min = Math.round(avg * 0.75);
     const max = Math.round(avg * 1.35);
-    const current = Math.round(property.monthlyRent / property.buildingArea * 10);
+    let current = Math.round((property.monthlyRent || safeMonthlyRent) / (property.buildingArea || safeBuildingArea) * 10);
+    if (!Number.isFinite(current) || isNaN(current)) {
+      current = Math.round((min + max) / 2);
+    }
+    current = Math.max(min, Math.min(max, current));
     return { min, max, current, avg };
-  }, [priceIndex, property]);
+  }, [priceIndex, property, estimatedUnitPrice, safeBuildingArea, safeMonthlyRent]);
 
-  /** 模拟通勤数据 */
-  const commuteData = useMemo(() => ({
-    metro: {
-      walkMinutes: property.commuteInfo?.metroWalkTime || 8,
-      stationName: property.commuteInfo?.nearestMetroName || '地铁2号线人民广场站',
-    },
-    bike: {
-      minutes: 12 + Math.round(Math.random() * 15),
-      distance: Number((2.5 + Math.random() * 4).toFixed(1)),
-    },
-    drive: {
-      minutes: 18 + Math.round(Math.random() * 25),
-    },
-    score: Math.round(70 + Math.random() * 25),
-  }), [property]);
+  /** 通勤数据：优先从路由state承接搜索页的真实通勤结果 */
+  const commuteData = useMemo(() => {
+    const fromSearch = location.state?.fromSearch;
+    return {
+      metro: {
+        walkMinutes: fromSearch && location.state?.transportMode === 'metro'
+          ? location.state.commuteMinutes
+          : property?.commuteInfo?.metroWalkTime || 8,
+        stationName: property?.commuteInfo?.nearestMetroName || '地铁2号线人民广场站',
+      },
+      bike: {
+        minutes: fromSearch && location.state?.transportMode === 'bike'
+          ? location.state.commuteMinutes
+          : 12 + Math.round(Math.random() * 15),
+        distance: Number((2.5 + Math.random() * 4).toFixed(1)),
+      },
+      drive: {
+        minutes: fromSearch && location.state?.transportMode === 'drive'
+          ? location.state.commuteMinutes
+          : 18 + Math.round(Math.random() * 25),
+      },
+      walk: {
+        minutes: fromSearch && location.state?.transportMode === 'walk'
+          ? location.state.commuteMinutes
+          : 20 + Math.round(Math.random() * 20),
+      },
+      score: location.state?.commuteScore ?? Math.round(70 + Math.random() * 25),
+      workAddress: location.state?.workAddress,
+      fromSearch,
+      transportMode: location.state?.transportMode,
+    };
+  }, [property, location.state]);
 
   /** 计算通勤综合评分颜色 */
   function getCommuteScoreColor(score: number): string {
@@ -658,6 +736,23 @@ export default function PropertyDetail() {
                 </span>
               }
             >
+              {commuteData.fromSearch && (
+                <div className="mb-4 rounded-lg border border-success-200 bg-gradient-to-r from-success-50 via-brand-50 to-warning-50 px-4 py-3">
+                  <Tag
+                    color="success"
+                    className="!m-0 !px-3 !py-1 !text-sm !font-semibold"
+                    style={{ borderRadius: 6 }}
+                  >
+                    🏢 已承接「{commuteData.workAddress}」
+                    {TRANSPORT_LABEL[commuteData.transportMode || ''] || '搜索'}
+                    搜索条件 · 综合得分
+                    <span className="ml-1 font-mono text-base font-bold" style={{ color: getCommuteScoreColor(commuteData.score) }}>
+                      {commuteData.score}
+                    </span>
+                    分
+                  </Tag>
+                </div>
+              )}
               <div className="mb-4 flex gap-2">
                 <Input
                   size="large"

@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
+  Alert,
+  Avatar,
   Button,
   Card,
   Col,
@@ -7,11 +9,12 @@ import {
   Form,
   Image,
   Input,
+  Modal,
+  Result,
   Row,
   Space,
   Tag,
-  Avatar,
-  Result,
+  Tooltip,
   message,
 } from 'antd';
 import type { EChartsOption } from 'echarts';
@@ -417,10 +420,24 @@ export default function AuditDetail() {
         action === 'approve' ? 'approved' : 'rejected';
 
       setAuditStatus(application.id, targetStatus, values.remark);
-      message.success(action === 'approve' ? '审核通过成功' : '驳回成功');
-      setTimeout(() => navigate('/landlord/audit'), 600);
+
+      const msgKey = `audit-${action}-${Date.now()}`;
+      const successText =
+        action === 'approve'
+          ? '✅ 审核通过成功 · 系统已写入审计日志 · 即将返回列表...'
+          : '🚫 驳回成功 · 复核记录已生成 · 房东将收到重新提交通知 · 即将返回列表...';
+
+      message.loading({ content: '正在提交审核结果...', key: msgKey, duration: 0.4 });
+      setTimeout(() => {
+        message.success({ content: successText, key: msgKey, duration: 0.6 });
+      }, 400);
+
+      setTimeout(() => {
+        form.resetFields();
+        navigate('/landlord/audit');
+      }, 1200);
     } catch {
-      // 校验未通过
+      message.warning('请填写审核意见（必填）');
     } finally {
       setSubmitting(null);
     }
@@ -452,6 +469,33 @@ export default function AuditDetail() {
   })();
 
   const isFinal = application.status === 'approved' || application.status === 'rejected';
+
+  /** 产权核验状态 */
+  const propertyVerifyResult = application.propertyVerifyResult ?? { status: 'pending' as const };
+  /** 人脸核验状态 */
+  const faceVerifyResult = application.faceVerifyResult ?? { status: 'pending' as const };
+
+  /** 产权核验状态文字映射 */
+  const propertyStatusText: Record<string, string> = {
+    passed: '已通过',
+    failed: '未通过',
+    processing: '处理中',
+    pending: '待核验',
+  };
+  /** 人脸核验状态文字映射 */
+  const faceStatusText: Record<string, string> = {
+    passed: '比对通过',
+    failed: '比对失败',
+    pending: '待比对',
+  };
+
+  /** 是否可以通过审核：前置核验全部通过 */
+  const canApprove =
+    !isFinal &&
+    propertyVerifyResult.status === 'passed' &&
+    faceVerifyResult.status === 'passed';
+  /** 是否可以驳回：只要不是最终状态即可 */
+  const canReject = !isFinal;
 
   return (
     <div className="animate-fade-in-up" style={{ padding: 24 }}>
@@ -1096,6 +1140,49 @@ export default function AuditDetail() {
             />
           </Form.Item>
 
+          {/* 前置核验警告横幅 */}
+          {!isFinal &&
+            (propertyVerifyResult.status !== 'passed' ||
+              faceVerifyResult.status !== 'passed') && (
+              <div style={{ marginBottom: 16 }}>
+                {propertyVerifyResult.status !== 'passed' &&
+                faceVerifyResult.status !== 'passed' ? (
+                  <Alert
+                    type="warning"
+                    showIcon
+                    message={
+                      <Space direction="vertical" size={2}>
+                        <div>
+                          ⚠️ 产权核验未完成（
+                          {propertyStatusText[propertyVerifyResult.status] ?? '待核验'}）
+                        </div>
+                        <div>
+                          ⚠️ 人脸活体比对未完成（
+                          {faceStatusText[faceVerifyResult.status] ?? '待比对'}）
+                        </div>
+                      </Space>
+                    }
+                  />
+                ) : propertyVerifyResult.status !== 'passed' ? (
+                  <Alert
+                    type="warning"
+                    showIcon
+                    message={`⚠️ 产权核验未完成 · 当前状态：${
+                      propertyStatusText[propertyVerifyResult.status] ?? '待核验'
+                    }`}
+                  />
+                ) : (
+                  <Alert
+                    type="warning"
+                    showIcon
+                    message={`⚠️ 人脸活体比对未完成 · 当前状态：${
+                      faceStatusText[faceVerifyResult.status] ?? '待比对'
+                    }`}
+                  />
+                )}
+              </div>
+            )}
+
           <div
             style={{
               display: 'flex',
@@ -1119,26 +1206,43 @@ export default function AuditDetail() {
                   danger
                   icon={<CloseCircleFilled />}
                   loading={submitting === 'reject'}
-                  onClick={() => handleAudit('reject')}
+                  disabled={!canReject}
+                  onClick={() =>
+                    Modal.confirm({
+                      title: '确认驳回该申请？',
+                      content:
+                        '驳回后将生成复核记录，房东将收到重新提交通知。请确认已填写驳回理由。',
+                      okText: '确认驳回',
+                      okButtonProps: { danger: true },
+                      cancelText: '取消',
+                      onOk: () => handleAudit('reject'),
+                    })
+                  }
                   style={{ paddingInline: 28, fontWeight: 600 }}
                 >
                   驳回申请
                 </Button>
-                <Button
-                  type="primary"
-                  size="large"
-                  icon={<CheckCircleFilled />}
-                  loading={submitting === 'approve'}
-                  onClick={() => handleAudit('approve')}
-                  style={{
-                    background: '#00A86B',
-                    borderColor: '#00A86B',
-                    paddingInline: 28,
-                    fontWeight: 600,
-                  }}
+                <Tooltip
+                  title={canApprove ? '' : '前置核验未完成，请等待核验通过后再审批'}
+                  placement="top"
                 >
-                  通过审核
-                </Button>
+                  <Button
+                    type="primary"
+                    size="large"
+                    icon={<CheckCircleFilled />}
+                    loading={submitting === 'approve'}
+                    disabled={!canApprove}
+                    onClick={() => handleAudit('approve')}
+                    style={{
+                      background: '#00A86B',
+                      borderColor: '#00A86B',
+                      paddingInline: 28,
+                      fontWeight: 600,
+                    }}
+                  >
+                    通过审核
+                  </Button>
+                </Tooltip>
               </>
             )}
           </div>

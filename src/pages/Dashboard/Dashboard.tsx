@@ -57,6 +57,19 @@ export default function Dashboard() {
   /** 热力图层切换状态 */
   const [heatmapLayer, setHeatmapLayer] = useState<HeatmapLayer>('property');
 
+  /** 生成椭圆环线坐标（模拟上海环形路） */
+  function generateEllipseCoords(cx: number, cy: number, rx: number, ry: number, n = 80): [number, number][] {
+    const arr: [number, number][] = [];
+    for (let i = 0; i <= n; i++) {
+      const t = (i / n) * Math.PI * 2;
+      arr.push([
+        Number((cx + Math.cos(t) * rx + Math.sin(t * 2) * rx * 0.05).toFixed(5)),
+        Number((cy + Math.sin(t) * ry + Math.cos(t * 3) * ry * 0.04).toFixed(5)),
+      ]);
+    }
+    return arr;
+  }
+
   /** 从全局 store 取数 */
   const {
     dashboardMetrics,
@@ -119,9 +132,9 @@ export default function Dashboard() {
   /** 上海地图热力散点图配置 */
   const heatmapOption: EChartsOption = useMemo(() => {
     const filteredPoints = heatmapPoints.filter((p) => {
-      if (heatmapLayer === 'property') return p.category === 'property';
-      if (heatmapLayer === 'contract') return p.category === 'contract';
-      return p.category === 'property';
+      if (heatmapLayer === 'property') return p.category === 'property' || p.type === 'property';
+      if (heatmapLayer === 'contract') return p.category === 'contract' || p.type === 'contract';
+      return p.category === 'rent' || p.type === 'rent' || p.category === 'price' || p.type === 'price_index';
     });
 
     const scatterData = filteredPoints.map((p) => [
@@ -182,8 +195,11 @@ export default function Dashboard() {
         right: 16,
         bottom: 16,
         min: 0,
-        max: 100,
-        text: ['高', '低'],
+        max: heatmapLayer === 'property' ? 100 : heatmapLayer === 'contract' ? 80 : 60,
+        text: [
+          heatmapLayer === 'property' ? '密' : heatmapLayer === 'contract' ? '热' : '高',
+          heatmapLayer === 'property' ? '疏' : heatmapLayer === 'contract' ? '冷' : '低',
+        ],
         textStyle: {
           color: '#4A4F5A',
           fontSize: 12,
@@ -198,6 +214,54 @@ export default function Dashboard() {
         },
       },
       series: [
+        {
+          name: heatmapLayer === 'property' ? '房源密度' : heatmapLayer === 'contract' ? '成交密度' : '租金梯度',
+          type: 'heatmap',
+          coordinateSystem: 'cartesian2d',
+          data: filteredPoints.map((p) => [
+            p.lng,
+            p.lat,
+            heatmapLayer === 'property'
+              ? (p.count || 1) * 10
+              : heatmapLayer === 'contract'
+              ? (p.weight || 50) * 0.8 + (p.count || 0) * 5
+              : Math.abs((p.value || 80) - 60) * 1.5,
+          ]),
+          pointSize: 28,
+          blurSize: 42,
+          minOpacity: 0.18,
+          maxOpacity: 0.92,
+          gradientColors: [
+            [0, heatmapLayer === 'rent' ? 'rgba(212, 165, 116, 0.05)' : heatmapLayer === 'contract' ? 'rgba(0, 168, 107, 0.05)' : 'rgba(15, 76, 129, 0.05)'],
+            [0.25, heatmapLayer === 'rent' ? 'rgba(255, 107, 53, 0.35)' : heatmapLayer === 'contract' ? 'rgba(105, 203, 159, 0.45)' : 'rgba(111, 165, 213, 0.45)'],
+            [0.5, heatmapLayer === 'rent' ? 'rgba(230, 57, 70, 0.65)' : heatmapLayer === 'contract' ? 'rgba(0, 168, 107, 0.75)' : 'rgba(15, 76, 129, 0.75)'],
+            [0.75, heatmapLayer === 'rent' ? 'rgba(212, 165, 116, 0.85)' : heatmapLayer === 'contract' ? 'rgba(15, 76, 129, 0.85)' : 'rgba(255, 107, 53, 0.85)'],
+            [1, heatmapLayer === 'rent' ? 'rgba(230, 57, 70, 1)' : heatmapLayer === 'contract' ? 'rgba(15, 76, 129, 1)' : 'rgba(230, 57, 70, 1)'],
+          ],
+          z: 1,
+        },
+        {
+          name: '上海主要环线',
+          type: 'lines',
+          coordinateSystem: 'cartesian2d',
+          polyline: true,
+          effect: { show: false },
+          lineStyle: {
+            color: '#BFC7D1',
+            width: 2,
+            opacity: 0.35,
+            type: 'dashed',
+          },
+          silent: true,
+          data: [
+            { coords: generateEllipseCoords(121.4737, 31.2304, 0.032, 0.022) },
+            { coords: generateEllipseCoords(121.4737, 31.2304, 0.062, 0.045) },
+            { coords: generateEllipseCoords(121.4737, 31.2304, 0.095, 0.072) },
+            { coords: [[120.92, 31.2304], [121.92, 31.2304]] },
+            { coords: [[121.4737, 30.86], [121.4737, 31.62]] },
+          ],
+          z: 0,
+        },
         {
           name: '热力分布',
           type: 'effectScatter',
@@ -246,7 +310,12 @@ export default function Dashboard() {
                 : COLORS.gold,
           },
           label: {
-            show: false,
+            show: true,
+            formatter: (p: any) => p.name?.slice(0, 4) || '',
+            position: 'top',
+            color: '#4A4F5A',
+            fontSize: 10,
+            fontWeight: 600,
           },
           emphasis: {
             scale: true,
@@ -748,10 +817,10 @@ export default function Dashboard() {
               ]}
             />
           </div>
-          <div className="relative flex-1" style={{ minHeight: 420 }}>
+          <div className="relative flex-1" style={{ minHeight: 460 }}>
             <ReactECharts
               option={heatmapOption}
-              style={{ width: '100%', height: '100%', minHeight: 420 }}
+              style={{ width: '100%', height: '100%', minHeight: 460 }}
               notMerge={true}
               lazyUpdate={false}
             />

@@ -777,7 +777,15 @@ export default function PropertySearch() {
                         className="h-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-cardHover"
                         bodyStyle={{ padding: 0 }}
                         styles={{ body: { display: 'flex', flexDirection: 'column', height: '100%' } }}
-                        onClick={() => navigate(`/property/detail/${p.id}`)}
+                        onClick={() => navigate(`/property/detail/${p.id}`, {
+                          state: {
+                            fromSearch: true,
+                            workAddress,
+                            transportMode,
+                            commuteScore: p.commuteScore,
+                            commuteMinutes: p.commuteMinutes,
+                          }
+                        })}
                       >
                         {/* 缩略图 */}
                         <div className="relative">
@@ -880,7 +888,15 @@ export default function PropertySearch() {
                               icon={<EyeOutlined />}
                               onClick={e => {
                                 e.stopPropagation();
-                                navigate(`/property/detail/${p.id}`);
+                                navigate(`/property/detail/${p.id}`, {
+                                  state: {
+                                    fromSearch: true,
+                                    workAddress,
+                                    transportMode,
+                                    commuteScore: p.commuteScore,
+                                    commuteMinutes: p.commuteMinutes,
+                                  }
+                                });
                               }}
                             >
                               查看详情
