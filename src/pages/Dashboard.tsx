@@ -89,6 +89,7 @@ import {
   deviceLockRecords,
   seatMapDataList,
   roomDeviceMaps,
+  mallOrders,
 } from '@/data/mockData';
 
 const revenueDistribution = [
@@ -752,33 +753,33 @@ export default function Dashboard() {
                   <div className="flex items-center gap-2">
                     <SlidersHorizontal className="w-4 h-4 text-cyber-400" />
                     <span className="text-sm font-semibold text-white">智能订座筛选承接结果</span>
-                    <span className="px-2 py-0.5 rounded-full bg-neon-green/20 text-neon-green text-xs">匹配到 5 个座位</span>
+                    <span className="px-2 py-0.5 rounded-full bg-neon-green/20 text-neon-green text-xs">匹配到 {(() => { const f = seatMapDataList.filter(s => s.deviceSpec.includes('RTX4090') && s.networkLatency < 20 && s.status === 'available'); return Math.min(f.length, 7); })()} 个座位</span>
                   </div>
                 </div>
                 <div className="mb-2.5 flex flex-wrap gap-1">
                   <span className="px-1.5 py-0.5 rounded bg-cyber-500/20 text-cyber-400 text-[10px]">GPU:RTX4090</span>
                   <span className="px-1.5 py-0.5 rounded bg-neon-green/20 text-neon-green text-[10px]">延迟:超低&lt;20ms</span>
-                  <span className="px-1.5 py-0.5 rounded bg-neon-purple/20 text-neon-purple text-[10px]">时段:今晚19-22</span>
-                  <span className="px-1.5 py-0.5 rounded bg-neon-orange/20 text-neon-orange text-[10px]">240Hz</span>
+                  <span className="px-1.5 py-0.5 rounded bg-neon-purple/20 text-neon-purple text-[10px]">状态:空闲</span>
                 </div>
                 <div className="grid grid-cols-7 gap-1.5 mb-2">
-                  {[
-                    { id: 'A1-1', available: true },
-                    { id: 'A1-2', available: true },
-                    { id: 'B2-3', available: true },
-                    { id: 'C3-1', available: true },
-                    { id: 'C3-2', available: true },
-                    { id: 'D1-5', available: false },
-                    { id: 'VIP-2', available: false },
-                  ].map(seat => (
-                    <div
-                      key={seat.id}
-                      className={`p-1.5 rounded-lg text-center ${seat.available ? 'bg-cyber-500/10 border border-cyber-500/30' : 'bg-dark-800 border border-dark-700'}`}
-                    >
-                      <p className={`text-xs font-bold ${seat.available ? 'text-cyber-400' : 'text-dark-500'}`}>{seat.id}</p>
-                      <p className={`text-[9px] mt-0.5 ${seat.available ? 'text-neon-green' : 'text-dark-600'}`}>{seat.available ? '空闲' : '已占'}</p>
-                    </div>
-                  ))}
+                  {seatMapDataList
+                    .filter(s => s.deviceSpec.includes('RTX4090') && s.networkLatency < 20 && s.status === 'available')
+                    .slice(0, 7)
+                    .map(seat => {
+                      const seatData = seats.find(s => s.id === seat.id);
+                      const storeName = seatData ? stores.find(s => s.id === seatData.storeId)?.name?.split('·')[1] || '' : '';
+                      return (
+                        <div
+                          key={seat.id}
+                          className="p-1.5 rounded-lg text-center bg-cyber-500/10 border border-cyber-500/30"
+                        >
+                          <p className="text-xs font-bold text-cyber-400">{seat.seatNumber}</p>
+                          <p className="text-[9px] mt-0.5 text-neon-green">空闲</p>
+                          <p className="text-[8px] text-dark-500 truncate">{storeName}</p>
+                          <p className="text-[8px] text-dark-600 truncate">{seat.area}·{seat.networkLatency}ms</p>
+                        </div>
+                      );
+                    })}
                 </div>
                 <a href="#/booking" className="text-xs text-cyber-400 hover:text-cyber-300 flex items-center justify-end gap-0.5">
                   去订座页设置筛选条件 <ChevronRight className="w-3 h-3" />
@@ -788,29 +789,41 @@ export default function Dashboard() {
                 {/* 酒店预订 */}
                 {recentHotelBookings.map((hb, idx) => {
                   const lockActions = deviceLockRecords.filter(r => r.hotelBookingId === hb.id);
-                  const lockCount = lockActions.filter(r => r.action === 'lock').length;
-                  const unlockCount = lockActions.filter(r => r.action === 'unlock').length;
-                  const recentLockRecords = lockActions.slice(-3);
+                  const deviceLockMap = new Map<string, string>();
+                  lockActions.forEach(r => {
+                    if (r.action === 'lock' || r.action === 'extend') deviceLockMap.set(r.deviceId, 'locked');
+                    else if (r.action === 'unlock' || r.action === 'force_unlock') deviceLockMap.set(r.deviceId, 'unlocked');
+                  });
+                  const currentLockCount = Array.from(deviceLockMap.values()).filter(v => v === 'locked').length;
+                  const totalUnlockCount = Array.from(deviceLockMap.values()).filter(v => v === 'unlocked').length;
                   let lockStatusNode;
-                  if (hb.status === 'checked_in' || hb.status === 'confirmed') {
+                  if (hb.status === 'checked_in') {
                     lockStatusNode = (
                       <span className="flex items-center gap-1 text-neon-green">
-                        <Lock className="w-3 h-3" /> {lockCount}台锁定
+                        <Lock className="w-3 h-3" /> {currentLockCount}台锁定中
+                      </span>
+                    );
+                  } else if (hb.status === 'confirmed') {
+                    lockStatusNode = (
+                      <span className="flex items-center gap-1 text-neon-green">
+                        <Lock className="w-3 h-3" /> {currentLockCount}台已锁定
                       </span>
                     );
                   } else if (hb.status === 'checked_out') {
                     lockStatusNode = (
                       <span className="flex items-center gap-1 text-dark-400">
-                        <Lock className="w-3 h-3" /> {lockCount}锁/{unlockCount}解
+                        <Unlock className="w-3 h-3" /> 退房时已解锁{totalUnlockCount}台归档
                       </span>
                     );
                   } else {
                     lockStatusNode = (
                       <span className="flex items-center gap-1 text-neon-orange">
-                        <Unlock className="w-3 h-3" /> 待锁定
+                        <Unlock className="w-3 h-3" /> 待确认·待锁定
                       </span>
                     );
                   }
+                  const statusLabel = hb.status === 'checked_in' ? '已入住' : hb.status === 'confirmed' ? '已确认·待入住' : hb.status === 'checked_out' ? '已退房' : '待确认';
+                  const statusColor = hb.status === 'checked_in' ? 'bg-neon-green/20 text-neon-green' : hb.status === 'confirmed' ? 'bg-cyber-500/20 text-cyber-400' : hb.status === 'checked_out' ? 'bg-dark-600 text-dark-300' : 'bg-neon-orange/20 text-neon-orange';
                   return (
                     <div
                       key={hb.id}
@@ -827,39 +840,40 @@ export default function Dashboard() {
                         <span className="text-dark-400">{hb.guestName}·{hb.nights}晚</span>
                         <div className="flex items-center gap-2">
                           {lockStatusNode}
-                          <span className={`px-1.5 py-0.5 rounded-full ${
-                            hb.status === 'checked_in' ? 'bg-neon-green/20 text-neon-green' :
-                            hb.status === 'confirmed' ? 'bg-cyber-500/20 text-cyber-400' :
-                            hb.status === 'checked_out' ? 'bg-dark-600 text-dark-300' :
-                            'bg-neon-orange/20 text-neon-orange'
-                          }`}>
-                            {hb.status === 'checked_in' ? '已入住' : hb.status === 'confirmed' ? '已确认' : hb.status === 'checked_out' ? '已退房' : '待确认'}
+                          <span className={`px-1.5 py-0.5 rounded-full ${statusColor}`}>
+                            {statusLabel}
                           </span>
                         </div>
                       </div>
-                      {recentLockRecords.length > 0 && (
-                        <div className="pt-1.5 border-t border-dark-700/50 text-[10px] text-dark-500 flex flex-wrap gap-x-2 gap-y-0.5">
-                          {recentLockRecords.map((r, i) => (
+                      <div className="pt-1.5 border-t border-dark-700/50 text-[10px] text-dark-500">
+                        <p className="text-dark-600 mb-1">📋 预订→锁定→入住→[续住]→退房解锁</p>
+                        <div className="flex flex-wrap gap-x-2 gap-y-0.5">
+                          {lockActions.length === 0 && (
+                            <span className="text-dark-600">暂无业务记录</span>
+                          )}
+                          {lockActions.map((r, i) => (
                             <span key={i}>
-                              [{r.createdAt.split('T')[1].slice(0, 5)}] {r.operatorName}-{r.action === 'lock' ? '锁定' : '解锁'}
+                              [{r.createdAt.split('T')[1].slice(0, 5)}] {r.operatorName}{r.action === 'lock' ? '锁定' : r.action === 'extend' ? '续住' : r.action === 'force_unlock' ? '强制解锁' : '解锁'}
+                              {r.action === 'lock' && i < lockActions.length - 1 ? '→' : ''}
                             </span>
                           ))}
+                          {hb.status === 'checked_out' && <span>→ [退房时解锁归档]</span>}
                         </div>
-                      )}
+                      </div>
                     </div>
                   );
                 })}
                 {/* 座位订单 */}
                 {recentSeatOrders.map((order, idx) => {
-                  const seatObj = seats.find(s => s.id === order.seatId) || seats[idx];
-                  const seatStore = stores.find(s => s.id === seatObj.storeId) || stores[0];
-                  const seatRoom = rooms.find(r => r.storeId === seatObj.storeId) || rooms[0];
+                  const seatObj = seats.find(s => s.id === order.seatId);
+                  const seatStore = seatObj ? stores.find(s => s.id === seatObj.storeId) : null;
+                  const seatDevice = seatObj ? devices.find(d => d.id === seatObj.deviceId) : null;
                   const seatInfo = getSeatDevice(order.seatId);
-                  const seatDev = devices.find(d => d.id === seatObj.deviceId) || devices[idx];
-                  const cpuModel = seatDev?.specs?.cpu || 'Intel Core i7-14700K';
-                  const refreshRate = seatDev?.type === 'monitor' ? (seatDev?.specs?.refreshRate || 144) : 240;
-                  const storeShort = seatStore.name.split('·')[1] || seatStore.name;
-                  const roomShort = seatRoom?.name?.split('·')[0] || seatRoom?.name || '标准区';
+                  const gpuShort = seatDevice?.specs?.gpu?.replace('NVIDIA GeForce ', '') || 'RTX4070';
+                  const cpuModel = seatDevice?.specs?.cpu || '';
+                  const refreshRate = seatDevice?.specs?.refreshRate || 144;
+                  const storeShort = seatStore?.name?.split('·')[1] || seatStore?.name || '未知门店';
+                  const areaLabel = seatObj?.area || '';
                   return (
                     <div
                       key={order.id}
@@ -868,14 +882,15 @@ export default function Dashboard() {
                       <div className="flex items-start justify-between mb-1.5">
                         <div className="flex items-center gap-1.5">
                           <span className="px-1.5 py-0.5 rounded bg-cyber-500/20 text-cyber-400 text-[10px] font-medium">订座</span>
-                          <span className="text-sm font-medium text-white">{seatObj.seatNumber}</span>
-                          <span className="text-[10px] text-dark-500">{storeShort}·{roomShort}</span>
+                          <span className="text-sm font-medium text-white">{seatObj?.seatNumber || order.seatNumber}</span>
+                          <span className="text-[10px] text-dark-500">{storeShort}·{areaLabel}</span>
                         </div>
                         <p className="text-xs font-medium text-neon-green">¥{order.totalAmount}</p>
                       </div>
                       <div className="flex items-center justify-between text-xs mb-1.5">
                         <div className="flex items-center gap-2">
                           <span className="text-dark-400">{order.userName}</span>
+                          <span className="text-cyber-400 text-[10px]">{gpuShort}</span>
                           <span className={`flex items-center gap-0.5 ${seatInfo.networkLatency < 20 ? 'text-neon-green' : 'text-neon-orange'}`}>
                             <Wifi className="w-3 h-3" /> {seatInfo.networkLatency}ms
                           </span>
@@ -890,12 +905,12 @@ export default function Dashboard() {
                       </div>
                       <div className="pt-1.5 border-t border-dark-700/50 text-[10px] text-dark-500 flex items-center gap-2">
                         <span className="flex items-center gap-0.5">
-                          <Cpu className="w-3 h-3 text-dark-600" /> {cpuModel.split(' ').slice(-2).join(' ')}
+                          <Cpu className="w-3 h-3 text-dark-600" /> {cpuModel || seatInfo.deviceSpec}
                         </span>
                         <span>·</span>
                         <span>{refreshRate}Hz</span>
                         <span>·</span>
-                        <span>{seatObj.area}</span>
+                        <span>{seatDevice?.model || ''}</span>
                       </div>
                     </div>
                   );
@@ -938,31 +953,19 @@ export default function Dashboard() {
               <div className="space-y-2 max-h-[350px] overflow-y-auto">
                 {topMembers.map((member, index) => {
                   const isExpanded = expandedMemberId === member.id;
-                  const hash = (index * 3) % pointTransactions.length;
-                  const mPoints = [
-                    pointTransactions[hash % pointTransactions.length],
-                    pointTransactions[(hash + 2) % pointTransactions.length],
-                    pointTransactions[(hash + 4) % pointTransactions.length],
-                  ].filter(Boolean);
-                  if (mPoints.length >= 3) {
-                    const hasEarn = mPoints.some(p => p.type === 'earn');
-                    const hasSpend = mPoints.some(p => p.type === 'spend');
-                    const hasAdjust = mPoints.some(p => p.type === 'adjust');
-                    if (!hasEarn) {
-                      const earnPt = pointTransactions.find(p => p.type === 'earn');
-                      if (earnPt) mPoints[0] = earnPt;
-                    }
-                    if (!hasSpend) {
-                      const spendPt = pointTransactions.find(p => p.type === 'spend');
-                      if (spendPt) mPoints[1] = spendPt;
-                    }
-                    if (!hasAdjust) {
-                      const adjustPt = pointTransactions.find(p => p.type === 'adjust');
-                      if (adjustPt) mPoints[2] = adjustPt;
-                    }
+                  let mPoints = pointTransactions.filter(p => p.memberId === member.id).slice(0, 3);
+                  let mExchanges = exchangeRecords.filter(e => e.memberId === member.id).slice(0, 2);
+                  if (mPoints.length === 0) {
+                    mPoints = [
+                      { id: 'demo-pt-' + member.id, type: 'earn', points: 200, balance: member.points, description: '消费获得积分', source: '订座消费', memberId: member.id, memberName: member.name, createdAt: new Date().toISOString() },
+                      { id: 'demo-pt2-' + member.id, type: 'spend', points: -50, balance: member.points - 50, description: '权益兑换扣减', source: '积分商城', memberId: member.id, memberName: member.name, createdAt: new Date().toISOString() },
+                    ];
                   }
-                  const exchHash = (index * 2) % exchangeRecords.length;
-                  const mExchanges = [exchangeRecords[exchHash], exchangeRecords[(exchHash + 1) % exchangeRecords.length]].filter(Boolean);
+                  if (mExchanges.length === 0) {
+                    mExchanges = [
+                      { id: 'demo-ex-' + member.id, memberId: member.id, memberName: member.name, productId: 'prod-demo', productName: '免费饮料券', productType: 'food' as const, pointsUsed: 100, quantity: 1, status: 'redeemed' as const, fulfillmentType: 'virtual' as const, createdAt: new Date().toISOString(), auditTrail: [{ status: 'redeemed', timestamp: new Date().toISOString(), operator: '系统', note: '自动核销' }] },
+                    ];
+                  }
                   return (
                     <div key={member.id} className="rounded-lg bg-dark-900/50 overflow-hidden">
                       <div
@@ -990,71 +993,64 @@ export default function Dashboard() {
                       </div>
                       {isExpanded && (
                         <div className="px-2.5 pb-2.5 space-y-2 border-t border-dark-700 pt-2">
-                          {mPoints.length > 0 && (
-                            <div>
-                              <p className="text-[10px] font-medium text-neon-green flex items-center gap-1 mb-1.5">
-                                <Coins className="w-3 h-3" /> 积分累计流水
-                              </p>
-                              <div className="space-y-1">
-                                {mPoints.slice(0, 3).map(pt => (
-                                  <div key={pt.id + '-' + Math.random()} className="flex justify-between text-[10px] p-1.5 rounded bg-dark-800/80">
-                                    <div className="flex items-center gap-1.5">
-                                      <span className={`px-1 rounded ${pt.type === 'earn' ? 'bg-neon-green/20 text-neon-green' : pt.type === 'spend' ? 'bg-neon-orange/20 text-neon-orange' : 'bg-dark-600 text-dark-300'}`}>
-                                        {pt.type === 'earn' ? '+' : pt.type === 'spend' ? '-' : '±'}
-                                      </span>
-                                      <span className="text-dark-300 truncate max-w-[120px]">{pt.description}</span>
-                                    </div>
-                                    <span className={`font-medium whitespace-nowrap ${pt.type === 'earn' ? 'text-neon-green' : pt.type === 'spend' ? 'text-neon-orange' : 'text-dark-300'}`}>
-                                      {pt.type === 'earn' ? '+' : ''}{pt.points} = {pt.balance}
+                          <div>
+                            <p className="text-[10px] font-medium text-neon-green flex items-center gap-1 mb-1.5">
+                              <Coins className="w-3 h-3" /> 积分累计流水
+                            </p>
+                            <div className="space-y-1">
+                              {mPoints.slice(0, 3).map(pt => (
+                                <div key={pt.id} className="flex justify-between text-[10px] p-1.5 rounded bg-dark-800/80">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={`px-1 rounded ${pt.type === 'earn' ? 'bg-neon-green/20 text-neon-green' : pt.type === 'spend' ? 'bg-neon-orange/20 text-neon-orange' : 'bg-dark-600 text-dark-300'}`}>
+                                      {pt.type === 'earn' ? '+' : pt.type === 'spend' ? '-' : '±'}
                                     </span>
+                                    <span className="text-dark-300 truncate max-w-[120px]">{pt.description}</span>
                                   </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          {mExchanges.length > 0 && (
-                            <div>
-                              <p className="text-[10px] font-medium text-neon-orange flex items-center gap-1 mb-1.5">
-                                <CalendarCheck className="w-3 h-3" /> 权益核销待复查
-                              </p>
-                              {mExchanges.slice(0, 2).map(ex => (
-                                <div key={ex.id} className="text-[10px] p-1.5 rounded bg-dark-800/80 space-y-1.5">
-                                  <div className="flex justify-between items-center">
-                                    <div>
-                                      <span className="text-white font-medium">{ex.productName}</span>
-                                      <span className="text-dark-500 ml-1">×{ex.quantity}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                      <span className="px-1.5 py-0.5 rounded bg-dark-700 text-dark-300 font-mono">
-                                        {ex.redemptionCode || 'EX-0000'}
-                                      </span>
-                                      <span className={`px-1 rounded ${
-                                        ex.status === 'confirmed' || ex.status === 'fulfilled' ? 'bg-cyber-500/20 text-cyber-400' :
-                                        ex.status === 'redeemed' ? 'bg-neon-green/20 text-neon-green' :
-                                        'bg-neon-orange/20 text-neon-orange'
-                                      }`}>
-                                        {ex.status === 'confirmed' ? '待核销' : ex.status === 'fulfilled' ? '备货中' : ex.status === 'redeemed' ? '已核销' : '已申请'}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  {ex.auditTrail && ex.auditTrail.length > 0 && (
-                                    <div className="pt-1 border-t border-dark-700/50 space-y-0.5">
-                                      <p className="text-dark-600 text-[9px]">审核轨迹：</p>
-                                      {ex.auditTrail.slice(-3).map((trail, ti) => (
-                                        <div key={ti} className="flex items-center gap-1 text-[9px] text-dark-500">
-                                          <span className="text-dark-600">[{trail.timestamp ? (new Date(trail.timestamp).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'})) : '--:--'}]</span>
-                                          <span className={`px-1 rounded ${trail.status === 'redeemed' ? 'bg-neon-green/10 text-neon-green' : trail.status === 'confirmed' ? 'bg-cyber-500/10 text-cyber-400' : trail.status === 'fulfilled' ? 'bg-neon-purple/10 text-neon-purple' : 'bg-dark-700 text-dark-400'}`}>
-                                            {trail.status === 'pending' ? '申请' : trail.status === 'confirmed' ? '确认' : trail.status === 'fulfilled' ? '备货' : trail.status === 'redeemed' ? '核销' : trail.status}
-                                          </span>
-                                          <span className="text-dark-400">{trail.operator || '系统'}</span>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
+                                  <span className={`font-medium whitespace-nowrap ${pt.type === 'earn' ? 'text-neon-green' : pt.type === 'spend' ? 'text-neon-orange' : 'text-dark-300'}`}>
+                                    {pt.type === 'earn' ? '+' : ''}{pt.points} = {pt.balance}
+                                  </span>
                                 </div>
                               ))}
                             </div>
-                          )}
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-medium text-neon-orange flex items-center gap-1 mb-1.5">
+                              <CalendarCheck className="w-3 h-3" /> 权益核销·履约台账
+                            </p>
+                            {mExchanges.slice(0, 2).map(ex => (
+                              <div key={ex.id} className="text-[10px] p-1.5 rounded bg-dark-800/80 space-y-1.5">
+                                <div className="flex justify-between items-center">
+                                  <div>
+                                    <span className="text-white font-medium">{ex.productName}</span>
+                                    <span className="text-dark-500 ml-1">×{ex.quantity}</span>
+                                    <span className="text-dark-500 ml-1">{ex.pointsUsed}积分</span>
+                                  </div>
+                                  <span className={`px-1 rounded ${
+                                    ex.status === 'confirmed' || ex.status === 'fulfilled' ? 'bg-cyber-500/20 text-cyber-400' :
+                                    ex.status === 'redeemed' ? 'bg-neon-green/20 text-neon-green' :
+                                    'bg-neon-orange/20 text-neon-orange'
+                                  }`}>
+                                    {ex.status === 'confirmed' ? '待核销' : ex.status === 'fulfilled' ? '备货中' : ex.status === 'redeemed' ? '已核销' : '已申请'}
+                                  </span>
+                                </div>
+                                {ex.auditTrail && ex.auditTrail.length > 0 && (
+                                  <div className="pt-1 border-t border-dark-700/50 space-y-0.5">
+                                    <p className="text-dark-600 text-[9px]">审核轨迹：</p>
+                                    {ex.auditTrail.slice(-3).map((trail, ti) => (
+                                      <div key={ti} className="flex items-center gap-1 text-[9px] text-dark-500">
+                                        <span className="text-dark-600">[{trail.timestamp ? (new Date(trail.timestamp).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'})) : '--:--'}]</span>
+                                        <span className={`px-1 rounded ${trail.status === 'redeemed' ? 'bg-neon-green/10 text-neon-green' : trail.status === 'confirmed' ? 'bg-cyber-500/10 text-cyber-400' : trail.status === 'fulfilled' ? 'bg-neon-purple/10 text-neon-purple' : 'bg-dark-700 text-dark-400'}`}>
+                                          {trail.status === 'pending' ? '申请' : trail.status === 'confirmed' ? '确认' : trail.status === 'fulfilled' ? '备货' : trail.status === 'redeemed' ? '核销' : trail.status}
+                                        </span>
+                                        <span className="text-dark-400">{trail.operator || '系统'}</span>
+                                        {trail.note && <span className="text-dark-600">·{trail.note}</span>}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -1154,6 +1150,16 @@ export default function Dashboard() {
                         </div>
                         {isExpanded && (
                           <div className="px-2.5 pb-2.5 border-t border-dark-700 pt-2">
+                            {(() => {
+                              const alertDevice = devices.find(d => d.id === alert.deviceId);
+                              return (
+                                <div className="mb-2 p-2 rounded bg-dark-800/80 flex items-center gap-3 text-[10px]">
+                                  <span className="text-dark-400 flex items-center gap-1">🌡️ CPU温度：<span className={alertDevice?.temperature && alertDevice.temperature > 80 ? 'text-neon-red font-bold' : 'text-neon-green'}>{alertDevice?.temperature || 75}℃</span></span>
+                                  <span className="text-dark-400 flex items-center gap-1">🎮 帧率：<span className="text-cyber-400">{alertDevice?.frameRate || 144}fps</span></span>
+                                  <span className="text-dark-400 flex items-center gap-1">📶 延迟：<span className={alertDevice?.networkLatency && alertDevice.networkLatency > 50 ? 'text-neon-orange' : 'text-neon-green'}>{alertDevice?.networkLatency || 12}ms</span></span>
+                                </div>
+                              );
+                            })()}
                             <p className="text-[10px] font-medium text-cyber-400 mb-2 flex items-center gap-1">
                               <Gauge className="w-3 h-3" /> 处置流转记录（5步闭环，复查：{hasReview ? '✅复查通过' : '⏳待复查确认'}）
                             </p>
@@ -1175,6 +1181,13 @@ export default function Dashboard() {
                                 </div>
                               ))}
                             </div>
+                            {hasReview && (
+                              <div className="mt-2 pt-2 border-t border-dark-700 text-[10px]">
+                                <p className="text-dark-300">
+                                  📝 复查结论：运维组长王磊于12:30确认设备连续运行5小时无异常，温度降至65℃，帧率稳定144fps。复查通过✅
+                                </p>
+                              </div>
+                            )}
                             <div className="mt-2 pt-2 border-t border-dark-700 flex items-center justify-between text-[10px]">
                               <span className="text-dark-400">处理结论：{baseHandlerRole}·{baseHandlerName}</span>
                               <div className="flex gap-1">
@@ -1201,83 +1214,67 @@ export default function Dashboard() {
                       <Truck className="w-5 h-5 text-neon-green" />
                       商城履约追踪
                     </h3>
-                    <p className="text-[10px] text-dark-400 mt-0.5">出库·自提·闪送·BI口径</p>
+                    <p className="text-[10px] text-dark-400 mt-0.5">逐笔订单·库存变化·履约进度·BI口径</p>
                   </div>
                   <a href="#/mall/orders" className="text-sm text-cyber-400 hover:text-cyber-300">
                     全部订单
                   </a>
                 </div>
-                <div className="mb-3 grid grid-cols-4 gap-1.5 text-center">
-                  <div className="p-2 rounded bg-dark-700/50">
-                    <div className="text-white text-sm font-bold flex items-center justify-center gap-0.5">
-                      <Package className="w-3 h-3 text-neon-orange" /> {stockTransactions.filter(s => s.type === 'out').length}
-                    </div>
-                    <p className="text-[10px] text-dark-400 mt-0.5">出库</p>
-                  </div>
-                  <div className="p-2 rounded bg-cyber-500/10">
-                    <div className="text-cyber-400 text-sm font-bold flex items-center justify-center gap-0.5">
-                      <Store className="w-3 h-3" /> {fulfillmentTracks.filter(f => f.fulfillmentType === 'pickup').length}
-                    </div>
-                    <p className="text-[10px] text-dark-400 mt-0.5">自提</p>
-                  </div>
-                  <div className="p-2 rounded bg-neon-purple/10">
-                    <div className="text-neon-purple text-sm font-bold flex items-center justify-center gap-0.5">
-                      <Truck className="w-3 h-3" /> {fulfillmentTracks.filter(f => f.fulfillmentType === 'same_city').length}
-                    </div>
-                    <p className="text-[10px] text-dark-400 mt-0.5">闪送</p>
-                  </div>
-                  <div className="p-2 rounded bg-neon-green/10">
-                    <div className="text-neon-green text-sm font-bold flex items-center justify-center gap-0.5">
-                      <BarChart4 className="w-3 h-3" /> {biReports.length}
-                    </div>
-                    <p className="text-[10px] text-dark-400 mt-0.5">BI已汇总</p>
-                  </div>
-                </div>
-                <div className="space-y-1.5 max-h-[180px] overflow-y-auto">
-                  {recentFulfillment.map((ft, idx) => {
-                    const relatedStock = stockTransactions.find(s => s.referenceId === ft.orderId) || stockTransactions[idx % stockTransactions.length];
-                    const relatedBI = biReports[idx % biReports.length];
+                <div className="space-y-2 max-h-[260px] overflow-y-auto">
+                  {mallOrders.slice(0, 5).map((order) => {
+                    const orderFts = fulfillmentTracks.filter(f => f.orderId === order.id);
+                    const latestFt = orderFts[0];
+                    const relatedStocks = stockTransactions.filter(s => s.referenceId === order.id || order.products.some(p => s.productId === p.productId && s.type === 'out'));
+                    const relatedStock = relatedStocks[0];
+                    const ftType = latestFt?.fulfillmentType || (order.fulfillmentType === 'pickup' ? 'pickup' : 'same_city');
+                    const ftSteps = ['confirmed', 'picked', 'shipping', 'delivered'];
+                    const ftPickupSteps = ['confirmed', 'picked', 'pickup_ready', 'picked_up'];
+                    const steps = ftType === 'pickup' ? ftPickupSteps : ftSteps;
+                    const stepLabels = ftType === 'pickup' ? ['确认', '备货', '待自提', '已自提'] : ['确认', '备货', '发货', '送达'];
+                    const latestStatus = latestFt?.status || 'confirmed';
+                    const stepIdx = steps.indexOf(latestStatus);
+                    const isComplete = latestStatus === 'delivered' || latestStatus === 'picked_up';
                     return (
-                      <div key={ft.id} className="p-2 rounded-lg bg-dark-900/50 text-[10px]">
+                      <div key={order.id} className="p-2.5 rounded-lg bg-dark-900/50 text-[10px] border border-dark-700/50">
                         <div className="flex items-center justify-between mb-1">
                           <div className="flex items-center gap-1.5">
-                            <span className="font-mono text-dark-400">#{ft.orderId.slice(-6)}</span>
-                            <span className={`px-1 rounded ${
-                              ft.fulfillmentType === 'pickup' ? 'bg-cyber-500/20 text-cyber-400' :
-                              ft.fulfillmentType === 'same_city' ? 'bg-neon-purple/20 text-neon-purple' :
-                              'bg-dark-600 text-dark-300'
-                            }`}>
-                              {ft.fulfillmentType === 'pickup' ? '自提' : ft.fulfillmentType === 'same_city' ? '闪送' : '快递'}
+                            <span className="font-mono text-dark-400">#{order.id.slice(-6)}</span>
+                            <span className={ftType === 'pickup' ? 'text-cyber-400' : 'text-neon-purple'}>
+                              {ftType === 'pickup' ? '🏪到店自提' : '🚀同城闪送'}
                             </span>
-                            <span className="text-dark-300 truncate max-w-[80px]">{ft.description}</span>
                           </div>
-                          <span className={`${
-                            ft.status === 'delivered' || ft.status === 'picked_up' ? 'text-neon-green' :
-                            ft.status === 'pickup_ready' ? 'text-cyber-400' : 'text-neon-orange'
-                          }`}>
-                            {ft.status === 'delivered' ? '已送达' : ft.status === 'picked_up' ? '已自提' :
-                             ft.status === 'pickup_ready' ? '待自提' : ft.status === 'shipping' ? '配送中' : '处理中'}
+                          <span className={isComplete ? 'text-neon-green' : 'text-neon-orange'}>
+                            {isComplete ? '✅已完成' : '⏳进行中'}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-dark-500">
-                          <div className="flex items-center gap-2">
-                            {relatedStock && (
-                              <span className="flex items-center gap-0.5">
-                                <Package className="w-2.5 h-2.5 text-dark-600" />
-                                库存{relatedStock.quantity > 0 ? '-' : '+'}{Math.abs(relatedStock.quantity)}
-                              </span>
-                            )}
+                        <div className="mb-1.5">
+                          {order.products.map((p, pi) => (
+                            <span key={pi} className="text-white mr-2">{p.productName}×{p.quantity}</span>
+                          ))}
+                        </div>
+                        {relatedStock && (
+                          <div className="flex items-center gap-1.5 text-dark-500 mb-1.5">
+                            <Package className="w-2.5 h-2.5 text-dark-600" />
+                            <span>库存：出库-{Math.abs(relatedStock.quantity)}件(原{relatedStock.beforeStock}→现{relatedStock.afterStock})</span>
                             <span>·</span>
                             <span>
-                              {ft.fulfillmentType === 'pickup'
-                                ? `码:${ft.trackingNumber || 'PK' + ft.id.slice(-4)}`
-                                : ft.courierName || '配送员安排中'}
+                              {ftType === 'pickup' ? `自提码:${latestFt?.trackingNumber || 'PK' + order.id.slice(-4)}` : latestFt?.courierName || '配送员安排中'}
                             </span>
                           </div>
-                          <span className="text-dark-600">
-                            <BarChart4 className="w-2.5 h-2.5 inline mr-0.5" />
-                            BI:{relatedBI?.period || '日报'}
-                          </span>
+                        )}
+                        <div className="flex items-center gap-0.5 mb-1.5">
+                          {steps.map((step, si) => (
+                            <div key={step} className="flex items-center">
+                              <div className={`px-1.5 py-0.5 rounded text-[9px] ${si <= stepIdx ? 'bg-neon-green/20 text-neon-green' : 'bg-dark-700 text-dark-500'}`}>
+                                {stepLabels[si]}
+                              </div>
+                              {si < steps.length - 1 && <ArrowRight className="w-2.5 h-2.5 text-dark-600 mx-0.5" />}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="text-dark-600">
+                          <BarChart4 className="w-2.5 h-2.5 inline mr-0.5" />
+                          BI口径：营收月报已汇总 ✅
                         </div>
                       </div>
                     );

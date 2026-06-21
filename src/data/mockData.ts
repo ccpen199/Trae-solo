@@ -730,10 +730,10 @@ export const hotelBookings: HotelBooking[] = [
     checkOut: new Date(Date.now() + 86400000 * 10).toISOString(),
     nights: 3,
     totalAmount: 1197,
-    status: 'pending',
+    status: 'confirmed',
     guestName: '刘洋',
     guestPhone: '15933334444',
-    deviceLocked: false,
+    deviceLocked: true,
     createdAt: new Date(Date.now() - 86400000).toISOString(),
   },
   {
