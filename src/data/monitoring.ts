@@ -292,10 +292,10 @@ export const mockAlertThresholds: AlertThreshold[] = [
 
 export const mockAlertStats: AlertStats = {
   total: 12,
-  unread: 6,
+  unread: 5,
   high: 5,
-  medium: 4,
-  low: 3,
+  medium: 5,
+  low: 2,
   finance: 7,
   judicial: 2,
   sentiment: 2,

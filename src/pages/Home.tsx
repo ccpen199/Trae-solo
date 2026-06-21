@@ -97,44 +97,48 @@ export default function Home() {
         <MetricCard
           title="收录房企"
           value={12580}
-          change={0.023}
+          change={2.3}
+          changeLabel="环比"
           icon={<Building2 className="w-6 h-6 text-brand-400" />}
           iconBg="bg-brand-500/20"
           showSparkline={true}
-          sparklineData={[12000, 12100, 12200, 12300, 12400, 12500, 12580]}
+          sparklineData={[11800, 11950, 12100, 12250, 12380, 12480, 12580]}
           color="brand"
           onClick={() => navigate('/finance')}
         />
         <MetricCard
           title="在建项目"
           value={86520}
-          change={-0.018}
+          change={-1.8}
+          changeLabel="环比"
           icon={<Zap className="w-6 h-6 text-purple-400" />}
           iconBg="bg-purple-500/20"
           showSparkline={true}
-          sparklineData={[88000, 87800, 87500, 87200, 87000, 86800, 86520]}
+          sparklineData={[88200, 87900, 87500, 87200, 86900, 86700, 86520]}
           color="purple"
           onClick={() => navigate('/projects')}
         />
         <MetricCard
           title="今日舆情"
           value={3586}
-          change={0.125}
+          change={12.5}
+          changeLabel="环比"
           icon={<Newspaper className="w-6 h-6 text-success-500" />}
           iconBg="bg-success-500/20"
           showSparkline={true}
-          sparklineData={[3200, 3100, 3400, 3300, 3250, 3450, 3586]}
+          sparklineData={[3120, 3080, 3350, 3280, 3220, 3420, 3586]}
           color="success"
           onClick={() => navigate('/sentiment')}
         />
         <MetricCard
           title="风险预警"
           value={mockAlertStats.total}
-          change={0.085}
+          change={8.5}
+          changeLabel="环比"
           icon={<AlertTriangle className="w-6 h-6 text-warning-500" />}
           iconBg="bg-warning-500/20"
           showSparkline={true}
-          sparklineData={[8, 9, 10, 11, 10, 12, 12]}
+          sparklineData={[8, 9, 10, 11, 10, 12, mockAlertStats.total]}
           color="warning"
           onClick={() => navigate('/monitoring')}
         />

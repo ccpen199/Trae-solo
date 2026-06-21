@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { AlertTriangle, Settings, Bell, TrendingUp, TrendingDown, Filter, ChevronRight, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AlertTriangle, Settings, Bell, TrendingUp, TrendingDown, Filter, ChevronRight, Clock, CheckCircle, XCircle, Building2, ArrowLeft, FileText, Landmark } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
@@ -8,23 +9,35 @@ import { LineChart } from '../components/charts/LineChart';
 import { BarChart } from '../components/charts/BarChart';
 import { PieChart } from '../components/charts/PieChart';
 import { mockAlerts, mockAlertThresholds, mockAlertStats } from '../data/monitoring';
-import { mockCompanies } from '../data/companies';
+import { mockCompanies, getCompanyById } from '../data/companies';
+import { getAnnualReportsByCompany, getLatestReport, mockBonds, mockLandReserves } from '../data/finance';
 import { formatMoney, formatRate } from '../utils/format';
+import { useAppStore } from '../stores/useAppStore';
 import type { Alert, AlertLevel, AlertType, AlertStatus } from '../types/monitoring';
 
 export default function Monitoring() {
+  const navigate = useNavigate();
+  const { financeContext, setFinanceContext, selectedCompany: storeSelectedCompany } = useAppStore();
+  const contextCompany = useMemo(() => {
+    if (financeContext.companyId) {
+      return getCompanyById(financeContext.companyId) || storeSelectedCompany;
+    }
+    return storeSelectedCompany;
+  }, [financeContext.companyId, storeSelectedCompany]);
+
   const [activeTab, setActiveTab] = useState('alerts');
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
   const [levelFilter, setLevelFilter] = useState<AlertLevel | 'all'>('all');
   const [typeFilter, setTypeFilter] = useState<AlertType | 'all'>('all');
   const [statusFilter, setStatusFilter] = useState<AlertStatus | 'all'>('all');
 
-  const filteredAlerts = mockAlerts.filter(a => {
+  const filteredAlerts = useMemo(() => mockAlerts.filter(a => {
+    if (contextCompany && a.companyId && a.companyId !== contextCompany.id) return false;
     if (levelFilter !== 'all' && a.level !== levelFilter) return false;
     if (typeFilter !== 'all' && a.type !== typeFilter) return false;
     if (statusFilter !== 'all' && a.status !== statusFilter) return false;
     return true;
-  });
+  }), [contextCompany, levelFilter, typeFilter, statusFilter]);
 
   const getLevelColor = (level: AlertLevel) => {
     switch (level) {
@@ -125,12 +138,116 @@ export default function Monitoring() {
             <p className="text-sm text-dark-400 mt-1">营收增速与销售回款率偏差超阈值预警</p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="primary" size="md" icon={<Settings className="w-4 h-4" />}>
+            <Button variant="primary" size="md" icon={<Settings className="w-4 h-4" />} onClick={() => setActiveTab('thresholds')}>
               阈值配置
             </Button>
           </div>
         </div>
       </div>
+
+      {contextCompany && financeContext.source === 'finance' && (
+        <div className="px-6 pb-4">
+          <Card className="border-brand-500/30 bg-brand-500/5">
+            <Card.Body>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-700/20 flex items-center justify-center text-2xl border border-brand-500/30 flex-shrink-0">
+                  {contextCompany.logo}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => {
+                        setFinanceContext({ companyId: null, source: null });
+                      }}
+                      className="text-xs text-dark-500 hover:text-dark-300 flex items-center gap-1 mr-2"
+                    >
+                      <ArrowLeft className="w-3 h-3" /> 退出企业视图
+                    </button>
+                    <span className="text-lg font-bold text-white">{contextCompany.name}</span>
+                    <Tag variant="primary">联动自: 企业财务数据库</Tag>
+                    <Tag variant="outline">{contextCompany.stockCode}</Tag>
+                  </div>
+                  
+                  <div className="grid grid-cols-5 gap-3 mt-4">
+                    <div className="p-3 rounded-lg bg-dark-800/40 border border-dark-700/30">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <FileText className="w-3.5 h-3.5 text-brand-400" />
+                        <span className="text-[10px] text-dark-400">最新年报</span>
+                      </div>
+                      {(() => {
+                        const reports = getAnnualReportsByCompany(contextCompany.id);
+                        const latest = reports[reports.length - 1];
+                        return latest ? (
+                          <>
+                            <p className="text-sm font-bold text-white font-mono">{latest.year}年报</p>
+                            <p className="text-[10px] text-success-500 mt-0.5">
+                              营收 {formatMoney(latest.revenue)}
+                            </p>
+                          </>
+                        ) : <p className="text-xs text-dark-500">暂无</p>;
+                      })()}
+                    </div>
+                    <div className="p-3 rounded-lg bg-dark-800/40 border border-dark-700/30">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <Landmark className="w-3.5 h-3.5 text-purple-400" />
+                        <span className="text-[10px] text-dark-400">存续债券</span>
+                      </div>
+                      {(() => {
+                        const bonds = mockBonds.filter(b => b.companyId === contextCompany.id);
+                        const totalOutstanding = bonds.reduce((sum, b) => sum + b.outstandingAmount, 0);
+                        return (
+                          <>
+                            <p className="text-sm font-bold text-white font-mono">{bonds.length}只</p>
+                            <p className="text-[10px] text-purple-400 mt-0.5">
+                              余额 {formatMoney(totalOutstanding)}
+                            </p>
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <div className="p-3 rounded-lg bg-dark-800/40 border border-dark-700/30">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <Building2 className="w-3.5 h-3.5 text-warning-400" />
+                        <span className="text-[10px] text-dark-400">土储建面</span>
+                      </div>
+                      {(() => {
+                        const land = mockLandReserves.filter(l => l.companyId === contextCompany.id);
+                        const total = land.reduce((sum, l) => sum + l.totalArea, 0);
+                        return (
+                          <>
+                            <p className="text-sm font-bold text-white font-mono">{(total / 10000).toFixed(0)}万㎡</p>
+                            <p className="text-[10px] text-warning-400 mt-0.5">
+                              {land.length}个地块
+                            </p>
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <div className="p-3 rounded-lg bg-danger-500/10 border border-danger-500/20">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5 text-danger-400" />
+                        <span className="text-[10px] text-dark-400">匹配预警</span>
+                      </div>
+                      <p className="text-sm font-bold text-danger-500 font-mono">{filteredAlerts.length}条</p>
+                      <p className="text-[10px] text-danger-400 mt-0.5">
+                        高危 {filteredAlerts.filter(a => a.level === 'high').length}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-success-500/10 border border-success-500/20 flex flex-col justify-center">
+                      <button
+                        onClick={() => navigate('/finance')}
+                        className="w-full py-2 px-3 rounded-lg bg-success-500/20 text-success-400 text-xs font-medium hover:bg-success-500/30 transition-colors flex items-center justify-center gap-1"
+                      >
+                        <ArrowLeft className="w-3 h-3" /> 返回财务库
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      )}
 
       <div className="px-6 pb-4">
         <div className="grid grid-cols-4 gap-5">
@@ -302,47 +419,148 @@ export default function Monitoring() {
 
               {activeTab === 'thresholds' && (
                 <div className="space-y-3">
-                  {mockAlertThresholds.map((threshold) => (
-                    <div key={threshold.id} className="p-4 rounded-xl bg-dark-800/30 border border-dark-700/30">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-brand-500/20 flex items-center justify-center">
-                            <Settings className="w-5 h-5 text-brand-400" />
-                          </div>
-                          <div>
-                            <h3 className="text-sm font-medium text-white">{threshold.metricName}</h3>
-                            <p className="text-xs text-dark-500">{threshold.category}</p>
-                          </div>
-                        </div>
-                        <button className="text-xs text-brand-400 hover:text-brand-300 transition-colors">
-                          编辑
-                        </button>
-                      </div>
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="p-3 rounded-lg bg-danger-500/10 border border-danger-500/20">
-                          <p className="text-xs text-danger-400">高风险阈值</p>
-                          <p className="text-sm font-mono text-white mt-1">
-                            {threshold.highThreshold}{threshold.unit || ''}
-                          </p>
-                        </div>
-                        <div className="p-3 rounded-lg bg-warning-500/10 border border-warning-500/20">
-                          <p className="text-xs text-warning-400">中风险阈值</p>
-                          <p className="text-sm font-mono text-white mt-1">
-                            {threshold.mediumThreshold}{threshold.unit || ''}
-                          </p>
-                        </div>
-                        <div className="p-3 rounded-lg bg-brand-500/10 border border-brand-500/20">
-                          <p className="text-xs text-brand-400">低风险阈值</p>
-                          <p className="text-sm font-mono text-white mt-1">
-                            {threshold.lowThreshold}{threshold.unit || ''}
-                          </p>
-                        </div>
-                      </div>
-                      {threshold.description && (
-                        <p className="text-xs text-dark-500 mt-3">{threshold.description}</p>
-                      )}
+                  <div className="grid grid-cols-4 gap-3 mb-4">
+                    <div className="p-3 rounded-lg bg-success-500/10 border border-success-500/20 text-center">
+                      <p className="text-lg font-bold text-success-400 font-mono">
+                        {mockAlertThresholds.filter(t => t.enabled).length}
+                      </p>
+                      <p className="text-xs text-dark-400">已启用规则</p>
                     </div>
-                  ))}
+                    <div className="p-3 rounded-lg bg-dark-700/50 border border-dark-600/50 text-center">
+                      <p className="text-lg font-bold text-dark-300 font-mono">
+                        {mockAlertThresholds.filter(t => !t.enabled).length}
+                      </p>
+                      <p className="text-xs text-dark-400">已暂停规则</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-brand-500/10 border border-brand-500/20 text-center">
+                      <p className="text-lg font-bold text-brand-400 font-mono">28</p>
+                      <p className="text-xs text-dark-400">本月触发次数</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20 text-center">
+                      <p className="text-lg font-bold text-purple-400 font-mono">
+                        {mockAlertThresholds.length}
+                      </p>
+                      <p className="text-xs text-dark-400">规则总数</p>
+                    </div>
+                  </div>
+
+                  {mockAlertThresholds.map((threshold, idx) => {
+                    const triggerCount = [8, 6, 5, 4, 3, 1, 0, 1][idx] || 0;
+                    const lastAdjustedAt = [
+                      '2024-01-10 14:30',
+                      '2024-01-08 09:15',
+                      '2024-01-05 16:45',
+                      '2023-12-28 11:20',
+                      '2023-12-20 10:00',
+                      '2023-12-15 15:30',
+                      '2023-12-10 09:00',
+                      '2023-12-08 14:15',
+                    ][idx];
+                    return (
+                      <div key={threshold.id} className="p-4 rounded-xl bg-dark-800/30 border border-dark-700/30 hover:border-dark-600/50 transition-colors">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                              threshold.enabled ? 'bg-brand-500/20' : 'bg-dark-700/50'
+                            }`}>
+                              <Settings className={`w-5 h-5 ${
+                                threshold.enabled ? 'text-brand-400' : 'text-dark-500'
+                              }`} />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <h3 className="text-sm font-medium text-white">{threshold.metricName}</h3>
+                                {threshold.enabled ? (
+                                  <Tag variant="success" size="sm">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-success-500 mr-1" />
+                                    运行中
+                                  </Tag>
+                                ) : (
+                                  <Tag variant="default" size="sm">已暂停</Tag>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-3 mt-1">
+                                <span className="text-xs text-dark-500">{threshold.category}</span>
+                                <span className="text-xs text-dark-600">
+                                  {threshold.direction === 'up' ? '↑ 超过阈值触发' : '↓ 低于阈值触发'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`relative w-10 h-6 rounded-full cursor-pointer transition-colors ${
+                                threshold.enabled ? 'bg-brand-500' : 'bg-dark-700'
+                              }`}
+                            >
+                              <div
+                                className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${
+                                  threshold.enabled ? 'translate-x-5' : 'translate-x-1'
+                                }`}
+                              />
+                            </div>
+                            <button className="px-3 py-1 rounded-md text-xs text-brand-400 hover:text-brand-300 hover:bg-brand-500/10 transition-colors">
+                              编辑规则
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-3 mb-3">
+                          <div className="p-3 rounded-lg bg-danger-500/10 border border-danger-500/20">
+                            <p className="text-xs text-danger-400">🔴 高风险阈值</p>
+                            <p className="text-sm font-mono text-white mt-1">
+                              {threshold.unit === '%' 
+                                ? `${(threshold.highThreshold * 100).toFixed(0)}%` 
+                                : threshold.unit === '亿元'
+                                  ? `${(threshold.highThreshold / 100000000).toFixed(0)}亿`
+                                  : threshold.highThreshold}
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-warning-500/10 border border-warning-500/20">
+                            <p className="text-xs text-warning-400">🟡 中风险阈值</p>
+                            <p className="text-sm font-mono text-white mt-1">
+                              {threshold.unit === '%' 
+                                ? `${(threshold.mediumThreshold * 100).toFixed(0)}%` 
+                                : threshold.unit === '亿元'
+                                  ? `${(threshold.mediumThreshold / 100000000).toFixed(0)}亿`
+                                  : threshold.mediumThreshold}
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-brand-500/10 border border-brand-500/20">
+                            <p className="text-xs text-brand-400">🔵 低风险阈值</p>
+                            <p className="text-sm font-mono text-white mt-1">
+                              {threshold.unit === '%' 
+                                ? `${(threshold.lowThreshold * 100).toFixed(0)}%` 
+                                : threshold.unit === '亿元'
+                                  ? `${(threshold.lowThreshold / 100000000).toFixed(0)}亿`
+                                  : threshold.lowThreshold}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-3 border-t border-dark-700/30">
+                          <div className="flex items-center gap-4 text-xs">
+                            <span className="text-dark-500">
+                              本月触发: <span className="text-brand-400 font-mono">{triggerCount}</span>次
+                            </span>
+                            <span className="text-dark-500">
+                              最近调整: <span className="text-dark-300">{lastAdjustedAt}</span>
+                            </span>
+                          </div>
+                          <button className="text-xs text-dark-400 hover:text-brand-400 transition-colors flex items-center gap-1">
+                            调整记录
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        {threshold.description && (
+                          <p className="text-xs text-dark-500 mt-3 pt-3 border-t border-dark-700/20">
+                            📝 {threshold.description}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 

@@ -17,9 +17,14 @@ export default function Sentiment() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [sentimentFilter, setSentimentFilter] = useState<SentimentType | 'all'>('all');
   const [sourceFilter, setSourceFilter] = useState<SourceLevel | 'all'>('all');
+  const [activeHotKeyword, setActiveHotKeyword] = useState<string | null>(null);
 
   const filteredNews = mockNews.filter(n => {
     if (searchKeyword && !n.title.includes(searchKeyword) && !n.summary.includes(searchKeyword)) {
+      return false;
+    }
+    if (activeHotKeyword && !n.keywords.includes(activeHotKeyword) && 
+        !n.title.includes(activeHotKeyword) && !n.summary.includes(activeHotKeyword)) {
       return false;
     }
     if (sentimentFilter !== 'all' && n.sentiment !== sentimentFilter) {
@@ -268,6 +273,27 @@ export default function Sentiment() {
 
               {activeTab === 'list' && (
                 <div className="space-y-2">
+                  {(activeHotKeyword || searchKeyword) && (
+                    <div className="p-3 rounded-xl bg-warning-500/10 border border-warning-500/30 mb-3 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Filter className="w-4 h-4 text-warning-500" />
+                        <span className="text-xs text-warning-300">
+                          {activeHotKeyword && <>关键词筛选: <Tag variant="warning" size="sm">#{activeHotKeyword}</Tag> </>}
+                          {searchKeyword && <>文本搜索: <span className="font-mono text-warning-400">{searchKeyword}</span></>}
+                          <span className="text-warning-500/70 ml-2">共匹配 {filteredNews.length} 条报道</span>
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setActiveHotKeyword(null);
+                          setSearchKeyword('');
+                        }}
+                        className="text-xs text-warning-400 hover:text-warning-300"
+                      >
+                        清除筛选
+                      </button>
+                    </div>
+                  )}
                   {filteredNews.map((news) => (
                     <div
                       key={news.id}
@@ -279,8 +305,17 @@ export default function Sentiment() {
                       }`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0">
+                        <div className="flex-shrink-0 flex flex-col items-center gap-2">
                           {getSentimentTag(news.sentiment)}
+                          <div className={`px-2 py-0.5 rounded text-[10px] font-medium whitespace-nowrap ${
+                            news.sourceLevel === 'national' ? 'bg-purple-500/20 text-purple-400' :
+                            news.sourceLevel === 'provincial' ? 'bg-brand-500/20 text-brand-400' :
+                            news.sourceLevel === 'city' ? 'bg-success-500/20 text-success-400' :
+                            news.sourceLevel === 'industry' ? 'bg-warning-500/20 text-warning-400' :
+                            'bg-dark-700 text-dark-400'
+                          }`}>
+                            {getSourceLevelText(news.sourceLevel)}
+                          </div>
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-sm font-medium text-white hover:text-brand-400 transition-colors line-clamp-2">
@@ -289,22 +324,48 @@ export default function Sentiment() {
                           <p className="text-xs text-dark-400 mt-1.5 line-clamp-2">
                             {news.summary}
                           </p>
-                          <div className="flex items-center gap-4 mt-3">
-                            <span className="text-xs text-dark-500">{news.source}</span>
+                          <div className="flex items-center gap-4 mt-3 flex-wrap">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-xs text-dark-500">{news.source}</span>
+                              {activeHotKeyword && (news.keywords.includes(activeHotKeyword) || news.title.includes(activeHotKeyword)) && (
+                                <Tag variant="primary" size="sm">匹配关键词</Tag>
+                              )}
+                            </div>
                             <div className="flex items-center gap-1">
-                              <span className="text-xs text-dark-500">权威度:</span>
+                              <span className="text-[10px] text-dark-500">信源权威度</span>
                               {getAuthorityStars(news.sourceAuthority)}
+                              <span className="text-[10px] text-dark-500 font-mono ml-1">{(news.sourceAuthority / 20).toFixed(1)}</span>
                             </div>
                             <span className="text-xs text-dark-500 flex items-center gap-1">
                               <Eye className="w-3 h-3" />
                               {formatNumber(news.readCount)}
                             </span>
+                            <span className="text-[10px] text-dark-500">情感置信度 {Math.abs(news.sentimentScore * 100).toFixed(0)}%</span>
                             <span className="text-xs text-dark-500">{news.publishDate.split(' ')[0]}</span>
                           </div>
                           {news.keywords.length > 0 && (
                             <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                               {news.keywords.slice(0, 4).map((kw, i) => (
-                                <Tag key={i} variant="outline" size="sm">#{kw}</Tag>
+                                <button
+                                  key={i}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveHotKeyword(kw);
+                                  }}
+                                  className={`cursor-pointer ${
+                                    activeHotKeyword === kw
+                                      ? 'bg-brand-500/20 text-brand-400 border-brand-500/40'
+                                      : ''
+                                  }`}
+                                >
+                                  <Tag 
+                                    key={i} 
+                                    variant={activeHotKeyword === kw ? 'primary' : 'outline'} 
+                                    size="sm"
+                                  >
+                                    #{kw}
+                                  </Tag>
+                                </button>
                               ))}
                             </div>
                           )}
@@ -320,26 +381,168 @@ export default function Sentiment() {
 
               {activeTab === 'keywords' && (
                 <div className="space-y-4">
+                  {activeHotKeyword && (
+                    <div className="p-4 rounded-xl bg-brand-500/10 border border-brand-500/30">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <Tag variant="primary">#{activeHotKeyword}</Tag>
+                          <span className="text-xs text-dark-400">当前筛选关键词</span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setActiveHotKeyword(null);
+                            setActiveTab('list');
+                          }}
+                          className="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1"
+                        >
+                          查看匹配新闻 <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-4 gap-3">
+                        <div className="p-2.5 rounded-lg bg-dark-800/50 text-center">
+                          <p className="text-lg font-bold text-white font-mono">{mockNews.filter(n => n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)).length}</p>
+                          <p className="text-[10px] text-dark-500">关联报道</p>
+                        </div>
+                        <div className="p-2.5 rounded-lg bg-success-500/10 text-center">
+                          <p className="text-lg font-bold text-success-500 font-mono">
+                            {Math.round(mockNews.filter(n => (n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)) && n.sentiment === 'positive').length / Math.max(mockNews.filter(n => n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)).length, 1) * 100)}%
+                          </p>
+                          <p className="text-[10px] text-dark-500">正面占比</p>
+                        </div>
+                        <div className="p-2.5 rounded-lg bg-danger-500/10 text-center">
+                          <p className="text-lg font-bold text-danger-500 font-mono">
+                            {Math.round(mockNews.filter(n => (n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)) && n.sentiment === 'negative').length / Math.max(mockNews.filter(n => n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)).length, 1) * 100)}%
+                          </p>
+                          <p className="text-[10px] text-dark-500">负面占比</p>
+                        </div>
+                        <div className="p-2.5 rounded-lg bg-purple-500/10 text-center">
+                          <p className="text-lg font-bold text-purple-400 font-mono">
+                            {(() => {
+                              const relevant = mockNews.filter(n => n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword));
+                              const avg = relevant.length > 0 
+                                ? Math.round(relevant.reduce((sum, n) => sum + n.sourceAuthority, 0) / relevant.length / 20)
+                                : 0;
+                              return `★${avg}`;
+                            })()}
+                          </p>
+                          <p className="text-[10px] text-dark-500">信源权威</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-dark-700/50">
+                        <p className="text-[10px] text-dark-500 mb-1.5">信源权威度分布</p>
+                        <div className="flex items-center gap-1">
+                          {['national', 'provincial', 'city', 'industry', 'self-media'].map((level) => {
+                            const count = mockNews.filter(n => 
+                              (n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)) && 
+                              n.sourceLevel === level
+                            ).length;
+                            const total = Math.max(mockNews.filter(n => n.keywords.includes(activeHotKeyword) || n.title.includes(activeHotKeyword)).length, 1);
+                            return (
+                              <div key={level} className="flex-1 text-center">
+                                <div className="h-1.5 rounded-full bg-dark-700 overflow-hidden mb-1">
+                                  <div
+                                    className={`h-full ${
+                                      level === 'national' ? 'bg-purple-500' :
+                                      level === 'provincial' ? 'bg-brand-500' :
+                                      level === 'city' ? 'bg-success-500' :
+                                      level === 'industry' ? 'bg-warning-500' : 'bg-dark-500'
+                                    }`}
+                                    style={{ width: `${(count / total) * 100}%` }}
+                                  />
+                                </div>
+                                <span className="text-[9px] text-dark-500">{getSourceLevelText(level as SourceLevel)}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <Card>
                     <Card.Header>
                       <Card.Title className="text-sm">热门关键词</Card.Title>
-                      <Tag variant="outline">实时热度</Tag>
+                      <div className="flex items-center gap-2">
+                        {activeHotKeyword && (
+                          <button
+                            onClick={() => setActiveHotKeyword(null)}
+                            className="text-xs text-dark-400 hover:text-white"
+                          >
+                            清除筛选
+                          </button>
+                        )}
+                        <Tag variant="outline">实时热度 · 点击追溯关联新闻</Tag>
+                      </div>
                     </Card.Header>
                     <Card.Body>
-                      <div className="flex flex-wrap gap-3">
-                        {mockHotKeywords.map((kw, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-dark-800/50 border border-dark-700/50 hover:border-brand-500/30 cursor-pointer transition-all group"
-                          >
-                            <span className="text-xs font-bold text-dark-500 w-5">{index + 1}</span>
-                            <span className="text-sm text-white group-hover:text-brand-400 transition-colors">
-                              {kw.keyword}
-                            </span>
-                            {getTrendIcon(kw.trend)}
-                            <span className="text-xs text-dark-500">{kw.count}篇</span>
-                          </div>
-                        ))}
+                      <div className="space-y-2">
+                        {mockHotKeywords.map((kw, index) => {
+                          const relatedNews = mockNews.filter(n => n.keywords.includes(kw.keyword) || n.title.includes(kw.keyword));
+                          const posCount = relatedNews.filter(n => n.sentiment === 'positive').length;
+                          const negCount = relatedNews.filter(n => n.sentiment === 'negative').length;
+                          const avgAuth = relatedNews.length > 0 
+                            ? Math.round(relatedNews.reduce((sum, n) => sum + n.sourceAuthority, 0) / relatedNews.length)
+                            : 0;
+                          return (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                setActiveHotKeyword(activeHotKeyword === kw.keyword ? null : kw.keyword);
+                                if (activeHotKeyword !== kw.keyword) {
+                                  setSearchKeyword('');
+                                }
+                              }}
+                              className={`p-3 rounded-xl cursor-pointer transition-all ${
+                                activeHotKeyword === kw.keyword
+                                  ? 'bg-brand-500/10 border border-brand-500/30'
+                                  : 'bg-dark-800/30 border border-dark-700/30 hover:border-dark-600/50'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <span className={`text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ${
+                                    index < 3 ? 'bg-danger-500/20 text-danger-400' : 'bg-dark-700 text-dark-500'
+                                  }`}>
+                                    {index + 1}
+                                  </span>
+                                  <span className="text-sm font-medium text-white">{kw.keyword}</span>
+                                  {getTrendIcon(kw.trend)}
+                                </div>
+                                <div className="flex items-center gap-3 text-xs">
+                                  <span className="text-dark-500">{kw.count}篇报道</span>
+                                  <ChevronRight className={`w-4 h-4 ${
+                                    activeHotKeyword === kw.keyword ? 'text-brand-400 rotate-90' : 'text-dark-600'
+                                  } transition-transform`} />
+                                </div>
+                              </div>
+                              
+                              {activeHotKeyword === kw.keyword && (
+                                <div className="mt-3 pt-3 border-t border-dark-700/50 grid grid-cols-4 gap-2">
+                                  <div>
+                                    <p className="text-[10px] text-dark-500 mb-1">情感倾向</p>
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-xs text-success-500">正{posCount}</span>
+                                      <span className="text-xs text-dark-600">|</span>
+                                      <span className="text-xs text-danger-500">负{negCount}</span>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] text-dark-500 mb-1">信源平均权威度</p>
+                                    {getAuthorityStars(avgAuth)}
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] text-dark-500 mb-1">传播热度</p>
+                                    <p className="text-xs text-brand-400 font-mono">{formatNumber(kw.count * 1250)}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-[10px] text-dark-500 mb-1">关联企业</p>
+                                    <p className="text-xs text-purple-400 font-mono">{Math.floor(index/2)+1}家</p>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </Card.Body>
                   </Card>
@@ -352,7 +555,13 @@ export default function Sentiment() {
                       <Card.Body>
                         <div className="space-y-3">
                           {mockHotKeywords.filter(k => k.trend === 'up').slice(0, 5).map((kw, i) => (
-                            <div key={i} className="flex items-center justify-between">
+                            <div 
+                              key={i} 
+                              className="flex items-center justify-between cursor-pointer hover:bg-dark-800/30 p-2 -mx-2 rounded-lg transition-colors"
+                              onClick={() => {
+                                setActiveHotKeyword(kw.keyword);
+                              }}
+                            >
                               <div className="flex items-center gap-2">
                                 <TrendingUp className="w-4 h-4 text-danger-500" />
                                 <span className="text-sm text-white">{kw.keyword}</span>
@@ -370,7 +579,13 @@ export default function Sentiment() {
                       <Card.Body>
                         <div className="space-y-3">
                           {mockHotKeywords.filter(k => k.trend === 'down').slice(0, 5).map((kw, i) => (
-                            <div key={i} className="flex items-center justify-between">
+                            <div 
+                              key={i} 
+                              className="flex items-center justify-between cursor-pointer hover:bg-dark-800/30 p-2 -mx-2 rounded-lg transition-colors"
+                              onClick={() => {
+                                setActiveHotKeyword(kw.keyword);
+                              }}
+                            >
                               <div className="flex items-center gap-2">
                                 <TrendingDown className="w-4 h-4 text-success-500" />
                                 <span className="text-sm text-white">{kw.keyword}</span>

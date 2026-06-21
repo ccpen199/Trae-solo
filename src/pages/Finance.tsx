@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Search, Filter, Download, TrendingUp, TrendingDown, Building2, ChevronRight, BarChart2, PieChart as PieChartIcon, MapPin } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search, Filter, Download, TrendingUp, TrendingDown, Building2, ChevronRight, BarChart2, PieChart as PieChartIcon, MapPin, AlertTriangle } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
@@ -10,14 +11,27 @@ import { PieChart } from '../components/charts/PieChart';
 import { mockCompanies, getCompanyById } from '../data/companies';
 import { mockAnnualReports, mockBonds, mockLandReserves, getAnnualReportsByCompany, getLatestReport } from '../data/finance';
 import { formatNumber, formatMoney, formatPercent, formatRate } from '../utils/format';
+import { useAppStore } from '../stores/useAppStore';
 import type { Company } from '../types/company';
 import type { AnnualReport } from '../types/finance';
 
 export default function Finance() {
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(mockCompanies[0]);
+  const navigate = useNavigate();
+  const { setSelectedCompany: setStoreSelectedCompany, setFinanceContext, selectedCompany: storeSelectedCompany, financeContext } = useAppStore();
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(storeSelectedCompany || mockCompanies[0]);
   const [activeTab, setActiveTab] = useState('annual');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [filterType, setFilterType] = useState<string>('all');
+
+  useEffect(() => {
+    if (financeContext.companyId && financeContext.source === 'finance') {
+      const company = getCompanyById(financeContext.companyId);
+      if (company) {
+        setSelectedCompany(company);
+        setStoreSelectedCompany(company);
+      }
+    }
+  }, [financeContext, setStoreSelectedCompany]);
 
   const filteredCompanies = mockCompanies.filter(c => {
     if (searchKeyword && !c.name.includes(searchKeyword) && !c.shortName.includes(searchKeyword)) {
@@ -154,10 +168,15 @@ export default function Finance() {
             </Card.Header>
             <Card.Body className="flex-1 overflow-y-auto py-3">
               <div className="space-y-2">
-                {filteredCompanies.map((company) => (
+                {filteredCompanies.map((company) => {
+                  const companyLatestReport = getLatestReport(company.id);
+                  return (
                   <div
                     key={company.id}
-                    onClick={() => setSelectedCompany(company)}
+                    onClick={() => {
+                      setSelectedCompany(company);
+                      useAppStore.getState().setSelectedCompany(company);
+                    }}
                     className={`p-3 rounded-xl cursor-pointer transition-all ${
                       selectedCompany?.id === company.id
                         ? 'bg-brand-500/10 border border-brand-500/30'
@@ -179,25 +198,26 @@ export default function Finance() {
                         selectedCompany?.id === company.id ? 'text-brand-400' : 'text-dark-600'
                       }`} />
                     </div>
-                    {selectedCompany?.id === company.id && latestReport && (
+                    {selectedCompany?.id === company.id && companyLatestReport && (
                       <div className="mt-2.5 pt-2.5 border-t border-dark-700/30 grid grid-cols-2 gap-2">
                         <div>
                           <p className="text-[10px] text-dark-500">最新营收</p>
                           <p className="text-sm font-mono font-semibold text-white">
-                            {formatMoney(latestReport.revenue)}
+                            {formatMoney(companyLatestReport.revenue)}
                           </p>
                         </div>
                         <div>
                           <p className="text-[10px] text-dark-500">同比</p>
-                          <p className={`text-sm font-mono font-semibold ${getGrowthColor(latestReport.revenueGrowth)}`}>
-                            {latestReport.revenueGrowth >= 0 ? '+' : ''}
-                            {(latestReport.revenueGrowth * 100).toFixed(1)}%
+                          <p className={`text-sm font-mono font-semibold ${getGrowthColor(companyLatestReport.revenueGrowth)}`}>
+                            {companyLatestReport.revenueGrowth >= 0 ? '+' : ''}
+                            {(companyLatestReport.revenueGrowth * 100).toFixed(1)}%
                           </p>
                         </div>
                       </div>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </Card.Body>
           </Card>
@@ -208,15 +228,31 @@ export default function Finance() {
             <>
               <Card>
                 <Card.Body>
-                  <div className="flex items-center gap-5">
+                  <div className="flex items-start gap-5">
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-3xl border border-dark-600/50">
                       {selectedCompany.logo}
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-3">
-                        <h2 className="text-xl font-bold text-white">{selectedCompany.name}</h2>
-                        {getTypeTag(selectedCompany.type)}
-                        <Tag variant="outline">{selectedCompany.stockCode}</Tag>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <h2 className="text-xl font-bold text-white">{selectedCompany.name}</h2>
+                          {getTypeTag(selectedCompany.type)}
+                          <Tag variant="outline">{selectedCompany.stockCode}</Tag>
+                        </div>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          icon={<AlertTriangle className="w-4 h-4" />}
+                          onClick={() => {
+                            setFinanceContext({
+                              companyId: selectedCompany.id,
+                              source: 'finance',
+                            });
+                            navigate('/monitoring');
+                          }}
+                        >
+                          财报异动监测
+                        </Button>
                       </div>
                       <div className="flex items-center gap-6 mt-2">
                         <div>
