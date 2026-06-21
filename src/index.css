@@ -1,0 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cn-red: 222 41 16;
+    --it-green: 0 146 70;
+    --warm-gold: 212 175 55;
+    --ivory: 255 248 231;
+    --charcoal: 44 44 44;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ivory-100 text-charcoal-500 font-sans-zh font-sans-it antialiased;
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(222, 41, 16, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 90% 100%, rgba(0, 146, 70, 0.04) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display-zh font-display-it tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-warm-gold-500/30;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 font-medium text-white
+           bg-gradient-cnit bg-[length:200%_auto]
+           transition-all duration-300 ease-out
+           hover:bg-right hover:shadow-hover hover:-translate-y-0.5
+           active:translate-y-0 active:shadow-elegant
+           focus:outline-none focus:ring-2 focus:ring-warm-gold-500/50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 font-medium
+           border border-warm-gold-500/40 text-charcoal-500 bg-white/60 backdrop-blur
+           transition-all duration-300 ease-out
+           hover:border-warm-gold-500 hover:bg-white hover:shadow-elegant hover:-translate-y-0.5
+           focus:outline-none focus:ring-2 focus:ring-warm-gold-500/30;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-charcoal-500
+           transition-all duration-200
+           hover:bg-charcoal-500/5 hover:text-cn-red-500
+           focus:outline-none focus:ring-2 focus:ring-charcoal-500/10;
+  }
+
+  .card {
+    @apply rounded-xl bg-white/80 backdrop-blur-sm border border-charcoal-500/5 shadow-elegant
+           transition-all duration-300 ease-out;
+  }
+
+  .card-hover {
+    @apply hover:shadow-hover hover:-translate-y-1 hover:border-warm-gold-500/20;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-semibold mb-2 bg-clip-text text-transparent bg-text-gradient-cnit;
+  }
+
+  .section-subtitle {
+    @apply text-charcoal-400 text-base md:text-lg mb-10;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium;
+  }
+
+  .tag-cn {
+    @apply tag bg-cn-red-50 text-cn-red-600;
+  }
+
+  .tag-it {
+    @apply tag bg-it-green-50 text-it-green-600;
+  }
+
+  .tag-gold {
+    @apply tag bg-warm-gold-50 text-warm-gold-600;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-charcoal-500/10 bg-white/70 px-4 py-2.5 text-charcoal-500
+           placeholder:text-charcoal-300
+           transition-all duration-200
+           focus:border-warm-gold-500 focus:outline-none focus:ring-2 focus:ring-warm-gold-500/20
+           hover:border-charcoal-500/20;
+  }
+
+  .divider-gold {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-warm-gold-500/40 to-transparent;
+  }
+
+  .gold-border {
+    position: relative;
+  }
+
+  .gold-border::before {
+    content: "";
+    @apply absolute inset-0 rounded-xl p-px bg-gradient-cnit opacity-0 transition-opacity duration-300;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .gold-border:hover::before {
+    @apply opacity-100;
+  }
+
+  .bilingual-row {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  }
+
+  .nav-link {
+    @apply relative px-3 py-2 text-sm font-medium text-charcoal-500 transition-colors duration-200
+           hover:text-cn-red-500;
+  }
+
+  .nav-link-active {
+    @apply text-cn-red-500;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-gradient-cnit
+           transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link-active::after {
+    @apply w-6;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-pattern {
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(222, 41, 16, 0.03) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, rgba(0, 146, 70, 0.03) 2px, transparent 2px);
+    background-size: 40px 40px;
+  }
+}
