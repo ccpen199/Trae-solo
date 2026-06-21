@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Plus, Settings, GripVertical, Trash2, MoreHorizontal, ChevronDown, BarChart3, PieChart as PieChartIcon, TrendingUp, Building2, Users, MapPin, Package, Bell, Download, LayoutGrid } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Settings, GripVertical, Trash2, MoreHorizontal, ChevronDown, BarChart3, PieChart as PieChartIcon, TrendingUp, Building2, Users, MapPin, Package, Bell, Download, LayoutGrid, Link2, TrendingDown, AlertTriangle } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
@@ -10,8 +11,10 @@ import { BarChart } from '../components/charts/BarChart';
 import { PieChart } from '../components/charts/PieChart';
 import { mockCompanies } from '../data/companies';
 import { mockSentimentStats } from '../data/sentiment';
-import { mockAlertStats } from '../data/monitoring';
+import { mockAlertStats, mockAlerts } from '../data/monitoring';
+import { mockProjects } from '../data/projects';
 import { formatMoney, formatNumber, formatRate } from '../utils/format';
+import { useAppStore } from '../stores/useAppStore';
 
 const widgetTypes = [
   { type: 'metric', label: '指标卡', icon: BarChart3 },
@@ -77,6 +80,12 @@ export default function Dashboard() {
   const [showWidgetPanel, setShowWidgetPanel] = useState(false);
   const [showDashboardList, setShowDashboardList] = useState(false);
   const [widgetCategory, setWidgetCategory] = useState('all');
+  const [compareMode, setCompareMode] = useState(false);
+  const [selectedCompanyA, setSelectedCompanyA] = useState<string | null>(null);
+  const [selectedCompanyB, setSelectedCompanyB] = useState<string | null>(null);
+  
+  const navigate = useNavigate();
+  const { setSelectedCompany, setFinanceContext } = useAppStore();
 
   const revenueTrendData = {
     xAxis: ['Q1', 'Q2', 'Q3', 'Q4', 'Q1', 'Q2', 'Q3', 'Q4'],
@@ -119,24 +128,53 @@ export default function Dashboard() {
     : availableWidgets.filter(w => w.category === widgetCategory);
 
   const categories = ['all', '财务', '运营', '排行', '舆情', '风险'];
+  
+  const crossDbStats = useMemo(() => {
+    const totalCompanies = mockCompanies.length;
+    const totalProjects = mockProjects.length;
+    const totalAlerts = mockAlertStats.total;
+    const negativeSentiment = mockSentimentStats.negative;
+    return { totalCompanies, totalProjects, totalAlerts, negativeSentiment };
+  }, []);
 
   const renderWidgetContent = (widget: any) => {
     switch (widget.type) {
       case 'metric':
         return (
-          <MetricCard
-            title={widget.config.title}
-            value={widget.config.value}
-            trend={widget.config.trend}
-            trendType={widget.config.trendType}
-            color={widget.config.color || 'brand'}
-            showSparkline={false}
-          />
+          <div 
+            className="h-full cursor-pointer group"
+            onClick={() => {
+              if (widget.config.color === 'danger') {
+                navigate('/monitoring');
+              } else {
+                navigate('/finance');
+              }
+            }}
+          >
+            <MetricCard
+              title={widget.config.title}
+              value={widget.config.value}
+              trend={widget.config.trend}
+              trendType={widget.config.trendType}
+              color={widget.config.color || 'brand'}
+              showSparkline={false}
+            />
+            <div className="flex items-center gap-2 mt-2 text-[10px] text-dark-500 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="flex items-center gap-0.5 text-brand-400">
+                点击下钻 <ChevronDown className="w-3 h-3" />
+              </span>
+            </div>
+          </div>
         );
       case 'line':
         return (
-          <div className="h-full flex flex-col">
-            <h4 className="text-sm font-medium text-white mb-2">{widget.config.title}</h4>
+          <div className="h-full flex flex-col cursor-pointer group" onClick={() => navigate('/finance')}>
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-sm font-medium text-white">{widget.config.title}</h4>
+              <div className="flex items-center gap-1">
+                <Tag variant="primary" size="xs">同比 +8.5%</Tag>
+              </div>
+            </div>
             <div className="flex-1 min-h-0">
               <LineChart data={revenueTrendData} showLegend />
             </div>
@@ -144,8 +182,13 @@ export default function Dashboard() {
         );
       case 'bar':
         return (
-          <div className="h-full flex flex-col">
-            <h4 className="text-sm font-medium text-white mb-2">{widget.config.title || 'TOP10房企'}</h4>
+          <div className="h-full flex flex-col cursor-pointer group" onClick={() => navigate('/finance')}>
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-sm font-medium text-white">{widget.config.title || 'TOP10房企'}</h4>
+              <span className="text-[10px] text-brand-400 flex items-center gap-0.5">
+                下钻 <ChevronDown className="w-3 h-3" />
+              </span>
+            </div>
             <div className="flex-1 min-h-0">
               <BarChart data={top10Data} horizontal showLegend={false} />
             </div>
@@ -153,8 +196,19 @@ export default function Dashboard() {
         );
       case 'pie':
         return (
-          <div className="h-full flex flex-col">
-            <h4 className="text-sm font-medium text-white mb-2">{widget.config.title || '区域分布'}</h4>
+          <div className="h-full flex flex-col cursor-pointer group" onClick={() => {
+            if (widget.config.title?.includes('舆情')) {
+              navigate('/sentiment');
+            } else {
+              navigate('/projects');
+            }
+          }}>
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-sm font-medium text-white">{widget.config.title || '区域分布'}</h4>
+              <span className="text-[10px] text-purple-400 flex items-center gap-0.5">
+                跨库联动 <Link2 className="w-3 h-3" />
+              </span>
+            </div>
             <div className="flex-1 min-h-0">
               <PieChart data={widget.config.title?.includes('舆情') ? sentimentData : regionData} type="doughnut" showLegend={true} />
             </div>
@@ -162,13 +216,24 @@ export default function Dashboard() {
         );
       case 'list':
         return (
-          <div className="h-full flex flex-col">
-            <h4 className="text-sm font-medium text-white mb-3">{widget.config.title || '预警列表'}</h4>
+          <div className="h-full flex flex-col cursor-pointer group" onClick={() => navigate('/monitoring')}>
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-medium text-white">{widget.config.title || '预警列表'}</h4>
+              <span className="text-[10px] text-danger-400 flex items-center gap-0.5">
+                查看全部 <ChevronDown className="w-3 h-3" />
+              </span>
+            </div>
             <div className="flex-1 min-h-0 overflow-y-auto space-y-2">
-              {['财务异动预警', '司法风险预警', '舆情负面预警', '运营风险预警', '债务违约预警'].map((item, i) => (
-                <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-dark-800/30">
-                  <span className="text-xs text-dark-300">{item}</span>
-                  <Tag variant={i < 2 ? 'danger' : 'warning'} size="sm">{5 - i}条</Tag>
+              {mockAlerts.slice(0, 5).map((alert, i) => (
+                <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-dark-800/30 hover:bg-dark-800/50 transition-colors">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      alert.level === 'high' ? 'bg-danger-500' :
+                      alert.level === 'medium' ? 'bg-warning-500' : 'bg-brand-500'
+                    }`} />
+                    <span className="text-xs text-dark-300 truncate">{alert.title}</span>
+                  </div>
+                  <Tag variant={alert.level === 'high' ? 'danger' : 'warning'} size="xs">{alert.level === 'high' ? '高' : '中'}</Tag>
                 </div>
               ))}
             </div>
@@ -255,6 +320,114 @@ export default function Dashboard() {
             </Button>
           </div>
         </div>
+      </div>
+
+      <div className="px-6 pb-4">
+        <Card className="bg-gradient-to-r from-purple-500/5 via-brand-500/5 to-success-500/5 border-purple-500/20">
+          <Card.Body className="py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Link2 className="w-5 h-5 text-purple-400" />
+                <div>
+                  <p className="text-sm font-medium text-white">跨库联动视图</p>
+                  <p className="text-[10px] text-dark-500">4大数据层实时联动 · 支持同比环比下钻分析</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5 bg-dark-800/50 rounded-lg p-0.5">
+                  {[
+                    { key: 'yoy', label: '同比' },
+                    { key: 'mom', label: '环比' },
+                    { key: 'od', label: '占比' },
+                  ].map(item => (
+                    <button
+                      key={item.key}
+                      className="px-3 py-1 text-[10px] rounded-md text-dark-400 hover:text-white hover:bg-dark-700/50 transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setCompareMode(!compareMode)}
+                  className={`text-[10px] px-3 py-1.5 rounded-lg transition-colors ${
+                    compareMode
+                      ? 'bg-brand-500/20 text-brand-400 border border-brand-500/30'
+                      : 'bg-dark-800/50 text-dark-400 hover:text-white'
+                  }`}
+                >
+                  {compareMode ? '退出双企比对' : '双企比对'}
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4 mt-3">
+              <div 
+                className="p-3 rounded-lg bg-dark-800/40 hover:bg-dark-800/60 cursor-pointer transition-colors border border-dark-700/30 hover:border-brand-500/30"
+                onClick={() => navigate('/finance')}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <BarChart3 className="w-3.5 h-3.5 text-brand-400" />
+                  <span className="text-[10px] text-dark-400">企业财务库</span>
+                </div>
+                <p className="text-lg font-bold text-white font-mono">{crossDbStats.totalCompanies}家</p>
+                <div className="flex items-center gap-1 mt-1 text-[9px]">
+                  <TrendingUp className="w-2.5 h-2.5 text-success-500" />
+                  <span className="text-success-500">+6.8% 同比</span>
+                  <span className="text-dark-600">·</span>
+                  <span className="text-dark-500">营收 7.23万亿</span>
+                </div>
+              </div>
+              <div 
+                className="p-3 rounded-lg bg-dark-800/40 hover:bg-dark-800/60 cursor-pointer transition-colors border border-dark-700/30 hover:border-purple-500/30"
+                onClick={() => navigate('/relationship')}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Users className="w-3.5 h-3.5 text-purple-400" />
+                  <span className="text-[10px] text-dark-400">人物关系</span>
+                </div>
+                <p className="text-lg font-bold text-white font-mono">1,280人</p>
+                <div className="flex items-center gap-1 mt-1 text-[9px]">
+                  <TrendingUp className="w-2.5 h-2.5 text-purple-500" />
+                  <span className="text-purple-500">+12.3% 环比</span>
+                  <span className="text-dark-600">·</span>
+                  <span className="text-dark-500">关系链 3.2万条</span>
+                </div>
+              </div>
+              <div 
+                className="p-3 rounded-lg bg-dark-800/40 hover:bg-dark-800/60 cursor-pointer transition-colors border border-dark-700/30 hover:border-success-500/30"
+                onClick={() => navigate('/projects')}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-success-400" />
+                  <span className="text-[10px] text-dark-400">项目全周期</span>
+                </div>
+                <p className="text-lg font-bold text-white font-mono">{crossDbStats.totalProjects}个</p>
+                <div className="flex items-center gap-1 mt-1 text-[9px]">
+                  <TrendingDown className="w-2.5 h-2.5 text-danger-500" />
+                  <span className="text-danger-500">-3.2% 同比</span>
+                  <span className="text-dark-600">·</span>
+                  <span className="text-dark-500">在建 8.6万㎡</span>
+                </div>
+              </div>
+              <div 
+                className="p-3 rounded-lg bg-dark-800/40 hover:bg-dark-800/60 cursor-pointer transition-colors border border-dark-700/30 hover:border-danger-500/30"
+                onClick={() => navigate('/monitoring')}
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 text-danger-400" />
+                  <span className="text-[10px] text-dark-400">风险预警</span>
+                </div>
+                <p className="text-lg font-bold text-white font-mono">{crossDbStats.totalAlerts}条</p>
+                <div className="flex items-center gap-1 mt-1 text-[9px]">
+                  <TrendingUp className="w-2.5 h-2.5 text-danger-500" />
+                  <span className="text-danger-500">+15.6% 同比</span>
+                  <span className="text-dark-600">·</span>
+                  <span className="text-dark-500">高风险 {mockAlertStats.high}条</span>
+                </div>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
       </div>
 
       <div className="flex-1 flex px-6 pb-6 gap-5 min-h-0">

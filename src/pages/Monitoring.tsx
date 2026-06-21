@@ -325,6 +325,7 @@ export default function Monitoring() {
               <Tabs
                 tabs={[
                   { key: 'alerts', label: '预警列表' },
+                  { key: 'supervision', label: '监管视图' },
                   { key: 'thresholds', label: '阈值配置' },
                   { key: 'trend', label: '趋势分析' },
                 ]}
@@ -561,6 +562,150 @@ export default function Monitoring() {
                       </div>
                     );
                   })}
+                </div>
+              )}
+
+              {activeTab === 'supervision' && (
+                <div className="space-y-5">
+                  <div className="grid grid-cols-4 gap-3">
+                    <div className="p-3 rounded-lg bg-danger-500/10 border border-danger-500/20">
+                      <p className="text-[10px] text-dark-400">待处置</p>
+                      <p className="text-xl font-bold text-danger-400 font-mono mt-0.5">
+                        {mockAlerts.filter(a => a.status === 'unread').length}
+                      </p>
+                      <p className="text-[9px] text-danger-500/70 mt-0.5">需要立即分发</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-warning-500/10 border border-warning-500/20">
+                      <p className="text-[10px] text-dark-400">处理中</p>
+                      <p className="text-xl font-bold text-warning-400 font-mono mt-0.5">
+                        {mockAlerts.filter(a => a.status === 'read').length}
+                      </p>
+                      <p className="text-[9px] text-warning-500/70 mt-0.5">正在核实尽调</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-success-500/10 border border-success-500/20">
+                      <p className="text-[10px] text-dark-400">已闭环</p>
+                      <p className="text-xl font-bold text-success-400 font-mono mt-0.5">
+                        {mockAlerts.filter(a => a.status === 'processed').length}
+                      </p>
+                      <p className="text-[9px] text-success-500/70 mt-0.5">已复查归档</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                      <p className="text-[10px] text-dark-400">平均处置周期</p>
+                      <p className="text-xl font-bold text-purple-400 font-mono mt-0.5">2.3天</p>
+                      <p className="text-[9px] text-purple-500/70 mt-0.5">环比 ↓18%</p>
+                    </div>
+                  </div>
+
+                  <Card>
+                    <Card.Header>
+                      <Card.Title className="text-sm">跨房企风险比对</Card.Title>
+                      <Tag variant="outline">TOP5高风险企业</Tag>
+                    </Card.Header>
+                    <Card.Body>
+                      <BarChart data={companyAlertData} horizontal height={200} showLegend={false} />
+                      <div className="grid grid-cols-5 gap-2 mt-3">
+                        {highRiskCompanies.map((c, i) => (
+                          <div key={c.name} className="p-2 rounded-lg bg-dark-800/30 text-center">
+                            <p className="text-[10px] text-dark-400 truncate">{c.name}</p>
+                            <p className="text-sm font-bold text-danger-400 font-mono mt-0.5">{c.alerts}</p>
+                            <p className="text-[9px] text-dark-500 mt-0.5">条预警</p>
+                          </div>
+                        ))}
+                      </div>
+                    </Card.Body>
+                  </Card>
+
+                  <Card>
+                    <Card.Header>
+                      <Card.Title className="text-sm">处置流转跟踪</Card.Title>
+                      <Tag variant="primary">
+                        <Clock className="w-3 h-3 mr-1" />实时更新
+                      </Tag>
+                    </Card.Header>
+                    <Card.Body>
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-danger-500/5 border border-danger-500/20">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-medium text-danger-400">待分发</p>
+                            <Tag variant="danger" size="xs">{mockAlerts.filter(a => a.status === 'unread').length}条</Tag>
+                          </div>
+                          <div className="space-y-1.5">
+                            {mockAlerts.filter(a => a.status === 'unread').slice(0, 3).map(alert => (
+                              <div key={alert.id} className="p-2 rounded bg-dark-800/60 text-[10px]">
+                                <p className="text-white truncate">{alert.title}</p>
+                                <p className="text-dark-500 mt-0.5">{alert.companyName} · 今日</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-warning-500/5 border border-warning-500/20">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-medium text-warning-400">处理中</p>
+                            <Tag variant="warning" size="xs">{mockAlerts.filter(a => a.status === 'read').length}条</Tag>
+                          </div>
+                          <div className="space-y-1.5">
+                            {mockAlerts.filter(a => a.status === 'read').slice(0, 3).map(alert => (
+                              <div key={alert.id} className="p-2 rounded bg-dark-800/60 text-[10px]">
+                                <p className="text-white truncate">{alert.title}</p>
+                                <p className="text-dark-500 mt-0.5">核实中 · 张经理</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-success-500/5 border border-success-500/20">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-medium text-success-400">已闭环</p>
+                            <Tag variant="success" size="xs">{mockAlerts.filter(a => a.status === 'processed').length}条</Tag>
+                          </div>
+                          <div className="space-y-1.5">
+                            {mockAlerts.filter(a => a.status === 'processed').slice(0, 3).map(alert => (
+                              <div key={alert.id} className="p-2 rounded bg-dark-800/60 text-[10px]">
+                                <p className="text-white truncate">{alert.title}</p>
+                                <p className="text-dark-500 mt-0.5">已复查 · 昨日</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+
+                  <Card>
+                    <Card.Header>
+                      <Card.Title className="text-sm">监管跟踪记录</Card.Title>
+                      <Tag variant="outline">近7日</Tag>
+                    </Card.Header>
+                    <Card.Body className="py-2">
+                      <div className="space-y-2">
+                        {[
+                          { time: '今天 14:32', action: '下发监管函', target: '碧桂园', user: '监管一科', type: 'danger' },
+                          { time: '今天 10:15', action: '风险提示', target: '融创中国', user: '监管二科', type: 'warning' },
+                          { time: '昨天 16:45', action: '现场核查完成', target: '万科A', user: '监管一科', type: 'success' },
+                          { time: '昨天 11:20', action: '数据报送核实', target: '保利发展', user: '监管三科', type: 'info' },
+                          { time: '06-19 09:00', action: '季度风险评级', target: '全行业', user: '监管总部', type: 'primary' },
+                        ].map((record, i) => (
+                          <div key={i} className="flex items-start gap-3 py-2 border-b border-dark-700/20 last:border-b-0">
+                            <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                              record.type === 'danger' ? 'bg-danger-500' :
+                              record.type === 'warning' ? 'bg-warning-500' :
+                              record.type === 'success' ? 'bg-success-500' :
+                              record.type === 'primary' ? 'bg-brand-500' : 'bg-dark-500'
+                            }`} />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <p className="text-xs text-white">{record.action}</p>
+                                <Tag variant="outline" size="xs">{record.target}</Tag>
+                              </div>
+                              <div className="flex items-center gap-3 mt-0.5 text-[10px] text-dark-500">
+                                <span>{record.time}</span>
+                                <span>经办人: {record.user}</span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </Card.Body>
+                  </Card>
                 </div>
               )}
 

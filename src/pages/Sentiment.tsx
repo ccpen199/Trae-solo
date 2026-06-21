@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Search, Filter, TrendingUp, TrendingDown, Newspaper, BarChart3, PieChart as PieChartIcon, Calendar, ChevronRight, Star, Eye, MessageSquare, Share2 } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search, Filter, TrendingUp, TrendingDown, Newspaper, BarChart3, PieChart as PieChartIcon, Calendar, ChevronRight, Star, Eye, MessageSquare, Share2, Building2, AlertTriangle, Link2 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
@@ -8,8 +9,11 @@ import { LineChart } from '../components/charts/LineChart';
 import { PieChart } from '../components/charts/PieChart';
 import { BarChart } from '../components/charts/BarChart';
 import { mockNews, mockSentimentStats, mockSentimentTrend, mockSourceDistribution, mockHotKeywords } from '../data/sentiment';
+import { mockCompanies } from '../data/companies';
+import { mockProjects from '../data/projects';
 import { formatNumber } from '../utils/format';
 import type { NewsItem, SentimentType, SourceLevel } from '../types/sentiment';
+import { useAppStore } from '../stores/useAppStore';
 
 export default function Sentiment() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -18,6 +22,12 @@ export default function Sentiment() {
   const [sentimentFilter, setSentimentFilter] = useState<SentimentType | 'all'>('all');
   const [sourceFilter, setSourceFilter] = useState<SourceLevel | 'all'>('all');
   const [activeHotKeyword, setActiveHotKeyword] = useState<string | null>(null);
+  const [companyFilter, setCompanyFilter] = useState<string>('all');
+  const [regionFilter, setRegionFilter] = useState<string>('all');
+  const [dimensionView, setDimensionView] = useState<'trend' | 'company' | 'region'>('trend');
+  
+  const navigate = useNavigate();
+  const { setSelectedCompany, setFinanceContext } = useAppStore();
 
   const filteredNews = mockNews.filter(n => {
     if (searchKeyword && !n.title.includes(searchKeyword) && !n.summary.includes(searchKeyword)) {
@@ -52,6 +62,27 @@ export default function Sentiment() {
       },
     ],
   };
+
+  const companySentimentData = useMemo(() => {
+    return mockCompanies.slice(0, 6).map(c => ({
+      ...c,
+      total: Math.floor(Math.random() * 800) + 200,
+      positive: Math.floor(Math.random() * 400) + 100,
+      negative: Math.floor(Math.random() * 100) + 20,
+      neutral: 0,
+      score: Math.floor(Math.random() * 40) + 50,
+    })).map(c => ({ ...c, neutral: c.total - c.positive - c.negative }));
+  }, []);
+
+  const regionSentimentData = [
+    { name: '华东', total: 1280, positive: 720, negative: 180, neutral: 380 },
+    { name: '华南', total: 960, positive: 520, negative: 160, neutral: 280 },
+    { name: '华北', total: 840, positive: 450, negative: 140, neutral: 250 },
+    { name: '西南', total: 620, positive: 320, negative: 110, neutral: 190 },
+    { name: '华中', total: 540, positive: 280, negative: 90, neutral: 170 },
+    { name: '西北', total: 320, positive: 170, negative: 50, neutral: 100 },
+    { name: '东北', total: 280, positive: 140, negative: 45, neutral: 95 },
+  ];
 
   const trendData = {
     xAxis: mockSentimentTrend.map(t => t.date.slice(5)),
@@ -234,40 +265,264 @@ export default function Sentiment() {
           <Card className="flex-1 min-h-0 flex flex-col">
             <Card.Body className="flex-1 overflow-y-auto">
               {activeTab === 'overview' && (
-                <div className="space-y-5">
-                  <Card>
-                    <Card.Header>
-                      <Card.Title className="text-sm">舆情趋势</Card.Title>
-                      <Tag variant="outline">近14天</Tag>
-                    </Card.Header>
-                    <Card.Body>
-                      <LineChart data={trendData} height={280} showLegend />
-                    </Card.Body>
-                  </Card>
-
-                  <div className="grid grid-cols-2 gap-5">
-                    <Card>
-                      <Card.Header>
-                        <Card.Title className="text-sm">情感分布</Card.Title>
-                      </Card.Header>
-                      <Card.Body>
-                        <PieChart
-                          data={sentimentData}
-                          type="doughnut"
-                          height={200}
-                          showLegend={true}
-                        />
-                      </Card.Body>
-                    </Card>
-                    <Card>
-                      <Card.Header>
-                        <Card.Title className="text-sm">信源分布</Card.Title>
-                      </Card.Header>
-                      <Card.Body>
-                        <BarChart data={sourceData} horizontal height={200} showLegend={false} />
-                      </Card.Body>
-                    </Card>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    {[
+                      { key: 'trend', label: '趋势走势' },
+                      { key: 'company', label: '房企维度' },
+                      { key: 'region', label: '区域维度' },
+                    ].map(view => (
+                      <button
+                        key={view.key}
+                        onClick={() => setDimensionView(view.key as any)}
+                        className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
+                          dimensionView === view.key
+                            ? 'bg-brand-500/20 text-brand-400 border border-brand-500/30'
+                            : 'text-dark-400 hover:text-dark-300 hover:bg-dark-800/30 border border-transparent'
+                        }`}
+                      >
+                        {view.label}
+                      </button>
+                    ))}
+                    <div className="flex-1" />
+                    <button
+                      onClick={() => {
+                        const topCompany = companySentimentData.find(c => c.negative > 50);
+                        if (topCompany) {
+                          setSelectedCompany(topCompany as any);
+                          setFinanceContext({ companyId: topCompany.id, source: 'home' });
+                          navigate('/monitoring');
+                        }
+                      }}
+                      className="text-[11px] px-3 py-1.5 rounded-lg bg-danger-500/10 text-danger-400 hover:bg-danger-500/20 transition-colors flex items-center gap-1.5"
+                    >
+                      <AlertTriangle className="w-3 h-3" />
+                      关联财务异动
+                    </button>
                   </div>
+
+                  {dimensionView === 'trend' && (
+                    <div className="space-y-4">
+                      <Card>
+                        <Card.Header>
+                          <Card.Title className="text-sm">舆情情感走势</Card.Title>
+                          <Tag variant="outline">近14天 · 全行业</Tag>
+                        </Card.Header>
+                        <Card.Body>
+                          <LineChart data={trendData} height={280} showLegend />
+                        </Card.Body>
+                      </Card>
+                      <div className="grid grid-cols-2 gap-4">
+                        <Card>
+                          <Card.Header>
+                            <Card.Title className="text-sm">情感分布</Card.Title>
+                          </Card.Header>
+                          <Card.Body>
+                            <PieChart
+                              data={sentimentData}
+                              type="doughnut"
+                              height={200}
+                              showLegend={true}
+                            />
+                          </Card.Body>
+                        </Card>
+                        <Card>
+                          <Card.Header>
+                            <Card.Title className="text-sm">信源分布</Card.Title>
+                          </Card.Header>
+                          <Card.Body>
+                            <BarChart data={sourceData} horizontal height={200} showLegend={false} />
+                          </Card.Body>
+                        </Card>
+                      </div>
+                    </div>
+                  )}
+
+                  {dimensionView === 'company' && (
+                    <div className="space-y-4">
+                      <Card>
+                        <Card.Header>
+                          <Card.Title className="text-sm">房企舆情热度排行</Card.Title>
+                          <div className="flex items-center gap-2">
+                            <select
+                              value={companyFilter}
+                              onChange={(e) => setCompanyFilter(e.target.value)}
+                              className="text-[10px] bg-dark-800/50 border border-dark-700/50 rounded px-2 py-1 text-dark-300 focus:outline-none"
+                            >
+                              <option value="all">全部房企</option>
+                              <option value="state-owned">仅国企</option>
+                              <option value="private">仅民企</option>
+                            </select>
+                            <Tag variant="outline">TOP6</Tag>
+                          </div>
+                        </Card.Header>
+                        <Card.Body>
+                          <div className="space-y-3">
+                            {companySentimentData.map((company, i) => (
+                              <div 
+                                key={company.id}
+                                className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 cursor-pointer transition-all group"
+                                onClick={() => {
+                                  setSelectedCompany(company as any);
+                                  setFinanceContext({ companyId: company.id, source: 'home' });
+                                }}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="w-8 h-8 rounded-lg bg-dark-700/50 flex items-center justify-center text-lg flex-shrink-0">
+                                    {company.logo}
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2">
+                                      <p className="text-sm font-medium text-white group-hover:text-brand-400 transition-colors">
+                                        {company.shortName}
+                                      </p>
+                                      <Tag variant={company.type === 'state-owned' ? 'primary' : company.type === 'private' ? 'success' : 'warning'} size="xs">
+                                        {company.type === 'state-owned' ? '国企' : company.type === 'private' ? '民企' : '混合'}
+                                      </Tag>
+                                      <span className="text-[10px] font-mono text-brand-400">{company.total}篇报道</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 mt-2">
+                                      <div className="flex-1 h-2 rounded-full bg-dark-700 overflow-hidden flex">
+                                        <div 
+                                          className="h-full bg-success-500"
+                                          style={{ width: `${(company.positive / company.total) * 100}%` }}
+                                        />
+                                        <div 
+                                          className="h-full bg-dark-500"
+                                          style={{ width: `${(company.neutral / company.total) * 100}%` }}
+                                        />
+                                        <div 
+                                          className="h-full bg-danger-500"
+                                          style={{ width: `${(company.negative / company.total) * 100}%` }}
+                                        />
+                                      </div>
+                                      <span className="text-[10px] text-dark-400 font-mono w-16 text-right">
+                                        情感分 <span className={company.score >= 70 ? 'text-success-400' : company.score >= 50 ? 'text-warning-400' : 'text-danger-400'}>{company.score}</span>
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col gap-1 flex-shrink-0">
+                                    <span className="text-[10px] text-success-400">{company.positive}正面</span>
+                                    <span className="text-[10px] text-danger-400">{company.negative}负面</span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-dark-700/20">
+                                  <div className="flex items-center gap-1.5 text-[10px] text-dark-500">
+                                    <Link2 className="w-3 h-3" />
+                                    <span>关联预警 {Math.floor(Math.random()*3)+1} 条</span>
+                                  </div>
+                                  <button className="text-[10px] text-brand-400 hover:text-brand-300 flex items-center gap-0.5">
+                                    下钻分析 <ChevronRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </Card.Body>
+                      </Card>
+
+                      <Card>
+                        <Card.Header>
+                          <Card.Title className="text-sm">舆情-财务联动提示</Card.Title>
+                          <Tag variant="warning">
+                            <AlertTriangle className="w-3 h-3 mr-1" />需关注
+                          </Tag>
+                        </Card.Header>
+                        <Card.Body className="py-2.5">
+                          <div className="p-3 rounded-lg bg-warning-500/5 border border-warning-500/20">
+                            <div className="flex items-start gap-2.5">
+                              <AlertTriangle className="w-4 h-4 text-warning-400 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-xs font-medium text-warning-300">
+                                  碧桂园负面舆情环比上升 42%，建议同步核查财报异动
+                                </p>
+                                <div className="flex items-center gap-3 mt-2">
+                                  <button
+                                    onClick={() => navigate('/monitoring')}
+                                    className="text-[10px] px-2.5 py-1 rounded bg-warning-500/10 text-warning-400 hover:bg-warning-500/20 transition-colors"
+                                  >
+                                    → 跳转财报异动监测
+                                  </button>
+                                  <button
+                                    onClick={() => navigate('/finance')}
+                                    className="text-[10px] px-2.5 py-1 rounded bg-dark-700/50 text-dark-300 hover:bg-dark-700 transition-colors"
+                                  >
+                                    → 查看财务数据
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  )}
+
+                  {dimensionView === 'region' && (
+                    <div className="space-y-4">
+                      <Card>
+                        <Card.Header>
+                          <Card.Title className="text-sm">区域舆情分布</Card.Title>
+                          <div className="flex items-center gap-2">
+                            <select
+                              value={regionFilter}
+                              onChange={(e) => setRegionFilter(e.target.value)}
+                              className="text-[10px] bg-dark-800/50 border border-dark-700/50 rounded px-2 py-1 text-dark-300 focus:outline-none"
+                            >
+                              <option value="all">全部区域</option>
+                              {regionSentimentData.map(r => (
+                                <option key={r.name} value={r.name}>{r.name}</option>
+                              ))}
+                            </select>
+                            <Tag variant="outline">7大区域</Tag>
+                          </div>
+                        </Card.Header>
+                        <Card.Body>
+                          <div className="space-y-2.5">
+                            {regionSentimentData.map((region) => {
+                              const posRate = (region.positive / region.total) * 100;
+                              const negRate = (region.negative / region.total) * 100;
+                              return (
+                              <div 
+                                key={region.name}
+                                className="p-2.5 rounded-lg bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 cursor-pointer transition-all group"
+                                onClick={() => { setRegionFilter(region.name); }}
+                              >
+                                <div className="flex items-center justify-between mb-1.5">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium text-white group-hover:text-brand-400 transition-colors">{region.name}</span>
+                                    <span className="text-[10px] text-dark-500 font-mono">{region.total}篇</span>
+                                  </div>
+                                  <div className="flex items-center gap-3 text-[10px]">
+                                    <span className="text-success-400">正面 {(region.positive/region.total*100).toFixed(0)}%</span>
+                                    <span className="text-danger-400">负面 {(region.negative/region.total*100).toFixed(0)}%</span>
+                                  </div>
+                                </div>
+                                <div className="h-2 rounded-full bg-dark-700 overflow-hidden flex">
+                                  <div className="h-full bg-success-500" style={{ width: `${posRate}%` }} />
+                                  <div className="h-full bg-dark-500" style={{ width: `${100 - posRate - negRate}%` }} />
+                                  <div className="h-full bg-danger-500" style={{ width: `${negRate}%` }} />
+                                </div>
+                                <div className="flex items-center gap-3 mt-2 text-[10px] text-dark-500">
+                                  <span className="flex items-center gap-1">
+                                    <Building2 className="w-3 h-3" />
+                                    覆盖房企 {Math.floor(Math.random()*20)+10}家
+                                  </span>
+                                  <span className="flex items-center gap-1">
+                                    <Building2 className="w-3 h-3" />
+                                    在管项目 {Math.floor(Math.random()*200)+80}个
+                                  </span>
+                                  <button className="text-brand-400 hover:text-brand-300 ml-auto flex items-center gap-0.5">
+                                    区域下钻 <ChevronRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )})}
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  )}
                 </div>
               )}
 

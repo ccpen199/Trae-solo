@@ -25,6 +25,10 @@ export default function Home() {
   const [regionFilter, setRegionFilter] = useState<string>('all');
   const [dashboardTab, setDashboardTab] = useState('overview');
   const [expandedAlertId, setExpandedAlertId] = useState<string | null>(null);
+  const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [stageFilter, setStageFilter] = useState<string>('all');
+  const [partnerFilter, setPartnerFilter] = useState<string>('all');
+  const [xSearchView, setXSearchView] = useState<'grid' | 'table' | 'rank'>('grid');
 
   const salesTrendData = {
     xAxis: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -64,11 +68,44 @@ export default function Home() {
   const highAlerts = mockAlerts.filter(a => a.level === 'high').slice(0, 3);
 
   const allRegions = ['all', '华东', '华南', '华北', '西南', '华中', '西北', '东北'];
+  const allTypes = ['all', 'state-owned', 'private', 'mixed'];
+  const allStages = ['all', 'land-acquisition', 'construction', 'sales', 'delivery'];
+  const allPartners = ['all', '中国建筑', '万科物业', '金螳螂', '广田集团', '亚厦股份'];
   
   const filteredCompanies = useMemo(() => {
-    if (regionFilter === 'all') return mockCompanies.slice(0, 8);
-    return mockCompanies.filter(c => c.headquarters?.includes(regionFilter)).slice(0, 8);
-  }, [regionFilter]);
+    let result = mockCompanies.slice();
+    
+    if (regionFilter !== 'all') {
+      result = result.filter(c => c.headquarters?.includes(regionFilter));
+    }
+    
+    if (typeFilter !== 'all') {
+      result = result.filter(c => c.type === typeFilter);
+    }
+    
+    if (stageFilter !== 'all') {
+      result = result.filter(c => {
+        const companyProjects = mockProjects.filter(p => p.companyId === c.id);
+        return companyProjects.some(p => 
+          p.stages.some(s => s.type === stageFilter && s.status !== 'not-started')
+        );
+      });
+    }
+    
+    return result.slice(0, 8);
+  }, [regionFilter, typeFilter, stageFilter, partnerFilter]);
+  
+  const xSearchStats = useMemo(() => {
+    const companies = filteredCompanies;
+    const totalRevenue = companies.reduce((sum, c) => sum + (c.revenue || 0), 0);
+    const totalProjects = companies.reduce((sum, c) => 
+      sum + mockProjects.filter(p => p.companyId === c.id).length, 0
+    );
+    const avgDebtRatio = companies.length 
+      ? companies.reduce((sum, c) => sum + (c.debtRatio || 65), 0) / companies.length 
+      : 0;
+    return { totalRevenue, totalProjects, avgDebtRatio, companyCount: companies.length };
+  }, [filteredCompanies]);
 
   const handleCompanyDrill = (company: Company, target: 'finance' | 'relationship' | 'projects' | 'supply-chain') => {
     setSelectedCompany(company);
@@ -602,13 +639,16 @@ export default function Home() {
           <Card.Header>
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-3">
-                <Card.Title>热门房企</Card.Title>
-                <Tag variant="outline">关注度排行</Tag>
+                <Card.Title>多维度交叉检索</Card.Title>
+                <Tag variant="primary">
+                  <Target className="w-3 h-3 mr-1" />
+                  投研筛选
+                </Tag>
                 {selectedHomeCompany && (
-                  <Tag variant="primary" size="sm">
+                  <Tag variant="success" size="sm">
                     已选: {selectedHomeCompany.shortName}
                     <button
-                      onClick={(e) => { e.stopPropagation(); setSelectedHomeCompany(null); }}
+                      onClick={(e) => { e.stopPropagation(); setSelectedHomeCompany(null); setSelectedCompany(null); }}
                       className="ml-1.5 hover:text-white"
                     >
                       ×
@@ -617,189 +657,304 @@ export default function Home() {
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  <Filter className="w-3.5 h-3.5 text-dark-500" />
+                <div className="flex items-center gap-0.5 bg-dark-800/50 rounded-lg p-0.5">
+                  {(['grid', 'table', 'rank'] as const).map(view => (
+                    <button
+                      key={view}
+                      onClick={() => setXSearchView(view)}
+                      className={`px-2.5 py-1 text-[10px] rounded-md transition-all ${
+                        xSearchView === view
+                          ? 'bg-brand-500/20 text-brand-400'
+                          : 'text-dark-500 hover:text-dark-300'
+                      }`}
+                    >
+                      {view === 'grid' ? '卡片' : view === 'table' ? '列表' : '排行'}
+                    </button>
+                  ))}
+                </div>
+                <Tag variant="outline" size="sm">{filteredCompanies.length}家匹配</Tag>
+              </div>
+            </div>
+          </Card.Header>
+          <Card.Body>
+            <div className="space-y-3.5">
+              <div className="grid grid-cols-4 gap-2.5">
+                <div>
+                  <label className="text-[10px] text-dark-500 mb-1.5 block flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" /> 区域
+                  </label>
                   <select
                     value={regionFilter}
                     onChange={(e) => setRegionFilter(e.target.value)}
-                    className="text-xs bg-dark-800/50 border border-dark-700/50 rounded-lg px-2 py-1 text-dark-300 focus:outline-none focus:border-brand-500/50"
+                    className="w-full h-7 px-2 text-xs bg-dark-800/50 border border-dark-700/50 rounded-lg text-dark-200 focus:outline-none focus:border-brand-500/50"
                   >
                     {allRegions.map(r => (
                       <option key={r} value={r}>{r === 'all' ? '全部区域' : r}</option>
                     ))}
                   </select>
                 </div>
-                <Tag variant="outline" size="sm">{filteredCompanies.length}家</Tag>
-              </div>
-            </div>
-          </Card.Header>
-          <Card.Body>
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2.5">
-                {[
-                  { key: 'overview', label: '总览' },
-                  { key: 'project', label: '项目节点' },
-                  { key: 'partner', label: '合作方' },
-                  { key: 'sentiment', label: '舆情' },
-                ].map(tab => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setDashboardTab(tab.key)}
-                    className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
-                      dashboardTab === tab.key
-                        ? 'bg-brand-500/20 text-brand-400 border border-brand-500/30'
-                        : 'text-dark-400 hover:text-dark-300 hover:bg-dark-800/30'
-                    }`}
+                <div>
+                  <label className="text-[10px] text-dark-500 mb-1.5 block flex items-center gap-1">
+                    <Building2 className="w-2.5 h-2.5" /> 企业性质
+                  </label>
+                  <select
+                    value={typeFilter}
+                    onChange={(e) => setTypeFilter(e.target.value)}
+                    className="w-full h-7 px-2 text-xs bg-dark-800/50 border border-dark-700/50 rounded-lg text-dark-200 focus:outline-none focus:border-brand-500/50"
                   >
-                    {tab.label}
-                  </button>
-                ))}
+                    <option value="all">全部性质</option>
+                    <option value="state-owned">国企</option>
+                    <option value="private">民企</option>
+                    <option value="mixed">混合所有制</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] text-dark-500 mb-1.5 block flex items-center gap-1">
+                    <Home className="w-2.5 h-2.5" /> 项目节点
+                  </label>
+                  <select
+                    value={stageFilter}
+                    onChange={(e) => setStageFilter(e.target.value)}
+                    className="w-full h-7 px-2 text-xs bg-dark-800/50 border border-dark-700/50 rounded-lg text-dark-200 focus:outline-none focus:border-brand-500/50"
+                  >
+                    <option value="all">全部阶段</option>
+                    <option value="land-acquisition">拿地阶段</option>
+                    <option value="construction">开工建设</option>
+                    <option value="sales">在售阶段</option>
+                    <option value="delivery">已交付</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] text-dark-500 mb-1.5 block flex items-center gap-1">
+                    <Link2 className="w-2.5 h-2.5" /> 核心合作方
+                  </label>
+                  <select
+                    value={partnerFilter}
+                    onChange={(e) => setPartnerFilter(e.target.value)}
+                    className="w-full h-7 px-2 text-xs bg-dark-800/50 border border-dark-700/50 rounded-lg text-dark-200 focus:outline-none focus:border-brand-500/50"
+                  >
+                    {allPartners.map(p => (
+                      <option key={p} value={p}>{p === 'all' ? '全部合作方' : p}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
-              {dashboardTab === 'overview' && (
-                <div className="grid grid-cols-4 gap-3 mb-3">
-                  {dashboardMetrics.map((metric) => (
-                    <div key={metric.key} className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 cursor-pointer hover:border-brand-500/30 transition-colors">
-                      <p className="text-[10px] text-dark-500">{metric.label}</p>
-                      <p className="text-base font-bold text-white font-mono mt-1">{metric.value}</p>
-                      <div className={`flex items-center gap-1 mt-1 text-[10px] ${
-                        metric.change >= 0 ? 'text-success-500' : 'text-danger-500'
-                      }`}>
-                        {metric.change >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                        <span>{metric.change >= 0 ? '+' : ''}{metric.change}%</span>
-                        <span className="text-dark-600 ml-0.5">{metric.changeLabel}</span>
+              <div className="grid grid-cols-4 gap-3">
+                <div className="p-2.5 rounded-lg bg-gradient-to-br from-brand-500/10 to-transparent border border-brand-500/20">
+                  <p className="text-[10px] text-dark-500">匹配房企</p>
+                  <p className="text-lg font-bold text-white font-mono mt-0.5">{xSearchStats.companyCount}家</p>
+                  <p className="text-[9px] text-dark-500 mt-0.5">占总量 {(xSearchStats.companyCount / mockCompanies.length * 100).toFixed(1)}%</p>
+                </div>
+                <div className="p-2.5 rounded-lg bg-gradient-to-br from-success-500/10 to-transparent border border-success-500/20">
+                  <p className="text-[10px] text-dark-500">累计销售额</p>
+                  <p className="text-lg font-bold text-white font-mono mt-0.5">{formatMoney(xSearchStats.totalRevenue)}</p>
+                  <p className="text-[9px] text-success-500 mt-0.5">行业集中度 ↑</p>
+                </div>
+                <div className="p-2.5 rounded-lg bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-500/20">
+                  <p className="text-[10px] text-dark-500">在管项目</p>
+                  <p className="text-lg font-bold text-white font-mono mt-0.5">{xSearchStats.totalProjects}个</p>
+                  <p className="text-[9px] text-purple-400 mt-0.5">在建 + 在售</p>
+                </div>
+                <div className="p-2.5 rounded-lg bg-gradient-to-br from-warning-500/10 to-transparent border border-warning-500/20">
+                  <p className="text-[10px] text-dark-500">平均负债率</p>
+                  <p className="text-lg font-bold text-white font-mono mt-0.5">{xSearchStats.avgDebtRatio.toFixed(1)}%</p>
+                  <p className="text-[9px] text-warning-400 mt-0.5">高于60%预警线</p>
+                </div>
+              </div>
+
+              {xSearchView === 'grid' && (
+                <div className="grid grid-cols-4 gap-2.5 mt-1">
+                  {filteredCompanies.map((company, index) => {
+                    const companyProjects = mockProjects.filter(p => p.companyId === company.id);
+                    const isSelected = selectedHomeCompany?.id === company.id;
+                    return (
+                    <div
+                      key={company.id}
+                      className={`p-3 rounded-xl cursor-pointer transition-all group relative ${
+                        isSelected
+                          ? 'bg-brand-500/10 border-2 border-brand-500/50'
+                          : 'bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 hover:bg-dark-800/50'
+                      }`}
+                    >
+                      <div 
+                        className="relative"
+                        onClick={() => {
+                          setSelectedHomeCompany(isSelected ? null : company);
+                          setSelectedCompany(isSelected ? null : company);
+                        }}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className="relative flex-shrink-0">
+                            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-lg border border-dark-600/50">
+                              {company.logo}
+                            </div>
+                            <span className="absolute -top-1 -right-1 w-4 h-4 bg-dark-900 border border-dark-600 rounded-full text-[9px] font-bold text-brand-400 flex items-center justify-center">
+                              {index + 1}
+                            </span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-medium text-white truncate group-hover:text-brand-400 transition-colors">
+                              {company.shortName}
+                            </p>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <Tag variant={company.type === 'state-owned' ? 'primary' : company.type === 'private' ? 'success' : 'warning'} size="xs">
+                                {company.type === 'state-owned' ? '国企' : company.type === 'private' ? '民企' : '混合'}
+                              </Tag>
+                              <span className="text-[9px] text-dark-500 font-mono">{formatMoney(company.revenue || 0)}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-dark-700/30">
+                          <div className="text-[9px] text-dark-500">
+                            <span className="text-brand-400 font-mono">{companyProjects.length}</span> 项目
+                          </div>
+                          <div className="text-[9px] text-dark-500">
+                            <span className="text-warning-400 font-mono">{company.debtRatio || 65}%</span> 负债
+                          </div>
+                          <div className="text-[9px] text-dark-500">
+                            <span className="text-purple-400 font-mono">{Math.floor(Math.random()*8)+3}</span> 高管
+                          </div>
+                        </div>
                       </div>
+
+                      {isSelected && (
+                        <div className="mt-2.5 pt-2.5 border-t border-dark-700/30 space-y-1.5">
+                          <div className="grid grid-cols-4 gap-1">
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'finance'); }}
+                              className="text-[9px] py-1.5 rounded bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
+                            >
+                              财务
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'relationship'); }}
+                              className="text-[9px] py-1.5 rounded bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors"
+                            >
+                              关系
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'projects'); }}
+                              className="text-[9px] py-1.5 rounded bg-success-500/10 text-success-400 hover:bg-success-500/20 transition-colors"
+                            >
+                              项目
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'supply-chain'); }}
+                              className="text-[9px] py-1.5 rounded bg-warning-500/10 text-warning-400 hover:bg-warning-500/20 transition-colors"
+                            >
+                              供应链
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  ))}
+                  )})}
                 </div>
               )}
 
-              {dashboardTab === 'project' && (
-                <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 mb-3">
-                  <p className="text-xs font-medium text-dark-300 mb-2">📊 项目节点下钻</p>
-                  <div className="grid grid-cols-5 gap-2">
-                    {['拿地', '开工', '预售', '封顶', '交付'].map((stage, i) => (
-                      <div key={stage} className="text-center p-2 rounded bg-dark-800/50">
-                        <p className="text-xs font-medium text-white">{86520 - i * 15000}</p>
-                        <p className="text-[10px] text-dark-500 mt-0.5">{stage}</p>
-                      </div>
-                    ))}
-                  </div>
+              {xSearchView === 'table' && (
+                <div className="mt-1 rounded-lg overflow-hidden border border-dark-700/30">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="bg-dark-800/50 text-dark-400 text-[10px]">
+                        <th className="text-left py-2 px-3 font-medium">排名</th>
+                        <th className="text-left py-2 px-3 font-medium">企业名称</th>
+                        <th className="text-left py-2 px-3 font-medium">性质</th>
+                        <th className="text-right py-2 px-3 font-medium">销售额</th>
+                        <th className="text-right py-2 px-3 font-medium">项目数</th>
+                        <th className="text-right py-2 px-3 font-medium">负债率</th>
+                        <th className="text-center py-2 px-3 font-medium">区域</th>
+                        <th className="text-center py-2 px-3 font-medium">操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredCompanies.map((company, index) => (
+                        <tr 
+                          key={company.id} 
+                          className="border-t border-dark-700/20 hover:bg-dark-800/30 transition-colors"
+                        >
+                          <td className="py-2.5 px-3 font-mono text-[10px] text-dark-500">{index + 1}</td>
+                          <td className="py-2.5 px-3">
+                            <div className="flex items-center gap-2">
+                              <span className="text-base">{company.logo}</span>
+                              <span className="text-white font-medium">{company.shortName}</span>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <Tag variant={company.type === 'state-owned' ? 'primary' : company.type === 'private' ? 'success' : 'warning'} size="xs">
+                              {company.type === 'state-owned' ? '国企' : company.type === 'private' ? '民企' : '混合'}
+                            </Tag>
+                          </td>
+                          <td className="py-2.5 px-3 text-right font-mono text-brand-400">{formatMoney(company.revenue || 0)}</td>
+                          <td className="py-2.5 px-3 text-right font-mono text-purple-400">
+                            {mockProjects.filter(p => p.companyId === company.id).length}
+                          </td>
+                          <td className="py-2.5 px-3 text-right font-mono text-warning-400">
+                            {company.debtRatio || 65}%
+                          </td>
+                          <td className="py-2.5 px-3 text-center text-dark-400 text-[10px]">
+                            {company.headquarters?.split(' ')[0] || '华东'}
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <div className="flex items-center justify-center gap-1">
+                              <button 
+                                onClick={() => handleCompanyDrill(company, 'finance')}
+                                className="text-[9px] px-2 py-1 rounded bg-brand-500/10 text-brand-400 hover:bg-brand-500/20"
+                              >财务</button>
+                              <button 
+                                onClick={() => handleCompanyDrill(company, 'projects')}
+                                className="text-[9px] px-2 py-1 rounded bg-success-500/10 text-success-400 hover:bg-success-500/20"
+                              >项目</button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
 
-              {dashboardTab === 'partner' && (
-                <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 mb-3">
-                  <p className="text-xs font-medium text-dark-300 mb-2">🤝 合作方网络</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['中国建筑', '万科物业', '碧桂园服务', '保利发展', '融创服务', '中海地产', '华润置地', '龙湖集团'].map((p, i) => (
-                      <Tag key={p} variant={i < 3 ? 'primary' : 'outline'} size="sm">
-                        <Link2 className="w-2.5 h-2.5 mr-1" />{p}
-                      </Tag>
-                    ))}
+              {xSearchView === 'rank' && (
+                <div className="grid grid-cols-2 gap-3 mt-1">
+                  <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30">
+                    <p className="text-xs font-medium text-dark-300 mb-2">🏆 销售金额榜</p>
+                    <div className="space-y-1.5">
+                      {filteredCompanies.slice(0, 5).map((c, i) => (
+                        <div key={c.id} className="flex items-center gap-2.5">
+                          <span className={`w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold ${
+                            i < 3 ? 'bg-gradient-to-br from-warning-500 to-danger-500 text-white' : 'bg-dark-700 text-dark-400'
+                          }`}>{i + 1}</span>
+                          <span className="text-sm">{c.logo}</span>
+                          <span className="flex-1 text-xs text-white truncate">{c.shortName}</span>
+                          <span className="text-xs font-mono text-brand-400">{formatMoney(c.revenue || 0)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30">
+                    <p className="text-xs font-medium text-dark-300 mb-2">📊 项目数量榜</p>
+                    <div className="space-y-1.5">
+                      {[...filteredCompanies].sort((a, b) => 
+                        mockProjects.filter(p => p.companyId === b.id).length - 
+                        mockProjects.filter(p => p.companyId === a.id).length
+                      ).slice(0, 5).map((c, i) => {
+                        const count = mockProjects.filter(p => p.companyId === c.id).length;
+                        return (
+                        <div key={c.id} className="flex items-center gap-2.5">
+                          <span className={`w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold ${
+                            i < 3 ? 'bg-gradient-to-br from-purple-500 to-brand-500 text-white' : 'bg-dark-700 text-dark-400'
+                          }`}>{i + 1}</span>
+                          <span className="text-sm">{c.logo}</span>
+                          <span className="flex-1 text-xs text-white truncate">{c.shortName}</span>
+                          <span className="text-xs font-mono text-purple-400">{count}个</span>
+                        </div>
+                      )})}
+                    </div>
                   </div>
                 </div>
               )}
-
-              {dashboardTab === 'sentiment' && (
-                <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 mb-3">
-                  <p className="text-xs font-medium text-dark-300 mb-2">🔥 热点关键词</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {mockHotKeywords.slice(0, 8).map((kw, i) => (
-                      <Tag key={i} variant={kw.trend === 'up' ? 'danger' : 'success'} size="sm">
-                        #{kw.keyword} · {kw.count}篇
-                      </Tag>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="grid grid-cols-4 gap-3">
-              {filteredCompanies.map((company, index) => {
-                const companyProjects = mockProjects.filter(p => p.companyId === company.id);
-                const isSelected = selectedHomeCompany?.id === company.id;
-                return (
-                <div
-                  key={company.id}
-                  className={`p-4 rounded-xl cursor-pointer transition-all text-center group relative ${
-                    isSelected
-                      ? 'bg-brand-500/10 border-2 border-brand-500/50'
-                      : 'bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 hover:bg-dark-800/50'
-                  }`}
-                >
-                  <div 
-                    className="z-10 relative"
-                    onClick={() => {
-                      setSelectedHomeCompany(isSelected ? null : company);
-                      setSelectedCompany(isSelected ? null : company);
-                    }}
-                  >
-                    <div className="relative inline-block">
-                      <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-2xl border border-dark-600/50">
-                        {company.logo}
-                      </div>
-                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-dark-900 border border-dark-600 rounded-full text-xs font-bold text-brand-400 flex items-center justify-center">
-                        {index + 1}
-                      </span>
-                    </div>
-                    <p className="text-sm font-medium text-white mt-3 truncate group-hover:text-brand-400 transition-colors">
-                      {company.shortName}
-                    </p>
-                    <div className="flex items-center justify-center gap-1 mt-2">
-                      <Tag variant={company.type === 'state-owned' ? 'primary' : company.type === 'private' ? 'success' : 'warning'} size="sm">
-                        {company.type === 'state-owned' ? '国企' : company.type === 'private' ? '民企' : '混合'}
-                      </Tag>
-                    </div>
-                    <p className="text-xs text-dark-500 mt-1.5 font-mono">
-                      {formatMoney(company.revenue || 0)}
-                    </p>
-                    <div className="flex items-center justify-center gap-2 mt-1.5 text-[10px] text-dark-500">
-                      <span className="flex items-center gap-0.5">
-                        <MapPin className="w-2.5 h-2.5" />
-                        {company.headquarters?.split(' ')[0] || '华东'}
-                      </span>
-                      <span className="text-dark-700">|</span>
-                      <span className="flex items-center gap-0.5">
-                        <Building2 className="w-2.5 h-2.5" />
-                        {companyProjects.length}项目
-                      </span>
-                    </div>
-                  </div>
-
-                  {isSelected && (
-                    <div className="mt-3 pt-3 border-t border-dark-700/30 space-y-1.5 z-20 relative">
-                      <p className="text-[10px] text-dark-500 mb-1.5">下钻到:</p>
-                      <div className="grid grid-cols-2 gap-1.5">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'finance'); }}
-                          className="text-[10px] py-1.5 rounded bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
-                        >
-                          <BarChart3 className="w-2.5 h-2.5 mr-0.5 inline" />财务
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'relationship'); }}
-                          className="text-[10px] py-1.5 rounded bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors"
-                        >
-                          <Network className="w-2.5 h-2.5 mr-0.5 inline" />关系
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'projects'); }}
-                          className="text-[10px] py-1.5 rounded bg-success-500/10 text-success-400 hover:bg-success-500/20 transition-colors"
-                        >
-                          <Building2 className="w-2.5 h-2.5 mr-0.5 inline" />项目
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'supply-chain'); }}
-                          className="text-[10px] py-1.5 rounded bg-warning-500/10 text-warning-400 hover:bg-warning-500/20 transition-colors"
-                        >
-                          <Database className="w-2.5 h-2.5 mr-0.5 inline" />供应链
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )})}
             </div>
           </Card.Body>
         </Card>
