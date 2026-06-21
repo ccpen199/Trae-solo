@@ -1,5 +1,5 @@
 import { CATEGORIES, PROVINCES } from '../../shared/types';
-import type { MarketPrice, PricePoint, RegionalPrice, Supply, Station, AllianceNode, AllianceTask, Settlement, DashboardMetrics, FunnelStep, DataPoint, User, PriceAlert, Certification } from '../../shared/types';
+import type { MarketPrice, PricePoint, RegionalPrice, Supply, Station, AllianceNode, AllianceTask, Settlement, DashboardMetrics, FunnelStep, DataPoint, User, PriceAlert, Certification, UserRole } from '../../shared/types';
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
@@ -8,12 +8,31 @@ const basePrices: Record<string, number> = {
   '7': 8500, '8': 2800, '9': 4200, '10': 1650, '11': 2200, '12': 980,
 };
 
+export const demoAccounts = [
+  { phone: 'admin', password: 'admin', role: 'operator' as UserRole, companyName: '平台运营中心', name: '系统管理员' },
+  { phone: 'platform', password: 'platform', role: 'operator' as UserRole, companyName: '盟主运营中心', name: '平台盟主' },
+  { phone: 'ops', password: 'ops', role: 'operator' as UserRole, companyName: '运营管理部', name: '运营专员' },
+  { phone: 'supplier', password: 'supplier', role: 'supplier' as UserRole, companyName: '永达回收站', name: '张老板' },
+  { phone: 'buyer', password: 'buyer', role: 'buyer' as UserRole, companyName: '鑫达冶炼厂', name: '李经理' },
+  { phone: '13800000001', password: '123456', role: 'supplier' as UserRole, companyName: '永达回收站', name: '张老板' },
+  { phone: '13800000002', password: '123456', role: 'buyer' as UserRole, companyName: '鑫达冶炼厂', name: '李经理' },
+  { phone: '13800000003', password: '123456', role: 'operator' as UserRole, companyName: '华东回收联盟', name: '王盟主' },
+];
+
 export const mockUsers: User[] = [
   { id: 'u1', phone: '13800138001', role: 'supplier', companyName: '北京鑫源回收站', status: 'approved', createdAt: '2024-01-15T00:00:00Z' },
   { id: 'u2', phone: '13800138002', role: 'supplier', companyName: '上海宏达物资回收有限公司', status: 'approved', createdAt: '2024-02-20T00:00:00Z' },
   { id: 'u3', phone: '13800138003', role: 'buyer', companyName: '江西铜业集团', status: 'approved', createdAt: '2024-01-10T00:00:00Z' },
   { id: 'u4', phone: '13800138004', role: 'buyer', companyName: '山东魏桥铝业', status: 'approved', createdAt: '2024-03-05T00:00:00Z' },
   { id: 'u5', phone: '13800138005', role: 'operator', companyName: '平台运营管理', status: 'approved', createdAt: '2023-12-01T00:00:00Z' },
+  ...demoAccounts.map((acc, idx) => ({
+    id: `demo_${idx}`,
+    phone: acc.phone,
+    role: acc.role,
+    companyName: acc.companyName,
+    status: 'approved' as const,
+    createdAt: '2024-01-01T00:00:00Z',
+  })),
 ];
 
 export const mockCurrentUser: User = mockUsers[2];

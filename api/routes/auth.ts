@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { mockUsers, mockCurrentUser } from '../mock/data';
+import { mockUsers, mockCurrentUser, demoAccounts } from '../mock/data';
 import type { ApiResponse, User, UserRole } from '../../shared/types';
 
 const router = Router();
@@ -40,8 +40,42 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   if (!phone || !password) {
     res.status(400).json({
       success: false,
-      message: '请输入手机号和密码',
+      message: '请输入账号和密码',
     });
+    return;
+  }
+
+  const demoAccount = demoAccounts.find(acc => acc.phone === phone);
+  if (demoAccount) {
+    if (demoAccount.password !== password) {
+      res.status(401).json({
+        success: false,
+        message: '密码错误',
+      });
+      return;
+    }
+
+    const user = mockUsers.find(u => u.phone === phone && u.status === 'approved');
+    if (!user) {
+      res.status(401).json({
+        success: false,
+        message: '账号不存在',
+      });
+      return;
+    }
+
+    const token = jwt.sign(
+      { userId: user.id, role: user.role, phone: user.phone },
+      JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    const response: ApiResponse<{ token: string; user: User }> = {
+      success: true,
+      data: { token, user },
+      message: `登录成功，欢迎${user.role === 'supplier' ? '货源方' : user.role === 'buyer' ? '采购方' : '运营方'}`,
+    };
+    res.json(response);
     return;
   }
 
@@ -50,7 +84,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   if (!user) {
     res.status(401).json({
       success: false,
-      message: '用户名或密码错误，或账号未通过审核',
+      message: '账号不存在或未通过审核',
     });
     return;
   }

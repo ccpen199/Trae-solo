@@ -6,7 +6,8 @@ import {
   Phone, Lock, Building2, Factory, Settings,
   CheckCircle, ArrowRight, Eye, EyeOff, Shield,
   TrendingUp, Package, Users, BarChart3, ChevronRight,
-  Search, Bell, MapPin, Sparkles, ArrowLeft
+  Search, Bell, MapPin, Sparkles, ArrowLeft,
+  AlertCircle, User
 } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '@/services/api';
@@ -30,6 +31,7 @@ const Login: React.FC = () => {
     password: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loginError, setLoginError] = useState<string>('');
 
   const roles = [
     { value: 'supplier', label: '货源方', description: '回收站/个体户', icon: Building2, color: 'from-green-500 to-emerald-500' },
@@ -60,14 +62,10 @@ const Login: React.FC = () => {
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!formData.phone.trim()) {
-      newErrors.phone = '请输入手机号';
-    } else if (!/^1[3-9]\d{9}$/.test(formData.phone)) {
-      newErrors.phone = '请输入正确的手机号';
+      newErrors.phone = '请输入账号';
     }
     if (!formData.password) {
       newErrors.password = '请输入密码';
-    } else if (formData.password.length < 6) {
-      newErrors.password = '密码长度不能少于6位';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -75,6 +73,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError('');
     if (!validate()) return;
 
     setLoading(true);
@@ -83,7 +82,7 @@ const Login: React.FC = () => {
       if (result.success) {
         navigate(roleHomeRoutes[selectedRole], { replace: true });
       } else {
-        setErrors({ phone: result.message || '登录失败，请检查手机号和密码' });
+        setLoginError(result.message || '账号或密码错误，请重新输入');
       }
     } finally {
       setLoading(false);
@@ -92,18 +91,21 @@ const Login: React.FC = () => {
 
   const handleQuickDemo = async (role: UserRole) => {
     const demoPhones: Record<UserRole, string> = {
-      supplier: '13800000001',
-      buyer: '13800000002',
-      operator: '13800000003',
+      supplier: 'supplier',
+      buyer: 'buyer',
+      operator: 'admin',
     };
     setSelectedRole(role);
-    setFormData({ phone: demoPhones[role], password: 'Demo123456' });
+    setFormData({ phone: demoPhones[role], password: '123456' });
     setLoading(true);
+    setLoginError('');
     setTimeout(async () => {
       try {
-        const result = await login(demoPhones[role], 'Demo123456', role);
+        const result = await login(demoPhones[role], '123456', role);
         if (result.success) {
           navigate(roleHomeRoutes[role], { replace: true });
+        } else {
+          setLoginError(result.message || '登录失败');
         }
       } finally {
           setLoading(false);
@@ -215,12 +217,18 @@ const Login: React.FC = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
+                {loginError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-600">{loginError}</p>
+                  </div>
+                )}
+
                 <Input
-                  label="手机号"
-                  type="tel"
-                  placeholder="请输入手机号"
-                  icon={<Phone className="w-4 h-4" />}
-                  maxLength={11}
+                  label="账号"
+                  type="text"
+                  placeholder="请输入账号（如：admin、platform、ops、supplier、buyer）"
+                  icon={<User className="w-4 h-4" />}
                   value={formData.phone}
                   onChange={(e) => handleChange('phone', e.target.value)}
                   error={errors.phone}
@@ -230,7 +238,7 @@ const Login: React.FC = () => {
                   <Input
                     label="密码"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="请输入密码"
+                    placeholder="请输入密码（演示账号密码：123456）"
                     icon={<Lock className="w-4 h-4" />}
                     value={formData.password}
                     onChange={(e) => handleChange('password', e.target.value)}
@@ -281,29 +289,34 @@ const Login: React.FC = () => {
                   </Link>
                 </p>
                 <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
-                  <p className="text-xs font-medium text-amber-800 mb-2">💡 体验账号（点击一键登录）</p>
-                  <div className="grid grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleQuickDemo('supplier')}
-                      className="text-xs bg-white border border-amber-300 rounded-md py-1.5 px-2 text-amber-700 hover:bg-amber-100 transition-colors"
-                    >
-                      货源方
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleQuickDemo('buyer')}
-                      className="text-xs bg-white border border-amber-300 rounded-md py-1.5 px-2 text-amber-700 hover:bg-amber-100 transition-colors"
-                    >
-                      采购方
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleQuickDemo('operator')}
-                      className="text-xs bg-white border border-amber-300 rounded-md py-1.5 px-2 text-amber-700 hover:bg-amber-100 transition-colors"
-                    >
-                      运营方
-                    </button>
+                  <p className="text-xs font-medium text-amber-800 mb-2">💡 体验账号（点击一键登录，密码均为：123456）</p>
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleQuickDemo('supplier')}
+                        className="text-xs bg-white border border-amber-300 rounded-md py-1.5 px-2 text-amber-700 hover:bg-amber-100 transition-colors"
+                      >
+                        货源方
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickDemo('buyer')}
+                        className="text-xs bg-white border border-amber-300 rounded-md py-1.5 px-2 text-amber-700 hover:bg-amber-100 transition-colors"
+                      >
+                        采购方
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickDemo('operator')}
+                        className="text-xs bg-white border border-amber-300 rounded-md py-1.5 px-2 text-amber-700 hover:bg-amber-100 transition-colors"
+                      >
+                        运营方
+                      </button>
+                    </div>
+                    <p className="text-xs text-amber-600">
+                      可用账号：admin / platform / ops / supplier / buyer / 13800000001 / 13800000002 / 13800000003
+                    </p>
                   </div>
                 </div>
               </div>
