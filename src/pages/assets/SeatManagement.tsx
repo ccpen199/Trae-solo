@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Plus, Search, Filter, Edit, Trash2, Monitor, Cpu, Wifi } from 'lucide-react';
-import { seats, devices } from '@/data/mockData';
+import { Plus, Search, Filter, Edit, Trash2, Monitor, Cpu, Wifi, Clock, User, ChevronDown, ChevronUp, Gauge, Gamepad2 } from 'lucide-react';
+import { seats, devices, seatMapDataList } from '@/data/mockData';
 import { useAppStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
 
@@ -20,8 +20,18 @@ export default function SeatManagement() {
   const [selectedStatus, setSelectedStatus] = useState('全部状态');
   const [searchText, setSearchText] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
+  const [expandedSeatId, setExpandedSeatId] = useState<string | null>(null);
 
   const storeSeats = seats.filter((s) => s.storeId === currentStoreId);
+  const storeSeatMapData = seatMapDataList.filter(s => seats.find(seat => seat.id === s.id)?.storeId === currentStoreId);
+
+  const toggleSeatExpand = (seatId: string) => {
+    setExpandedSeatId(expandedSeatId === seatId ? null : seatId);
+  };
+
+  const getSeatMapData = (seatId: string) => {
+    return seatMapDataList.find(s => s.id === seatId);
+  };
 
   const filteredSeats = storeSeats.filter((seat) => {
     const matchArea = selectedArea === '全部区域' || seat.area === selectedArea.replace('区', '') + '区';
@@ -156,7 +166,7 @@ export default function SeatManagement() {
         <div className="p-6 rounded-xl bg-dark-800/50 border border-cyber-800/50">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">座位分布图</h3>
-            <div className="flex items-center gap-4 text-sm">
+            <div className="flex flex-wrap items-center gap-4 text-sm">
               <span className="flex items-center gap-2">
                 <span className="w-4 h-4 rounded bg-neon-green/50 border border-neon-green"></span>
                 <span className="text-dark-300">空闲</span>
@@ -173,15 +183,29 @@ export default function SeatManagement() {
                 <span className="w-4 h-4 rounded bg-dark-600/50 border border-dark-600"></span>
                 <span className="text-dark-300">维护中</span>
               </span>
+              <span className="flex items-center gap-2 text-dark-400">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-neon-green"></span>
+                  <span className="text-[10px]">&lt;10ms</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-cyber-400"></span>
+                  <span className="text-[10px]">&lt;30ms</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-neon-orange"></span>
+                  <span className="text-[10px]">&lt;60ms</span>
+                </span>
+              </span>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <div className="inline-grid gap-2 min-w-max" style={{ gridTemplateColumns: `repeat(${cols + 1}, minmax(0, 1fr))` }}>
+            <div className="inline-grid gap-3 min-w-max" style={{ gridTemplateColumns: `repeat(${cols + 1}, minmax(0, 1fr))` }}>
               {/* 列标题 */}
               <div></div>
               {Array.from({ length: cols }, (_, i) => (
-                <div key={i} className="w-14 h-8 flex items-center justify-center text-xs text-dark-400">
+                <div key={i} className="w-20 h-8 flex items-center justify-center text-xs text-dark-400">
                   {i + 1}列
                 </div>
               ))}
@@ -189,7 +213,7 @@ export default function SeatManagement() {
               {/* 行 */}
               {Array.from({ length: rows }, (_, rowIndex) => (
                 <>
-                  <div key={`row-${rowIndex}`} className="w-12 h-14 flex items-center justify-center text-xs text-dark-400">
+                  <div key={`row-${rowIndex}`} className="w-12 h-20 flex items-center justify-center text-xs text-dark-400">
                     {rowIndex + 1}排
                   </div>
                   {Array.from({ length: cols }, (_, colIndex) => {
@@ -197,31 +221,82 @@ export default function SeatManagement() {
                       (s) => s.row === rowIndex + 1 && s.col === colIndex + 1
                     );
                     if (!seat) {
-                      return <div key={`empty-${rowIndex}-${colIndex}`} className="w-14 h-14"></div>;
+                      return <div key={`empty-${rowIndex}-${colIndex}`} className="w-20 h-20"></div>;
                     }
                     const device = getDevice(seat.deviceId);
+                    const seatMapData = getSeatMapData(seat.id);
                     const statusInfo = statusMap[seat.status];
 
                     return (
                       <div
                         key={seat.id}
                         className={cn(
-                          'w-14 h-14 rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all duration-200 border-2',
-                          seat.status === 'available' && 'bg-neon-green/10 border-neon-green/50 hover:bg-neon-green/20 hover:shadow-neon-green',
+                          'w-20 h-20 rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all duration-200 border-2 group relative',
+                          seat.status === 'available' && 'bg-neon-green/10 border-neon-green/50 hover:bg-neon-green/20 hover:shadow-neon-green/20',
                           seat.status === 'occupied' && 'bg-neon-red/10 border-neon-red/50 hover:bg-neon-red/20',
                           seat.status === 'reserved' && 'bg-neon-orange/10 border-neon-orange/50 hover:bg-neon-orange/20',
                           seat.status === 'maintenance' && 'bg-dark-700/50 border-dark-600 opacity-50 cursor-not-allowed'
                         )}
-                        title={`${seat.seatNumber} - ${statusInfo.label}\n设备: ${device?.model || '-'}`}
                       >
-                        <Monitor className={cn(
-                          'w-5 h-5 mb-0.5',
+                        <Gamepad2 className={cn(
+                          'w-6 h-6 mb-1',
                           seat.status === 'available' && 'text-neon-green',
                           seat.status === 'occupied' && 'text-neon-red',
                           seat.status === 'reserved' && 'text-neon-orange',
                           seat.status === 'maintenance' && 'text-dark-500'
                         )} />
-                        <span className="text-xs font-medium text-white">{seat.seatNumber}</span>
+                        <span className="text-xs font-medium text-white font-orbitron">{seat.seatNumber}</span>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <Wifi className={cn(
+                            'w-3 h-3',
+                            seat.networkLatency < 10 ? 'text-neon-green' :
+                            seat.networkLatency < 30 ? 'text-cyber-400' :
+                            seat.networkLatency < 60 ? 'text-neon-orange' : 'text-neon-red'
+                          )} />
+                          <span className={cn(
+                            'text-[10px]',
+                            seat.networkLatency < 10 ? 'text-neon-green' :
+                            seat.networkLatency < 30 ? 'text-cyber-400' :
+                            seat.networkLatency < 60 ? 'text-neon-orange' : 'text-neon-red'
+                          )}>
+                            {seat.networkLatency}ms
+                          </span>
+                        </div>
+                        {seatMapData && (
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity z-10 w-56 p-3 rounded-lg bg-dark-900 border border-cyber-700 shadow-xl pointer-events-none">
+                            <div className="text-xs font-semibold text-cyber-400 mb-2 font-orbitron">{seatMapData.deviceSpec}</div>
+                            <div className="text-xs text-dark-400 space-y-1.5">
+                              <div className="flex justify-between">
+                                <span>区域:</span>
+                                <span className="text-white">{seatMapData.area}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>价格:</span>
+                                <span className="text-neon-green">¥{seatMapData.pricePerHour}/小时</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>延迟:</span>
+                                <span className={cn(
+                                  seatMapData.networkLatency < 20 ? 'text-neon-green' : 'text-neon-orange'
+                                )}>{seatMapData.networkLatency}ms</span>
+                              </div>
+                              {seatMapData.currentUserName && (
+                                <div className="pt-1 border-t border-dark-700 mt-1">
+                                  <div className="flex items-center gap-1.5">
+                                    <User className="w-3 h-3 text-neon-purple" />
+                                    <span className="text-white">{seatMapData.currentUserName}</span>
+                                  </div>
+                                </div>
+                              )}
+                              {seatMapData.bookingEndTime && (
+                                <div className="flex items-center gap-1.5">
+                                  <Clock className="w-3 h-3 text-neon-orange" />
+                                  <span className="text-neon-orange">预计结束: {new Date(seatMapData.bookingEndTime).toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'})}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -238,6 +313,7 @@ export default function SeatManagement() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-dark-700">
+                <th className="w-10 px-4 py-4"></th>
                 <th className="px-6 py-4 text-left text-xs font-medium text-dark-400 uppercase tracking-wider">
                   座位号
                 </th>
@@ -264,59 +340,201 @@ export default function SeatManagement() {
             <tbody className="divide-y divide-dark-700">
               {filteredSeats.map((seat) => {
                 const device = getDevice(seat.deviceId);
+                const seatMapData = getSeatMapData(seat.id);
                 const statusInfo = statusMap[seat.status];
+                const isExpanded = expandedSeatId === seat.id;
 
                 return (
-                  <tr key={seat.id} className="hover:bg-dark-700/30 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-white">{seat.seatNumber}</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-dark-300">{seat.area}</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <Cpu className="w-4 h-4 text-cyber-400" />
-                        <span className="text-sm text-dark-300">
-                          {device?.specs.gpu || '未知配置'}
+                  <>
+                    <tr
+                      key={seat.id}
+                      className="hover:bg-dark-700/30 transition-colors cursor-pointer"
+                      onClick={() => toggleSeatExpand(seat.id)}
+                    >
+                      <td className="px-4 py-4 w-10">
+                        {isExpanded ? (
+                          <ChevronUp className="w-4 h-4 text-dark-400" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-dark-400" />
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm font-medium text-white">{seat.seatNumber}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm text-dark-300">{seat.area}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <Cpu className="w-4 h-4 text-cyber-400" />
+                          <span className="text-sm text-dark-300">
+                            {seatMapData?.deviceSpec || device?.specs.gpu || '未知配置'}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <Wifi className={cn(
+                            'w-4 h-4',
+                            seat.networkLatency < 20 ? 'text-neon-green' :
+                            seat.networkLatency < 50 ? 'text-neon-orange' : 'text-neon-red'
+                          )} />
+                          <span className={cn(
+                            'text-sm',
+                            seat.networkLatency < 20 ? 'text-neon-green' :
+                            seat.networkLatency < 50 ? 'text-neon-orange' : 'text-neon-red'
+                          )}>
+                            {seat.networkLatency}ms
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm text-white font-medium">
+                          ¥{seat.pricePerHour}/小时
                         </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        <Wifi className={`w-4 h-4 ${
-                          seat.networkLatency < 20 ? 'text-neon-green' :
-                          seat.networkLatency < 50 ? 'text-neon-orange' : 'text-neon-red'
-                        }`} />
-                        <span className={`text-sm ${
-                          seat.networkLatency < 20 ? 'text-neon-green' :
-                          seat.networkLatency < 50 ? 'text-neon-orange' : 'text-neon-red'
-                        }`}>
-                          {seat.networkLatency}ms
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={cn('inline-flex px-2.5 py-1 text-xs font-medium rounded-full', statusInfo.color)}>
+                          {statusInfo.label}
                         </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-white font-medium">
-                        ¥{seat.pricePerHour}/小时
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2.5 py-1 text-xs font-medium rounded-full ${statusInfo.color}`}>
-                        {statusInfo.label}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button className="p-1.5 text-dark-400 hover:text-cyber-400 transition-colors">
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button className="p-1.5 text-dark-400 hover:text-neon-red transition-colors">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button className="p-1.5 text-dark-400 hover:text-cyber-400 transition-colors">
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button className="p-1.5 text-dark-400 hover:text-neon-red transition-colors">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {isExpanded && (
+                      <tr className="bg-dark-900/50">
+                        <td colSpan={8} className="px-6 py-4">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="p-4 rounded-lg bg-dark-800/80 border border-cyber-800/30">
+                              <h4 className="text-sm font-semibold text-cyber-400 mb-3 flex items-center gap-2">
+                                <Cpu className="w-4 h-4" />
+                                设备配置详情
+                              </h4>
+                              <div className="space-y-2 text-sm">
+                                <div className="flex justify-between">
+                                  <span className="text-dark-400">设备型号</span>
+                                  <span className="text-white">{device?.model}</span>
+                                </div>
+                                {device?.specs.cpu && (
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">处理器</span>
+                                    <span className="text-white">{device.specs.cpu}</span>
+                                  </div>
+                                )}
+                                {device?.specs.gpu && (
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">显卡</span>
+                                    <span className="text-white">{device.specs.gpu}</span>
+                                  </div>
+                                )}
+                                {device?.specs.ram && (
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">内存</span>
+                                    <span className="text-white">{device.specs.ram}</span>
+                                  </div>
+                                )}
+                                {device?.specs.refreshRate && (
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">刷新率</span>
+                                    <span className="text-white">{device.specs.refreshRate}Hz</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="p-4 rounded-lg bg-dark-800/80 border border-cyber-800/30">
+                              <h4 className="text-sm font-semibold text-neon-green mb-3 flex items-center gap-2">
+                                <Gauge className="w-4 h-4" />
+                                实时状态
+                              </h4>
+                              <div className="space-y-2 text-sm">
+                                <div className="flex justify-between">
+                                  <span className="text-dark-400">设备状态</span>
+                                  <span className={cn(
+                                    'text-xs px-2 py-0.5 rounded-full',
+                                    device?.status === 'normal' ? 'bg-neon-green/20 text-neon-green' :
+                                    device?.status === 'warning' ? 'bg-neon-orange/20 text-neon-orange' :
+                                    device?.status === 'fault' ? 'bg-neon-red/20 text-neon-red' :
+                                    'bg-dark-600 text-dark-300'
+                                  )}>
+                                    {device?.status === 'normal' ? '正常' :
+                                     device?.status === 'warning' ? '警告' :
+                                     device?.status === 'fault' ? '故障' : '离线'}
+                                  </span>
+                                </div>
+                                {device?.temperature && (
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">CPU温度</span>
+                                    <span className={cn(
+                                      device.temperature < 60 ? 'text-neon-green' :
+                                      device.temperature < 75 ? 'text-neon-orange' : 'text-neon-red'
+                                    )}>{device.temperature.toFixed(0)}°C</span>
+                                  </div>
+                                )}
+                                {device?.frameRate && (
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">帧率</span>
+                                    <span className="text-cyber-400">{device.frameRate.toFixed(0)} FPS</span>
+                                  </div>
+                                )}
+                                <div className="flex justify-between">
+                                  <span className="text-dark-400">网络延迟</span>
+                                  <span className={cn(
+                                    seat.networkLatency < 20 ? 'text-neon-green' :
+                                    seat.networkLatency < 50 ? 'text-neon-orange' : 'text-neon-red'
+                                  )}>{seat.networkLatency}ms</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="p-4 rounded-lg bg-dark-800/80 border border-cyber-800/30">
+                              <h4 className="text-sm font-semibold text-neon-purple mb-3 flex items-center gap-2">
+                                <User className="w-4 h-4" />
+                                使用信息
+                              </h4>
+                              <div className="space-y-2 text-sm">
+                                {seatMapData?.currentUserName ? (
+                                  <>
+                                    <div className="flex justify-between">
+                                      <span className="text-dark-400">当前用户</span>
+                                      <span className="text-white">{seatMapData.currentUserName}</span>
+                                    </div>
+                                    {seatMapData.bookingEndTime && (
+                                      <div className="flex justify-between">
+                                        <span className="text-dark-400">预计结束</span>
+                                        <span className="text-neon-orange">
+                                          {new Date(seatMapData.bookingEndTime).toLocaleString('zh-CN', {
+                                            month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+                                          })}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : (
+                                  <div className="text-center py-4 text-dark-500">
+                                    <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                    <p className="text-sm">当前无人使用</p>
+                                  </div>
+                                )}
+                                <div className="pt-2 border-t border-dark-700 mt-2">
+                                  <div className="flex justify-between">
+                                    <span className="text-dark-400">位置</span>
+                                    <span className="text-white">{seat.area}区 {seat.row}排{seat.col}座</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </>
                 );
               })}
             </tbody>

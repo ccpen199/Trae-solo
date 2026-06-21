@@ -14,11 +14,17 @@ import {
   ChevronDown,
   ChevronUp,
   User,
+  ShieldCheck,
+  UserCheck,
+  Activity,
+  PlusCircle,
+  Eye,
+  RotateCcw,
 } from 'lucide-react';
-import { alerts } from '@/data/mockData';
+import { alerts, alertHandlingRecords } from '@/data/mockData';
 import { useAppStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
-import type { Alert } from '@/types';
+import type { Alert, AlertHandlingRecord } from '@/types';
 
 const levelMap = {
   low: { label: '低', color: 'bg-cyber-500/20 text-cyber-400', border: 'border-cyber-500' },
@@ -40,6 +46,17 @@ const typeMap: Record<string, { label: string; icon: any }> = {
   hardware: { label: '硬件故障', icon: HardDrive },
 };
 
+const actionMap: Record<string, { label: string; icon: any; color: string }> = {
+  create: { label: '告警创建', icon: AlertTriangle, color: 'text-neon-red' },
+  assign: { label: '指派处理', icon: UserCheck, color: 'text-cyber-400' },
+  start: { label: '开始处理', icon: Wrench, color: 'text-neon-orange' },
+  escalate: { label: '升级告警', icon: AlertCircle, color: 'text-neon-red' },
+  resolve: { label: '标记解决', icon: CheckCircle, color: 'text-neon-green' },
+  reopen: { label: '重新打开', icon: RotateCcw, color: 'text-yellow-400' },
+  close: { label: '关闭告警', icon: ShieldCheck, color: 'text-cyber-500' },
+  review: { label: '复查通过', icon: Eye, color: 'text-neon-purple' },
+};
+
 const levelOptions = ['全部等级', '低', '中', '高', '严重'];
 const statusOptions = ['全部状态', '待处理', '处理中', '已解决'];
 const typeOptions = ['全部类型', '温度异常', '性能下降', '网络问题', '硬件故障'];
@@ -51,8 +68,10 @@ export default function AlertCenter() {
   const [selectedType, setSelectedType] = useState('全部类型');
   const [searchText, setSearchText] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [localAlerts, setLocalAlerts] = useState<Alert[]>(alerts);
+  const [localRecords, setLocalRecords] = useState<AlertHandlingRecord[]>(alertHandlingRecords);
 
-  const storeAlerts = alerts.filter((a) => a.storeId === currentStoreId);
+  const storeAlerts = localAlerts.filter((a) => a.storeId === currentStoreId);
 
   const filteredAlerts = storeAlerts.filter((alert) => {
     const levelKey = selectedLevel === '全部等级' ? '' :
@@ -90,12 +109,125 @@ export default function AlertCenter() {
     return `${Math.floor(diff / 86400)}天前`;
   };
 
+  const formatDateTime = (dateStr: string) => {
+    return new Date(dateStr).toLocaleString('zh-CN', {
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  };
+
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  const handleResolve = (id: string) => {
-    console.log('处理告警:', id);
+  const getRecordsForAlert = (alertId: string) => {
+    return localRecords.filter((r) => r.alertId === alertId).sort(
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+  };
+
+  const getCurrentHandler = (alert: Alert) => {
+    const records = getRecordsForAlert(alert.id);
+    const assignRecord = [...records].reverse().find((r) => r.action === 'assign');
+    if (assignRecord?.assigneeName) return assignRecord.assigneeName;
+    if (alert.handler) return alert.handler;
+    return '未指派';
+  };
+
+  const getResponsibleParty = (alert: Alert) => {
+    if (alert.type === 'temperature' || alert.type === 'hardware') return '运维部';
+    if (alert.type === 'network') return '网络部';
+    if (alert.type === 'performance') return '技术部';
+    return '综合运维';
+  };
+
+  const handleAssign = (alertId: string) => {
+    const now = new Date().toISOString();
+    const newRecord: AlertHandlingRecord = {
+      id: `ahr-${Date.now()}`,
+      alertId,
+      action: 'assign',
+      operatorId: 'current-user',
+      operatorName: '当前用户',
+      operatorRole: '运维主管',
+      note: '指派值班工程师处理此告警',
+      beforeStatus: localAlerts.find((a) => a.id === alertId)?.status,
+      afterStatus: localAlerts.find((a) => a.id === alertId)?.status,
+      assigneeId: 'op-default',
+      assigneeName: '运维工程师-小李',
+      createdAt: now,
+    };
+    setLocalRecords([...localRecords, newRecord]);
+    setLocalAlerts(localAlerts.map((a) => a.id === alertId ? { ...a, handler: '运维工程师-小李' } : a));
+  };
+
+  const handleStartProcessing = (alertId: string) => {
+    const now = new Date().toISOString();
+    const currentAlert = localAlerts.find((a) => a.id === alertId);
+    const newRecord: AlertHandlingRecord = {
+      id: `ahr-${Date.now()}`,
+      alertId,
+      action: 'start',
+      operatorId: 'current-user',
+      operatorName: '运维工程师-小李',
+      operatorRole: '运维工程师',
+      note: '已到达现场，开始排查问题',
+      beforeStatus: currentAlert?.status,
+      afterStatus: 'processing',
+      createdAt: now,
+    };
+    setLocalRecords([...localRecords, newRecord]);
+    setLocalAlerts(localAlerts.map((a) => a.id === alertId ? { ...a, status: 'processing' } : a));
+  };
+
+  const handleResolve = (alertId: string) => {
+    const now = new Date().toISOString();
+    const currentAlert = localAlerts.find((a) => a.id === alertId);
+    const newRecord: AlertHandlingRecord = {
+      id: `ahr-${Date.now()}`,
+      alertId,
+      action: 'resolve',
+      operatorId: 'current-user',
+      operatorName: '运维工程师-小李',
+      operatorRole: '运维工程师',
+      note: '问题已修复，设备恢复正常运行',
+      beforeStatus: currentAlert?.status,
+      afterStatus: 'resolved',
+      createdAt: now,
+    };
+    setLocalRecords([...localRecords, newRecord]);
+    setLocalAlerts(localAlerts.map((a) => a.id === alertId ? { ...a, status: 'resolved', resolvedAt: now } : a));
+  };
+
+  const handleReview = (alertId: string) => {
+    const now = new Date().toISOString();
+    const currentAlert = localAlerts.find((a) => a.id === alertId);
+    const newRecord: AlertHandlingRecord = {
+      id: `ahr-${Date.now()}`,
+      alertId,
+      action: 'review',
+      operatorId: 'current-user',
+      operatorName: '运维主管-张工',
+      operatorRole: '运维主管',
+      note: '复查通过，告警正式关闭',
+      beforeStatus: currentAlert?.status,
+      afterStatus: currentAlert?.status,
+      createdAt: now,
+    };
+    setLocalRecords([...localRecords, newRecord]);
+  };
+
+  const getTimelineSteps = (records: AlertHandlingRecord[]) => {
+    return [
+      { key: 'create', label: '告警创建', required: true },
+      { key: 'assign', label: '指派处理人', required: true },
+      { key: 'start', label: '开始处理', required: true },
+      { key: 'resolve', label: '问题解决', required: false },
+      { key: 'review', label: '复查关闭', required: false },
+    ];
   };
 
   return (
@@ -203,6 +335,11 @@ export default function AlertCenter() {
           const typeInfo = typeMap[alert.type];
           const TypeIcon = typeInfo.icon;
           const isExpanded = expandedId === alert.id;
+          const records = getRecordsForAlert(alert.id);
+          const currentHandler = getCurrentHandler(alert);
+          const responsibleParty = getResponsibleParty(alert);
+          const timelineSteps = getTimelineSteps(records);
+          const completedActions = new Set<string>(records.map((r) => r.action));
 
           return (
             <div
@@ -255,6 +392,10 @@ export default function AlertCenter() {
                           {formatTime(alert.createdAt)}
                         </span>
                         <span>{typeInfo.label}</span>
+                        <span className="flex items-center gap-1">
+                          <User className="w-3.5 h-3.5" />
+                          {currentHandler}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -269,37 +410,242 @@ export default function AlertCenter() {
 
               {isExpanded && (
                 <div className="px-4 pb-4 border-t border-dark-700">
-                  <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="pt-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="space-y-3">
-                      <h4 className="text-sm font-medium text-dark-300">告警详情</h4>
-                      <div className="text-sm text-dark-400 space-y-2">
-                        <p>告警ID: {alert.id}</p>
-                        <p>设备: {alert.deviceName}</p>
-                        <p>门店: {alert.storeName}</p>
-                        <p>告警类型: {typeInfo.label}</p>
-                        <p>告警等级: {levelInfo.label}</p>
-                        <p>创建时间: {new Date(alert.createdAt).toLocaleString('zh-CN')}</p>
+                      <h4 className="text-sm font-medium text-dark-300 flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-cyber-400" />
+                        告警详情
+                      </h4>
+                      <div className="p-3 rounded-lg bg-dark-900/50 border border-dark-700/50 space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-dark-500">告警ID</span>
+                          <span className="text-white font-mono text-xs">{alert.id}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-dark-500">设备</span>
+                          <span className="text-white">{alert.deviceName}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-dark-500">门店</span>
+                          <span className="text-white">{alert.storeName}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-dark-500">告警类型</span>
+                          <span className="text-white">{typeInfo.label}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-dark-500">告警等级</span>
+                          <span className={cn('font-medium', levelInfo.color.replace('/20', ''))}>
+                            {levelInfo.label}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-dark-500">创建时间</span>
+                          <span className="text-white text-xs">{formatDateTime(alert.createdAt)}</span>
+                        </div>
                       </div>
                     </div>
 
                     <div className="space-y-3">
-                      <h4 className="text-sm font-medium text-dark-300">处理记录</h4>
-                      {alert.status === 'pending' ? (
-                        <p className="text-sm text-dark-500">暂无处理记录</p>
-                      ) : (
-                        <div className="text-sm text-dark-400 space-y-2">
-                          <p>处理人: {alert.handler || '未分配'}</p>
-                          {alert.resolvedAt && (
-                            <p>解决时间: {new Date(alert.resolvedAt).toLocaleString('zh-CN')}</p>
-                          )}
+                      <h4 className="text-sm font-medium text-dark-300 flex items-center gap-2">
+                        <UserCheck className="w-4 h-4 text-cyber-400" />
+                        处理归属
+                      </h4>
+                      <div className="p-3 rounded-lg bg-dark-900/50 border border-dark-700/50 space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-full bg-cyber-500/20">
+                            <User className="w-4 h-4 text-cyber-400" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-dark-500">当前处理人</p>
+                            <p className="text-sm text-white font-medium">{currentHandler}</p>
+                          </div>
                         </div>
-                      )}
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-full bg-neon-purple/20">
+                            <ShieldCheck className="w-4 h-4 text-neon-purple" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-dark-500">责任部门</p>
+                            <p className="text-sm text-white font-medium">{responsibleParty}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-full bg-neon-orange/20">
+                            <Activity className="w-4 h-4 text-neon-orange" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-dark-500">当前状态</p>
+                            <p className={cn('text-sm font-medium', statusInfo.color.replace('/20', ''))}>
+                              {statusInfo.label}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 lg:col-span-1">
+                      <h4 className="text-sm font-medium text-dark-300 flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-cyber-400" />
+                        状态流转进度
+                      </h4>
+                      <div className="p-3 rounded-lg bg-dark-900/50 border border-dark-700/50">
+                        <div className="relative">
+                          {timelineSteps.map((step, index) => {
+                            const isCompleted = completedActions.has(step.key as string);
+                            const isCurrent = !isCompleted && (index === 0 || completedActions.has(timelineSteps[index - 1]?.key as string));
+                            const ActionIcon = actionMap[step.key]?.icon || PlusCircle;
+                            return (
+                              <div key={step.key} className="flex items-start gap-3">
+                                {index < timelineSteps.length - 1 && (
+                                  <div className="absolute left-[15px] top-8 bottom-0 w-0.5 bg-dark-700" style={{ height: 'calc(100% - 32px)' }} />
+                                )}
+                                <div className={cn(
+                                  'relative z-10 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
+                                  isCompleted && 'bg-neon-green/20 border border-neon-green/50',
+                                  isCurrent && 'bg-cyber-500/20 border border-cyber-500 animate-pulse',
+                                  !isCompleted && !isCurrent && 'bg-dark-700 border border-dark-600'
+                                )}>
+                                  <ActionIcon className={cn(
+                                    'w-4 h-4',
+                                    isCompleted && 'text-neon-green',
+                                    isCurrent && 'text-cyber-400',
+                                    !isCompleted && !isCurrent && 'text-dark-500'
+                                  )} />
+                                </div>
+                                <div className="flex-1 pb-4">
+                                  <p className={cn(
+                                    'text-sm font-medium',
+                                    isCompleted && 'text-neon-green',
+                                    isCurrent && 'text-cyber-400',
+                                    !isCompleted && !isCurrent && 'text-dark-500'
+                                  )}>
+                                    {step.label}
+                                  </p>
+                                  {isCompleted && (
+                                    <p className="text-xs text-dark-500 mt-0.5">
+                                      {formatDateTime(records.find((r) => r.action === step.key)?.createdAt || '')}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-dark-700 flex gap-3">
+                  <div className="mt-5">
+                    <h4 className="text-sm font-medium text-dark-300 flex items-center gap-2 mb-3">
+                      <Clock className="w-4 h-4 text-cyber-400" />
+                      处置记录时间轴
+                    </h4>
+                    {records.length === 0 ? (
+                      <div className="p-6 rounded-lg bg-dark-900/50 border border-dark-700/50 text-center">
+                        <Clock className="w-8 h-8 mx-auto mb-2 text-dark-600" />
+                        <p className="text-sm text-dark-500">暂无处置记录</p>
+                      </div>
+                    ) : (
+                      <div className="relative space-y-0">
+                        {records.map((record, index) => {
+                          const actionInfo = actionMap[record.action] || actionMap.create;
+                          const ActionIcon = actionInfo.icon;
+                          const isLast = index === records.length - 1;
+                          return (
+                            <div key={record.id} className="relative flex gap-4 pb-4">
+                              {!isLast && (
+                                <div className="absolute left-[17px] top-8 bottom-0 w-0.5 bg-gradient-to-b from-cyber-500/50 to-dark-700" />
+                              )}
+                              <div className={cn(
+                                'relative z-10 w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 border',
+                                record.action === 'create' && 'bg-neon-red/10 border-neon-red/30',
+                                record.action === 'assign' && 'bg-cyber-500/10 border-cyber-500/30',
+                                record.action === 'start' && 'bg-neon-orange/10 border-neon-orange/30',
+                                record.action === 'resolve' && 'bg-neon-green/10 border-neon-green/30',
+                                record.action === 'review' && 'bg-neon-purple/10 border-neon-purple/30',
+                                !['create', 'assign', 'start', 'resolve', 'review'].includes(record.action) && 'bg-dark-700 border-dark-600'
+                              )}>
+                                <ActionIcon className={cn('w-4 h-4', actionInfo.color)} />
+                              </div>
+                              <div className="flex-1 p-3 rounded-lg bg-dark-900/50 border border-dark-700/50">
+                                <div className="flex items-start justify-between gap-2">
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span className={cn('text-sm font-medium', actionInfo.color)}>
+                                        {actionInfo.label}
+                                      </span>
+                                      {record.action === 'assign' && record.assigneeName && (
+                                        <span className="text-xs px-2 py-0.5 rounded-full bg-cyber-500/20 text-cyber-400">
+                                          → {record.assigneeName}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div className="flex items-center gap-3 mt-1 text-xs text-dark-500">
+                                      <span className="flex items-center gap-1">
+                                        <User className="w-3 h-3" />
+                                        {record.operatorName}
+                                      </span>
+                                      <span className="text-dark-600">|</span>
+                                      <span>{record.operatorRole}</span>
+                                      <span className="text-dark-600">|</span>
+                                      <span className="flex items-center gap-1">
+                                        <Clock className="w-3 h-3" />
+                                        {formatDateTime(record.createdAt)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                {record.note && (
+                                  <p className="text-sm text-dark-400 mt-2 pt-2 border-t border-dark-700/50">
+                                    {record.note}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-5 pt-4 border-t border-dark-700 flex flex-wrap gap-3">
                     {alert.status === 'pending' && (
                       <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAssign(alert.id);
+                          }}
+                          className="flex items-center gap-2 h-9 px-4 bg-cyber-600 hover:bg-cyber-500 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <UserCheck className="w-4 h-4" />
+                          指派处理人
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleStartProcessing(alert.id);
+                          }}
+                          className="flex items-center gap-2 h-9 px-4 bg-neon-orange hover:bg-neon-orange/80 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <Wrench className="w-4 h-4" />
+                          开始处理
+                        </button>
+                      </>
+                    )}
+                    {alert.status === 'processing' && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAssign(alert.id);
+                          }}
+                          className="flex items-center gap-2 h-9 px-4 bg-dark-700 hover:bg-dark-600 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <UserCheck className="w-4 h-4" />
+                          转交处理人
+                        </button>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -308,32 +654,32 @@ export default function AlertCenter() {
                           className="flex items-center gap-2 h-9 px-4 bg-neon-green hover:bg-neon-green/80 text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           <CheckCircle className="w-4 h-4" />
-                          开始处理
-                        </button>
-                        <button className="flex items-center gap-2 h-9 px-4 bg-dark-700 hover:bg-dark-600 text-white text-sm font-medium rounded-lg transition-colors">
-                          <User className="w-4 h-4" />
-                          指派处理
+                          标记已解决
                         </button>
                       </>
                     )}
-                    {alert.status === 'processing' && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleResolve(alert.id);
-                        }}
-                        className="flex items-center gap-2 h-9 px-4 bg-neon-green hover:bg-neon-green/80 text-white text-sm font-medium rounded-lg transition-colors"
-                      >
-                        <CheckCircle className="w-4 h-4" />
-                        标记已解决
-                      </button>
-                    )}
                     {alert.status === 'resolved' && (
-                      <span className="flex items-center gap-2 text-neon-green text-sm">
-                        <CheckCircle className="w-4 h-4" />
-                        已解决
-                      </span>
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReview(alert.id);
+                          }}
+                          className="flex items-center gap-2 h-9 px-4 bg-neon-purple hover:bg-neon-purple/80 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                          <Eye className="w-4 h-4" />
+                          复查通过
+                        </button>
+                        <span className="flex items-center gap-2 text-neon-green text-sm">
+                          <CheckCircle className="w-4 h-4" />
+                          已解决
+                        </span>
+                      </>
                     )}
+                    <button className="flex items-center gap-2 h-9 px-4 bg-dark-700 hover:bg-dark-600 text-white text-sm font-medium rounded-lg transition-colors ml-auto">
+                      <Activity className="w-4 h-4" />
+                      查看详情
+                    </button>
                   </div>
                 </div>
               )}

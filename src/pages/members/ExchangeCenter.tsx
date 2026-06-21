@@ -10,17 +10,47 @@ import {
   Plus,
   Minus,
   X,
+  ChevronDown,
+  ChevronUp,
+  MapPin,
+  Truck,
+  CheckCircle,
+  Package,
+  QrCode,
+  Filter,
+  RefreshCw,
 } from 'lucide-react';
-import { products, members } from '@/data/mockData';
+import { products, members, exchangeRecords } from '@/data/mockData';
 import { cn } from '@/lib/utils';
+import type { ExchangeRecord } from '@/types';
 
 const categories = ['全部', '时长卡', '电竞周边', '赛事门票', '饮品', '零食'];
+
+const exchangeStatusLabels: Record<ExchangeRecord['status'], { label: string; color: string }> = {
+  pending: { label: '待确认', color: 'bg-yellow-500/20 text-yellow-400' },
+  confirmed: { label: '已确认', color: 'bg-cyber-500/20 text-cyber-300' },
+  fulfilled: { label: '已备货', color: 'bg-neon-purple/20 text-neon-purple' },
+  redeemed: { label: '已核销', color: 'bg-neon-green/20 text-neon-green' },
+  cancelled: { label: '已取消', color: 'bg-neon-red/20 text-neon-red' },
+  expired: { label: '已过期', color: 'bg-gray-500/20 text-gray-400' },
+};
+
+const fulfillmentTypeLabels: Record<ExchangeRecord['fulfillmentType'], { label: string; icon: typeof Package }> = {
+  pickup: { label: '到店自提', icon: MapPin },
+  delivery: { label: '快递配送', icon: Truck },
+  virtual: { label: '虚拟发放', icon: QrCode },
+};
+
+const orderStatusFilters = ['全部订单', '待确认', '已确认', '已备货', '已核销', '已取消', '已过期'];
 
 export default function ExchangeCenter() {
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('全部');
   const [cart, setCart] = useState<{ productId: string; quantity: number }[]>([]);
   const [showCart, setShowCart] = useState(false);
+  const [expandedOrders, setExpandedOrders] = useState<Set<string>>(new Set());
+  const [orderStatusFilter, setOrderStatusFilter] = useState('全部订单');
+  const [redeemingOrderId, setRedeemingOrderId] = useState<string | null>(null);
 
   const currentMember = members[0];
 
@@ -30,6 +60,21 @@ export default function ExchangeCenter() {
       product.name.toLowerCase().includes(searchText.toLowerCase());
     return matchCategory && matchSearch && product.pointsCost > 0;
   });
+
+  const filteredOrders = exchangeRecords
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .filter((order) => {
+      if (orderStatusFilter === '全部订单') return true;
+      const statusMap: Record<string, ExchangeRecord['status']> = {
+        '待确认': 'pending',
+        '已确认': 'confirmed',
+        '已备货': 'fulfilled',
+        '已核销': 'redeemed',
+        '已取消': 'cancelled',
+        '已过期': 'expired',
+      };
+      return order.status === statusMap[orderStatusFilter];
+    });
 
   const addToCart = (productId: string) => {
     setCart((prev) => {
@@ -68,6 +113,48 @@ export default function ExchangeCenter() {
   }, 0);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const toggleOrderExpand = (id: string) => {
+    setExpandedOrders((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const formatDateTime = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.toLocaleString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const getAuditStatusLabel = (status: string) => {
+    const map: Record<string, string> = {
+      pending: '待处理',
+      confirmed: '已确认',
+      fulfilled: '已备货',
+      redeemed: '已核销',
+      cancelled: '已取消',
+      expired: '已过期',
+    };
+    return map[status] || status;
+  };
+
+  const handleRedeem = (orderId: string) => {
+    setRedeemingOrderId(orderId);
+    setTimeout(() => {
+      setRedeemingOrderId(null);
+    }, 1500);
+  };
 
   return (
     <div className="space-y-6">
@@ -195,6 +282,262 @@ export default function ExchangeCenter() {
           <p>没有找到符合条件的商品</p>
         </div>
       )}
+
+      <div className="pt-4 border-t border-dark-700">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Package className="w-5 h-5 text-cyber-400" />
+            <h2 className="text-xl font-bold text-white font-orbitron">兑换订单</h2>
+            <span className="text-xs px-2 py-0.5 rounded bg-dark-700 text-dark-300">
+              {filteredOrders.length}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 p-4 rounded-xl bg-dark-800/50 border border-cyber-800/50 mb-4">
+          <Filter className="w-4 h-4 text-dark-400" />
+          {orderStatusFilters.map((status) => (
+            <button
+              key={status}
+              onClick={() => setOrderStatusFilter(status)}
+              className={cn(
+                'h-8 px-3 text-xs rounded-lg transition-colors',
+                orderStatusFilter === status
+                  ? 'bg-cyber-600 text-white'
+                  : 'bg-dark-700/50 text-dark-300 hover:text-white hover:bg-dark-700'
+              )}
+            >
+              {status}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-2">
+          {filteredOrders.length === 0 ? (
+            <div className="py-12 text-center text-dark-400 rounded-xl bg-dark-800/50 border border-cyber-800/50">
+              <Package className="w-12 h-12 mx-auto mb-3 opacity-50" />
+              <p>暂无兑换订单</p>
+            </div>
+          ) : (
+            filteredOrders.map((order) => {
+              const statusInfo = exchangeStatusLabels[order.status];
+              const fulfillmentInfo = fulfillmentTypeLabels[order.fulfillmentType];
+              const FulfillmentIcon = fulfillmentInfo.icon;
+              const isExpanded = expandedOrders.has(order.id);
+              const isRedeeming = redeemingOrderId === order.id;
+              const canRedeem = order.status === 'confirmed' || order.status === 'fulfilled';
+
+              return (
+                <div
+                  key={order.id}
+                  className="rounded-xl bg-dark-800/50 border border-cyber-800/50 overflow-hidden transition-all hover:border-cyber-600/50"
+                >
+                  <button
+                    onClick={() => toggleOrderExpand(order.id)}
+                    className="w-full p-4 text-left flex items-start justify-between gap-4"
+                  >
+                    <div className="flex items-start gap-3 min-w-0 flex-1">
+                      <div className={cn(
+                        'p-2 rounded-lg flex-shrink-0',
+                        statusInfo.color
+                      )}>
+                        <FulfillmentIcon className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="text-sm font-medium text-white">{order.productName}</p>
+                          <span className={cn(
+                            'text-xs px-2 py-0.5 rounded-full flex-shrink-0',
+                            statusInfo.color
+                          )}>
+                            {statusInfo.label}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3 mt-1 flex-wrap">
+                          <span className="text-xs text-dark-400">
+                            订单号: {order.id}
+                          </span>
+                          <span className="text-xs text-dark-400">
+                            数量: x{order.quantity}
+                          </span>
+                          <span className="text-xs text-dark-400 flex items-center gap-1">
+                            <FulfillmentIcon className="w-3 h-3" />
+                            {fulfillmentInfo.label}
+                          </span>
+                          <span className="text-xs text-dark-500">
+                            {formatDateTime(order.createdAt)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3 mt-1 flex-wrap">
+                          {order.redemptionCode && (
+                            <span className="text-xs px-2 py-0.5 rounded bg-dark-900 text-cyber-300 font-mono">
+                              核销码: {order.redemptionCode}
+                            </span>
+                          )}
+                          {order.memberName && (
+                            <span className="text-xs text-dark-400">
+                              会员: {order.memberName}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-neon-orange flex items-center justify-end gap-1">
+                          <Coins className="w-3 h-3" />
+                          -{order.pointsUsed.toLocaleString()}
+                        </p>
+                        {order.amountPaid !== undefined && order.amountPaid > 0 && (
+                          <p className="text-xs text-dark-400 mt-0.5">
+                            +¥{order.amountPaid}
+                          </p>
+                        )}
+                      </div>
+                      {isExpanded ? (
+                        <ChevronUp className="w-4 h-4 text-dark-400" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-dark-400" />
+                      )}
+                    </div>
+                  </button>
+
+                  {isExpanded && (
+                    <div className="border-t border-dark-700/50 p-4 space-y-4 bg-dark-900/30">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {order.redemptionCode && (
+                          <div className="p-3 rounded-lg bg-dark-800/50 border border-cyber-700/30">
+                            <p className="text-xs text-dark-400 mb-1 flex items-center gap-1">
+                              <QrCode className="w-3 h-3" />
+                              核销码
+                            </p>
+                            <p className="text-lg font-mono text-cyber-300 font-bold tracking-wider">
+                              {order.redemptionCode}
+                            </p>
+                          </div>
+                        )}
+                        {order.fulfillmentType === 'pickup' && order.storeName && (
+                          <div className="p-3 rounded-lg bg-dark-800/50 border border-cyber-700/30">
+                            <p className="text-xs text-dark-400 mb-1 flex items-center gap-1">
+                              <MapPin className="w-3 h-3" />
+                              自提门店
+                            </p>
+                            <p className="text-sm text-white">{order.storeName}</p>
+                          </div>
+                        )}
+                        {order.fulfillmentType === 'delivery' && order.address && (
+                          <div className="p-3 rounded-lg bg-dark-800/50 border border-cyber-700/30">
+                            <p className="text-xs text-dark-400 mb-1 flex items-center gap-1">
+                              <Truck className="w-3 h-3" />
+                              收货地址
+                            </p>
+                            <p className="text-sm text-white">{order.address}</p>
+                          </div>
+                        )}
+                        {order.trackingNumber && (
+                          <div className="p-3 rounded-lg bg-dark-800/50 border border-cyber-700/30">
+                            <p className="text-xs text-dark-400 mb-1">快递单号</p>
+                            <p className="text-sm text-white font-mono">{order.trackingNumber}</p>
+                          </div>
+                        )}
+                        {order.operatorName && (
+                          <div className="p-3 rounded-lg bg-dark-800/50 border border-cyber-700/30">
+                            <p className="text-xs text-dark-400 mb-1">处理人</p>
+                            <p className="text-sm text-white">{order.operatorName}</p>
+                          </div>
+                        )}
+                        <div className="p-3 rounded-lg bg-dark-800/50 border border-cyber-700/30">
+                          <p className="text-xs text-dark-400 mb-1">商品类型</p>
+                          <p className="text-sm text-white">
+                            {order.productType === 'peripheral' && '电竞周边'}
+                            {order.productType === 'time' && '时长卡'}
+                            {order.productType === 'ticket' && '赛事门票'}
+                            {order.productType === 'food' && '饮品零食'}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-xs text-dark-400 mb-2 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          审计轨迹
+                        </p>
+                        <div className="space-y-0">
+                          {order.auditTrail.map((log, idx) => (
+                            <div key={idx} className="flex gap-3">
+                              <div className="flex flex-col items-center">
+                                <div className="mt-1">
+                                  {idx === order.auditTrail.length - 1 ? (
+                                    <div className="w-4 h-4 rounded-full bg-neon-green/20 flex items-center justify-center">
+                                      <CheckCircle className="w-3 h-3 text-neon-green" />
+                                    </div>
+                                  ) : (
+                                    <div className="w-4 h-4 rounded-full border-2 border-dark-500 bg-dark-700" />
+                                  )}
+                                </div>
+                                {idx < order.auditTrail.length - 1 && (
+                                  <div className="w-px flex-1 bg-dark-600 my-1" />
+                                )}
+                              </div>
+                              <div className="flex-1 pb-4">
+                                <div className="p-3 rounded-lg bg-dark-800/50 border border-dark-700/50">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xs px-2 py-0.5 rounded bg-gradient-to-r from-cyber-600/30 to-neon-purple/30 text-dark-100 border border-cyber-700/30">
+                                      {getAuditStatusLabel(log.status)}
+                                    </span>
+                                    {log.operator && (
+                                      <span className="text-xs text-dark-400">
+                                        操作人: {log.operator}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {log.note && (
+                                    <p className="text-xs text-dark-300 mt-2">{log.note}</p>
+                                  )}
+                                  <p className="text-xs text-dark-500 mt-2">
+                                    {formatDateTime(log.timestamp)}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {canRedeem && (
+                        <div className="flex gap-2 pt-2">
+                          <button
+                            onClick={() => handleRedeem(order.id)}
+                            disabled={isRedeeming}
+                            className={cn(
+                              'flex-1 h-10 text-sm font-medium rounded-lg transition-all flex items-center justify-center gap-1.5',
+                              isRedeeming
+                                ? 'bg-dark-600 text-dark-300 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-cyber-600 to-neon-purple hover:from-cyber-500 hover:to-neon-purple/80 text-white shadow-lg shadow-cyber-500/20'
+                            )}
+                          >
+                            {isRedeeming ? (
+                              <>
+                                <RefreshCw className="w-4 h-4 animate-spin" />
+                                核销中...
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="w-4 h-4" />
+                                确认核销
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
 
       {showCart && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">

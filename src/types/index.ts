@@ -235,3 +235,223 @@ export interface DeviceUsageItem {
   usage: number;
   revenue: number;
 }
+
+export interface PointTransaction {
+  id: string;
+  memberId: string;
+  memberName: string;
+  type: 'earn' | 'spend' | 'adjust' | 'refund';
+  points: number;
+  balance: number;
+  source: string;
+  sourceId?: string;
+  description: string;
+  operatorId?: string;
+  operatorName?: string;
+  createdAt: string;
+}
+
+export interface TournamentParticipation {
+  id: string;
+  memberId: string;
+  memberName: string;
+  tournamentId: string;
+  tournamentName: string;
+  teamName?: string;
+  role: 'player' | 'substitute' | 'spectator';
+  registrationTime: string;
+  status: 'registered' | 'confirmed' | 'eliminated' | 'finished';
+  finalRank?: number;
+  prizePoints?: number;
+  checkInTime?: string;
+}
+
+export interface ExchangeRecord {
+  id: string;
+  memberId: string;
+  memberName: string;
+  productId: string;
+  productName: string;
+  productType: 'peripheral' | 'time' | 'ticket' | 'food';
+  pointsUsed: number;
+  amountPaid?: number;
+  quantity: number;
+  status: 'pending' | 'confirmed' | 'fulfilled' | 'redeemed' | 'cancelled' | 'expired';
+  fulfillmentType: 'pickup' | 'delivery' | 'virtual';
+  storeId?: string;
+  storeName?: string;
+  address?: string;
+  trackingNumber?: string;
+  redemptionCode?: string;
+  createdAt: string;
+  confirmedAt?: string;
+  fulfilledAt?: string;
+  redeemedAt?: string;
+  operatorId?: string;
+  operatorName?: string;
+  auditTrail: {
+    status: string;
+    timestamp: string;
+    operator?: string;
+    note?: string;
+  }[];
+}
+
+export interface AlertHandlingRecord {
+  id: string;
+  alertId: string;
+  action: 'create' | 'assign' | 'start' | 'escalate' | 'resolve' | 'reopen' | 'close' | 'review';
+  operatorId: string;
+  operatorName: string;
+  operatorRole: string;
+  note?: string;
+  beforeStatus?: string;
+  afterStatus?: string;
+  assigneeId?: string;
+  assigneeName?: string;
+  createdAt: string;
+}
+
+export interface StockTransaction {
+  id: string;
+  productId: string;
+  productName: string;
+  storeId: string;
+  storeName: string;
+  type: 'in' | 'out' | 'adjust' | 'transfer_in' | 'transfer_out' | 'return';
+  quantity: number;
+  beforeStock: number;
+  afterStock: number;
+  referenceId?: string;
+  referenceType?: string;
+  operatorId: string;
+  operatorName: string;
+  note?: string;
+  createdAt: string;
+}
+
+export interface FulfillmentTrack {
+  id: string;
+  orderId: string;
+  status: 'pending' | 'confirmed' | 'picking' | 'picked' | 'packing' | 'packed' | 'shipping' | 'delivered' | 'pickup_ready' | 'picked_up' | 'cancelled';
+  fulfillmentType: 'pickup' | 'same_city' | 'standard';
+  location?: string;
+  description: string;
+  operatorId?: string;
+  operatorName?: string;
+  courierName?: string;
+  courierPhone?: string;
+  trackingNumber?: string;
+  estimatedTime?: string;
+  createdAt: string;
+}
+
+export interface BIReport {
+  id: string;
+  name: string;
+  category: 'revenue' | 'operations' | 'members' | 'devices' | 'inventory';
+  period: 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly';
+  startDate: string;
+  endDate: string;
+  generatedAt: string;
+  generatedBy: string;
+  status: 'generating' | 'ready' | 'expired' | 'failed';
+  fileUrl?: string;
+  fileSize?: number;
+  filters?: Record<string, any>;
+  summary: {
+    key: string;
+    label: string;
+    value: number | string;
+    unit?: string;
+    trend?: number;
+  }[];
+}
+
+export interface StoreComparison {
+  storeId: string;
+  storeName: string;
+  storeType: string;
+  revenue: number;
+  orders: number;
+  avgOrderValue: number;
+  deviceUsageRate: number;
+  spaceEfficiency: number;
+  newMembers: number;
+  activeMembers: number;
+  repurchaseRate: number;
+  alertCount: number;
+}
+
+export interface TimeSegmentData {
+  period: string;
+  segment: string;
+  revenue: number;
+  orders: number;
+  avgDuration: number;
+  peakUsers: number;
+  deviceUsage: number;
+}
+
+export interface BookingTrack {
+  id: string;
+  bookingId: string;
+  status: 'created' | 'confirmed' | 'checked_in' | 'in_progress' | 'paused' | 'extended' | 'completed' | 'cancelled' | 'no_show';
+  operatorId?: string;
+  operatorName?: string;
+  description: string;
+  note?: string;
+  createdAt: string;
+}
+
+export interface DeviceLockRecord {
+  id: string;
+  hotelBookingId: string;
+  roomId: string;
+  roomName: string;
+  deviceId: string;
+  deviceName: string;
+  action: 'lock' | 'unlock' | 'extend' | 'force_unlock';
+  operatorId: string;
+  operatorName: string;
+  reason?: string;
+  lockedAt?: string;
+  unlockedAt?: string;
+  createdAt: string;
+}
+
+export interface SeatMapData {
+  id: string;
+  seatNumber: string;
+  row: number;
+  col: number;
+  area: string;
+  status: 'available' | 'occupied' | 'reserved' | 'maintenance';
+  deviceId: string;
+  deviceSpec: string;
+  networkLatency: number;
+  pricePerHour: number;
+  currentUserId?: string;
+  currentUserName?: string;
+  bookingEndTime?: string;
+}
+
+export interface RoomDeviceMap {
+  roomId: string;
+  roomName: string;
+  roomType: string;
+  storeId: string;
+  storeName: string;
+  isHotel: boolean;
+  deviceIds: string[];
+  devices: {
+    id: string;
+    name: string;
+    model: string;
+    type: string;
+    status: string;
+  }[];
+  status: string;
+  capacity: number;
+}
+
