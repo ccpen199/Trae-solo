@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   TrendingUp, TrendingDown, Clock, Star, AlertTriangle, BarChart3, FileText, Download,
   Check, X, Filter, Search, Eye, Settings, Users, FileCheck, PieChart as PieChartIcon,
-  BarChart2, RefreshCw, Activity, Layers, Shield,
+  BarChart2, RefreshCw, Activity, Layers, Shield, ChevronRight, AlertCircle,
 } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid,
@@ -202,29 +202,75 @@ export default function Monitor() {
                   </ResponsiveContainer>
                 </Card>
                 <div className="lg:col-span-2">
-                  <Card title="异常中断列表" icon={X} color="text-red-400">
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs">
-                        <thead><tr className="text-gray-400 border-b border-gray-700">
-                          <th className="text-left py-2 px-2">申请编号</th><th className="text-left py-2 px-2">中断类型</th><th className="text-left py-2 px-2">发生时间</th><th className="text-left py-2 px-2">描述</th><th className="text-left py-2 px-2">状态</th><th className="text-left py-2 px-2">操作</th>
-                        </tr></thead>
-                        <tbody>
-                          {allIntr.slice(0, 5).map(item => (
-                            <tr key={item.id} className="border-b border-gray-700/50 hover:bg-gray-700/30">
-                              <td className="py-2 px-2 font-mono">{item.applicationId}</td>
-                              <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${typeBadge[item.type]}`}>{item.type}</span></td>
-                              <td className="py-2 px-2 text-gray-300">{item.occurredAt}</td>
-                              <td className="py-2 px-2 text-gray-300">{item.description}</td>
-                              <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${item.resolution ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>{item.resolution ? '已解决' : '未解决'}</span></td>
-                              <td className="py-2 px-2"><button className="text-yellow-400 hover:text-yellow-300">处理</button></td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                  <Card title="异常中断归因分析" icon={X} color="text-red-400">
+                    <div className="space-y-4">
+                      {intrTypes.map((type, idx) => {
+                        const items = allIntr.filter(x => x.type === type.name)
+                        const resolved = items.filter(x => x.resolution).length
+                        const rate = items.length > 0 ? ((resolved / items.length) * 100).toFixed(0) : '0'
+                        const causes = type.name === '材料不全' ? ['缺少身份证明', '信息填写不完整', '照片模糊不清', '缺少相关证明'] :
+                                      type.name === '系统超时' ? ['接口响应慢', '网络波动', '并发量过高', '服务器负载高'] :
+                                      type.name === '用户放弃' ? ['操作流程复杂', '等待时间过长', '材料准备不足', '改变办理意向'] :
+                                      ['材料不符合要求', '信息比对不一致', '申请条件不满足', '政策限制']
+                        return (
+                          <div key={type.name} className="bg-gray-700/30 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-2">
+                                <span className={`px-2 py-0.5 rounded-full text-xs ${typeBadge[type.name]}`}>{type.name}</span>
+                                <span className="text-gray-400 text-sm">{items.length} 件</span>
+                              </div>
+                              <span className="text-xs text-green-400">解决率 {rate}%</span>
+                            </div>
+                            <div className="mb-3">
+                              <p className="text-xs text-gray-400 mb-2">主要原因：</p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {causes.map((c, i) => (
+                                  <span key={i} className="text-xs px-2 py-0.5 bg-gray-600/50 rounded text-gray-300">{c}</span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="flex-1 h-1.5 bg-gray-600 rounded-full overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${rate}%` }}
+                                  transition={{ duration: 0.6, delay: idx * 0.15 }}
+                                  className={`h-full rounded-full ${Number(rate) >= 80 ? 'bg-green-500' : Number(rate) >= 50 ? 'bg-yellow-500' : 'bg-red-500'}`}
+                                />
+                              </div>
+                              <button className="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1">
+                                优化建议 <ChevronRight className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
                   </Card>
                 </div>
               </div>
+
+              <Card title="异常中断列表" icon={AlertCircle} color="text-red-400">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead><tr className="text-gray-400 border-b border-gray-700">
+                      <th className="text-left py-2 px-2">申请编号</th><th className="text-left py-2 px-2">中断类型</th><th className="text-left py-2 px-2">发生时间</th><th className="text-left py-2 px-2">描述</th><th className="text-left py-2 px-2">状态</th><th className="text-left py-2 px-2">操作</th>
+                    </tr></thead>
+                    <tbody>
+                      {allIntr.map(item => (
+                        <tr key={item.id} className="border-b border-gray-700/50 hover:bg-gray-700/30">
+                          <td className="py-2 px-2 font-mono">{item.applicationId}</td>
+                          <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${typeBadge[item.type]}`}>{item.type}</span></td>
+                          <td className="py-2 px-2 text-gray-300">{item.occurredAt}</td>
+                          <td className="py-2 px-2 text-gray-300">{item.description}</td>
+                          <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${item.resolution ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>{item.resolution ? '已解决' : '未解决'}</span></td>
+                          <td className="py-2 px-2"><button className="text-yellow-400 hover:text-yellow-300">处理</button></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
             </motion.div>
           )}
 

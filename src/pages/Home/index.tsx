@@ -206,10 +206,15 @@ export default function Home() {
       )}
 
       <section className="container mx-auto px-4 mb-12">
-        <h2 className="section-title">服务效能</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="section-title mb-0">服务效能</h2>
+          <Link to="/admin/monitor" className="text-sm text-primary-500 hover:text-primary-600 flex items-center gap-1">
+            查看详情 <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {efficiencyCards.map(({ label, value, icon: Icon, trend, trendColor }) => (
-            <div key={label} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+            <Link key={label} to="/admin/monitor" className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 card-hover block">
               <div className="flex items-start justify-between mb-3">
                 <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
                   <Icon className="w-5 h-5 text-primary-500" />
@@ -218,7 +223,7 @@ export default function Home() {
               </div>
               <p className="text-2xl font-bold text-gray-800">{value}</p>
               <p className="text-sm text-gray-500 mt-1">{label}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
