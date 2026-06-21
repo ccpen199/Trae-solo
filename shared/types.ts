@@ -83,6 +83,7 @@ export interface AIScreenResult {
   categoryConfidence: number;
   era: string;
   eraConfidence: number;
+  material: string;
   authenticity: AuthenticityLevel;
   authenticityConfidence: number;
   features: string[];

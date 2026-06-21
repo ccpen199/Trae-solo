@@ -540,6 +540,7 @@ export const mockAIScreenResult: AIScreenResult = {
   eraConfidence: 0.82,
   authenticity: AuthenticityLevel.GENUINE,
   authenticityConfidence: 0.78,
+  material: '高岭土胎，釉面肥润',
   features: [
     '青花发色沉稳偏灰，有铁锈斑',
     '胎质洁白细腻，底足跳刀痕明显',

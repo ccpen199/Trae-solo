@@ -10,6 +10,7 @@ import {
   ChevronUp, Calculator, Wallet, BarChart3,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 import {
   mockExperts, mockKnowledgeArticles, mockCommunityQuestions,
   mockCertificates, mockArtworks,
@@ -50,6 +51,34 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
   [Category.STATIONERY]: PenTool, [Category.SEAL]: Award, [Category.ZISHA]: Coffee,
 };
 
+const sampleCertDetail = {
+  no: 'JZG-202406-00128',
+  name: '清乾隆青花缠枝莲纹赏瓶',
+  category: '陶瓷·青花瓷',
+  era: '清代乾隆年间',
+  conclusion: '真品',
+  opinion: '经目鉴+仪器检测，此青花缠枝莲纹赏瓶器型规整，青花发色沉稳呈翠毛蓝，胎釉结合紧密，修足规整，底款为乾隆官窑标准篆书款。综合判断为清代乾隆本朝官窑真品，品相完好，具有较高的收藏价值。',
+  expertName: '张明德',
+  expertLevel: ExpertLevel.NATIONAL,
+  expertTitle: '国家级文物鉴定专家',
+  images: [
+    'https://picsum.photos/seed/cert1/80/100',
+    'https://picsum.photos/seed/cert2/80/100',
+    'https://picsum.photos/seed/cert3/80/100',
+    'https://picsum.photos/seed/cert4/80/100',
+  ],
+  reviewHistory: [
+    { date: '2024-06-15', reviewer: '李淑芬', level: ExpertLevel.NATIONAL, result: '复核通过' },
+    { date: '2024-06-14', reviewer: '张明德', level: ExpertLevel.NATIONAL, result: '初鉴通过' },
+  ],
+  keyPoints: [
+    { label: '器型', result: '符合乾隆朝规制', pass: true },
+    { label: '青花发色', result: '翠毛蓝，沉稳纯正', pass: true },
+    { label: '胎釉', result: '结合紧密，老化自然', pass: true },
+    { label: '款识', result: '官窑标准篆书款', pass: true },
+  ],
+};
+
 const allCategories = [
   Category.CERAMIC, Category.JADE, Category.CALLIGRAPHY_PAINTING, Category.BRONZE,
   Category.COIN, Category.MISCELLANEOUS, Category.WOOD, Category.LACQUER,
@@ -61,20 +90,41 @@ const staggerContainer = { hidden: {}, visible: { transition: { staggerChildren:
 const fadeInLeft = { hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } } };
 
 const sampleArtworks = [
-  { id: 'sample1', category: Category.CERAMIC, name: '青花缠枝莲纹梅瓶', image: 'https://picsum.photos/seed/sample1/120/120', era: '清代乾隆年间', confidence: 96.2, authenticity: AuthenticityLevel.GENUINE },
-  { id: 'sample2', category: Category.JADE, name: '和田白玉籽料观音', image: 'https://picsum.photos/seed/sample2/120/120', era: '清代中期', confidence: 92.5, authenticity: AuthenticityLevel.GENUINE },
-  { id: 'sample3', category: Category.CALLIGRAPHY_PAINTING, name: '山水立轴', image: 'https://picsum.photos/seed/sample3/120/120', era: '近现代', confidence: 88.3, authenticity: AuthenticityLevel.SUSPICIOUS },
-  { id: 'sample4', category: Category.BRONZE, name: '青铜饕餮纹鼎', image: 'https://picsum.photos/seed/sample4/120/120', era: '商代晚期', confidence: 94.8, authenticity: AuthenticityLevel.GENUINE },
-  { id: 'sample5', category: Category.COIN, name: '咸丰元宝当百', image: 'https://picsum.photos/seed/sample5/120/120', era: '清代咸丰年', confidence: 85.6, authenticity: AuthenticityLevel.FAKE },
-  { id: 'sample6', category: Category.ZISHA, name: '石瓢紫砂壶', image: 'https://picsum.photos/seed/sample6/120/120', era: '当代', confidence: 91.2, authenticity: AuthenticityLevel.GENUINE },
+  { id: 'sample1', category: Category.CERAMIC, name: '青花缠枝莲纹梅瓶', image: 'https://picsum.photos/seed/sample1/120/120', era: '清代乾隆年间', material: '高岭土胎，釉面滋润', confidence: 96.2, authenticity: AuthenticityLevel.GENUINE },
+  { id: 'sample2', category: Category.JADE, name: '和田白玉籽料观音', image: 'https://picsum.photos/seed/sample2/120/120', era: '清代中期', material: '和田白玉籽料，质地细腻温润', confidence: 92.5, authenticity: AuthenticityLevel.GENUINE },
+  { id: 'sample3', category: Category.CALLIGRAPHY_PAINTING, name: '山水立轴', image: 'https://picsum.photos/seed/sample3/120/120', era: '近现代', material: '宣纸本，水墨设色', confidence: 88.3, authenticity: AuthenticityLevel.SUSPICIOUS },
+  { id: 'sample4', category: Category.BRONZE, name: '青铜饕餮纹鼎', image: 'https://picsum.photos/seed/sample4/120/120', era: '商代晚期', material: '青铜范铸，红斑绿锈', confidence: 94.8, authenticity: AuthenticityLevel.GENUINE },
+  { id: 'sample5', category: Category.COIN, name: '咸丰元宝当百', image: 'https://picsum.photos/seed/sample5/120/120', era: '清代咸丰年', material: '黄铜质地，包浆厚重', confidence: 85.6, authenticity: AuthenticityLevel.FAKE },
+  { id: 'sample6', category: Category.ZISHA, name: '石瓢紫砂壶', image: 'https://picsum.photos/seed/sample6/120/120', era: '当代', material: '宜兴原矿紫泥', confidence: 91.2, authenticity: AuthenticityLevel.GENUINE },
 ];
 
 const aiFeatures = [
   { icon: Package, label: '器型规整度' },
   { icon: Palette, label: '纹饰风格' },
-  { icon: Sparkles, label: '胎釉特征' },
+  { icon: Sparkles, label: '胎釉/材质' },
   { icon: FileText, label: '款识比对' },
 ];
+
+const authenticityPoints: Record<AuthenticityLevel, { icon: React.ComponentType<{ className?: string }>; text: string }[]> = {
+  [AuthenticityLevel.GENUINE]: [
+    { icon: CheckCircle2, text: '器型比例协调，符合时代特征' },
+    { icon: CheckCircle2, text: '纹饰线条流畅自然，无刻意描摹痕迹' },
+    { icon: CheckCircle2, text: '胎釉结合紧密，老化痕迹自然' },
+    { icon: CheckCircle2, text: '款识书法工整，符合官窑规制' },
+  ],
+  [AuthenticityLevel.SUSPICIOUS]: [
+    { icon: CheckCircle2, text: '整体造型有古韵' },
+    { icon: AlertTriangle, text: '纹饰笔力稍显软弱' },
+    { icon: AlertTriangle, text: '胎质密度略高于同期标准' },
+    { icon: AlertTriangle, text: '包浆有后做嫌疑' },
+  ],
+  [AuthenticityLevel.FAKE]: [
+    { icon: XCircle, text: '器型比例失调，线条生硬' },
+    { icon: XCircle, text: '纹饰呆板，有刻意模仿痕迹' },
+    { icon: XCircle, text: '胎釉结合处有明显做旧痕迹' },
+    { icon: XCircle, text: '款识书法功力不足，与真品差距大' },
+  ],
+};
 
 const eraFilters = ['先秦', '秦汉', '唐宋', '元明', '清', '近现代'];
 const craftFilters = ['青花', '粉彩', '籽料', '水墨', '包浆', '开片'];
@@ -106,6 +156,9 @@ interface LiveOrder {
   expertCount: number; bidCount: number; minPrice: number; maxPrice: number;
   slaTotal: number; slaRemaining: number;
   experts: { name: string; avatar: string; level: ExpertLevel }[];
+  expertLevel: ExpertLevel;
+  hasDispute: boolean;
+  disputeCount?: number;
 }
 
 function getConclusionBadge(conclusion: string) {
@@ -164,10 +217,10 @@ export default function Home() {
 
   useEffect(() => {
     const orders: LiveOrder[] = [
-      { id: 'live_001', name: '清乾隆粉彩百花不落地纹瓶', category: Category.CERAMIC, image: 'https://picsum.photos/seed/live1/100/100', status: OrderStatus.PENDING, expertCount: 3, bidCount: 5, minPrice: 1200, maxPrice: 2800, slaTotal: 1800, slaRemaining: 755, experts: mockExperts.slice(0, 3).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 10}/60/60`, level: e.level })) },
-      { id: 'live_002', name: '和田白玉籽料把件', category: Category.JADE, image: 'https://picsum.photos/seed/live2/100/100', status: OrderStatus.APPRAISING, expertCount: 1, bidCount: 1, minPrice: 800, maxPrice: 800, slaTotal: 3600, slaRemaining: 2150, experts: mockExperts.slice(0, 1).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 20}/60/60`, level: e.level })) },
-      { id: 'live_003', name: '齐白石虾蟹图立轴', category: Category.CALLIGRAPHY_PAINTING, image: 'https://picsum.photos/seed/live3/100/100', status: OrderStatus.PENDING, expertCount: 2, bidCount: 4, minPrice: 2000, maxPrice: 5000, slaTotal: 1800, slaRemaining: 240, experts: mockExperts.slice(1, 4).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 30}/60/60`, level: e.level })) },
-      { id: 'live_004', name: '商周青铜爵杯', category: Category.BRONZE, image: 'https://picsum.photos/seed/live4/100/100', status: OrderStatus.ACCEPTED, expertCount: 1, bidCount: 1, minPrice: 1500, maxPrice: 1500, slaTotal: 3600, slaRemaining: 3200, experts: mockExperts.slice(2, 3).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 40}/60/60`, level: e.level })) },
+      { id: 'live_001', name: '清乾隆粉彩百花不落地纹瓶', category: Category.CERAMIC, image: 'https://picsum.photos/seed/live1/100/100', status: OrderStatus.PENDING, expertCount: 3, bidCount: 5, minPrice: 1200, maxPrice: 2800, slaTotal: 1800, slaRemaining: 755, experts: mockExperts.slice(0, 3).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 10}/60/60`, level: e.level })), expertLevel: ExpertLevel.NATIONAL, hasDispute: false },
+      { id: 'live_002', name: '和田白玉籽料把件', category: Category.JADE, image: 'https://picsum.photos/seed/live2/100/100', status: OrderStatus.APPRAISING, expertCount: 1, bidCount: 1, minPrice: 800, maxPrice: 800, slaTotal: 1800, slaRemaining: 1200, experts: mockExperts.slice(0, 1).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 20}/60/60`, level: e.level })), expertLevel: ExpertLevel.PROVINCIAL, hasDispute: true, disputeCount: 2 },
+      { id: 'live_003', name: '齐白石虾蟹图立轴', category: Category.CALLIGRAPHY_PAINTING, image: 'https://picsum.photos/seed/live3/100/100', status: OrderStatus.PENDING, expertCount: 2, bidCount: 4, minPrice: 2000, maxPrice: 5000, slaTotal: 1800, slaRemaining: 240, experts: mockExperts.slice(1, 4).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 30}/60/60`, level: e.level })), expertLevel: ExpertLevel.SENIOR, hasDispute: true, disputeCount: 1 },
+      { id: 'live_004', name: '商周青铜爵杯', category: Category.BRONZE, image: 'https://picsum.photos/seed/live4/100/100', status: OrderStatus.ACCEPTED, expertCount: 1, bidCount: 1, minPrice: 1500, maxPrice: 1500, slaTotal: 1800, slaRemaining: 0, experts: mockExperts.slice(2, 3).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 40}/60/60`, level: e.level })), expertLevel: ExpertLevel.NATIONAL, hasDispute: false },
     ];
     setLiveOrders(orders);
   }, []);
@@ -239,12 +292,17 @@ export default function Home() {
   };
 
   const getStatusConfig = (status: OrderStatus, slaRemaining: number) => {
-    const isUrgent = slaRemaining < 300;
+    if (slaRemaining <= 0) {
+      return { label: '已超时', borderClass: 'border-cinnabar-500', labelClass: 'bg-cinnabar-500', urgent: true, timeout: true };
+    }
+    if (slaRemaining <= 300) {
+      return { label: '即将超时', borderClass: 'border-cinnabar-400', labelClass: 'bg-cinnabar-400 animate-pulse', urgent: true, timeout: false };
+    }
     switch (status) {
-      case OrderStatus.PENDING: return { label: '等待接单', borderClass: isUrgent ? 'border-cinnabar-400 animate-pulse' : 'border-gold-400', labelClass: isUrgent ? 'bg-cinnabar-400' : 'bg-gold-500' };
-      case OrderStatus.ACCEPTED: return { label: '已接单', borderClass: 'border-jade-400', labelClass: 'bg-jade-500' };
-      case OrderStatus.APPRAISING: return { label: '鉴定中', borderClass: 'border-jade-500', labelClass: 'bg-jade-600' };
-      default: return { label: '进行中', borderClass: 'border-gold-300', labelClass: 'bg-gold-400' };
+      case OrderStatus.PENDING: return { label: '等待接单', borderClass: 'border-gold-400', labelClass: 'bg-gold-500', urgent: false, timeout: false };
+      case OrderStatus.ACCEPTED: return { label: '已接单', borderClass: 'border-jade-400', labelClass: 'bg-jade-500', urgent: false, timeout: false };
+      case OrderStatus.APPRAISING: return { label: '鉴定中', borderClass: 'border-jade-500', labelClass: 'bg-jade-600', urgent: false, timeout: false };
+      default: return { label: '进行中', borderClass: 'border-gold-300', labelClass: 'bg-gold-400', urgent: false, timeout: false };
     }
   };
 
@@ -460,7 +518,7 @@ export default function Home() {
                               </div>
                             </div>
                           </div>
-                          <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div className="space-y-2 text-xs">
                             <div className="p-2 bg-rice-100 rounded-md">
                               <p className="text-jade-400 mb-1">年代推测</p>
                               <p className="font-medium text-jade-700">{aiResult.era}</p>
@@ -468,6 +526,10 @@ export default function Home() {
                                 <div className="flex-1 h-1 bg-rice-200 rounded-full overflow-hidden"><div className="h-full bg-jade-500 rounded-full" style={{ width: '85%' }} /></div>
                                 <span className="text-[10px] text-jade-400">87.5%</span>
                               </div>
+                            </div>
+                            <div className="p-2 bg-rice-100 rounded-md">
+                              <p className="text-jade-400 mb-1">材质检测</p>
+                              <p className="font-medium text-jade-700 text-xs">{aiResult.material}</p>
                             </div>
                             <div className="p-2 bg-rice-100 rounded-md">
                               <p className="text-jade-400 mb-1">真伪初判</p>
@@ -488,6 +550,24 @@ export default function Home() {
                               </div>
                             </div>
                           </div>
+                          <div className="p-2 bg-rice-100 rounded-md">
+                            <p className="text-xs text-jade-500 mb-2">真伪要点分析</p>
+                            <div className="space-y-1.5">
+                              {authenticityPoints[aiResult.authenticity].map((point, idx) => {
+                                const PointIcon = point.icon;
+                                return (
+                                  <div key={idx} className="flex items-start gap-1.5">
+                                    <PointIcon className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${
+                                      aiResult.authenticity === AuthenticityLevel.GENUINE ? 'text-jade-500' :
+                                      aiResult.authenticity === AuthenticityLevel.SUSPICIOUS ? 'text-gold-500' :
+                                      'text-cinnabar-500'
+                                    }`} />
+                                    <span className="text-xs text-jade-600 leading-tight">{point.text}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
                           <div>
                             <p className="text-xs text-jade-500 mb-2">AI 识别特征</p>
                             <div className="grid grid-cols-2 gap-1.5">
@@ -502,18 +582,23 @@ export default function Home() {
                               })}
                             </div>
                           </div>
-                          <div className="flex items-center justify-between pt-2 border-t border-gold-200/50">
-                            <div className="flex items-center gap-2">
-                              <div className="flex -space-x-2">
-                                {mockExperts.slice(0, 3).map((expert, i) => (
-                                  <div key={expert.id} className="w-7 h-7 rounded-full border-2 border-rice-50 bg-jade-100 overflow-hidden">
-                                    <img src={`https://picsum.photos/seed/expert_res${i}/40/40`} alt={expert.name} className="w-full h-full object-cover" />
-                                  </div>
-                                ))}
+                          <div className="pt-2 border-t border-gold-200/50">
+                            <p className="text-xs text-center text-jade-500 mb-3">
+                              基于 AI 初筛结果，已为您匹配到 8 位 {categoryLabels[aiResult.category]} 类专家，2 位可立即接单
+                            </p>
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-2">
+                                <div className="flex -space-x-2">
+                                  {mockExperts.slice(0, 3).map((expert, i) => (
+                                    <div key={expert.id} className="w-7 h-7 rounded-full border-2 border-rice-50 bg-jade-100 overflow-hidden">
+                                      <img src={`https://picsum.photos/seed/expert_res${i}/40/40`} alt={expert.name} className="w-full h-full object-cover" />
+                                    </div>
+                                  ))}
+                                </div>
+                                <span className="text-xs text-jade-500">查看全部 8 位</span>
                               </div>
-                              <span className="text-xs text-jade-500">查看全部 8 位</span>
+                              <ChevronRight className="w-4 h-4 text-jade-400" />
                             </div>
-                            <ChevronRight className="w-4 h-4 text-jade-400" />
                           </div>
                           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                             onClick={() => handleCategoryClick(aiResult.category)}
@@ -574,8 +659,17 @@ export default function Home() {
             {liveOrders.map((order, index) => {
               const statusConfig = getStatusConfig(order.status, order.slaRemaining);
               const isUrgent = order.slaRemaining < 300;
+              const isTimeout = order.slaRemaining <= 0;
               const CatIcon = categoryIcons[order.category] || Package;
               const slaProgress = (order.slaRemaining / order.slaTotal) * 100;
+              const getExpertLevelTag = (level: ExpertLevel) => {
+                switch (level) {
+                  case ExpertLevel.NATIONAL: return <span className="px-1.5 py-0.5 bg-cinnabar-100 text-cinnabar-600 text-[10px] rounded">国家级专家接单</span>;
+                  case ExpertLevel.PROVINCIAL: return <span className="px-1.5 py-0.5 bg-gold-100 text-gold-700 text-[10px] rounded">省级专家接单</span>;
+                  case ExpertLevel.SENIOR: return <span className="px-1.5 py-0.5 bg-jade-100 text-jade-600 text-[10px] rounded">资深专家接单</span>;
+                  default: return null;
+                }
+              };
               return (
                 <motion.div key={order.id} variants={fadeInUp} custom={index} whileHover={{ y: -2 }}
                   className={`card card-hover p-4 border-l-4 ${statusConfig.borderClass}`}
@@ -594,19 +688,25 @@ export default function Home() {
                         <h4 className="font-medium text-jade-700 text-sm line-clamp-1 flex-1">{order.name}</h4>
                         <span className={`shrink-0 px-2 py-0.5 text-xs text-white rounded ${statusConfig.labelClass}`}>{statusConfig.label}</span>
                       </div>
-                      <div className="flex items-center gap-4 text-xs text-jade-500 mb-2">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-jade-500 mb-2">
                         <span className="flex items-center gap-1"><Users className="w-3 h-3" />已有 {order.bidCount} 位专家报价</span>
+                        {getExpertLevelTag(order.expertLevel)}
                         <span className="flex items-center gap-1"><Wallet className="w-3 h-3" />¥{order.minPrice}-{order.maxPrice}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="flex-1">
                           <div className="flex items-center justify-between text-xs mb-1">
                             <span className="text-jade-400">SLA 倒计时</span>
-                            <span className={`font-mono font-bold ${isUrgent ? 'text-cinnabar-500' : 'text-jade-600'}`}>{formatTime(order.slaRemaining)}</span>
+                            <span className={`font-mono font-bold ${isUrgent || isTimeout ? 'text-cinnabar-500' : 'text-jade-600'}`}>{formatTime(order.slaRemaining)}</span>
                           </div>
                           <div className="h-1.5 bg-rice-200 rounded-full overflow-hidden">
-                            <div className={`h-full rounded-full transition-all duration-1000 ${isUrgent ? 'bg-cinnabar-500' : slaProgress > 50 ? 'bg-jade-500' : 'bg-gold-500'}`} style={{ width: `${slaProgress}%` }} />
+                            <div className={`h-full rounded-full transition-all duration-1000 ${isUrgent || isTimeout ? 'bg-cinnabar-500' : slaProgress > 50 ? 'bg-jade-500' : 'bg-gold-500'}`} style={{ width: `${slaProgress}%` }} />
                           </div>
+                          {(isUrgent || isTimeout) && (
+                            <div className="mt-1 text-[10px] text-cinnabar-500 font-medium">
+                              {isTimeout ? '⚠️ 已超时，系统已自动分派备用专家' : '⚠️ 超时将自动升级至资深专家组'}
+                            </div>
+                          )}
                         </div>
                         <div className="flex -space-x-2">
                           {order.experts.slice(0, 3).map((expert, i) => (
@@ -621,7 +721,14 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-3 pt-3 border-t border-gold-200/50 flex justify-end">
+                  <div className="mt-3 pt-3 border-t border-gold-200/50 flex items-center justify-between">
+                    <div>
+                      {order.hasDispute && (
+                        <button onClick={() => navigate('/admin/disputes')} className="inline-flex items-center gap-1 text-xs text-cinnabar-500 hover:text-cinnabar-600 font-medium mr-3">
+                          <Gavel className="w-3 h-3" /> 纠纷记录 {order.disputeCount}
+                        </button>
+                      )}
+                    </div>
                     <button onClick={() => navigate(`/appraise`)} className="inline-flex items-center gap-1 text-xs text-gold-600 hover:text-gold-700 font-medium">
                       查看竞价 <ChevronRight className="w-3.5 h-3.5" />
                     </button>
@@ -666,7 +773,7 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="relative">
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 className="relative rounded-xl overflow-hidden border border-gold-300 shadow-gold-glow/20"
-                style={{ background: 'linear-gradient(135deg, #F8F4E9 0%, #EDE3CE 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F8F4E9 0%, #EDE3CE 100%)', minHeight: '450px' }}
               >
                 <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ opacity: 0.15 }}>
                   <div className="absolute inset-0" style={{ transform: 'rotate(-20deg) scale(1.5)' }}>
@@ -687,39 +794,113 @@ export default function Home() {
                       </div>
                       <span className="font-serif font-bold text-jade-700">鉴真阁</span>
                     </div>
-                    <span className="text-xs font-mono text-jade-500">JZG-202406-00128</span>
+                    <span className="text-xs font-mono text-jade-500">{sampleCertDetail.no}</span>
                   </div>
-                  <div className="flex gap-4 items-center">
-                    <div className="w-20 h-24 rounded border border-gold-300/60 overflow-hidden bg-rice-100 shrink-0">
-                      <img src="https://picsum.photos/seed/cert_art/80/100" alt="藏品" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-serif font-bold text-jade-700 mb-1">清乾隆青花赏瓶</h4>
-                      <p className="text-xs text-jade-500 mb-2">陶瓷 · 青花瓷</p>
-                      <div className="relative inline-block">
-                        <div className="w-12 h-12 rounded-full border-2 border-cinnabar-500/70 flex items-center justify-center bg-cinnabar-500/5 transform rotate-[-8deg]">
-                          <span className="text-cinnabar-600 font-serif font-bold text-xs">真品</span>
+
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    {sampleCertDetail.images.map((img, idx) => (
+                      <div key={idx} className="relative">
+                        <div className="w-full h-20 rounded border border-gold-300/60 overflow-hidden bg-rice-100">
+                          <img src={img} alt={`藏品${['①', '②', '③', '④'][idx]}`} className="w-full h-full object-cover" />
                         </div>
+                        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 bg-jade-700/80 text-gold-300 text-[10px] px-1.5 py-0.5 rounded font-mono">
+                          {['①', '②', '③', '④'][idx]}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-3 items-start mb-3">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-serif font-bold text-jade-700 mb-0.5 text-sm">{sampleCertDetail.name}</h4>
+                      <p className="text-[11px] text-jade-500">{sampleCertDetail.category} · {sampleCertDetail.era}</p>
+                    </div>
+                    <div className="relative inline-block shrink-0">
+                      <div className="w-14 h-14 rounded-full border-2 border-cinnabar-500/70 flex items-center justify-center bg-cinnabar-500/5 transform rotate-[-8deg]">
+                        <span className="text-cinnabar-600 font-serif font-bold text-sm">{sampleCertDetail.conclusion}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-gold-200/50">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-jade-500">专家签名：<span className="font-serif text-jade-700">张明德</span></span>
+
+                  <div className="mb-3">
+                    <p className="text-[11px] text-jade-600 leading-relaxed">
+                      {sampleCertDetail.opinion.length > 100 ? (
+                        <>
+                          {sampleCertDetail.opinion.slice(0, 100)}...
+                          <span className="text-gold-600 font-medium ml-1 cursor-pointer hover:text-gold-700">查看全文</span>
+                        </>
+                      ) : (
+                        sampleCertDetail.opinion
+                      )}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-1.5 mb-3">
+                    {sampleCertDetail.keyPoints.map((point, idx) => (
+                      <div key={idx} className="flex items-center gap-1.5 text-[11px]">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-jade-500 shrink-0" />
+                        <span className="text-jade-700 font-medium">{point.label}：</span>
+                        <span className="text-jade-600 truncate">{point.result}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between py-2.5 border-y border-gold-200/50 mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="text-right">
+                        <span className="block text-lg text-jade-700" style={{ fontFamily: 'Brush Script MT, cursive' }}>
+                          {sampleCertDetail.expertName}
+                        </span>
+                        <span className="text-[10px] text-jade-500">专家编号：ZJ2024001</span>
+                      </div>
+                    </div>
+                    <div className="relative w-12 h-12 shrink-0">
+                      <div className="absolute inset-0 rounded-full border-2 border-cinnabar-500 flex items-center justify-center bg-cinnabar-500/10">
+                        <span className="text-[10px] text-cinnabar-600 font-bold text-center leading-tight px-0.5">
+                          国家级<br/>文物鉴定<br/>专用章
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <p className="text-[11px] text-jade-600 font-medium">复查历史</p>
+                    {sampleCertDetail.reviewHistory.map((record, idx) => (
+                      <div key={idx} className="flex items-center justify-between text-[10px]">
+                        <div className="flex items-center gap-2">
+                          <span className="text-jade-500">{record.date}</span>
+                          <span className="text-jade-700">{record.reviewer}</span>
+                          <span className={cn(
+                            'px-1.5 py-0.5 rounded text-[9px] font-medium',
+                            record.level === ExpertLevel.NATIONAL ? 'bg-cinnabar-100 text-cinnabar-600' :
+                            record.level === ExpertLevel.PROVINCIAL ? 'bg-gold-100 text-gold-600' :
+                            'bg-jade-100 text-jade-600'
+                          )}>
+                            {levelLabels[record.level]}
+                          </span>
+                        </div>
+                        <span className="text-jade-500">{record.result}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-3 pt-2 border-t border-gold-200/50">
+                    <div className="flex items-center justify-between text-[11px]">
                       <div className="flex items-center gap-1 text-jade-500">
                         <CheckCircle2 className="w-3.5 h-3.5 text-jade-500" />已上链
                       </div>
-                    </div>
-                    <div className="mt-2 flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-rice-200 rounded-full overflow-hidden">
-                        <div className="h-full w-full bg-gradient-to-r from-jade-400 via-gold-400 to-jade-400 rounded-full opacity-50" />
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-16 h-1.5 bg-rice-200 rounded-full overflow-hidden">
+                          <div className="h-full w-full bg-gradient-to-r from-jade-400 via-gold-400 to-jade-400 rounded-full opacity-50" />
+                        </div>
+                        <span className="font-mono text-[10px] text-jade-400">0x8f3a...7f9</span>
                       </div>
-                      <span className="font-mono text-[10px] text-jade-400">0x8f3a...7f9</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-right">
-                    <Link to="/certificate/JZG-202406-00128" className="inline-flex items-center gap-1 text-xs text-gold-600 hover:text-gold-700 font-medium">
-                      查看完整证书 <ChevronRight className="w-3.5 h-3.5" />
+
+                  <div className="mt-2 text-right">
+                    <Link to={`/certificate/${sampleCertDetail.no}`} className="inline-flex items-center gap-1 text-[11px] text-gold-600 hover:text-gold-700 font-medium">
+                      查看完整证书 <ChevronRight className="w-3 h-3" />
                     </Link>
                   </div>
                 </div>

@@ -12,6 +12,9 @@ import {
   Gem,
   Gauge,
   Award,
+  Gavel,
+  FileText,
+  Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/authStore';
@@ -24,11 +27,21 @@ const navItems = [
   { label: '行家知识库', path: '/knowledge' },
   { label: '价值评估', path: '/valuation' },
   { label: '社区问答', path: '/community' },
+  { 
+    label: '平台服务', 
+    dropdown: [
+      { label: '专家资质认证', path: '/admin/experts', icon: Award, desc: '国家级/省级/资深三级认证', badge: '本月审核 48 名' },
+      { label: '纠纷仲裁中心', path: '/admin/disputes', icon: Gavel, desc: '三级仲裁机制', badge: '待处理 3 件' },
+      { label: '证书模板配置', path: '/admin/templates', icon: FileText, desc: '6套官方模板', badge: '可视化编辑' },
+      { label: 'B端开放平台', path: '/openapi', icon: Building2, desc: '博物馆批量初鉴', badge: '合作 128 家' },
+    ]
+  },
 ];
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
   const navigate = useNavigate();
 
@@ -89,33 +102,88 @@ export function Navbar() {
             <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item, index) => (
                 <motion.div
-                  key={item.path}
+                  key={item.label}
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.1 * index }}
+                  className="relative"
                 >
-                  <NavLink
-                    to={item.path}
-                    end={item.path === '/'}
-                    className={({ isActive }) =>
-                      cn(
-                        'relative px-4 py-2 font-medium text-jade-600 hover:text-gold-500 transition-colors',
-                        isActive && 'text-gold-500',
-                      )
-                    }
-                  >
-                    {({ isActive }) => (
-                      <>
-                        <span>{item.label}</span>
-                        {isActive && (
-                          <motion.span
-                            layoutId="nav-indicator"
-                            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gold-gradient rounded-full"
-                          />
+                  {'dropdown' in item ? (
+                    <div
+                      onMouseEnter={() => setDropdownOpen(true)}
+                      onMouseLeave={() => setDropdownOpen(false)}
+                    >
+                      <button
+                        className={cn(
+                          'relative px-4 py-2 font-medium text-jade-600 hover:text-gold-500 transition-colors flex items-center gap-1',
                         )}
-                      </>
-                    )}
-                  </NavLink>
+                      >
+                        <span>{item.label}</span>
+                        <ChevronDown className={cn('w-4 h-4 transition-transform', dropdownOpen && 'rotate-180')} />
+                      </button>
+                      <AnimatePresence>
+                        {dropdownOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute left-1/2 -translate-x-1/2 mt-2 w-[480px] rounded-xl bg-jade-800 border border-gold-400/30 shadow-xl overflow-hidden"
+                          >
+                            <div className="grid grid-cols-2 gap-2 p-3">
+                              {item.dropdown.map((subItem, idx) => {
+                                const Icon = subItem.icon;
+                                return (
+                                  <Link
+                                    key={subItem.path}
+                                    to={subItem.path}
+                                    onClick={() => setDropdownOpen(false)}
+                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-jade-700/50 transition-colors group"
+                                  >
+                                    <div className="w-10 h-10 rounded-lg bg-gold-500/20 flex items-center justify-center shrink-0 group-hover:bg-gold-500/30 transition-colors">
+                                      <Icon className="w-5 h-5 text-gold-400" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="font-medium text-gold-300 text-sm">{subItem.label}</p>
+                                      <p className="text-xs text-jade-300 mt-0.5">{subItem.desc}</p>
+                                      {subItem.badge && (
+                                        <span className="inline-block mt-1.5 px-2 py-0.5 text-[10px] font-medium rounded-full bg-cinnabar-500/20 text-cinnabar-300 border border-cinnabar-500/30">
+                                          {subItem.badge}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <NavLink
+                      to={item.path}
+                      end={item.path === '/'}
+                      className={({ isActive }) =>
+                        cn(
+                          'relative px-4 py-2 font-medium text-jade-600 hover:text-gold-500 transition-colors',
+                          isActive && 'text-gold-500',
+                        )
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          <span>{item.label}</span>
+                          {isActive && (
+                            <motion.span
+                              layoutId="nav-indicator"
+                              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gold-gradient rounded-full"
+                            />
+                          )}
+                        </>
+                      )}
+                    </NavLink>
+                  )}
                 </motion.div>
               ))}
             </nav>
@@ -217,20 +285,49 @@ export function Navbar() {
           >
             <div className="container py-4 space-y-1">
               {navItems.map((item) => (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  end={item.path === '/'}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={({ isActive }) =>
-                    cn(
-                      'block px-4 py-3 rounded-md font-medium text-jade-600 hover:bg-gold-50 transition-colors',
-                      isActive && 'bg-gold-50 text-gold-600',
-                    )
-                  }
-                >
-                  {item.label}
-                </NavLink>
+                <div key={item.label}>
+                  {'dropdown' in item ? (
+                    <>
+                      <div className="px-4 py-2 text-xs font-medium text-gold-500 tracking-wider">
+                        {item.label}
+                      </div>
+                      {item.dropdown.map((subItem) => {
+                        const Icon = subItem.icon;
+                        return (
+                          <NavLink
+                            key={subItem.path}
+                            to={subItem.path}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                              cn(
+                                'flex items-center gap-3 px-4 py-2.5 rounded-md font-medium text-jade-600 hover:bg-gold-50 transition-colors',
+                                isActive && 'bg-gold-50 text-gold-600',
+                              )
+                            }
+                          >
+                            <Icon className="w-4 h-4 text-gold-500" />
+                            <span>{subItem.label}</span>
+                          </NavLink>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      end={item.path === '/'}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={({ isActive }) =>
+                        cn(
+                          'block px-4 py-3 rounded-md font-medium text-jade-600 hover:bg-gold-50 transition-colors',
+                          isActive && 'bg-gold-50 text-gold-600',
+                        )
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  )}
+                </div>
               ))}
               <div className="pt-4 mt-2 border-t border-gold-200">
                 {isAuthenticated && user ? (
