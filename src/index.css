@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  body {
+    @apply bg-space-900 text-slate-200 antialiased;
+  }
+}
+
+@layer components {
+  .cip-card {
+    @apply bg-space-800/60 backdrop-blur-sm border border-space-700/50 rounded-xl shadow-card;
+  }
+
+  .cip-card-hover {
+    @apply cip-card transition-all duration-300 hover:border-gold-500/30 hover:shadow-glow-gold hover:-translate-y-0.5;
+  }
+
+  .cip-divider {
+    @apply h-px bg-gradient-to-r from-transparent via-space-600 to-transparent;
+  }
+
+  .kpi-value {
+    @apply font-mono font-bold text-gold-400 tracking-tight;
+  }
+
+  .kpi-label {
+    @apply text-xs text-slate-400 uppercase tracking-wider;
+  }
+
+  .btn-primary {
+    @apply px-5 py-2.5 bg-gold-500 text-space-950 font-semibold rounded-lg
+           hover:bg-gold-400 active:bg-gold-600 transition-all duration-200
+           shadow-glow-gold hover:shadow-gold-500/40;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 bg-space-700 text-slate-200 font-medium rounded-lg border border-space-600
+           hover:bg-space-600 hover:border-gold-500/30 transition-all duration-200;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-online {
+    @apply bg-chart-green/15 text-chart-green border border-chart-green/30;
+  }
+
+  .badge-warn {
+    @apply bg-chart-orange/15 text-chart-orange border border-chart-orange/30;
+  }
+
+  .badge-offline {
+    @apply bg-cine-500/15 text-cine-400 border border-cine-500/30;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400
+           hover:bg-space-700/50 hover:text-slate-100
+           transition-all duration-200;
+  }
+
+  .nav-link-active {
+    @apply bg-gradient-to-r from-gold-500/20 to-transparent text-gold-400
+           border-l-2 border-gold-500 shadow-inner;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm
+           bg-space-700 text-slate-300 border border-space-600
+           hover:border-gold-500/50 hover:text-gold-400 transition-colors cursor-pointer;
+  }
+
+  .chip-active {
+    @apply bg-gold-500/20 text-gold-400 border-gold-500/50;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #243B5E transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #243B5E;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #3a5587;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #F3DE88 0%, #D4AF37 50%, #95751B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-gradient-gold {
+    position: relative;
+  }
+
+  .border-gradient-gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(212,175,55,0.6), rgba(212,175,55,0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
