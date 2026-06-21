@@ -8,6 +8,12 @@ const routes = [
     meta: { title: '渝快办' }
   },
   {
+    path: '/workbench',
+    name: 'Workbench',
+    component: () => import('../views/Workbench.vue'),
+    meta: { title: '工作台' }
+  },
+  {
     path: '/identity',
     name: 'Identity',
     component: () => import('../views/Identity.vue'),
@@ -24,6 +30,18 @@ const routes = [
     name: 'Certificates',
     component: () => import('../views/Certificates.vue'),
     meta: { title: '我的证件' }
+  },
+  {
+    path: '/identity/risk',
+    name: 'RiskAssessment',
+    component: () => import('../views/RiskAssessment.vue'),
+    meta: { title: '风险评估', hideTabBar: true }
+  },
+  {
+    path: '/identity/records',
+    name: 'CodeRecords',
+    component: () => import('../views/CodeRecords.vue'),
+    meta: { title: '亮码记录', hideTabBar: true }
   },
   {
     path: '/outlets',
@@ -50,16 +68,70 @@ const routes = [
     meta: { title: '预约办理', hideTabBar: true }
   },
   {
+    path: '/outlets/appointment/success',
+    name: 'AppointmentSuccess',
+    component: () => import('../views/AppointmentSuccess.vue'),
+    meta: { title: '预约成功', hideTabBar: true }
+  },
+  {
+    path: '/outlets/smart-match',
+    name: 'SmartMatch',
+    component: () => import('../views/SmartMatch.vue'),
+    meta: { title: '智能匹配', hideTabBar: true }
+  },
+  {
+    path: '/outlets/ar-nav',
+    name: 'ARNavigation',
+    component: () => import('../views/ARNavigation.vue'),
+    meta: { title: 'AR实景导航', hideTabBar: true }
+  },
+  {
     path: '/elder',
     name: 'Elder',
     component: () => import('../views/Elder.vue'),
     meta: { title: '暖心办' }
   },
   {
+    path: '/elder/home',
+    name: 'ElderHome',
+    component: () => import('../views/ElderHome.vue'),
+    meta: { title: '长辈版首页' }
+  },
+  {
     path: '/elder/agent',
     name: 'AgentAuth',
     component: () => import('../views/AgentAuth.vue'),
-    meta: { title: '亲友代办', hideTabBar: true }
+    meta: { title: '亲友代办' }
+  },
+  {
+    path: '/elder/agent/create',
+    name: 'AgentCreate',
+    component: () => import('../views/AgentCreate.vue'),
+    meta: { title: '创建授权', hideTabBar: true }
+  },
+  {
+    path: '/elder/agent/operations',
+    name: 'AgentOperations',
+    component: () => import('../views/AgentOperations.vue'),
+    meta: { title: '代办记录', hideTabBar: true }
+  },
+  {
+    path: '/elder/agent/confirm',
+    name: 'AgentConfirm',
+    component: () => import('../views/AgentConfirm.vue'),
+    meta: { title: '确认代办', hideTabBar: true }
+  },
+  {
+    path: '/elder/service',
+    name: 'CustomerService',
+    component: () => import('../views/CustomerService.vue'),
+    meta: { title: '人工坐席', hideTabBar: true }
+  },
+  {
+    path: '/elder/voice',
+    name: 'VoiceInput',
+    component: () => import('../views/VoiceInput.vue'),
+    meta: { title: '语音输入', hideTabBar: true }
   },
   {
     path: '/profile',
@@ -71,7 +143,7 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin.vue'),
-    meta: { title: '后台管理' }
+    meta: { title: '后台工作台' }
   },
   {
     path: '/admin/heat',
@@ -84,6 +156,18 @@ const routes = [
     name: 'WindowScheduling',
     component: () => import('../views/WindowScheduling.vue'),
     meta: { title: '窗口调度', hideTabBar: true }
+  },
+  {
+    path: '/admin/logs',
+    name: 'OperationLogs',
+    component: () => import('../views/OperationLogs.vue'),
+    meta: { title: '审计日志', hideTabBar: true }
+  },
+  {
+    path: '/admin/report',
+    name: 'DataReport',
+    component: () => import('../views/DataReport.vue'),
+    meta: { title: '数据报表', hideTabBar: true }
   }
 ]
 
