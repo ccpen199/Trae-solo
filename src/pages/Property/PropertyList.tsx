@@ -71,20 +71,18 @@ const VERIFY_STATUS_OPTIONS = [
   { label: '核验失败', value: 'verification_failed' },
 ];
 
-/** 生成三态核验状态（模拟数据） */
-function generateTriVerify(property: Property): TriVerifyStatus {
-  const states: VerifyState[] = ['verified', 'verified', 'verifying', 'unverified', 'verification_failed'];
-  const seed = property.id.charCodeAt(0) + property.id.charCodeAt(property.id.length - 1);
+/** 从property对象读取三态核验状态（统一数据源） */
+function getTriVerify(property: Property): TriVerifyStatus {
   return {
-    video: states[seed % 5],
-    vr: states[(seed + 1) % 5],
-    onsite: states[(seed + 2) % 5],
+    video: property.videoVerify || 'unverified',
+    vr: property.vrVerify || 'unverified',
+    onsite: property.onsiteVerify || 'unverified',
   };
 }
 
 /** 计算真实性评分（基于三态核验 + verifyState） */
 function calculateAuthenticityScore(property: Property): number {
-  const tri = generateTriVerify(property);
+  const tri = getTriVerify(property);
   let score = 30;
   const scoreMap: Record<VerifyState, number> = {
     verified: 25,
@@ -326,7 +324,7 @@ export default function PropertyList() {
       width: 180,
       align: 'center',
       render: (_, record) => {
-        const tri = generateTriVerify(record);
+        const tri = getTriVerify(record);
         return (
           <Space size={4} wrap className="justify-center">
             <TriVerifyTag type="video" status={tri.video} />

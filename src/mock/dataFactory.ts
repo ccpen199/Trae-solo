@@ -236,6 +236,7 @@ export function generateProperties(count: number = 30): Property[] {
     const createTime = randomDate(365);
     const totalFloor = random(6, 38);
     const floor = random(1, totalFloor);
+    let decorationVal = 'standard';
 
     const p: Property = {
       id: uuidv4(),
@@ -266,7 +267,7 @@ export function generateProperties(count: number = 30): Property[] {
       floor,
       hasElevator: totalFloor > 7 ? true : random(0, 1) === 1,
       orientation: pick(ORIENTATIONS),
-      decoration: pick(DECORATIONS),
+      decoration: (() => { const d = pick(DECORATIONS); decorationVal = d; return d; })(),
       decorationText: (() => {
         const map: Record<string, string> = {
           rough: '毛坯',
@@ -275,7 +276,7 @@ export function generateProperties(count: number = 30): Property[] {
           fine: '精装',
           luxury: '豪装',
         };
-        return map[decoration] || '普装';
+        return map[decorationVal] || '普装';
       })(),
       videoVerify: pick(['verified', 'verified', 'verified', 'verifying', 'unverified', 'verification_failed']),
       vrVerify: pick(['verified', 'verified', 'verifying', 'unverified', 'verification_failed']),

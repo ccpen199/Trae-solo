@@ -200,13 +200,6 @@ export default function Dashboard() {
           return `<b>${d[4] || '区域'}</b><br/>地址: ${d[5] || '-'}<br/>权重: ${d[2] || 0}<br/>数量: ${d[3] || 1}`;
         },
       },
-      geo: {
-        map: 'china',
-        roam: true,
-        center: [121.4737, 31.2304],
-        zoom: 55,
-        show: false,
-      },
       grid: {
         left: 0,
         right: 0,
@@ -251,42 +244,70 @@ export default function Dashboard() {
         },
       },
       series: [
+        /** 散点热力晕染层 - 大尺寸半透明散点模拟热力连续分布 */
         {
           name: heatmapLayer === 'property' ? '房源密度' : heatmapLayer === 'contract' ? '成交密度' : '租金梯度',
-          type: 'heatmap',
-          coordinateSystem: 'cartesian2d',
-          data: heatData,
-          /** 注意：gradientColors 是 geo 坐标系 heatmap 专用参数，cartesian2d 下由 visualMap.inRange.color 控制颜色 */
-          pointSize: 28,
-          blurSize: 42,
-          minOpacity: 0.18,
-          maxOpacity: 0.92,
-          z: 1,
-        },
-        /** 散点热力晕染层：增强视觉效果，形成光晕效果 */
-        {
-          name: '热力晕染',
           type: 'scatter',
           coordinateSystem: 'cartesian2d',
-          data: heatData.filter((_, i) => i % 3 === 0),
-          symbolSize: (val: number[]) => val[2] * 2.5,
+          data: heatData,
+          symbolSize: (val: number[]) => Math.max(8, Math.min(60, val[2] * 1.8)),
           itemStyle: {
-            color:
-              heatmapLayer === 'property'
-                ? 'rgba(15, 76, 129, 0.15)'
-                : heatmapLayer === 'contract'
-                ? 'rgba(0, 168, 107, 0.15)'
-                : 'rgba(212, 165, 116, 0.2)',
-            shadowBlur: 20,
-            shadowColor:
-              heatmapLayer === 'property'
-                ? 'rgba(15, 76, 129, 0.5)'
-                : heatmapLayer === 'contract'
-                ? 'rgba(0, 168, 107, 0.5)'
-                : 'rgba(255, 107, 53, 0.5)',
+            color: (params: any) => {
+              const v = params.value?.[2] || 0;
+              const maxVal = heatmapLayer === 'property' ? 50 : heatmapLayer === 'contract' ? 40 : 30;
+              const ratio = Math.min(v / maxVal, 1);
+              if (heatmapLayer === 'property') {
+                const r = Math.round(232 + (15 - 232) * ratio);
+                const g = Math.round(240 + (76 - 240) * ratio);
+                const b = Math.round(248 + (129 - 248) * ratio);
+                return `rgba(${r}, ${g}, ${b}, ${0.12 + ratio * 0.55})`;
+              }
+              if (heatmapLayer === 'contract') {
+                const r = Math.round(230 + (0 - 230) * ratio);
+                const g = Math.round(247 + (168 - 247) * ratio);
+                const b = Math.round(239 + (107 - 239) * ratio);
+                return `rgba(${r}, ${g}, ${b}, ${0.12 + ratio * 0.55})`;
+              }
+              const r = Math.round(249 + (212 - 249) * ratio);
+              const g = Math.round(241 + (165 - 241) * ratio);
+              const b = Math.round(232 + (116 - 232) * ratio);
+              return `rgba(${r}, ${g}, ${b}, ${0.15 + ratio * 0.6})`;
+            },
+            shadowBlur: (params: any) => {
+              const v = params.value?.[2] || 0;
+              return Math.max(6, Math.min(30, v * 0.8));
+            },
+            shadowColor: (params: any) => {
+              const v = params.value?.[2] || 0;
+              const maxVal = heatmapLayer === 'property' ? 50 : heatmapLayer === 'contract' ? 40 : 30;
+              const ratio = Math.min(v / maxVal, 1);
+              if (heatmapLayer === 'property') return `rgba(15, 76, 129, ${0.2 + ratio * 0.4})`;
+              if (heatmapLayer === 'contract') return `rgba(0, 168, 107, ${0.2 + ratio * 0.4})`;
+              return `rgba(212, 165, 116, ${0.2 + ratio * 0.4})`;
+            },
           },
           silent: true,
-          z: 1.5,
+          z: 1,
+        },
+        /** 小散点叠加层 - 增强中心密度感知 */
+        {
+          name: '密度叠加',
+          type: 'scatter',
+          coordinateSystem: 'cartesian2d',
+          data: heatData.filter((_, i) => i % 2 === 0),
+          symbolSize: (val: number[]) => Math.max(3, Math.min(18, val[2] * 0.5)),
+          itemStyle: {
+            color: (params: any) => {
+              const v = params.value?.[2] || 0;
+              const maxVal = heatmapLayer === 'property' ? 50 : heatmapLayer === 'contract' ? 40 : 30;
+              const ratio = Math.min(v / maxVal, 1);
+              if (heatmapLayer === 'property') return `rgba(15, 76, 129, ${0.3 + ratio * 0.5})`;
+              if (heatmapLayer === 'contract') return `rgba(0, 168, 107, ${0.3 + ratio * 0.5})`;
+              return `rgba(212, 165, 116, ${0.3 + ratio * 0.5})`;
+            },
+          },
+          silent: true,
+          z: 2,
         },
         {
           name: '上海主要环线',
