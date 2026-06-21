@@ -1,0 +1,105 @@
+/** @type {import('tailwindcss').Config} */
+
+export default {
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    container: {
+      center: true,
+    },
+    extend: {
+      colors: {
+        primary: {
+          50: "#f0f4f8",
+          100: "#cdd9e5",
+          200: "#9bb3cb",
+          300: "#698db1",
+          400: "#376797",
+          500: "#1a365d",
+          600: "#152a4a",
+          700: "#101f37",
+          800: "#0b1525",
+          900: "#050a12",
+        },
+        gold: {
+          50: "#fdf8e8",
+          100: "#faefc4",
+          200: "#f5df8b",
+          300: "#f0cf52",
+          400: "#ebbf19",
+          500: "#d69e2e",
+          600: "#ab7e25",
+          700: "#805f1c",
+          800: "#563f13",
+          900: "#2b2009",
+        },
+        success: {
+          50: "#f0fdf4",
+          100: "#dcfce7",
+          200: "#bbf7d0",
+          300: "#86efac",
+          400: "#4ade80",
+          500: "#38a169",
+          600: "#16a34a",
+          700: "#15803d",
+          800: "#166534",
+          900: "#14532d",
+        },
+        danger: {
+          50: "#fef2f2",
+          100: "#fee2e2",
+          200: "#fecaca",
+          300: "#fca5a5",
+          400: "#f87171",
+          500: "#e53e3e",
+          600: "#dc2626",
+          700: "#b91c1c",
+          800: "#991b1b",
+          900: "#7f1d1d",
+        },
+        info: {
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3182ce",
+          600: "#2563eb",
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
+        },
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', "serif"],
+        sans: ['"Noto Sans SC"', "sans-serif"],
+      },
+      boxShadow: {
+        card: "0 4px 6px -1px rgba(26, 54, 93, 0.1), 0 2px 4px -1px rgba(26, 54, 93, 0.06)",
+        "card-hover": "0 10px 15px -3px rgba(26, 54, 93, 0.1), 0 4px 6px -2px rgba(26, 54, 93, 0.05)",
+        gold: "0 4px 14px 0 rgba(214, 158, 46, 0.39)",
+      },
+      backgroundImage: {
+        "gradient-primary": "linear-gradient(135deg, #1a365d 0%, #2d4a6f 100%)",
+        "gradient-gold": "linear-gradient(135deg, #d69e2e 0%, #eab308 100%)",
+        "noise": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
+      },
+      animation: {
+        "fade-in-up": "fadeInUp 0.6s ease-out forwards",
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "shimmer": "shimmer 2s linear infinite",
+      },
+      keyframes: {
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+      },
+    },
+  },
+  plugins: [],
+};
