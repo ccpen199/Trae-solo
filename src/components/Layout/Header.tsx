@@ -71,45 +71,70 @@ export default function Header() {
           </button>
 
           <div className="relative">
-            <button
-              onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10 transition-colors"
-            >
-              {user.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-full border-2 border-gold-400 object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gold-400 flex items-center justify-center">
-                  <User className="w-4 h-4 text-primary-900" />
-                </div>
-              )}
-              <span className="hidden sm:inline text-sm text-white/90">{user.name}</span>
-            </button>
-
-            {userMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 border border-gray-100">
-                <Link
-                  to="/profile"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50"
-                  onClick={() => setUserMenuOpen(false)}
+            {user ? (
+              <>
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10 transition-colors"
                 >
-                  个人中心
-                </Link>
-                <Link
-                  to="/applications"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50"
-                  onClick={() => setUserMenuOpen(false)}
-                >
-                  我的办事
-                </Link>
-                <hr className="my-1 border-gray-100" />
-                <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                  退出登录
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name}
+                      className="w-8 h-8 rounded-full border-2 border-gold-400 object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-gold-400 flex items-center justify-center">
+                      <User className="w-4 h-4 text-primary-900" />
+                    </div>
+                  )}
+                  <span className="hidden sm:inline text-sm text-white/90">{user.name}</span>
                 </button>
-              </div>
+
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 border border-gray-100">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      个人中心
+                    </Link>
+                    <Link
+                      to="/government"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      我的办事
+                    </Link>
+                    <Link
+                      to="/admin/monitor"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      管理后台
+                    </Link>
+                    <hr className="my-1 border-gray-100" />
+                    <button
+                      onClick={() => {
+                        useStore.getState().logout()
+                        setUserMenuOpen(false)
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    >
+                      退出登录
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="flex items-center gap-2 px-4 py-1.5 bg-gold-400 text-primary-900 rounded-full text-sm font-semibold hover:bg-gold-300 transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span className="hidden sm:inline">登录</span>
+              </Link>
             )}
           </div>
 

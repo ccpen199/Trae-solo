@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   User, CreditCard, Shield, Home, FileText, Users,
   Star, QrCode, ChevronRight, Clock, X,
-  Edit, BookOpen, UserCheck,
+  Edit, BookOpen, UserCheck, TrendingUp, CheckCircle, FileCheck, BarChart3
 } from 'lucide-react'
 import { useStore } from '@/store/useStore'
 
-const tabs = ['证照库', '办事记录', '代办管理'] as const
+const tabs = ['证照库', '办事记录', '效能数据', '代办管理'] as const
 type TabKey = typeof tabs[number]
 
 const certIcons: Record<string, React.ElementType> = {
@@ -58,6 +58,19 @@ export default function Profile() {
 
   const maskedId = user.idCard.replace(/^(.{4})(.+)(.{4})$/, '$1**********$3')
   const maskedPhone = user.phone.replace(/^(.{3})(.+)(.{4})$/, '$1****$3')
+
+  const completedCount = applications.filter(a => a.status === '已办结').length
+  const inProgressCount = applications.filter(a => a.status !== '已办结' && a.status !== '已驳回').length
+  const avgSatisfaction = completedCount > 0
+    ? (applications.filter(a => a.satisfaction).reduce((sum, a) => sum + (a.satisfaction || 0), 0) / Math.max(1, applications.filter(a => a.satisfaction).length)).toFixed(1)
+    : '暂无'
+
+  const statCards = [
+    { label: '累计办件', value: applications.length, icon: FileCheck, color: 'bg-primary-500', bg: 'bg-primary-50' },
+    { label: '已办结', value: completedCount, icon: CheckCircle, color: 'bg-success', bg: 'bg-success-light' },
+    { label: '办理中', value: inProgressCount, icon: TrendingUp, color: 'bg-gold-500', bg: 'bg-gold-50' },
+    { label: '平均评分', value: avgSatisfaction, icon: Star, color: 'bg-purple-500', bg: 'bg-purple-50' },
+  ]
 
   return (
     <div className="min-h-screen bg-gray-50 pb-8">
@@ -216,6 +229,87 @@ export default function Profile() {
                   </div>
                 </div>
               ))}
+            </motion.div>
+          )}
+
+          {activeTab === '效能数据' && (
+            <motion.div
+              key="efficiency"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {statCards.map((card) => {
+                  const Icon = card.icon
+                  return (
+                    <motion.div
+                      key={card.label}
+                      whileHover={{ scale: 1.02 }}
+                      className={`${card.bg} rounded-xl p-4 text-center`}
+                    >
+                      <div className={`w-10 h-10 ${card.color} rounded-lg flex items-center justify-center mx-auto mb-2`}>
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <p className="text-2xl font-bold text-gray-800">{card.value}</p>
+                      <p className="text-xs text-gray-500 mt-1">{card.label}</p>
+                    </motion.div>
+                  )
+                })}
+              </div>
+
+              <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-primary-500" />
+                  满意度分布
+                </h3>
+                <div className="space-y-3">
+                  {[5, 4, 3, 2, 1].map((score) => {
+                    const count = applications.filter(a => a.satisfaction === score).length
+                    const total = applications.filter(a => a.satisfaction).length
+                    const percent = total > 0 ? Math.round((count / total) * 100) : 0
+                    return (
+                      <div key={score} className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500 w-12">{score}星</span>
+                        <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${percent}%` }}
+                            transition={{ duration: 0.6, delay: score * 0.1 }}
+                            className="h-full bg-gradient-to-r from-gold-400 to-gold-500 rounded-full"
+                          />
+                        </div>
+                        <span className="text-sm text-gray-400 w-12 text-right">{percent}%</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-primary-500" />
+                  平均办理时效
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="text-center p-3 bg-primary-50 rounded-lg">
+                    <p className="text-2xl font-bold text-primary-500">2.4天</p>
+                    <p className="text-xs text-gray-500 mt-1">政务服务</p>
+                  </div>
+                  <div className="text-center p-3 bg-success-light rounded-lg">
+                    <p className="text-2xl font-bold text-success">即时</p>
+                    <p className="text-xs text-gray-500 mt-1">查询类</p>
+                  </div>
+                  <div className="text-center p-3 bg-gold-50 rounded-lg">
+                    <p className="text-2xl font-bold text-gold-600">5.2天</p>
+                    <p className="text-xs text-gray-500 mt-1">审批类</p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400 mt-4 text-center">
+                  数据来源：无锡市政务服务效能监测系统
+                </p>
+              </div>
             </motion.div>
           )}
 
