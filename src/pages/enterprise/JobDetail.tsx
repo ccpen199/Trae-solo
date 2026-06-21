@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Users, Calendar, Clock, Briefcase, Edit2, XCircle, Share2 } from 'lucide-react';
+import { ArrowLeft, MapPin, Users, Calendar, Clock, Briefcase, Edit2, XCircle, Share2, FileText, AlertCircle } from 'lucide-react';
 import { mockJobs, mockResumes } from '@/mock/data';
 
 export default function JobDetail() {
@@ -122,6 +122,26 @@ export default function JobDetail() {
                 分享职位
               </button>
             </div>
+
+            {job.status === 'closed' && job.closeReason && (
+              <div className="mt-6 p-5 bg-ash-50 rounded-xl border border-ash-100">
+                <div className="flex items-start gap-3">
+                  <AlertCircle size={20} className="text-ash-400 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <h4 className="font-medium text-ash-700 mb-1">职位关闭原因</h4>
+                    <p className="text-sm text-ash-600">{job.closeReason}</p>
+                    <p className="text-xs text-ash-400 mt-2">此记录将同步至数据看板的职位关闭原因分布统计。</p>
+                  </div>
+                  <button
+                    onClick={() => navigate('/admin/dashboard')}
+                    className="text-sm text-terracotta-600 font-medium hover:text-terracotta-700 flex items-center gap-1 whitespace-nowrap"
+                  >
+                    <FileText size={14} />
+                    查看统计分析
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="card p-8">

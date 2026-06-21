@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Filter, MoreVertical, Eye, Edit2, XCircle, Users, MapPin, Clock, Briefcase } from 'lucide-react';
+import { Plus, Search, Filter, MoreVertical, Eye, Edit2, XCircle, Users, MapPin, Clock, Briefcase, FileText } from 'lucide-react';
 import { mockJobs } from '@/mock/data';
 import type { Job, JobStatus, EmploymentType } from '@/types';
 
@@ -110,6 +110,7 @@ export default function JobList() {
               <th className="text-left px-6 py-4 text-sm font-medium text-ash-600">工作地点</th>
               <th className="text-left px-6 py-4 text-sm font-medium text-ash-600">投递人数</th>
               <th className="text-left px-6 py-4 text-sm font-medium text-ash-600">状态</th>
+              <th className="text-left px-6 py-4 text-sm font-medium text-ash-600">关闭原因</th>
               <th className="text-left px-6 py-4 text-sm font-medium text-ash-600">发布时间</th>
               <th className="text-right px-6 py-4 text-sm font-medium text-ash-600">操作</th>
             </tr>
@@ -150,6 +151,16 @@ export default function JobList() {
                   <span className={`badge ${statusBadge[job.status]}`}>
                     {statusLabel[job.status]}
                   </span>
+                </td>
+                <td className="px-6 py-4">
+                  {job.status === 'closed' && job.closeReason ? (
+                    <span className="text-sm text-ash-600 flex items-center gap-1">
+                      <XCircle size={14} className="text-ash-400" />
+                      {job.closeReason}
+                    </span>
+                  ) : (
+                    <span className="text-sm text-ash-300">—</span>
+                  )}
                 </td>
                 <td className="px-6 py-4 text-sm text-ash-500">{job.createdAt}</td>
                 <td className="px-6 py-4 text-right">

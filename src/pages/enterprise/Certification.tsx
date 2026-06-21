@@ -1,16 +1,19 @@
 import { useState, useRef } from 'react';
-import { Upload, Check, X, Smartphone, FileText, ShieldCheck, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Upload, Check, X, Smartphone, FileText, ShieldCheck, Loader2, Briefcase } from 'lucide-react';
 import { mockCertification } from '@/mock/data';
 
 type Step = 'ocr' | 'confirm' | 'verify' | 'result';
 
 export default function Certification() {
+  const navigate = useNavigate();
   const [step, setStep] = useState<Step>('confirm');
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState('13812345678');
   const [code, setCode] = useState('');
   const [countdown, setCountdown] = useState(0);
+  const [verifyStatus, setVerifyStatus] = useState<'idle' | 'verifying' | 'success' | 'fail'>('idle');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const cert = mockCertification;
@@ -35,6 +38,7 @@ export default function Certification() {
   const handleSendCode = () => {
     if (!phone || phone.length !== 11) return;
     setCountdown(60);
+    setCode('888888');
     const timer = setInterval(() => {
       setCountdown((c) => {
         if (c <= 1) clearInterval(timer);
@@ -45,7 +49,13 @@ export default function Certification() {
 
   const handleVerify = () => {
     if (code.length !== 6) return;
-    setStep('result');
+    setVerifyStatus('verifying');
+    setTimeout(() => {
+      setVerifyStatus('success');
+      setTimeout(() => {
+        setStep('result');
+      }, 800);
+    }, 1500);
   };
 
   return (
@@ -287,6 +297,12 @@ export default function Certification() {
                     {countdown > 0 ? `${countdown}s后重发` : '获取验证码'}
                   </button>
                 </div>
+                {countdown > 0 && (
+                  <p className="text-xs text-spruce-600 mt-2 flex items-center gap-1">
+                    <Check size={12} />
+                    验证码已发送至法人手机（演示验证码：888888）
+                  </p>
+                )}
               </div>
 
               <div className="flex items-start gap-2 text-sm text-ash-500">
@@ -295,13 +311,31 @@ export default function Certification() {
               </div>
             </div>
 
+            {verifyStatus === 'verifying' && (
+              <div className="p-4 bg-sand-50 rounded-xl flex items-center gap-3">
+                <Loader2 size={20} className="text-sand-500 animate-spin" />
+                <p className="text-sm text-sand-700 font-medium">正在验证中，请稍候...</p>
+              </div>
+            )}
+
+            {verifyStatus === 'success' && (
+              <div className="p-4 bg-spruce-50 rounded-xl flex items-center gap-3">
+                <Check size={20} className="text-spruce-500" />
+                <p className="text-sm text-spruce-700 font-medium">法人实名绑定成功！正在跳转认证结果...</p>
+              </div>
+            )}
+
             <div className="flex gap-3 pt-4">
-              <button onClick={() => setStep('confirm')} className="btn-secondary flex-1">
+              <button
+                onClick={() => setStep('confirm')}
+                className="btn-secondary flex-1"
+                disabled={verifyStatus === 'verifying'}
+              >
                 上一步
               </button>
               <button
                 onClick={handleVerify}
-                disabled={phone.length !== 11 || code.length !== 6}
+                disabled={phone.length !== 11 || code.length !== 6 || verifyStatus === 'verifying' || verifyStatus === 'success'}
                 className="btn-primary flex-1 disabled:opacity-50"
               >
                 完成实名认证
@@ -325,17 +359,47 @@ export default function Certification() {
                     您的企业认证已成功通过审核，现在可以发布职位开始招聘了。
                   </p>
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-spruce-50 rounded-full">
-                  <Check size={16} className="text-spruce-500" />
-                  <span className="text-sm text-spruce-700 font-medium">
-                    营业执照核验通过
-                  </span>
+                <div className="flex items-center justify-center gap-3 flex-wrap">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-spruce-50 rounded-full">
+                    <Check size={16} className="text-spruce-500" />
+                    <span className="text-sm text-spruce-700 font-medium">营业执照核验通过</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-spruce-50 rounded-full">
+                    <Check size={16} className="text-spruce-500" />
+                    <span className="text-sm text-spruce-700 font-medium">法人实名绑定成功</span>
+                  </div>
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-spruce-50 rounded-full ml-2">
-                  <Check size={16} className="text-spruce-500" />
-                  <span className="text-sm text-spruce-700 font-medium">
-                    法人实名绑定成功
-                  </span>
+
+                <div className="mt-6 p-6 bg-ash-50 rounded-xl text-left max-w-lg mx-auto space-y-3">
+                  <h4 className="font-medium text-ash-700 mb-3">认证信息摘要</h4>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-ash-500">企业名称</span>
+                      <p className="text-ash-700 font-medium">{cert.companyName}</p>
+                    </div>
+                    <div>
+                      <span className="text-ash-500">统一社会信用代码</span>
+                      <p className="text-ash-700 font-mono text-xs">{cert.creditCode}</p>
+                    </div>
+                    <div>
+                      <span className="text-ash-500">法定代表人</span>
+                      <p className="text-ash-700 font-medium">{cert.legalPerson}</p>
+                    </div>
+                    <div>
+                      <span className="text-ash-500">认证时间</span>
+                      <p className="text-ash-700 font-medium">{cert.createdAt}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 justify-center mt-8">
+                  <button onClick={() => navigate('/enterprise/jobs')} className="btn-primary flex items-center gap-2">
+                    <Briefcase size={18} />
+                    前往发布职位
+                  </button>
+                  <button onClick={() => navigate('/enterprise/jobs/create')} className="btn-outline flex items-center gap-2">
+                    立即发布新职位
+                  </button>
                 </div>
               </>
             ) : cert.status === 'rejected' ? (
@@ -351,10 +415,13 @@ export default function Certification() {
                     您的认证资料存在问题，请修改后重新提交。
                   </p>
                 </div>
-                <div className="p-4 bg-terracotta-50 rounded-xl text-left">
+                <div className="p-4 bg-terracotta-50 rounded-xl text-left max-w-lg mx-auto">
                   <p className="text-sm text-terracotta-700 font-medium">未通过原因：</p>
-                  <p className="text-sm text-terracotta-600 mt-1">{cert.rejectReason}</p>
+                  <p className="text-sm text-terracotta-600 mt-1">{cert.rejectReason || '营业执照信息与工商注册信息不一致，请核实后重新提交。'}</p>
                 </div>
+                <button onClick={() => { setStep('ocr'); setVerifyStatus('idle'); }} className="btn-primary mt-4">
+                  重新提交认证
+                </button>
               </>
             ) : (
               <>

@@ -49,7 +49,7 @@ export default function JobCreate() {
 
     const partialData: Partial<FormData> = {};
     fieldsToValidate.forEach((k) => {
-      partialData[k] = form[k];
+      (partialData as Record<string, string | number>)[k] = form[k];
     });
 
     const result = formSchema.partial().safeParse(partialData);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Building2, User, Shield, Smartphone, ArrowRight } from 'lucide-react';
+import { Building2, User, Shield, Smartphone, ArrowRight, Zap } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import type { UserRole } from '@/types';
 
@@ -14,11 +14,17 @@ export default function Login() {
   const [code, setCode] = useState('');
   const [countdown, setCountdown] = useState(0);
 
-  const from = location.state?.from?.pathname || '/';
+  const getHomeRoute = (r: UserRole) => {
+    if (r === 'enterprise') return '/enterprise/jobs';
+    if (r === 'applicant') return '/applicant/home';
+    if (r === 'admin') return '/admin/dashboard';
+    return '/login';
+  };
 
   const handleSendCode = () => {
     if (!phone || phone.length !== 11) return;
     setCountdown(60);
+    setCode('888888');
     const timer = setInterval(() => {
       setCountdown((c) => {
         if (c <= 1) clearInterval(timer);
@@ -35,7 +41,17 @@ export default function Login() {
       admin: '系统管理员',
     };
     login(role, phone, names[role]);
-    navigate(from, { replace: true });
+    navigate(getHomeRoute(role), { replace: true });
+  };
+
+  const handleQuickLogin = (selectedRole: UserRole) => {
+    const names = {
+      enterprise: '云南云智科技HR',
+      applicant: '求职者小李',
+      admin: '系统管理员',
+    };
+    login(selectedRole, '13800001111', names[selectedRole]);
+    navigate(getHomeRoute(selectedRole), { replace: true });
   };
 
   const roles: { value: UserRole; icon: typeof Building2; label: string; desc: string }[] = [
@@ -158,6 +174,9 @@ export default function Login() {
                   {countdown > 0 ? `${countdown}s后重发` : '获取验证码'}
                 </button>
               </div>
+              {countdown > 0 && (
+                <p className="text-xs text-spruce-600 mt-1.5">验证码已发送（演示验证码：888888）</p>
+              )}
             </div>
           </div>
 
@@ -169,6 +188,53 @@ export default function Login() {
             登录
             <ArrowRight size={18} />
           </button>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-ash-100"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-gradient-to-br from-terracotta-50 via-white to-spruce-50 px-4 text-ash-400">快速体验</span>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-3">
+              <button
+                onClick={() => handleQuickLogin('enterprise')}
+                className="p-3 rounded-xl border-2 border-spruce-200 bg-spruce-50/50 hover:bg-spruce-50 hover:border-spruce-300 transition-all group"
+              >
+                <Building2 size={20} className="mx-auto text-spruce-600 group-hover:text-spruce-700" />
+                <p className="text-xs font-medium text-spruce-700 mt-1.5">企业HR</p>
+                <p className="text-xs text-spruce-500 mt-0.5 flex items-center justify-center gap-0.5">
+                  <Zap size={10} />
+                  一键进入
+                </p>
+              </button>
+              <button
+                onClick={() => handleQuickLogin('applicant')}
+                className="p-3 rounded-xl border-2 border-terracotta-200 bg-terracotta-50/50 hover:bg-terracotta-50 hover:border-terracotta-300 transition-all group"
+              >
+                <User size={20} className="mx-auto text-terracotta-600 group-hover:text-terracotta-700" />
+                <p className="text-xs font-medium text-terracotta-700 mt-1.5">求职者</p>
+                <p className="text-xs text-terracotta-500 mt-0.5 flex items-center justify-center gap-0.5">
+                  <Zap size={10} />
+                  一键进入
+                </p>
+              </button>
+              <button
+                onClick={() => handleQuickLogin('admin')}
+                className="p-3 rounded-xl border-2 border-sand-200 bg-sand-50/50 hover:bg-sand-50 hover:border-sand-300 transition-all group"
+              >
+                <Shield size={20} className="mx-auto text-sand-600 group-hover:text-sand-700" />
+                <p className="text-xs font-medium text-sand-700 mt-1.5">管理员</p>
+                <p className="text-xs text-sand-500 mt-0.5 flex items-center justify-center gap-0.5">
+                  <Zap size={10} />
+                  一键进入
+                </p>
+              </button>
+            </div>
+          </div>
 
           <p className="text-center text-xs text-ash-400 mt-6">
             登录即表示您同意《用户服务协议》和《隐私政策》
