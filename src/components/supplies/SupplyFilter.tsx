@@ -4,15 +4,15 @@ import { Input, Select } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Search, Filter, X, CheckCircle } from 'lucide-react';
-import { CATEGORIES, PROVINCES, type SupplyFilter } from '../../../shared/types';
+import { CATEGORIES, PROVINCES, type SupplyFilter as SupplyFilterType } from '../../../shared/types';
 
 interface SupplyFilterProps {
-  onFilter: (filter: SupplyFilter) => void;
+  onFilter: (filter: SupplyFilterType) => void;
   onReset: () => void;
 }
 
 export const SupplyFilter: React.FC<SupplyFilterProps> = ({ onFilter, onReset }) => {
-  const [filters, setFilters] = useState<SupplyFilter>({
+  const [filters, setFilters] = useState<SupplyFilterType>({
     category: '',
     minTonnage: undefined,
     maxTonnage: undefined,
@@ -23,16 +23,16 @@ export const SupplyFilter: React.FC<SupplyFilterProps> = ({ onFilter, onReset })
   });
   const [expanded, setExpanded] = useState(false);
 
-  const handleChange = (key: keyof SupplyFilter, value: any) => {
+  const handleChange = (key: keyof SupplyFilterType, value: any) => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanedFilters: SupplyFilter = {};
+    const cleanedFilters: SupplyFilterType = {} as SupplyFilterType;
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== undefined && value !== '' && value !== null) {
-        cleanedFilters[key as keyof SupplyFilter] = value;
+        (cleanedFilters as any)[key] = value;
       }
     });
     onFilter(cleanedFilters);

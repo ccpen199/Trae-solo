@@ -123,18 +123,17 @@ const Register: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await authAPI.register({
-        phone: formData.phone,
-        password: formData.password,
-        name: formData.name,
-        role: selectedRole,
-        company: formData.company,
-        province: formData.province,
-        city: formData.city,
-      });
+      const response = await authAPI.register(
+        formData.phone,
+        formData.password,
+        selectedRole,
+        formData.company,
+      );
       if (response.success && response.data) {
-        login(response.data.token, response.data.user);
-        navigate('/market');
+        const loginResult = await login(formData.phone, formData.password, selectedRole);
+        if (loginResult.success) {
+          navigate('/market');
+        }
       }
     } catch (error) {
       console.error('注册失败:', error);

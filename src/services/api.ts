@@ -7,8 +7,11 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...options.headers,
   };
+  if (options.headers) {
+    const extra = options.headers as Record<string, string>;
+    Object.entries(extra).forEach(([k, v]) => { headers[k] = v; });
+  }
 
   const response = await fetch(`${API_BASE}${url}`, {
     ...options,

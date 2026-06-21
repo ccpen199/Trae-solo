@@ -5,9 +5,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   icon?: React.ReactNode;
+  suffix?: React.ReactNode;
 }
 
-export const Input: React.FC<InputProps> = ({ label, error, icon, className, id, ...props }) => {
+export const Input: React.FC<InputProps> = ({ label, error, icon, suffix, className, id, ...props }) => {
   const inputId = id || Math.random().toString(36).substring(2, 9);
   
   return (
@@ -28,11 +29,17 @@ export const Input: React.FC<InputProps> = ({ label, error, icon, className, id,
           className={cn(
             'w-full px-4 py-2.5 border border-slate-300 rounded-md shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200',
             icon && 'pl-10',
+            suffix && 'pr-10',
             error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
             className
           )}
           {...props}
         />
+        {suffix && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            {suffix}
+          </div>
+        )}
       </div>
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>
@@ -71,10 +78,11 @@ export const Textarea: React.FC<TextareaProps> = ({ label, error, className, id,
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
+  icon?: React.ReactNode;
   options: { value: string; label: string }[];
 }
 
-export const Select: React.FC<SelectProps> = ({ label, error, options, className, id, ...props }) => {
+export const Select: React.FC<SelectProps> = ({ label, error, icon, options, className, id, ...props }) => {
   const inputId = id || Math.random().toString(36).substring(2, 9);
   
   return (

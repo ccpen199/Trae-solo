@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useAuthStore } from '@/store/authStore';
 
 interface LayoutProps {
   requireAuth?: boolean;
+  children?: React.ReactNode;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ requireAuth = true }) => {
+export const Layout: React.FC<LayoutProps> = ({ requireAuth = true, children }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export const Layout: React.FC<LayoutProps> = ({ requireAuth = true }) => {
         sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'
       )}>
         <div className="p-4 lg:p-6 xl:p-8">
-          <Outlet />
+          {children}
         </div>
       </main>
     </div>
