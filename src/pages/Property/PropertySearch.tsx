@@ -15,6 +15,7 @@ import {
   Progress,
   message,
   Divider,
+  Empty,
 } from 'antd';
 import {
   EnvironmentOutlined,
@@ -108,9 +109,11 @@ export default function PropertySearch() {
           if (p.bedrooms < 4 && !selectedRooms.includes(p.bedrooms)) return false;
         } else if (!selectedRooms.includes(p.bedrooms)) return false;
       }
-      if (mustHaveVideo && p.videoVerify !== 'verified') return false;
-      if (mustHaveVR && p.vrVerify !== 'verified') return false;
-      if (mustHaveOnsite && p.onsiteVerify !== 'verified') return false;
+      // 三态核验筛选：仅保留已核验通过的房源
+      // 显式排除以下三种状态：unverified(未核验)、verifying(核验中)、verification_failed(核验失败)
+      if (mustHaveVideo && (p.videoVerify === 'unverified' || p.videoVerify === 'verifying' || p.videoVerify === 'verification_failed')) return false;
+      if (mustHaveVR && (p.vrVerify === 'unverified' || p.vrVerify === 'verifying' || p.vrVerify === 'verification_failed')) return false;
+      if (mustHaveOnsite && (p.onsiteVerify === 'unverified' || p.onsiteVerify === 'verifying' || p.onsiteVerify === 'verification_failed')) return false;
       return true;
     });
 
@@ -429,6 +432,14 @@ export default function PropertySearch() {
     message.info('已重置所有筛选条件');
   };
 
+  /** 重置三态核验筛选条件 */
+  const handleResetFilter = () => {
+    setMustHaveVideo(false);
+    setMustHaveVR(false);
+    setMustHaveOnsite(false);
+    message.info('已重置三态核验筛选条件');
+  };
+
   return (
     <Layout className="min-h-screen bg-transparent">
       <Layout>
@@ -740,10 +751,29 @@ export default function PropertySearch() {
                 </div>
               }
             >
+              {/* 筛选条件摘要条 */}
+              <div className="mb-3 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-ink-600">共找到 <span className="font-semibold text-brand-600">{recommendedProperties.length}</span> 套符合条件的房源</span>
+                  {(mustHaveVideo || mustHaveVR || mustHaveOnsite) && (
+                    <div className="flex items-center gap-1">
+                      <span className="text-ink-400">·</span>
+                      <span className="text-ink-500">三态必选：</span>
+                      {mustHaveVideo && <Tag color="success">视频核验</Tag>}
+                      {mustHaveVR && <Tag color="processing">VR核验</Tag>}
+                      {mustHaveOnsite && <Tag color="warning">实地勘验</Tag>}
+                    </div>
+                  )}
+                </div>
+                <Button size="small" onClick={handleResetFilter} icon={<ReloadOutlined />}>重置筛选</Button>
+              </div>
+
               {recommendedProperties.length === 0 ? (
-                <div className="py-20 text-center text-ink-400">
-                  <SearchOutlined className="mb-3 text-4xl opacity-30" />
-                  <div>暂无符合筛选条件的房源，请放宽条件后重试</div>
+                <div className="py-12">
+                  <Empty
+                    description="无符合条件的房源，请放宽筛选"
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  />
                 </div>
               ) : (
                 <Row gutter={[16, 16]}>

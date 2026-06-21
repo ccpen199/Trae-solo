@@ -19,6 +19,8 @@ import type {
   CreditDimensions,
   SettlementRecord,
   AuditActionType,
+  PropertyVerifyResult,
+  FaceVerifyResult,
 } from '@/types';
 import { generateRandomId } from '@/utils';
 
@@ -125,6 +127,12 @@ const AUDIT_ACTIONS: AuditActionType[] = ['create', 'update', 'delete', 'approve
 /**
  * 生成房东申请数据
  * @param count 生成数量
+ * @description 核心原则：状态与核验结果必须一致，可追溯
+ *  - pending: 待审核，无核验结果
+ *  - verifying: 自动审核中，核验状态为 processing
+ *  - approved: 已通过，所有核验项均为 passed
+ *  - rejected: 已驳回，至少有一项核验失败
+ *  - cancelled: 已取消，核验状态均为 pending
  */
 export function generateLandlordApplications(count: number = 20): LandlordApplication[] {
   const statuses: LandlordApplication['status'][] = ['pending', 'verifying', 'approved', 'rejected', 'cancelled'];
@@ -132,12 +140,36 @@ export function generateLandlordApplications(count: number = 20): LandlordApplic
 
   for (let i = 0; i < count; i++) {
     const status = pick(statuses);
-    const currentStep = status === 'pending' ? 1 : status === 'verifying' ? random(2, 3) : status === 'approved' || status === 'rejected' ? 5 : random(1, 2);
-    const progress = status === 'pending' ? random(5, 15) : status === 'verifying' ? random(30, 70) : status === 'cancelled' ? random(10, 50) : 100;
     const submitTime = randomDate(60);
     const district = pick(DISTRICTS);
     const area = random(35, 180);
     const bedrooms = random(1, 5);
+
+    // 根据状态决定 currentStep 和 progress
+    let currentStep: number;
+    let progress: number;
+
+    if (status === 'pending') {
+      // 待审核：第一步，进度10-20%
+      currentStep = 1;
+      progress = random(10, 20);
+    } else if (status === 'verifying') {
+      // 自动审核中：第2或3步，进度30-70%
+      currentStep = random(2, 3);
+      progress = random(30, 70);
+    } else if (status === 'approved') {
+      // 已通过：第5步，进度100%
+      currentStep = 5;
+      progress = 100;
+    } else if (status === 'rejected') {
+      // 已驳回：停在失败的那一步（2-4步），进度40-80%
+      currentStep = random(2, 4);
+      progress = random(40, 80);
+    } else {
+      // 已取消：第1-2步，进度5-30%
+      currentStep = random(1, 2);
+      progress = random(5, 30);
+    }
 
     const app: LandlordApplication = {
       id: uuidv4(),
@@ -165,28 +197,182 @@ export function generateLandlordApplications(count: number = 20): LandlordApplic
       submitTime,
     };
 
-    if (status !== 'pending') {
-      app.propertyVerifyResult = {
-        status: status === 'cancelled' ? 'pending' : pick(['processing', 'passed', 'passed', 'failed']),
-        ownerNameMatched: random(0, 10) !== 0,
-        ownerCertNoMatched: random(0, 10) !== 0,
-        propertyUnitNoValid: random(0, 10) !== 0,
-        hasMortgage: random(0, 100) < 30,
-        hasSeizure: random(0, 100) < 5,
-        hasObjection: random(0, 100) < 3,
-        verifySource: pick(['government_api', 'third_party', 'manual']),
+    // 根据状态生成对应的核验结果（同时设置 propertyVerify/propertyVerifyResult 和 faceVerify/faceVerifyResult 两套字段名）
+    // 注：同时设置两套字段名，保证向前向后兼容
+    if (status === 'pending') {
+      // 待审核：核验状态都为 pending
+      const pendingPropertyVerify: PropertyVerifyResult = {
+        status: 'pending',
+        ownerNameMatched: false,
+        ownerCertNoMatched: false,
+        propertyUnitNoValid: false,
+        hasMortgage: false,
+        hasSeizure: false,
+        hasObjection: false,
+        verifySource: 'government_api',
+        verifyTime: undefined,
+      };
+      const pendingFaceVerify: FaceVerifyResult = {
+        status: 'pending',
+        similarity: 0,
+        livenessPassed: false,
+        channel: 'alipay',
+        sessionId: undefined,
+        verifyTime: undefined,
+      };
+      app.propertyVerifyResult = pendingPropertyVerify;
+      app.propertyVerify = pendingPropertyVerify;
+      app.faceVerifyResult = pendingFaceVerify;
+      app.faceVerify = pendingFaceVerify;
+    } else if (status === 'verifying') {
+      // 自动审核中：都为 processing
+      const processingPropertyVerify: PropertyVerifyResult = {
+        status: 'processing',
+        ownerNameMatched: false,
+        ownerCertNoMatched: false,
+        propertyUnitNoValid: false,
+        hasMortgage: false,
+        hasSeizure: false,
+        hasObjection: false,
+        verifySource: pick<'government_api' | 'third_party' | 'manual'>(['government_api', 'third_party', 'manual']),
         verifyTime: randomDate(50),
       };
-      app.faceVerifyResult = {
-        status: status === 'cancelled' ? 'pending' : pick(['passed', 'passed', 'passed', 'failed']),
-        similarity: random(72, 99),
-        livenessPassed: random(0, 100) > 5,
-        channel: pick(['alipay', 'wechat', 'ctid']),
+      const processingFaceVerify: FaceVerifyResult = {
+        status: 'processing',
+        similarity: 0,
+        livenessPassed: false,
+        channel: pick<'alipay' | 'wechat' | 'ctid'>(['alipay', 'wechat', 'ctid']),
         sessionId: uuidv4(),
         verifyTime: randomDate(50),
       };
+      app.propertyVerifyResult = processingPropertyVerify;
+      app.propertyVerify = processingPropertyVerify;
+      app.faceVerifyResult = processingFaceVerify;
+      app.faceVerify = processingFaceVerify;
+    } else if (status === 'approved') {
+      // 已通过：所有核验项都通过
+      const approvedPropertyVerify: PropertyVerifyResult = {
+        status: 'passed',
+        ownerNameMatched: true,
+        ownerCertNoMatched: true,
+        propertyUnitNoValid: true,
+        hasMortgage: random(0, 100) < 30, // 30%概率有抵押但也可通过
+        hasSeizure: false, // 无查封
+        hasObjection: false, // 无异议
+        verifySource: pick<'government_api' | 'third_party' | 'manual'>(['government_api', 'third_party', 'manual']),
+        verifyTime: randomDate(50),
+      };
+      const approvedFaceVerify: FaceVerifyResult = {
+        status: 'passed',
+        similarity: random(85, 99), // 85-99 相似度
+        livenessPassed: true,
+        channel: pick<'alipay' | 'wechat' | 'ctid'>(['alipay', 'wechat', 'ctid']),
+        sessionId: uuidv4(),
+        verifyTime: randomDate(50),
+      };
+      app.propertyVerifyResult = approvedPropertyVerify;
+      app.propertyVerify = approvedPropertyVerify;
+      app.faceVerifyResult = approvedFaceVerify;
+      app.faceVerify = approvedFaceVerify;
+    } else if (status === 'rejected') {
+      // 已驳回：至少有一项核验失败
+      // 随机选择失败原因类型
+      const failType = random(1, 100);
+      let propertyStatus: 'passed' | 'failed' = 'passed';
+      let faceStatus: 'passed' | 'failed' = 'passed';
+      let ownerNameMatched = true;
+      let ownerCertNoMatched = true;
+      let propertyUnitNoValid = true;
+      let hasMortgage = random(0, 100) < 30;
+      let hasSeizure = false;
+      let hasObjection = false;
+      let similarity = random(85, 99);
+      let livenessPassed = true;
+
+      if (failType <= 30) {
+        // 30% 产权核验失败
+        propertyStatus = 'failed';
+        if (random(0, 1) === 0) {
+          ownerNameMatched = false;
+        } else {
+          propertyUnitNoValid = false;
+        }
+        ownerCertNoMatched = random(0, 1) === 0;
+      } else if (failType <= 60) {
+        // 30% 人脸核验失败
+        faceStatus = 'failed';
+        if (random(0, 1) === 0) {
+          similarity = random(30, 60); // 低相似度
+        } else {
+          livenessPassed = false;
+        }
+      } else if (failType <= 80) {
+        // 20% 有查封/异议
+        propertyStatus = 'failed';
+        if (random(0, 1) === 0) {
+          hasSeizure = true;
+        } else {
+          hasObjection = true;
+        }
+      } else {
+        // 20% 综合风险过高（两项都有问题）
+        propertyStatus = 'failed';
+        faceStatus = 'failed';
+        ownerNameMatched = false;
+        similarity = random(40, 65);
+      }
+
+      const rejectedPropertyVerify: PropertyVerifyResult = {
+        status: propertyStatus,
+        ownerNameMatched,
+        ownerCertNoMatched,
+        propertyUnitNoValid,
+        hasMortgage,
+        hasSeizure,
+        hasObjection,
+        verifySource: pick<'government_api' | 'third_party' | 'manual'>(['government_api', 'third_party', 'manual']),
+        verifyTime: randomDate(50),
+      };
+      const rejectedFaceVerify: FaceVerifyResult = {
+        status: faceStatus,
+        similarity,
+        livenessPassed,
+        channel: pick<'alipay' | 'wechat' | 'ctid'>(['alipay', 'wechat', 'ctid']),
+        sessionId: uuidv4(),
+        verifyTime: randomDate(50),
+      };
+      app.propertyVerifyResult = rejectedPropertyVerify;
+      app.propertyVerify = rejectedPropertyVerify;
+      app.faceVerifyResult = rejectedFaceVerify;
+      app.faceVerify = rejectedFaceVerify;
+    } else if (status === 'cancelled') {
+      // 已取消：核验状态都为 pending
+      const cancelledPropertyVerify: PropertyVerifyResult = {
+        status: 'pending',
+        ownerNameMatched: false,
+        ownerCertNoMatched: false,
+        propertyUnitNoValid: false,
+        hasMortgage: false,
+        hasSeizure: false,
+        hasObjection: false,
+        verifySource: 'government_api',
+        verifyTime: undefined,
+      };
+      const cancelledFaceVerify: FaceVerifyResult = {
+        status: 'pending',
+        similarity: 0,
+        livenessPassed: false,
+        channel: 'alipay',
+        sessionId: undefined,
+        verifyTime: undefined,
+      };
+      app.propertyVerifyResult = cancelledPropertyVerify;
+      app.propertyVerify = cancelledPropertyVerify;
+      app.faceVerifyResult = cancelledFaceVerify;
+      app.faceVerify = cancelledFaceVerify;
     }
 
+    // 已通过或已驳回状态：生成最终审核结果
     if (status === 'approved' || status === 'rejected') {
       const passed = status === 'approved';
       const score = passed ? random(75, 98) : random(30, 60);

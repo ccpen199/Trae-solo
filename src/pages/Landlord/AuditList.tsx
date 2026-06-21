@@ -54,13 +54,16 @@ const AUDIT_STEPS = [
 ];
 
 /** 申请状态映射（业务语义层） */
+// 注：待处理 = pending + verifying，与看板统计口径保持一致
 const STATUS_OPTIONS = [
   { value: 'all', label: '全部' },
   { value: 'pending', label: '待审核' },
+  { value: 'verifying', label: '审核中' },
   { value: 'auto_verifying', label: '自动审核中' },
   { value: 'manual_review', label: '人工复核' },
   { value: 'approved', label: '已通过' },
   { value: 'rejected', label: '已驳回' },
+  { value: 'cancelled', label: '已取消' },
 ];
 
 /** 优先级选项 */
@@ -136,6 +139,14 @@ function toBizStatus(app: LandlordApplication): string {
   return app.status;
 }
 
+/**
+ * 检查申请是否处于待处理状态（与看板统计口径一致）
+ * 待处理 = pending + verifying
+ */
+function isPendingStatus(app: LandlordApplication): boolean {
+  return app.status === 'pending' || app.status === 'verifying';
+}
+
 /** 手机号脱敏显示 */
 function maskPhone(phone: string): string {
   if (!phone || phone.length < 11) return phone;
@@ -158,31 +169,63 @@ export default function AuditList() {
   const [submitting, setSubmitting] = useState(false);
 
   /** 计算数据概览指标 */
+  // 统计口径与看板保持一致：待处理 = pending + verifying
   const stats = useMemo(() => {
     const today = dayjs().startOf('day');
-    let pending = 0;
-    let autoVerifying = 0;
-    let manualReview = 0;
-    let todayApproved = 0;
+    let pendingCount = 0;       // 待审核（仅 pending）
+    let verifyingCount = 0;     // 审核中（仅 verifying）
+    let pendingTotal = 0;       // 待处理总数（pending + verifying，与看板对齐）
+    let autoVerifying = 0;      // 自动审核中
+    let manualReview = 0;       // 人工复核
+    let approved = 0;           // 已通过
+    let rejected = 0;           // 已驳回
+    let todayApproved = 0;      // 今日通过
 
     landlordApplications.forEach((app) => {
       const biz = toBizStatus(app);
-      if (biz === 'pending') pending++;
+      if (app.status === 'pending') pendingCount++;
+      if (app.status === 'verifying') verifyingCount++;
+      if (isPendingStatus(app)) pendingTotal++;
       if (biz === 'auto_verifying') autoVerifying++;
       if (biz === 'manual_review') manualReview++;
-      if (biz === 'approved' && dayjs(app.completeTime || app.submitTime).isSame(today, 'day')) {
+      if (app.status === 'approved') approved++;
+      if (app.status === 'rejected') rejected++;
+      if (app.status === 'approved' && dayjs(app.completeTime || app.submitTime).isSame(today, 'day')) {
         todayApproved++;
       }
     });
 
-    return { pending, autoVerifying, manualReview, todayApproved };
+    return {
+      pending: pendingCount,
+      verifying: verifyingCount,
+      pendingTotal,
+      autoVerifying,
+      manualReview,
+      approved,
+      rejected,
+      todayApproved,
+    };
   }, [landlordApplications]);
 
   /** 根据筛选条件过滤列表 */
   const filteredList = useMemo(() => {
     return landlordApplications.filter((app) => {
       if (filters.status && filters.status !== 'all') {
-        if (toBizStatus(app) !== filters.status) return false;
+        // 支持按底层状态筛选（如 verifying 作为整体）
+        if (filters.status === 'verifying') {
+          if (app.status !== 'verifying') return false;
+        } else if (filters.status === 'pending') {
+          if (app.status !== 'pending') return false;
+        } else if (filters.status === 'approved') {
+          if (app.status !== 'approved') return false;
+        } else if (filters.status === 'rejected') {
+          if (app.status !== 'rejected') return false;
+        } else if (filters.status === 'cancelled') {
+          if (app.status !== 'cancelled') return false;
+        } else {
+          // 其他按业务状态筛选
+          if (toBizStatus(app) !== filters.status) return false;
+        }
       }
       if (filters.priority && derivePriority(app) !== filters.priority) {
         return false;
@@ -252,6 +295,20 @@ export default function AuditList() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  /** 重新审核操作 */
+  const handleReaudit = (record: LandlordApplication) => {
+    Modal.confirm({
+      title: '确认重新审核？',
+      content: `将申请 [${record.applyNo}] 重置为审核中状态，系统将重新进行自动核验。`,
+      okText: '确认重新审核',
+      cancelText: '取消',
+      onOk: () => {
+        setAuditStatus(record.id, 'verifying', '重新审核');
+        message.success('已提交重新审核申请');
+      },
+    });
   };
 
   /** 构造审核步骤 UI */
@@ -352,38 +409,79 @@ export default function AuditList() {
       width: 220,
       fixed: 'right' as const,
       render: (_: unknown, record: LandlordApplication) => {
-        const bizStatus = toBizStatus(record);
-        const actionable = bizStatus !== 'approved' && bizStatus !== 'rejected';
+        const status = record.status;
         return (
           <Space size="small">
+            {/* 所有状态都显示查看/详情按钮 */}
             <Button
               type="link"
               size="small"
               icon={<EyeOutlined />}
               onClick={() => navigate(`/landlord/audit/${record.id}`)}
             >
-              详情
+              {status === 'pending' ? '审核' : status === 'rejected' ? '查看详情' : '查看'}
             </Button>
-            <Button
-              type="link"
-              size="small"
-              icon={<CheckCircleFilled />}
-              disabled={!actionable}
-              style={{ color: actionable ? '#00A86B' : undefined }}
-              onClick={() => openActionModal('approve', record)}
-            >
-              通过
-            </Button>
-            <Button
-              type="link"
-              size="small"
-              icon={<CloseCircleFilled />}
-              disabled={!actionable}
-              style={{ color: actionable ? '#E63946' : undefined }}
-              onClick={() => openActionModal('reject', record)}
-            >
-              驳回
-            </Button>
+
+            {/* 待审核状态：显示通过/驳回按钮 */}
+            {status === 'pending' && (
+              <>
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<CheckCircleFilled />}
+                  style={{ color: '#00A86B' }}
+                  onClick={() => openActionModal('approve', record)}
+                >
+                  通过
+                </Button>
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<CloseCircleFilled />}
+                  style={{ color: '#E63946' }}
+                  onClick={() => openActionModal('reject', record)}
+                >
+                  驳回
+                </Button>
+              </>
+            )}
+
+            {/* 审核中状态：显示通过/驳回按钮（人工审核）*/}
+            {status === 'verifying' && (
+              <>
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<CheckCircleFilled />}
+                  style={{ color: '#00A86B' }}
+                  onClick={() => openActionModal('approve', record)}
+                >
+                  通过
+                </Button>
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<CloseCircleFilled />}
+                  style={{ color: '#E63946' }}
+                  onClick={() => openActionModal('reject', record)}
+                >
+                  驳回
+                </Button>
+              </>
+            )}
+
+            {/* 已驳回状态：显示重新审核按钮 */}
+            {status === 'rejected' && (
+              <Button
+                type="link"
+                size="small"
+                icon={<ReloadOutlined />}
+                style={{ color: '#FF6B35' }}
+                onClick={() => handleReaudit(record)}
+              >
+                重新审核
+              </Button>
+            )}
           </Space>
         );
       },
@@ -466,28 +564,41 @@ export default function AuditList() {
           </p>
         </div>
         <Space size={12} wrap>
+          {/* 待处理：与看板统计口径一致（pending + verifying） */}
           <StatCard
-            label="待审核"
-            value={stats.pending}
+            label="待处理"
+            value={stats.pendingTotal}
             color="#FF6B35"
             icon={<ClockCircleOutlined />}
           />
           <StatCard
-            label="自动审核中"
-            value={stats.autoVerifying}
+            label="待审核"
+            value={stats.pending}
+            color="#FF9F43"
+            icon={<ClockCircleOutlined />}
+          />
+          <StatCard
+            label="审核中"
+            value={stats.verifying}
             color="#4787C7"
             icon={<ClockCircleOutlined />}
           />
           <StatCard
-            label="人工复核"
-            value={stats.manualReview}
-            color="#7B61FF"
-            icon={<ExclamationCircleFilled />}
+            label="已通过"
+            value={stats.approved}
+            color="#00A86B"
+            icon={<CheckCircleFilled />}
+          />
+          <StatCard
+            label="已驳回"
+            value={stats.rejected}
+            color="#E63946"
+            icon={<CloseCircleFilled />}
           />
           <StatCard
             label="今日通过"
             value={stats.todayApproved}
-            color="#00A86B"
+            color="#20C997"
             icon={<CheckCircleFilled />}
           />
         </Space>

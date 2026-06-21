@@ -172,35 +172,136 @@ export const useAppStore = create<AppState>((set, get) => ({
     set({ auditLogs: [newLog, ...auditLogs].slice(0, 2000) });
   },
 
+  // 设置房东审核状态
+  // 支持状态变更时同步更新核验结果，确保数据一致性
   setAuditStatus: (id, status, remark) => {
-    const { landlordApplications } = get();
+    const { landlordApplications, currentUser } = get();
     const application = landlordApplications.find((a) => a.id === id);
+    if (!application) return;
+
+    const now = new Date().toISOString();
+    const nowStr = new Date().toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '-');
+
+    // 根据目标状态生成对应的核验结果
+    let updatedApp = { ...application };
+
+    if (status === 'approved') {
+      // 审核通过：所有核验项都通过
+      const passedVerify = {
+        status: 'passed' as const,
+        ownerNameMatched: true,
+        ownerCertNoMatched: true,
+        propertyUnitNoValid: true,
+        hasMortgage: application.propertyVerifyResult?.hasMortgage ?? false,
+        hasSeizure: false,
+        hasObjection: false,
+        verifySource: application.propertyVerifyResult?.verifySource ?? 'government_api' as const,
+        verifyTime: nowStr,
+      };
+      const passedFace = {
+        status: 'passed' as const,
+        similarity: application.faceVerifyResult?.similarity ?? 90,
+        livenessPassed: true,
+        channel: application.faceVerifyResult?.channel ?? 'alipay' as const,
+        sessionId: application.faceVerifyResult?.sessionId ?? uuidv4(),
+        verifyTime: nowStr,
+      };
+      updatedApp = {
+        ...updatedApp,
+        status: 'approved' as const,
+        propertyVerifyResult: passedVerify,
+        propertyVerify: passedVerify,
+        faceVerifyResult: passedFace,
+        faceVerify: passedFace,
+        currentStep: 5,
+        progress: 100,
+        verifyResult: {
+          passed: true,
+          score: 85 + Math.floor(Math.random() * 15),
+          riskLevel: 'low' as const,
+          riskTags: ['产权清晰', '身份核验通过'],
+          opinion: remark || '综合审核通过，准予准入。',
+          verifyTime: nowStr,
+        },
+        completeTime: nowStr,
+        auditorName: currentUser.name,
+        auditorId: currentUser.id,
+        rejectReason: undefined,
+      };
+    } else if (status === 'rejected') {
+      // 审核驳回：保持原核验状态（可能有失败项）
+      updatedApp = {
+        ...updatedApp,
+        status: 'rejected' as const,
+        verifyResult: {
+          passed: false,
+          score: 40 + Math.floor(Math.random() * 20),
+          riskLevel: 'high' as const,
+          riskTags: ['资料待补充'],
+          opinion: remark || '审核未通过，请补充完整资料后重新提交。',
+          verifyTime: nowStr,
+        },
+        completeTime: nowStr,
+        auditorName: currentUser.name,
+        auditorId: currentUser.id,
+        rejectReason: remark || '审核未通过',
+      };
+    } else if (status === 'verifying') {
+      // 重新审核：置为审核中状态，核验状态重置为 processing
+      const processingVerify = {
+        status: 'processing' as const,
+        ownerNameMatched: false,
+        ownerCertNoMatched: false,
+        propertyUnitNoValid: false,
+        hasMortgage: false,
+        hasSeizure: false,
+        hasObjection: false,
+        verifySource: application.propertyVerifyResult?.verifySource ?? 'government_api' as const,
+        verifyTime: nowStr,
+      };
+      const processingFace = {
+        status: 'processing' as const,
+        similarity: 0,
+        livenessPassed: false,
+        channel: application.faceVerifyResult?.channel ?? 'alipay' as const,
+        sessionId: uuidv4(),
+        verifyTime: nowStr,
+      };
+      updatedApp = {
+        ...updatedApp,
+        status: 'verifying' as const,
+        propertyVerifyResult: processingVerify,
+        propertyVerify: processingVerify,
+        faceVerifyResult: processingFace,
+        faceVerify: processingFace,
+        currentStep: 2,
+        progress: 30,
+        verifyResult: undefined,
+        completeTime: undefined,
+        auditorName: undefined,
+        auditorId: undefined,
+        rejectReason: undefined,
+      };
+    }
+
     const updated = landlordApplications.map((a) =>
-      a.id === id
-        ? ({
-            ...a,
-            auditStatus: status,
-            auditTime: new Date().toISOString(),
-            auditorName: get().currentUser.name,
-            auditRemark: remark,
-          } as any)
-        : a
+      a.id === id ? updatedApp : a
     );
     set({ landlordApplications: updated });
 
-    const statusText = (AUDIT_STATUS_TEXT as any)[status];
+    const statusText = (AUDIT_STATUS_TEXT as any)[status] || status;
     get().addAuditLog({
       action: status === 'approved' ? 'approve' : status === 'rejected' ? 'reject' : 'update',
       module: '房东审核',
       targetId: id,
-      targetName: (application as any)?.name || (application as any)?.landlordName || '未知房东',
-      description: `审核房东申请 [${application?.applyNo ?? id}]，结果：${statusText}${
+      targetName: application.landlordName || '未知房东',
+      description: `审核房东申请 [${application.applyNo ?? id}]，结果：${statusText}${
         remark ? `，备注：${remark}` : ''
       }`,
       changes: [
         {
-          field: 'auditStatus',
-          oldValue: (application as any)?.auditStatus,
+          field: 'status',
+          oldValue: application.status,
           newValue: status,
         },
       ],

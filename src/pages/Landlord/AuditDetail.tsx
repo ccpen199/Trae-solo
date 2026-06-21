@@ -22,6 +22,7 @@ import {
   ArrowLeftOutlined,
   CheckCircleFilled,
   CloseCircleFilled,
+  ClockCircleOutlined,
   CopyOutlined,
   UserOutlined,
   IdcardOutlined,
@@ -515,7 +516,18 @@ export default function AuditDetail() {
     return application.status;
   })();
 
-  const isFinal = application.status === 'approved' || application.status === 'rejected';
+  // 是否为终态：已通过、已驳回、已取消
+  const isFinal =
+    application.status === 'approved' ||
+    application.status === 'rejected' ||
+    application.status === 'cancelled';
+
+  // 状态标签配置
+  const statusLabelConfig: Record<string, { text: string; color: string; bgColor: string }> = {
+    approved: { text: '已通过', color: '#00A86B', bgColor: '#F0FBF6' },
+    rejected: { text: '已驳回', color: '#E63946', bgColor: '#FEF1F2' },
+    cancelled: { text: '已取消', color: '#6B7280', bgColor: '#F3F4F6' },
+  };
 
   /** 产权核验状态文字映射 */
   const propertyStatusText: Record<string, string> = {
@@ -1301,82 +1313,137 @@ export default function AuditDetail() {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'flex-end',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               gap: 12,
               flexWrap: 'wrap',
               marginTop: 4,
             }}
           >
-            <Button
-              size="large"
-              onClick={() => navigate('/landlord/audit')}
-              style={{ paddingInline: 28 }}
-            >
-              返回列表
-            </Button>
-            {!isFinal && (
-              <>
-                {/* 驳回按钮：始终可用，核验未完成时显示提示 */}
-                <Tooltip
-                  title={
-                    propertyVerifyResult.status === 'pending' ||
-                    propertyVerifyResult.status === 'processing' ||
-                    faceVerifyResult.status === 'pending' ||
-                    faceVerifyResult.status === 'processing'
-                      ? '核验未完成时驳回，房东可重新提交材料'
-                      : ''
-                  }
-                  placement="top"
+            {/* 左侧：终态时显示状态标签 */}
+            {isFinal && statusLabelConfig[application.status] && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '8px 16px',
+                  borderRadius: 8,
+                  backgroundColor: statusLabelConfig[application.status].bgColor,
+                  border: `1px solid ${statusLabelConfig[application.status].color}33`,
+                }}
+              >
+                {application.status === 'approved' && (
+                  <CheckCircleFilled
+                    style={{ color: statusLabelConfig[application.status].color, fontSize: 18 }}
+                  />
+                )}
+                {application.status === 'rejected' && (
+                  <CloseCircleFilled
+                    style={{ color: statusLabelConfig[application.status].color, fontSize: 18 }}
+                  />
+                )}
+                {application.status === 'cancelled' && (
+                  <ClockCircleOutlined
+                    style={{ color: statusLabelConfig[application.status].color, fontSize: 18 }}
+                  />
+                )}
+                <span
+                  style={{
+                    fontWeight: 600,
+                    color: statusLabelConfig[application.status].color,
+                    fontSize: 14,
+                  }}
                 >
-                  <Button
-                    size="large"
-                    danger
-                    icon={<CloseCircleFilled />}
-                    loading={submitting === 'reject'}
-                    disabled={!canReject}
-                    onClick={() =>
-                      Modal.confirm({
-                        title: '确认驳回该申请？',
-                        content:
-                          '驳回后将生成复核记录，房东将收到重新提交通知。请确认已填写驳回理由。',
-                        okText: '确认驳回',
-                        okButtonProps: { danger: true },
-                        cancelText: '取消',
-                        onOk: () => handleAudit('reject'),
-                      })
-                    }
-                    style={{ paddingInline: 28, fontWeight: 600 }}
-                  >
-                    驳回申请
-                  </Button>
-                </Tooltip>
-
-                {/* 通过按钮：只有两者都 passed 时才可用 */}
-                <Tooltip
-                  title={
-                    canApprove ? '' : '前置核验未全部通过，无法审批通过'
-                  }
-                  placement="top"
-                >
-                  <Button
-                    type="primary"
-                    size="large"
-                    icon={<CheckCircleFilled />}
-                    loading={submitting === 'approve'}
-                    disabled={!canApprove}
-                    onClick={() => handleAudit('approve')}
-                    style={{
-                      background: '#00A86B',
-                      borderColor: '#00A86B',
-                      paddingInline: 28,
-                      fontWeight: 600,
-                    }}
-                  >
-                    通过审核
-                  </Button>
-                </Tooltip>
-              </>
+                  {statusLabelConfig[application.status].text}
+                </span>
+                {application.rejectReason && (
+                  <span style={{ color: '#6B7280', fontSize: 12, marginLeft: 8 }}>
+                    原因：{application.rejectReason}
+                  </span>
+                )}
+              </div>
             )}
+
+            {/* 右侧：操作按钮 */}
+            <div
+              style={{
+                display: 'flex',
+                gap: 12,
+                marginLeft: isFinal ? 'auto' : undefined,
+              }}
+            >
+              <Button
+                size="large"
+                onClick={() => navigate('/landlord/audit')}
+                style={{ paddingInline: 28 }}
+              >
+                返回列表
+              </Button>
+              {!isFinal && (
+                <>
+                  {/* 驳回按钮：始终可用，核验未完成时显示提示 */}
+                  <Tooltip
+                    title={
+                      propertyVerifyResult.status === 'pending' ||
+                      propertyVerifyResult.status === 'processing' ||
+                      faceVerifyResult.status === 'pending' ||
+                      faceVerifyResult.status === 'processing'
+                        ? '核验未完成时驳回，房东可重新提交材料'
+                        : ''
+                    }
+                    placement="top"
+                  >
+                    <Button
+                      size="large"
+                      danger
+                      icon={<CloseCircleFilled />}
+                      loading={submitting === 'reject'}
+                      disabled={!canReject}
+                      onClick={() =>
+                        Modal.confirm({
+                          title: '确认驳回该申请？',
+                          content:
+                            '驳回后将生成复核记录，房东将收到重新提交通知。请确认已填写驳回理由。',
+                          okText: '确认驳回',
+                          okButtonProps: { danger: true },
+                          cancelText: '取消',
+                          onOk: () => handleAudit('reject'),
+                        })
+                      }
+                      style={{ paddingInline: 28, fontWeight: 600 }}
+                    >
+                      驳回申请
+                    </Button>
+                  </Tooltip>
+
+                  {/* 通过按钮：只有两者都 passed 时才可用 */}
+                  <Tooltip
+                    title={
+                      canApprove ? '' : '前置核验未全部通过，无法审批通过'
+                    }
+                    placement="top"
+                  >
+                    <Button
+                      type="primary"
+                      size="large"
+                      icon={<CheckCircleFilled />}
+                      loading={submitting === 'approve'}
+                      disabled={!canApprove}
+                      onClick={() => handleAudit('approve')}
+                      style={{
+                        background: '#00A86B',
+                        borderColor: '#00A86B',
+                        paddingInline: 28,
+                        fontWeight: 600,
+                      }}
+                    >
+                      通过审核
+                    </Button>
+                  </Tooltip>
+                </>
+              )}
+            </div>
           </div>
         </Form>
       </Card>

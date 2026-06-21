@@ -82,8 +82,12 @@ export interface LandlordApplication {
   totalSteps: number;
   /** 房产核验结果 */
   propertyVerifyResult?: PropertyVerifyResult;
+  /** 房产核验结果（别名，兼容旧版字段名） */
+  propertyVerify?: PropertyVerifyResult;
   /** 人脸核验结果 */
   faceVerifyResult?: FaceVerifyResult;
+  /** 人脸核验结果（别名，兼容旧版字段名） */
+  faceVerify?: FaceVerifyResult;
   /** 最终审核结果 */
   verifyResult?: VerifyResult;
   /** 拒绝/失败原因 */
