@@ -6,7 +6,7 @@ import {
 import {
   VideoCameraOutlined, FullscreenOutlined,
   AudioOutlined, PlayCircleOutlined, CalendarOutlined,
-  PictureOutlined, Grid3x3Outlined, UnorderedListOutlined,
+  PictureOutlined, AppstoreOutlined, UnorderedListOutlined,
   SendOutlined, DownloadOutlined
 } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
@@ -169,7 +169,15 @@ const LivePreview: React.FC = observer(() => {
             />
           </Tooltip>
           <Tooltip title="全屏">
-            <Button size="small" icon={<FullscreenOutlined />} className="!bg-black/50 !text-white !border-none hover:!bg-black/70" onClick={() => setLayout('1') || setSelectedIds([deviceId])} />
+            <Button
+              size="small"
+              icon={<FullscreenOutlined />}
+              className="!bg-black/50 !text-white !border-none hover:!bg-black/70"
+              onClick={() => {
+                setLayout('1');
+                setSelectedIds([deviceId]);
+              }}
+            />
           </Tooltip>
         </div>
       </div>
@@ -184,8 +192,8 @@ const LivePreview: React.FC = observer(() => {
         extra={
           <Space wrap>
             <span className="text-gray-500 text-sm">布局：</span>
-            <Radio.Group value={layout} onChange={(e) => setLayout(e.target.value)}>
-              <Radio.Button value="1"><Grid3x3Outlined /> 单画面</Radio.Button>
+              <Radio.Group value={layout} onChange={(e) => setLayout(e.target.value)}>
+              <Radio.Button value="1"><AppstoreOutlined /> 单画面</Radio.Button>
               <Radio.Button value="4">2×2</Radio.Button>
               <Radio.Button value="9">3×3</Radio.Button>
               <Radio.Button value="16">4×4</Radio.Button>
@@ -204,9 +212,9 @@ const LivePreview: React.FC = observer(() => {
                     {index < displayDevices.length
                       ? renderPlayer(displayDevices[index], index)
                       : (
-                        <div className="h-full bg-gray-900 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-700">
+                          <div className="h-full bg-gray-900 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-700">
                           <div className="text-center text-gray-500">
-                            <Grid3x3Outlined className="text-4xl mb-2 opacity-50" />
+                            <AppstoreOutlined className="text-4xl mb-2 opacity-50" />
                             <div className="text-sm">从右侧选择设备加入画面</div>
                           </div>
                         </div>

@@ -96,6 +96,8 @@ export const userApi = {
     requestData<any>({ url: '/users/login-logs', params }),
   listTrustedDevices: () =>
     requestData<any>({ url: '/users/trusted-devices' }),
+  verifyTrustedDevice: (data: { deviceId: number; isTrusted: boolean }) =>
+    requestData<any>({ url: '/users/trusted-devices/verify', method: 'PUT', data }),
 };
 
 export const deviceApi = {
@@ -162,6 +164,8 @@ export const streamApi = {
     requestData<any>({ url: '/stream/alerts', params }),
   markAlertsRead: (data: { ids?: number[] }) =>
     requestData<any>({ url: '/stream/alerts/read', method: 'PUT', data }),
+  createAuditLog: (data: { alertId?: number; action: string; detail?: string }) =>
+    requestData<any>({ url: '/stream/alert-audit', method: 'POST', data }),
   listAuditLogs: (params?: any) =>
     requestData<any>({ url: '/stream/alert-audit', params }),
   getStatistics: () =>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Table, Card, Button, Space, Tag, Input, Modal, Form, Select,
-  Switch, Popconfirm, message, Empty, Dropdown, Tooltip, Divider
+  Switch, Popconfirm, message, Empty, Dropdown, Tooltip, Divider, Tabs
 } from 'antd';
 import {
   PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined,
@@ -28,7 +28,7 @@ const DeviceList: React.FC = observer(() => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [keyword, setKeyword] = useState('');
-  const [filterGroup, setFilterGroup] = useState<number | null | undefined>(undefined);
+  const [filterGroup, setFilterGroup] = useState<number | 'ungrouped' | undefined>(undefined);
   const [filterStatus, setFilterStatus] = useState<number | undefined>(undefined);
 
   const [deviceModal, setDeviceModal] = useState(false);
@@ -61,7 +61,7 @@ const DeviceList: React.FC = observer(() => {
     try {
       const params: any = { page, pageSize };
       if (keyword) params.keyword = keyword;
-      if (filterGroup !== undefined) params.groupId = filterGroup === null ? 'null' : filterGroup;
+      if (filterGroup !== undefined) params.groupId = filterGroup === 'ungrouped' ? 'null' : filterGroup;
       if (filterStatus !== undefined) params.status = filterStatus;
       const res = await deviceApi.listDevices(params);
       setDevices(res.list || []);
@@ -363,7 +363,7 @@ const DeviceList: React.FC = observer(() => {
                 onChange={(v) => { setFilterGroup(v); setPage(1); }}
               >
                 {groups.map((g) => (
-                  <Option key={g.id ?? 'null'} value={g.id ?? null}>
+                  <Option key={g.id ?? 'ungrouped'} value={g.id ?? 'ungrouped'}>
                     {g.name} ({g.device_count})
                   </Option>
                 ))}
@@ -585,99 +585,112 @@ const DeviceList: React.FC = observer(() => {
         footer={shareTab === 'list' ? [
           <Button key="close" onClick={() => setShareModal(false)}>关闭</Button>
         ] : undefined}
-        tabList={[
-          { key: 'share', tab: '新增分享' },
-          { key: 'list', tab: `已分享 (${shares.length})` },
-        ]}
-        activeTabKey={shareTab}
-        onTabChange={(k) => setShareTab(k as any)}
       >
-        {shareTab === 'share' ? (
-          <Form form={shareForm} layout="vertical">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
-              <Form.Item
-                name="toPhone"
-                label="目标用户"
-                tooltip="输入对方的用户名或手机号"
-                className="sm:col-span-2"
-              >
-                <Input placeholder="用户名或手机号（留空可仅生成临时链接）" />
-              </Form.Item>
-              <Form.Item
-                name="permissionLevel"
-                label="权限等级"
-                rules={[{ required: true, message: '请选择权限' }]}
-              >
-                <Select>
-                  <Option value="view">只看 - 仅可预览画面</Option>
-                  <Option value="talk">可对讲 - 预览 + 双向语音</Option>
-                  <Option value="config">可配置 - 全部权限（含云台、设置）</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item name="expireHours" label="有效期（天）">
-                <Select allowClear placeholder="永久有效">
-                  <Option value={1}>1 天</Option>
-                  <Option value={7}>7 天</Option>
-                  <Option value={30}>30 天</Option>
-                  <Option value={90}>90 天</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item name="temporary" label="生成临时访问链接" valuePropName="checked" className="sm:col-span-2">
-                <Switch />
-              </Form.Item>
-              <div className="sm:col-span-2 text-gray-500 text-sm bg-blue-50 p-3 rounded">
-                💡 <strong>权限说明：</strong>
-                <ul className="list-disc ml-5 mt-1 space-y-0.5">
-                  <li><strong>只看</strong>：只能查看实时视频，无法操作设备</li>
-                  <li><strong>可对讲</strong>：查看视频 + 语音对讲</li>
-                  <li><strong>可配置</strong>：云台控制、设备参数修改等</li>
-                </ul>
-              </div>
-            </div>
-          </Form>
-        ) : (
-          shares.length === 0 ? (
-            <Empty description="暂无分享记录" image={Empty.PRESENTED_IMAGE_SIMPLE} />
-          ) : (
-            <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
-              {shares.map((s) => (
-                <div key={s.id} className="p-3 border rounded-lg">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-medium">{s.to_nickname || s.to_username || s.share_to_phone || '临时访客'}</span>
-                        <Tag color={s.permission_level === 'config' ? 'blue' : s.permission_level === 'talk' ? 'orange' : 'green'}>
-                          {getPermissionText(s.permission_level)}
-                        </Tag>
-                        {s.temporary_token && <Tag color="geekblue">临时链接</Tag>}
-                        {!s.status ? <Tag color="default">已撤销</Tag> : null}
-                      </div>
-                      <div className="text-xs text-gray-500 mt-1 space-x-3">
-                        <span>分享于 {formatTime(s.created_at, 'MM-DD HH:mm')}</span>
-                        {s.expire_at && <span>到期 {formatTime(s.expire_at, 'MM-DD HH:mm')}</span>}
-                      </div>
-                      {s.shareLink && (
-                        <div className="mt-2">
-                          <Input
-                            size="small"
-                            readOnly
-                            value={window.location.origin + '/temp-view' + s.shareLink.replace('/api/stream/temporary', '')}
-                            addonAfter={<Button size="small" onClick={() => copyToClipboard(window.location.origin + '/temp-view' + s.shareLink.replace('/api/stream/temporary', ''))}>复制</Button>}
-                          />
-                        </div>
-                      )}
+        <Tabs
+          activeKey={shareTab}
+          onChange={(key) => setShareTab(key as 'share' | 'list')}
+          items={[
+            {
+              key: 'share',
+              label: '新增分享',
+              children: (
+                <Form form={shareForm} layout="vertical">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                    <Form.Item
+                      name="toPhone"
+                      label="目标用户"
+                      tooltip="输入对方的用户名或手机号"
+                      className="sm:col-span-2"
+                    >
+                      <Input placeholder="用户名或手机号（留空可仅生成临时链接）" />
+                    </Form.Item>
+                    <Form.Item
+                      name="permissionLevel"
+                      label="权限等级"
+                      rules={[{ required: true, message: '请选择权限' }]}
+                    >
+                      <Select>
+                        <Option value="view">只看 - 仅可预览画面</Option>
+                        <Option value="talk">可对讲 - 预览 + 双向语音</Option>
+                        <Option value="config">可配置 - 全部权限（含云台、设置）</Option>
+                      </Select>
+                    </Form.Item>
+                    <Form.Item name="expireHours" label="有效期（天）">
+                      <Select allowClear placeholder="永久有效">
+                        <Option value={1}>1 天</Option>
+                        <Option value={7}>7 天</Option>
+                        <Option value={30}>30 天</Option>
+                        <Option value={90}>90 天</Option>
+                      </Select>
+                    </Form.Item>
+                    <Form.Item name="temporary" label="生成临时访问链接" valuePropName="checked" className="sm:col-span-2">
+                      <Switch />
+                    </Form.Item>
+                    <div className="sm:col-span-2 text-gray-500 text-sm bg-blue-50 p-3 rounded">
+                      💡 <strong>权限说明：</strong>
+                      <ul className="list-disc ml-5 mt-1 space-y-0.5">
+                        <li><strong>只看</strong>：只能查看实时视频，无法操作设备</li>
+                        <li><strong>可对讲</strong>：查看视频 + 语音对讲</li>
+                        <li><strong>可配置</strong>：云台控制、设备参数修改等</li>
+                      </ul>
                     </div>
-                    {s.status ? (
-                      <Popconfirm title="确认撤销此分享？" onConfirm={() => revokeShare(s)} okText="撤销" okButtonProps={{ danger: true }}>
-                        <Button size="small" danger>撤销</Button>
-                      </Popconfirm>
-                    ) : null}
                   </div>
+                </Form>
+              ),
+            },
+            {
+              key: 'list',
+              label: `已分享 (${shares.length})`,
+              children: shares.length === 0 ? (
+                <Empty description="暂无分享记录" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              ) : (
+                <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                  {shares.map((s) => {
+                    const temporaryShareUrl = s.shareLink
+                      ? `${window.location.origin}/temp-view${s.shareLink.replace('/api/stream/temporary', '')}`
+                      : '';
+
+                    return (
+                      <div key={s.id} className="p-3 border rounded-lg">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="font-medium">{s.to_nickname || s.to_username || s.share_to_phone || '临时访客'}</span>
+                              <Tag color={s.permission_level === 'config' ? 'blue' : s.permission_level === 'talk' ? 'orange' : 'green'}>
+                                {getPermissionText(s.permission_level)}
+                              </Tag>
+                              {s.temporary_token && <Tag color="geekblue">临时链接</Tag>}
+                              {!s.status ? <Tag color="default">已撤销</Tag> : null}
+                            </div>
+                            <div className="text-xs text-gray-500 mt-1 space-x-3">
+                              <span>分享于 {formatTime(s.created_at, 'MM-DD HH:mm')}</span>
+                              {s.expire_at && <span>到期 {formatTime(s.expire_at, 'MM-DD HH:mm')}</span>}
+                            </div>
+                            {temporaryShareUrl && (
+                              <div className="mt-2">
+                                <Input
+                                  size="small"
+                                  readOnly
+                                  value={temporaryShareUrl}
+                                  addonAfter={<Button size="small" onClick={() => copyToClipboard(temporaryShareUrl)}>复制</Button>}
+                                />
+                              </div>
+                            )}
+                          </div>
+                          {s.status ? (
+                            <Popconfirm title="确认撤销此分享？" onConfirm={() => revokeShare(s)} okText="撤销" okButtonProps={{ danger: true }}>
+                              <Button size="small" danger>撤销</Button>
+                            </Popconfirm>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          )
-        )}
+              ),
+            },
+          ]}
+        />
       </Modal>
     </div>
   );

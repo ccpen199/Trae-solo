@@ -209,23 +209,23 @@ class DeviceController {
       const { groupId, status, keyword, page = 1, pageSize = 50 } = req.query;
       const offset = (page - 1) * pageSize;
 
-      const conditions = ['(owner_id = ? OR id IN (SELECT device_id FROM device_shares WHERE share_to_user_id = ? AND status = 1))'];
+      const conditions = ['(d.owner_id = ? OR d.id IN (SELECT device_id FROM device_shares WHERE share_to_user_id = ? AND status = 1))'];
       const params = [req.user.id, req.user.id];
 
       if (groupId !== undefined) {
         if (groupId === 'null' || groupId === '') {
-          conditions.push('group_id IS NULL');
+          conditions.push('d.group_id IS NULL');
         } else {
-          conditions.push('group_id = ?');
+          conditions.push('d.group_id = ?');
           params.push(groupId);
         }
       }
       if (status !== undefined) {
-        conditions.push('status = ?');
+        conditions.push('d.status = ?');
         params.push(+status);
       }
       if (keyword) {
-        conditions.push('(name LIKE ? OR device_sn LIKE ? OR model LIKE ?)');
+        conditions.push('(d.name LIKE ? OR d.device_sn LIKE ? OR d.model LIKE ?)');
         params.push(`%${keyword}%`, `%${keyword}%`, `%${keyword}%`);
       }
 
@@ -234,7 +234,7 @@ class DeviceController {
         SELECT d.*, dg.name as group_name,
           CASE WHEN d.owner_id = ? THEN 'owner' ELSE (
             SELECT permission_level FROM device_shares WHERE device_id = d.id AND share_to_user_id = ? AND status = 1 LIMIT 1
-          END as my_permission
+          ) END as my_permission
         FROM devices d
         LEFT JOIN device_groups dg ON d.group_id = dg.id
         ${where}
@@ -243,7 +243,7 @@ class DeviceController {
 
       const total = db.prepare(`SELECT COUNT(*) as count FROM devices d ${where}`).get(...params).count;
 
-      const onlineCount = db.prepare(`SELECT COUNT(*) as count FROM devices d ${where} AND online_status = 1`).get(...params).count;
+      const onlineCount = db.prepare(`SELECT COUNT(*) as count FROM devices d ${where} AND d.online_status = 1`).get(...params).count;
 
       res.json({
         code: 200,
@@ -289,7 +289,7 @@ class DeviceController {
       if (!permission.allowed) return res.status(403).json({ code: 403, message: permission.message });
 
       const device = db.prepare('SELECT * FROM devices WHERE id = ?').get(id);
-      if (!device.support_ptz !== 1) {
+      if (device.support_ptz !== 1) {
         return res.status(400).json({ code: 400, message: '该设备不支持云台控制' });
       }
 
@@ -418,7 +418,7 @@ class DeviceController {
         JOIN devices d ON ds.device_id = d.id
         JOIN users u ON ds.share_from_user_id = u.id
         WHERE ds.share_to_user_id = ? AND ds.status = 1
-          AND (ds.expire_at IS NULL OR ds.expire_at > CURRENT_TIMESTAMP
+          AND (ds.expire_at IS NULL OR ds.expire_at > CURRENT_TIMESTAMP)
         ORDER BY ds.created_at DESC
       `).all(req.user.id);
 

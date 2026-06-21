@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
+  host: process.env.HOST || '127.0.0.1',
   port: process.env.PORT || 3001,
   wsPort: process.env.WS_PORT || 3002,
   jwtSecret: process.env.JWT_SECRET || 'default_secret',

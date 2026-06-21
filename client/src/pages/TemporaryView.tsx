@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Card, Button, Alert, Spin, Result, Countdown, Typography, Space, Tag } from 'antd';
+import { Card, Button, Alert, Spin, Result, Typography, Space, Tag, Statistic } from 'antd';
 import {
   SafetyOutlined, EyeOutlined, VideoCameraOutlined,
   ClockCircleOutlined, WarningOutlined
@@ -11,6 +11,7 @@ import { formatTime, getPermissionText } from '@/utils/format';
 import { StreamSession } from '@/types';
 
 const { Title, Paragraph, Text } = Typography;
+const { Countdown } = Statistic;
 
 const TemporaryView: React.FC = () => {
   const [searchParams] = useSearchParams();

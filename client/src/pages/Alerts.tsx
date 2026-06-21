@@ -455,8 +455,8 @@ const Alerts: React.FC = observer(() => {
                 {'title' in currentRecord && <Descriptions.Item label="告警标题">{currentRecord.title}</Descriptions.Item>}
                 {'event_type' in currentRecord && <Descriptions.Item label="事件类型">{getEventTypeText(currentRecord.event_type)}</Descriptions.Item>}
                 {'event_level' in currentRecord && <Descriptions.Item label="级别"><Tag color={getEventLevelColor(currentRecord.event_level || 'normal')}>{currentRecord.event_level}</Tag></Descriptions.Item>}
-                {'confidence' in currentRecord && currentRecord.confidence > 0 && (
-                  <Descriptions.Item label="AI置信度">{Math.round(currentRecord.confidence * 100)}%</Descriptions.Item>
+                {'confidence' in currentRecord && (currentRecord.confidence ?? 0) > 0 && (
+                  <Descriptions.Item label="AI置信度">{Math.round((currentRecord.confidence ?? 0) * 100)}%</Descriptions.Item>
                 )}
                 <Descriptions.Item label="设备">{currentRecord.device_name}</Descriptions.Item>
                 {'content' in currentRecord && <Descriptions.Item label="详细说明">{currentRecord.content || '-'}</Descriptions.Item>}

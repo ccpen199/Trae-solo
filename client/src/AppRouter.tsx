@@ -23,6 +23,7 @@ import AuditLogs from '@/pages/AuditLogs';
 import TemporaryView from '@/pages/TemporaryView';
 
 const { Header, Sider, Content } = Layout;
+const WS_PORT = import.meta.env.VITE_WS_PORT;
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = observer(({ children }) => {
   const navigate = useNavigate();
@@ -106,9 +107,12 @@ const MainLayout: React.FC = observer(() => {
   useEffect(() => {
     if (!appStore.token) return;
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = window.location.host.replace(/:\d+/, ':3002');
+    const host = WS_PORT
+      ? `${window.location.hostname}:${WS_PORT}`
+      : window.location.host;
     const ws = new WebSocket(`${protocol}//${host}/ws?token=${appStore.token}`);
     wsRef.current = ws;
+    let disposed = false;
 
     ws.onmessage = (event) => {
       try {
@@ -127,7 +131,19 @@ const MainLayout: React.FC = observer(() => {
       } catch (e) {}
     };
 
-    return () => ws.close();
+    ws.addEventListener('open', () => {
+      if (disposed) {
+        ws.close();
+      }
+    }, { once: true });
+
+    return () => {
+      disposed = true;
+      wsRef.current = null;
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close();
+      }
+    };
   }, [appStore.token]);
 
   const userMenu = [
@@ -225,7 +241,7 @@ const MainLayout: React.FC = observer(() => {
 
 const AppRouter: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

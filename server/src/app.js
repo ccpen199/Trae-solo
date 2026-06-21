@@ -70,10 +70,10 @@ dirs.forEach(dir => {
   }
 });
 
-app.listen(config.port, () => {
+app.listen(config.port, config.host, () => {
   console.log(`Server started on port ${config.port}`);
-  console.log(`HTTP API: http://localhost:${config.port}`);
-  console.log(`WebSocket: ws://localhost:${config.wsPort}`);
+  console.log(`HTTP API: http://${config.host}:${config.port}`);
+  console.log(`WebSocket: ws://${config.host}:${config.wsPort}`);
 });
 
 module.exports = app;

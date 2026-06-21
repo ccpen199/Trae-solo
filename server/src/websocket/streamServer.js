@@ -56,8 +56,8 @@ class StreamWebSocketServer {
       }
     });
 
-    this.server.listen(config.wsPort, () => {
-      console.log(`WebSocket server started on port ${config.wsPort}`);
+    this.server.listen(config.wsPort, config.host, () => {
+      console.log(`WebSocket server started on ${config.host}:${config.wsPort}`);
     });
   }
 
