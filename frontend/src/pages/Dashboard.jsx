@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API, formatMoney, formatEnergy, getStatusText, getStatusColor, getChargerTypeText } from '../api';
+import { API, formatMoney, formatEnergy, getStatusText, getStatusColor, getChargerTypeText, formatDateTime } from '../api';
 import ReactECharts from 'echarts-for-react';
 
 function Dashboard() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [summary, setSummary] = useState(null);
   const [stations, setStations] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
+  const [dailyData, setDailyData] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -17,26 +19,42 @@ function Dashboard() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [summaryRes, stationsRes, ordersRes] = await Promise.all([
+      setError(null);
+      
+      const [summaryRes, stationsRes, ordersRes, dailyRes] = await Promise.all([
         API.revenue.summary(),
         API.stations.list(),
-        API.orders.list({ user_id: 1 })
+        API.orders.list({ limit: 10 }),
+        API.revenue.daily({ days: 7 })
       ]);
 
       setSummary(summaryRes.data);
-      setStations(stationsRes.data.slice(0, 6));
-      setRecentOrders(ordersRes.data.slice(0, 5));
+      setStations((stationsRes.data || []).slice(0, 6));
+      setRecentOrders((ordersRes.data || []).slice(0, 5));
+      setDailyData(dailyRes.data || []);
     } catch (err) {
       console.error('加载数据失败:', err);
+      setError(err.message || '加载数据失败，请稍后重试');
     } finally {
       setLoading(false);
     }
   };
 
   const getChargingTrendOption = () => {
+    const chartData = dailyData && dailyData.length > 0 
+      ? dailyData.slice(-7).map(d => ({
+          date: d.date ? d.date.slice(5) : '',
+          energy: d.total_energy || 0
+        }))
+      : [];
+
+    const defaultData = [120, 150, 180, 165, 210, 280, 240];
+    const defaultLabels = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+
     return {
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        formatter: '{b}<br/>充电量: {c} kWh'
       },
       grid: {
         left: '3%',
@@ -47,7 +65,7 @@ function Dashboard() {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        data: chartData.length > 0 ? chartData.map(d => d.date) : defaultLabels
       },
       yAxis: {
         type: 'value',
@@ -78,7 +96,7 @@ function Dashboard() {
           itemStyle: {
             color: '#1890ff'
           },
-          data: [120, 150, 180, 165, 210, 280, 240]
+          data: chartData.length > 0 ? chartData.map(d => d.energy) : defaultData
         }
       ]
     };
@@ -87,12 +105,17 @@ function Dashboard() {
   const getStationDistributionOption = () => {
     const cityCount = {};
     stations.forEach(s => {
-      cityCount[s.city] = (cityCount[s.city] || 0) + 1;
+      if (s.city) {
+        cityCount[s.city] = (cityCount[s.city] || 0) + 1;
+      }
     });
+
+    const colors = ['#1890ff', '#52c41a', '#faad14', '#722ed1', '#eb2f96', '#13c2c2'];
 
     return {
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b}: {c} 座 ({d}%)'
       },
       legend: {
         orient: 'vertical',
@@ -127,12 +150,43 @@ function Dashboard() {
             value,
             name,
             itemStyle: {
-              color: ['#1890ff', '#52c41a', '#faad14', '#722ed1', '#eb2f96', '#13c2c2'][idx]
+              color: colors[idx % colors.length]
             }
           }))
         }
       ]
     };
+  };
+
+  const getTotalPiles = (station) => {
+    return station.total_piles || station.total_chargers || 0;
+  };
+
+  const getAvailablePiles = (station) => {
+    return station.available_piles || station.available_chargers || 0;
+  };
+
+  const getChargingPiles = (station) => {
+    return station.charging_piles || station.charging_chargers || 0;
+  };
+
+  const getCityCount = () => {
+    const cities = new Set(stations.map(s => s.city).filter(Boolean));
+    return cities.size;
+  };
+
+  const getTodayEnergy = () => {
+    if (summary && summary.today_energy !== undefined) {
+      return summary.today_energy;
+    }
+    if (dailyData && dailyData.length > 0) {
+      const today = new Date().toISOString().split('T')[0];
+      const todayData = dailyData.find(d => d.date === today || d.date.startsWith(today));
+      if (todayData && todayData.total_energy !== undefined) {
+        return todayData.total_energy;
+      }
+    }
+    return 0;
   };
 
   if (loading) {
@@ -158,27 +212,40 @@ function Dashboard() {
         </div>
       </div>
 
+      {error && (
+        <div className="alert alert-error">
+          <strong>⚠️ 错误：</strong>{error}
+          <button 
+            className="btn btn-default btn-sm" 
+            style={{ marginLeft: '12px' }}
+            onClick={loadData}
+          >
+            重试
+          </button>
+        </div>
+      )}
+
       {summary && (
         <div className="grid grid-cols-4 mb-16">
           <div className="stat-card blue">
             <div className="label">运营充电站</div>
-            <div className="value">{summary.total_stations}<span className="unit">座</span></div>
-            <div className="trend">覆盖 {stations.filter((v, i, a) => a.findIndex(t => t.city === v.city) === i).length} 个城市</div>
+            <div className="value">{summary.total_stations || 0}<span className="unit">座</span></div>
+            <div className="trend">覆盖 {getCityCount()} 个城市</div>
           </div>
           <div className="stat-card green">
             <div className="label">在线充电桩</div>
-            <div className="value">{summary.online_chargers}<span className="unit">台</span></div>
-            <div className="trend">在线率 {summary.online_rate}%</div>
+            <div className="value">{summary.online_chargers || 0}<span className="unit">台</span></div>
+            <div className="trend">在线率 {summary.online_rate || 0}%</div>
           </div>
           <div className="stat-card orange">
             <div className="label">正在充电</div>
-            <div className="value">{summary.charging_now}<span className="unit">辆</span></div>
+            <div className="value">{summary.charging_now || 0}<span className="unit">辆</span></div>
             <div className="trend">实时功率曲线监控中</div>
           </div>
           <div className="stat-card red">
-            <div className="label">待处理告警</div>
-            <div className="value">{summary.active_alarms}<span className="unit">条</span></div>
-            <div className="trend">需要及时处理</div>
+            <div className="label">今日订单</div>
+            <div className="value">{summary.today_orders || summary.today || 0}<span className="unit">单</span></div>
+            <div className="trend">今日充电 {formatEnergy(getTodayEnergy())}</div>
           </div>
         </div>
       )}
@@ -207,34 +274,39 @@ function Dashboard() {
               查看全部
             </button>
           </div>
-          <div className="grid grid-cols-2">
-            {stations.map(station => (
-              <div
-                key={station.id}
-                className="charger-card"
-                onClick={() => navigate(`/stations/${station.id}`)}
-              >
-                <div className="charger-card-header">
-                  <span className="font-bold">{station.name}</span>
-                  <span className="text-muted text-small">{station.city}</span>
-                </div>
-                <div className="text-muted text-small mb-8">{station.address}</div>
-                <div className="flex-between">
-                  <div>
-                    <span className="status-badge" style={{ background: '#e6f7ff', color: '#1890ff' }}>
-                      空闲 {station.available_piles}
-                    </span>
-                    <span className="status-badge" style={{ background: '#fffbe6', color: '#faad14', marginLeft: '4px' }}>
-                      充电中 {station.charging_piles}
-                    </span>
+          {stations.length === 0 ? (
+            <div className="empty">暂无充电站数据</div>
+          ) : (
+            <div className="grid grid-cols-2">
+              {stations.map(station => (
+                <div
+                  key={station.id}
+                  className="charger-card"
+                  onClick={() => navigate(`/stations/${station.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="charger-card-header">
+                    <span className="font-bold">{station.name}</span>
+                    <span className="text-muted text-small">{station.city || ''}</span>
                   </div>
-                  <div className="text-small text-muted">
-                    {station.total_piles} 桩
+                  <div className="text-muted text-small mb-8">{station.address || ''}</div>
+                  <div className="flex-between">
+                    <div>
+                      <span className="status-badge" style={{ background: '#e6f7ff', color: '#1890ff' }}>
+                        空闲 {getAvailablePiles(station)}
+                      </span>
+                      <span className="status-badge" style={{ background: '#fffbe6', color: '#faad14', marginLeft: '4px' }}>
+                        充电中 {getChargingPiles(station)}
+                      </span>
+                    </div>
+                    <div className="text-small text-muted">
+                      {getTotalPiles(station)} 桩
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="card">
@@ -250,17 +322,20 @@ function Dashboard() {
                 <tr>
                   <th>订单号</th>
                   <th>充电站</th>
+                  <th>充电桩</th>
                   <th>充电量</th>
-                  <th>金额</th>
+                  <th>费用</th>
                   <th>状态</th>
+                  <th>时间</th>
                 </tr>
               </thead>
               <tbody>
                 {recentOrders.map(order => (
                   <tr key={order.id}>
                     <td style={{ fontFamily: 'monospace', fontSize: '12px' }}>{order.order_no}</td>
-                    <td>{order.station_name}</td>
-                    <td>{formatEnergy(order.energy)}</td>
+                    <td>{order.station_name || '-'}</td>
+                    <td>{order.charger_code || '-'}</td>
+                    <td>{formatEnergy(order.total_energy)}</td>
                     <td>{formatMoney(order.total_amount)}</td>
                     <td>
                       <span className="status-badge" style={{
@@ -269,6 +344,9 @@ function Dashboard() {
                       }}>
                         {getStatusText(order.status)}
                       </span>
+                    </td>
+                    <td className="text-small text-muted">
+                      {formatDateTime(order.created_at || order.start_time)}
                     </td>
                   </tr>
                 ))}

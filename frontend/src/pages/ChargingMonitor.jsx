@@ -42,8 +42,40 @@ function ChargingMonitor() {
         API.orders.list({ status: 'charging' }),
         API.revenue.summary()
       ]);
-      setOrders(ordersRes.data || []);
-      setSummary(summaryRes.data);
+      const ordersList = Array.isArray(ordersRes) ? ordersRes : (ordersRes.data || []);
+      const summaryData = summaryRes.data || summaryRes;
+
+      const ordersWithChargerData = await Promise.all(
+        ordersList.map(async (order) => {
+          try {
+            const chargerRes = await API.chargers.detail(order.charger_id);
+            const chargerData = chargerRes.data || chargerRes;
+            return {
+              ...order,
+              voltage: chargerData.voltage,
+              current: chargerData.current,
+              power: chargerData.power,
+              temperature: chargerData.temperature,
+              current_soc: chargerData.soc,
+              charger_type: chargerData.type
+            };
+          } catch (err) {
+            console.error('获取充电桩数据失败:', err);
+            return {
+              ...order,
+              voltage: 0,
+              current: 0,
+              power: 0,
+              temperature: 25,
+              current_soc: order.start_soc || 0,
+              charger_type: 'fast'
+            };
+          }
+        })
+      );
+
+      setOrders(ordersWithChargerData);
+      setSummary(summaryData);
     } catch (err) {
       console.error('加载数据失败:', err);
     } finally {
@@ -84,14 +116,14 @@ function ChargingMonitor() {
       setOrders(prevOrders => 
         prevOrders.map(order => {
           if (order.status === 'charging') {
-            const updatedDuration = (order.duration || 0) + 1;
-            const updatedEnergy = (order.energy || 0) + ((order.power || 0) / 3600);
+            const updatedDuration = (order.duration_seconds || 0) + 1;
+            const updatedEnergy = (order.total_energy || 0) + ((order.power || 0) / 3600);
             const estimatedTime = calculateEstimatedTime(order);
             
             return {
               ...order,
-              duration: updatedDuration,
-              energy: updatedEnergy,
+              duration_seconds: updatedDuration,
+              total_energy: updatedEnergy,
               estimated_time: estimatedTime,
               total_amount: calculateCost(order, updatedEnergy)
             };
@@ -164,9 +196,9 @@ function ChargingMonitor() {
 
   const calculateEstimatedTime = (order) => {
     const currentSoc = order.current_soc || 0;
-    const targetSoc = order.target_soc || 100;
+    const targetSoc = 100;
     const power = order.power || 0;
-    const batteryCapacity = order.battery_capacity || 60;
+    const batteryCapacity = 60;
     
     if (currentSoc >= targetSoc || power <= 0) {
       return 0;
@@ -179,8 +211,8 @@ function ChargingMonitor() {
   };
 
   const calculateCost = (order, energy) => {
-    const electricityPrice = order.electricity_price || 0.8;
-    const serviceFee = order.service_fee || 0.6;
+    const electricityPrice = 0.8;
+    const serviceFee = 0.6;
     const totalPrice = electricityPrice + serviceFee;
     return energy * totalPrice;
   };
@@ -313,16 +345,12 @@ function ChargingMonitor() {
                 <div className="charging-order-header">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <div className="charging-avatar">
-                      {order.user_avatar ? (
-                        <img src={order.user_avatar} alt="" />
-                      ) : (
-                        <span>👤</span>
-                      )}
+                      <span>⚡</span>
                     </div>
                     <div>
-                      <div className="font-bold">{order.user_name || '用户' + (order.user_id || '')}</div>
+                      <div className="font-bold">订单 {order.order_no || order.id}</div>
                       <div className="text-muted text-small">
-                        {order.license_plate || order.vin || '未登记车辆'}
+                        {formatDateTime(order.start_time)}
                       </div>
                     </div>
                   </div>
@@ -400,7 +428,7 @@ function ChargingMonitor() {
                   <div className="progress-labels">
                     <span className="text-small text-muted">开始</span>
                     <span className="text-small text-muted">
-                      目标 {order.target_soc || 100}%
+                      目标 100%
                     </span>
                   </div>
                 </div>
@@ -409,13 +437,13 @@ function ChargingMonitor() {
                   <div className="stat-item">
                     <div className="stat-label">已充电量</div>
                     <div className="stat-value text-primary">
-                      {formatEnergy(order.energy || 0)}
+                      {formatEnergy(order.total_energy || 0)}
                     </div>
                   </div>
                   <div className="stat-item">
                     <div className="stat-label">已充时长</div>
                     <div className="stat-value">
-                      {formatDuration(order.duration || 0)}
+                      {formatDuration(order.duration_seconds || 0)}
                     </div>
                   </div>
                   <div className="stat-item">
@@ -441,7 +469,7 @@ function ChargingMonitor() {
                   </div>
                   <div className="cost-item">
                     <span className="cost-label text-small text-muted">
-                      电价 {formatMoney(order.electricity_price || 0.8)}/kWh + 服务费 {formatMoney(order.service_fee || 0.6)}/kWh
+                      电价 {formatMoney(0.8)}/kWh + 服务费 {formatMoney(0.6)}/kWh
                     </span>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { API, formatMoney, formatEnergy, formatDateTime, getStatusText, getStatusColor, getAlarmLevelText, getAlarmLevelColor } from '../../api';
+import { API, formatMoney, formatEnergy, formatDateTime, getStatusText, getStatusColor, getAlarmLevelText, getAlarmLevelColor, getHealthLevelText, getHealthLevelColor, getChargerTypeText } from '../../api';
 import ReactECharts from 'echarts-for-react';
 
 function AdminDashboard() {
@@ -19,7 +19,7 @@ function AdminDashboard() {
       const [summaryRes, dailyRes, alarmsRes] = await Promise.all([
         API.revenue.summary(),
         API.revenue.daily({ days: 30 }),
-        API.alarms.list({ limit: 10 })
+        API.alarms.list({ limit: 5 })
       ]);
       setSummary(summaryRes.data);
       setDailyData(dailyRes.data || []);
@@ -29,6 +29,12 @@ function AdminDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const getTodayData = () => {
+    if (!dailyData || dailyData.length === 0) return null;
+    const today = new Date().toISOString().split('T')[0];
+    return dailyData.find(d => d.date === today) || dailyData[dailyData.length - 1];
   };
 
   const getChargingTrendOption = () => {
@@ -56,7 +62,7 @@ function AdminDashboard() {
         },
         lineStyle: { color: '#1890ff', width: 2 },
         itemStyle: { color: '#1890ff' },
-        data: dailyData.map(d => d.energy || 0)
+        data: dailyData.map(d => d.total_energy || 0)
       }]
     };
   };
@@ -65,7 +71,7 @@ function AdminDashboard() {
     const stationMap = {};
     dailyData.forEach(d => {
       if (d.station_name) {
-        stationMap[d.station_name] = (stationMap[d.station_name] || 0) + (d.energy || 0);
+        stationMap[d.station_name] = (stationMap[d.station_name] || 0) + (d.total_energy || 0);
       }
     });
     const sorted = Object.entries(stationMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
@@ -91,6 +97,8 @@ function AdminDashboard() {
       }]
     };
   };
+
+  const todayData = useMemo(() => getTodayData(), [dailyData]);
 
   if (loading) {
     return <div className="loading">加载中...</div>;
@@ -120,18 +128,18 @@ function AdminDashboard() {
           </div>
           <div className="stat-card orange">
             <div className="label">今日订单</div>
-            <div className="value">{summary.today_orders}<span className="unit">单</span></div>
+            <div className="value">{todayData?.total_orders || summary.today || 0}<span className="unit">单</span></div>
             <div className="trend">充电中 {summary.charging_now} 辆</div>
           </div>
           <div className="stat-card red">
             <div className="label">今日电量</div>
-            <div className="value">{formatEnergy(summary.today_energy)}</div>
-            <div className="trend">较昨日 {summary.today_energy > summary.yesterday_energy ? '↑' : '↓'}</div>
+            <div className="value">{formatEnergy(todayData?.total_energy || 0)}</div>
+            <div className="trend">周电量 {formatEnergy(summary.weekly_energy || 0)}</div>
           </div>
           <div className="stat-card">
             <div className="label">今日收入</div>
-            <div className="value">{formatMoney(summary.today_revenue)}</div>
-            <div className="trend">服务费 {formatMoney(summary.today_service_fee)}</div>
+            <div className="value">{formatMoney(todayData?.total_revenue || 0)}</div>
+            <div className="trend">服务费 {formatMoney(todayData?.service_fee || 0)}</div>
           </div>
           <div className="stat-card green">
             <div className="label">待处理告警</div>
@@ -177,18 +185,18 @@ function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {alarms.map(alarm => (
+              {alarms.slice(0, 5).map(alarm => (
                 <tr key={alarm.id}>
-                  <td style={{ fontFamily: 'monospace', fontSize: '12px' }}>{alarm.alarm_no}</td>
+                  <td style={{ fontFamily: 'monospace', fontSize: '12px' }}>{alarm.work_order_no}</td>
                   <td>{alarm.station_name}</td>
                   <td>{alarm.charger_code}</td>
                   <td>{alarm.alarm_type}</td>
                   <td>
                     <span className="status-badge" style={{
-                      background: getAlarmLevelColor(alarm.level) + '20',
-                      color: getAlarmLevelColor(alarm.level)
+                      background: getAlarmLevelColor(alarm.alarm_level) + '20',
+                      color: getAlarmLevelColor(alarm.alarm_level)
                     }}>
-                      {getAlarmLevelText(alarm.level)}
+                      {getAlarmLevelText(alarm.alarm_level)}
                     </span>
                   </td>
                   <td>

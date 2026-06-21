@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard.jsx';
 import StationList from './pages/StationList.jsx';
 import StationDetail from './pages/StationDetail.jsx';
@@ -108,11 +108,12 @@ function App() {
           <Route path="/chargers/:id" element={<ChargerDetail />} />
           <Route path="/recommendation" element={<Recommendation />} />
           <Route path="/charging" element={<ChargingMonitor />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/devices" element={<DeviceHealth />} />
-          <Route path="/admin/alarms" element={<AlarmWorkOrders />} />
-          <Route path="/admin/pricing" element={<PriceStrategy />} />
-          <Route path="/admin/revenue" element={<RevenueReport />} />
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/device-health" element={<DeviceHealth />} />
+          <Route path="/admin/alarm-workorders" element={<AlarmWorkOrders />} />
+          <Route path="/admin/price-strategy" element={<PriceStrategy />} />
+          <Route path="/admin/revenue-report" element={<RevenueReport />} />
         </Routes>
       </main>
       

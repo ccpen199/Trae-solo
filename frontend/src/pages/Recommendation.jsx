@@ -14,17 +14,17 @@ function Recommendation() {
   const [loading, setLoading] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
   const [reservingId, setReservingId] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [hasSearched, setHasSearched] = useState(false);
   const [formData, setFormData] = useState({
     latitude: 39.9087,
     longitude: 116.4123,
     batteryCapacity: 60,
     currentSoc: 30,
-    range: 400,
     targetSoc: 80,
     preferFast: true,
-    preferLowPrice: false,
-    maxDistance: 5,
-    destination: ''
+    preferLowPrice: true,
+    maxDistance: 10
   });
 
   const handleInputChange = (e) => {
@@ -37,15 +37,23 @@ function Recommendation() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg('');
+    setHasSearched(true);
     try {
       setLoading(true);
       const res = await API.recommendation.get(formData);
-      const data = res.data || [];
-      data.sort((a, b) => b.score - a.score);
-      setRecommendations(data);
+      if (res.success) {
+        const data = res.data || [];
+        data.sort((a, b) => b.score - a.score);
+        setRecommendations(data);
+      } else {
+        setErrorMsg(res.message || '获取推荐结果失败');
+        setRecommendations([]);
+      }
     } catch (err) {
       console.error('获取推荐结果失败:', err);
-      alert('获取推荐结果失败，请重试');
+      setErrorMsg(err.response?.data?.message || '获取推荐结果失败，请重试');
+      setRecommendations([]);
     } finally {
       setLoading(false);
     }
@@ -57,26 +65,29 @@ function Recommendation() {
     }
     try {
       setReservingId(item.station.id);
+      const scheduledStartTime = new Date(Date.now() + 30 * 60 * 1000).toISOString();
       const res = await API.recommendation.reserve({
+        userId: 'user_001',
         stationId: item.station.id,
         chargerId: item.charger.id,
-        userId: 'user_001'
+        scheduledStartTime: scheduledStartTime,
+        targetSoc: formData.targetSoc
       });
       if (res.success) {
-        alert(`预约成功！预约号: ${res.data?.reservationCode || '已生成'}`);
+        alert(`预约成功！预约号: ${res.data?.reservation_no || '已生成'}\n桩位已锁定，请在30分钟内到站充电`);
       } else {
         alert(res.message || '预约失败');
       }
     } catch (err) {
       console.error('预约失败:', err);
-      alert('预约失败，请重试');
+      alert(err.response?.data?.message || '预约失败，请重试');
     } finally {
       setReservingId(null);
     }
   };
 
   const handleNavigate = (station) => {
-    const url = `https://uri.amap.com/navigation?to=${station.longitude},${station.latitude},${station.name}&mode=car&policy=1&src=evcharger&coordinate=gaode&callnative=1`;
+    const url = `https://uri.amap.com/navigation?to=${station.lng},${station.lat},${station.name}&mode=car&policy=1&src=evcharger&coordinate=gaode&callnative=1`;
     window.open(url, '_blank');
   };
 
@@ -84,13 +95,6 @@ function Recommendation() {
     if (score >= 80) return '#52c41a';
     if (score >= 60) return '#faad14';
     return '#ff4d4f';
-  };
-
-  const getFullChargeTime = (item) => {
-    if (!item.estimation) return '-';
-    const now = new Date();
-    now.setSeconds(now.getSeconds() + item.estimation.chargeDuration);
-    return formatDateTime(now.toISOString());
   };
 
   return (
@@ -129,7 +133,7 @@ function Recommendation() {
 
             <div className="form-group">
               <label>车辆信息</label>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', gap: '8px' }}>
                 <div style={{ flex: 1 }}>
                   <input
                     type="number"
@@ -153,14 +157,6 @@ function Recommendation() {
                   <div className="text-muted text-small mt-4">当前SOC (%)</div>
                 </div>
               </div>
-              <input
-                type="number"
-                name="range"
-                value={formData.range}
-                onChange={handleInputChange}
-                placeholder="续航里程"
-              />
-              <div className="text-muted text-small mt-4">续航里程 (km)</div>
             </div>
 
             <div className="form-group">
@@ -213,17 +209,6 @@ function Recommendation() {
               <div className="text-muted text-small mt-4">搜索半径 (km)</div>
             </div>
 
-            <div className="form-group">
-              <label>目的地 (可选)</label>
-              <input
-                type="text"
-                name="destination"
-                value={formData.destination}
-                onChange={handleInputChange}
-                placeholder="输入目的地地址..."
-              />
-            </div>
-
             <button
               type="submit"
               className="btn btn-primary btn-block"
@@ -246,10 +231,14 @@ function Recommendation() {
             )}
           </div>
 
-          {recommendations.length === 0 ? (
-            <div className="empty">
-              {loading ? '正在为您智能匹配最优充电站...' : '请填写参数后点击智能推荐'}
+          {loading ? (
+            <div className="empty">正在智能匹配...</div>
+          ) : errorMsg ? (
+            <div className="empty" style={{ color: '#ff4d4f' }}>
+              ⚠️ {errorMsg}
             </div>
+          ) : recommendations.length === 0 ? (
+            <div className="empty">{hasSearched ? '未找到合适的充电站' : '请填写参数后点击智能推荐'}</div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {recommendations.map((item, index) => (
@@ -319,14 +308,14 @@ function Recommendation() {
                         <span>{item.station.address}</span>
                       </div>
 
-                      <div style={{ display: 'flex', gap: '16px', marginBottom: '12px' }}>
+                      <div style={{ display: 'flex', gap: '16px', marginBottom: '12px', flexWrap: 'wrap' }}>
                         <div>
                           <span className="text-muted text-small">距离</span>
-                          <div className="font-bold text-primary">{item.distance.toFixed(2)} km</div>
+                          <div className="font-bold text-primary">{item.station.distance.toFixed(2)} km</div>
                         </div>
                         <div>
                           <span className="text-muted text-small">车程</span>
-                          <div className="font-bold">{formatDuration(item.driveTime * 60)}</div>
+                          <div className="font-bold">{formatDuration(item.station.drive_time * 60)}</div>
                         </div>
                         <div>
                           <span className="text-muted text-small">充电桩类型</span>
@@ -336,11 +325,11 @@ function Recommendation() {
                         </div>
                         <div>
                           <span className="text-muted text-small">额定功率</span>
-                          <div className="font-bold">{item.charger.ratedPower} kW</div>
+                          <div className="font-bold">{item.charger.power_rating} kW</div>
                         </div>
                         <div>
                           <span className="text-muted text-small">可用数量</span>
-                          <div className="font-bold" style={{ color: '#52c41a' }}>{item.charger.available} 个</div>
+                          <div className="font-bold" style={{ color: '#52c41a' }}>{item.charger.available_count} 个</div>
                         </div>
                       </div>
 
@@ -355,32 +344,32 @@ function Recommendation() {
                           <span
                             className="period-tag"
                             style={{
-                              background: `linear-gradient(90deg, ${getPeriodColor(item.pricing.period)}, ${getPeriodColor(item.pricing.period)}aa)`,
+                              background: `linear-gradient(90deg, ${getPeriodColor(item.price.current_period)}, ${getPeriodColor(item.price.current_period)}aa)`,
                               color: 'white'
                             }}
                           >
-                            {getPeriodText(item.pricing.period)}
+                            {getPeriodText(item.price.current_period)}
                           </span>
                         </div>
                         <div style={{ display: 'flex', gap: '16px' }}>
                           <div>
                             <span className="text-muted text-small">电费</span>
-                            <div>{formatMoney(item.pricing.electricityPrice)}/kWh</div>
+                            <div>{formatMoney(item.price.electricity_price)}/kWh</div>
                           </div>
                           <div>
                             <span className="text-muted text-small">服务费</span>
-                            <div>{formatMoney(item.pricing.serviceFee)}/kWh</div>
+                            <div>{formatMoney(item.price.service_price)}/kWh</div>
                           </div>
                           <div>
                             <span className="text-muted text-small">总价</span>
                             <div className="font-bold text-danger">
-                              {formatMoney(item.pricing.electricityPrice + item.pricing.serviceFee)}/kWh
+                              {formatMoney(item.price.total_price)}/kWh
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      {item.estimation && (
+                      {item.estimate && (
                         <div style={{
                           padding: '12px',
                           background: '#f6ffed',
@@ -390,37 +379,42 @@ function Recommendation() {
                           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                             <div>
                               <span className="text-muted text-small">预估充电量</span>
-                              <div className="font-bold">{formatEnergy(item.estimation.chargeAmount)}</div>
+                              <div className="font-bold">{formatEnergy(item.estimate.energy)}</div>
                             </div>
                             <div>
                               <span className="text-muted text-small">充电时长</span>
-                              <div className="font-bold">{formatDuration(item.estimation.chargeDuration)}</div>
+                              <div className="font-bold">{formatDuration(item.estimate.duration)}</div>
                             </div>
                             <div>
                               <span className="text-muted text-small">充满时间</span>
-                              <div className="font-bold">{getFullChargeTime(item)}</div>
+                              <div className="font-bold">{formatDateTime(item.estimate.end_time)}</div>
                             </div>
                             <div>
                               <span className="text-muted text-small">预估费用</span>
-                              <div className="font-bold text-danger">{formatMoney(item.estimation.totalCost)}</div>
+                              <div className="font-bold text-danger">{formatMoney(item.estimate.cost)}</div>
                             </div>
                           </div>
-                          {item.estimation.costDetail && (
+                          {item.estimate.cost_detail && (
                             <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px dashed #d9f7be' }}>
                               <div className="text-muted text-small">费用明细:</div>
-                              <div style={{ display: 'flex', gap: '16px', fontSize: '12px', marginTop: '4px' }}>
-                                <span>电费: {formatMoney(item.estimation.costDetail.electricityCost)}</span>
-                                <span>服务费: {formatMoney(item.estimation.costDetail.serviceCost)}</span>
-                                {item.estimation.costDetail.discount && (
-                                  <span style={{ color: '#52c41a' }}>优惠: -{formatMoney(item.estimation.costDetail.discount)}</span>
+                              <div style={{ display: 'flex', gap: '16px', fontSize: '12px', marginTop: '4px', flexWrap: 'wrap' }}>
+                                {item.estimate.cost_detail.peak > 0 && (
+                                  <span>峰时费用: {formatMoney(item.estimate.cost_detail.peak)}</span>
                                 )}
+                                {item.estimate.cost_detail.flat > 0 && (
+                                  <span>平时费用: {formatMoney(item.estimate.cost_detail.flat)}</span>
+                                )}
+                                {item.estimate.cost_detail.valley > 0 && (
+                                  <span>谷时费用: {formatMoney(item.estimate.cost_detail.valley)}</span>
+                                )}
+                                <span>服务费: {formatMoney(item.estimate.cost_detail.service_fee)}</span>
                               </div>
                             </div>
                           )}
                         </div>
                       )}
 
-                      {item.reason && (
+                      {item.recommendation_reason && (
                         <div style={{
                           padding: '8px 12px',
                           background: '#fff7e6',
@@ -429,7 +423,7 @@ function Recommendation() {
                           fontSize: '13px',
                           color: '#d46b08'
                         }}>
-                          💡 {item.reason}
+                          💡 {item.recommendation_reason}
                         </div>
                       )}
 

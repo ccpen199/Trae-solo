@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { API, formatDateTime, getStatusText, getStatusColor, getAlarmLevelText, getAlarmLevelColor } from '../../api';
+import { API, formatDateTime, getAlarmLevelText, getAlarmLevelColor } from '../../api';
+
+const WORK_ORDER_STATUS_MAP = {
+  pending: { text: '待处理', color: '#ff4d4f' },
+  processing: { text: '处理中', color: '#faad14' },
+  resolved: { text: '已解决', color: '#52c41a' }
+};
+
+function getWorkOrderStatusText(status) {
+  return WORK_ORDER_STATUS_MAP[status]?.text || status || '-';
+}
+
+function getWorkOrderStatusColor(status) {
+  return WORK_ORDER_STATUS_MAP[status]?.color || '#8c8c8c';
+}
 
 function AlarmWorkOrders() {
   const [loading, setLoading] = useState(true);
@@ -9,8 +23,8 @@ function AlarmWorkOrders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showProcessModal, setShowProcessModal] = useState(false);
   const [showAssignModal, setShowAssignModal] = useState(false);
-  const [processForm, setProcessForm] = useState({ status: '', handler: '', solution: '' });
-  const [assignForm, setAssignForm] = useState({ handler: '' });
+  const [processForm, setProcessForm] = useState({ status: '', assignee: '', resolution: '' });
+  const [assignForm, setAssignForm] = useState({ assignee: '' });
 
   useEffect(() => {
     loadData();
@@ -45,13 +59,13 @@ function AlarmWorkOrders() {
     let nextStatus = 'pending';
     if (order.status === 'pending') nextStatus = 'processing';
     else if (order.status === 'processing') nextStatus = 'resolved';
-    setProcessForm({ status: nextStatus, handler: order.handler || '', solution: '' });
+    setProcessForm({ status: nextStatus, assignee: order.assignee || '', resolution: '' });
     setShowProcessModal(true);
   };
 
   const handleAssign = (order) => {
     setSelectedOrder(order);
-    setAssignForm({ handler: order.handler || '' });
+    setAssignForm({ assignee: order.assignee || '' });
     setShowAssignModal(true);
   };
 
@@ -60,8 +74,8 @@ function AlarmWorkOrders() {
     try {
       await API.alarms.update(selectedOrder.id, {
         status: processForm.status,
-        handler: processForm.handler,
-        solution: processForm.solution
+        assignee: processForm.assignee,
+        resolution: processForm.resolution
       });
       alert('状态更新成功');
       setShowProcessModal(false);
@@ -73,13 +87,13 @@ function AlarmWorkOrders() {
   };
 
   const handleSubmitAssign = async () => {
-    if (!selectedOrder || !assignForm.handler) {
+    if (!selectedOrder || !assignForm.assignee) {
       alert('请选择处理人');
       return;
     }
     try {
       await API.alarms.update(selectedOrder.id, {
-        handler: assignForm.handler
+        assignee: assignForm.assignee
       });
       alert('分配成功');
       setShowAssignModal(false);
@@ -157,28 +171,28 @@ function AlarmWorkOrders() {
             <tbody>
               {filteredOrders.map(order => (
                 <tr key={order.id}>
-                  <td style={{ fontFamily: 'monospace', fontSize: '12px' }}>{order.alarm_no}</td>
+                  <td style={{ fontFamily: 'monospace', fontSize: '12px' }}>{order.work_order_no}</td>
                   <td>{order.station_name}</td>
                   <td>{order.charger_code}</td>
                   <td>{order.alarm_type}</td>
                   <td>
                     <span className="status-badge" style={{
-                      background: getAlarmLevelColor(order.level) + '20',
-                      color: getAlarmLevelColor(order.level)
+                      background: getAlarmLevelColor(order.alarm_level) + '20',
+                      color: getAlarmLevelColor(order.alarm_level)
                     }}>
-                      {getAlarmLevelText(order.level)}
+                      {getAlarmLevelText(order.alarm_level)}
                     </span>
                   </td>
                   <td>
                     <span className="status-badge" style={{
-                      background: getStatusColor(order.status) + '20',
-                      color: getStatusColor(order.status)
+                      background: getWorkOrderStatusColor(order.status) + '20',
+                      color: getWorkOrderStatusColor(order.status)
                     }}>
-                      {getStatusText(order.status)}
+                      {getWorkOrderStatusText(order.status)}
                     </span>
                   </td>
                   <td>{formatDateTime(order.created_at)}</td>
-                  <td>{order.handler || '-'}</td>
+                  <td>{order.assignee || '-'}</td>
                   <td>
                     {order.status !== 'resolved' && (
                       <button className="btn btn-primary btn-sm" onClick={() => handleStatusChange(order)}>
@@ -204,7 +218,7 @@ function AlarmWorkOrders() {
               <button className="btn btn-default btn-sm" onClick={() => setShowProcessModal(false)}>取消</button>
             </div>
             <div className="alert alert-info">
-              工单：{selectedOrder.alarm_no} - {selectedOrder.alarm_type}
+              工单：{selectedOrder.work_order_no} - {selectedOrder.alarm_type}
             </div>
             <div className="form-group">
               <label>目标状态</label>
@@ -215,7 +229,7 @@ function AlarmWorkOrders() {
             </div>
             <div className="form-group">
               <label>处理人</label>
-              <select value={processForm.handler} onChange={(e) => setProcessForm({ ...processForm, handler: e.target.value })}>
+              <select value={processForm.assignee} onChange={(e) => setProcessForm({ ...processForm, assignee: e.target.value })}>
                 <option value="">请选择</option>
                 <option value="张三">张三</option>
                 <option value="李四">李四</option>
@@ -225,7 +239,7 @@ function AlarmWorkOrders() {
             </div>
             <div className="form-group">
               <label>处理说明/解决方案</label>
-              <textarea rows="4" value={processForm.solution} onChange={(e) => setProcessForm({ ...processForm, solution: e.target.value })} placeholder="请填写处理说明和解决方案..."></textarea>
+              <textarea rows="4" value={processForm.resolution} onChange={(e) => setProcessForm({ ...processForm, resolution: e.target.value })} placeholder="请填写处理说明和解决方案..."></textarea>
             </div>
             <div className="flex-between">
               <button className="btn btn-default" onClick={() => setShowProcessModal(false)}>取消</button>
@@ -243,11 +257,11 @@ function AlarmWorkOrders() {
               <button className="btn btn-default btn-sm" onClick={() => setShowAssignModal(false)}>取消</button>
             </div>
             <div className="alert alert-info">
-              工单：{selectedOrder.alarm_no}
+              工单：{selectedOrder.work_order_no}
             </div>
             <div className="form-group">
               <label>处理人 <span style={{ color: '#ff4d4f' }}>*</span></label>
-              <select value={assignForm.handler} onChange={(e) => setAssignForm({ ...assignForm, handler: e.target.value })}>
+              <select value={assignForm.assignee} onChange={(e) => setAssignForm({ ...assignForm, assignee: e.target.value })}>
                 <option value="">请选择处理人</option>
                 <option value="张三">张三</option>
                 <option value="李四">李四</option>

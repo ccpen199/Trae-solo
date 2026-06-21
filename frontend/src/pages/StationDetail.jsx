@@ -9,7 +9,8 @@ import {
   getPeriodColor,
   formatMoney,
   formatEnergy,
-  formatDuration
+  formatDuration,
+  formatDateTime
 } from '../api';
 
 function StationDetail() {
@@ -18,7 +19,7 @@ function StationDetail() {
   const [loading, setLoading] = useState(true);
   const [station, setStation] = useState(null);
   const [chargers, setChargers] = useState([]);
-  const [pricing, setPricing] = useState([]);
+  const [periods, setPeriods] = useState([]);
   const [activeTab, setActiveTab] = useState('chargers');
 
   useEffect(() => {
@@ -28,14 +29,11 @@ function StationDetail() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [stationRes, chargersRes, pricingRes] = await Promise.all([
-        API.stations.detail(id),
-        API.stations.chargers(id),
-        API.stations.price(id)
-      ]);
-      setStation(stationRes.data);
-      setChargers(chargersRes.data);
-      setPricing(pricingRes.data);
+      const res = await API.stations.detail(id);
+      const data = res.data || {};
+      setStation(data);
+      setChargers(data.chargers || []);
+      setPeriods(data.price_strategy?.periods || []);
     } catch (err) {
       console.error('加载数据失败:', err);
     } finally {
@@ -44,10 +42,11 @@ function StationDetail() {
   };
 
   const getStats = () => {
-    const available = chargers.filter(c => c.status === 'available').length;
-    const charging = chargers.filter(c => c.status === 'charging' || c.status === 'occupied').length;
-    const offline = chargers.filter(c => c.status === 'offline').length;
-    return { available, charging, offline, total: chargers.length };
+    const available = station?.available_piles || 0;
+    const charging = station?.charging_piles || 0;
+    const offline = station?.offline_piles || 0;
+    const total = station?.total_piles || 0;
+    return { available, charging, offline, total };
   };
 
   const getChargerIcon = (type) => {
@@ -74,7 +73,7 @@ function StationDetail() {
               📍 {station.address}
             </div>
             <div className="text-muted text-small mt-8">
-              🗺️ 坐标: {station.latitude}, {station.longitude}
+              🗺️ 坐标: {station.lat}, {station.lng}
             </div>
           </div>
           <button className="btn btn-default" onClick={() => navigate(-1)}>
@@ -132,9 +131,8 @@ function StationDetail() {
                     <div className="charger-card-header">
                       <div>
                         <span className="font-bold font-large">
-                          {getChargerIcon(charger.type)} {charger.code}
+                          {getChargerIcon(charger.type)} {charger.charger_code}
                         </span>
-                        <div className="charger-code">{charger.manufacturer} · {charger.model}</div>
                       </div>
                       <span
                         className={`charger-type ${charger.type === 'fast' ? 'fast' : 'slow'}`}
@@ -146,7 +144,7 @@ function StationDetail() {
                     <div className="flex-between mb-8">
                       <div>
                         <span className="text-muted text-small">额定功率</span>
-                        <div className="font-bold">{charger.rated_power} kW</div>
+                        <div className="font-bold">{charger.power_rating || '--'} kW</div>
                       </div>
                       <div>
                         <span className="text-muted text-small">状态</span>
@@ -164,16 +162,16 @@ function StationDetail() {
                       </div>
                     </div>
 
-                    {charger.status !== 'offline' && (
+                    {(charger.voltage !== undefined || charger.current !== undefined || charger.power !== undefined || charger.temperature !== undefined || charger.soc !== undefined) && charger.status !== 'offline' && (
                       <>
                         <div className="charger-info">
                           <div className="charger-info-item">
                             <span className="label">电压</span>
-                            <span className="value">{charger.voltage || '--'} V</span>
+                            <span className="value">{charger.voltage !== undefined && charger.voltage !== null ? charger.voltage + ' V' : '--'}</span>
                           </div>
                           <div className="charger-info-item">
                             <span className="label">电流</span>
-                            <span className="value">{charger.current || '--'} A</span>
+                            <span className="value">{charger.current !== undefined && charger.current !== null ? charger.current + ' A' : '--'}</span>
                           </div>
                           <div className="charger-info-item">
                             <span className="label">实时功率</span>
@@ -181,7 +179,7 @@ function StationDetail() {
                           </div>
                           <div className="charger-info-item">
                             <span className="label">温度</span>
-                            <span className="value">{charger.temperature || '--'} °C</span>
+                            <span className="value">{charger.temperature !== undefined && charger.temperature !== null ? charger.temperature + ' °C' : '--'}</span>
                           </div>
                         </div>
 
@@ -202,15 +200,6 @@ function StationDetail() {
                             </div>
                           </div>
                         )}
-
-                        {charger.occupied_duration && charger.status !== 'available' && (
-                          <div className="mt-16 text-right">
-                            <span className="text-muted text-small">占用时长: </span>
-                            <span className="font-bold text-primary">
-                              {formatDuration(charger.occupied_duration)}
-                            </span>
-                          </div>
-                        )}
                       </>
                     )}
                   </div>
@@ -222,7 +211,7 @@ function StationDetail() {
 
         {activeTab === 'pricing' && (
           <div>
-            {pricing.length === 0 ? (
+            {periods.length === 0 ? (
               <div className="empty">暂无电价策略</div>
             ) : (
               <table>
@@ -236,24 +225,24 @@ function StationDetail() {
                   </tr>
                 </thead>
                 <tbody>
-                  {pricing.map((price, index) => (
+                  {periods.map((period, index) => (
                     <tr key={index}>
                       <td>
                         <span
                           className="period-tag"
                           style={{
-                            background: `linear-gradient(90deg, ${getPeriodColor(price.period)}, ${getPeriodColor(price.period)}aa)`,
+                            background: `linear-gradient(90deg, ${getPeriodColor(period.period_type)}, ${getPeriodColor(period.period_type)}aa)`,
                             color: 'white'
                           }}
                         >
-                          {getPeriodText(price.period)}
+                          {getPeriodText(period.period_type)}
                         </span>
                       </td>
-                      <td>{price.start_time} - {price.end_time}</td>
-                      <td>{formatMoney(price.electricity_price)}/kWh</td>
-                      <td>{formatMoney(price.service_fee)}/kWh</td>
+                      <td>{period.start_time} - {period.end_time}</td>
+                      <td>{formatMoney(period.electricity_price)}/kWh</td>
+                      <td>{formatMoney(period.service_price)}/kWh</td>
                       <td className="font-bold text-danger">
-                        {formatMoney(price.electricity_price + price.service_fee)}/kWh
+                        {formatMoney(period.total_price)}/kWh
                       </td>
                     </tr>
                   ))}

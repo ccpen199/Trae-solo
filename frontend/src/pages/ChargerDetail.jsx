@@ -190,7 +190,7 @@ function ChargerDetail() {
     try {
       setLoading(true);
       const res = await API.chargers.detail(id);
-      const chargerData = res.data;
+      const chargerData = res.data || res;
       setCharger(chargerData);
       setRealtimeData({
         voltage: chargerData.voltage || 0,
@@ -200,14 +200,15 @@ function ChargerDetail() {
         soc: chargerData.soc || 0
       });
 
-      if (chargerData.status === 'charging') {
+      if (chargerData.is_charging || chargerData.status === 'charging') {
         setCharging(true);
         try {
-          const ordersRes = await API.chargers.orders(id);
-          const activeOrder = ordersRes.data?.find(o => o.status === 'charging' || o.status === 'processing');
+          const ordersRes = await API.orders.list({ charger_id: id, status: 'charging' });
+          const ordersList = Array.isArray(ordersRes) ? ordersRes : (ordersRes.data || []);
+          const activeOrder = ordersList.find(o => o.status === 'charging' || o.status === 'processing');
           if (activeOrder) {
             setCurrentOrder(activeOrder);
-            setChargingDuration(activeOrder.duration || 0);
+            setChargingDuration(activeOrder.duration_seconds || 0);
             loadPowerData(activeOrder.id);
           }
         } catch (err) {
@@ -224,15 +225,16 @@ function ChargerDetail() {
   const loadPowerData = async (orderId) => {
     try {
       const res = await API.orders.powerData(orderId);
-      if (res.data && Array.isArray(res.data)) {
+      const dataList = res.data || res;
+      if (dataList && Array.isArray(dataList)) {
         const powerData = [];
         const voltageData = [];
         const currentData = [];
         const socData = [];
         const tempData = [];
 
-        res.data.forEach((item, idx) => {
-          const time = new Date(item.timestamp || Date.now() - (res.data.length - idx) * 1000);
+        dataList.forEach((item, idx) => {
+          const time = new Date(item.timestamp || Date.now() - (dataList.length - idx) * 1000);
           const timeStr = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}`;
 
           if (item.power !== undefined) powerData.push({ time: timeStr, value: item.power });
@@ -257,7 +259,7 @@ function ChargerDetail() {
     const now = new Date();
     const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
 
-    const basePower = charger?.power_max || 60;
+    const basePower = charger?.power_rating || 60;
     const power = Math.max(0, basePower * (0.8 + Math.random() * 0.4 - (realtimeData.soc / 100) * 0.5));
     const voltage = 380 + (Math.random() - 0.5) * 20;
     const current = (power * 1000) / voltage;
@@ -306,9 +308,9 @@ function ChargerDetail() {
       setEstimatedTime(0);
       return;
     }
-    if (realtimeData.power > 0 && charger) {
+    if (realtimeData.power > 0) {
       const remainingSoc = 100 - realtimeData.soc;
-      const batteryCapacity = charger.battery_capacity || 60;
+      const batteryCapacity = 60;
       const remainingEnergy = (remainingSoc / 100) * batteryCapacity;
       const hours = remainingEnergy / realtimeData.power;
       const seconds = Math.floor(hours * 3600);
@@ -319,11 +321,12 @@ function ChargerDetail() {
   const handleStartCharging = async () => {
     try {
       const res = await API.orders.create({
-        charger_id: id,
-        user_id: 1,
-        target_soc: 100
+        chargerId: id,
+        userId: 1,
+        startSoc: charger.soc || 0
       });
-      setCurrentOrder(res.data);
+      const orderData = res.data || res;
+      setCurrentOrder(orderData);
       setCharging(true);
       setChargingDuration(0);
       setPowerHistory([]);
@@ -349,7 +352,7 @@ function ChargerDetail() {
     if (!currentOrder) return;
     try {
       await API.orders.stop(currentOrder.id, {
-        stop_reason: 'user_stop'
+        endSoc: realtimeData.soc || 0
       });
       setCharging(false);
     } catch (err) {
@@ -521,8 +524,14 @@ function ChargerDetail() {
     );
   }
 
-  const healthLevel = charger.health_level || 'good';
   const healthScore = charger.health_score || 85;
+  const getHealthLevel = (score) => {
+    if (score >= 90) return 'excellent';
+    if (score >= 75) return 'good';
+    if (score >= 60) return 'fair';
+    return 'poor';
+  };
+  const healthLevel = getHealthLevel(healthScore);
 
   return (
     <div>
@@ -535,7 +544,7 @@ function ChargerDetail() {
             >
               ← 返回
             </button>
-            <h2>充电桩详情 - {charger.code}</h2>
+            <h2>充电桩详情 - {charger.charger_code}</h2>
             <span
               className="status-badge"
               style={{
@@ -557,7 +566,7 @@ function ChargerDetail() {
           <div className="charger-info">
             <div className="charger-info-item">
               <span className="label">充电桩编号</span>
-              <span className="value charger-code">{charger.code}</span>
+              <span className="value charger-code">{charger.charger_code}</span>
             </div>
             <div className="charger-info-item">
               <span className="label">充电桩类型</span>
@@ -569,15 +578,15 @@ function ChargerDetail() {
             </div>
             <div className="charger-info-item">
               <span className="label">额定功率</span>
-              <span className="value">{charger.power_max || 60} kW</span>
+              <span className="value">{charger.power_rating || 60} kW</span>
             </div>
             <div className="charger-info-item">
               <span className="label">通信协议</span>
               <span className="value">{charger.protocol || 'OCPP 1.6'}</span>
             </div>
             <div className="charger-info-item">
-              <span className="label">接口标准</span>
-              <span className="value">{charger.connector || 'GB/T'}</span>
+              <span className="label">OCPP版本</span>
+              <span className="value">{charger.ocpp_version || '-'}</span>
             </div>
             <div className="charger-info-item">
               <span className="label">所属充电站</span>
@@ -598,8 +607,8 @@ function ChargerDetail() {
           </div>
 
           <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #f0f0f0' }}>
-            <div className="text-muted mb-8" style={{ fontSize: '13px' }}>上次校准</div>
-            <div>{formatDateTime(charger.last_calibration)}</div>
+            <div className="text-muted mb-8" style={{ fontSize: '13px' }}>最后更新</div>
+            <div>{formatDateTime(charger.last_update)}</div>
           </div>
         </div>
 
@@ -697,7 +706,7 @@ function ChargerDetail() {
             </div>
           ) : (
             <div>
-              {charger.status === 'available' || charger.status === 'online' ? (
+              {!charger.is_offline && !charger.is_charging ? (
                 <div>
                   <div className="alert alert-info mb-16">
                     <strong>🔌 充电桩已就绪</strong>
@@ -883,13 +892,11 @@ function ChargerDetail() {
                 </div>
                 <div className="charger-info-item">
                   <span className="label">充电时长</span>
-                  <span className="value">{formatDuration(currentOrder.duration || chargingDuration)}</span>
+                  <span className="value">{formatDuration(currentOrder.duration_seconds || chargingDuration)}</span>
                 </div>
                 <div className="charger-info-item">
-                  <span className="label">车辆VIN</span>
-                  <span className="value" style={{ fontFamily: 'monospace', fontSize: '13px' }}>
-                    {currentOrder.vin || '-'}
-                  </span>
+                  <span className="label">起始SOC</span>
+                  <span className="value">{currentOrder.start_soc || 0}%</span>
                 </div>
               </div>
 
@@ -897,13 +904,13 @@ function ChargerDetail() {
                 <div className="flex-between">
                   <span className="text-muted">本次充电量</span>
                   <span className="font-bold text-primary font-large">
-                    {formatEnergy(currentOrder.energy || costBreakdown.totalEnergy)}
+                    {formatEnergy(currentOrder.total_energy !== undefined ? currentOrder.total_energy : costBreakdown.totalEnergy)}
                   </span>
                 </div>
                 <div className="flex-between mt-8">
                   <span className="text-muted">总费用</span>
                   <span className="font-bold text-danger font-xlarge">
-                    {formatMoney(currentOrder.total_amount || costBreakdown.totalCost)}
+                    {formatMoney(currentOrder.total_amount !== undefined ? currentOrder.total_amount : costBreakdown.totalCost)}
                   </span>
                 </div>
               </div>

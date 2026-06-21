@@ -39,26 +39,26 @@ function RevenueReport() {
     const summary = {
       total_orders: 0,
       total_energy: 0,
-      total_amount: 0,
+      total_revenue: 0,
       total_service_fee: 0,
       peak_energy: 0,
       flat_energy: 0,
       valley_energy: 0,
-      peak_amount: 0,
-      flat_amount: 0,
-      valley_amount: 0
+      peak_revenue: 0,
+      flat_revenue: 0,
+      valley_revenue: 0
     };
     data.forEach(d => {
-      summary.total_orders += d.orders_count || 0;
-      summary.total_energy += d.energy || 0;
-      summary.total_amount += d.total_amount || 0;
+      summary.total_orders += d.total_orders || 0;
+      summary.total_energy += d.total_energy || 0;
+      summary.total_revenue += d.total_revenue || 0;
       summary.total_service_fee += d.service_fee || 0;
       summary.peak_energy += d.peak_energy || 0;
       summary.flat_energy += d.flat_energy || 0;
       summary.valley_energy += d.valley_energy || 0;
-      summary.peak_amount += d.peak_amount || 0;
-      summary.flat_amount += d.flat_amount || 0;
-      summary.valley_amount += d.valley_amount || 0;
+      summary.peak_revenue += d.peak_revenue || 0;
+      summary.flat_revenue += d.flat_revenue || 0;
+      summary.valley_revenue += d.valley_revenue || 0;
     });
     return summary;
   };
@@ -70,7 +70,7 @@ function RevenueReport() {
       grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
       xAxis: {
         type: 'category',
-        data: data.map(d => reportType === 'daily' ? d.date?.slice(5) : d.month?.slice(2))
+        data: data.map(d => reportType === 'daily' ? d.date?.slice(5) : d.date?.slice(0, 7))
       },
       yAxis: [
         { type: 'value', name: '电量(kWh)' },
@@ -83,7 +83,7 @@ function RevenueReport() {
           smooth: true,
           yAxisIndex: 0,
           itemStyle: { color: '#1890ff' },
-          data: data.map(d => d.energy || 0)
+          data: data.map(d => d.total_energy || 0)
         },
         {
           name: '电费',
@@ -91,7 +91,7 @@ function RevenueReport() {
           smooth: true,
           yAxisIndex: 1,
           itemStyle: { color: '#52c41a' },
-          data: data.map(d => (d.total_amount || 0) - (d.service_fee || 0))
+          data: data.map(d => (d.total_revenue || 0) - (d.service_fee || 0))
         },
         {
           name: '服务费',
@@ -143,9 +143,9 @@ function RevenueReport() {
         emphasis: { label: { show: true, fontSize: 16, fontWeight: 'bold' } },
         labelLine: { show: false },
         data: [
-          { value: s.peak_amount, name: '峰时', itemStyle: { color: '#ff4d4f' } },
-          { value: s.flat_amount, name: '平时', itemStyle: { color: '#faad14' } },
-          { value: s.valley_amount, name: '谷时', itemStyle: { color: '#52c41a' } }
+          { value: s.peak_revenue, name: '峰时', itemStyle: { color: '#ff4d4f' } },
+          { value: s.flat_revenue, name: '平时', itemStyle: { color: '#faad14' } },
+          { value: s.valley_revenue, name: '谷时', itemStyle: { color: '#52c41a' } }
         ]
       }]
     };
@@ -160,17 +160,17 @@ function RevenueReport() {
             station_name: d.station_name,
             orders: 0,
             energy: 0,
-            amount: 0,
+            total_revenue: 0,
             service_fee: 0
           };
         }
-        stationMap[d.station_name].orders += d.orders_count || 0;
-        stationMap[d.station_name].energy += d.energy || 0;
-        stationMap[d.station_name].amount += d.total_amount || 0;
+        stationMap[d.station_name].orders += d.total_orders || 0;
+        stationMap[d.station_name].energy += d.total_energy || 0;
+        stationMap[d.station_name].total_revenue += d.total_revenue || 0;
         stationMap[d.station_name].service_fee += d.service_fee || 0;
       }
     });
-    return Object.values(stationMap).sort((a, b) => b.amount - a.amount);
+    return Object.values(stationMap).sort((a, b) => b.total_revenue - a.total_revenue);
   };
 
   const summary = getSummary();
@@ -234,7 +234,7 @@ function RevenueReport() {
         </div>
         <div className="stat-card orange">
           <div className="label">总金额</div>
-          <div className="value">{formatMoney(summary.total_amount)}</div>
+          <div className="value">{formatMoney(summary.total_revenue)}</div>
         </div>
         <div className="stat-card">
           <div className="label">服务费</div>
@@ -283,22 +283,22 @@ function RevenueReport() {
                 <td><span className="period-tag peak">峰时</span></td>
                 <td>{formatEnergy(summary.peak_energy)}</td>
                 <td>{summary.total_energy > 0 ? ((summary.peak_energy / summary.total_energy) * 100).toFixed(1) : 0}%</td>
-                <td>{formatMoney(summary.peak_amount)}</td>
-                <td>{summary.total_amount > 0 ? ((summary.peak_amount / summary.total_amount) * 100).toFixed(1) : 0}%</td>
+                <td>{formatMoney(summary.peak_revenue)}</td>
+                <td>{summary.total_revenue > 0 ? ((summary.peak_revenue / summary.total_revenue) * 100).toFixed(1) : 0}%</td>
               </tr>
               <tr>
                 <td><span className="period-tag flat">平时</span></td>
                 <td>{formatEnergy(summary.flat_energy)}</td>
                 <td>{summary.total_energy > 0 ? ((summary.flat_energy / summary.total_energy) * 100).toFixed(1) : 0}%</td>
-                <td>{formatMoney(summary.flat_amount)}</td>
-                <td>{summary.total_amount > 0 ? ((summary.flat_amount / summary.total_amount) * 100).toFixed(1) : 0}%</td>
+                <td>{formatMoney(summary.flat_revenue)}</td>
+                <td>{summary.total_revenue > 0 ? ((summary.flat_revenue / summary.total_revenue) * 100).toFixed(1) : 0}%</td>
               </tr>
               <tr>
                 <td><span className="period-tag valley">谷时</span></td>
                 <td>{formatEnergy(summary.valley_energy)}</td>
                 <td>{summary.total_energy > 0 ? ((summary.valley_energy / summary.total_energy) * 100).toFixed(1) : 0}%</td>
-                <td>{formatMoney(summary.valley_amount)}</td>
-                <td>{summary.total_amount > 0 ? ((summary.valley_amount / summary.total_amount) * 100).toFixed(1) : 0}%</td>
+                <td>{formatMoney(summary.valley_revenue)}</td>
+                <td>{summary.total_revenue > 0 ? ((summary.valley_revenue / summary.total_revenue) * 100).toFixed(1) : 0}%</td>
               </tr>
             </tbody>
           </table>
@@ -329,9 +329,9 @@ function RevenueReport() {
                   <td className="font-bold">{s.station_name}</td>
                   <td>{s.orders}</td>
                   <td>{formatEnergy(s.energy)}</td>
-                  <td>{formatMoney(s.amount - s.service_fee)}</td>
+                  <td>{formatMoney(s.total_revenue - s.service_fee)}</td>
                   <td>{formatMoney(s.service_fee)}</td>
-                  <td className="font-bold text-danger">{formatMoney(s.amount)}</td>
+                  <td className="font-bold text-danger">{formatMoney(s.total_revenue)}</td>
                 </tr>
               ))}
             </tbody>

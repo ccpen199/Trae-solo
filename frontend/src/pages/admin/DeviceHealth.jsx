@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { API, formatDateTime, getStatusText, getStatusColor, getHealthLevelText, getHealthLevelColor, getChargerTypeText } from '../../api';
+import { API, formatMoney, formatEnergy, formatDateTime, getStatusText, getStatusColor, getHealthLevelText, getHealthLevelColor, getChargerTypeText, getAlarmLevelText, getAlarmLevelColor } from '../../api';
 
 function DeviceHealth() {
   const navigate = useNavigate();
@@ -129,7 +129,7 @@ function DeviceHealth() {
                   <td>
                     <span className={`charger-type ${charger.type}`}>{getChargerTypeText(charger.type)}</span>
                   </td>
-                  <td>{charger.power} kW</td>
+                  <td>{charger.power_rating} kW</td>
                   <td>
                     <div style={{ minWidth: '120px' }}>
                       <div className="flex-between mb-8">
@@ -155,10 +155,10 @@ function DeviceHealth() {
                   </td>
                   <td>
                     <span className="status-badge" style={{
-                      background: getStatusColor(charger.status) + '20',
-                      color: getStatusColor(charger.status)
+                      background: getStatusColor(charger.is_offline ? 'offline' : 'available') + '20',
+                      color: getStatusColor(charger.is_offline ? 'offline' : 'available')
                     }}>
-                      {getStatusText(charger.status)}
+                      {charger.is_offline ? '离线' : '在线'}
                     </span>
                   </td>
                   <td style={{ fontFamily: 'monospace', color: charger.fault_code ? '#ff4d4f' : '#8c8c8c' }}>
@@ -193,7 +193,7 @@ function DeviceHealth() {
               </div>
               <div className="form-group">
                 <label>类型/功率</label>
-                <div>{getChargerTypeText(selectedCharger.type)} / {selectedCharger.power} kW</div>
+                <div>{getChargerTypeText(selectedCharger.type)} / {selectedCharger.power_rating} kW</div>
               </div>
               <div className="form-group">
                 <label>健康评分</label>
@@ -213,8 +213,8 @@ function DeviceHealth() {
               <div className="form-group">
                 <label>运行状态</label>
                 <div>
-                  <span className="status-badge" style={{ background: getStatusColor(selectedCharger.status) + '20', color: getStatusColor(selectedCharger.status) }}>
-                    {getStatusText(selectedCharger.status)}
+                  <span className="status-badge" style={{ background: getStatusColor(selectedCharger.is_offline ? 'offline' : 'available') + '20', color: getStatusColor(selectedCharger.is_offline ? 'offline' : 'available') }}>
+                    {selectedCharger.is_offline ? '离线' : '在线'}
                   </span>
                 </div>
               </div>
@@ -225,14 +225,18 @@ function DeviceHealth() {
                 </div>
               </div>
               <div className="form-group">
-                <label>最后检测时间</label>
-                <div>{formatDateTime(selectedCharger.last_check_time)}</div>
+                <label>最后维护日期</label>
+                <div>{formatDateTime(selectedCharger.last_maintenance_date)}</div>
+              </div>
+              <div className="form-group">
+                <label>城市</label>
+                <div>{selectedCharger.city || '-'}</div>
               </div>
             </div>
             <div className="form-group">
-              <label>健康诊断说明</label>
+              <label>故障信息</label>
               <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '6px' }}>
-                {selectedCharger.health_note || '设备运行正常'}
+                {selectedCharger.fault_message || '设备运行正常'}
               </div>
             </div>
             <div className="flex-between">
