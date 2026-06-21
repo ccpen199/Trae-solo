@@ -4,8 +4,8 @@ import { useStore } from '@/store/useStore'
 import { mockListings } from '@/data/mockData'
 import type { Listing, ListingType, CommuteMode } from '@/types'
 import {
-  Bed, Bath, Maximize, Compass, Train, Bus, Car,
-  Check, Star, Shield, ArrowLeft,
+  Bed, Maximize, Compass, Train, Bus, Car,
+  Check, Star, Shield, ArrowLeft, ShieldCheck, ChevronRight,
 } from 'lucide-react'
 
 const typeBadge: Record<ListingType, string> = {
@@ -37,6 +37,100 @@ const amenityIcons: Record<string, string> = {
   智能门锁: '🔐', 健身房: '💪', 停车位: '🅿️', 共享办公区: '💻',
   快递柜: '📦', 公共厨房: '🍳', 公共客厅: '🛋️', 燃气灶: '🔥',
   洗碗机: '🍽️',
+}
+
+const flowSteps = ['搜索房源', '查看详情', '预约看房', '签署合同', '租金支付', '租后服务']
+
+function FlowBreadcrumb() {
+  return (
+    <div className="px-4 py-2.5 flex items-center gap-1 overflow-x-auto text-xs whitespace-nowrap">
+      {flowSteps.map((step, i) => (
+        <span key={step} className="flex items-center gap-1">
+          <span className={i === 1 ? 'text-ccb-500 font-bold' : i < 1 ? 'text-space-400' : 'text-space-300'}>
+            {i === 1 ? `${step}(当前)` : step}
+          </span>
+          {i < flowSteps.length - 1 && <ChevronRight className="w-3 h-3 text-space-300 shrink-0" />}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function VerificationPanel({ listing }: { listing: Listing }) {
+  const v = listing.verification
+  if (listing.type === 'ccb_direct') {
+    return (
+      <div className="glass-panel rounded-xl p-4 border-l-4 border-ccb-500">
+        <div className="flex items-center gap-2 mb-3">
+          <ShieldCheck className="w-5 h-5 text-ccb-500" />
+          <h2 className="section-title text-lg">建行直营认证</h2>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-sm">
+            <Shield className="w-4 h-4 text-ccb-500" />
+            <span className="text-space-700">直营管理体系</span>
+            <span className="text-space-400 text-xs ml-auto">{v.managementStandard ?? '建行自营标准'}</span>
+            <Check className="w-4 h-4 text-emerald-500" />
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <Shield className="w-4 h-4 text-ccb-500" />
+            <span className="text-space-700">品质保障体系</span>
+            <span className="text-space-400 text-xs ml-auto">全流程管控</span>
+            <Check className="w-4 h-4 text-emerald-500" />
+          </div>
+        </div>
+        <span className="inline-block mt-3 badge-ccb text-xs px-2 py-1 rounded">建行品质保障</span>
+      </div>
+    )
+  }
+  if (listing.type === 'partner') {
+    return (
+      <div className="glass-panel rounded-xl p-4 border-l-4 border-emerald-500">
+        <div className="flex items-center gap-2 mb-3">
+          <ShieldCheck className="w-5 h-5 text-emerald-500" />
+          <h2 className="section-title text-lg">合作运营认证</h2>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-sm">
+            <Shield className="w-4 h-4 text-emerald-500" />
+            <span className="text-space-700">资质白名单</span>
+            <span className="text-space-400 text-xs ml-auto">有效期至 {v.whitelistExpiry ?? '2026-12-31'}</span>
+            <Check className="w-4 h-4 text-emerald-500" />
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <Shield className="w-4 h-4 text-emerald-500" />
+            <span className="text-space-700">服务标准契约</span>
+            <span className="text-space-400 text-xs ml-auto">合同号 {v.serviceContractNo ?? 'CCB-SV-2025-001'}</span>
+            <Check className="w-4 h-4 text-emerald-500" />
+          </div>
+        </div>
+        <span className="inline-block mt-3 badge-partner text-xs px-2 py-1 rounded">白名单运营商</span>
+      </div>
+    )
+  }
+  return (
+    <div className="glass-panel rounded-xl p-4 border-l-4 border-amber-500">
+      <div className="flex items-center gap-2 mb-3">
+        <ShieldCheck className="w-5 h-5 text-amber-500" />
+        <h2 className="section-title text-lg">个人房源核验</h2>
+      </div>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-sm">
+          <Shield className="w-4 h-4 text-amber-500" />
+          <span className="text-space-700">产权核验</span>
+          <span className="text-space-400 text-xs ml-auto">证书号 {v.propertyCertNo ?? 'CR-2025-0892'}</span>
+          <Check className="w-4 h-4 text-emerald-500" />
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <Shield className="w-4 h-4 text-amber-500" />
+          <span className="text-space-700">人脸识别</span>
+          <span className="text-space-400 text-xs ml-auto">{v.faceVerifiedAt ?? '2025-06-01'} 已验证</span>
+          <Check className="w-4 h-4 text-emerald-500" />
+        </div>
+      </div>
+      <span className="inline-block mt-3 badge-personal text-xs px-2 py-1 rounded">双重验证</span>
+    </div>
+  )
 }
 
 function LightingGauge({ score }: { score: number }) {
@@ -72,6 +166,46 @@ function HeatMapGrid({ data }: { data: number[][] }) {
   )
 }
 
+function FloorPlanSVG({ rooms }: { rooms: { room: string; area: number }[] }) {
+  const layout: { room: string; x: number; y: number; w: number; h: number }[] = []
+  const cols = rooms.length <= 4 ? 2 : 3
+  const cellW = 180 / cols
+  const cellH = 60
+  rooms.forEach((r, i) => {
+    const col = i % cols
+    const row = Math.floor(i / cols)
+    layout.push({ room: r.room, x: 10 + col * cellW, y: 10 + row * (cellH + 4), w: cellW - 4, h: cellH })
+  })
+  const svgH = 10 + Math.ceil(rooms.length / cols) * (cellH + 4) + 24
+
+  const dirs = [
+    { label: '北', x: 100, y: 6, anchor: 'middle' },
+    { label: '南', x: 100, y: svgH - 2, anchor: 'middle' },
+    { label: '西', x: 4, y: svgH / 2, anchor: 'start' },
+    { label: '东', x: 196, y: svgH / 2, anchor: 'end' },
+  ]
+
+  return (
+    <svg viewBox={`0 0 200 ${svgH}`} className="w-full max-w-xs mx-auto mb-2">
+      {dirs.map(d => (
+        <text key={d.label} x={d.x} y={d.y} textAnchor={d.anchor as 'middle' | 'start' | 'end'}
+          fontSize="8" fill="#9CA3AF" fontWeight="bold">{d.label}</text>
+      ))}
+      <rect x="10" y="10" width="180" height={svgH - 20} rx="4" fill="none" stroke="#003DA5" strokeWidth="1.5" />
+      {layout.map(l => (
+        <g key={l.room}>
+          <rect x={l.x} y={l.y} width={l.w} height={l.h} rx="2"
+            fill={`${roomColors[l.room] ?? '#003DA5'}20`} stroke={roomColors[l.room] ?? '#003DA5'} strokeWidth="1" />
+          <text x={l.x + l.w / 2} y={l.y + l.h / 2 - 4} textAnchor="middle" fontSize="9"
+            fill={roomColors[l.room] ?? '#003DA5'}>{l.room}</text>
+          <text x={l.x + l.w / 2} y={l.y + l.h / 2 + 8} textAnchor="middle" fontSize="7"
+            fill="#6B7280">{rooms.find(r => r.room === l.room)?.area}㎡</text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
 export default function ListingDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -98,9 +232,11 @@ export default function ListingDetail() {
     { label: '押金', amount: listing.price * 2 },
   ]
   const total = costs.reduce((s, c) => s + c.amount, 0)
+  const monthlyInstallment = Math.round(total / 12)
 
   return (
     <div className="pb-20">
+      <FlowBreadcrumb />
       <div className="relative">
         <button onClick={() => navigate(-1)} className="absolute top-4 left-4 z-10 w-9 h-9 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow-md">
           <ArrowLeft className="w-5 h-5 text-space-800" />
@@ -145,23 +281,11 @@ export default function ListingDetail() {
           </div>
         </div>
 
+        <VerificationPanel listing={listing} />
+
         <div className="glass-panel rounded-xl p-4">
           <h2 className="section-title text-lg mb-3">AI 户型分析</h2>
-          <svg viewBox="0 0 200 140" className="w-full max-w-xs mx-auto mb-4">
-            <rect x="10" y="10" width="180" height="120" rx="4" fill="none" stroke="#003DA5" strokeWidth="1.5" />
-            <rect x="10" y="10" width="80" height="70" rx="2" fill="#003DA520" stroke="#003DA5" strokeWidth="1" />
-            <text x="50" y="50" textAnchor="middle" fontSize="10" fill="#003DA5">主卧</text>
-            <rect x="90" y="10" width="100" height="70" rx="2" fill="#C9A96E20" stroke="#C9A96E" strokeWidth="1" />
-            <text x="140" y="50" textAnchor="middle" fontSize="10" fill="#C9A96E">客厅</text>
-            <rect x="10" y="80" width="55" height="50" rx="2" fill="#2563EB20" stroke="#2563EB" strokeWidth="1" />
-            <text x="37" y="108" textAnchor="middle" fontSize="10" fill="#2563EB">次卧</text>
-            <rect x="65" y="80" width="45" height="50" rx="2" fill="#10B98120" stroke="#10B981" strokeWidth="1" />
-            <text x="87" y="108" textAnchor="middle" fontSize="10" fill="#10B981">厨房</text>
-            <rect x="110" y="80" width="40" height="50" rx="2" fill="#6366F120" stroke="#6366F1" strokeWidth="1" />
-            <text x="130" y="108" textAnchor="middle" fontSize="10" fill="#6366F1">卫</text>
-            <rect x="150" y="80" width="40" height="50" rx="2" fill="#F59E0B20" stroke="#F59E0B" strokeWidth="1" />
-            <text x="170" y="108" textAnchor="middle" fontSize="10" fill="#F59E0B">阳台</text>
-          </svg>
+          <FloorPlanSVG rooms={aiAnalysis.areaBreakdown} />
           <div className="space-y-2">
             {aiAnalysis.areaBreakdown.map(r => (
               <div key={r.room} className="flex items-center gap-2 text-sm">
@@ -189,6 +313,9 @@ export default function ListingDetail() {
               <HeatMapGrid data={aiAnalysis.lightingMap} />
             </div>
           </div>
+          <p className="text-sm text-space-600 mt-3 leading-relaxed">
+            采光评分{aiAnalysis.lightingScore}分，客厅与主卧朝南采光充足，次卧东南向有晨光照射，建议选用浅色窗帘增强光线反射。
+          </p>
         </div>
 
         <div className="glass-panel rounded-xl p-4">
@@ -203,6 +330,8 @@ export default function ListingDetail() {
             <span className="font-bold text-space-800">合计</span>
             <span className="font-bold text-red-500 text-lg">¥{total.toLocaleString()}</span>
           </div>
+          <p className="text-xs text-space-400 mt-2">支持建行卡/银联/分期付款</p>
+          <p className="text-xs text-ccb-500 font-medium">月供约¥{monthlyInstallment.toLocaleString()}起</p>
         </div>
 
         <div className="glass-panel rounded-xl p-4">
@@ -238,8 +367,8 @@ export default function ListingDetail() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 glass-panel border-t border-white/20 px-4 py-3 flex gap-3 z-20">
-        <button onClick={() => navigate('/appointment')} className="ccb-btn-outline flex-1">预约看房</button>
-        <button onClick={() => navigate('/contract')} className="ccb-btn-primary flex-1">立即签约</button>
+        <button onClick={() => navigate('/appointment')} className="ccb-btn-outline flex-1">预约看房 →</button>
+        <button onClick={() => navigate('/contract')} className="ccb-btn-primary flex-1">立即签约 →</button>
       </div>
     </div>
   )

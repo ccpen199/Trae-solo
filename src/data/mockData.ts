@@ -38,6 +38,7 @@ const mockListings: Listing[] = [
     },
     landlord: { name: '建融家园', type: 'ccb', verified: true, rating: 4.9 },
     amenities: ['空调', '洗衣机', '冰箱', '热水器', '智能门锁', '健身房', '停车位'],
+    verification: { directManaged: true, managementStandard: '建融家园直营管理体系V3.0' },
     status: 'available',
   },
   {
@@ -75,6 +76,7 @@ const mockListings: Listing[] = [
     },
     landlord: { name: '万科泊寓', type: 'partner', verified: true, rating: 4.6 },
     amenities: ['空调', '洗衣机', '冰箱', '公共厨房', '公共客厅', '快递柜'],
+    verification: { whitelistQualified: true, whitelistExpiry: '2027-12-31', serviceContractNo: 'SC-2026-0089', serviceContractSigned: true },
     status: 'available',
   },
   {
@@ -113,6 +115,7 @@ const mockListings: Listing[] = [
     },
     landlord: { name: '张先生', type: 'personal', verified: true, rating: 4.3 },
     amenities: ['空调', '洗衣机', '冰箱', '热水器', '燃气灶'],
+    verification: { propertyVerified: true, propertyCertNo: '沪房权证静字第2026001号', faceVerified: true, faceVerifiedAt: '2026-05-20T14:30:00Z' },
     status: 'available',
   },
   {
@@ -150,6 +153,7 @@ const mockListings: Listing[] = [
     },
     landlord: { name: '建融家园', type: 'ccb', verified: true, rating: 4.8 },
     amenities: ['空调', '洗衣机', '冰箱', '智能门锁', '共享办公区', '健身房', '快递柜'],
+    verification: { directManaged: true, managementStandard: '建融家园直营管理体系V3.0' },
     status: 'available',
   },
   {
@@ -187,6 +191,7 @@ const mockListings: Listing[] = [
     },
     landlord: { name: '龙湖冠寓', type: 'partner', verified: true, rating: 4.5 },
     amenities: ['空调', '洗衣机', '公共厨房', '公共客厅', '快递柜'],
+    verification: { whitelistQualified: true, whitelistExpiry: '2027-12-31', serviceContractNo: 'SC-2026-0089', serviceContractSigned: true },
     status: 'available',
   },
   {
@@ -226,6 +231,7 @@ const mockListings: Listing[] = [
     },
     landlord: { name: '李女士', type: 'personal', verified: true, rating: 4.1 },
     amenities: ['空调', '洗衣机', '冰箱', '热水器', '燃气灶', '洗碗机'],
+    verification: { propertyVerified: true, propertyCertNo: '沪房权证黄字第2026008号', faceVerified: true, faceVerifiedAt: '2026-06-01T09:15:00Z' },
     status: 'available',
   },
 ]
@@ -261,6 +267,7 @@ const mockAppointments: Appointment[] = [
     selectedSlot: null,
     status: 'pending',
     createdAt: new Date().toISOString(),
+    confirmHistory: [{ action: '创建预约', timestamp: new Date().toISOString(), by: '租客' }],
   },
 ]
 
@@ -269,7 +276,9 @@ const mockContracts: Contract[] = [
     id: 'C001',
     listingId: 'L001',
     tenantId: 'U001',
+    tenantName: '张明',
     landlordId: 'LL001',
+    landlordName: '建融家园',
     startDate: '2026-07-01',
     endDate: '2027-06-30',
     monthlyRent: 8500,
@@ -284,6 +293,7 @@ const mockContracts: Contract[] = [
       filingNo: '',
       status: 'pending',
       filedAt: '',
+      reviewComments: '',
     },
     signatures: {
       tenant: { signed: false, timestamp: '' },
@@ -301,8 +311,8 @@ const mockPayments: Payment[] = [
     status: 'completed',
     createdAt: '2026-07-01T09:00:00Z',
     auditTrail: [
-      { from: '租客建行卡 ****8888', to: '建融家园资金监管账户', intermediateAccounts: ['建行中间清算账户'], timestamp: '2026-07-01T09:00:01Z' },
-      { from: '建融家园资金监管账户', to: '房东建行卡 ****6666', intermediateAccounts: [], timestamp: '2026-07-01T09:00:03Z' },
+      { from: '租客建行卡 ****8888', to: '建融家园资金监管账户', amount: 8500, intermediateAccounts: ['建行中间清算账户'], timestamp: '2026-07-01T09:00:01Z' },
+      { from: '建融家园资金监管账户', to: '房东建行卡 ****6666', amount: 8500, intermediateAccounts: [], timestamp: '2026-07-01T09:00:03Z' },
     ],
   },
   {
@@ -322,7 +332,7 @@ const mockPayments: Payment[] = [
     status: 'completed',
     createdAt: '2026-06-20T14:30:00Z',
     auditTrail: [
-      { from: '租客建行卡 ****8888', to: '建融家园押金监管账户', intermediateAccounts: ['建行中间清算账户'], timestamp: '2026-06-20T14:30:01Z' },
+      { from: '租客建行卡 ****8888', to: '建融家园押金监管账户', amount: 17000, intermediateAccounts: ['建行中间清算账户'], timestamp: '2026-06-20T14:30:01Z' },
     ],
   },
 ]
@@ -336,7 +346,11 @@ const mockServiceRequests: ServiceRequest[] = [
     description: '卫生间水龙头漏水，需要维修',
     images: [],
     status: 'dispatched',
-    assignedProvider: { id: 'SP001', name: '万达物业维修', rating: 4.5 },
+    assignedProvider: { id: 'SP001', name: '万达物业维修', rating: 4.5, completionRate: 96, avgResponseTime: '2h' },
+    dispatchHistory: [
+      { status: 'submitted', timestamp: '2026-06-18T10:00:00Z' },
+      { status: 'dispatched', timestamp: '2026-06-18T10:02:00Z' },
+    ],
   },
   {
     id: 'S002',
@@ -346,7 +360,13 @@ const mockServiceRequests: ServiceRequest[] = [
     description: '卧室电路跳闸，无法正常用电',
     images: [],
     status: 'completed',
-    assignedProvider: { id: 'SP002', name: '中建物业', rating: 4.7 },
+    assignedProvider: { id: 'SP002', name: '中建物业', rating: 4.7, completionRate: 98, avgResponseTime: '1.5h' },
+    dispatchHistory: [
+      { status: 'submitted', timestamp: '2026-06-10T08:00:00Z' },
+      { status: 'dispatched', timestamp: '2026-06-10T08:05:00Z' },
+      { status: 'in_progress', timestamp: '2026-06-10T09:00:00Z' },
+      { status: 'completed', timestamp: '2026-06-10T11:30:00Z' },
+    ],
     rating: { score: 5, comment: '响应迅速，维修专业', ratedAt: '2026-06-12T16:00:00Z' },
   },
 ]

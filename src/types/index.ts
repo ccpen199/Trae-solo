@@ -9,6 +9,19 @@ export type ServiceType = 'plumbing' | 'electrical' | 'appliance' | 'structural'
 export type ServiceUrgency = 'low' | 'medium' | 'high'
 export type ServiceStatus = 'submitted' | 'dispatched' | 'in_progress' | 'completed'
 
+export interface VerificationInfo {
+  propertyVerified?: boolean
+  propertyCertNo?: string
+  faceVerified?: boolean
+  faceVerifiedAt?: string
+  whitelistQualified?: boolean
+  whitelistExpiry?: string
+  serviceContractNo?: string
+  serviceContractSigned?: boolean
+  directManaged?: boolean
+  managementStandard?: string
+}
+
 export interface AreaBreakdown {
   room: string
   area: number
@@ -58,6 +71,7 @@ export interface Listing {
   landlord: Landlord
   amenities: string[]
   status: ListingStatus
+  verification: VerificationInfo
 }
 
 export interface SearchParams {
@@ -81,13 +95,16 @@ export interface FilingInfo {
   filingNo: string
   status: FilingStatus
   filedAt: string
+  reviewComments?: string
 }
 
 export interface Contract {
   id: string
   listingId: string
   tenantId: string
+  tenantName: string
   landlordId: string
+  landlordName: string
   startDate: string
   endDate: string
   monthlyRent: number
@@ -110,6 +127,7 @@ export interface InstallmentPlan {
 export interface AuditTrailEntry {
   from: string
   to: string
+  amount: number
   intermediateAccounts: string[]
   timestamp: string
 }
@@ -129,6 +147,8 @@ export interface ServiceProvider {
   id: string
   name: string
   rating: number
+  completionRate: number
+  avgResponseTime: string
 }
 
 export interface ServiceRating {
@@ -147,12 +167,14 @@ export interface ServiceRequest {
   status: ServiceStatus
   assignedProvider: ServiceProvider
   rating?: ServiceRating
+  dispatchHistory: { status: ServiceStatus; timestamp: string }[]
 }
 
 export interface TimeSlot {
   date: string
   time: string
   available: boolean
+  lockedBy?: string
 }
 
 export interface Appointment {
@@ -167,6 +189,7 @@ export interface Appointment {
   selectedSlot: TimeSlot | null
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled'
   createdAt: string
+  confirmHistory: { action: string; timestamp: string; by: string }[]
 }
 
 export interface FinancialProduct {
@@ -177,4 +200,11 @@ export interface FinancialProduct {
   rate: string
   term: string
   icon: string
+}
+
+export interface BusinessFlowStep {
+  path: string
+  label: string
+  completed: boolean
+  active: boolean
 }

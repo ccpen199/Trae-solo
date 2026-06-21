@@ -13,9 +13,15 @@ import {
   Car,
   ShieldCheck,
   MapPin,
+  Search as SearchIcon,
+  CalendarCheck,
+  FileSignature,
+  Headphones,
+  ArrowRight,
 } from 'lucide-react'
+import { useStore } from '@/store/useStore'
 import { mockListings, mockFinancialProducts } from '@/data/mockData'
-import type { CommuteMode, ListingType } from '@/types'
+import type { CommuteMode, ListingType, Listing } from '@/types'
 
 const commuteTabs: { mode: CommuteMode; label: string; icon: React.ReactNode }[] = [
   { mode: 'metro', label: '地铁', icon: <TrainFront size={16} /> },
@@ -77,6 +83,19 @@ const typeBadgeMap: Record<ListingType, { label: string; cls: string }> = {
   personal: { label: '个人', cls: 'badge-personal' },
 }
 
+const verificationDisplay: Record<ListingType, string[]> = {
+  ccb_direct: ['建行直管 ✓'],
+  partner: ['白名单准入 ✓', '服务契约 ✓'],
+  personal: ['产权核验 ✓', '人脸识别 ✓'],
+}
+
+const flowSteps = [
+  { icon: <SearchIcon size={28} className="text-ccb-500" />, title: '搜索房源', desc: '智能通勤匹配，精准筛选理想居所', path: '/search' },
+  { icon: <CalendarCheck size={28} className="text-ccb-500" />, title: '预约看房', desc: '在线预约看房，专业管家全程陪同', path: '/appointment' },
+  { icon: <FileSignature size={28} className="text-ccb-500" />, title: '签署合同', desc: '银行存证上链，电子签约安全便捷', path: '/contract' },
+  { icon: <Headphones size={28} className="text-ccb-500" />, title: '租后服务', desc: '维修报备响应，租金托管安心无忧', path: '/service' },
+]
+
 const trustItems = [
   { label: '银行存证', desc: '合同上链存证' },
   { label: '住建备案', desc: '官方备案登记' },
@@ -86,8 +105,23 @@ const trustItems = [
 
 export default function Home() {
   const navigate = useNavigate()
+  const { setSearchParams } = useStore()
   const [commuteMode, setCommuteMode] = useState<CommuteMode>('metro')
   const [destination, setDestination] = useState('')
+
+  const handleSearch = () => {
+    setSearchParams({ commuteMode, commuteDestination: destination })
+    navigate('/search')
+  }
+
+  const handlePoolClick = (type: ListingType) => {
+    setSearchParams({ listingType: [type] })
+    navigate('/search')
+  }
+
+  const handleListingClick = (listing: Listing) => {
+    navigate(`/listing/${listing.id}`)
+  }
 
   return (
     <div className="animate-fade-in">
@@ -128,11 +162,12 @@ export default function Home() {
                 <input
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                   placeholder="输入通勤目的地，智能推荐房源"
                   className="w-full rounded-lg border border-space-200 bg-white py-2.5 pl-10 pr-3 text-sm text-space-800 placeholder:text-space-400 focus:border-ccb-500 focus:outline-none focus:ring-1 focus:ring-ccb-500"
                 />
               </div>
-              <button className="ccb-btn-primary flex items-center gap-1.5">
+              <button onClick={handleSearch} className="ccb-btn-primary flex items-center gap-1.5">
                 <Search size={18} />
                 搜索
               </button>
@@ -147,7 +182,7 @@ export default function Home() {
           {poolCards.map((card) => (
             <div
               key={card.type}
-              onClick={() => navigate(`/search?type=${card.type}`)}
+              onClick={() => handlePoolClick(card.type)}
               className={`card-hover cursor-pointer rounded-xl bg-white p-5 shadow-md ${card.border}`}
             >
               <div className="flex items-start justify-between">
@@ -162,7 +197,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="bg-gradient-to-r from-ccb-50 to-gold-50 py-12">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="section-title mb-2">开始您的租房之旅</h2>
+          <p className="mb-8 text-sm text-space-500">一站式住房租赁服务，从找房到入住全程护航</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {flowSteps.map((step, i) => (
+              <div key={step.title} className="glass-panel card-hover rounded-xl bg-white p-5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-ccb-50">
+                    {step.icon}
+                  </div>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ccb-500 text-xs font-bold text-white">
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="mt-4 font-serif text-lg font-semibold text-space-800">{step.title}</h3>
+                <p className="mt-1 text-sm text-space-500">{step.desc}</p>
+                <button
+                  onClick={() => navigate(step.path)}
+                  className="ccb-btn-primary mt-4 flex w-full items-center justify-center gap-1 text-sm"
+                >
+                  开始 <ArrowRight size={14} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="section-title mb-6">金融产品</h2>
         <div className="flex gap-5 overflow-x-auto pb-2 scrollbar-hide">
           {mockFinancialProducts.map((fp) => (
@@ -189,7 +253,7 @@ export default function Home() {
           {mockListings.map((listing) => (
             <div
               key={listing.id}
-              onClick={() => navigate(`/listing/${listing.id}`)}
+              onClick={() => handleListingClick(listing)}
               className="card-hover cursor-pointer overflow-hidden rounded-xl bg-white shadow-md"
             >
               <img
@@ -201,6 +265,11 @@ export default function Home() {
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-medium text-space-800 line-clamp-1">{listing.title}</h3>
                   <span className={typeBadgeMap[listing.type].cls}>{typeBadgeMap[listing.type].label}</span>
+                </div>
+                <div className="mt-1.5 flex flex-wrap gap-x-2">
+                  {verificationDisplay[listing.type].map((v) => (
+                    <span key={v} className="text-xs text-emerald-600 font-medium">{v}</span>
+                  ))}
                 </div>
                 <div className="mt-2 flex items-baseline gap-3">
                   <span className="text-lg font-bold text-red-500">¥{listing.price.toLocaleString()}<span className="text-xs font-normal text-space-400">/月</span></span>

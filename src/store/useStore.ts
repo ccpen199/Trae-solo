@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Listing, SearchParams, Appointment, Contract, Payment, ServiceRequest } from '@/types'
+import type { Listing, SearchParams, Appointment, Contract, Payment, ServiceRequest, ServiceProvider } from '@/types'
 import { mockListings, mockAppointments, mockContracts, mockPayments, mockServiceRequests } from '@/data/mockData'
 
 interface AppState {
@@ -21,6 +21,7 @@ interface AppState {
   fileContract: (contractId: string) => void
   makePayment: (paymentId: string) => void
   submitServiceRequest: (request: Omit<ServiceRequest, 'id' | 'status'>) => void
+  dispatchServiceRequest: (requestId: string, provider: ServiceProvider) => void
   rateService: (requestId: string, score: number, comment: string) => void
   toggleSidebar: () => void
 }
@@ -104,6 +105,7 @@ export const useStore = create<AppState>((set, get) => ({
                 filingNo: `ZJ-${Date.now()}`,
                 status: 'filed' as const,
                 filedAt: new Date().toISOString(),
+                reviewComments: '合同信息完整，符合备案要求，予以通过。',
               },
               status: 'filed' as const,
             }
@@ -128,6 +130,23 @@ export const useStore = create<AppState>((set, get) => ({
           status: 'submitted' as const,
         },
       ],
+    })),
+
+  dispatchServiceRequest: (requestId, provider) =>
+    set((state) => ({
+      serviceRequests: state.serviceRequests.map((r) =>
+        r.id === requestId
+          ? {
+              ...r,
+              status: 'dispatched' as const,
+              assignedProvider: provider,
+              dispatchHistory: [
+                ...r.dispatchHistory,
+                { status: 'dispatched' as const, timestamp: new Date().toISOString() },
+              ],
+            }
+          : r
+      ),
     })),
 
   rateService: (requestId, score, comment) =>

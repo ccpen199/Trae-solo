@@ -13,6 +13,7 @@ import {
   Building2,
   Shield,
 } from 'lucide-react'
+import BusinessFlow from '@/components/BusinessFlow'
 
 const navItems = [
   { path: '/', label: '首页', icon: Home },
@@ -24,9 +25,12 @@ const navItems = [
   { path: '/admin', label: '后台管理', icon: Settings },
 ]
 
+const flowPaths = ['/search', '/listing/', '/appointment', '/contract', '/payment', '/service']
+
 export default function Layout() {
   const { sidebarCollapsed, toggleSidebar } = useStore()
   const location = useLocation()
+  const showFlow = flowPaths.some(p => location.pathname.startsWith(p) || (p === '/listing/' && location.pathname.includes('/listing/')))
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -92,8 +96,11 @@ export default function Layout() {
         </button>
       </aside>
 
-      <main className="flex-1 overflow-y-auto">
-        <Outlet />
+      <main className="flex-1 overflow-y-auto flex flex-col">
+        {showFlow && <BusinessFlow />}
+        <div className="flex-1 overflow-y-auto">
+          <Outlet />
+        </div>
       </main>
     </div>
   )
