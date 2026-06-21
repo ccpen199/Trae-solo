@@ -1,23 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { User, Relative } from "../../shared/types";
 
-export interface Relative {
-  id: string;
-  name: string;
-  relation: string;
-  idCardMasked: string;
-  authorized: boolean;
-}
-
-export interface User {
-  id: string;
-  name: string;
-  idCard: string;
-  phone: string;
-  avatar: string;
-  realNameVerified: boolean;
-  relatives: Relative[];
-}
+export type { User, Relative };
 
 interface UserState {
   user: User | null;
@@ -46,7 +31,15 @@ export const useUserStore = create<UserState>()(
       voiceNav: false,
       fontScale: 1,
       actingAs: null,
-      login: (user, token) => set({ user, token, isAuthenticated: true }),
+      login: (user, token) =>
+        set({
+          user,
+          token,
+          isAuthenticated: true,
+          elderlyMode: user.elderlyMode,
+          voiceNav: user.voiceNav,
+          fontScale: user.fontScale,
+        }),
       logout: () =>
         set({
           user: null,
@@ -54,7 +47,13 @@ export const useUserStore = create<UserState>()(
           isAuthenticated: false,
           actingAs: null,
         }),
-      setUser: (user) => set({ user }),
+      setUser: (user) =>
+        set({
+          user,
+          elderlyMode: user.elderlyMode,
+          voiceNav: user.voiceNav,
+          fontScale: user.fontScale,
+        }),
       toggleElderlyMode: () =>
         set((state) => ({
           elderlyMode: !state.elderlyMode,
@@ -84,10 +83,21 @@ export const useUserStore = create<UserState>()(
 
 export const demoUser: User = {
   id: "demo-user",
-  name: "演示用户",
+  name: "张三",
   idCard: "430100********1234",
   phone: "138****8888",
   avatar: "",
   realNameVerified: true,
-  relatives: [],
+  elderlyMode: false,
+  fontScale: 1,
+  voiceNav: false,
+  relatives: [
+    {
+      id: "relative-1",
+      name: "张父",
+      relation: "父亲",
+      idCardMasked: "430100********5678",
+      authorized: true,
+    },
+  ],
 };

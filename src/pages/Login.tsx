@@ -1,10 +1,20 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Phone, CreditCard, Shield, Sparkles, ArrowRight } from 'lucide-react'
+import { Phone, CreditCard, Shield, Sparkles, ArrowRight, Loader2 } from 'lucide-react'
 import { useUserStore, demoUser } from '@/store/user'
+import { useToastStore } from '@/store/toast'
 import { cn } from '@/lib/utils'
+import api from '@/lib/api'
+import type { User } from '../../shared/types'
 
 type LoginTab = 'phone' | 'idcard' | 'sso'
+
+interface LoginApiResponse {
+  success: boolean
+  token: string
+  user: User
+  error?: string
+}
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState<LoginTab>('phone')
@@ -14,42 +24,171 @@ export default function Login() {
   const [realName, setRealName] = useState('')
   const [countdown, setCountdown] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [codeSent, setCodeSent] = useState(false)
+
   const login = useUserStore((state) => state.login)
+  const toast = useToastStore((state) => state)
   const navigate = useNavigate()
   const location = useLocation()
 
   const from = (location.state as { from?: Location })?.from?.pathname || '/'
 
-  const handleGetCode = () => {
-    if (countdown > 0 || !phone) return
-    setCountdown(60)
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer)
-          return 0
-        }
-        return prev - 1
+  const validatePhone = (val: string): boolean => {
+    const phoneRegex = /^1[3-9]\d{9}$/
+    if (!val) {
+      toast.error('请输入手机号')
+      return false
+    }
+    if (!phoneRegex.test(val)) {
+      toast.error('请输入正确的11位手机号码')
+      return false
+    }
+    return true
+  }
+
+  const validateIdCard = (val: string): boolean => {
+    const idRegex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    if (!val) {
+      toast.error('请输入身份证号码')
+      return false
+    }
+    if (!idRegex.test(val)) {
+      toast.error('请输入正确的15或18位身份证号码')
+      return false
+    }
+    return true
+  }
+
+  const validateVerifyCode = (val: string): boolean => {
+    if (!val) {
+      toast.error('请输入验证码')
+      return false
+    }
+    if (val.length < 4) {
+      toast.error('验证码至少4位')
+      return false
+    }
+    return true
+  }
+
+  const validateRealName = (val: string): boolean => {
+    if (!val || val.trim().length < 2) {
+      toast.error('请输入真实姓名')
+      return false
+    }
+    return true
+  }
+
+  const handleGetCode = async () => {
+    if (countdown > 0 || loading) return
+    if (!validatePhone(phone)) return
+
+    setLoading(true)
+    try {
+      const res = await api.post('/api/auth/send-code', { phone })
+      if (res.data?.success) {
+        toast.success('验证码已发送，测试验证码：123456')
+        setCodeSent(true)
+        setCountdown(60)
+        const timer = setInterval(() => {
+          setCountdown((prev) => {
+            if (prev <= 1) {
+              clearInterval(timer)
+              return 0
+            }
+            return prev - 1
+          })
+        }, 1000)
+      } else {
+        toast.error(res.data?.error || '验证码发送失败')
+      }
+    } catch (err: any) {
+      const errorMsg = err.response?.data?.error || '网络异常，请稍后重试'
+      toast.error(errorMsg)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleLogin = async (type: LoginTab) => {
+    if (loading) return
+
+    if (type === 'phone') {
+      if (!validatePhone(phone) || !validateVerifyCode(verifyCode)) return
+      if (!codeSent) {
+        toast.warning('请先获取验证码')
+        return
+      }
+    } else if (type === 'idcard') {
+      if (!validateIdCard(idCard) || !validateRealName(realName)) return
+    }
+
+    setLoading(true)
+    try {
+      let payload: Record<string, string> = {}
+      if (type === 'phone') {
+        payload = { phone, verifyCode }
+      } else if (type === 'idcard') {
+        payload = { idCard, realName }
+      } else {
+        payload = { ssoToken: 'sso-demo-token' }
+      }
+
+      const res = await api.post<LoginApiResponse>('/api/auth/login', payload)
+      const data = res.data
+
+      if (!data?.success) {
+        throw new Error(data?.error || '登录失败')
+      }
+
+      if (!data.token || !data.user) {
+        throw new Error('登录数据异常，请重试')
+      }
+
+      login(data.user, data.token)
+      toast.success(`欢迎回来，${data.user.name}！`)
+      setTimeout(() => {
+        navigate(from, { replace: true })
+      }, 300)
+    } catch (err: any) {
+      const errorMsg = err.response?.data?.error || err.message || '登录失败，请检查网络'
+      toast.error(errorMsg)
+      console.error('[Login Error]:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDemoLogin = async () => {
+    if (loading) return
+    setLoading(true)
+    try {
+      const res = await api.post<LoginApiResponse>('/api/auth/login', {
+        phone: '13800138000',
+        verifyCode: '123456',
       })
-    }, 1000)
-  }
-
-  const handleDemoLogin = () => {
-    setLoading(true)
-    setTimeout(() => {
+      if (res.data?.success && res.data.user && res.data.token) {
+        login(res.data.user, res.data.token)
+        toast.success(`欢迎回来，${res.data.user.name}！`)
+        setTimeout(() => {
+          navigate(from, { replace: true })
+        }, 300)
+      } else {
+        login(demoUser, 'demo-token')
+        toast.success('演示账号登录成功')
+        setTimeout(() => {
+          navigate(from, { replace: true })
+        }, 300)
+      }
+    } catch {
       login(demoUser, 'demo-token')
+      toast.success('演示账号登录成功')
+      setTimeout(() => {
+        navigate(from, { replace: true })
+      }, 300)
+    } finally {
       setLoading(false)
-      navigate(from, { replace: true })
-    }, 500)
-  }
-
-  const handleLogin = (type: LoginTab) => {
-    setLoading(true)
-    setTimeout(() => {
-      login(demoUser, `${type}-token`)
-      setLoading(false)
-      navigate(from, { replace: true })
-    }, 800)
+    }
   }
 
   const tabs: { key: LoginTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
@@ -109,7 +248,11 @@ export default function Login() {
                 return (
                   <button
                     key={tab.key}
-                    onClick={() => setActiveTab(tab.key)}
+                    onClick={() => {
+                      setActiveTab(tab.key)
+                      setCodeSent(false)
+                    }}
+                    disabled={loading}
                     className={cn(
                       'flex-1 flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-medium transition-all',
                       activeTab === tab.key
@@ -134,8 +277,9 @@ export default function Login() {
                     <input
                       type="tel"
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 11))}
                       placeholder="请输入手机号"
+                      maxLength={11}
                       className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
                     />
                   </div>
@@ -148,21 +292,23 @@ export default function Login() {
                       <input
                         type="text"
                         value={verifyCode}
-                        onChange={(e) => setVerifyCode(e.target.value)}
+                        onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                         placeholder="请输入验证码"
+                        maxLength={6}
                         className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
                       />
                     </div>
                     <button
                       onClick={handleGetCode}
-                      disabled={countdown > 0}
+                      disabled={countdown > 0 || loading || !phone}
                       className={cn(
                         'h-12 px-4 rounded-xl text-sm font-medium whitespace-nowrap transition-colors',
-                        countdown > 0
+                        countdown > 0 || loading || !phone
                           ? 'bg-white/5 text-white/40 cursor-not-allowed'
                           : 'bg-white/10 text-white hover:bg-white/20'
                       )}
                     >
+                      {loading && <Loader2 className="w-4 h-4 animate-spin inline mr-1" />}
                       {countdown > 0 ? `${countdown}s` : '获取验证码'}
                     </button>
                   </div>
@@ -172,8 +318,17 @@ export default function Login() {
                   disabled={loading}
                   className="w-full h-12 rounded-xl bg-white text-indigo-600 font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {loading ? '登录中...' : '登录'}
-                  {!loading && <ArrowRight className="w-4 h-4" />}
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      登录中...
+                    </>
+                  ) : (
+                    <>
+                      登录
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </div>
             )}
@@ -187,8 +342,9 @@ export default function Login() {
                     <input
                       type="text"
                       value={idCard}
-                      onChange={(e) => setIdCard(e.target.value)}
+                      onChange={(e) => setIdCard(e.target.value.toUpperCase().slice(0, 18))}
                       placeholder="请输入身份证号码"
+                      maxLength={18}
                       className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
                     />
                   </div>
@@ -214,8 +370,17 @@ export default function Login() {
                   disabled={loading}
                   className="w-full h-12 rounded-xl bg-white text-indigo-600 font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {loading ? '登录中...' : '登录'}
-                  {!loading && <ArrowRight className="w-4 h-4" />}
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      登录中...
+                    </>
+                  ) : (
+                    <>
+                      登录
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </div>
             )}
@@ -234,8 +399,17 @@ export default function Login() {
                   disabled={loading}
                   className="w-full h-12 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  <Shield className="w-5 h-5" />
-                  {loading ? '跳转中...' : '湖南省政务服务网登录'}
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      跳转中...
+                    </>
+                  ) : (
+                    <>
+                      <Shield className="w-5 h-5" />
+                      湖南省政务服务网登录
+                    </>
+                  )}
                 </button>
                 <p className="text-center text-white/40 text-xs">
                   登录即表示同意《用户服务协议》和《隐私政策》
@@ -257,7 +431,11 @@ export default function Login() {
               disabled={loading}
               className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-semibold hover:from-amber-500 hover:to-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25"
             >
-              <Sparkles className="w-5 h-5" />
+              {loading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Sparkles className="w-5 h-5" />
+              )}
               演示账号一键登录
             </button>
           </div>

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Layout from '@/components/Layout'
-import ProtectedRoute from '@/components/ProtectedRoute'
+import ProtectedRoute, { PublicRoute } from '@/components/ProtectedRoute'
+import ToastContainer from '@/components/ToastContainer'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Transport from '@/pages/Transport'
@@ -21,8 +22,16 @@ import EducationEnroll from '@/pages/EducationEnroll'
 export default function App() {
   return (
     <Router>
+      <ToastContainer />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
         <Route
           element={
