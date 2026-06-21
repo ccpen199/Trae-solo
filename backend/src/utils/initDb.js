@@ -355,6 +355,86 @@ function seedData() {
     insertLog.run(entry.uid, entry.op, entry.mod, '127.0.0.1', 'Mozilla/5.0');
   });
 
+  const insertAppt = db.prepare(`
+    INSERT INTO appointments (user_id, outlet_id, service_item_id, appointment_date, appointment_time, status, queue_number)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const aptTimeSlots = ['09:30', '10:15', '10:45', '11:20', '14:10', '14:50', '15:30', '16:20'];
+  const todayDate = "date('now', 'localtime')";
+  const tomorrowDate = "date('now', 'localtime', '+1 day')";
+
+  const appointments = [
+    { uid: 1, outlet: 1, item: 1, date: todayDate, time: '09:30', status: 'confirmed', q: 1 },
+    { uid: 2, outlet: 2, item: 2, date: todayDate, time: '10:15', status: 'confirmed', q: 3 },
+    { uid: 3, outlet: 3, item: 3, date: todayDate, time: '10:45', status: 'completed', q: 2 },
+    { uid: 4, outlet: 4, item: 4, date: todayDate, time: '11:20', status: 'confirmed', q: 5 },
+    { uid: 1, outlet: 5, item: 5, date: todayDate, time: '14:10', status: 'pending', q: 7 },
+    { uid: 2, outlet: 6, item: 6, date: todayDate, time: '14:50', status: 'confirmed', q: 4 },
+    { uid: 3, outlet: 7, item: 7, date: todayDate, time: '15:30', status: 'pending', q: 6 },
+    { uid: 4, outlet: 8, item: 8, date: todayDate, time: '16:20', status: 'confirmed', q: 8 },
+    { uid: 1, outlet: 1, item: 9, date: todayDate, time: '14:50', status: 'confirmed', q: 9 },
+    { uid: 2, outlet: 2, item: 10, date: tomorrowDate, time: '09:30', status: 'pending', q: 1 },
+    { uid: 3, outlet: 3, item: 1, date: tomorrowDate, time: '10:15', status: 'confirmed', q: 2 },
+    { uid: 4, outlet: 4, item: 2, date: tomorrowDate, time: '10:45', status: 'confirmed', q: 3 },
+    { uid: 1, outlet: 5, item: 3, date: tomorrowDate, time: '11:20', status: 'pending', q: 4 },
+    { uid: 2, outlet: 6, item: 4, date: tomorrowDate, time: '14:10', status: 'confirmed', q: 5 },
+  ];
+
+  appointments.forEach(a => {
+    const stmt = db.prepare(`
+      INSERT INTO appointments (user_id, outlet_id, service_item_id, appointment_date, appointment_time, status, queue_number)
+      VALUES (?, ?, ?, ${a.date}, ?, ?, ?)
+    `);
+    stmt.run(a.uid, a.outlet, a.item, a.time, a.status, a.q);
+  });
+
+  const insertIdCode = db.prepare(`
+    INSERT INTO identity_codes (user_id, code_token, qr_data, risk_level, risk_score, is_offline, expire_at, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const idCodeRecords = [];
+  const riskConfig = [
+    { level: 'low', min: 0, max: 30, weight: 11 },
+    { level: 'medium', min: 31, max: 65, weight: 4 },
+    { level: 'high', min: 66, max: 100, weight: 1 },
+  ];
+  const weightedLevels = [];
+  riskConfig.forEach(c => {
+    for (let i = 0; i < c.weight; i++) weightedLevels.push(c);
+  });
+
+  for (let i = 0; i < 16; i++) {
+    const uid = (i % 4) + 1;
+    const isOffline = i % 3 === 0 ? 1 : 0;
+    const config = weightedLevels[Math.floor(Math.random() * weightedLevels.length)];
+    const score = config.min + Math.floor(Math.random() * (config.max - config.min + 1));
+    const hoursAgo = Math.floor(Math.random() * 49);
+    const expireSql = isOffline
+      ? "datetime('now', '+7 days')"
+      : "datetime('now', '+30 minutes')";
+    const createdAtSql = `datetime('now', '-' || ${hoursAgo} || ' hours')`;
+    idCodeRecords.push({
+      uid,
+      token: 'IC' + Date.now() + Math.floor(Math.random() * 100000) + i,
+      qr: JSON.stringify({ uid, ts: Date.now() }),
+      level: config.level,
+      score,
+      offline: isOffline,
+      expireSql,
+      createdAtSql,
+    });
+  }
+
+  idCodeRecords.forEach(r => {
+    const stmt = db.prepare(`
+      INSERT INTO identity_codes (user_id, code_token, qr_data, risk_level, risk_score, is_offline, expire_at, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ${r.expireSql}, ${r.createdAtSql})
+    `);
+    stmt.run(r.uid, r.token, r.qr, r.level, r.score, r.offline);
+  });
+
   console.log('初始数据填充完成');
 }
 

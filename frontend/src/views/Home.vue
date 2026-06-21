@@ -11,7 +11,7 @@
             <div class="greeting">{{ greeting }}，{{ userInfo?.real_name || '游客' }}</div>
             <div class="subtitle">
               <van-tag type="success" plain size="mini">已实名</van-tag>
-              <span class="cert-count">{{ userInfo?.cert_count || 0 }} 张证件</span>
+              <span class="cert-count">{{ identityStats.cert_integrated_count || 0 }}/12 证件整合</span>
             </div>
           </div>
           <van-icon name="arrow" color="#fff" />
@@ -66,6 +66,7 @@
             </div>
             <span class="action-label">在线预约</span>
           </div>
+          <span class="badge" v-if="overview.today_appointments > 0">{{ overview.today_appointments }}</span>
         </div>
         <div class="action-item" @click="goToARNav">
           <div class="action-wrap">
@@ -83,14 +84,16 @@
             </div>
             <span class="action-label">亲友代办</span>
           </div>
+          <span class="badge warn" v-if="identityStats.pending_agent_ops_count > 0">{{ identityStats.pending_agent_ops_count }}</span>
         </div>
-        <div class="action-item" @click="goToElder">
+        <div class="action-item" @click="toggleElderModeLocal">
           <div class="action-wrap">
-            <div class="action-icon elder">
+            <div class="action-icon elder" :class="{ active: isElder }">
               <van-icon name="heart-o" size="26" />
             </div>
             <span class="action-label">长辈版</span>
           </div>
+          <van-switch v-model="isElder" size="16px" active-color="#f4511e" @change="onElderChange" />
         </div>
         <div class="action-item" @click="goToAdmin">
           <div class="action-wrap">
@@ -110,16 +113,23 @@
           </div>
           <span class="section-more" @click="goToCode">立即亮码 <van-icon name="arrow" size="12" /></span>
         </div>
+
         <div class="code-display" @click="goToCode">
           <div class="qr-area">
             <div class="qr-placeholder">
-              <van-icon name="qr" size="64" color="#1976d2" />
+              <van-icon name="qr" size="56" color="#1976d2" />
             </div>
-            <div class="code-status">
-              <span class="status-dot"></span>
-              <span>动态码 实时有效</span>
+            <div class="code-status-row">
+              <span class="code-type active-dynamic" @click.stop="goToCode">
+                <span class="type-dot green"></span>动态
+              </span>
+              <span class="code-type offline" @click.stop="goToCode" :class="{ active: identityStats.offline_codes_count > 0 }">
+                <span class="type-dot"></span>离线
+                <span class="offline-count" v-if="identityStats.offline_codes_count > 0">{{ identityStats.offline_codes_count }}</span>
+              </span>
             </div>
           </div>
+
           <div class="code-info">
             <div class="info-row">
               <span class="info-label">姓名</span>
@@ -130,15 +140,37 @@
               <span class="info-value">{{ maskedIdCard }}</span>
             </div>
             <div class="info-row risk-row">
-              <span class="info-label">风险等级</span>
+              <span class="info-label">风险评分</span>
+              <div class="risk-circle" :class="'risk-circle-' + riskLevel">
+                <span class="risk-score">{{ identityStats.risk_score || 0 }}</span>
+              </div>
               <span class="risk-tag" :class="'risk-' + riskLevel">{{ riskText }}</span>
             </div>
           </div>
         </div>
+
+        <div class="cert-summary">
+          <div class="cert-summary-title">
+            <span>证件整合</span>
+            <span class="cert-count-num">{{ identityStats.cert_integrated_count || 0 }}/{{ identityStats.cert_total_types || 12 }}</span>
+          </div>
+          <div class="cert-chips">
+            <span
+              v-for="c in cert12List"
+              :key="c.type"
+              class="cert-chip"
+              :class="{ done: c.integrated, pending: !c.integrated }"
+            >
+              <van-icon :name="c.integrated ? 'success' : 'warning-o'" size="12" />
+              {{ c.name }}
+            </span>
+          </div>
+        </div>
+
         <div class="code-actions">
           <div class="code-btn" @click="goToCerts">
             <van-icon name="description" size="16" />
-            <span>证件管理 ({{ certCount }})</span>
+            <span>证件管理</span>
           </div>
           <div class="code-btn" @click="goToRisk">
             <van-icon name="shield-o" size="16" />
@@ -146,7 +178,7 @@
           </div>
           <div class="code-btn" @click="goToRecords">
             <van-icon name="clock-o" size="16" />
-            <span>亮码记录</span>
+            <span>今日亮码{{ identityStats.today_codes_count || 0 }}次</span>
           </div>
         </div>
       </div>
@@ -157,8 +189,9 @@
             <span class="title-dot green"></span>
             就近办理
           </div>
-          <span class="section-more" @click="goToOutlets">更多服务 <van-icon name="arrow" size="12" /></span>
+          <span class="section-more" @click="goToOutlets">更多网点 <van-icon name="arrow" size="12" /></span>
         </div>
+
         <div class="nearby-outlet" v-if="nearbyOutlet" @click="goToOutletDetail(nearbyOutlet.id)">
           <div class="outlet-info">
             <div class="outlet-name-row">
@@ -175,10 +208,40 @@
               <span class="window-tag">
                 <van-icon name="shop-o" size="12" /> {{ nearbyOutlet.open_windows || 5 }}窗开放
               </span>
+              <span class="queue-tag">
+                <van-icon name="friends-o" size="12" /> 当前排队{{ nearbyOutlet.total_queue || 0 }}人
+              </span>
             </div>
           </div>
-          <van-button size="small" type="primary" round>去这里</van-button>
+          <van-button size="small" type="primary" round @click.stop="goToARNavWithParams">去这里</van-button>
         </div>
+
+        <div class="match-result" v-if="matchResult.length > 0">
+          <div class="match-title">
+            <van-icon name="balance-o" size="14" color="#9c27b0" />
+            智能匹配推荐
+            <span class="match-sub">根据位置×事项×空闲时段</span>
+          </div>
+          <div
+            v-for="m in matchResult"
+            :key="m.outlet_id + m.service_item_id + m.slot"
+            class="match-item"
+            @click="bookFromMatch(m)"
+          >
+            <div class="match-left">
+              <span class="match-item-service">{{ m.service_name }}</span>
+              <span class="match-item-outlet">{{ m.outlet_name }}</span>
+            </div>
+            <div class="match-mid">
+              <span class="match-slot">{{ m.slot }}</span>
+              <span class="match-wait">等待约{{ m.wait_time }}分钟</span>
+            </div>
+            <div class="match-right">
+              <van-button size="mini" type="primary" round>立即预约</van-button>
+            </div>
+          </div>
+        </div>
+
         <div class="nearby-actions">
           <div class="nearby-action-item" @click="goToSmartMatch">
             <div class="nearby-action-icon match-icon">
@@ -189,25 +252,26 @@
               <span class="nearby-action-desc">事项×网点×时段</span>
             </div>
           </div>
-          <div class="nearby-action-item" @click="goToAppointment">
+          <div class="nearby-action-item" @click="goToAppointmentWithService">
             <div class="nearby-action-icon appt-icon">
               <van-icon name="calendar-o" size="20" />
             </div>
             <div class="nearby-action-text">
               <span class="nearby-action-name">在线预约</span>
-              <span class="nearby-action-desc">选择时段免排队</span>
+              <span class="nearby-action-desc">今日{{ overview.today_appointments }}人已预约</span>
             </div>
           </div>
-          <div class="nearby-action-item" @click="goToARNav">
+          <div class="nearby-action-item" @click="goToARNavWithParams">
             <div class="nearby-action-icon ar-icon">
               <span style="font-size:14px;font-weight:700;font-style:italic">AR</span>
             </div>
             <div class="nearby-action-text">
               <span class="nearby-action-name">实景导航</span>
-              <span class="nearby-action-desc">AR步行引导</span>
+              <span class="nearby-action-desc">定位→AR步行引导</span>
             </div>
           </div>
         </div>
+
         <div class="service-types">
           <div class="type-item" @click="bookService('身份证补办')">
             <span class="type-icon">🪪</span>
@@ -242,18 +306,34 @@
             <span class="title-dot orange"></span>
             暖心服务
           </div>
-          <span class="section-more" @click="goToElderHome">进入长辈版 <van-icon name="arrow" size="12" /></span>
+          <span class="section-more" @click="goToElderHome">
+            {{ isElder ? '退出长辈版' : '进入长辈版' }} <van-icon name="arrow" size="12" />
+          </span>
         </div>
-        <div class="elder-banner" @click="goToElderHome">
-          <div class="elder-text">
-            <div class="elder-title">长辈专属版本</div>
-            <div class="elder-desc">大字 · 语音 · 人工直连 · 无广告</div>
+
+        <div class="elder-environment">
+          <div class="env-row">
+            <div class="env-item" :class="{ on: elderSettings.bigFont }">
+              <van-icon :name="elderSettings.bigFont ? 'checked' : 'circle'" size="16" />
+              <span>大字体高对比度</span>
+            </div>
+            <div class="env-item" :class="{ on: elderSettings.noAds }">
+              <van-icon :name="elderSettings.noAds ? 'checked' : 'circle'" size="16" />
+              <span>禁用弹窗广告</span>
+            </div>
           </div>
-          <div class="elder-entry">
-            <span>立即体验</span>
-            <van-icon name="arrow" />
+          <div class="env-row">
+            <div class="env-item" :class="{ on: elderSettings.voiceAssist }">
+              <van-icon :name="elderSettings.voiceAssist ? 'checked' : 'circle'" size="16" />
+              <span>语音输入辅助</span>
+            </div>
+            <div class="env-item" :class="{ on: elderSettings.quickService }">
+              <van-icon :name="elderSettings.quickService ? 'checked' : 'circle'" size="16" />
+              <span>人工坐席直连</span>
+            </div>
           </div>
         </div>
+
         <div class="elder-features">
           <div class="elder-feature" @click="goToElderHome">
             <div class="feature-icon">🔤</div>
@@ -267,7 +347,7 @@
             <div class="feature-icon">🎤</div>
             <div class="feature-body">
               <span class="feature-name">语音办事</span>
-              <span class="feature-desc">说句话即可办理业务</span>
+              <span class="feature-desc">今日语音办理{{ elderServiceStats.voice_count }}次</span>
             </div>
             <van-icon name="arrow" size="14" color="#ccc" />
           </div>
@@ -275,11 +355,30 @@
             <div class="feature-icon">👩‍💼</div>
             <div class="feature-body">
               <span class="feature-name">人工坐席直连</span>
-              <span class="feature-desc">一键拨通人工客服</span>
+              <span class="feature-desc">最近通话{{ elderServiceStats.last_call_time || '-' }}</span>
             </div>
             <van-icon name="arrow" size="14" color="#ccc" />
           </div>
         </div>
+
+        <div class="agent-summary">
+          <div class="agent-summary-title">亲友代办 · 我的授权</div>
+          <div class="agent-summary-row">
+            <div class="agent-stat-card" @click="goToAgent">
+              <span class="agent-num">{{ identityStats.active_auth_count || 0 }}</span>
+              <span class="agent-label">生效授权</span>
+            </div>
+            <div class="agent-stat-card warn" @click="goToAgentConfirm">
+              <span class="agent-num">{{ identityStats.pending_agent_ops_count || 0 }}</span>
+              <span class="agent-label">待确认操作</span>
+            </div>
+            <div class="agent-stat-card ok" @click="goToAgentOps">
+              <span class="agent-num">{{ overview.pending_agent_ops_count || 0 }}</span>
+              <span class="agent-label">历史留痕</span>
+            </div>
+          </div>
+        </div>
+
         <div class="elder-agent-row">
           <div class="elder-btn" @click="goToAgentCreate">
             <div class="elder-btn-icon auth">👨‍👩‍👧</div>
@@ -308,40 +407,114 @@
           </div>
           <span class="section-more" @click="goToAdmin">进入后台 <van-icon name="arrow" size="12" /></span>
         </div>
+
         <div class="stats-row">
           <div class="stat-item" @click="goToReport">
-            <div class="stat-num">{{ stats.userCount || 0 }}</div>
+            <div class="stat-num">{{ overview.user_count || 0 }}</div>
             <div class="stat-label">注册用户</div>
           </div>
-          <div class="stat-item" @click="goToHeat">
-            <div class="stat-num">{{ stats.outletCount || 0 }}</div>
+          <div class="stat-item" @click="goToMap">
+            <div class="stat-num">{{ overview.outlet_count || 0 }}</div>
             <div class="stat-label">服务网点</div>
           </div>
-          <div class="stat-item" @click="goToWindows">
-            <div class="stat-num">{{ stats.todayAppointments || 0 }}</div>
+          <div class="stat-item highlight" @click="goToAppointment">
+            <div class="stat-num">{{ overview.today_appointments || 0 }}</div>
             <div class="stat-label">今日预约</div>
+            <div class="stat-sub">
+              <span class="sub-item ok">已确认{{ overview.today_confirmed_appointments || 0 }}</span>
+              <span class="sub-item warn">待确认{{ overview.today_pending_appointments || 0 }}</span>
+            </div>
           </div>
-          <div class="stat-item" @click="goToLogs">
-            <div class="stat-num">{{ stats.certCount || 0 }}</div>
+          <div class="stat-item" @click="goToCerts">
+            <div class="stat-num">{{ overview.cert_count || 0 }}</div>
             <div class="stat-label">电子证件</div>
           </div>
         </div>
+
+        <div class="dispatch-summary">
+          <div class="dispatch-summary-title">
+            <span class="dispatch-title">窗口调度摘要</span>
+            <span class="dispatch-more" @click="goToWindows">查看全部</span>
+          </div>
+          <div v-if="overview.window_dispatch_summary && overview.window_dispatch_summary.length > 0" class="dispatch-list">
+            <div
+              v-for="d in overview.window_dispatch_summary"
+              :key="d.outlet_id"
+              class="dispatch-mini-card"
+            >
+              <div class="dispatch-mini-top">
+                <span class="dispatch-mini-name">{{ d.outlet_name?.replace('政务服务中心', '') }}</span>
+                <span class="load-badge" :class="d.load_level">
+                  {{ d.load_level === 'high' ? '繁忙' : d.load_level === 'medium' ? '适中' : '空闲' }}
+                </span>
+              </div>
+              <div class="dispatch-mini-body">
+                <div class="mini-stat">
+                  <span class="mini-val">{{ d.open_windows }}/{{ d.total_windows }}</span>
+                  <span class="mini-label">窗口</span>
+                </div>
+                <div class="mini-stat">
+                  <span class="mini-val warn">{{ d.current_queue }}</span>
+                  <span class="mini-label">排队</span>
+                </div>
+                <div class="mini-stat">
+                  <span class="mini-val highlight">→{{ d.suggested_windows }}</span>
+                  <span class="mini-label">建议</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="peak-summary" v-if="overview.today_peak">
+          <div class="peak-row">
+            <div class="peak-left">
+              <van-icon name="fire-o" size="16" color="#ff6d00" />
+              <span>今日高峰</span>
+            </div>
+            <div class="peak-mid">
+              <span class="peak-slot">{{ overview.today_peak.peak_slot }}</span>
+              <span class="peak-outlet">{{ overview.today_peak.outlet_name?.replace('政务服务中心', '') }}</span>
+            </div>
+            <div class="peak-right">
+              <span class="peak-count">{{ overview.today_peak.peak_count }}人</span>
+              <span class="peak-suggest">建议{{ overview.today_peak.suggested_windows }}窗</span>
+            </div>
+          </div>
+        </div>
+
         <div class="admin-shortcuts">
           <div class="shortcut-item" @click="goToHeat">
             <span class="shortcut-icon">📊</span>
-            <span>热度预测</span>
+            <div class="shortcut-info">
+              <span>热度预测</span>
+              <span class="shortcut-desc">今日生成{{ overview.identity_today?.codes_total_count || 0 }}条预测</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
           </div>
           <div class="shortcut-item" @click="goToWindows">
             <span class="shortcut-icon">🪟</span>
-            <span>窗口调度</span>
+            <div class="shortcut-info">
+              <span>窗口调度</span>
+              <span class="shortcut-desc">{{ overview.window_dispatch_summary?.length || 0 }}网点资源</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
           </div>
           <div class="shortcut-item" @click="goToLogs">
             <span class="shortcut-icon">📜</span>
-            <span>审计日志</span>
+            <div class="shortcut-info">
+              <span>审计日志</span>
+              <span class="shortcut-desc">今日新记录{{ overview.today_logs_count || 0 }}条</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
           </div>
           <div class="shortcut-item" @click="goToReport">
             <span class="shortcut-icon">📈</span>
-            <span>数据报表</span>
+            <div class="shortcut-info">
+              <span>数据报表</span>
+              <span class="shortcut-desc">{{ overview.identity_today?.today_codes_count || 0 }}次亮码今日</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
           </div>
         </div>
       </div>
@@ -349,7 +522,7 @@
       <div class="notice-section card">
         <van-notice-bar
           left-icon="volume-o"
-          text="身份证补办支持全程网办，最快当日可取 | 长辈模式全新上线，操作更简单 | 亲友代办功能已开放授权"
+          text="身份证补办支持全程网办，最快当日可取 | 长辈模式全新上线，操作更简单 | 亲友代办功能已开放授权范围与时效设置"
           scrollable
           color="#ff9800"
           background="#fff8e1"
@@ -362,28 +535,60 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../store/user'
 import { showToast } from 'vant'
-import { getUserInfo, toggleElderMode as apiToggleElder } from '../api/users'
-import { getCertificates, getRiskAssessment } from '../api/identity'
-import { getNearbyOutlets } from '../api/outlets'
-import request from '../api/request'
+import { getUserInfo } from '../api/users'
+import { getNearbyOutlets, matchService } from '../api/outlets'
+import { getAdminOverview, getIdentityStats } from '../api/admin'
 
 const router = useRouter()
 const userStore = useUserStore()
 
 const userInfo = ref(null)
-const certCount = ref(0)
-const riskLevel = ref('low')
 const nearbyOutlet = ref(null)
-const stats = ref({})
+const overview = ref({})
+const identityStats = ref({})
 const showSearch = ref(false)
+const isElder = ref(false)
+const matchResult = ref([])
 
+const elderSettings = reactive({
+  bigFont: true,
+  noAds: true,
+  voiceAssist: true,
+  quickService: true,
+})
+
+const elderServiceStats = reactive({
+  voice_count: 3,
+  last_call_time: '2小时前',
+})
+
+const cert12List = computed(() => {
+  const all = [
+    { type: 'id_card', name: '身份证', integrated: false },
+    { type: 'social_security', name: '社保卡', integrated: false },
+    { type: 'driving_license', name: '驾驶证', integrated: false },
+    { type: 'vehicle_license', name: '行驶证', integrated: false },
+    { type: 'passport', name: '护照', integrated: false },
+    { type: 'hk_macau_pass', name: '港澳通行证', integrated: false },
+    { type: 'taiwan_pass', name: '台湾通行证', integrated: false },
+    { type: 'birth_cert', name: '出生证', integrated: false },
+    { type: 'marriage_cert', name: '结婚证', integrated: false },
+    { type: 'real_estate', name: '房产证', integrated: false },
+    { type: 'business_license', name: '营业执照', integrated: false },
+    { type: 'tax_cert', name: '税务登记', integrated: false },
+  ]
+  const count = identityStats.value.cert_integrated_count || 0
+  return all.map((c, i) => ({ ...c, integrated: i < count }))
+})
+
+const riskLevel = computed(() => identityStats.value.risk_level || 'low')
 const riskText = computed(() => {
   const map = { low: '低风险', medium: '中风险', high: '高风险' }
-  return map[riskLevel.value] || '低风险'
+  return map[riskLevel.value]
 })
 
 const maskedIdCard = computed(() => {
@@ -406,22 +611,52 @@ const greeting = computed(() => {
 async function loadAll() {
   try {
     const uid = userStore.currentUserId
-    const [user, certs, risk, nearby, statData] = await Promise.all([
+    const [user, nearby, ov, idStats] = await Promise.all([
       getUserInfo(uid),
-      getCertificates(uid),
-      getRiskAssessment(uid),
       getNearbyOutlets({ lng: 106.5516, lat: 29.5628, radius: 5000 }),
-      request.get('/health/stats')
+      getAdminOverview(),
+      getIdentityStats(uid),
     ])
     userInfo.value = user
     userStore.setUserInfo(user)
-    certCount.value = certs?.length || 0
-    riskLevel.value = risk?.risk_level || 'low'
     nearbyOutlet.value = nearby?.[0] || null
-    stats.value = statData || {}
+    overview.value = ov || {}
+    identityStats.value = idStats || {}
+
+    if (nearbyOutlet.value) {
+      try {
+        const match = await matchService({
+          lng: 106.5516,
+          lat: 29.5628,
+          radius: 5000,
+          serviceItemIds: [1, 2, 3],
+        })
+        matchResult.value = (match || []).slice(0, 3).map((m, i) => ({
+          outlet_id: m.outlet_id,
+          outlet_name: m.outlet_name,
+          service_item_id: i + 1,
+          service_name: ['身份证补办', '社保查询', '不动产查询'][i] || '综合业务',
+          slot: m.time_slots?.[0]?.slot || '10:00-11:00',
+          wait_time: Math.max(3, Math.round((m.wait_time || 18) / 10)),
+          distance: m.distance,
+        }))
+      } catch (e) {
+        matchResult.value = []
+      }
+    }
   } catch (e) {
     console.error(e)
   }
+}
+
+function toggleElderModeLocal() {
+  isElder.value = !isElder.value
+  onElderChange(isElder.value)
+}
+
+function onElderChange(val) {
+  userStore.toggleElderMode(val)
+  showToast(val ? '已进入长辈模式' : '已退出长辈模式')
 }
 
 function goToCode() { router.push('/identity/code') }
@@ -432,9 +667,14 @@ function goToOutlets() { router.push('/outlets') }
 function goToMap() { router.push('/outlets/map') }
 function goToSmartMatch() { router.push('/outlets/smart-match') }
 function goToAppointment() { router.push('/outlets/appointment') }
+function goToAppointmentWithService() {
+  router.push({ path: '/outlets/appointment', query: { outletId: nearbyOutlet.value?.id || 1 } })
+}
 function goToARNav() { router.push('/outlets/ar-nav') }
+function goToARNavWithParams() {
+  router.push({ path: '/outlets/ar-nav', query: { outletId: nearbyOutlet.value?.id || 1 } })
+}
 function goToOutletDetail(id) { router.push(`/outlets/${id}`) }
-function goToElder() { router.push('/elder') }
 function goToElderHome() { router.push('/elder/home') }
 function goToVoiceInput() { router.push('/elder/voice') }
 function goToService() { router.push('/elder/service') }
@@ -450,8 +690,14 @@ function goToLogs() { router.push('/admin/logs') }
 function goToReport() { router.push('/admin/report') }
 
 function bookService(name) {
-  showToast(`预约：${name}`)
   router.push({ path: '/outlets/appointment', query: { service: name } })
+}
+
+function bookFromMatch(m) {
+  router.push({
+    path: '/outlets/appointment',
+    query: { outletId: m.outlet_id, service: m.service_name, slot: m.slot }
+  })
 }
 
 function formatDistance(m) {
@@ -462,6 +708,7 @@ function formatDistance(m) {
 
 onMounted(() => {
   userStore.initElderMode()
+  isElder.value = userStore.isElderMode
   loadAll()
 })
 </script>
@@ -564,8 +811,8 @@ onMounted(() => {
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px 8px;
-  padding: 20px 8px;
+  gap: 16px 8px;
+  padding: 20px 8px 8px;
 }
 .action-item {
   position: relative;
@@ -579,8 +826,10 @@ onMounted(() => {
   border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
   color: #fff;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  transition: transform 0.2s;
 }
+.action-icon.active { transform: scale(1.05); box-shadow: 0 0 0 3px #ffe0b2; }
 .action-icon.code { background: linear-gradient(135deg, #1e88e5, #1565c0); }
 .action-icon.match { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
 .action-icon.map { background: linear-gradient(135deg, #43a047, #2e7d32); }
@@ -600,13 +849,24 @@ onMounted(() => {
 }
 .hot-tag, .new-tag {
   position: absolute;
-  top: -4px; right: 4px;
+  top: -6px; right: 0px;
   font-size: 10px;
   padding: 1px 6px;
   border-radius: 8px;
 }
 .hot-tag { background: #ffebee; color: #e53935; }
 .new-tag { background: #e8f5e9; color: #43a047; }
+.badge {
+  position: absolute;
+  top: -6px; right: 2px;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: #e53935;
+  color: #fff;
+  font-weight: 600;
+}
+.badge.warn { background: #ff9800; }
 
 .section-header {
   display: flex; justify-content: space-between; align-items: center;
@@ -637,7 +897,7 @@ onMounted(() => {
   padding: 14px;
   background: linear-gradient(135deg, #e3f2fd, #bbdefb);
   border-radius: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .qr-area {
   width: 100px; margin-right: 14px;
@@ -650,29 +910,62 @@ onMounted(() => {
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 8px;
 }
-.code-status {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 11px;
+.code-status-row {
+  display: flex;
+  gap: 6px;
+}
+.code-type {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.7);
+  color: #666;
+  cursor: pointer;
+}
+.code-type.active-dynamic {
+  background: #e8f5e9;
   color: #43a047;
 }
-.status-dot {
+.code-type.offline.active {
+  background: #fff3e0;
+  color: #ff9800;
+}
+.type-dot {
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: #43a047;
-  animation: blink 1.5s infinite;
+  background: #999;
 }
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+.type-dot.green { background: #43a047; }
+.offline-count {
+  background: #ff9800;
+  color: #fff;
+  font-size: 9px;
+  padding: 0 4px;
+  border-radius: 6px;
+  margin-left: 2px;
 }
 .code-info { flex: 1; }
 .info-row {
   display: flex; justify-content: space-between;
-  padding: 5px 0;
+  padding: 4px 0;
   font-size: 13px;
 }
 .info-label { color: #666; }
 .info-value { color: #333; font-weight: 500; }
+.risk-row { align-items: center; }
+.risk-circle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 3px solid;
+}
+.risk-circle-low { border-color: #43a047; color: #43a047; }
+.risk-circle-medium { border-color: #ff9800; color: #ff9800; }
+.risk-circle-high { border-color: #e53935; color: #e53935; }
+.risk-score { font-size: 14px; font-weight: 700; }
 .risk-tag {
   padding: 2px 8px;
   border-radius: 10px;
@@ -682,9 +975,42 @@ onMounted(() => {
 .risk-medium { background: #fff3e0; color: #ff9800; }
 .risk-high { background: #ffebee; color: #e53935; }
 
+.cert-summary {
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.cert-summary-title {
+  display: flex; justify-content: space-between;
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.cert-count-num {
+  color: #1976d2;
+  font-weight: 700;
+}
+.cert-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cert-chip {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+.cert-chip.done { background: #e8f5e9; color: #2e7d32; }
+.cert-chip.pending { background: #fff3e0; color: #e65100; }
+
 .code-actions {
   display: flex; justify-content: space-around;
-  padding-top: 14px;
+  padding-top: 12px;
   border-top: 1px solid #f0f0f0;
 }
 .code-btn {
@@ -698,7 +1024,7 @@ onMounted(() => {
   padding: 12px;
   background: #f8f9fa;
   border-radius: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .outlet-info { flex: 1; }
 .outlet-name-row {
@@ -723,9 +1049,61 @@ onMounted(() => {
   display: flex; gap: 12px;
   font-size: 12px;
   color: #666;
+  flex-wrap: wrap;
 }
-.wait-tag, .window-tag {
+.wait-tag, .window-tag, .queue-tag {
   display: flex; align-items: center; gap: 4px;
+}
+
+.match-result {
+  margin-bottom: 12px;
+}
+.match-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+.match-sub {
+  font-size: 11px;
+  color: #999;
+  font-weight: 400;
+}
+.match-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.match-left { flex: 1; }
+.match-item-service {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a148c;
+  margin-bottom: 2px;
+}
+.match-item-outlet {
+  font-size: 11px;
+  color: #7b1fa2;
+}
+.match-mid {
+  display: flex; flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+.match-slot {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+.match-wait {
+  font-size: 10px;
+  color: #999;
 }
 
 .service-types {
@@ -740,7 +1118,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .nearby-action-item {
@@ -810,10 +1188,28 @@ onMounted(() => {
   font-weight: 500;
 }
 
-.elder-actions {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+.elder-environment {
+  padding: 12px;
+  background: #fff8e1;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.env-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.env-row:last-child { margin-bottom: 0; }
+.env-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #999;
+}
+.env-item.on {
+  color: #e65100;
+  font-weight: 500;
 }
 
 .elder-features {
@@ -855,6 +1251,43 @@ onMounted(() => {
   color: #999;
 }
 
+.agent-summary {
+  margin-bottom: 14px;
+}
+.agent-summary-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+.agent-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.agent-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+.agent-stat-card.warn { background: #fff3e0; }
+.agent-stat-card.ok { background: #e8f5e9; }
+.agent-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+.agent-stat-card.warn .agent-num { color: #ff9800; }
+.agent-stat-card.ok .agent-num { color: #43a047; }
+.agent-label {
+  font-size: 11px;
+  color: #999;
+  margin-top: 2px;
+}
+
 .elder-agent-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -886,6 +1319,10 @@ onMounted(() => {
   padding: 12px 4px;
   background: #f8f9fa;
   border-radius: 10px;
+  position: relative;
+}
+.stat-item.highlight {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
 }
 .stat-num {
   font-size: 20px; font-weight: 700;
@@ -895,20 +1332,174 @@ onMounted(() => {
 .stat-label {
   font-size: 11px; color: #999;
 }
+.stat-sub {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+.sub-item {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.sub-item.ok { background: #e8f5e9; color: #43a047; }
+.sub-item.warn { background: #fff3e0; color: #ff9800; }
+
+.dispatch-summary {
+  margin-bottom: 12px;
+}
+.dispatch-summary-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+.dispatch-more {
+  font-size: 11px;
+  color: #999;
+  font-weight: 400;
+}
+.dispatch-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.dispatch-mini-card {
+  padding: 10px 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+.dispatch-mini-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.dispatch-mini-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+.load-badge {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.load-badge.high { background: #ffebee; color: #e53935; }
+.load-badge.medium { background: #fff3e0; color: #ff9800; }
+.load-badge.low { background: #e8f5e9; color: #43a047; }
+.dispatch-mini-body {
+  display: flex;
+  justify-content: space-between;
+}
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+.mini-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+}
+.mini-val.warn { color: #ff9800; }
+.mini-val.highlight { color: #1976d2; }
+.mini-label {
+  font-size: 9px;
+  color: #999;
+}
+
+.peak-summary {
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.peak-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.peak-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e65100;
+}
+.peak-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.peak-slot {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e65100;
+}
+.peak-outlet {
+  font-size: 11px;
+  color: #ef6c00;
+}
+.peak-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.peak-count {
+  font-size: 15px;
+  font-weight: 700;
+  color: #d84315;
+}
+.peak-suggest {
+  font-size: 10px;
+  color: #e65100;
+}
 
 .admin-shortcuts {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
   padding-top: 14px;
   border-top: 1px solid #f0f0f0;
 }
 .shortcut-item {
-  display: flex; flex-direction: column; align-items: center;
-  font-size: 12px; color: #333;
-  gap: 6px;
+  display: flex; align-items: center;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  gap: 8px;
 }
-.shortcut-icon { font-size: 24px; }
+.shortcut-icon { font-size: 22px; }
+.shortcut-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.shortcut-info span:first-child {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+.shortcut-desc {
+  font-size: 10px;
+  color: #999;
+}
 
 .bottom-space {
   height: 30px;

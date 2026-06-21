@@ -53,3 +53,10 @@ export function generatePrediction(data) {
     data
   })
 }
+
+export function getIdentityStats(userId) {
+  return request({
+    url: `/admin/identity-stats/${userId}`,
+    method: 'get'
+  })
+}
