@@ -55,23 +55,24 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   checkAuth: async () => {
+    set({ isLoading: true });
     const token = localStorage.getItem('token');
     if (!token) {
-      set({ isAuthenticated: false, user: null });
+      set({ isAuthenticated: false, user: null, isLoading: false });
       return;
     }
 
     try {
       const response = await authAPI.getMe();
       if (response.success && response.data) {
-        set({ user: response.data.user, isAuthenticated: true });
+        set({ user: response.data.user, isAuthenticated: true, isLoading: false });
       } else {
         localStorage.removeItem('token');
-        set({ isAuthenticated: false, user: null });
+        set({ isAuthenticated: false, user: null, isLoading: false });
       }
     } catch {
       localStorage.removeItem('token');
-      set({ isAuthenticated: false, user: null, token: null });
+      set({ isAuthenticated: false, user: null, token: null, isLoading: false });
     }
   },
 }));

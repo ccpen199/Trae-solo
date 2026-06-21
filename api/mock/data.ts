@@ -9,11 +9,11 @@ const basePrices: Record<string, number> = {
 };
 
 export const demoAccounts = [
-  { phone: 'admin', password: 'admin', role: 'operator' as UserRole, companyName: '平台运营中心', name: '系统管理员' },
-  { phone: 'platform', password: 'platform', role: 'operator' as UserRole, companyName: '盟主运营中心', name: '平台盟主' },
-  { phone: 'ops', password: 'ops', role: 'operator' as UserRole, companyName: '运营管理部', name: '运营专员' },
-  { phone: 'supplier', password: 'supplier', role: 'supplier' as UserRole, companyName: '永达回收站', name: '张老板' },
-  { phone: 'buyer', password: 'buyer', role: 'buyer' as UserRole, companyName: '鑫达冶炼厂', name: '李经理' },
+  { phone: 'admin', password: '123456', role: 'operator' as UserRole, companyName: '平台运营中心', name: '系统管理员' },
+  { phone: 'platform', password: '123456', role: 'operator' as UserRole, companyName: '盟主运营中心', name: '平台盟主' },
+  { phone: 'ops', password: '123456', role: 'operator' as UserRole, companyName: '运营管理部', name: '运营专员' },
+  { phone: 'supplier', password: '123456', role: 'supplier' as UserRole, companyName: '永达回收站', name: '张老板' },
+  { phone: 'buyer', password: '123456', role: 'buyer' as UserRole, companyName: '鑫达冶炼厂', name: '李经理' },
   { phone: '13800000001', password: '123456', role: 'supplier' as UserRole, companyName: '永达回收站', name: '张老板' },
   { phone: '13800000002', password: '123456', role: 'buyer' as UserRole, companyName: '鑫达冶炼厂', name: '李经理' },
   { phone: '13800000003', password: '123456', role: 'operator' as UserRole, companyName: '华东回收联盟', name: '王盟主' },

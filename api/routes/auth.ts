@@ -116,11 +116,20 @@ router.get('/me', async (req: Request, res: Response): Promise<void> => {
 
   try {
     const token = authHeader.split(' ')[1];
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; role: string; phone: string };
     
+    const user = mockUsers.find(u => u.id === decoded.userId || u.phone === decoded.phone);
+    if (!user) {
+      res.status(401).json({
+        success: false,
+        message: '用户不存在',
+      });
+      return;
+    }
+
     const response: ApiResponse<{ user: User }> = {
       success: true,
-      data: { user: mockCurrentUser },
+      data: { user },
     };
     res.json(response);
   } catch {

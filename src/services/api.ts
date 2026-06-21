@@ -18,11 +18,13 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
     headers,
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    throw new Error(data?.message || `HTTP error! status: ${response.status}`);
   }
 
-  return response.json();
+  return data;
 }
 
 export const authAPI = {
