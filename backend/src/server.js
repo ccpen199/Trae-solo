@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
+require('./utils/initDb');
+
 const app = express();
 const PORT = process.env.BACKEND_PORT || 59290;
 

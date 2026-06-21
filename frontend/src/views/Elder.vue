@@ -1,100 +1,137 @@
 <template>
-  <div class="elder-page" :class="{ 'elder-active': isElderMode }">
-    <div class="page-header warning-bg">
-      <div class="header-title">暖心办</div>
-      <div class="header-subtitle">长辈专属服务</div>
-      <div class="elder-toggle" @click="toggleElder">
-        <van-switch v-model="isElderMode" size="24px" />
-        <span class="toggle-text">{{ isElderMode ? '长辈模式' : '标准版' }}</span>
+  <div class="elder-page" :class="{ 'elder-mode': isElderMode }">
+    <div class="page-header">
+      <div class="header-bg"></div>
+      <div class="header-content">
+        <div class="h-title">暖心办 · 长辈服务</div>
+        <div class="h-sub">大字 · 语音 · 人工直连 · 无广告</div>
+        <div class="mode-row">
+          <van-switch v-model="isElderMode" size="22px" active-color="#ff7043" />
+          <span class="mode-text">{{ isElderMode ? '长辈模式已开启' : '点击开启长辈模式' }}</span>
+        </div>
       </div>
     </div>
 
     <div class="page-content">
-      <div class="features-card card">
-        <div class="feature-row">
-          <div class="feature-item" @click="useVoiceInput">
-            <div class="feature-icon voice">
-              <span>🎤</span>
+      <div class="env-card card" v-if="isElderMode">
+        <div class="card-title">长辈独立环境</div>
+        <div class="env-features">
+          <div class="env-item" v-for="f in envFeatures" :key="f.key">
+            <van-switch v-model="f.enabled" size="18px" active-color="#ff7043" />
+            <div class="env-info">
+              <div class="env-name">{{ f.icon }} {{ f.name }}</div>
+              <div class="env-desc">{{ f.desc }}</div>
             </div>
-            <div class="feature-name">语音输入</div>
-          </div>
-          <div class="feature-item" @click="callAgent">
-            <div class="feature-icon agent">
-              <span>👩‍💼</span>
-            </div>
-            <div class="feature-name">人工坐席</div>
-          </div>
-          <div class="feature-item" @click="goToAgent">
-            <div class="feature-icon auth">
-              <span>👨‍👩‍👧</span>
-            </div>
-            <div class="feature-name">亲友代办</div>
-          </div>
-          <div class="feature-item" @click="showHelp">
-            <div class="feature-icon help">
-              <span>❓</span>
-            </div>
-            <div class="feature-name">使用帮助</div>
           </div>
         </div>
       </div>
 
-      <div class="elder-config card">
-        <div class="section-title">长辈模式配置</div>
-        <div class="config-list">
-          <div class="config-item" v-for="item in configFeatures" :key="item.id">
-            <div class="config-left">
-              <span class="config-icon">{{ item.icon }}</span>
-              <span class="config-name">{{ item.name }}</span>
+      <div class="quick-card card">
+        <div class="card-title">快捷入口</div>
+        <div class="quick-grid">
+          <div class="q-item" @click="goElderHome">
+            <div class="q-icon home">🏠</div>
+            <span>长辈首页</span>
+          </div>
+          <div class="q-item" @click="goVoice">
+            <div class="q-icon voice">🎤</div>
+            <span>语音办事</span>
+          </div>
+          <div class="q-item" @click="goService">
+            <div class="q-icon service">👩‍💼</div>
+            <span>人工坐席</span>
+          </div>
+          <div class="q-item" @click="goAgentCreate">
+            <div class="q-icon agent">👨‍👩‍👧</div>
+            <span>创建代办</span>
+          </div>
+          <div class="q-item" @click="goAgentOps">
+            <div class="q-icon ops">📋</div>
+            <span>代办记录</span>
+          </div>
+          <div class="q-item" @click="goAgentConfirm">
+            <div class="q-icon confirm">✅</div>
+            <span>待确认</span>
+          </div>
+          <div class="q-item" @click="goAppointment">
+            <div class="q-icon appt">📅</div>
+            <span>在线预约</span>
+          </div>
+          <div class="q-item" @click="goCode">
+            <div class="q-icon code">📲</div>
+            <span>亮身份码</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-demo card">
+        <div class="card-title">简化表单示例</div>
+        <div class="form-notice">长辈模式下，表单自动简化：必填项减少、输入框放大、语音输入可用</div>
+        <div class="demo-form">
+          <div class="demo-field">
+            <div class="df-label">办理事项</div>
+            <div class="df-value" @click="showPicker = true">{{ selectedService || '请选择 →' }}</div>
+          </div>
+          <div class="demo-field">
+            <div class="df-label">您的姓名</div>
+            <div class="df-input">
+              <input v-model="form.name" placeholder="可语音输入" class="big-input" />
+              <van-icon name="microphone" size="22" color="#ff7043" @click="goVoice" />
             </div>
-            <van-switch v-model="item.enabled" size="22px" disabled />
           </div>
+          <div class="demo-field">
+            <div class="df-label">联系电话</div>
+            <div class="df-input">
+              <input v-model="form.phone" placeholder="可语音输入" type="tel" class="big-input" />
+              <van-icon name="microphone" size="22" color="#ff7043" @click="goVoice" />
+            </div>
+          </div>
+          <van-button type="primary" block round size="large" @click="submitForm">一键提交</van-button>
         </div>
       </div>
 
-      <div class="quick-service card">
-        <div class="section-title">常用服务</div>
-        <div class="service-grid">
-          <div class="service-item" @click="goService('社保查询')">
-            <span class="service-icon">💳</span>
-            <span class="service-name">社保查询</span>
-          </div>
-          <div class="service-item" @click="goService('医保报销')">
-            <span class="service-icon">❤️‍🩹</span>
-            <span class="service-name">医保报销</span>
-          </div>
-          <div class="service-item" @click="goService('养老金')">
-            <span class="service-icon">👴</span>
-            <span class="service-name">养老金</span>
-          </div>
-          <div class="service-item" @click="goService('高龄补贴')">
-            <span class="service-icon">🎁</span>
-            <span class="service-name">高龄补贴</span>
+      <div class="records-card card">
+        <div class="card-title">
+          <span>语音办理记录</span>
+          <span class="more-btn" @click="goVoice">更多</span>
+        </div>
+        <div class="record-list" v-if="voiceRecords.length">
+          <div class="rec-item" v-for="r in voiceRecords" :key="r.id">
+            <div class="rec-icon">🎤</div>
+            <div class="rec-info">
+              <div class="rec-text">{{ r.text }}</div>
+              <div class="rec-meta">{{ r.time }} · {{ r.result }}</div>
+            </div>
           </div>
         </div>
+        <div class="empty-tip" v-else>暂无语音记录，点击上方"语音办事"开始</div>
       </div>
 
-      <div class="notice-card card">
-        <div class="notice-title">
-          <span>📢</span>
-          <span>为您推荐</span>
+      <div class="records-card card">
+        <div class="card-title">
+          <span>人工坐席记录</span>
+          <span class="more-btn" @click="goService">更多</span>
         </div>
-        <div class="notice-content">
-          <p>· 65岁以上老人可免费办理公交敬老卡</p>
-          <p>· 养老金资格认证可在线完成</p>
-          <p>· 社区养老服务中心提供助餐助浴</p>
+        <div class="record-list" v-if="serviceRecords.length">
+          <div class="rec-item" v-for="s in serviceRecords" :key="s.id">
+            <div class="rec-icon">👩‍💼</div>
+            <div class="rec-info">
+              <div class="rec-text">{{ s.agent }}：{{ s.topic }}</div>
+              <div class="rec-meta">{{ s.time }} · {{ s.status }}</div>
+            </div>
+          </div>
         </div>
+        <div class="empty-tip" v-else>暂无坐席记录，点击上方"人工坐席"直连</div>
       </div>
 
       <div class="hotline-card">
-        <div class="hotline-title">服务热线</div>
-        <div class="hotline-number">12345</div>
-        <div class="hotline-desc">7×24小时人工服务</div>
-        <van-button type="warning" block round size="large" @click="callHotline">
-          立即拨打
-        </van-button>
+        <div class="hl-title">24小时服务热线</div>
+        <div class="hl-number">12345</div>
+        <van-button type="warning" block round size="large" @click="callHotline">立即拨打</van-button>
       </div>
     </div>
+
+    <van-action-sheet v-model:show="showPicker" :actions="serviceActions" @select="onSelectService" cancel-text="取消" />
   </div>
 </template>
 
@@ -102,313 +139,118 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../store/user'
-import { showToast, showDialog } from 'vant'
-import { getElderConfig, toggleElderMode } from '../api/users'
+import { showToast } from 'vant'
+import { toggleElderMode } from '../api/users'
 
 const router = useRouter()
 const userStore = useUserStore()
 
-const isElderMode = computed(() => userStore.isElderMode)
+const isElderMode = computed({
+  get: () => userStore.isElderMode,
+  set: async (v) => {
+    userStore.setElderMode(v)
+    try { await toggleElderMode({ userId: userStore.currentUserId, enabled: v }) } catch (e) {}
+    showToast(v ? '长辈模式已开启' : '长辈模式已关闭')
+  }
+})
 
-const configFeatures = ref([
-  { id: 'voice_input', name: '语音输入', icon: '🎤', enabled: true },
-  { id: 'direct_agent', name: '人工坐席直连', icon: '👩‍💼', enabled: true },
-  { id: 'large_font', name: '超大字体', icon: '🔍', enabled: true },
-  { id: 'no_ads', name: '无广告弹窗', icon: '🚫', enabled: true },
-  { id: 'simplified', name: '简化界面', icon: '📱', enabled: true },
-  { id: 'high_contrast', name: '高对比度', icon: '🎨', enabled: false },
+const envFeatures = ref([
+  { key: 'large_font', name: '超大字体', icon: '🔍', desc: '字体放大至1.5倍', enabled: true },
+  { key: 'no_ads', name: '无广告弹窗', icon: '🚫', desc: '禁用所有弹窗和广告', enabled: true },
+  { key: 'simplified', name: '简化界面', icon: '📱', desc: '隐藏非必要元素', enabled: true },
+  { key: 'voice', name: '语音优先', icon: '🎤', desc: '所有输入支持语音', enabled: true },
+  { key: 'contrast', name: '高对比度', icon: '🎨', desc: '增强色彩对比', enabled: false }
 ])
 
-async function loadConfig() {
-  try {
-    const data = await getElderConfig()
-    if (data?.features) {
-      configFeatures.value = data.features
-    }
-  } catch (e) {
-    console.error(e)
-  }
-}
+const selectedService = ref('')
+const showPicker = ref(false)
+const form = ref({ name: '', phone: '' })
 
-async function toggleElder() {
-  const enabled = !isElderMode.value
-  userStore.toggleElderMode(enabled)
-  try {
-    await toggleElderMode({ userId: userStore.currentUserId, enabled })
-  } catch (e) {
-    console.error(e)
-  }
-  showToast(enabled ? '已开启长辈模式' : '已关闭长辈模式')
-}
+const serviceActions = [
+  { name: '养老金认证' }, { name: '身份证补办' }, { name: '社保查询' },
+  { name: '医保报销' }, { name: '高龄补贴' }, { name: '驾驶证换证' }
+]
 
-function useVoiceInput() {
-  showToast('语音输入已启动，请说话...')
-}
+const voiceRecords = ref([
+  { id: 1, text: '我要补办身份证', time: '今天 09:15', result: '已跳转预约' },
+  { id: 2, text: '查一下社保交了多少年', time: '昨天 14:30', result: '已查询' }
+])
 
-function callAgent() {
-  showDialog({
-    title: '人工坐席',
-    message: '正在为您连接人工坐席，请稍候...',
-    confirmButtonText: '取消'
-  })
-}
+const serviceRecords = ref([
+  { id: 1, agent: '客服李姐', topic: '养老金认证方法', time: '06-18 10:20', status: '已解决' },
+  { id: 2, agent: '客服王姐', topic: '高龄补贴申请条件', time: '06-15 15:00', status: '已解决' }
+])
 
-function goToAgent() {
-  router.push('/elder/agent')
-}
-
-function showHelp() {
-  showDialog({
-    title: '使用帮助',
-    message: '长辈模式提供：\n1. 超大字体显示\n2. 语音输入功能\n3. 人工坐席直连\n4. 无广告弹窗\n5. 亲友代办授权',
-    confirmButtonText: '我知道了'
-  })
-}
-
-function goService(name) {
-  showToast(`进入${name}服务`)
-}
-
-function callHotline() {
-  showToast('正在拨打12345...')
-}
-
-onMounted(() => {
-  loadConfig()
-})
+function onSelectService(a) { selectedService.value = a.name; showPicker.value = false }
+function submitForm() { showToast('表单已提交，工作人员将联系您') }
+function callHotline() { showToast('正在拨打12345...') }
+function goElderHome() { router.push('/elder/home') }
+function goVoice() { router.push('/elder/voice') }
+function goService() { router.push('/elder/service') }
+function goAgentCreate() { router.push('/elder/agent/create') }
+function goAgentOps() { router.push('/elder/agent/operations') }
+function goAgentConfirm() { router.push('/elder/agent/confirm') }
+function goAppointment() { router.push('/outlets/appointment') }
+function goCode() { router.push('/identity/code') }
 </script>
 
 <style scoped>
-.elder-page {
-  min-height: 100vh;
-  background: #f5f7fa;
-}
+.elder-page { min-height: 100vh; background: #f5f7fa; }
+.elder-page.elder-mode { font-size: 17px; }
+.page-header { position: relative; padding: 30px 16px 40px; }
+.header-bg { position: absolute; top: 0; left: 0; right: 0; height: 180px; background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%); border-radius: 0 0 28px 28px; }
+.header-content { position: relative; color: #fff; }
+.h-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.h-sub { font-size: 13px; opacity: 0.9; margin-bottom: 14px; }
+.mode-row { display: flex; align-items: center; gap: 10px; }
+.mode-text { font-size: 14px; }
+.page-content { padding: 0 12px 30px; margin-top: -16px; position: relative; z-index: 1; }
+.card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+.card-title { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.more-btn { font-size: 13px; color: #ff7043; font-weight: normal; }
+.elder-mode .card-title { font-size: 18px; }
 
-.elder-active {
-  font-size: 18px;
-}
+.env-features { display: flex; flex-direction: column; gap: 10px; }
+.env-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+.env-item:last-child { border-bottom: none; }
+.env-info { flex: 1; }
+.env-name { font-size: 14px; font-weight: 500; color: #333; margin-bottom: 2px; }
+.env-desc { font-size: 12px; color: #999; }
 
-.page-header {
-  padding: 40px 20px 60px;
-  color: #fff;
-  text-align: center;
-  position: relative;
-}
+.quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 8px; }
+.q-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.q-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.q-icon.home { background: #fff3e0; }
+.q-icon.voice { background: #ffebee; }
+.q-icon.service { background: #f3e5f5; }
+.q-icon.agent { background: #e3f2fd; }
+.q-icon.ops { background: #e8f5e9; }
+.q-icon.confirm { background: #e0f7fa; }
+.q-icon.appt { background: #fce4ec; }
+.q-icon.code { background: #e8eaf6; }
+.q-item span { font-size: 13px; color: #333; }
+.elder-mode .q-item span { font-size: 15px; }
 
-.header-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
+.form-notice { padding: 10px; background: #fff8e1; border-radius: 8px; font-size: 12px; color: #b26a00; margin-bottom: 14px; line-height: 1.5; }
+.demo-form { display: flex; flex-direction: column; gap: 12px; }
+.demo-field {}
+.df-label { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 6px; }
+.elder-mode .df-label { font-size: 17px; }
+.df-value { padding: 12px 14px; background: #f8f9fa; border-radius: 10px; font-size: 15px; color: #666; }
+.df-input { display: flex; align-items: center; gap: 10px; background: #f8f9fa; border-radius: 10px; padding: 0 14px; }
+.big-input { flex: 1; height: 48px; border: none; background: transparent; font-size: 16px; outline: none; }
+.elder-mode .big-input { font-size: 20px; height: 56px; }
 
-.header-subtitle {
-  font-size: 14px;
-  opacity: 0.9;
-}
+.record-list { display: flex; flex-direction: column; gap: 2px; }
+.rec-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+.rec-item:last-child { border-bottom: none; }
+.rec-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.rec-info { flex: 1; }
+.rec-text { font-size: 14px; color: #333; margin-bottom: 3px; }
+.rec-meta { font-size: 12px; color: #999; }
+.empty-tip { text-align: center; padding: 16px; font-size: 13px; color: #999; }
 
-.elder-toggle {
-  position: absolute;
-  right: 20px;
-  top: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.toggle-text {
-  font-size: 12px;
-}
-
-.page-content {
-  margin-top: -40px;
-  padding: 0 12px 20px;
-}
-
-.features-card {
-  padding: 20px 10px;
-  margin-bottom: 12px;
-}
-
-.feature-row {
-  display: flex;
-  justify-content: space-around;
-}
-
-.feature-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.feature-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  margin-bottom: 10px;
-  background: #fff3e0;
-}
-
-.feature-icon.voice {
-  background: #e3f2fd;
-}
-
-.feature-icon.agent {
-  background: #f3e5f5;
-}
-
-.feature-icon.auth {
-  background: #e8f5e9;
-}
-
-.feature-icon.help {
-  background: #fff3e0;
-}
-
-.feature-name {
-  font-size: 14px;
-  color: #333;
-}
-
-.elder-active .feature-name {
-  font-size: 16px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 16px;
-}
-
-.elder-active .section-title {
-  font-size: 18px;
-}
-
-.config-list {
-  .config-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  
-  .config-item:last-child {
-    border-bottom: none;
-  }
-}
-
-.config-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.config-icon {
-  font-size: 22px;
-}
-
-.config-name {
-  font-size: 15px;
-  color: #333;
-}
-
-.elder-active .config-name {
-  font-size: 17px;
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-
-.service-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.service-icon {
-  font-size: 36px;
-  margin-bottom: 8px;
-}
-
-.service-name {
-  font-size: 13px;
-  color: #333;
-  text-align: center;
-}
-
-.elder-active .service-name {
-  font-size: 15px;
-}
-
-.notice-card {
-  margin-bottom: 12px;
-}
-
-.notice-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 12px;
-}
-
-.elder-active .notice-title {
-  font-size: 17px;
-}
-
-.notice-content {
-  font-size: 13px;
-  color: #666;
-  line-height: 2;
-}
-
-.elder-active .notice-content {
-  font-size: 15px;
-}
-
-.hotline-card {
-  background: linear-gradient(135deg, #ff9800, #f57c00);
-  border-radius: 16px;
-  padding: 24px;
-  text-align: center;
-  color: #fff;
-}
-
-.hotline-title {
-  font-size: 15px;
-  margin-bottom: 8px;
-  opacity: 0.9;
-}
-
-.hotline-number {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  letter-spacing: 2px;
-}
-
-.hotline-desc {
-  font-size: 13px;
-  opacity: 0.9;
-  margin-bottom: 16px;
-}
-
-.elder-active .hotline-card {
-  padding: 28px;
-}
-
-.elder-active .hotline-number {
-  font-size: 40px;
-}
+.hotline-card { background: linear-gradient(135deg, #ff7043, #f4511e); border-radius: 16px; padding: 24px; text-align: center; color: #fff; }
+.hl-title { font-size: 14px; margin-bottom: 6px; opacity: 0.9; }
+.hl-number { font-size: 40px; font-weight: 700; margin-bottom: 16px; letter-spacing: 3px; }
 </style>

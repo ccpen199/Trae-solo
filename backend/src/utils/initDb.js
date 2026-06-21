@@ -304,6 +304,57 @@ function seedData() {
     'active', 1
   );
 
+  insertAuth.run(
+    3, 4, JSON.stringify(['医保业务', '住房服务', '证件办理']),
+    new Date().toISOString(),
+    new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
+    'active', 1
+  );
+
+  insertAuth.run(
+    1, 4, JSON.stringify(['社保业务']),
+    new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    'revoked', 0
+  );
+
+  const insertOp = db.prepare(`
+    INSERT INTO agent_operations (auth_id, operation_type, operation_detail, is_confirmed)
+    VALUES (?, ?, ?, ?)
+  `);
+
+  const opTypes = ['社保缴费查询', '身份证补办预约', '医保卡补办', '公积金提取申请', '社保缴费查询'];
+  opTypes.forEach((type, i) => {
+    insertOp.run(1, type, `${type}代办操作详情`, i < 3 ? 1 : 0);
+  });
+
+  const insertLog = db.prepare(`
+    INSERT INTO operation_logs (user_id, operation, module, ip, user_agent)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  const logEntries = [
+    { uid: 1, op: '生成动态身份码', mod: 'identity' },
+    { uid: 1, op: '查询风险评估', mod: 'identity' },
+    { uid: 2, op: '进入长辈版模式', mod: 'identity' },
+    { uid: 1, op: '查询附近网点', mod: 'outlet' },
+    { uid: 1, op: '预约身份证补办', mod: 'outlet' },
+    { uid: 3, op: '创建代办授权', mod: 'agent' },
+    { uid: 4, op: '执行代办操作-社保查询', mod: 'agent' },
+    { uid: 1, op: '确认代办操作', mod: 'agent' },
+    { uid: 1, op: '调整窗口调度-渝中区', mod: 'window' },
+    { uid: 1, op: '生成明日热度预测', mod: 'window' },
+    { uid: 2, op: '语音输入办理社保', mod: 'identity' },
+    { uid: 1, op: '查看证件列表', mod: 'identity' },
+    { uid: 3, op: '查询附近网点', mod: 'outlet' },
+    { uid: 1, op: '撤销代办授权', mod: 'agent' },
+    { uid: 1, op: '导出运营数据', mod: 'window' },
+  ];
+
+  logEntries.forEach(entry => {
+    insertLog.run(entry.uid, entry.op, entry.mod, '127.0.0.1', 'Mozilla/5.0');
+  });
+
   console.log('初始数据填充完成');
 }
 

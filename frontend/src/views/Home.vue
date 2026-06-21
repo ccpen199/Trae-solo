@@ -179,6 +179,35 @@
           </div>
           <van-button size="small" type="primary" round>去这里</van-button>
         </div>
+        <div class="nearby-actions">
+          <div class="nearby-action-item" @click="goToSmartMatch">
+            <div class="nearby-action-icon match-icon">
+              <van-icon name="balance-o" size="20" />
+            </div>
+            <div class="nearby-action-text">
+              <span class="nearby-action-name">智能匹配</span>
+              <span class="nearby-action-desc">事项×网点×时段</span>
+            </div>
+          </div>
+          <div class="nearby-action-item" @click="goToAppointment">
+            <div class="nearby-action-icon appt-icon">
+              <van-icon name="calendar-o" size="20" />
+            </div>
+            <div class="nearby-action-text">
+              <span class="nearby-action-name">在线预约</span>
+              <span class="nearby-action-desc">选择时段免排队</span>
+            </div>
+          </div>
+          <div class="nearby-action-item" @click="goToARNav">
+            <div class="nearby-action-icon ar-icon">
+              <span style="font-size:14px;font-weight:700;font-style:italic">AR</span>
+            </div>
+            <div class="nearby-action-text">
+              <span class="nearby-action-name">实景导航</span>
+              <span class="nearby-action-desc">AR步行引导</span>
+            </div>
+          </div>
+        </div>
         <div class="service-types">
           <div class="type-item" @click="bookService('身份证补办')">
             <span class="type-icon">🪪</span>
@@ -225,15 +254,33 @@
             <van-icon name="arrow" />
           </div>
         </div>
-        <div class="elder-actions">
-          <div class="elder-btn" @click="goToVoiceInput">
-            <div class="elder-btn-icon voice">🎤</div>
-            <span>语音输入</span>
+        <div class="elder-features">
+          <div class="elder-feature" @click="goToElderHome">
+            <div class="feature-icon">🔤</div>
+            <div class="feature-body">
+              <span class="feature-name">长辈独立环境</span>
+              <span class="feature-desc">大字体、高对比度、禁弹窗</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
           </div>
-          <div class="elder-btn" @click="goToService">
-            <div class="elder-btn-icon service">👩‍💼</div>
-            <span>人工坐席</span>
+          <div class="elder-feature" @click="goToVoiceInput">
+            <div class="feature-icon">🎤</div>
+            <div class="feature-body">
+              <span class="feature-name">语音办事</span>
+              <span class="feature-desc">说句话即可办理业务</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
           </div>
+          <div class="elder-feature" @click="goToService">
+            <div class="feature-icon">👩‍💼</div>
+            <div class="feature-body">
+              <span class="feature-name">人工坐席直连</span>
+              <span class="feature-desc">一键拨通人工客服</span>
+            </div>
+            <van-icon name="arrow" size="14" color="#ccc" />
+          </div>
+        </div>
+        <div class="elder-agent-row">
           <div class="elder-btn" @click="goToAgentCreate">
             <div class="elder-btn-icon auth">👨‍👩‍👧</div>
             <span>创建代办</span>
@@ -241,6 +288,14 @@
           <div class="elder-btn" @click="goToAgentOps">
             <div class="elder-btn-icon log">📋</div>
             <span>代办记录</span>
+          </div>
+          <div class="elder-btn" @click="goToAgent">
+            <div class="elder-btn-icon scope">🔐</div>
+            <span>授权管理</span>
+          </div>
+          <div class="elder-btn" @click="goToAgentConfirm">
+            <div class="elder-btn-icon confirm">✅</div>
+            <span>待确认</span>
           </div>
         </div>
       </div>
@@ -386,6 +441,7 @@ function goToService() { router.push('/elder/service') }
 function goToAgent() { router.push('/elder/agent') }
 function goToAgentCreate() { router.push('/elder/agent/create') }
 function goToAgentOps() { router.push('/elder/agent/operations') }
+function goToAgentConfirm() { router.push('/elder/agent/confirm') }
 function goToProfile() { router.push('/profile') }
 function goToAdmin() { router.push('/admin') }
 function goToHeat() { router.push('/admin/heat') }
@@ -676,6 +732,57 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 14px 8px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.nearby-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.nearby-action-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.nearby-action-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.match-icon { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+.appt-icon { background: linear-gradient(135deg, #00897b, #00695c); }
+.ar-icon { background: linear-gradient(135deg, #e53935, #c62828); }
+
+.nearby-action-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nearby-action-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.nearby-action-desc {
+  font-size: 10px;
+  color: #999;
 }
 .type-item {
   display: flex; flex-direction: column; align-items: center;
@@ -707,6 +814,53 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+}
+
+.elder-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.elder-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fff8e1;
+  border-radius: 10px;
+}
+
+.feature-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.feature-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feature-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.feature-desc {
+  font-size: 11px;
+  color: #999;
+}
+
+.elder-agent-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f0;
 }
 .elder-btn {
   display: flex; flex-direction: column; align-items: center;
