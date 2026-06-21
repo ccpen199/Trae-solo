@@ -1,9 +1,10 @@
-import { useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   TrendingUp, TrendingDown, Clock, Star, AlertTriangle, BarChart3, FileText, Download,
   Check, X, Filter, Search, Eye, Settings, Users, FileCheck, PieChart as PieChartIcon,
   BarChart2, RefreshCw, Activity, Layers, Shield, ChevronRight, AlertCircle,
+  Building2, Target, MessageSquare, Bell, RotateCcw, Flag, ChevronDown,
 } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid,
@@ -41,12 +42,31 @@ const statusBadge: Record<string, string> = {
 }
 
 const reviewApps = [
-  { id: 'a001', service: '公积金提取', applicant: '张明华', time: '2025-06-18 09:30', status: '待审核' },
-  { id: 'a002', service: '户籍登记', applicant: '李国强', time: '2025-06-18 10:15', status: '待审核' },
-  { id: 'a003', service: '社保卡申领', applicant: '王美玲', time: '2025-06-17 14:20', status: '已通过' },
-  { id: 'a004', service: '居住证办理', applicant: '陈大伟', time: '2025-06-17 11:00', status: '补正中' },
-  { id: 'a005', service: '公积金提取', applicant: '刘芳', time: '2025-06-16 16:45', status: '已驳回' },
+  { id: 'a001', service: '公积金提取', applicant: '张明华', time: '2025-06-18 09:30', status: '待审核', dept: '公积金管理中心' },
+  { id: 'a002', service: '户籍登记', applicant: '李国强', time: '2025-06-18 10:15', status: '待审核', dept: '公安局户政处' },
+  { id: 'a003', service: '社保卡申领', applicant: '王美玲', time: '2025-06-17 14:20', status: '已通过', dept: '人力资源社会保障局' },
+  { id: 'a004', service: '居住证办理', applicant: '陈大伟', time: '2025-06-17 11:00', status: '补正中', dept: '公安局户政处' },
+  { id: 'a005', service: '公积金提取', applicant: '刘芳', time: '2025-06-16 16:45', status: '已驳回', dept: '公积金管理中心' },
 ]
+
+const deptMetrics = [
+  { dept: '人力资源社会保障局', apps: 4820, avgDays: 2.1, sat: 4.8, compRate: 96.5, interrupt: 1.2 },
+  { dept: '公积金管理中心', apps: 3256, avgDays: 1.8, sat: 4.7, compRate: 97.2, interrupt: 0.9 },
+  { dept: '公安局户政处', apps: 2980, avgDays: 3.5, sat: 4.5, compRate: 93.8, interrupt: 2.1 },
+  { dept: '自然资源规划局', apps: 1860, avgDays: 5.2, sat: 4.3, compRate: 89.5, interrupt: 3.8 },
+  { dept: '卫生健康委员会', apps: 1542, avgDays: 1.2, sat: 4.9, compRate: 98.8, interrupt: 0.5 },
+  { dept: '教育局', apps: 1208, avgDays: 2.8, sat: 4.6, compRate: 95.3, interrupt: 1.6 },
+]
+
+const interruptionDetails = allIntr.map(x => ({
+  ...x,
+  dept: x.type === '材料不全' ? '前台窗口' :
+        x.type === '系统超时' ? '信息技术处' :
+        x.type === '用户放弃' ? '业务办理处' : '行政审批处',
+  handler: ['陈主管', '李经理', '王主任', '张科长', '刘专员'][Math.floor(Math.random() * 5)],
+  followUp: Math.random() > 0.5,
+  priority: x.resolution ? '低' : (x.type === '系统超时' ? '高' : '中'),
+}))
 
 const intrTypes = [
   { name: '材料不全', value: allIntr.filter(x => x.type === '材料不全').length },
@@ -88,6 +108,9 @@ export default function Monitor() {
   const [sk, setSk] = useState('totalApplications')
   const [sa, setSa] = useState(false)
   const [cmt, setCmt] = useState('')
+  const [dimFilter, setDimFilter] = useState<'service' | 'dept'>('service')
+  const [expandedIntr, setExpandedIntr] = useState<string | null>(null)
+  const [showTracking, setShowTracking] = useState<any>(null)
 
   const sorted = useMemo(() => [...m].sort((a, b) => {
     const av: any = a[sk as keyof typeof a], bv: any = b[sk as keyof typeof b]
@@ -162,31 +185,86 @@ export default function Monitor() {
               </div>
 
               <Card title="服务排名" icon={BarChart2}>
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2 bg-gray-700/50 rounded-lg p-1">
+                    <button
+                      onClick={() => setDimFilter('service')}
+                      className={`px-3 py-1.5 text-xs rounded-md transition ${dimFilter === 'service' ? 'bg-yellow-500 text-gray-900 font-medium' : 'text-gray-400 hover:text-white'}`}
+                    >
+                      按事项维度
+                    </button>
+                    <button
+                      onClick={() => setDimFilter('dept')}
+                      className={`px-3 py-1.5 text-xs rounded-md transition ${dimFilter === 'dept' ? 'bg-yellow-500 text-gray-900 font-medium' : 'text-gray-400 hover:text-white'}`}
+                    >
+                      按部门维度
+                    </button>
+                  </div>
+                </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead><tr className="text-gray-400 border-b border-gray-700">
-                      <th className="text-left py-3 px-3">排名</th>
-                      {['serviceName', 'totalApplications', 'avgProcessingDays', 'satisfactionAvg', 'completionRate'].map(k => (
-                        <th key={k} className="text-left py-3 px-3 cursor-pointer hover:text-white" onClick={() => hSort(k)}>
-                          <div className="flex items-center gap-1">{sortLabels[k]}{sk === k && (sa ? '↑' : '↓')}</div>
-                        </th>
-                      ))}
-                      <th className="text-left py-3 px-3">操作</th>
-                    </tr></thead>
-                    <tbody>
-                      {sorted.map((x, i) => (
-                        <tr key={x.serviceId} className="border-b border-gray-700/50 hover:bg-gray-700/30">
-                          <td className="py-3 px-3">{i < 3 ? <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-700/50 font-bold ${medals[i]}`}>{i + 1}</span> : <span className="text-gray-500 px-2">{i + 1}</span>}</td>
-                          <td className="py-3 px-3 font-medium">{x.serviceName}</td>
-                          <td className="py-3 px-3 text-yellow-400">{x.totalApplications.toLocaleString()}</td>
-                          <td className="py-3 px-3">{x.avgProcessingDays}天</td>
-                          <td className="py-3 px-3">{x.satisfactionAvg}</td>
-                          <td className="py-3 px-3">{x.completionRate}%</td>
-                          <td className="py-3 px-3"><button className="text-yellow-400 hover:text-yellow-300 text-xs flex items-center gap-1"><Eye className="w-3 h-3" /> 查看详情</button></td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  {dimFilter === 'service' ? (
+                    <table className="w-full text-sm">
+                      <thead><tr className="text-gray-400 border-b border-gray-700">
+                        <th className="text-left py-3 px-3">排名</th>
+                        {['serviceName', 'totalApplications', 'avgProcessingDays', 'satisfactionAvg', 'completionRate'].map(k => (
+                          <th key={k} className="text-left py-3 px-3 cursor-pointer hover:text-white" onClick={() => hSort(k)}>
+                            <div className="flex items-center gap-1">{sortLabels[k]}{sk === k && (sa ? '↑' : '↓')}</div>
+                          </th>
+                        ))}
+                        <th className="text-left py-3 px-3">操作</th>
+                      </tr></thead>
+                      <tbody>
+                        {sorted.map((x, i) => (
+                          <tr key={x.serviceId} className="border-b border-gray-700/50 hover:bg-gray-700/30">
+                            <td className="py-3 px-3">{i < 3 ? <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-700/50 font-bold ${medals[i]}`}>{i + 1}</span> : <span className="text-gray-500 px-2">{i + 1}</span>}</td>
+                            <td className="py-3 px-3 font-medium">{x.serviceName}</td>
+                            <td className="py-3 px-3 text-yellow-400">{x.totalApplications.toLocaleString()}</td>
+                            <td className="py-3 px-3">{x.avgProcessingDays}天</td>
+                            <td className="py-3 px-3">{x.satisfactionAvg}</td>
+                            <td className="py-3 px-3">{x.completionRate}%</td>
+                            <td className="py-3 px-3">
+                              <div className="flex items-center gap-2">
+                                <button className="text-yellow-400 hover:text-yellow-300 text-xs flex items-center gap-1"><Eye className="w-3 h-3" /> 详情</button>
+                                <button className="text-blue-400 hover:text-blue-300 text-xs flex items-center gap-1"><Target className="w-3 h-3" /> 跟踪</button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <table className="w-full text-sm">
+                      <thead><tr className="text-gray-400 border-b border-gray-700">
+                        <th className="text-left py-3 px-3">排名</th>
+                        <th className="text-left py-3 px-3">责任部门</th>
+                        <th className="text-left py-3 px-3">办件量</th>
+                        <th className="text-left py-3 px-3">平均用时</th>
+                        <th className="text-left py-3 px-3">满意度</th>
+                        <th className="text-left py-3 px-3">办结率</th>
+                        <th className="text-left py-3 px-3">异常率</th>
+                        <th className="text-left py-3 px-3">操作</th>
+                      </tr></thead>
+                      <tbody>
+                        {deptMetrics.map((x, i) => (
+                          <tr key={x.dept} className="border-b border-gray-700/50 hover:bg-gray-700/30">
+                            <td className="py-3 px-3">{i < 3 ? <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-700/50 font-bold ${medals[i]}`}>{i + 1}</span> : <span className="text-gray-500 px-2">{i + 1}</span>}</td>
+                            <td className="py-3 px-3"><div className="flex items-center gap-2"><Building2 className="w-4 h-4 text-gray-400" /><span className="font-medium">{x.dept}</span></div></td>
+                            <td className="py-3 px-3 text-yellow-400">{x.apps.toLocaleString()}</td>
+                            <td className="py-3 px-3">{x.avgDays}天</td>
+                            <td className="py-3 px-3">{x.sat}</td>
+                            <td className="py-3 px-3">{x.compRate}%</td>
+                            <td className={`py-3 px-3 ${x.interrupt > 2 ? 'text-red-400' : 'text-green-400'}`}>{x.interrupt}%</td>
+                            <td className="py-3 px-3">
+                              <div className="flex items-center gap-2">
+                                <button className="text-yellow-400 hover:text-yellow-300 text-xs flex items-center gap-1"><Eye className="w-3 h-3" /> 详情</button>
+                                <button className="text-blue-400 hover:text-blue-300 text-xs flex items-center gap-1"><Bell className="w-3 h-3" /> 督办</button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               </Card>
 
@@ -254,18 +332,103 @@ export default function Monitor() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
                     <thead><tr className="text-gray-400 border-b border-gray-700">
-                      <th className="text-left py-2 px-2">申请编号</th><th className="text-left py-2 px-2">中断类型</th><th className="text-left py-2 px-2">发生时间</th><th className="text-left py-2 px-2">描述</th><th className="text-left py-2 px-2">状态</th><th className="text-left py-2 px-2">操作</th>
+                      <th className="text-left py-2 px-2"></th>
+                      <th className="text-left py-2 px-2">申请编号</th><th className="text-left py-2 px-2">中断类型</th>
+                      <th className="text-left py-2 px-2">责任部门</th><th className="text-left py-2 px-2">处理人</th>
+                      <th className="text-left py-2 px-2">优先级</th><th className="text-left py-2 px-2">发生时间</th>
+                      <th className="text-left py-2 px-2">状态</th><th className="text-left py-2 px-2">操作</th>
                     </tr></thead>
                     <tbody>
-                      {allIntr.map(item => (
-                        <tr key={item.id} className="border-b border-gray-700/50 hover:bg-gray-700/30">
-                          <td className="py-2 px-2 font-mono">{item.applicationId}</td>
-                          <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${typeBadge[item.type]}`}>{item.type}</span></td>
-                          <td className="py-2 px-2 text-gray-300">{item.occurredAt}</td>
-                          <td className="py-2 px-2 text-gray-300">{item.description}</td>
-                          <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${item.resolution ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>{item.resolution ? '已解决' : '未解决'}</span></td>
-                          <td className="py-2 px-2"><button className="text-yellow-400 hover:text-yellow-300">处理</button></td>
-                        </tr>
+                      {interruptionDetails.map(item => (
+                        <React.Fragment key={item.id}>
+                          <tr className="border-b border-gray-700/50 hover:bg-gray-700/30">
+                            <td className="py-2 px-2">
+                              <button
+                                onClick={() => setExpandedIntr(expandedIntr === item.id ? null : item.id)}
+                                className="text-gray-400 hover:text-white"
+                              >
+                                <ChevronDown className={`w-4 h-4 transition-transform ${expandedIntr === item.id ? 'rotate-180' : ''}`} />
+                              </button>
+                            </td>
+                            <td className="py-2 px-2 font-mono">{item.applicationId}</td>
+                            <td className="py-2 px-2"><span className={`px-2 py-0.5 rounded-full ${typeBadge[item.type]}`}>{item.type}</span></td>
+                            <td className="py-2 px-2 text-gray-300">{item.dept}</td>
+                            <td className="py-2 px-2 text-gray-300">{item.handler}</td>
+                            <td className="py-2 px-2">
+                              <span className={`px-2 py-0.5 rounded-full text-xs ${
+                                item.priority === '高' ? 'bg-red-500/20 text-red-400' :
+                                item.priority === '中' ? 'bg-yellow-500/20 text-yellow-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}>{item.priority}</span>
+                            </td>
+                            <td className="py-2 px-2 text-gray-300">{item.occurredAt}</td>
+                            <td className="py-2 px-2">
+                              <div className="flex items-center gap-1">
+                                <span className={`px-2 py-0.5 rounded-full ${item.resolution ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                  {item.resolution ? '已解决' : '未解决'}
+                                </span>
+                                {item.followUp && !item.resolution && (
+                                  <Flag className="w-3 h-3 text-yellow-400" />
+                                )}
+                              </div>
+                            </td>
+                            <td className="py-2 px-2">
+                              <div className="flex items-center gap-1.5">
+                                <button className="text-yellow-400 hover:text-yellow-300 flex items-center gap-1">
+                                  <Eye className="w-3 h-3" /> 复查
+                                </button>
+                                <button
+                                  onClick={() => setShowTracking(item)}
+                                  className="text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                                >
+                                  <RotateCcw className="w-3 h-3" /> 跟踪
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                          {expandedIntr === item.id && (
+                            <tr className="bg-gray-700/20">
+                              <td colSpan={9} className="py-3 px-6">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                                  <div>
+                                    <p className="text-gray-500 mb-1">中断描述</p>
+                                    <p className="text-gray-300">{item.description}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-500 mb-1">影响服务</p>
+                                    <p className="text-gray-300">{item.type === '系统超时' ? '全平台服务' : '对应办件事项'}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-500 mb-1">处理方案</p>
+                                    <p className="text-gray-300">{item.resolution || '待制定处理方案'}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-500 mb-1">复查状态</p>
+                                    <p className={item.resolution ? 'text-green-400' : 'text-yellow-400'}>
+                                      {item.resolution ? '已复查通过' : '待管理员复查'}
+                                    </p>
+                                  </div>
+                                </div>
+                                {!item.resolution && (
+                                  <div className="mt-4 pt-3 border-t border-gray-600/50 flex items-center justify-between">
+                                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                                      <MessageSquare className="w-3 h-3" />
+                                      <span>处理备注：需联系申请人补充材料</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <button className="text-xs px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded hover:bg-yellow-500/30">
+                                        标记已处理
+                                      </button>
+                                      <button className="text-xs px-3 py-1 bg-blue-500/20 text-blue-400 rounded hover:bg-blue-500/30">
+                                        启动持续跟踪
+                                      </button>
+                                    </div>
+                                  </div>
+                                )}
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
                       ))}
                     </tbody>
                   </table>
@@ -391,6 +554,7 @@ export default function Monitor() {
                   <div><p className="text-gray-400 text-xs">服务事项</p><p>{rv.service}</p></div>
                   <div><p className="text-gray-400 text-xs">申请人</p><p>{rv.applicant}</p></div>
                   <div><p className="text-gray-400 text-xs">提交时间</p><p className="text-gray-300">{rv.time}</p></div>
+                  <div className="col-span-2"><p className="text-gray-400 text-xs">责任部门</p><p>{rv.dept}</p></div>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs mb-2">材料预览</p>
@@ -412,6 +576,93 @@ export default function Monitor() {
               <div className="flex justify-end gap-3 p-5 border-t border-gray-700">
                 <button className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg text-sm hover:bg-red-500/30 flex items-center gap-1.5"><X className="w-4 h-4" /> 驳回</button>
                 <button className="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm hover:bg-green-500/30 flex items-center gap-1.5"><Check className="w-4 h-4" /> 通过</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showTracking && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onClick={() => setShowTracking(null)}>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()} className="bg-gray-800 rounded-xl w-full max-w-md border border-gray-700 overflow-hidden">
+              <div className="flex items-center justify-between p-5 border-b border-gray-700">
+                <div className="flex items-center gap-2">
+                  <RotateCcw className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-lg font-semibold">异常持续跟踪</h3>
+                </div>
+                <button onClick={() => setShowTracking(null)} className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
+              </div>
+              <div className="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+                <div className="bg-gray-700/40 rounded-lg p-4 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">申请编号</span>
+                    <span className="font-mono text-yellow-400 text-sm">{showTracking.applicationId}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">中断类型</span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs ${typeBadge[showTracking.type]}`}>{showTracking.type}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">责任部门</span>
+                    <span className="text-sm">{showTracking.dept}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">处理人</span>
+                    <span className="text-sm">{showTracking.handler}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-400">优先级</span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs ${
+                      showTracking.priority === '高' ? 'bg-red-500/20 text-red-400' :
+                      showTracking.priority === '中' ? 'bg-yellow-500/20 text-yellow-400' :
+                      'bg-gray-500/20 text-gray-400'
+                    }`}>{showTracking.priority}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium mb-3 flex items-center gap-2">
+                    <Bell className="w-4 h-4 text-yellow-400" />
+                    跟踪记录
+                  </p>
+                  <div className="space-y-3">
+                    {[
+                      { time: '2026-06-20 14:30', user: '系统', event: '异常事件自动触发，进入跟踪队列', type: 'sys' },
+                      { time: '2026-06-20 14:35', user: '管理员', event: '已分配给 ' + showTracking.handler + ' 处理', type: 'action' },
+                      { time: '2026-06-20 15:10', user: showTracking.handler, event: showTracking.resolution ? '问题已定位并修复，等待复查' : '正在排查问题原因', type: 'handler' },
+                    ].map((log, i) => (
+                      <div key={i} className="flex gap-3">
+                        <div className="flex flex-col items-center">
+                          <div className={`w-2 h-2 rounded-full ${
+                            log.type === 'sys' ? 'bg-gray-400' :
+                            log.type === 'action' ? 'bg-yellow-400' : 'bg-blue-400'
+                          }`} />
+                          {i < 2 && <div className="w-px flex-1 bg-gray-600 mt-1" />}
+                        </div>
+                        <div className="flex-1 pb-3">
+                          <div className="flex items-center gap-2 text-xs text-gray-400 mb-0.5">
+                            <span>{log.time}</span>
+                            <span className="bg-gray-600/50 px-1.5 py-0.5 rounded">{log.user}</span>
+                          </div>
+                          <p className="text-sm text-gray-200">{log.event}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-gray-700">
+                  <p className="text-gray-400 text-xs mb-2">添加跟踪备注</p>
+                  <textarea placeholder="输入跟踪备注..." className="w-full bg-gray-700/50 border border-gray-600 rounded-lg p-3 text-sm resize-none h-16 focus:outline-none focus:border-yellow-500" />
+                </div>
+              </div>
+              <div className="flex justify-between p-5 border-t border-gray-700">
+                <button className="px-4 py-2 bg-gray-600/50 text-gray-300 rounded-lg text-sm hover:bg-gray-600 flex items-center gap-1.5"><Flag className="w-4 h-4" /> 标记关注</button>
+                <div className="flex gap-3">
+                  <button className="px-4 py-2 bg-gray-600/50 text-gray-300 rounded-lg text-sm hover:bg-gray-600" onClick={() => setShowTracking(null)}>关闭</button>
+                  <button className="px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg text-sm font-medium hover:bg-yellow-400 flex items-center gap-1.5">提交跟踪</button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

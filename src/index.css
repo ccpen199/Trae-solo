@@ -106,24 +106,10 @@
     focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2;
   }
 
-  .elderly-mode .btn-primary,
-  .elderly-mode .btn-gold,
-  .elderly-mode .btn-outline {
-    @apply px-8 py-4 text-xl rounded-xl;
-  }
-
-  .elderly-mode .section-title {
-    @apply text-3xl mb-8;
-  }
-
   .input-field {
     @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm
     focus:outline-none focus:ring-2 focus:ring-sky focus:border-transparent
     transition-all duration-200;
-  }
-
-  .elderly-mode .input-field {
-    @apply px-6 py-4 text-lg rounded-xl;
   }
 
   .stagger-1 { animation-delay: 0.1s; }
@@ -142,4 +128,111 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* ============ 适老化模式增强 ============ */
+.elderly-mode .btn-primary,
+.elderly-mode .btn-gold,
+.elderly-mode .btn-outline {
+  @apply px-8 py-4 text-xl rounded-xl;
+}
+
+.elderly-mode .section-title {
+  @apply text-3xl mb-8;
+}
+
+.elderly-mode .section-title::before {
+  @apply h-9 w-1.5;
+}
+
+.elderly-mode .badge {
+  @apply px-3 py-1 text-base;
+}
+
+.elderly-mode .input-field {
+  @apply px-6 py-4 text-lg rounded-xl;
+}
+
+.elderly-mode h1 {
+  font-size: calc(2.25rem * var(--elderly-font-scale, 1));
+  line-height: 1.3;
+}
+.elderly-mode h2 {
+  font-size: calc(1.875rem * var(--elderly-font-scale, 1));
+  line-height: 1.35;
+}
+.elderly-mode h3 {
+  font-size: calc(1.5rem * var(--elderly-font-scale, 1));
+  line-height: 1.4;
+}
+.elderly-mode h4 {
+  font-size: calc(1.25rem * var(--elderly-font-scale, 1));
+  line-height: 1.45;
+}
+
+.elderly-mode p,
+.elderly-mode span,
+.elderly-mode div,
+.elderly-mode li,
+.elderly-mode label {
+  font-size: calc(1em * var(--elderly-font-scale, 1));
+  line-height: 1.7;
+}
+
+.elderly-mode a {
+  font-size: calc(1em * var(--elderly-font-scale, 1));
+}
+
+.elderly-mode .container {
+  max-width: 1200px;
+}
+
+.elderly-mode nav button,
+.elderly-mode nav a {
+  padding: 1rem 1.25rem !important;
+  font-size: 1.1rem !important;
+  min-height: 56px !important;
+}
+
+.elderly-mode button,
+.elderly-mode [role="button"] {
+  min-height: 52px;
+}
+
+.elderly-mode input,
+.elderly-mode textarea,
+.elderly-mode select {
+  min-height: 56px !important;
+  font-size: 1.1rem !important;
+}
+
+.elderly-mode table th,
+.elderly-mode table td {
+  padding: 1rem !important;
+  font-size: 1rem !important;
+}
+
+.elderly-mode aside nav a {
+  padding: 1.25rem 1rem !important;
+}
+
+.elderly-mode img.icon,
+.elderly-mode svg.icon,
+.elderly-mode svg.lucide {
+  width: calc(1.25em * var(--elderly-font-scale, 1));
+  height: calc(1.25em * var(--elderly-font-scale, 1));
+}
+
+.elderly-mode .card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px -12px rgba(10, 46, 92, 0.25);
+}
+
+.elderly-mode * {
+  letter-spacing: 0.01em;
+}
+
+.elderly-mode strong,
+.elderly-mode b {
+  font-weight: 600;
 }

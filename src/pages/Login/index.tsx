@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Shield, Loader2, Camera, ArrowRight, Eye, EyeOff, AlertCircle, User, Building2, Building, FileCheck, CreditCard, Home, Users, ChevronRight } from 'lucide-react'
+import { Shield, Loader2, Camera, ArrowRight, Eye, EyeOff, AlertCircle, User, Building2, Building, FileCheck, CreditCard, Home, Users, ChevronRight, HeartHandshake, QrCode } from 'lucide-react'
 import { useStore } from '@/store/useStore'
 import { mockCertificates, mockApplications } from '@/data/mockData'
 
@@ -310,6 +310,35 @@ export default function Login() {
               </div>
             </motion.div>
           )}
+
+          <motion.div variants={itemVariants} className="mt-4">
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={handleSSOLogin}
+                className="flex items-center gap-3 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors text-left"
+              >
+                <div className="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center flex-shrink-0">
+                  <HeartHandshake className="w-5 h-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-purple-800">家属代办</p>
+                  <p className="text-xs text-gray-500">为父母子女绑定代办</p>
+                </div>
+              </button>
+              <button
+                onClick={handleSSOLogin}
+                className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors text-left"
+              >
+                <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <QrCode className="w-5 h-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-blue-800">扫码授权</p>
+                  <p className="text-xs text-gray-500">使用灵锡APP扫码</p>
+                </div>
+              </button>
+            </div>
+          </motion.div>
 
           <motion.div variants={itemVariants} className="mt-6 pt-6 border-t border-gray-200">
             <div className="flex flex-wrap gap-4 justify-center text-xs text-gray-400">
