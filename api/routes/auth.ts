@@ -47,10 +47,11 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 
   const demoAccount = demoAccounts.find(acc => acc.phone === phone);
   if (demoAccount) {
-    if (demoAccount.password !== password) {
+    const validPasswords = [demoAccount.password, demoAccount.phone, '123456'];
+    if (!validPasswords.includes(password)) {
       res.status(401).json({
         success: false,
-        message: '密码错误',
+        message: '密码错误，演示账号密码为账号名或123456',
       });
       return;
     }

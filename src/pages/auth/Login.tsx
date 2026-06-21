@@ -238,7 +238,7 @@ const Login: React.FC = () => {
                   <Input
                     label="密码"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="请输入密码（演示账号密码：123456）"
+                    placeholder="请输入密码（体验账号密码与账号名相同，或输入123456）"
                     icon={<Lock className="w-4 h-4" />}
                     value={formData.password}
                     onChange={(e) => handleChange('password', e.target.value)}
@@ -289,7 +289,7 @@ const Login: React.FC = () => {
                   </Link>
                 </p>
                 <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
-                  <p className="text-xs font-medium text-amber-800 mb-2">💡 体验账号（点击一键登录，密码均为：123456）</p>
+                  <p className="text-xs font-medium text-amber-800 mb-2">💡 体验账号（点击一键登录）</p>
                   <div className="space-y-2">
                     <div className="grid grid-cols-3 gap-2">
                       <button
@@ -315,7 +315,7 @@ const Login: React.FC = () => {
                       </button>
                     </div>
                     <p className="text-xs text-amber-600">
-                      可用账号：admin / platform / ops / supplier / buyer / 13800000001 / 13800000002 / 13800000003
+                      账号：admin / platform / ops / supplier / buyer（密码与账号名相同，也可输入123456）
                     </p>
                   </div>
                 </div>
