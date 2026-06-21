@@ -83,6 +83,14 @@ const PERIOD_CONFIG: Record<TimePeriod, {
   xLabels: string[];
   multiplier: number;
   seriesNames: [string, string, string];
+  rankingTitle: string;
+  rankingSubtitle: string;
+  rowBoxOfficeLabel: string;
+  rowTotalPrefix: string;
+  pieTitle: string;
+  pieSubtitle: string;
+  miniBoxOfficeLabel: string;
+  changeMaxPp: number;
 }> = {
   today: {
     kpiLabels: ['当日实时票房', '当日观影人次', '当日总场次'],
@@ -91,6 +99,14 @@ const PERIOD_CONFIG: Record<TimePeriod, {
     xLabels: Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`),
     multiplier: 1,
     seriesNames: ['今日票房', '上月同期', '影史同期'],
+    rankingTitle: '实时票房排行 TOP10',
+    rankingSubtitle: '档期热度榜 · 秒级刷新 · 涨跌指示',
+    rowBoxOfficeLabel: '当日票房',
+    rowTotalPrefix: '累计',
+    pieTitle: '当日票房分布',
+    pieSubtitle: 'TOP6影片当日票房占比',
+    miniBoxOfficeLabel: '当日',
+    changeMaxPp: 5,
   },
   week: {
     kpiLabels: ['本周累计票房', '本周观影人次', '本周总场次'],
@@ -99,6 +115,14 @@ const PERIOD_CONFIG: Record<TimePeriod, {
     xLabels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     multiplier: 12,
     seriesNames: ['本周票房', '上周同期', '影史同期'],
+    rankingTitle: '本周影片票房排行 TOP10',
+    rankingSubtitle: '本周累计排行 · 含昨日预估',
+    rowBoxOfficeLabel: '本周票房',
+    rowTotalPrefix: '本周累计',
+    pieTitle: '本周票房分布',
+    pieSubtitle: 'TOP6影片本周票房占比',
+    miniBoxOfficeLabel: '本周',
+    changeMaxPp: 3,
   },
   month: {
     kpiLabels: ['本月累计票房', '本月观影人次', '本月总场次'],
@@ -107,6 +131,14 @@ const PERIOD_CONFIG: Record<TimePeriod, {
     xLabels: Array.from({ length: 30 }, (_, i) => `${i + 1}日`),
     multiplier: 50,
     seriesNames: ['本月票房', '去年同期', '影史同期'],
+    rankingTitle: '本月影片票房排行 TOP10',
+    rankingSubtitle: '本月累计排行 · 可追溯历史数据',
+    rowBoxOfficeLabel: '本月票房',
+    rowTotalPrefix: '本月累计',
+    pieTitle: '本月票房分布',
+    pieSubtitle: 'TOP6影片本月票房占比',
+    miniBoxOfficeLabel: '本月',
+    changeMaxPp: 2,
   },
   season: {
     kpiLabels: ['档期累计票房', '档期观影人次', '档期总场次'],
@@ -124,6 +156,14 @@ const PERIOD_CONFIG: Record<TimePeriod, {
     })(),
     multiplier: 500,
     seriesNames: ['2026暑期档', '2025暑期档', '历史同期'],
+    rankingTitle: '暑期档影片票房排行 TOP10',
+    rankingSubtitle: '档期累计排行 · 实时更新',
+    rowBoxOfficeLabel: '档期票房',
+    rowTotalPrefix: '档期累计',
+    pieTitle: '档期票房分布',
+    pieSubtitle: 'TOP6影片档期票房占比',
+    miniBoxOfficeLabel: '档期',
+    changeMaxPp: 1.5,
   },
 };
 
@@ -165,6 +205,14 @@ function stabilize(current: number, prev: number | null): number {
   return Math.round(prev + (adjusted - prev) * 0.3);
 }
 
+function stabilizeChange(prev: number | null, raw: number, maxPp: number): number {
+  if (prev === null) return raw;
+  const diff = raw - prev;
+  const clampedDiff = Math.max(-maxPp, Math.min(maxPp, diff));
+  const target = prev + clampedDiff;
+  return +(prev + (target - prev) * 0.4).toFixed(1);
+}
+
 function detectAnomaly(current: number, prev: number | null): 'warn' | 'error' | null {
   if (prev === null || prev === 0) return null;
   const ratio = Math.abs((current - prev) / prev);
@@ -185,8 +233,25 @@ export default function Dashboard() {
 
   const prevTrendRef = useRef<number[] | null>(null);
 
+  const prevChangeRef = useRef<{
+    boxOfficeChange: number | null;
+    audienceChange: number | null;
+    showCountChange: number | null;
+    occupancyChange: number | null;
+    perShowChange: number | null;
+    ticketPriceChange: number | null;
+  }>({
+    boxOfficeChange: null,
+    audienceChange: null,
+    showCountChange: null,
+    occupancyChange: null,
+    perShowChange: null,
+    ticketPriceChange: null,
+  });
+
   const config = PERIOD_CONFIG[timePeriod];
   const multiplier = config.multiplier;
+  const changeMaxPp = config.changeMaxPp;
 
   const stabilizedKpi = useMemo(() => {
     const raw = {
@@ -209,6 +274,29 @@ export default function Dashboard() {
 
     return result;
   }, [boxOffice, multiplier]);
+
+  const stabilizedChanges = useMemo(() => {
+    const rawBoxOfficeChange = boxOffice?.boxOfficeChange ?? -2.5;
+    const rawAudienceChange = 3.2;
+    const rawShowCountChange = 1.8;
+    const rawOccupancyChange = -0.5;
+    const rawPerShowChange = 2.1;
+    const rawTicketPriceChange = 0.9;
+
+    const pc = prevChangeRef.current;
+    const result = {
+      boxOfficeChange: stabilizeChange(pc.boxOfficeChange, rawBoxOfficeChange, changeMaxPp),
+      audienceChange: stabilizeChange(pc.audienceChange, rawAudienceChange, changeMaxPp),
+      showCountChange: stabilizeChange(pc.showCountChange, rawShowCountChange, changeMaxPp),
+      occupancyChange: stabilizeChange(pc.occupancyChange, rawOccupancyChange, changeMaxPp),
+      perShowChange: stabilizeChange(pc.perShowChange, rawPerShowChange, changeMaxPp),
+      ticketPriceChange: stabilizeChange(pc.ticketPriceChange, rawTicketPriceChange, changeMaxPp),
+    };
+
+    prevChangeRef.current = { ...result };
+
+    return result;
+  }, [boxOffice, changeMaxPp]);
 
   const anomalies = useMemo(() => ({
     totalBoxOffice: detectAnomaly(stabilizedKpi.totalBoxOffice, prevKpiRef.current.totalBoxOffice),
@@ -238,6 +326,14 @@ export default function Dashboard() {
   useEffect(() => {
     prevKpiRef.current = { totalBoxOffice: null, totalAudience: null, totalShowCount: null };
     prevTrendRef.current = null;
+    prevChangeRef.current = {
+      boxOfficeChange: null,
+      audienceChange: null,
+      showCountChange: null,
+      occupancyChange: null,
+      perShowChange: null,
+      ticketPriceChange: null,
+    };
   }, [timePeriod]);
 
   const trendOption: EChartsOption = {
@@ -346,6 +442,25 @@ export default function Dashboard() {
     { key: 'season', label: '档期' },
   ];
 
+  const getPipelineImpact = (errorCount24h: number) => {
+    if (errorCount24h > 5) {
+      return {
+        text: `影响：可能存在约 ±${(errorCount24h * 0.5).toFixed(1)}% 数据偏差`,
+        className: 'text-cine-400',
+      };
+    }
+    if (errorCount24h > 0) {
+      return {
+        text: `影响：约 ±${(errorCount24h * 0.3).toFixed(1)}% 轻微偏差`,
+        className: 'text-yellow-400',
+      };
+    }
+    return {
+      text: '数据完整度 100%',
+      className: 'text-chart-green',
+    };
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -373,7 +488,7 @@ export default function Dashboard() {
           label={config.kpiLabels[0]}
           value={formatNumber(stabilizedKpi.totalBoxOffice, 1)}
           icon={Banknote}
-          change={boxOffice?.boxOfficeChange}
+          change={stabilizedChanges.boxOfficeChange}
           unit="万元"
           highlight
           anomaly={anomalies.totalBoxOffice}
@@ -382,7 +497,7 @@ export default function Dashboard() {
           label={config.kpiLabels[1]}
           value={formatNumber(stabilizedKpi.totalAudience)}
           icon={Users}
-          change={3.2}
+          change={stabilizedChanges.audienceChange}
           unit="人"
           anomaly={anomalies.totalAudience}
         />
@@ -390,13 +505,13 @@ export default function Dashboard() {
           label={config.kpiLabels[2]}
           value={formatNumber(stabilizedKpi.totalShowCount)}
           icon={Ticket}
-          change={1.8}
+          change={stabilizedChanges.showCountChange}
           unit="场"
           anomaly={anomalies.totalShowCount}
         />
-        <KpiCard label="平均上座率" value={formatPercent(boxOffice?.avgOccupancy || 0)} icon={Percent} change={-0.5} />
-        <KpiCard label="场均人次" value={String(boxOffice?.perShowAudience || 0)} icon={UserCheck} change={2.1} unit="人/场" />
-        <KpiCard label="平均票价" value={`¥${boxOffice?.avgTicketPrice?.toFixed(1) || '0'}`} icon={TrendingUp} unit="元" change={0.9} />
+        <KpiCard label="平均上座率" value={formatPercent(boxOffice?.avgOccupancy || 0)} icon={Percent} change={stabilizedChanges.occupancyChange} />
+        <KpiCard label="场均人次" value={String(boxOffice?.perShowAudience || 0)} icon={UserCheck} change={stabilizedChanges.perShowChange} unit="人/场" />
+        <KpiCard label="平均票价" value={`¥${boxOffice?.avgTicketPrice?.toFixed(1) || '0'}`} icon={TrendingUp} unit="元" change={stabilizedChanges.ticketPriceChange} />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
@@ -429,8 +544,8 @@ export default function Dashboard() {
         <div className="cip-card p-5 flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-serif text-lg font-semibold text-slate-100">档期票房分布</h3>
-              <p className="text-xs text-slate-500 mt-0.5">TOP6影片票房占比</p>
+              <h3 className="font-serif text-lg font-semibold text-slate-100">{config.pieTitle}</h3>
+              <p className="text-xs text-slate-500 mt-0.5">{config.pieSubtitle}</p>
             </div>
           </div>
           <div className="flex-1">
@@ -448,6 +563,7 @@ export default function Dashboard() {
                 )}>{r.rank}</span>
                 <span className="flex-1 text-slate-300 truncate">{r.filmName}</span>
                 <span className="font-mono text-gold-400 text-xs font-medium">{formatNumber(r.boxOffice)}万</span>
+                <span className="text-[10px] text-slate-500 w-8 text-right">{config.miniBoxOfficeLabel}</span>
                 <span className="w-16 text-right">
                   <div className="h-1.5 rounded-full bg-space-700 overflow-hidden">
                     <div
@@ -466,8 +582,8 @@ export default function Dashboard() {
         <div className="xl:col-span-3 cip-card p-5">
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="font-serif text-lg font-semibold text-slate-100">实时票房排行 TOP10</h3>
-              <p className="text-xs text-slate-500 mt-0.5">档期热度榜 · 秒级刷新 · 涨跌指示</p>
+              <h3 className="font-serif text-lg font-semibold text-slate-100">{config.rankingTitle}</h3>
+              <p className="text-xs text-slate-500 mt-0.5">{config.rankingSubtitle}</p>
             </div>
             <div className="flex items-center gap-4 text-xs text-slate-400">
               <span>票房占比</span>
@@ -494,7 +610,7 @@ export default function Dashboard() {
                       {r.changeIndicator === 'up' && <span className="text-chart-green flex items-center gap-0.5"><ArrowUpRight className="w-3 h-3" strokeWidth={3} />+{r.changeValue}</span>}
                       {r.changeIndicator === 'down' && <span className="text-cine-400 flex items-center gap-0.5"><ArrowDownRight className="w-3 h-3" strokeWidth={3} />-{r.changeValue}</span>}
                       {r.changeIndicator === 'flat' && <span className="text-slate-500 flex items-center gap-0.5"><Minus className="w-3 h-3" strokeWidth={3} />持平</span>}
-                      <span>累计 {formatNumber(r.totalBoxOffice)}万</span>
+                      <span>{config.rowTotalPrefix} {formatNumber(r.totalBoxOffice)}万</span>
                     </div>
                   </div>
                 </div>
@@ -533,7 +649,7 @@ export default function Dashboard() {
                 </div>
                 <div className="text-right shrink-0 w-28">
                   <div className="font-mono font-bold text-gold-400">{formatNumber(r.boxOffice)}<span className="text-xs text-gold-500/70 ml-0.5">万</span></div>
-                  <div className="text-[11px] text-slate-500">当日票房</div>
+                  <div className="text-[11px] text-slate-500">{config.rowBoxOfficeLabel}</div>
                 </div>
               </div>
             ))}
@@ -555,36 +671,42 @@ export default function Dashboard() {
               <span className="badge badge-online">3路在线</span>
             </div>
             <div className="space-y-3">
-              {pipelines.map(p => (
-                <div key={p.webhookName} className="p-3.5 rounded-xl bg-space-800/40 border border-space-700/30">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className={clsx(
-                        'w-2 h-2 rounded-full',
-                        p.status === 'online' ? 'bg-chart-green animate-pulse' : 'bg-chart-orange'
-                      )} />
-                      <span className="text-sm font-medium text-slate-200">{p.webhookName}</span>
+              {pipelines.map(p => {
+                const impact = getPipelineImpact(p.errorCount24h);
+                return (
+                  <div key={p.webhookName} className="p-3.5 rounded-xl bg-space-800/40 border border-space-700/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className={clsx(
+                          'w-2 h-2 rounded-full',
+                          p.status === 'online' ? 'bg-chart-green animate-pulse' : 'bg-chart-orange'
+                        )} />
+                        <span className="text-sm font-medium text-slate-200">{p.webhookName}</span>
+                      </div>
+                      <span className={clsx('badge text-[10px]', p.status === 'online' ? 'badge-online' : 'badge-warn')}>
+                        {p.status === 'online' ? '正常' : '降级'}
+                      </span>
                     </div>
-                    <span className={clsx('badge text-[10px]', p.status === 'online' ? 'badge-online' : 'badge-warn')}>
-                      {p.status === 'online' ? '正常' : '降级'}
-                    </span>
+                    <div className="grid grid-cols-3 gap-2 text-[11px]">
+                      <div>
+                        <div className="text-slate-500 flex items-center gap-1"><Clock className="w-3 h-3" strokeWidth={1.8} />延迟</div>
+                        <div className="font-mono text-slate-300 mt-0.5">{p.latencyMs} ms</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-500 flex items-center gap-1"><Zap className="w-3 h-3" strokeWidth={1.8} />吞吐</div>
+                        <div className="font-mono text-slate-300 mt-0.5">{p.eventsPerSecond}/s</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-500">24h异常</div>
+                        <div className={clsx('font-mono mt-0.5', p.errorCount24h > 5 ? 'text-cine-400' : 'text-chart-green')}>{p.errorCount24h} 次</div>
+                      </div>
+                    </div>
+                    <div className={clsx('text-[11px] mt-2', impact.className)}>
+                      {impact.text}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-[11px]">
-                    <div>
-                      <div className="text-slate-500 flex items-center gap-1"><Clock className="w-3 h-3" />延迟</div>
-                      <div className="font-mono text-slate-300 mt-0.5">{p.latencyMs} ms</div>
-                    </div>
-                    <div>
-                      <div className="text-slate-500 flex items-center gap-1"><Zap className="w-3 h-3" />吞吐</div>
-                      <div className="font-mono text-slate-300 mt-0.5">{p.eventsPerSecond}/s</div>
-                    </div>
-                    <div>
-                      <div className="text-slate-500">24h异常</div>
-                      <div className={clsx('font-mono mt-0.5', p.errorCount24h > 5 ? 'text-cine-400' : 'text-chart-green')}>{p.errorCount24h} 次</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
               {pipelines.length === 0 && (
                 <div className="text-center py-8 text-slate-500 text-sm">加载中...</div>
               )}
