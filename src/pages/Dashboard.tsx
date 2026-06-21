@@ -19,6 +19,33 @@ import {
   Clock as ClockIcon,
   FileBarChart,
   Building2,
+  Gamepad2,
+  Hotel,
+  ChevronRight,
+  ChevronDown,
+  Cpu,
+  Wifi,
+  Lock,
+  Unlock,
+  ShieldAlert,
+  UserCheck,
+  ClipboardCheck,
+  Zap,
+  Package,
+  Truck,
+  Store,
+  BarChart4,
+  Trophy,
+  Gift,
+  Coins,
+  CalendarCheck,
+  AlertTriangle,
+  Eye,
+  ArrowRight,
+  Gauge,
+  Layers,
+  MapPin,
+  Phone,
 } from 'lucide-react';
 import { StatCard } from '@/components/StatCard';
 import {
@@ -43,11 +70,24 @@ import {
   revenueTrend,
   deviceUsageTrend,
   bookingOrders,
+  hotelBookings,
   members,
   alerts,
+  stores,
+  seats,
+  rooms,
+  devices,
   storeComparisons,
   timeSegmentData,
   biReports,
+  pointTransactions,
+  exchangeRecords,
+  alertHandlingRecords,
+  stockTransactions,
+  fulfillmentTracks,
+  deviceLockRecords,
+  seatMapDataList,
+  roomDeviceMaps,
 } from '@/data/mockData';
 
 const revenueDistribution = [
@@ -64,9 +104,21 @@ const memberLevelDistribution = [
   { name: '钻石', value: 50, color: '#B9F2FF' },
 ];
 
-const recentOrders = bookingOrders.slice(0, 6);
-const topMembers = [...members].sort((a, b) => b.totalSpent - a.totalSpent).slice(0, 5);
-const activeAlerts = alerts.filter((a) => a.status !== 'resolved').slice(0, 5);
+const categoryLabels: Record<string, string> = {
+  revenue: '营收分析',
+  operations: '运营分析',
+  members: '会员分析',
+  devices: '设备分析',
+  inventory: '库存分析',
+};
+
+const periodLabels: Record<string, string> = {
+  daily: '日报',
+  weekly: '周报',
+  monthly: '月报',
+  quarterly: '季报',
+  yearly: '年报',
+};
 
 const tabs = [
   { id: 'overview', label: '总览', icon: PieChartIcon },
@@ -91,24 +143,58 @@ function formatFileSize(kb: number) {
   return `${kb} KB`;
 }
 
-const categoryLabels: Record<string, string> = {
-  revenue: '营收分析',
-  operations: '运营分析',
-  members: '会员分析',
-  devices: '设备分析',
-  inventory: '库存分析',
-};
+function getStoreName(storeId: string) {
+  return stores.find(s => s.id === storeId)?.name || '未知门店';
+}
 
-const periodLabels: Record<string, string> = {
-  daily: '日报',
-  weekly: '周报',
-  monthly: '月报',
-  quarterly: '季报',
-  yearly: '年报',
-};
+function getSeatDevice(seatId: string) {
+  const map = seatMapDataList.find(s => s.id === seatId);
+  if (map) return map;
+  const seat = seats.find(s => s.id === seatId);
+  const device = seat ? devices.find(d => d.id === seat.deviceId) : null;
+  return {
+    id: seatId,
+    seatNumber: seat?.seatNumber || '未知',
+    deviceSpec: device?.model || '标准配置',
+    networkLatency: device?.networkLatency || 15,
+  };
+}
+
+function getRoomDevices(roomId: string) {
+  return roomDeviceMaps.find(r => r.roomId === roomId);
+}
+
+function getAlertHandler(alertId: string) {
+  const records = alertHandlingRecords.filter(r => r.alertId === alertId);
+  const latest = records[records.length - 1];
+  const assignee = records.find(r => r.action === 'assign');
+  return {
+    currentHandler: assignee?.assigneeName || latest?.operatorName || '待指派',
+    currentRole: assignee?.assigneeName ? (assignee.assigneeName.includes('店长') ? '店长' : '运维工程师') : '未指派',
+    recordCount: records.length,
+    hasReview: records.some(r => r.action === 'review'),
+  };
+}
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [drillDownType, setDrillDownType] = useState<string | null>(null);
+  const [expandedStoreId, setExpandedStoreId] = useState<string | null>(null);
+  const [expandedMemberId, setExpandedMemberId] = useState<string | null>(null);
+  const [expandedAlertId, setExpandedAlertId] = useState<string | null>(null);
+
+  const recentSeatOrders = bookingOrders.slice(0, 4);
+  const recentHotelBookings = hotelBookings.slice(0, 4);
+
+  const topMembers = [...members].sort((a, b) => b.totalSpent - a.totalSpent).slice(0, 5);
+  const activeAlerts = alerts.filter((a) => a.status !== 'resolved').slice(0, 5);
+  const recentPoints = pointTransactions.slice(0, 5);
+  const pendingExchanges = exchangeRecords.filter(e => e.status === 'pending' || e.status === 'confirmed').slice(0, 5);
+  const pendingStockOut = stockTransactions.filter(s => s.type === 'out').slice(0, 4);
+  const recentFulfillment = fulfillmentTracks.slice(0, 5);
+
+  const esportsStores = stores.filter(s => s.type === 'esports' || s.type === 'both');
+  const hotelStores = stores.filter(s => s.type === 'hotel' || s.type === 'both');
 
   const storeChartData = storeComparisons.map((store) => ({
     name: store.storeName.split('·')[1] || store.storeName,
@@ -246,21 +332,289 @@ export default function Dashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* 业态营收构成 - 可下钻到门店→座位/包间→设备映射 */}
             <div className="lg:col-span-2 p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">营收趋势</h3>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-full bg-cyber-500"></span>
-                    营收
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-full bg-neon-purple"></span>
-                    订单
-                  </span>
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-cyber-400" />
+                  业态构成与实时资源映射
+                  <span className="text-xs font-normal text-dark-400">（点击业态查看门店→设备映射）</span>
+                </h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                {/* 电竞馆65% */}
+                <div
+                  onClick={() => setDrillDownType(drillDownType === 'esports' ? null : 'esports')}
+                  className={`p-4 rounded-xl cursor-pointer transition-all border-2 ${
+                    drillDownType === 'esports'
+                      ? 'bg-gradient-to-br from-cyber-500/20 to-cyber-600/10 border-cyber-500 shadow-lg shadow-cyber-500/20'
+                      : 'bg-dark-900/50 border-dark-700 hover:border-cyber-500/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2.5 rounded-lg bg-cyber-500/20">
+                      <Gamepad2 className="w-6 h-6 text-cyber-400" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-cyber-400 font-orbitron">65%</p>
+                      <p className="text-sm text-dark-300">电竞馆业务</p>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">覆盖门店</span>
+                      <span className="text-white">{esportsStores.length} 家</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">在用座位</span>
+                      <span className="text-white">{esportsStores.reduce((a, s) => a + s.seatCount, 0)} 个</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">在用包间</span>
+                      <span className="text-white">{esportsStores.reduce((a, s) => a + s.roomCount, 0)} 个</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center gap-1 text-xs text-cyber-400">
+                    {drillDownType === 'esports' ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+                    查看门店→设备实时映射
+                  </div>
+                </div>
+
+                {/* 电竞酒店25% */}
+                <div
+                  onClick={() => setDrillDownType(drillDownType === 'hotel' ? null : 'hotel')}
+                  className={`p-4 rounded-xl cursor-pointer transition-all border-2 ${
+                    drillDownType === 'hotel'
+                      ? 'bg-gradient-to-br from-neon-purple/20 to-neon-purple/10 border-neon-purple shadow-lg shadow-neon-purple/20'
+                      : 'bg-dark-900/50 border-dark-700 hover:border-neon-purple/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2.5 rounded-lg bg-neon-purple/20">
+                      <Hotel className="w-6 h-6 text-neon-purple" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-neon-purple font-orbitron">25%</p>
+                      <p className="text-sm text-dark-300">电竞酒店业务</p>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">覆盖门店</span>
+                      <span className="text-white">{hotelStores.length} 家</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">酒店房型</span>
+                      <span className="text-white">{hotelStores.reduce((a, s) => a + s.roomCount, 0)} 种</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">联动终端</span>
+                      <span className="text-white">{deviceLockRecords.filter(r => r.action === 'lock').length} 台</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center gap-1 text-xs text-neon-purple">
+                    {drillDownType === 'hotel' ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+                    查看房型→终端联动记录
+                  </div>
+                </div>
+
+                {/* 商城10% */}
+                <div
+                  onClick={() => setDrillDownType(drillDownType === 'mall' ? null : 'mall')}
+                  className={`p-4 rounded-xl cursor-pointer transition-all border-2 ${
+                    drillDownType === 'mall'
+                      ? 'bg-gradient-to-br from-neon-green/20 to-neon-green/10 border-neon-green shadow-lg shadow-neon-green/20'
+                      : 'bg-dark-900/50 border-dark-700 hover:border-neon-green/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2.5 rounded-lg bg-neon-green/20">
+                      <ShoppingCart className="w-6 h-6 text-neon-green" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-neon-green font-orbitron">10%</p>
+                      <p className="text-sm text-dark-300">商城消费业务</p>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">今日订单</span>
+                      <span className="text-white">{pendingStockOut.length + 12} 单</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">待履约</span>
+                      <span className="text-neon-orange">{recentFulfillment.filter(f => f.status !== 'delivered' && f.status !== 'picked_up').length} 单</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-dark-400">自提/闪送</span>
+                      <span className="text-white">4 / 3 单</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center gap-1 text-xs text-neon-green">
+                    {drillDownType === 'mall' ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+                    查看库存→履约→BI口径
+                  </div>
                 </div>
               </div>
-              <div className="h-72">
+
+              {/* 下钻展开区：门店→座位/包间→设备映射 */}
+              {drillDownType && (
+                <div className="mt-4 p-4 rounded-xl bg-dark-900/80 border border-dark-700">
+                  {drillDownType === 'esports' && (
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-semibold text-cyber-400 flex items-center gap-2">
+                        <MapPin className="w-4 h-4" /> 电竞馆门店→座位→设备实时映射
+                      </h4>
+                      {esportsStores.slice(0, 3).map(store => {
+                        const isExpanded = expandedStoreId === store.id;
+                        const storeSeats = seats.filter(s => s.storeId === store.id).slice(0, 5);
+                        return (
+                          <div key={store.id} className="border border-dark-700 rounded-lg overflow-hidden">
+                            <div
+                              className="flex items-center justify-between p-3 bg-dark-800/50 cursor-pointer hover:bg-dark-700/50"
+                              onClick={() => setExpandedStoreId(isExpanded ? null : store.id)}
+                            >
+                              <div className="flex items-center gap-3">
+                                <Building2 className="w-4 h-4 text-cyber-400" />
+                                <span className="font-medium text-white">{store.name}</span>
+                                <span className="text-xs text-dark-400">{store.seatCount}座位·{store.roomCount}包间</span>
+                              </div>
+                              <ChevronDown className={`w-4 h-4 text-dark-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </div>
+                            {isExpanded && (
+                              <div className="p-3 space-y-2">
+                                <p className="text-xs font-medium text-dark-400 mb-2">座位映射（实时延迟/设备配置/状态）：</p>
+                                {storeSeats.map(seat => {
+                                  const seatInfo = getSeatDevice(seat.id);
+                                  return (
+                                    <div key={seat.id} className="flex items-center justify-between p-2 rounded-lg bg-dark-800/50 text-xs">
+                                      <div className="flex items-center gap-2">
+                                        <span className="px-2 py-0.5 rounded bg-cyber-500/20 text-cyber-400 font-medium">{seat.seatNumber}</span>
+                                        <span className="text-dark-300">{seatInfo.deviceSpec}</span>
+                                      </div>
+                                      <div className="flex items-center gap-3">
+                                        <span className={`flex items-center gap-1 ${seatInfo.networkLatency < 20 ? 'text-neon-green' : seatInfo.networkLatency < 50 ? 'text-neon-orange' : 'text-neon-red'}`}>
+                                          <Wifi className="w-3 h-3" /> {seatInfo.networkLatency}ms
+                                        </span>
+                                        <span className={seat.status === 'occupied' ? 'text-neon-red' : seat.status === 'available' ? 'text-neon-green' : 'text-neon-orange'}>
+                                          {seat.status === 'occupied' ? '使用中' : seat.status === 'available' ? '空闲' : '已预订'}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {drillDownType === 'hotel' && (
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-semibold text-neon-purple flex items-center gap-2">
+                        <Lock className="w-4 h-4" /> 电竞酒店房型→终端联动锁定记录
+                      </h4>
+                      <div className="grid grid-cols-1 gap-3">
+                        {recentHotelBookings.map(hb => {
+                          const lockRecords = deviceLockRecords.filter(r => r.hotelBookingId === hb.id);
+                          const roomMap = getRoomDevices(hb.roomId);
+                          return (
+                            <div key={hb.id} className="p-3 rounded-lg bg-dark-800/50 border border-dark-700">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <span className="px-2 py-0.5 rounded bg-neon-purple/20 text-neon-purple text-xs font-medium">{hb.roomName}</span>
+                                  <span className="text-white text-sm">{hb.guestName}</span>
+                                  <span className="text-xs text-dark-400">{hb.storeName.split('·')[1]}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {hb.deviceLocked ? (
+                                    <span className="px-2 py-0.5 rounded bg-neon-green/20 text-neon-green text-xs flex items-center gap-1">
+                                      <Lock className="w-3 h-3" /> {lockRecords.length}台已锁定
+                                    </span>
+                                  ) : (
+                                    <span className="px-2 py-0.5 rounded bg-neon-orange/20 text-neon-orange text-xs flex items-center gap-1">
+                                      <Unlock className="w-3 h-3" /> 待锁定
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              {roomMap?.devices && (
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+                                  {roomMap.devices.slice(0, 6).map((d, i) => (
+                                    <div key={i} className="flex items-center gap-2 p-2 rounded bg-dark-900/50 text-xs">
+                                      <Cpu className="w-3 h-3 text-cyber-400" />
+                                      <span className="text-dark-300">{d.name}</span>
+                                      <span className={d.status === 'normal' ? 'text-neon-green' : 'text-neon-red'}>●</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                              {lockRecords.length > 0 && (
+                                <div className="mt-2 pt-2 border-t border-dark-700 text-xs text-dark-400">
+                                  业务记录：{lockRecords.map((r, i) => (
+                                    <span key={i} className="inline-block mr-2">
+                                      [{r.createdAt.split('T')[1].slice(0, 5)}] {r.operatorName}-{r.action === 'lock' ? '锁定' : '解锁'}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {drillDownType === 'mall' && (
+                    <div className="space-y-4">
+                      <h4 className="text-sm font-semibold text-neon-green flex items-center gap-2">
+                        <BarChart4 className="w-4 h-4" /> 商城订单→库存→履约→BI口径追踪链路
+                      </h4>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded bg-neon-orange/20 text-neon-orange text-xs flex items-center gap-1">
+                            <Package /> 库存出库 {pendingStockOut.length} 笔
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-dark-600" />
+                          <div className="p-2 rounded bg-cyber-500/20 text-cyber-400 text-xs flex items-center gap-1">
+                            <Truck /> 履约中 {recentFulfillment.filter(f => f.status !== 'delivered').length} 单
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-dark-600" />
+                          <div className="p-2 rounded bg-neon-green/20 text-neon-green text-xs flex items-center gap-1">
+                            <BarChart4 /> BI口径已汇总 {biReports.length} 份
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-xs space-y-2">
+                        {recentFulfillment.slice(0, 4).map(ft => (
+                          <div key={ft.id} className="flex items-center justify-between p-2 rounded-lg bg-dark-800/50">
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-dark-400">#{ft.orderId.slice(-6)}</span>
+                              <span className={ft.fulfillmentType === 'pickup' ? 'text-cyber-400' : 'text-neon-purple'}>
+                                {ft.fulfillmentType === 'pickup' ? '到店自提' : ft.fulfillmentType === 'same_city' ? '同城闪送' : '快递配送'}
+                              </span>
+                              <span className="text-dark-300">{ft.description}</span>
+                            </div>
+                            <span className={ft.status === 'delivered' || ft.status === 'picked_up' ? 'text-neon-green' : 'text-neon-orange'}>
+                              {ft.status === 'delivered' ? '已送达' : ft.status === 'picked_up' ? '已自提' : ft.status === 'pickup_ready' ? '待自提' : '配送中'}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* 营收趋势 */}
+            <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-white">营收趋势</h3>
+              </div>
+              <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={revenueTrend}>
                     <defs>
@@ -290,52 +644,6 @@ export default function Dashboard() {
                     />
                   </AreaChart>
                 </ResponsiveContainer>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
-              <h3 className="text-lg font-semibold text-white mb-4">营收构成</h3>
-              <div className="h-56">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={revenueDistribution}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={50}
-                      outerRadius={80}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      {revenueDistribution.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: '#0f172a',
-                        border: '1px solid #334155',
-                        borderRadius: '8px',
-                        color: '#e2e8f0',
-                      }}
-                      formatter={(value: number) => [`${value}%`, '占比']}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="space-y-2 mt-2">
-                {revenueDistribution.map((item) => (
-                  <div key={item.name} className="flex items-center justify-between text-sm">
-                    <span className="flex items-center gap-2">
-                      <span
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                      ></span>
-                      <span className="text-dark-300">{item.name}</span>
-                    </span>
-                    <span className="text-white font-medium">{item.value}%</span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -417,116 +725,340 @@ export default function Dashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* 最近订单：座位单 + 酒店预订双展示 */}
             <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">最近订单</h3>
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <ShoppingCart className="w-5 h-5 text-cyber-400" />
+                  最近订单
+                  <span className="text-xs font-normal text-dark-400">（座位+酒店）</span>
+                </h3>
                 <a href="#" className="text-sm text-cyber-400 hover:text-cyber-300">
                   查看全部
                 </a>
               </div>
-              <div className="space-y-3">
-                {recentOrders.map((order) => (
-                  <div
-                    key={order.id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-dark-900/50 hover:bg-dark-700/50 transition-colors"
-                  >
-                    <div>
-                      <p className="text-sm font-medium text-white">{order.seatNumber}</p>
-                      <p className="text-xs text-dark-400">{order.userName}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-neon-green">¥{order.totalAmount}</p>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded-full ${
-                          order.status === 'in_progress'
-                            ? 'bg-neon-green/20 text-neon-green'
-                            : order.status === 'completed'
-                            ? 'bg-dark-600 text-dark-300'
-                            : 'bg-cyber-500/20 text-cyber-400'
-                        }`}
-                      >
-                        {order.status === 'in_progress'
-                          ? '进行中'
-                          : order.status === 'completed'
-                          ? '已完成'
-                          : '已确认'}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">消费排行</h3>
-                <a href="#" className="text-sm text-cyber-400 hover:text-cyber-300">
-                  查看全部
-                </a>
-              </div>
-              <div className="space-y-3">
-                {topMembers.map((member, index) => (
-                  <div
-                    key={member.id}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-dark-900/50 hover:bg-dark-700/50 transition-colors"
-                  >
-                    <span
-                      className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                        index === 0
-                          ? 'bg-yellow-500 text-black'
-                          : index === 1
-                          ? 'bg-gray-300 text-black'
-                          : index === 2
-                          ? 'bg-amber-700 text-white'
-                          : 'bg-dark-700 text-dark-400'
-                      }`}
-                    >
-                      {index + 1}
-                    </span>
-                    <img src={member.avatar} alt={member.name} className="w-8 h-8 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{member.name}</p>
-                      <p className="text-xs text-dark-400">{member.levelName}</p>
-                    </div>
-                    <span className="text-sm font-medium text-neon-green">
-                      ¥{member.totalSpent.toLocaleString()}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">设备预警</h3>
-                <span className="text-xs bg-neon-red/20 text-neon-red px-2 py-1 rounded-full">
-                  {activeAlerts.length} 条待处理
+              <div className="mb-3 flex gap-1">
+                <span className="px-2 py-0.5 rounded bg-cyber-500/20 text-cyber-400 text-xs flex items-center gap-1">
+                  <Gamepad2 className="w-3 h-3" /> 订座 {recentSeatOrders.length}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-neon-purple/20 text-neon-purple text-xs flex items-center gap-1">
+                  <Hotel className="w-3 h-3" /> 酒店 {recentHotelBookings.length}
                 </span>
               </div>
-              <div className="space-y-3">
-                {activeAlerts.map((alert) => (
-                  <div
-                    key={alert.id}
-                    className="p-3 rounded-lg bg-dark-900/50 border-l-2 border-neon-red"
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-white">{alert.deviceName}</span>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded-full ${
-                          alert.level === 'critical'
-                            ? 'bg-neon-red/20 text-neon-red'
-                            : alert.level === 'high'
-                            ? 'bg-neon-orange/20 text-neon-orange'
-                            : 'bg-yellow-500/20 text-yellow-400'
-                        }`}
-                      >
-                        {alert.level === 'critical' ? '严重' : alert.level === 'high' ? '高' : '中'}
-                      </span>
+              <div className="space-y-2 max-h-[420px] overflow-y-auto">
+                {/* 酒店预订 */}
+                {recentHotelBookings.map(hb => {
+                  const lockCount = deviceLockRecords.filter(r => r.hotelBookingId === hb.id && r.action === 'lock').length;
+                  return (
+                    <div
+                      key={hb.id}
+                      className="p-3 rounded-lg bg-dark-900/50 hover:bg-dark-700/50 transition-colors border-l-2 border-neon-purple"
+                    >
+                      <div className="flex items-start justify-between mb-1.5">
+                        <div className="flex items-center gap-1.5">
+                          <span className="px-1.5 py-0.5 rounded bg-neon-purple/20 text-neon-purple text-[10px] font-medium">酒店</span>
+                          <span className="text-sm font-medium text-white">{hb.roomName}</span>
+                        </div>
+                        <p className="text-xs font-medium text-neon-green">¥{hb.totalAmount}</p>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-dark-400">{hb.guestName}·{hb.nights}晚</span>
+                        <div className="flex items-center gap-2">
+                          {hb.deviceLocked ? (
+                            <span className="flex items-center gap-1 text-neon-green">
+                              <Lock className="w-3 h-3" /> {lockCount}台锁定
+                            </span>
+                          ) : (
+                            <span className="flex items-center gap-1 text-neon-orange">
+                              <Unlock className="w-3 h-3" /> 待锁定
+                            </span>
+                          )}
+                          <span className={`px-1.5 py-0.5 rounded-full ${
+                            hb.status === 'checked_in' ? 'bg-neon-green/20 text-neon-green' :
+                            hb.status === 'confirmed' ? 'bg-cyber-500/20 text-cyber-400' :
+                            'bg-dark-600 text-dark-300'
+                          }`}>
+                            {hb.status === 'checked_in' ? '已入住' : hb.status === 'confirmed' ? '已确认' : hb.status === 'checked_out' ? '已退房' : '待确认'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-xs text-dark-400">{alert.message}</p>
-                    <p className="text-xs text-dark-500 mt-1">{alert.storeName}</p>
+                  );
+                })}
+                {/* 座位订单 */}
+                {recentSeatOrders.map(order => {
+                  const seatInfo = getSeatDevice(order.seatId);
+                  return (
+                    <div
+                      key={order.id}
+                      className="p-3 rounded-lg bg-dark-900/50 hover:bg-dark-700/50 transition-colors border-l-2 border-cyber-500"
+                    >
+                      <div className="flex items-start justify-between mb-1.5">
+                        <div className="flex items-center gap-1.5">
+                          <span className="px-1.5 py-0.5 rounded bg-cyber-500/20 text-cyber-400 text-[10px] font-medium">订座</span>
+                          <span className="text-sm font-medium text-white">{order.seatNumber}</span>
+                        </div>
+                        <p className="text-xs font-medium text-neon-green">¥{order.totalAmount}</p>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="text-dark-400">{order.userName}</span>
+                          <span className="text-dark-500 flex items-center gap-0.5">
+                            <Cpu className="w-3 h-3" /> {seatInfo.deviceSpec.slice(0, 10)}..
+                          </span>
+                          <span className={`flex items-center gap-0.5 ${seatInfo.networkLatency < 20 ? 'text-neon-green' : 'text-neon-orange'}`}>
+                            <Wifi className="w-3 h-3" /> {seatInfo.networkLatency}ms
+                          </span>
+                        </div>
+                        <span className={`px-1.5 py-0.5 rounded-full ${
+                          order.status === 'in_progress' ? 'bg-neon-green/20 text-neon-green' :
+                          order.status === 'completed' ? 'bg-dark-600 text-dark-300' :
+                          'bg-cyber-500/20 text-cyber-400'
+                        }`}>
+                          {order.status === 'in_progress' ? '进行中' : order.status === 'completed' ? '已完成' : '已确认'}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-3 pt-3 border-t border-dark-700 text-xs text-dark-500 flex items-center justify-between">
+                <span>💡 按设备配置/延迟/时段筛选 → 智能订座承接结果</span>
+                <a href="#/booking" className="text-cyber-400 hover:text-cyber-300 flex items-center gap-0.5">
+                  去筛选 <ChevronRight className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+
+            {/* 会员：消费排行 + 积分流水/赛事/核销待办可展开 */}
+            <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <Users className="w-5 h-5 text-neon-purple" />
+                  会员体系
+                  <span className="text-xs font-normal text-dark-400">（积分/赛事/核销）</span>
+                </h3>
+                <a href="#/members" className="text-sm text-cyber-400 hover:text-cyber-300">
+                  会员详情
+                </a>
+              </div>
+              <div className="mb-3 grid grid-cols-3 gap-1.5 text-center">
+                <div className="p-2 rounded bg-neon-green/10">
+                  <div className="text-neon-green text-sm font-bold flex items-center justify-center gap-0.5">
+                    <Coins className="w-3 h-3" /> {recentPoints.length}
                   </div>
-                ))}
+                  <p className="text-[10px] text-dark-400 mt-0.5">积分流水</p>
+                </div>
+                <div className="p-2 rounded bg-cyber-500/10">
+                  <div className="text-cyber-400 text-sm font-bold flex items-center justify-center gap-0.5">
+                    <Trophy className="w-3 h-3" /> 5
+                  </div>
+                  <p className="text-[10px] text-dark-400 mt-0.5">赛事参与</p>
+                </div>
+                <div className="p-2 rounded bg-neon-orange/10">
+                  <div className="text-neon-orange text-sm font-bold flex items-center justify-center gap-0.5">
+                    <Gift className="w-3 h-3" /> {pendingExchanges.length}
+                  </div>
+                  <p className="text-[10px] text-dark-400 mt-0.5">核销待办</p>
+                </div>
+              </div>
+              <div className="space-y-2 max-h-[350px] overflow-y-auto">
+                {topMembers.map((member, index) => {
+                  const isExpanded = expandedMemberId === member.id;
+                  const mPoints = recentPoints.filter(p => p.memberId === member.id);
+                  const mExchanges = pendingExchanges.filter(e => e.memberId === member.id);
+                  return (
+                    <div key={member.id} className="rounded-lg bg-dark-900/50 overflow-hidden">
+                      <div
+                        className="flex items-center gap-2 p-2.5 cursor-pointer hover:bg-dark-700/50"
+                        onClick={() => setExpandedMemberId(isExpanded ? null : member.id)}
+                      >
+                        <span
+                          className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                            index === 0 ? 'bg-yellow-500 text-black' :
+                            index === 1 ? 'bg-gray-300 text-black' :
+                            index === 2 ? 'bg-amber-700 text-white' : 'bg-dark-700 text-dark-400'
+                          }`}
+                        >
+                          {index + 1}
+                        </span>
+                        <img src={member.avatar} alt={member.name} className="w-7 h-7 rounded-full" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium text-white truncate">{member.name}</p>
+                          <p className="text-[10px] text-dark-400">{member.levelName}·{member.points}积分</p>
+                        </div>
+                        <span className="text-xs font-medium text-neon-green">
+                          ¥{(member.totalSpent / 1000).toFixed(1)}k
+                        </span>
+                        <ChevronDown className={`w-3.5 h-3.5 text-dark-400 transition-transform flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`} />
+                      </div>
+                      {isExpanded && (
+                        <div className="px-2.5 pb-2.5 space-y-2 border-t border-dark-700 pt-2">
+                          {mPoints.length > 0 && (
+                            <div>
+                              <p className="text-[10px] font-medium text-neon-green flex items-center gap-1 mb-1.5">
+                                <Coins className="w-3 h-3" /> 积分累计流水
+                              </p>
+                              <div className="space-y-1">
+                                {mPoints.slice(0, 3).map(pt => (
+                                  <div key={pt.id} className="flex justify-between text-[10px] p-1.5 rounded bg-dark-800/80">
+                                    <div className="flex items-center gap-1.5">
+                                      <span className={`px-1 rounded ${pt.type === 'earn' ? 'bg-neon-green/20 text-neon-green' : pt.type === 'spend' ? 'bg-neon-orange/20 text-neon-orange' : 'bg-dark-600 text-dark-300'}`}>
+                                        {pt.type === 'earn' ? '+' : pt.type === 'spend' ? '-' : '±'}
+                                      </span>
+                                      <span className="text-dark-300">{pt.description}</span>
+                                    </div>
+                                    <span className={`font-medium ${pt.type === 'earn' ? 'text-neon-green' : 'text-neon-orange'}`}>
+                                      {pt.type === 'earn' ? '+' : ''}{pt.points} = {pt.balance}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {mExchanges.length > 0 && (
+                            <div>
+                              <p className="text-[10px] font-medium text-neon-orange flex items-center gap-1 mb-1.5">
+                                <CalendarCheck className="w-3 h-3" /> 权益核销待复查
+                              </p>
+                              {mExchanges.slice(0, 2).map(ex => (
+                                <div key={ex.id} className="flex justify-between items-center text-[10px] p-1.5 rounded bg-dark-800/80">
+                                  <div>
+                                    <span className="text-white font-medium">{ex.productName}</span>
+                                    <span className="text-dark-500 ml-1">×{ex.quantity}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={`px-1 rounded ${
+                                      ex.status === 'confirmed' ? 'bg-cyber-500/20 text-cyber-400' : 'bg-neon-orange/20 text-neon-orange'
+                                    }`}>
+                                      {ex.status === 'confirmed' ? '待核销' : '已申请'}
+                                    </span>
+                                    <button className="px-1.5 py-0.5 rounded bg-neon-green/20 text-neon-green hover:bg-neon-green/30 flex items-center gap-0.5">
+                                      <ClipboardCheck className="w-3 h-3" /> 核销
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 设备预警：处理状态/责任归属/复查记录 */}
+            <div className="p-5 rounded-xl bg-dark-800/50 border border-cyber-800/50">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                    <ShieldAlert className="w-5 h-5 text-neon-red" />
+                    IoT预警处置
+                  </h3>
+                  <p className="text-[10px] text-dark-400 mt-0.5">处理状态·责任归属·复查闭环</p>
+                </div>
+                <span className="text-xs bg-neon-red/20 text-neon-red px-2 py-1 rounded-full">
+                  {activeAlerts.length} 待处理
+                </span>
+              </div>
+              <div className="mb-3 grid grid-cols-3 gap-1.5 text-center">
+                <div className="p-2 rounded bg-neon-red/10">
+                  <div className="text-neon-red text-sm font-bold flex items-center justify-center gap-0.5">
+                    <AlertTriangle className="w-3 h-3" /> {activeAlerts.filter(a => a.level === 'critical' || a.level === 'high').length}
+                  </div>
+                  <p className="text-[10px] text-dark-400 mt-0.5">严重告警</p>
+                </div>
+                <div className="p-2 rounded bg-cyber-500/10">
+                  <div className="text-cyber-400 text-sm font-bold flex items-center justify-center gap-0.5">
+                    <UserCheck className="w-3 h-3" /> {activeAlerts.filter(a => alertHandlingRecords.some(r => r.alertId === a.id && r.action === 'assign')).length}
+                  </div>
+                  <p className="text-[10px] text-dark-400 mt-0.5">已指派</p>
+                </div>
+                <div className="p-2 rounded bg-neon-green/10">
+                  <div className="text-neon-green text-sm font-bold flex items-center justify-center gap-0.5">
+                    <ClipboardCheck className="w-3 h-3" /> {Math.floor(alertHandlingRecords.filter(r => r.action === 'review').length / 2)}
+                  </div>
+                  <p className="text-[10px] text-dark-400 mt-0.5">已复查</p>
+                </div>
+              </div>
+              <div className="space-y-2 max-h-[350px] overflow-y-auto">
+                {activeAlerts.map((alert) => {
+                  const isExpanded = expandedAlertId === alert.id;
+                  const handler = getAlertHandler(alert.id);
+                  const records = alertHandlingRecords.filter(r => r.alertId === alert.id);
+                  return (
+                    <div key={alert.id} className="rounded-lg bg-dark-900/50 overflow-hidden border-l-2 border-neon-red">
+                      <div
+                        className="p-2.5 cursor-pointer hover:bg-dark-700/50"
+                        onClick={() => setExpandedAlertId(isExpanded ? null : alert.id)}
+                      >
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${
+                              alert.level === 'critical' ? 'bg-neon-red/20 text-neon-red' :
+                              alert.level === 'high' ? 'bg-neon-orange/20 text-neon-orange' : 'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {alert.level === 'critical' ? '严重' : alert.level === 'high' ? '高' : '中'}
+                            </span>
+                            <span className="text-xs font-medium text-white truncate">{alert.deviceName}</span>
+                          </div>
+                          <ChevronDown className={`w-3.5 h-3.5 text-dark-400 flex-shrink-0 ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </div>
+                        <p className="text-[10px] text-dark-400 mb-1.5 line-clamp-1">{alert.message}</p>
+                        <div className="flex items-center justify-between text-[10px]">
+                          <div className="flex items-center gap-1.5">
+                            <span className={`px-1.5 py-0.5 rounded ${
+                              alert.status === 'processing' ? 'bg-cyber-500/20 text-cyber-400' : 'bg-neon-orange/20 text-neon-orange'
+                            }`}>
+                              {alert.status === 'processing' ? '处理中' : '待指派'}
+                            </span>
+                            <span className="text-dark-500 flex items-center gap-0.5">
+                              <UserCheck className="w-3 h-3" /> {handler.currentHandler}
+                            </span>
+                          </div>
+                          <span className="text-dark-500">{alert.storeName.split('·')[1] || alert.storeName}</span>
+                        </div>
+                      </div>
+                      {isExpanded && records.length > 0 && (
+                        <div className="px-2.5 pb-2.5 border-t border-dark-700 pt-2">
+                          <p className="text-[10px] font-medium text-cyber-400 mb-2 flex items-center gap-1">
+                            <Gauge className="w-3 h-3" /> 处置流转记录（{records.length}条，复查：{handler.hasReview ? '✅' : '⏳待'}）
+                          </p>
+                          <div className="space-y-1.5">
+                            {records.slice(0, 4).map(r => (
+                              <div key={r.id} className="flex items-start gap-2 text-[10px]">
+                                <span className="px-1.5 py-0.5 rounded bg-dark-700 text-dark-300 flex-shrink-0 mt-0.5">
+                                  {r.action === 'create' ? '创建' : r.action === 'assign' ? '指派' :
+                                   r.action === 'start' ? '开始' : r.action === 'resolve' ? '解决' :
+                                   r.action === 'review' ? '复查' : r.action}
+                                </span>
+                                <div className="flex-1 min-w-0">
+                                  <span className="text-dark-300">{r.operatorName}({r.operatorRole})</span>
+                                  {r.note && <span className="text-dark-500 ml-1">- {r.note}</span>}
+                                </div>
+                                <span className="text-dark-600 flex-shrink-0">
+                                  {r.createdAt.split('T')[1].slice(0, 5)}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="mt-2 pt-2 border-t border-dark-700 flex items-center justify-between text-[10px]">
+                            <span className="text-dark-400">责任：{handler.currentRole}·{handler.currentHandler}</span>
+                            <div className="flex gap-1">
+                              {!handler.hasReview && records.some(r => r.action === 'resolve') && (
+                                <button className="px-2 py-0.5 rounded bg-neon-green/20 text-neon-green hover:bg-neon-green/30 flex items-center gap-0.5">
+                                  <Eye className="w-3 h-3" /> 复查通过
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
