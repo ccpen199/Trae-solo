@@ -5,7 +5,7 @@ import {
   Star, Briefcase, CalendarCheck, Fingerprint, Check, MessageSquare, FileSignature,
   BadgeCheck, Clock, User, Zap, Film,
 } from 'lucide-react';
-import type { MatchMatrixItem, CertificateInfo } from '../../shared/types';
+import type { MatchMatrixItem, CertificateInfo } from 'shared/types';
 import { formatNumber } from '@/utils/format';
 import type { EChartsOption } from 'echarts';
 import { clsx } from 'clsx';

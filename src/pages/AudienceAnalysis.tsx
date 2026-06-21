@@ -4,7 +4,7 @@ import {
   Users, UserCheck, BarChart3, GitMerge, RotateCcw, Search,
   Eye, PieChart as PieChartIcon, ArrowRight, Sparkles,
 } from 'lucide-react';
-import type { AudienceFilterReq, AudienceProfile, AudienceMigration } from '../../shared/types';
+import type { AudienceFilterReq, AudienceProfile, AudienceMigration } from 'shared/types';
 import { formatNumber, formatPercent } from '@/utils/format';
 import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';

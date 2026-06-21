@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import {
-  generateRealtimeBoxOffice, generateTrendData, generateFilmRanking, generatePipelineStatus,
+  generateRealtimeBoxOffice, generateTrendData, generateFilmRank, generatePipelineStatus,
   generateCityHeatmap, generateTheaterHeatmap, generateScreenHeatmap,
   generateCompetitors, generateSchedulePrediction,
   generateAudienceProfile, generateAudienceMigration,
@@ -28,7 +28,7 @@ router.get('/boxoffice/trend', (_req, res) => {
 
 router.get('/boxoffice/ranking', (req, res) => {
   const limit = Number(req.query.limit) || 10;
-  res.json(wrap(generateFilmRanking().slice(0, limit)));
+  res.json(wrap(generateFilmRank().slice(0, limit)));
 });
 
 router.get('/pipeline/status', (_req, res) => {

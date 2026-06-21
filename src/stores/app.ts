@@ -1,5 +1,10 @@
 import { create } from 'zustand';
-import type { RealtimeBoxOffice, FilmRankItem, PipelineStatus } from '../../shared/types';
+import type { RealtimeBoxOffice, FilmRankItem, PipelineStatus } from 'shared/types';
+import {
+  generateRealtimeBoxOffice,
+  generateFilmRank,
+  generatePipelineStatus,
+} from 'shared/mock-generator';
 
 interface UserState {
   userId: string;
@@ -13,10 +18,11 @@ interface AppState {
   sidebarCollapsed: boolean;
   currentRoute: string;
   user: UserState;
-  boxOffice: RealtimeBoxOffice | null;
+  boxOffice: RealtimeBoxOffice;
   ranking: FilmRankItem[];
   pipelines: PipelineStatus[];
   lastUpdate: string;
+  error: string | null;
   setSidebarCollapsed: (v: boolean) => void;
   setCurrentRoute: (r: string) => void;
   setBoxOffice: (d: RealtimeBoxOffice) => void;
@@ -25,11 +31,23 @@ interface AppState {
   refreshAll: () => Promise<void>;
 }
 
-const fetchJson = async <T>(url: string): Promise<T> => {
-  const res = await fetch(url);
-  const json = await res.json();
-  return json.data as T;
+const fetchJson = async <T>(url: string, fallback: () => T): Promise<T> => {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    return (json.data ?? fallback()) as T;
+  } catch {
+    return fallback();
+  }
 };
+
+const defaultBO = generateRealtimeBoxOffice();
+const defaultRank = generateFilmRank();
+const defaultPipes = generatePipelineStatus();
 
 export const useAppStore = create<AppState>((set, get) => ({
   sidebarCollapsed: false,
@@ -41,10 +59,11 @@ export const useAppStore = create<AppState>((set, get) => ({
     orgName: '华光影业',
     permissionLevel: '企业定制版',
   },
-  boxOffice: null,
-  ranking: [],
-  pipelines: [],
-  lastUpdate: '-',
+  boxOffice: defaultBO,
+  ranking: defaultRank,
+  pipelines: defaultPipes,
+  lastUpdate: defaultBO.updateTime,
+  error: null,
   setSidebarCollapsed: (v) => set({ sidebarCollapsed: v }),
   setCurrentRoute: (r) => set({ currentRoute: r }),
   setBoxOffice: (d) => set({ boxOffice: d, lastUpdate: d.updateTime }),
@@ -53,18 +72,19 @@ export const useAppStore = create<AppState>((set, get) => ({
   refreshAll: async () => {
     try {
       const [bo, rank, pipes] = await Promise.all([
-        fetchJson<RealtimeBoxOffice>('/api/boxoffice/realtime'),
-        fetchJson<FilmRankItem[]>('/api/boxoffice/ranking?limit=10'),
-        fetchJson<PipelineStatus[]>('/api/pipeline/status'),
+        fetchJson<RealtimeBoxOffice>('/api/boxoffice/realtime', generateRealtimeBoxOffice),
+        fetchJson<FilmRankItem[]>('/api/boxoffice/ranking?limit=10', generateFilmRank),
+        fetchJson<PipelineStatus[]>('/api/pipeline/status', generatePipelineStatus),
       ]);
       set({
         boxOffice: bo,
         ranking: rank,
         pipelines: pipes,
         lastUpdate: bo.updateTime,
+        error: null,
       });
     } catch (e) {
-      console.error('Refresh failed:', e);
+      set({ error: e instanceof Error ? e.message : 'Unknown error' });
     }
   },
 }));

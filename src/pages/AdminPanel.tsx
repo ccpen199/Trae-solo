@@ -4,7 +4,7 @@ import {
   TrendingUp, ChevronRight, AlertTriangle, CheckCircle2, Clock, Zap,
   ArrowUpRight, BarChart3, Globe2, Lock,
 } from 'lucide-react';
-import type { PermissionLevel, RolePermission, ExportAuditLog, ReportInfo } from '../../shared/types';
+import type { PermissionLevel, RolePermission, ExportAuditLog, ReportInfo } from 'shared/types';
 import { clsx } from 'clsx';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 

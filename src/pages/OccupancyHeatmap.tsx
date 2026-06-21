@@ -4,7 +4,7 @@ import {
   MapPin, Building, Armchair, ChevronRight, Search, Flame, Filter,
   ArrowUpDown, TrendingUp, Star, Clock,
 } from 'lucide-react';
-import type { CityHeatmapItem, TheaterHeatmapItem, ScreenHeatmap } from '../../shared/types';
+import type { CityHeatmapItem, TheaterHeatmapItem, ScreenHeatmap } from 'shared/types';
 import { formatNumber, formatPercent } from '@/utils/format';
 import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';

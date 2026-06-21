@@ -38,13 +38,17 @@ export function generateTrendData() {
   return data;
 }
 
+export function generateRealtimeTrend() {
+  return generateTrendData();
+}
+
 const filmNames = [
   '星河长明', '山海谣', '长安诡事录', '霓虹夜色', '逆战苍穹',
   '小镇来信', '黎明前的约定', '代号:猎鹰', '归途列车', '浮生若梦',
   '冰川之上', '剑雨江湖', '青春纪念册', '量子迷局', '山海异闻录',
 ];
 
-export function generateFilmRanking() {
+export function generateFilmRank() {
   const totalBoxOffice = 48000 + rand(0, 3000);
   const list = filmNames.map((name, i) => {
     const ratio = (1 - i * 0.08) * rand(0.85, 1.15);

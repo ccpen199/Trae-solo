@@ -7,6 +7,8 @@ import {
 import { useAppStore } from '@/stores/app';
 import { formatNumber, formatPercent, formatCurrency } from '@/utils/format';
 import type { EChartsOption } from 'echarts';
+import { clsx } from 'clsx';
+import { generateRealtimeTrend } from 'shared/mock-generator';
 
 interface KpiCardProps {
   label: string;
@@ -62,10 +64,6 @@ function KpiCard({ label, value, icon: Icon, change, unit, highlight }: KpiCardP
   );
 }
 
-function clsx(...args: (string | false | undefined)[]) {
-  return args.filter(Boolean).join(' ');
-}
-
 export default function Dashboard() {
   const { boxOffice, ranking, pipelines, refreshAll } = useAppStore();
 
@@ -74,6 +72,8 @@ export default function Dashboard() {
     const t = setInterval(refreshAll, 15000);
     return () => clearInterval(t);
   }, [refreshAll]);
+
+  const trend = generateRealtimeTrend();
 
   const trendOption: EChartsOption = {
     backgroundColor: 'transparent',
@@ -108,7 +108,7 @@ export default function Dashboard() {
     grid: { left: 8, right: 8, top: 40, bottom: 24, containLabel: true },
     xAxis: {
       type: 'category',
-      data: Array.from({ length: 24 }).map((_, i) => `${String(i).padStart(2, '0')}:00`),
+      data: trend.map(t => t.time),
       axisLine: { lineStyle: { color: '#1A2A47' } },
       axisLabel: { color: '#64748b', fontSize: 10, interval: 1 },
       axisTick: { show: false },
@@ -132,26 +132,17 @@ export default function Dashboard() {
             ],
           },
         },
-        data: Array.from({ length: 24 }).map((_, i) => {
-          const hf = Math.max(0, Math.sin((i - 8) * Math.PI / 14));
-          return Math.round(rand(600, 3200) * (hf * 0.9 + 0.1));
-        }),
+        data: trend.map(t => t.boxOffice),
       },
       {
         name: '上月同期', type: 'line', smooth: true, symbol: 'none',
         lineStyle: { color: '#3B82F6', width: 1.5, type: 'dashed', opacity: 0.7 },
-        data: Array.from({ length: 24 }).map((_, i) => {
-          const hf = Math.max(0, Math.sin((i - 8) * Math.PI / 14));
-          return Math.round(rand(500, 2800) * (hf * 0.85 + 0.1));
-        }),
+        data: trend.map(t => t.samePeriodLastMonth),
       },
       {
         name: '影史同期', type: 'line', smooth: true, symbol: 'none',
         lineStyle: { color: '#475569', width: 1.2, type: 'dotted', opacity: 0.8 },
-        data: Array.from({ length: 24 }).map((_, i) => {
-          const hf = Math.max(0, Math.sin((i - 8) * Math.PI / 14));
-          return Math.round(rand(450, 2600) * (hf * 0.8 + 0.1));
-        }),
+        data: trend.map(t => t.samePeriodLastYear),
       },
     ],
   };
@@ -178,8 +169,6 @@ export default function Dashboard() {
       })),
     }],
   };
-
-  const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 
   return (
     <div className="space-y-6">

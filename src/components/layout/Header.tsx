@@ -1,6 +1,7 @@
 import { Bell, Search, Settings, RefreshCw, User, Shield, TrendingUp, Clock } from 'lucide-react';
 import { useAppStore } from '@/stores/app';
 import { useEffect, useState } from 'react';
+import { clsx } from 'clsx';
 
 export default function Header() {
   const { user, lastUpdate, refreshAll, boxOffice } = useAppStore();
@@ -100,8 +101,4 @@ export default function Header() {
       </div>
     </header>
   );
-}
-
-function clsx(...args: (string | false | undefined)[]) {
-  return args.filter(Boolean).join(' ');
 }

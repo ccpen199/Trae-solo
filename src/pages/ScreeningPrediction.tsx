@@ -5,7 +5,7 @@ import {
   Film, Users, Megaphone, Calendar as CalendarIcon, MessageCircle,
   Lightbulb, ChevronRight,
 } from 'lucide-react';
-import type { CompetitorInfo, SchedulePredictionRes } from '../../shared/types';
+import type { CompetitorInfo, SchedulePredictionRes } from 'shared/types';
 import { formatNumber, formatCurrency } from '@/utils/format';
 import type { EChartsOption } from 'echarts';
 
