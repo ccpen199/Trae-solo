@@ -3,24 +3,95 @@ import ReactECharts from 'echarts-for-react';
 import {
   Calendar, CalendarCheck, TrendingUp, Target, Sparkles, ArrowRight,
   Film, Users, Megaphone, Calendar as CalendarIcon, MessageCircle,
-  Lightbulb, ChevronRight,
+  Lightbulb, ChevronRight, Flame, Shield, Building2, Gauge,
+  Eye, CheckCircle2,
 } from 'lucide-react';
 import type { CompetitorInfo, SchedulePredictionRes } from 'shared/types';
 import { formatNumber, formatCurrency } from '@/utils/format';
 import type { EChartsOption } from 'echarts';
-
-function clsx(...args: (string | false | undefined)[]) {
-  return args.filter(Boolean).join(' ');
-}
+import { clsx } from 'clsx';
 
 const castLevelColor: Record<string, string> = { S: 'text-gold-400', A: 'text-chart-purple', B: 'text-chart-blue', C: 'text-slate-400' };
 const castLevelBg: Record<string, string> = { S: 'bg-gold-500/15 border-gold-500/30', A: 'bg-chart-purple/15 border-chart-purple/30', B: 'bg-chart-blue/15 border-chart-blue/30', C: 'bg-space-700 border-space-600' };
+
+const scheduleHeatData = {
+  name: '2026暑期档',
+  score: 78,
+  trend: 'up' as const,
+  details: [
+    { label: '影片供给量', value: 72 },
+    { label: '观众期待度', value: 85 },
+    { label: '社交媒体声量', value: 81 },
+    { label: '预售转化率', value: 64 },
+  ],
+};
+
+const competitorFactorData = {
+  score: 68,
+  top3: [
+    { name: '星河长明', type: '科幻/冒险', opening: 18600, cast: 'S' as const },
+    { name: '山海谣', type: '奇幻/爱情', opening: 12400, cast: 'A' as const },
+    { name: '长安诡事录', type: '悬疑/古装', opening: 9800, cast: 'A' as const },
+  ],
+  pressureIndex: 72,
+};
+
+const theaterHistoryData = {
+  avgOccupancy: 42.6,
+  avgRevenue: 3280,
+  efficiencyScore: 76,
+  theaters: [
+    { name: '万达IMAX旗舰店', occupancy: 58.2, dailyShows: 12 },
+    { name: '中影杜比影城', occupancy: 51.7, dailyShows: 10 },
+    { name: '金逸CGV中心店', occupancy: 39.4, dailyShows: 8 },
+  ],
+};
+
+const schedulingPlan = [
+  { id: 1, name: '万达IMAX旗舰店', shows: 12, goldenPct: 58, hall: 'IMAX', confidence: 92, advice: '增加1场黄金场', hallType: 'IMAX' as const },
+  { id: 2, name: '中影杜比影城', shows: 10, goldenPct: 55, hall: '杜比', confidence: 88, advice: '建议替换为杜比厅', hallType: 'dolby' as const },
+  { id: 3, name: '金逸CGV中心店', shows: 8, goldenPct: 50, hall: '普通', confidence: 83, advice: '维持当前排片', hallType: 'normal' as const },
+  { id: 4, name: '百老汇万象城店', shows: 9, goldenPct: 52, hall: 'IMAX', confidence: 79, advice: '建议增加IMAX场次', hallType: 'IMAX' as const },
+  { id: 5, name: '大地影院银泰店', shows: 7, goldenPct: 48, hall: '普通', confidence: 74, advice: '午后场可减少1场', hallType: 'normal' as const },
+  { id: 6, name: '横店影视城旗舰店', shows: 11, goldenPct: 54, hall: '杜比', confidence: 86, advice: '黄金场加密至6场', hallType: 'dolby' as const },
+  { id: 7, name: '博纳国际影城', shows: 8, goldenPct: 46, hall: '普通', confidence: 68, advice: '建议升级IMAX厅', hallType: 'normal' as const },
+  { id: 8, name: '星美国际影城', shows: 6, goldenPct: 42, hall: '普通', confidence: 71, advice: '场次偏少，建议+2场', hallType: 'normal' as const },
+  { id: 9, name: 'UME国际影城双井店', shows: 10, goldenPct: 56, hall: 'IMAX', confidence: 90, advice: '周末增加早场', hallType: 'IMAX' as const },
+  { id: 10, name: '耀莱成龙影城', shows: 7, goldenPct: 44, hall: '杜比', confidence: 65, advice: '建议替换杜比厅排片', hallType: 'dolby' as const },
+];
+
+function confidenceColor(v: number) {
+  if (v > 85) return 'text-chart-green';
+  if (v >= 70) return 'text-chart-orange';
+  return 'text-cine-400';
+}
+
+function confidenceBg(v: number) {
+  if (v > 85) return 'bg-chart-green/15';
+  if (v >= 70) return 'bg-chart-orange/15';
+  return 'bg-cine-400/15';
+}
+
+function hallBadge(type: 'IMAX' | 'dolby' | 'normal') {
+  if (type === 'IMAX') return 'bg-chart-blue/15 text-chart-blue border-chart-blue/30';
+  if (type === 'dolby') return 'bg-chart-purple/15 text-chart-purple border-chart-purple/30';
+  return 'bg-space-700 text-slate-400 border-space-600';
+}
+
+function ProgressBar({ value, color = 'bg-gold-500' }: { value: number; color?: string }) {
+  return (
+    <div className="w-full h-1.5 bg-space-700/60 rounded-full overflow-hidden">
+      <div className={clsx('h-full rounded-full transition-all', color)} style={{ width: `${value}%` }} />
+    </div>
+  );
+}
 
 export default function ScreeningPrediction() {
   const [competitors, setCompetitors] = useState<CompetitorInfo[]>([]);
   const [prediction, setPrediction] = useState<SchedulePredictionRes | null>(null);
   const [selectedFilm, setSelectedFilm] = useState(0);
   const [simulateValues, setSimulateValues] = useState({ screenPct: 18, priceAdj: 0, primeTimeBoost: 65 });
+  const [adoptedRows, setAdoptedRows] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     Promise.all([
@@ -96,6 +167,19 @@ export default function ScreeningPrediction() {
       },
     ],
   };
+
+  const combinedScore =
+    scheduleHeatData.score * 0.35 +
+    competitorFactorData.score * 0.35 +
+    theaterHistoryData.efficiencyScore * 0.30;
+
+  const strategy = combinedScore >= 80 ? '激进' : combinedScore >= 60 ? '稳健' : '保守';
+  const strategyColor = combinedScore >= 80 ? 'text-chart-green' : combinedScore >= 60 ? 'text-gold-400' : 'text-cine-400';
+  const strategyBg = combinedScore >= 80 ? 'bg-chart-green/15 border-chart-green/30' : combinedScore >= 60 ? 'bg-gold-500/15 border-gold-500/30' : 'bg-cine-400/15 border-cine-400/30';
+
+  const totalShows = schedulingPlan.reduce((s, r) => s + r.shows, 0);
+  const avgGolden = schedulingPlan.reduce((s, r) => s + r.goldenPct, 0) / schedulingPlan.length;
+  const weightedConf = schedulingPlan.reduce((s, r) => s + r.confidence * r.shows, 0) / totalShows;
 
   return (
     <div className="space-y-6">
@@ -199,6 +283,154 @@ export default function ScreeningPrediction() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="cip-card p-5">
+        <div className="flex items-center gap-2.5 mb-6">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-500/20 to-amber-500/10 flex items-center justify-center">
+            <Gauge className="w-4.5 h-4.5 text-gold-400" strokeWidth={1.8} />
+          </div>
+          <div>
+            <h3 className="font-serif text-lg font-semibold text-slate-100">三因子联动分析</h3>
+            <p className="text-[11px] text-slate-500 mt-0.5">档期热度 × 竞品表现 × 影院历史表现 综合评估</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="rounded-xl border border-space-700/50 bg-space-800/30 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-chart-orange/15 flex items-center justify-center">
+                <Flame className="w-4 h-4 text-chart-orange" strokeWidth={1.8} />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-slate-200">档期热度因子</div>
+                <div className="text-[10px] text-slate-500">{scheduleHeatData.name}</div>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="font-mono text-3xl font-bold text-gold-400">{scheduleHeatData.score}</span>
+              <span className="text-xs text-slate-500">/100</span>
+              {scheduleHeatData.trend === 'up' && <TrendingUp className="w-4 h-4 text-chart-green" strokeWidth={1.8} />}
+            </div>
+            <div className="space-y-3">
+              {scheduleHeatData.details.map(d => (
+                <div key={d.label}>
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="text-slate-400">{d.label}</span>
+                    <span className="font-mono text-slate-300">{d.value}</span>
+                  </div>
+                  <ProgressBar value={d.value} color={d.value >= 80 ? 'bg-chart-green' : d.value >= 60 ? 'bg-gold-500' : 'bg-chart-orange'} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-space-700/50 bg-space-800/30 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-chart-red/15 flex items-center justify-center">
+                <Shield className="w-4 h-4 text-chart-red" strokeWidth={1.8} />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-slate-200">竞品表现因子</div>
+                <div className="text-[10px] text-slate-500">综合评分</div>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="font-mono text-3xl font-bold text-gold-400">{competitorFactorData.score}</span>
+              <span className="text-xs text-slate-500">/100</span>
+            </div>
+            <div className="space-y-2.5 mb-4">
+              {competitorFactorData.top3.map((t, i) => (
+                <div key={t.name} className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded bg-space-700 text-slate-400 text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
+                    <span className="text-slate-200 font-medium">{t.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-500">{t.type}</span>
+                    <span className="font-mono text-gold-400">{formatNumber(t.opening)}万</span>
+                    <span className={clsx('badge text-[9px] py-0 px-1.5', castLevelBg[t.cast], castLevelColor[t.cast])}>{t.cast}级</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className="text-slate-400">竞品压力指数</span>
+                <span className="font-mono text-chart-orange">{competitorFactorData.pressureIndex}</span>
+              </div>
+              <ProgressBar value={competitorFactorData.pressureIndex} color="bg-chart-red" />
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-space-700/50 bg-space-800/30 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-chart-blue/15 flex items-center justify-center">
+                <Building2 className="w-4 h-4 text-chart-blue" strokeWidth={1.8} />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-slate-200">影院历史表现因子</div>
+                <div className="text-[10px] text-slate-500">近30天数据</div>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="text-center">
+                <div className="font-mono text-lg font-bold text-gold-400">{theaterHistoryData.avgOccupancy}%</div>
+                <div className="text-[10px] text-slate-500">平均上座率</div>
+              </div>
+              <div className="text-center">
+                <div className="font-mono text-lg font-bold text-gold-400">{formatNumber(theaterHistoryData.avgRevenue)}</div>
+                <div className="text-[10px] text-slate-500">场均收入</div>
+              </div>
+              <div className="text-center">
+                <div className="font-mono text-lg font-bold text-gold-400">{theaterHistoryData.efficiencyScore}</div>
+                <div className="text-[10px] text-slate-500">排片效率</div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {theaterHistoryData.theaters.map(t => (
+                <div key={t.name} className="flex items-center justify-between text-xs bg-space-700/30 rounded-lg px-3 py-2">
+                  <span className="text-slate-300 font-medium">{t.name}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-slate-400">上座 <span className="font-mono text-chart-green">{t.occupancy}%</span></span>
+                    <span className="text-slate-400">日均 <span className="font-mono text-chart-blue">{t.dailyShows}场</span></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-gold-500/20 bg-gradient-to-r from-gold-500/5 to-transparent p-5">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-6">
+              <div>
+                <div className="text-xs text-slate-500 mb-1">三因子加权总分</div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-mono text-3xl font-bold text-gold-400">{combinedScore.toFixed(1)}</span>
+                  <span className="text-xs text-slate-500">/100</span>
+                </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  档期×0.35 + 竞品×0.35 + 历史×0.30
+                </div>
+              </div>
+              <div className="h-10 w-px bg-space-700" />
+              <div>
+                <div className="text-xs text-slate-500 mb-1">推荐排片策略</div>
+                <span className={clsx('badge border text-sm font-semibold px-3 py-1', strategyBg, strategyColor)}>
+                  {strategy}
+                </span>
+              </div>
+              <div className="h-10 w-px bg-space-700" />
+              <div>
+                <div className="text-xs text-slate-500 mb-1">置信区间</div>
+                <span className="font-mono text-sm text-chart-blue">
+                  {formatNumber(Math.round(combinedScore * 180 - 800))}万 ~ {formatNumber(Math.round(combinedScore * 180 + 600))}万
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -383,6 +615,117 @@ export default function ScreeningPrediction() {
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-chart-orange/25 border border-chart-orange/35" />一般</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-gold-500/30 border border-gold-500/40" />热门</span>
           <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-cine-500/40 border border-cine-500/50" />极热</span>
+        </div>
+      </div>
+
+      <div className="cip-card p-5">
+        <div className="flex items-center gap-2.5 mb-5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-chart-green/20 to-emerald-500/10 flex items-center justify-center">
+            <Users className="w-4.5 h-4.5 text-chart-green" strokeWidth={1.8} />
+          </div>
+          <div>
+            <h3 className="font-serif text-lg font-semibold text-slate-100">可复核院线排片方案</h3>
+            <p className="text-[11px] text-slate-500 mt-0.5">逐影院排片详情 · 一键采纳 · 灵活调整</p>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-space-700/60">
+                <th className="text-left text-xs text-slate-500 font-medium py-3 px-2 w-10">序号</th>
+                <th className="text-left text-xs text-slate-500 font-medium py-3 px-3">影院名称</th>
+                <th className="text-center text-xs text-slate-500 font-medium py-3 px-3">推荐排片场次</th>
+                <th className="text-center text-xs text-slate-500 font-medium py-3 px-3">黄金场占比</th>
+                <th className="text-center text-xs text-slate-500 font-medium py-3 px-3">推荐影厅</th>
+                <th className="text-center text-xs text-slate-500 font-medium py-3 px-3">置信度</th>
+                <th className="text-left text-xs text-slate-500 font-medium py-3 px-3">调整建议</th>
+                <th className="text-center text-xs text-slate-500 font-medium py-3 px-3">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {schedulingPlan.map(row => {
+                const adopted = adoptedRows.has(row.id);
+                return (
+                  <tr
+                    key={row.id}
+                    className={clsx(
+                      'border-b border-space-700/30 transition-colors',
+                      adopted ? 'bg-chart-green/5' : 'hover:bg-space-800/40'
+                    )}
+                  >
+                    <td className="py-3 px-2">
+                      <span className="w-6 h-6 rounded-md bg-space-700 text-slate-400 text-xs font-bold flex items-center justify-center">
+                        {row.id}
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 text-slate-200 font-medium">{row.name}</td>
+                    <td className="py-3 px-3 text-center font-mono text-gold-400">{row.shows}</td>
+                    <td className="py-3 px-3 text-center">
+                      <span className="font-mono text-slate-200">{row.goldenPct}%</span>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <span className={clsx('badge text-[10px] border', hallBadge(row.hallType))}>
+                        {row.hall}
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <span className={clsx('font-mono font-semibold px-2 py-0.5 rounded-md', confidenceColor(row.confidence), confidenceBg(row.confidence))}>
+                        {row.confidence}%
+                      </span>
+                    </td>
+                    <td className="py-3 px-3">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                        <Lightbulb className="w-3 h-3 text-chart-orange shrink-0" strokeWidth={1.8} />
+                        <span>{row.advice}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3">
+                      <div className="flex items-center justify-center gap-2">
+                        <button className="text-xs text-slate-400 hover:text-chart-blue transition-colors flex items-center gap-1">
+                          <Eye className="w-3.5 h-3.5" strokeWidth={1.8} />
+                          详情
+                        </button>
+                        <button
+                          onClick={() => {
+                            setAdoptedRows(prev => {
+                              const next = new Set(prev);
+                              if (next.has(row.id)) next.delete(row.id);
+                              else next.add(row.id);
+                              return next;
+                            });
+                          }}
+                          className={clsx(
+                            'text-xs transition-colors flex items-center gap-1',
+                            adopted
+                              ? 'text-chart-green'
+                              : 'text-slate-400 hover:text-chart-green'
+                          )}
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5" strokeWidth={1.8} />
+                          {adopted ? '已采纳' : '采纳'}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+            <tfoot>
+              <tr className="border-t border-gold-500/20">
+                <td colSpan={2} className="py-3 px-2 text-xs text-slate-500 font-medium">汇总</td>
+                <td className="py-3 px-3 text-center font-mono font-bold text-gold-400">{totalShows}</td>
+                <td className="py-3 px-3 text-center font-mono text-gold-400">{avgGolden.toFixed(1)}%</td>
+                <td />
+                <td className="py-3 px-3 text-center">
+                  <span className={clsx('font-mono font-semibold px-2 py-0.5 rounded-md', confidenceColor(weightedConf), confidenceBg(weightedConf))}>
+                    {weightedConf.toFixed(1)}%
+                  </span>
+                </td>
+                <td colSpan={2} />
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
     </div>

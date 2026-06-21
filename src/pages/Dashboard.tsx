@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import ReactECharts from 'echarts-for-react';
 import {
   TrendingUp, Users, Ticket, Percent, Banknote, UserCheck,
@@ -8,7 +8,8 @@ import { useAppStore } from '@/stores/app';
 import { formatNumber, formatPercent, formatCurrency } from '@/utils/format';
 import type { EChartsOption } from 'echarts';
 import { clsx } from 'clsx';
-import { generateRealtimeTrend } from 'shared/mock-generator';
+
+type TimePeriod = 'today' | 'week' | 'month' | 'season';
 
 interface KpiCardProps {
   label: string;
@@ -17,9 +18,10 @@ interface KpiCardProps {
   change?: number;
   unit?: string;
   highlight?: boolean;
+  anomaly?: 'warn' | 'error' | null;
 }
 
-function KpiCard({ label, value, icon: Icon, change, unit, highlight }: KpiCardProps) {
+function KpiCard({ label, value, icon: Icon, change, unit, highlight, anomaly }: KpiCardProps) {
   const changeColor = change === undefined ? 'text-slate-500'
     : change > 0 ? 'text-chart-green'
     : change < 0 ? 'text-cine-400' : 'text-slate-400';
@@ -45,12 +47,22 @@ function KpiCard({ label, value, icon: Icon, change, unit, highlight }: KpiCardP
           )}>
             <Icon className="w-5.5 h-5.5" strokeWidth={1.8} />
           </div>
-          {change !== undefined && ChangeIcon && (
-            <div className={clsx('flex items-center gap-0.5 text-xs font-medium', changeColor)}>
-              <ChangeIcon className="w-3.5 h-3.5" strokeWidth={2.5} />
-              <span>{Math.abs(change).toFixed(1)}%</span>
-            </div>
-          )}
+          <div className="flex items-center gap-1.5">
+            {anomaly && (
+              <span className={clsx(
+                'badge text-[10px]',
+                anomaly === 'error' ? 'badge-warn' : 'bg-yellow-500/15 text-yellow-400 border border-yellow-500/30'
+              )}>
+                {anomaly === 'error' ? '🚨异常波动' : '⚠️数据波动'}
+              </span>
+            )}
+            {change !== undefined && ChangeIcon && (
+              <div className={clsx('flex items-center gap-0.5 text-xs font-medium', changeColor)}>
+                <ChangeIcon className="w-3.5 h-3.5" strokeWidth={2.5} />
+                <span>{Math.abs(change).toFixed(1)}%</span>
+              </div>
+            )}
+          </div>
         </div>
         <div className="kpi-label mb-1.5">{label}</div>
         <div className="flex items-baseline gap-1.5">
@@ -64,8 +76,158 @@ function KpiCard({ label, value, icon: Icon, change, unit, highlight }: KpiCardP
   );
 }
 
+const PERIOD_CONFIG: Record<TimePeriod, {
+  kpiLabels: [string, string, string];
+  chartTitle: string;
+  chartSubtitle: string;
+  xLabels: string[];
+  multiplier: number;
+  seriesNames: [string, string, string];
+}> = {
+  today: {
+    kpiLabels: ['当日实时票房', '当日观影人次', '当日总场次'],
+    chartTitle: '24小时票房分时走势',
+    chartSubtitle: '今日票房 vs 上月同期 vs 影史同期参考',
+    xLabels: Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`),
+    multiplier: 1,
+    seriesNames: ['今日票房', '上月同期', '影史同期'],
+  },
+  week: {
+    kpiLabels: ['本周累计票房', '本周观影人次', '本周总场次'],
+    chartTitle: '本周每日票房走势',
+    chartSubtitle: '本周每日 vs 上周同期 vs 影史同期参考',
+    xLabels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    multiplier: 12,
+    seriesNames: ['本周票房', '上周同期', '影史同期'],
+  },
+  month: {
+    kpiLabels: ['本月累计票房', '本月观影人次', '本月总场次'],
+    chartTitle: '本月每日票房走势',
+    chartSubtitle: '本月每日 vs 去年同期 vs 影史同期参考',
+    xLabels: Array.from({ length: 30 }, (_, i) => `${i + 1}日`),
+    multiplier: 50,
+    seriesNames: ['本月票房', '去年同期', '影史同期'],
+  },
+  season: {
+    kpiLabels: ['档期累计票房', '档期观影人次', '档期总场次'],
+    chartTitle: '2026暑期档每日票房走势',
+    chartSubtitle: '2026暑期档 vs 2025暑期档 vs 历史同期参考',
+    xLabels: (() => {
+      const labels: string[] = [];
+      for (let m = 6; m <= 8; m++) {
+        const days = m === 8 ? 31 : 30;
+        for (let d = 1; d <= days; d++) {
+          labels.push(`${m}.${d}`);
+        }
+      }
+      return labels;
+    })(),
+    multiplier: 500,
+    seriesNames: ['2026暑期档', '2025暑期档', '历史同期'],
+  },
+};
+
+function generateTrendForPeriod(period: TimePeriod) {
+  const config = PERIOD_CONFIG[period];
+  const { xLabels, multiplier } = config;
+
+  const genSeries = (baseFactor: number) => xLabels.map((_, i) => {
+    let hourFactor = 1;
+    if (period === 'today') {
+      const h = i;
+      hourFactor = Math.max(0, Math.sin((h - 8) * Math.PI / 14)) * 0.9 + 0.1;
+    } else if (period === 'week') {
+      hourFactor = i >= 5 ? 1.6 : 1;
+    } else if (period === 'month') {
+      const weekday = i % 7;
+      hourFactor = weekday >= 5 ? 1.4 : 1;
+    } else {
+      hourFactor = i > 20 ? 1.3 : 0.85 + Math.random() * 0.3;
+    }
+    return Math.round((800 + Math.random() * 2700) * hourFactor * multiplier * baseFactor);
+  });
+
+  return {
+    xLabels,
+    series: [
+      genSeries(1),
+      genSeries(0.9 + Math.random() * 0.15),
+      genSeries(0.8 + Math.random() * 0.2),
+    ],
+  };
+}
+
+function stabilize(current: number, prev: number | null): number {
+  if (prev === null) return current;
+  const ratio = (current - prev) / Math.max(Math.abs(prev), 1);
+  const clamped = Math.max(-0.08, Math.min(0.08, ratio));
+  const adjusted = prev * (1 + clamped);
+  return Math.round(prev + (adjusted - prev) * 0.3);
+}
+
+function detectAnomaly(current: number, prev: number | null): 'warn' | 'error' | null {
+  if (prev === null || prev === 0) return null;
+  const ratio = Math.abs((current - prev) / prev);
+  if (ratio > 0.10) return 'error';
+  if (ratio > 0.05) return 'warn';
+  return null;
+}
+
 export default function Dashboard() {
   const { boxOffice, ranking, pipelines, refreshAll } = useAppStore();
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('today');
+
+  const prevKpiRef = useRef<{
+    totalBoxOffice: number | null;
+    totalAudience: number | null;
+    totalShowCount: number | null;
+  }>({ totalBoxOffice: null, totalAudience: null, totalShowCount: null });
+
+  const prevTrendRef = useRef<number[] | null>(null);
+
+  const config = PERIOD_CONFIG[timePeriod];
+  const multiplier = config.multiplier;
+
+  const stabilizedKpi = useMemo(() => {
+    const raw = {
+      totalBoxOffice: (boxOffice?.totalBoxOffice || 38000) * multiplier,
+      totalAudience: (boxOffice?.totalAudience || 3500000) * multiplier * 0.8,
+      totalShowCount: (boxOffice?.totalShowCount || 450000) * multiplier * 0.6,
+    };
+
+    const result = {
+      totalBoxOffice: stabilize(raw.totalBoxOffice, prevKpiRef.current.totalBoxOffice),
+      totalAudience: stabilize(raw.totalAudience, prevKpiRef.current.totalAudience),
+      totalShowCount: stabilize(raw.totalShowCount, prevKpiRef.current.totalShowCount),
+    };
+
+    prevKpiRef.current = {
+      totalBoxOffice: result.totalBoxOffice,
+      totalAudience: result.totalAudience,
+      totalShowCount: result.totalShowCount,
+    };
+
+    return result;
+  }, [boxOffice, multiplier]);
+
+  const anomalies = useMemo(() => ({
+    totalBoxOffice: detectAnomaly(stabilizedKpi.totalBoxOffice, prevKpiRef.current.totalBoxOffice),
+    totalAudience: detectAnomaly(stabilizedKpi.totalAudience, prevKpiRef.current.totalAudience),
+    totalShowCount: detectAnomaly(stabilizedKpi.totalShowCount, prevKpiRef.current.totalShowCount),
+  }), [stabilizedKpi]);
+
+  const trendData = useMemo(() => generateTrendForPeriod(timePeriod), [timePeriod]);
+
+  const trendSeries = useMemo(() => {
+    const current = trendData.series[0];
+    if (!prevTrendRef.current || prevTrendRef.current.length !== current.length) {
+      prevTrendRef.current = [...current];
+      return trendData.series;
+    }
+    const stabilized = current.map((v, i) => stabilize(v, prevTrendRef.current![i]));
+    prevTrendRef.current = [...stabilized];
+    return [stabilized, trendData.series[1], trendData.series[2]];
+  }, [trendData]);
 
   useEffect(() => {
     refreshAll();
@@ -73,7 +235,10 @@ export default function Dashboard() {
     return () => clearInterval(t);
   }, [refreshAll]);
 
-  const trend = generateRealtimeTrend();
+  useEffect(() => {
+    prevKpiRef.current = { totalBoxOffice: null, totalAudience: null, totalShowCount: null };
+    prevTrendRef.current = null;
+  }, [timePeriod]);
 
   const trendOption: EChartsOption = {
     backgroundColor: 'transparent',
@@ -87,8 +252,8 @@ export default function Dashboard() {
         const arr = params as Array<{ axisValue: string; seriesName: string; value: number }>;
         let s = `<div style="font-weight:600;margin-bottom:6px;color:#e2bc30">${arr[0]?.axisValue}</div>`;
         arr.forEach(p => {
-          const dot = p.seriesName === '今日票房' ? '#D4AF37'
-            : p.seriesName === '影史同期' ? '#64748b' : '#3B82F6';
+          const dot = p.seriesName === config.seriesNames[0] ? '#D4AF37'
+            : p.seriesName === config.seriesNames[2] ? '#64748b' : '#3B82F6';
           s += `<div style="display:flex;justify-content:space-between;gap:32px;margin:3px 0">
             <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dot};margin-right:6px"></span>${p.seriesName}</span>
             <span style="font-family:JetBrains Mono;font-weight:600">${formatCurrency(p.value)}</span>
@@ -98,7 +263,7 @@ export default function Dashboard() {
       },
     },
     legend: {
-      data: ['今日票房', '上月同期', '影史同期'],
+      data: config.seriesNames,
       right: 0,
       top: 0,
       textStyle: { color: '#94a3b8', fontSize: 11 },
@@ -108,9 +273,13 @@ export default function Dashboard() {
     grid: { left: 8, right: 8, top: 40, bottom: 24, containLabel: true },
     xAxis: {
       type: 'category',
-      data: trend.map(t => t.time),
+      data: trendData.xLabels,
       axisLine: { lineStyle: { color: '#1A2A47' } },
-      axisLabel: { color: '#64748b', fontSize: 10, interval: 1 },
+      axisLabel: {
+        color: '#64748b',
+        fontSize: 10,
+        interval: timePeriod === 'season' ? 15 : timePeriod === 'month' ? 4 : timePeriod === 'week' ? 0 : 1,
+      },
       axisTick: { show: false },
     },
     yAxis: {
@@ -121,7 +290,7 @@ export default function Dashboard() {
     },
     series: [
       {
-        name: '今日票房', type: 'line', smooth: true, symbol: 'none',
+        name: config.seriesNames[0], type: 'line', smooth: true, symbol: 'none',
         lineStyle: { color: '#D4AF37', width: 3, shadowColor: 'rgba(212,175,55,0.4)', shadowBlur: 12 },
         areaStyle: {
           color: {
@@ -132,17 +301,17 @@ export default function Dashboard() {
             ],
           },
         },
-        data: trend.map(t => t.boxOffice),
+        data: trendSeries[0],
       },
       {
-        name: '上月同期', type: 'line', smooth: true, symbol: 'none',
+        name: config.seriesNames[1], type: 'line', smooth: true, symbol: 'none',
         lineStyle: { color: '#3B82F6', width: 1.5, type: 'dashed', opacity: 0.7 },
-        data: trend.map(t => t.samePeriodLastMonth),
+        data: trendSeries[1],
       },
       {
-        name: '影史同期', type: 'line', smooth: true, symbol: 'none',
+        name: config.seriesNames[2], type: 'line', smooth: true, symbol: 'none',
         lineStyle: { color: '#475569', width: 1.2, type: 'dotted', opacity: 0.8 },
-        data: trend.map(t => t.samePeriodLastYear),
+        data: trendSeries[2],
       },
     ],
   };
@@ -170,6 +339,13 @@ export default function Dashboard() {
     }],
   };
 
+  const periodButtons: { key: TimePeriod; label: string }[] = [
+    { key: 'today', label: '今日' },
+    { key: 'week', label: '本周' },
+    { key: 'month', label: '本月' },
+    { key: 'season', label: '档期' },
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -194,15 +370,30 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         <KpiCard
-          label="当日实时票房"
-          value={formatNumber(boxOffice?.totalBoxOffice || 0, 1)}
+          label={config.kpiLabels[0]}
+          value={formatNumber(stabilizedKpi.totalBoxOffice, 1)}
           icon={Banknote}
           change={boxOffice?.boxOfficeChange}
           unit="万元"
           highlight
+          anomaly={anomalies.totalBoxOffice}
         />
-        <KpiCard label="当日观影人次" value={formatNumber(boxOffice?.totalAudience || 0)} icon={Users} change={3.2} unit="人" />
-        <KpiCard label="当日总场次" value={formatNumber(boxOffice?.totalShowCount || 0)} icon={Ticket} change={1.8} unit="场" />
+        <KpiCard
+          label={config.kpiLabels[1]}
+          value={formatNumber(stabilizedKpi.totalAudience)}
+          icon={Users}
+          change={3.2}
+          unit="人"
+          anomaly={anomalies.totalAudience}
+        />
+        <KpiCard
+          label={config.kpiLabels[2]}
+          value={formatNumber(stabilizedKpi.totalShowCount)}
+          icon={Ticket}
+          change={1.8}
+          unit="场"
+          anomaly={anomalies.totalShowCount}
+        />
         <KpiCard label="平均上座率" value={formatPercent(boxOffice?.avgOccupancy || 0)} icon={Percent} change={-0.5} />
         <KpiCard label="场均人次" value={String(boxOffice?.perShowAudience || 0)} icon={UserCheck} change={2.1} unit="人/场" />
         <KpiCard label="平均票价" value={`¥${boxOffice?.avgTicketPrice?.toFixed(1) || '0'}`} icon={TrendingUp} unit="元" change={0.9} />
@@ -212,19 +403,22 @@ export default function Dashboard() {
         <div className="xl:col-span-2 cip-card p-5">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-serif text-lg font-semibold text-slate-100">24小时票房分时走势</h3>
-              <p className="text-xs text-slate-500 mt-0.5">今日票房 vs 上月同期 vs 影史同期参考</p>
+              <h3 className="font-serif text-lg font-semibold text-slate-100">{config.chartTitle}</h3>
+              <p className="text-xs text-slate-500 mt-0.5">{config.chartSubtitle}</p>
             </div>
             <div className="flex gap-2">
-              {['今日', '本周', '本月', '档期'].map((t, i) => (
+              {periodButtons.map(btn => (
                 <button
-                  key={t}
+                  key={btn.key}
+                  onClick={() => setTimePeriod(btn.key)}
                   className={clsx(
                     'px-3 py-1.5 rounded-lg text-xs font-medium transition-colors',
-                    i === 0 ? 'bg-gold-500/20 text-gold-400 border border-gold-500/30' : 'text-slate-400 hover:text-slate-200'
+                    timePeriod === btn.key
+                      ? 'bg-gold-500/20 text-gold-400 border border-gold-500/30'
+                      : 'text-slate-400 hover:text-slate-200'
                   )}
                 >
-                  {t}
+                  {btn.label}
                 </button>
               ))}
             </div>

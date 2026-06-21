@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
   Shield, FileKey, FileSearch, FileBarChart, Users, Database, Activity,
-  TrendingUp, ChevronRight, AlertTriangle, CheckCircle2, Clock, Zap,
-  ArrowUpRight, BarChart3, Globe2, Lock,
+  ChevronRight, AlertTriangle, CheckCircle2, Clock, Zap,
+  ArrowUpRight, BarChart3, Globe2, Lock, Minus, X, Copy, ShieldCheck,
+  Download, FileText,
 } from 'lucide-react';
 import type { PermissionLevel, RolePermission, ExportAuditLog, ReportInfo } from 'shared/types';
 import { clsx } from 'clsx';
-import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 export default function AdminHome() {
   return <AdminModule mode="home" />;
@@ -28,6 +29,57 @@ const subNav = [
   { path: '/admin/reports', label: '报告中心', icon: FileBarChart },
 ];
 
+const dataAccessBoundary = [
+  { category: '票房总览', levels: ['full', 'full', 'full'] },
+  { category: '票房明细数据', levels: ['partial:仅TOP10', 'full', 'full'] },
+  { category: '排片预测结果', levels: ['none', 'full', 'full'] },
+  { category: '上座率热力图', levels: ['none', 'partial:延迟15分钟', 'full'] },
+  { category: '受众画像数据', levels: ['none', 'partial:仅基础标签', 'full'] },
+  { category: '人群迁移分析', levels: ['none', 'none', 'full'] },
+  { category: '剧组协作中心', levels: ['none', 'partial:仅查看', 'full'] },
+  { category: '报告中心', levels: ['partial:仅公开报告', 'full', 'full'] },
+  { category: '定制API接口', levels: ['none', 'none', 'full'] },
+  { category: '历史对比数据', levels: ['none', 'partial:近1年', 'full'] },
+  { category: '实时SSE推送', levels: ['none', 'partial:延迟15分钟', 'full'] },
+  { category: '影院经营数据', levels: ['none', 'partial:仅TOP50影院', 'full'] },
+];
+
+const sensitiveDataTypes = ['票房明细数据', '受众画像报告', '影院经营数据', '上座率原始数据'];
+
+function getCompliance(log: ExportAuditLog) {
+  const isSensitive = sensitiveDataTypes.includes(log.dataType);
+  return {
+    isSensitive,
+    desensitized: isSensitive ? log.status === 'approved' : true,
+    permissionVerified: log.status !== 'rejected',
+    purposeCompliant: log.status === 'approved',
+  };
+}
+
+function AccessCell({ level }: { level: string }) {
+  if (level === 'full') {
+    return (
+      <span className="inline-flex items-center gap-1 text-chart-green">
+        <CheckCircle2 className="w-4 h-4" strokeWidth={1.8} />完整访问
+      </span>
+    );
+  }
+  if (level === 'none') {
+    return (
+      <span className="inline-flex items-center gap-1 text-slate-500">
+        <X className="w-4 h-4" strokeWidth={1.8} />无权限
+      </span>
+    );
+  }
+  const note = level.slice(8);
+  return (
+    <span className="inline-flex items-center gap-1 text-chart-orange" title={note}>
+      <Minus className="w-4 h-4" strokeWidth={1.8} />部分访问
+      <span className="text-[10px] text-slate-400 ml-0.5">({note})</span>
+    </span>
+  );
+}
+
 function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'reports' }) {
   const loc = useLocation();
   const [permissions, setPermissions] = useState<{ levels: PermissionLevel[]; roles: RolePermission[] }>({ levels: [], roles: [] });
@@ -35,6 +87,15 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
   const [reports, setReports] = useState<ReportInfo[]>([]);
   const [filters, setFilters] = useState({ status: '全部', format: '全部', role: '全部' });
   const [reportConfig, setReportConfig] = useState({ type: 'weekly', period: 'last7', delivery: ['email'] as string[] });
+  const [reportResult, setReportResult] = useState<{
+    title: string;
+    generatedAt: string;
+    fileSize: string;
+    chapters: { title: string; summary: string }[];
+    dataVerified: boolean;
+    fileHash: string;
+  } | null>(null);
+  const [copiedHash, setCopiedHash] = useState('');
 
   useEffect(() => {
     fetch('/api/admin/permissions').then(r => r.json()).then(j => setPermissions(j.data));
@@ -53,6 +114,38 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
     pending: { label: '待审核', cls: 'bg-chart-orange/15 text-chart-orange border-chart-orange/30' },
     rejected: { label: '已拒绝', cls: 'bg-cine-500/15 text-cine-400 border-cine-500/30' },
   };
+
+  const copyHash = (hash: string) => {
+    navigator.clipboard.writeText(hash);
+    setCopiedHash(hash);
+    setTimeout(() => setCopiedHash(''), 2000);
+  };
+
+  const handleGenerateReport = () => {
+    setReportResult({
+      title: reportConfig.type === 'weekly'
+        ? '中国电影市场周度数据洞察报告'
+        : reportConfig.type === 'monthly'
+        ? '中国电影市场月度经营分析报告'
+        : '2026暑期档影片表现专项分析报告',
+      generatedAt: new Date().toLocaleString('zh-CN'),
+      fileSize: '12.4 MB',
+      chapters: [
+        { title: '一、市场大盘走势', summary: '报告期内全国票房累计48.6亿元，同比上涨12.5%，为近三年同期最高水平。暑期档预热效应显著。' },
+        { title: '二、档期影片表现分析', summary: '头部影片首周票房突破18亿，市场占比37%，创下题材首周票房新纪录；同期上映影片表现分化。' },
+        { title: '三、影院经营与区域洞察', summary: '一线城市票房贡献占比42%，三四线城市同比增幅达18.7%，下沉市场增长亮眼。' },
+        { title: '四、受众画像与观影偏好', summary: '25-34岁年龄段为核心消费群体，占比34.2%，科幻题材偏好度持续攀升。' },
+        { title: '五、未来走势预测与经营建议', summary: '预计下周单周票房有望冲击55亿，建议院线适度提升黄金场排片。' },
+      ],
+      dataVerified: true,
+      fileHash: `0x${Array.from({ length: 24 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`,
+    });
+  };
+
+  const complianceApproved = filterLogs.filter(l => l.status === 'approved').length;
+  const compliancePending = filterLogs.filter(l => l.status === 'pending').length;
+  const complianceRejected = filterLogs.filter(l => l.status === 'rejected').length;
+  const complianceRate = filterLogs.length ? Math.round(complianceApproved / filterLogs.length * 100) : 0;
 
   return (
     <div className="space-y-6">
@@ -337,6 +430,56 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
               </table>
             </div>
           </div>
+
+          <div className="cip-card p-5">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h3 className="font-serif text-lg font-semibold text-slate-100 flex items-center gap-2">
+                  <Database className="w-5 h-5 text-chart-purple" strokeWidth={1.8} />数据访问边界明细
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">各套餐级别的数据类别访问权限对照</p>
+              </div>
+            </div>
+            <div className="overflow-x-auto scrollbar-thin">
+              <table className="w-full text-sm min-w-[720px]">
+                <thead>
+                  <tr className="border-b border-space-700/50">
+                    <th className="text-left py-3 px-4 text-xs text-slate-500 font-semibold uppercase tracking-wider w-[200px]">数据类别</th>
+                    <th className="text-center py-3 px-4 text-xs text-slate-500 font-semibold">公开数据版</th>
+                    <th className="text-center py-3 px-4 text-xs text-gold-500 font-semibold">订阅专业版</th>
+                    <th className="text-center py-3 px-4 text-xs text-chart-purple font-semibold">企业定制版</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataAccessBoundary.map((row, i) => (
+                    <tr key={row.category} className={clsx('border-b border-space-700/30', i % 2 === 1 && 'bg-space-800/20')}>
+                      <td className="py-3 px-4 text-slate-200 font-medium">{row.category}</td>
+                      {row.levels.map((level, li) => (
+                        <td key={li} className="text-center py-3 px-4">
+                          <AccessCell level={level} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                  <tr className="border-t-2 border-space-700/50 bg-space-800/30">
+                    <td className="py-3 px-4 text-slate-300 font-semibold text-xs uppercase tracking-wider">可访问数据类别数</td>
+                    {[
+                      dataAccessBoundary.filter(r => r.levels[0] !== 'none').length,
+                      dataAccessBoundary.filter(r => r.levels[1] !== 'none').length,
+                      dataAccessBoundary.filter(r => r.levels[2] !== 'none').length,
+                    ].map((count, i) => (
+                      <td key={i} className="text-center py-3 px-4">
+                        <span className={clsx('font-mono font-bold text-lg', i === 2 ? 'text-chart-purple' : i === 1 ? 'text-gold-400' : 'text-slate-300')}>
+                          {count}
+                        </span>
+                        <span className="text-slate-500 text-xs"> / {dataAccessBoundary.length}</span>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       )}
 
@@ -370,13 +513,17 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
 
           <div className="cip-card overflow-hidden">
             <div className="overflow-x-auto scrollbar-thin">
-              <table className="w-full text-sm min-w-[1080px]">
+              <table className="w-full text-sm min-w-[1400px]">
                 <thead>
                   <tr className="bg-space-800/70 border-b border-space-700/50">
                     <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase tracking-wider">操作信息</th>
                     <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">数据范围</th>
                     <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">用途说明</th>
                     <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">格式</th>
+                    <th className="text-center py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">
+                      <span className="inline-flex items-center gap-1"><ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.8} />合规校验</span>
+                    </th>
+                    <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">文件哈希摘要</th>
                     <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">时间</th>
                     <th className="text-left py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase">状态</th>
                     <th className="text-right py-3.5 px-4 text-[11px] text-slate-500 font-semibold uppercase tracking-wider">操作</th>
@@ -393,64 +540,123 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
                     format: (['Excel', 'PDF', 'CSV', 'API'] as const)[i % 4],
                     status: (['approved', 'approved', 'pending', 'approved', 'rejected'] as const)[i % 5],
                     fileHash: `0x${Math.random().toString(16).slice(2, 18)}${Math.random().toString(16).slice(2, 10)}`,
-                  }))).map((log, i) => (
-                    <tr key={log.logId} className={clsx('border-b border-space-700/30 hover:bg-space-700/15 transition-colors', i % 2 === 1 && 'bg-space-800/20')}>
-                      <td className="py-3.5 px-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-lg bg-space-700/60 flex items-center justify-center shrink-0">
-                            <Users className="w-4.5 h-4.5 text-slate-400" strokeWidth={1.8} />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className="font-medium text-slate-200">{log.userName}</span>
-                              <span className="text-[10px] text-slate-500 font-mono">#{log.userId}</span>
+                  }))).map((log, i) => {
+                    const comp = getCompliance(log);
+                    return (
+                      <tr key={log.logId} className={clsx('border-b border-space-700/30 hover:bg-space-700/15 transition-colors', i % 2 === 1 && 'bg-space-800/20')}>
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-lg bg-space-700/60 flex items-center justify-center shrink-0">
+                              <Users className="w-4.5 h-4.5 text-slate-400" strokeWidth={1.8} />
                             </div>
-                            <div className="text-[11px] text-slate-500">{log.userRole}</div>
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-medium text-slate-200">{log.userName}</span>
+                                <span className="text-[10px] text-slate-500 font-mono">#{log.userId}</span>
+                              </div>
+                              <div className="text-[11px] text-slate-500">{log.userRole}</div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <div className="text-sm text-slate-200 mb-0.5">{log.dataType}</div>
-                        <div className="text-[11px] text-slate-500 inline-flex items-center gap-1">
-                          <Database className="w-3 h-3" />{log.dataScope}
-                        </div>
-                      </td>
-                      <td className="py-3.5 px-4 max-w-[220px]">
-                        <div className="text-sm text-slate-300 line-clamp-2">{log.purpose}</div>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <span className={clsx('badge text-[11px] px-2 py-0.5',
-                          log.format === 'PDF' ? 'bg-cine-500/15 text-cine-400 border-cine-500/30' :
-                          log.format === 'Excel' ? 'bg-chart-green/15 text-chart-green border-chart-green/30' :
-                          log.format === 'CSV' ? 'bg-chart-blue/15 text-chart-blue border-chart-blue/30' :
-                          'bg-chart-purple/15 text-chart-purple border-chart-purple/30')}>
-                          {log.format}
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <div className="text-sm font-mono text-slate-300">{log.operationTime.split(' ')[0]}</div>
-                        <div className="text-[11px] text-slate-500 font-mono">{log.operationTime.split(' ')[1]}</div>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <span className={clsx('badge text-[11px] px-2.5 py-1 border', statusMap[log.status]?.cls)}>
-                          {statusMap[log.status]?.label || log.status}
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-4 text-right">
-                        {log.status === 'pending' && (
-                          <>
-                            <button className="text-[11px] text-chart-green hover:text-emerald-400 transition-colors mr-2 font-medium">通过</button>
-                            <button className="text-[11px] text-cine-400 hover:text-cine-300 transition-colors mr-2 font-medium">拒绝</button>
-                          </>
-                        )}
-                        <button className="text-[11px] text-slate-400 hover:text-gold-400 transition-colors inline-flex items-center gap-1">
-                          <Lock className="w-3 h-3" />溯源
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-1.5 mb-0.5">
+                            <span className="text-sm text-slate-200">{log.dataType}</span>
+                            {comp.isSensitive && (
+                              <span className="badge badge-warn text-[9px] px-1.5 py-0">已脱敏</span>
+                            )}
+                          </div>
+                          <div className="text-[11px] text-slate-500 inline-flex items-center gap-1">
+                            <Database className="w-3 h-3" />{log.dataScope}
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 max-w-[220px]">
+                          <div className="text-sm text-slate-300 line-clamp-2">{log.purpose}</div>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <span className={clsx('badge text-[11px] px-2 py-0.5',
+                            log.format === 'PDF' ? 'bg-cine-500/15 text-cine-400 border-cine-500/30' :
+                            log.format === 'Excel' ? 'bg-chart-green/15 text-chart-green border-chart-green/30' :
+                            log.format === 'CSV' ? 'bg-chart-blue/15 text-chart-blue border-chart-blue/30' :
+                            'bg-chart-purple/15 text-chart-purple border-chart-purple/30')}>
+                            {log.format}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center justify-center gap-2">
+                            {[
+                              { label: '数据脱敏', pass: comp.desensitized },
+                              { label: '权限验证', pass: comp.permissionVerified },
+                              { label: '用途合规', pass: comp.purposeCompliant },
+                            ].map(check => (
+                              <span key={check.label} className="inline-flex items-center gap-0.5" title={`${check.label}${check.pass ? ' ✓' : ' ✗'}`}>
+                                {check.pass
+                                  ? <CheckCircle2 className="w-3.5 h-3.5 text-chart-green" strokeWidth={2.5} />
+                                  : <X className="w-3.5 h-3.5 text-slate-500" strokeWidth={2.5} />}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <button
+                            onClick={() => copyHash(log.fileHash)}
+                            className="font-mono text-xs text-slate-400 hover:text-gold-400 transition-colors inline-flex items-center gap-1"
+                          >
+                            {log.fileHash.slice(0, 14)}...
+                            <Copy className="w-3 h-3" strokeWidth={1.8} />
+                            {copiedHash === log.fileHash && <span className="text-[10px] text-chart-green ml-0.5">已复制</span>}
+                          </button>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <div className="text-sm font-mono text-slate-300">{log.operationTime.split(' ')[0]}</div>
+                          <div className="text-[11px] text-slate-500 font-mono">{log.operationTime.split(' ')[1]}</div>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <span className={clsx('badge text-[11px] px-2.5 py-1 border', statusMap[log.status]?.cls)}>
+                            {statusMap[log.status]?.label || log.status}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4 text-right">
+                          {log.status === 'pending' && (
+                            <>
+                              <button className="text-[11px] text-chart-green hover:text-emerald-400 transition-colors mr-2 font-medium">通过</button>
+                              <button className="text-[11px] text-cine-400 hover:text-cine-300 transition-colors mr-2 font-medium">拒绝</button>
+                            </>
+                          )}
+                          <button className="text-[11px] text-slate-400 hover:text-gold-400 transition-colors inline-flex items-center gap-1">
+                            <Lock className="w-3 h-3" />溯源
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
+            </div>
+            <div className="px-5 py-4 border-t border-space-700/50 bg-space-800/40 flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 text-xs">
+                  <CheckCircle2 className="w-4 h-4 text-chart-green" strokeWidth={1.8} />
+                  <span className="text-slate-400">已通过</span>
+                  <span className="font-mono font-bold text-chart-green">{complianceApproved}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <Clock className="w-4 h-4 text-chart-orange" strokeWidth={1.8} />
+                  <span className="text-slate-400">待审核</span>
+                  <span className="font-mono font-bold text-chart-orange">{compliancePending}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <X className="w-4 h-4 text-cine-400" strokeWidth={1.8} />
+                  <span className="text-slate-400">已拒绝</span>
+                  <span className="font-mono font-bold text-cine-400">{complianceRejected}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <ShieldCheck className="w-4 h-4 text-gold-400" strokeWidth={1.8} />
+                <span className="text-slate-400">合规率</span>
+                <span className={clsx('font-mono font-bold text-lg', complianceRate >= 80 ? 'text-chart-green' : complianceRate >= 50 ? 'text-chart-orange' : 'text-cine-400')}>
+                  {complianceRate}%
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -461,7 +667,7 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
           <div className="cip-card p-6">
             <div className="flex items-center justify-between mb-5">
               <h3 className="font-serif text-lg font-semibold text-slate-100 flex items-center gap-2">
-                <FileBarChart className="w-5 h-5 text-gold-400" />报告模板配置 · 自动化生成任务
+                <FileBarChart className="w-5 h-5 text-gold-400" strokeWidth={1.8} />报告模板配置 · 自动化生成任务
               </h3>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
@@ -513,8 +719,8 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
                     ))}
                   </div>
                 </div>
-                <button className="btn-primary w-full h-11 flex items-center justify-center gap-2 mt-2">
-                  <Zap className="w-4 h-4" />立即生成报告
+                <button onClick={handleGenerateReport} className="btn-primary w-full h-11 flex items-center justify-center gap-2 mt-2">
+                  <Zap className="w-4 h-4" strokeWidth={1.8} />立即生成报告
                 </button>
               </div>
 
@@ -557,10 +763,76 @@ function AdminModule({ mode }: { mode: 'home' | 'permissions' | 'audit' | 'repor
             </div>
           </div>
 
+          {reportResult ? (
+            <div className="cip-card p-6">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="font-serif text-lg font-semibold text-slate-100 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-gold-400" strokeWidth={1.8} />报告生成结果
+                </h3>
+                <button onClick={() => setReportResult(null)} className="text-xs text-slate-500 hover:text-slate-300 transition-colors">关闭</button>
+              </div>
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-gold-500/5 via-space-800/60 to-space-900/40 border border-gold-500/20 mb-5">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h4 className="font-serif text-xl font-bold text-gradient-gold mb-1">{reportResult.title}</h4>
+                    <div className="flex items-center gap-3 text-xs text-slate-400">
+                      <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3" strokeWidth={1.8} />{reportResult.generatedAt}</span>
+                      <span className="text-space-600">·</span>
+                      <span>{reportResult.fileSize}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {reportResult.dataVerified ? (
+                      <span className="badge badge-online text-[10px] px-2.5 py-1 flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3" strokeWidth={2.2} />数据校验通过
+                      </span>
+                    ) : (
+                      <span className="badge badge-warn text-[10px] px-2.5 py-1 flex items-center gap-1">
+                        <AlertTriangle className="w-3 h-3" strokeWidth={2.2} />数据校验异常
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="space-y-2.5 mb-5">
+                  {reportResult.chapters.map((ch, i) => (
+                    <div key={i} className="p-3.5 rounded-xl bg-space-950/40 border border-space-700/25">
+                      <h5 className="text-sm font-semibold text-slate-200 mb-1">{ch.title}</h5>
+                      <p className="text-xs text-slate-400 leading-relaxed">{ch.summary}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-slate-500">下载报告</span>
+                  {[
+                    { fmt: 'PDF', cls: 'bg-cine-500/15 text-cine-400 border-cine-500/30 hover:bg-cine-500/25' },
+                    { fmt: 'Excel', cls: 'bg-chart-green/15 text-chart-green border-chart-green/30 hover:bg-chart-green/25' },
+                    { fmt: 'PPT', cls: 'bg-chart-orange/15 text-chart-orange border-chart-orange/30 hover:bg-chart-orange/25' },
+                  ].map(dl => (
+                    <button key={dl.fmt} className={clsx('inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium border transition-colors', dl.cls)}>
+                      <Download className="w-3.5 h-3.5" strokeWidth={1.8} />{dl.fmt}
+                    </button>
+                  ))}
+                </div>
+                <div className="inline-flex items-center gap-1.5 text-[11px] text-slate-500">
+                  <ShieldCheck className="w-3.5 h-3.5 text-chart-green" strokeWidth={1.8} />
+                  本报告数据来源已通过合规审计，文件哈希：<span className="font-mono text-slate-400">{reportResult.fileHash}</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="cip-card p-8 flex flex-col items-center justify-center text-center">
+              <FileBarChart className="w-16 h-16 text-slate-600 mb-4" strokeWidth={1.2} />
+              <h4 className="text-lg font-semibold text-slate-300 mb-2">尚未生成报告</h4>
+              <p className="text-sm text-slate-500 max-w-md">请在上方配置报告参数后，点击"立即生成报告"按钮开始生成</p>
+            </div>
+          )}
+
           <div className="cip-card p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="font-serif text-lg font-semibold text-slate-100 flex items-center gap-2">
-                <Activity className="w-5 h-5 text-chart-blue" />历史报告 · 生成任务队列
+                <Activity className="w-5 h-5 text-chart-blue" strokeWidth={1.8} />历史报告 · 生成任务队列
               </h3>
               <span className="text-xs text-slate-500">共 {reports.length || 8} 份</span>
             </div>
