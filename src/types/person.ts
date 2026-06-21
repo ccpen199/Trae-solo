@@ -50,6 +50,7 @@ export interface GraphNode {
   name: string;
   type: 'company' | 'person' | 'judicial';
   subType?: string;
+  category?: string;
   x?: number;
   y?: number;
   vx?: number;
@@ -66,6 +67,7 @@ export interface GraphLink {
   type: string;
   value?: number;
   label?: string;
+  level?: number;
 }
 
 export interface GraphData {

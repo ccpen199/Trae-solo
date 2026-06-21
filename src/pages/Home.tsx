@@ -1,17 +1,30 @@
-import { Building2, TrendingUp, AlertTriangle, Newspaper, ArrowRight, Zap, Database, Network, BarChart3 } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Building2, TrendingUp, AlertTriangle, Newspaper, ArrowRight, Zap, Database, Network, BarChart3, User, MapPin, Link2, Clock, CheckCircle2, AlertCircle, Settings, Filter, Star, ChevronDown, Target, TrendingDown } from 'lucide-react';
 import { MetricCard } from '../components/common/MetricCard';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
+import { Button } from '../components/ui/Button';
 import { LineChart } from '../components/charts/LineChart';
 import { BarChart } from '../components/charts/BarChart';
+import { PieChart } from '../components/charts/PieChart';
 import { mockCompanies } from '../data/companies';
-import { mockNews } from '../data/sentiment';
-import { mockAlertStats, mockAlerts } from '../data/monitoring';
-import { formatNumber, formatMoney } from '../utils/format';
+import { mockNews, mockHotKeywords } from '../data/sentiment';
+import { mockAlertStats, mockAlerts, mockAlertThresholds } from '../data/monitoring';
+import { mockProjects } from '../data/projects';
+import { formatNumber, formatMoney, formatRate } from '../utils/format';
 import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '../stores/useAppStore';
+import type { Company } from '../types/company';
+import type { Alert } from '../types/monitoring';
+import type { SourceLevel } from '../types/sentiment';
 
 export default function Home() {
   const navigate = useNavigate();
+  const { setSelectedCompany, setFinanceContext } = useAppStore();
+  const [selectedHomeCompany, setSelectedHomeCompany] = useState<Company | null>(null);
+  const [regionFilter, setRegionFilter] = useState<string>('all');
+  const [dashboardTab, setDashboardTab] = useState('overview');
+  const [expandedAlertId, setExpandedAlertId] = useState<string | null>(null);
 
   const salesTrendData = {
     xAxis: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -50,11 +63,111 @@ export default function Home() {
   const latestNews = mockNews.slice(0, 5);
   const highAlerts = mockAlerts.filter(a => a.level === 'high').slice(0, 3);
 
+  const allRegions = ['all', '华东', '华南', '华北', '西南', '华中', '西北', '东北'];
+  
+  const filteredCompanies = useMemo(() => {
+    if (regionFilter === 'all') return mockCompanies.slice(0, 8);
+    return mockCompanies.filter(c => c.headquarters?.includes(regionFilter)).slice(0, 8);
+  }, [regionFilter]);
+
+  const handleCompanyDrill = (company: Company, target: 'finance' | 'relationship' | 'projects' | 'supply-chain') => {
+    setSelectedCompany(company);
+    setSelectedHomeCompany(company);
+    
+    if (target === 'finance') {
+      setFinanceContext({ companyId: company.id, source: 'home' });
+    }
+    
+    const paths: Record<string, string> = {
+      'finance': '/finance',
+      'relationship': '/relationship',
+      'projects': '/projects',
+      'supply-chain': '/supply-chain',
+    };
+    navigate(paths[target]);
+  };
+
+  const getSourceLevelTag = (level: SourceLevel) => {
+    switch (level) {
+      case 'national': return <Tag variant="purple" size="sm">国家级</Tag>;
+      case 'provincial': return <Tag variant="primary" size="sm">省级</Tag>;
+      case 'city': return <Tag variant="success" size="sm">城市级</Tag>;
+      case 'industry': return <Tag variant="warning" size="sm">行业</Tag>;
+      default: return <Tag variant="outline" size="sm">自媒体</Tag>;
+    }
+  };
+
+  const getAuthorityStars = (authority: number) => {
+    const stars = Math.round(authority / 20);
+    return (
+      <div className="flex items-center gap-0.5">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className={`w-3 h-3 ${
+              i < stars ? 'text-warning-500 fill-warning-500' : 'text-dark-600'
+            }`}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  const getAlertThreshold = (alert: Alert) => {
+    const matching = mockAlertThresholds.find(t => 
+      alert.title.includes(t.metricName) || alert.description.includes(t.metricName)
+    );
+    return matching;
+  };
+
   const quickEntries = [
-    { icon: Network, label: '人物关系', desc: '高管任职/股权穿透', path: '/relationship', color: 'text-purple-500', bg: 'bg-purple-500/10' },
-    { icon: BarChart3, label: '财务分析', desc: '财报/债券/土储', path: '/finance', color: 'text-brand-500', bg: 'bg-brand-500/10' },
-    { icon: Building2, label: '项目追踪', desc: '全周期进度', path: '/projects', color: 'text-success-500', bg: 'bg-success-500/10' },
-    { icon: Database, label: '供应链库', desc: '供应商/合作关系', path: '/supply-chain', color: 'text-warning-500', bg: 'bg-warning-500/10' },
+    { 
+      icon: Network, 
+      label: '人物关系', 
+      desc: '高管任职/股权穿透', 
+      path: '/relationship', 
+      color: 'text-purple-500', 
+      bg: 'bg-purple-500/10',
+      metric: mockProjects.length,
+      metricLabel: '条关系链'
+    },
+    { 
+      icon: BarChart3, 
+      label: '财务分析', 
+      desc: '财报/债券/土储', 
+      path: '/finance', 
+      color: 'text-brand-500', 
+      bg: 'bg-brand-500/10',
+      metric: mockCompanies.length,
+      metricLabel: '家房企'
+    },
+    { 
+      icon: Building2, 
+      label: '项目追踪', 
+      desc: '全周期进度', 
+      path: '/projects', 
+      color: 'text-success-500', 
+      bg: 'bg-success-500/10',
+      metric: '8.6万',
+      metricLabel: '个在建'
+    },
+    { 
+      icon: Database, 
+      label: '供应链库', 
+      desc: '供应商/合作关系', 
+      path: '/supply-chain', 
+      color: 'text-warning-500', 
+      bg: 'bg-warning-500/10',
+      metric: mockProjects.length * 12,
+      metricLabel: '家供应商'
+    },
+  ];
+
+  const dashboardMetrics = [
+    { key: 'sales', label: '销售额', value: '7.23万亿', change: 3.2, changeLabel: '同比' },
+    { key: 'area', label: '销售面积', value: '5.68亿㎡', change: -2.1, changeLabel: '同比' },
+    { key: 'price', label: '均价', value: '12729元/㎡', change: 5.4, changeLabel: '同比' },
+    { key: 'inventory', label: '去化周期', value: '14.8月', change: -8.3, changeLabel: '环比' },
   ];
 
   const getSentimentTag = (sentiment: string) => {
@@ -174,25 +287,55 @@ export default function Home() {
       <div className="grid grid-cols-3 gap-5">
         <Card>
           <Card.Header>
-            <Card.Title>快捷入口</Card.Title>
+            <Card.Title>功能入口</Card.Title>
+            <Tag variant="outline">点击下钻</Tag>
           </Card.Header>
           <Card.Body>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-2.5">
               {quickEntries.map((entry, index) => {
                 const Icon = entry.icon;
                 return (
                   <button
                     key={index}
                     onClick={() => navigate(entry.path)}
-                    className="p-4 rounded-xl bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 hover:bg-dark-800/50 transition-all duration-200 text-left group"
+                    className="w-full p-3.5 rounded-xl bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 hover:bg-dark-800/50 transition-all duration-200 text-left group"
                   >
-                    <div className={`w-10 h-10 rounded-lg ${entry.bg} flex items-center justify-center mb-3`}>
-                      <Icon className={`w-5 h-5 ${entry.color}`} />
+                    <div className="flex items-center gap-3">
+                      <div className={`w-11 h-11 rounded-xl ${entry.bg} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className={`w-5 h-5 ${entry.color}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-white group-hover:text-brand-400 transition-colors">
+                            {entry.label}
+                          </p>
+                          <span className={`text-[10px] font-mono font-bold ${entry.color} bg-dark-800/60 px-1.5 py-0.5 rounded`}>
+                            {entry.metric}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <span className="text-xs text-dark-500">{entry.desc}</span>
+                          <span className="text-xs text-dark-600">·</span>
+                          <span className="text-xs text-dark-400">{entry.metricLabel}</span>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-dark-600 group-hover:text-brand-400 flex-shrink-0 transition-colors" />
                     </div>
-                    <p className="text-sm font-medium text-white group-hover:text-brand-400 transition-colors">
-                      {entry.label}
-                    </p>
-                    <p className="text-xs text-dark-500 mt-0.5">{entry.desc}</p>
+                    {selectedHomeCompany && (
+                      <div className="mt-3 pt-3 border-t border-dark-700/30 grid grid-cols-4 gap-1.5">
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(selectedHomeCompany, entry.path.slice(1) as any); }}
+                          className="text-[10px] py-1.5 px-2 rounded bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
+                        >
+                          续查{selectedHomeCompany.shortName}
+                        </button>
+                        <div className="col-span-3 text-[10px] text-dark-500 flex items-center gap-1">
+                          <User className="w-3 h-3" /> 高管 {Math.floor(Math.random()*8)+3}人
+                          <span className="text-dark-700">|</span>
+                          <Building2 className="w-3 h-3" /> 项目 {Math.floor(Math.random()*30)+10}个
+                        </div>
+                      </div>
+                    )}
                   </button>
                 );
               })}
@@ -203,37 +346,80 @@ export default function Home() {
         <Card className="col-span-2">
           <Card.Header>
             <Card.Title>最新资讯</Card.Title>
-            <button 
-              onClick={() => navigate('/sentiment')}
-              className="text-xs text-brand-400 hover:text-brand-300 transition-colors flex items-center gap-1"
-            >
-              查看全部 <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 text-[10px]">
+                <span className="text-dark-500">信源:</span>
+                <span className="w-2 h-2 rounded-full bg-purple-500" />
+                <span className="text-dark-400">国家</span>
+                <span className="w-2 h-2 rounded-full bg-brand-500 ml-1.5" />
+                <span className="text-dark-400">省级</span>
+                <span className="w-2 h-2 rounded-full bg-success-500 ml-1.5" />
+                <span className="text-dark-400">城市</span>
+              </div>
+              <button 
+                onClick={() => navigate('/sentiment')}
+                className="text-xs text-brand-400 hover:text-brand-300 transition-colors flex items-center gap-1"
+              >
+                查看全部 <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </Card.Header>
           <Card.Body className="py-3">
             <div className="space-y-1">
-              {latestNews.map((news) => (
+              {latestNews.map((news) => {
+                const relatedCompany = mockCompanies.find(c => 
+                  news.title.includes(c.shortName) || news.keywords.some(k => c.shortName.includes(k))
+                );
+                const relatedAlert = mockAlerts.find(a => 
+                  news.title.includes(a.companyName || '') || news.keywords.some(k => a.title.includes(k))
+                );
+                return (
                 <div
                   key={news.id}
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-dark-800/50 cursor-pointer transition-colors group"
+                  onClick={() => navigate('/sentiment')}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-dark-800/50 cursor-pointer transition-colors group"
                 >
-                  {getSentimentTag(news.sentiment)}
+                  <div className="flex flex-col items-center gap-1.5 flex-shrink-0">
+                    {getSentimentTag(news.sentiment)}
+                    {getSourceLevelTag(news.sourceLevel as SourceLevel)}
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-white truncate group-hover:text-brand-400 transition-colors">
                       {news.title}
                     </p>
-                    <div className="flex items-center gap-3 mt-1">
+                    <div className="flex items-center gap-3 mt-1 flex-wrap">
                       <span className="text-xs text-dark-500">{news.source}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[10px] text-dark-500">权威度</span>
+                        {getAuthorityStars(news.sourceAuthority)}
+                        <span className="text-[10px] text-dark-600 font-mono ml-1">{(news.sourceAuthority/20).toFixed(1)}</span>
+                      </div>
                       <span className="text-xs text-dark-600">
-                        {news.readCount.toLocaleString()} 阅读
+                        {formatNumber(news.readCount)} 阅读
                       </span>
+                      {relatedCompany && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(relatedCompany, 'finance'); }}
+                          className="text-[10px] px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors flex items-center gap-1"
+                        >
+                          <Building2 className="w-2.5 h-2.5" /> {relatedCompany.shortName}
+                        </button>
+                      )}
+                      {relatedAlert && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); navigate('/monitoring'); }}
+                          className="text-[10px] px-2 py-0.5 rounded bg-danger-500/10 text-danger-400 hover:bg-danger-500/20 transition-colors flex items-center gap-1"
+                        >
+                          <AlertTriangle className="w-2.5 h-2.5" /> 关联预警
+                        </button>
+                      )}
                     </div>
                   </div>
                   <span className="text-xs text-dark-500 flex-shrink-0">
                     {news.publishDate.split(' ')[0]}
                   </span>
                 </div>
-              ))}
+              )})}
             </div>
           </Card.Body>
         </Card>
@@ -243,28 +429,163 @@ export default function Home() {
         <Card>
           <Card.Header>
             <Card.Title>高风险预警</Card.Title>
-            <Tag variant="danger">{highAlerts.length} 条</Tag>
+            <div className="flex items-center gap-2">
+              <Tag variant="outline" size="sm">阈值规则: {mockAlertThresholds.filter(t => t.enabled).length}条运行</Tag>
+              <Tag variant="danger">{highAlerts.length} 条</Tag>
+            </div>
           </Card.Header>
           <Card.Body className="py-3">
             <div className="space-y-3">
-              {highAlerts.map((alert) => (
+              {highAlerts.map((alert) => {
+                const threshold = getAlertThreshold(alert);
+                const isExpanded = expandedAlertId === alert.id;
+                return (
                 <div
                   key={alert.id}
-                  onClick={() => navigate('/monitoring')}
-                  className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 hover:border-danger-500/30 cursor-pointer transition-all group"
+                  className="rounded-lg bg-dark-800/30 border border-dark-700/30 hover:border-danger-500/30 transition-all"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className={`w-2.5 h-2.5 rounded-full ${getLevelColor(alert.level)} flex-shrink-0 mt-1.5`} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white group-hover:text-danger-400 transition-colors">
-                        {alert.title}
-                      </p>
-                      <p className="text-xs text-dark-400 mt-1 line-clamp-2">{alert.description}</p>
-                      <p className="text-xs text-dark-500 mt-2">{alert.companyName}</p>
+                  <div 
+                    onClick={() => setExpandedAlertId(isExpanded ? null : alert.id)}
+                    className="p-3 cursor-pointer"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`w-2.5 h-2.5 rounded-full ${getLevelColor(alert.level)} flex-shrink-0 mt-1.5 animate-pulse`} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-white group-hover:text-danger-400 transition-colors">
+                            {alert.title}
+                          </p>
+                          {threshold && (
+                            <Tag variant="outline" size="sm">
+                              {threshold.direction === 'up' ? '↑' : '↓'} 阈值 {(threshold.unit === '%' ? `${(threshold.highThreshold*100).toFixed(0)}%` : `${threshold.highThreshold/100000000}亿`)}
+                            </Tag>
+                          )}
+                        </div>
+                        <p className="text-xs text-dark-400 mt-1 line-clamp-2">{alert.description}</p>
+                        <div className="flex items-center gap-3 mt-2 flex-wrap">
+                          <span className="text-[10px] text-danger-400 font-medium">{alert.companyName}</span>
+                          {threshold && (
+                            <span className="text-[10px] text-dark-500 flex items-center gap-1">
+                              <Settings className="w-2.5 h-2.5" />
+                              规则: {threshold.metricName}
+                            </span>
+                          )}
+                          <span className={`text-[10px] flex items-center gap-1 ${
+                            alert.status === 'unread' ? 'text-danger-400' :
+                            alert.status === 'read' ? 'text-warning-400' : 'text-success-400'
+                          }`}>
+                            {alert.status === 'unread' ? <AlertCircle className="w-2.5 h-2.5" /> : 
+                             alert.status === 'read' ? <Clock className="w-2.5 h-2.5" /> : <CheckCircle2 className="w-2.5 h-2.5" />}
+                            {alert.status === 'unread' ? '未读' : alert.status === 'read' ? '处理中' : '已处置'}
+                          </span>
+                          <ChevronDown className={`w-3.5 h-3.5 text-dark-500 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  {isExpanded && (
+                    <div className="px-3 pb-3 border-t border-dark-700/30 mt-2 pt-3">
+                      {threshold && (
+                        <div className="p-2.5 rounded-lg bg-dark-800/60 mb-2.5">
+                          <p className="text-[10px] font-medium text-dark-300 mb-2">📐 阈值口径与规则状态</p>
+                          <div className="grid grid-cols-2 gap-2 text-[10px]">
+                            <div>
+                              <span className="text-dark-500">指标:</span>
+                              <span className="text-white ml-1">{threshold.metricName}</span>
+                            </div>
+                            <div>
+                              <span className="text-dark-500">单位:</span>
+                              <span className="text-white ml-1">{threshold.unit}</span>
+                            </div>
+                            <div>
+                              <span className="text-dark-500">触发方向:</span>
+                              <span className="text-brand-400 ml-1">{threshold.direction === 'up' ? '超过阈值' : '低于阈值'}</span>
+                            </div>
+                            <div>
+                              <span className="text-dark-500">当前值:</span>
+                              <span className="text-danger-400 ml-1 font-mono">
+                                {threshold.unit === '%' ? `${(parseFloat(alert.description)||0).toFixed(1)}%` : `${formatMoney(parseFloat(alert.description)||0)}`}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-dark-500">阈值上限:</span>
+                              <span className="text-warning-400 ml-1 font-mono">
+                                {threshold.unit === '%' ? `${(threshold.highThreshold*100).toFixed(0)}%` : `${formatMoney(threshold.highThreshold)}`}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-dark-500">规则状态:</span>
+                              <span className={`ml-1 ${threshold.enabled ? 'text-success-400' : 'text-dark-500'}`}>
+                                {threshold.enabled ? '● 运行中' : '○ 已暂停'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="space-y-2.5">
+                        <div>
+                          <p className="text-[10px] font-medium text-dark-300 mb-1.5">⏱️ 处置进度</p>
+                          <div className="flex items-center gap-3">
+                            <div className="flex-1 h-1.5 rounded-full bg-dark-700 overflow-hidden">
+                              <div 
+                                className="h-full bg-gradient-to-r from-danger-500 via-warning-500 to-brand-500"
+                                style={{ width: `${alert.status === 'processed' ? 100 : alert.status === 'read' ? 45 : 10}%` }}
+                              />
+                            </div>
+                            <span className="text-[10px] text-dark-400 font-mono">
+                              {alert.status === 'processed' ? '100%' : alert.status === 'read' ? '45%' : '10%'}
+                            </span>
+                          </div>
+                          <div className="flex justify-between mt-1">
+                            <span className="text-[9px] text-dark-600">触发</span>
+                            <span className="text-[9px] text-dark-600">分发</span>
+                            <span className="text-[9px] text-dark-600">核实</span>
+                            <span className="text-[9px] text-dark-600">处置</span>
+                            <span className="text-[9px] text-dark-600">复查</span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="text-[10px] font-medium text-dark-300 mb-1.5">📋 复查记录</p>
+                          <div className="space-y-1.5">
+                            <div className="p-2 rounded bg-dark-800/40 flex items-start gap-2">
+                              <CheckCircle2 className="w-3 h-3 text-success-500 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-[10px] text-dark-300">首次数据核验 · 财务数据与公告一致</p>
+                                <p className="text-[9px] text-dark-500 mt-0.5">张经理 · 2024-01-14 14:30</p>
+                              </div>
+                            </div>
+                            <div className="p-2 rounded bg-dark-800/40 flex items-start gap-2">
+                              <Clock className="w-3 h-3 text-warning-500 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-[10px] text-dark-300">待现场尽调 · 预约本周三走访项目现场</p>
+                                <p className="text-[9px] text-dark-500 mt-0.5">李总监 · 待处理</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 mt-3">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); navigate('/monitoring'); }}
+                          className="flex-1 py-1.5 px-3 rounded-lg bg-brand-500/10 text-brand-400 text-[10px] font-medium hover:bg-brand-500/20 transition-colors"
+                        >
+                          查看完整处置链路
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(mockCompanies.find(c => c.shortName === alert.companyName) || mockCompanies[0], 'finance'); }}
+                          className="flex-1 py-1.5 px-3 rounded-lg bg-dark-700/50 text-dark-300 text-[10px] font-medium hover:bg-dark-700 transition-colors"
+                        >
+                          追溯企业财务
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
+              )})}
             </div>
           </Card.Body>
           <Card.Footer>
@@ -279,36 +600,206 @@ export default function Home() {
 
         <Card className="col-span-2">
           <Card.Header>
-            <Card.Title>热门房企</Card.Title>
-            <Tag variant="outline">关注度排行</Tag>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-3">
+                <Card.Title>热门房企</Card.Title>
+                <Tag variant="outline">关注度排行</Tag>
+                {selectedHomeCompany && (
+                  <Tag variant="primary" size="sm">
+                    已选: {selectedHomeCompany.shortName}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setSelectedHomeCompany(null); }}
+                      className="ml-1.5 hover:text-white"
+                    >
+                      ×
+                    </button>
+                  </Tag>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  <Filter className="w-3.5 h-3.5 text-dark-500" />
+                  <select
+                    value={regionFilter}
+                    onChange={(e) => setRegionFilter(e.target.value)}
+                    className="text-xs bg-dark-800/50 border border-dark-700/50 rounded-lg px-2 py-1 text-dark-300 focus:outline-none focus:border-brand-500/50"
+                  >
+                    {allRegions.map(r => (
+                      <option key={r} value={r}>{r === 'all' ? '全部区域' : r}</option>
+                    ))}
+                  </select>
+                </div>
+                <Tag variant="outline" size="sm">{filteredCompanies.length}家</Tag>
+              </div>
+            </div>
           </Card.Header>
           <Card.Body>
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2.5">
+                {[
+                  { key: 'overview', label: '总览' },
+                  { key: 'project', label: '项目节点' },
+                  { key: 'partner', label: '合作方' },
+                  { key: 'sentiment', label: '舆情' },
+                ].map(tab => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setDashboardTab(tab.key)}
+                    className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
+                      dashboardTab === tab.key
+                        ? 'bg-brand-500/20 text-brand-400 border border-brand-500/30'
+                        : 'text-dark-400 hover:text-dark-300 hover:bg-dark-800/30'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {dashboardTab === 'overview' && (
+                <div className="grid grid-cols-4 gap-3 mb-3">
+                  {dashboardMetrics.map((metric) => (
+                    <div key={metric.key} className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 cursor-pointer hover:border-brand-500/30 transition-colors">
+                      <p className="text-[10px] text-dark-500">{metric.label}</p>
+                      <p className="text-base font-bold text-white font-mono mt-1">{metric.value}</p>
+                      <div className={`flex items-center gap-1 mt-1 text-[10px] ${
+                        metric.change >= 0 ? 'text-success-500' : 'text-danger-500'
+                      }`}>
+                        {metric.change >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                        <span>{metric.change >= 0 ? '+' : ''}{metric.change}%</span>
+                        <span className="text-dark-600 ml-0.5">{metric.changeLabel}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {dashboardTab === 'project' && (
+                <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 mb-3">
+                  <p className="text-xs font-medium text-dark-300 mb-2">📊 项目节点下钻</p>
+                  <div className="grid grid-cols-5 gap-2">
+                    {['拿地', '开工', '预售', '封顶', '交付'].map((stage, i) => (
+                      <div key={stage} className="text-center p-2 rounded bg-dark-800/50">
+                        <p className="text-xs font-medium text-white">{86520 - i * 15000}</p>
+                        <p className="text-[10px] text-dark-500 mt-0.5">{stage}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {dashboardTab === 'partner' && (
+                <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 mb-3">
+                  <p className="text-xs font-medium text-dark-300 mb-2">🤝 合作方网络</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {['中国建筑', '万科物业', '碧桂园服务', '保利发展', '融创服务', '中海地产', '华润置地', '龙湖集团'].map((p, i) => (
+                      <Tag key={p} variant={i < 3 ? 'primary' : 'outline'} size="sm">
+                        <Link2 className="w-2.5 h-2.5 mr-1" />{p}
+                      </Tag>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {dashboardTab === 'sentiment' && (
+                <div className="p-3 rounded-lg bg-dark-800/30 border border-dark-700/30 mb-3">
+                  <p className="text-xs font-medium text-dark-300 mb-2">🔥 热点关键词</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {mockHotKeywords.slice(0, 8).map((kw, i) => (
+                      <Tag key={i} variant={kw.trend === 'up' ? 'danger' : 'success'} size="sm">
+                        #{kw.keyword} · {kw.count}篇
+                      </Tag>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="grid grid-cols-4 gap-3">
-              {mockCompanies.slice(0, 8).map((company, index) => (
+              {filteredCompanies.map((company, index) => {
+                const companyProjects = mockProjects.filter(p => p.companyId === company.id);
+                const isSelected = selectedHomeCompany?.id === company.id;
+                return (
                 <div
                   key={company.id}
-                  onClick={() => navigate('/finance')}
-                  className="p-4 rounded-xl bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 hover:bg-dark-800/50 cursor-pointer transition-all text-center group"
+                  className={`p-4 rounded-xl cursor-pointer transition-all text-center group relative ${
+                    isSelected
+                      ? 'bg-brand-500/10 border-2 border-brand-500/50'
+                      : 'bg-dark-800/30 border border-dark-700/30 hover:border-brand-500/30 hover:bg-dark-800/50'
+                  }`}
                 >
-                  <div className="relative inline-block">
-                    <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-2xl border border-dark-600/50">
-                      {company.logo}
+                  <div 
+                    className="z-10 relative"
+                    onClick={() => {
+                      setSelectedHomeCompany(isSelected ? null : company);
+                      setSelectedCompany(isSelected ? null : company);
+                    }}
+                  >
+                    <div className="relative inline-block">
+                      <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-2xl border border-dark-600/50">
+                        {company.logo}
+                      </div>
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-dark-900 border border-dark-600 rounded-full text-xs font-bold text-brand-400 flex items-center justify-center">
+                        {index + 1}
+                      </span>
                     </div>
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-dark-900 border border-dark-600 rounded-full text-xs font-bold text-brand-400 flex items-center justify-center">
-                      {index + 1}
-                    </span>
+                    <p className="text-sm font-medium text-white mt-3 truncate group-hover:text-brand-400 transition-colors">
+                      {company.shortName}
+                    </p>
+                    <div className="flex items-center justify-center gap-1 mt-2">
+                      <Tag variant={company.type === 'state-owned' ? 'primary' : company.type === 'private' ? 'success' : 'warning'} size="sm">
+                        {company.type === 'state-owned' ? '国企' : company.type === 'private' ? '民企' : '混合'}
+                      </Tag>
+                    </div>
+                    <p className="text-xs text-dark-500 mt-1.5 font-mono">
+                      {formatMoney(company.revenue || 0)}
+                    </p>
+                    <div className="flex items-center justify-center gap-2 mt-1.5 text-[10px] text-dark-500">
+                      <span className="flex items-center gap-0.5">
+                        <MapPin className="w-2.5 h-2.5" />
+                        {company.headquarters?.split(' ')[0] || '华东'}
+                      </span>
+                      <span className="text-dark-700">|</span>
+                      <span className="flex items-center gap-0.5">
+                        <Building2 className="w-2.5 h-2.5" />
+                        {companyProjects.length}项目
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-sm font-medium text-white mt-3 truncate group-hover:text-brand-400 transition-colors">
-                    {company.shortName}
-                  </p>
-                  <div className="flex items-center justify-center gap-1 mt-2">
-                    <Tag variant={company.type === 'state-owned' ? 'primary' : company.type === 'private' ? 'success' : 'warning'} size="sm">
-                      {company.type === 'state-owned' ? '国企' : company.type === 'private' ? '民企' : '混合'}
-                    </Tag>
-                  </div>
-                  <p className="text-xs text-dark-500 mt-2">{formatMoney(4850 - index * 350)}</p>
+
+                  {isSelected && (
+                    <div className="mt-3 pt-3 border-t border-dark-700/30 space-y-1.5 z-20 relative">
+                      <p className="text-[10px] text-dark-500 mb-1.5">下钻到:</p>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'finance'); }}
+                          className="text-[10px] py-1.5 rounded bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
+                        >
+                          <BarChart3 className="w-2.5 h-2.5 mr-0.5 inline" />财务
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'relationship'); }}
+                          className="text-[10px] py-1.5 rounded bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors"
+                        >
+                          <Network className="w-2.5 h-2.5 mr-0.5 inline" />关系
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'projects'); }}
+                          className="text-[10px] py-1.5 rounded bg-success-500/10 text-success-400 hover:bg-success-500/20 transition-colors"
+                        >
+                          <Building2 className="w-2.5 h-2.5 mr-0.5 inline" />项目
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleCompanyDrill(company, 'supply-chain'); }}
+                          className="text-[10px] py-1.5 rounded bg-warning-500/10 text-warning-400 hover:bg-warning-500/20 transition-colors"
+                        >
+                          <Database className="w-2.5 h-2.5 mr-0.5 inline" />供应链
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
+              )})}
             </div>
           </Card.Body>
         </Card>

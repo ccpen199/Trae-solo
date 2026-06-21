@@ -25,6 +25,7 @@ export interface Bond {
   bondName: string;
   bondCode: string;
   issueAmount: number;
+  outstandingAmount?: number;
   couponRate: number;
   issueDate: string;
   maturityDate: string;
@@ -40,6 +41,7 @@ export interface LandReserve {
   region: string;
   city: string;
   area: number;
+  totalArea?: number;
   landPrice: number;
   floorPrice: number;
   acquireDate: string;

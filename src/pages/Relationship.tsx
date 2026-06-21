@@ -1,28 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import * as d3 from 'd3';
-import { Search, Filter, ZoomIn, ZoomOut, Maximize2, RefreshCw, User, Building2, AlertTriangle, ChevronRight } from 'lucide-react';
+import { Search, Filter, ZoomIn, ZoomOut, Maximize2, RefreshCw, User, Building2, AlertTriangle, ChevronRight, ArrowLeft, Network } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
 import { Tabs } from '../components/ui/Tabs';
 import { getMockGraphData, mockPersons, mockPositions, mockJudicialRisks, mockEquityRelations } from '../data/persons';
+import { mockCompanies } from '../data/companies';
 import type { GraphNode, GraphLink, Person } from '../types/person';
+import type { Company } from '../types/company';
 import { formatMoney } from '../utils/format';
+import { useAppStore } from '../stores/useAppStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function Relationship() {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const simulationRef = useRef<any>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [activeTab, setActiveTab] = useState('position');
   const [zoomLevel, setZoomLevel] = useState(1);
   const [showFilterPanel, setShowFilterPanel] = useState(false);
   
+  const { selectedCompany: storeSelectedCompany, setSelectedCompany } = useAppStore();
+  const navigate = useNavigate();
+  
   const [relationFilter, setRelationFilter] = useState<('position' | 'equity' | 'judicial')[]>(['position', 'equity', 'judicial']);
   const [levelFilter, setLevelFilter] = useState<number>(3);
   const [filterNodeType, setFilterNodeType] = useState<('all' | 'person' | 'company')>('all');
   
   const rawGraphData = getMockGraphData();
+  
+  const contextCompany = useMemo(() => {
+    if (storeSelectedCompany) return storeSelectedCompany;
+    const coreNode = rawGraphData.nodes.find(n => n.category === 'core');
+    if (coreNode) {
+      return mockCompanies.find(c => c.shortName === coreNode.name || c.name === coreNode.name) || null;
+    }
+    return null;
+  }, [storeSelectedCompany, rawGraphData]);
   
   const applyFilters = () => {
     let filteredNodes = [...rawGraphData.nodes];
@@ -290,6 +307,67 @@ export default function Relationship() {
           </div>
         </div>
       </div>
+
+      {contextCompany && (
+        <div className="px-6 pb-4">
+          <Card className="bg-gradient-to-r from-purple-500/10 via-brand-500/5 to-transparent border-purple-500/20">
+            <Card.Body className="py-3 px-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => navigate('/')}
+                    className="p-2 rounded-lg bg-dark-800/50 hover:bg-dark-700/50 text-dark-400 hover:text-white transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-xl border border-dark-600/50">
+                    {contextCompany.logo}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-semibold text-white">{contextCompany.shortName} · 关系图谱</p>
+                      <Tag variant="purple" size="sm">
+                        <Network className="w-2.5 h-2.5 mr-1" />从首页下钻
+                      </Tag>
+                    </div>
+                    <div className="flex items-center gap-3 mt-1 text-[11px] text-dark-400">
+                      <span className="flex items-center gap-1">
+                        <User className="w-3 h-3" /> 高管 {Math.floor(Math.random()*8)+5} 人
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Building2 className="w-3 h-3" /> 关联企业 {Math.floor(Math.random()*15)+8} 家
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <AlertTriangle className="w-3 h-3" /> 司法风险 {Math.floor(Math.random()*5)+1} 条
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => { navigate('/finance'); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
+                  >
+                    ↔ 切换财务库
+                  </button>
+                  <button
+                    onClick={() => { setSelectedCompany(null); navigate('/monitoring'); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-warning-500/10 text-warning-400 hover:bg-warning-500/20 transition-colors"
+                  >
+                    ⚠ 查看预警
+                  </button>
+                  <button
+                    onClick={() => { setSelectedCompany(null); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-dark-700/50 text-dark-300 hover:bg-dark-700 transition-colors"
+                  >
+                    清除上下文
+                  </button>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      )}
 
       <div className="flex-1 flex flex-col px-6 pb-6 gap-4 min-h-0">
         {showFilterPanel && (

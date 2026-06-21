@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Search, Filter, MapPin, Building2, Calendar, TrendingUp, Home, Hammer, ShoppingBag, CheckCircle2, ChevronRight } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Search, Filter, MapPin, Building2, Calendar, TrendingUp, Home, Hammer, ShoppingBag, CheckCircle2, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
@@ -7,18 +7,31 @@ import { Tabs } from '../components/ui/Tabs';
 import { BarChart } from '../components/charts/BarChart';
 import { PieChart } from '../components/charts/PieChart';
 import { mockProjects, getProjectStats } from '../data/projects';
+import { mockCompanies } from '../data/companies';
 import { formatNumber, formatMoney } from '../utils/format';
 import type { Project, ProjectStage, StageType, StageStatus } from '../types/project';
+import type { Company } from '../types/company';
+import { useAppStore } from '../stores/useAppStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [regionFilter, setRegionFilter] = useState('all');
+  
+  const { selectedCompany: storeSelectedCompany, setSelectedCompany } = useAppStore();
+  const navigate = useNavigate();
 
-  const stats = getProjectStats();
+  const contextCompany = useMemo(() => {
+    if (storeSelectedCompany) return storeSelectedCompany;
+    return null;
+  }, [storeSelectedCompany]);
+
+  const stats = getProjectStats(contextCompany?.id);
 
   const filteredProjects = mockProjects.filter(p => {
+    if (contextCompany && p.companyId !== contextCompany.id) return false;
     if (searchKeyword && !p.name.includes(searchKeyword) && !p.companyName.includes(searchKeyword)) {
       return false;
     }
@@ -90,6 +103,70 @@ export default function Projects() {
           </div>
         </div>
       </div>
+
+      {contextCompany && (
+        <div className="px-6 pb-4">
+          <Card className="bg-gradient-to-r from-success-500/10 via-brand-500/5 to-transparent border-success-500/20">
+            <Card.Body className="py-3 px-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => navigate('/')}
+                    className="p-2 rounded-lg bg-dark-800/50 hover:bg-dark-700/50 text-dark-400 hover:text-white transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-xl border border-dark-600/50">
+                    {contextCompany.logo}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-semibold text-white">{contextCompany.shortName} · 项目全周期</p>
+                      <Tag variant="success" size="sm">
+                        <Building2 className="w-2.5 h-2.5 mr-1" />从首页下钻
+                      </Tag>
+                    </div>
+                    <div className="flex items-center gap-3 mt-1 text-[11px] text-dark-400">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" /> {stats.total} 个项目
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Hammer className="w-3 h-3" /> 在建 {stats.inProgress} 个
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3" /> 已交付 {stats.completed} 个
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" /> 总投资 {formatMoney(stats.totalInvestment)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => { navigate('/finance'); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
+                  >
+                    ↔ 切换财务库
+                  </button>
+                  <button
+                    onClick={() => { navigate('/relationship'); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition-colors"
+                  >
+                    👥 关系图谱
+                  </button>
+                  <button
+                    onClick={() => { setSelectedCompany(null); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-dark-700/50 text-dark-300 hover:bg-dark-700 transition-colors"
+                  >
+                    清除上下文
+                  </button>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      )}
 
       <div className="px-6 pb-4">
         <div className="grid grid-cols-4 gap-5">

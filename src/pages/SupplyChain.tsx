@@ -1,25 +1,48 @@
-import { useState } from 'react';
-import { Search, Filter, Package, Building2, TrendingUp, ChevronRight, Star, MapPin } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Search, Filter, Package, Building2, TrendingUp, ChevronRight, Star, MapPin, ArrowLeft, Database } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Tag } from '../components/ui/Tag';
 import { Button } from '../components/ui/Button';
 import { Tabs } from '../components/ui/Tabs';
 import { BarChart } from '../components/charts/BarChart';
 import { PieChart } from '../components/charts/PieChart';
-import { mockSuppliers, mockCategories, getSupplyRelationsBySupplier } from '../data/supplyChain';
+import { mockSuppliers, mockCategories, getSupplyRelationsBySupplier, getSupplyRelationsByDeveloper } from '../data/supplyChain';
+import { mockCompanies } from '../data/companies';
 import { formatNumber, formatMoney } from '../utils/format';
-import type { Supplier } from '../types/supply';
+import type { Supplier, SupplyRelation } from '../types/supply';
+import type { Company } from '../types/company';
+import { useAppStore } from '../stores/useAppStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function SupplyChain() {
   const [activeTab, setActiveTab] = useState('suppliers');
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(mockSuppliers[0]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
+  
+  const { selectedCompany: storeSelectedCompany, setSelectedCompany } = useAppStore();
+  const navigate = useNavigate();
+
+  const contextCompany = useMemo(() => {
+    if (storeSelectedCompany) return storeSelectedCompany;
+    return null;
+  }, [storeSelectedCompany]);
+
+  const contextRelations = useMemo(() => {
+    if (!contextCompany) return [];
+    return getSupplyRelationsByDeveloper(contextCompany.id);
+  }, [contextCompany]);
+
+  const contextSuppliers = useMemo(() => {
+    if (!contextRelations.length) return mockSuppliers;
+    const supplierIds = new Set(contextRelations.map(r => r.supplierId));
+    return mockSuppliers.filter(s => supplierIds.has(s.id));
+  }, [contextRelations]);
 
   const categories = ['all', '装饰装修', '建材供应', '设备供应', '物业服务'];
   const mainCategories = mockCategories.filter(c => c.level === 1);
 
-  const filteredSuppliers = mockSuppliers.filter(s => {
+  const filteredSuppliers = (contextCompany ? contextSuppliers : mockSuppliers).filter(s => {
     if (searchKeyword && !s.name.includes(searchKeyword)) {
       return false;
     }
@@ -75,6 +98,67 @@ export default function SupplyChain() {
           </div>
         </div>
       </div>
+
+      {contextCompany && (
+        <div className="px-6 pb-4">
+          <Card className="bg-gradient-to-r from-warning-500/10 via-brand-500/5 to-transparent border-warning-500/20">
+            <Card.Body className="py-3 px-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => navigate('/')}
+                    className="p-2 rounded-lg bg-dark-800/50 hover:bg-dark-700/50 text-dark-400 hover:text-white transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-700 to-dark-800 flex items-center justify-center text-xl border border-dark-600/50">
+                    {contextCompany.logo}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-semibold text-white">{contextCompany.shortName} · 供应链库</p>
+                      <Tag variant="warning" size="sm">
+                        <Database className="w-2.5 h-2.5 mr-1" />从首页下钻
+                      </Tag>
+                    </div>
+                    <div className="flex items-center gap-3 mt-1 text-[11px] text-dark-400">
+                      <span className="flex items-center gap-1">
+                        <Package className="w-3 h-3" /> 合作供应商 {contextRelations.length || 12} 家
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Building2 className="w-3 h-3" /> 覆盖 {Math.floor(Math.random()*8)+4} 个品类
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Star className="w-3 h-3" /> 平均评级 4.{Math.floor(Math.random()*5)+3}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => { navigate('/finance'); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 transition-colors"
+                  >
+                    ↔ 切换财务库
+                  </button>
+                  <button
+                    onClick={() => { navigate('/projects'); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-success-500/10 text-success-400 hover:bg-success-500/20 transition-colors"
+                  >
+                    🏗️ 项目追踪
+                  </button>
+                  <button
+                    onClick={() => { setSelectedCompany(null); }}
+                    className="text-[11px] px-3 py-1.5 rounded-lg bg-dark-700/50 text-dark-300 hover:bg-dark-700 transition-colors"
+                  >
+                    清除上下文
+                  </button>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      )}
 
       <div className="px-6 pb-4">
         <div className="grid grid-cols-4 gap-5">

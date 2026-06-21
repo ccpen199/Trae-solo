@@ -251,15 +251,16 @@ export function getProjectById(id: string): Project | undefined {
   return mockProjects.find(p => p.id === id);
 }
 
-export function getProjectStats() {
-  const total = mockProjects.length;
-  const inProgress = mockProjects.filter(p => 
+export function getProjectStats(companyId?: string) {
+  const projects = companyId ? mockProjects.filter(p => p.companyId === companyId) : mockProjects;
+  const total = projects.length;
+  const inProgress = projects.filter(p => 
     p.stages.some(s => s.status === 'in-progress')
   ).length;
-  const completed = mockProjects.filter(p => 
+  const completed = projects.filter(p => 
     p.stages.every(s => s.status === 'completed' || s.type === 'land-acquisition')
   ).length;
-  const totalInvestment = mockProjects.reduce((sum, p) => sum + (p.totalInvestment || 0), 0);
+  const totalInvestment = projects.reduce((sum, p) => sum + (p.totalInvestment || 0), 0);
   
   return { total, inProgress, completed, totalInvestment };
 }
