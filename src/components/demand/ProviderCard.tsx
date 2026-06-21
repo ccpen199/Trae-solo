@@ -2,15 +2,34 @@ import { StarRating } from '@/components/ui/StarRating';
 import { cn } from '@/lib/utils';
 import type { ServiceProvider } from '@/types';
 import { formatDistance } from '@/utils/lbs';
-import { Award, Clock, MapPin, ShoppingCart, ThumbsUp, User } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Award,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  MapPin,
+  ShoppingCart,
+  ThumbsUp,
+} from 'lucide-react';
 
 interface ProviderCardProps {
   provider: ServiceProvider;
   rank: number;
   distance?: number;
+  expanded?: boolean;
+  onToggleExpand?: () => void;
+  onOrderClick?: () => void;
 }
 
-export const ProviderCard = ({ provider, rank, distance }: ProviderCardProps) => {
+export const ProviderCard = ({
+  provider,
+  rank,
+  distance,
+  expanded = false,
+  onToggleExpand,
+  onOrderClick,
+}: ProviderCardProps) => {
   const rankStyles: Record<number, string> = {
     1: 'bg-accent text-white',
     2: 'bg-brand-300 text-white',
@@ -18,6 +37,7 @@ export const ProviderCard = ({ provider, rank, distance }: ProviderCardProps) =>
   };
 
   const previewReviews = provider.reviews.slice(0, 2);
+  const displayReviews = expanded ? provider.reviews : previewReviews;
 
   return (
     <div className="relative bg-white rounded-3xl2 shadow-card p-6 border border-warm-card overflow-hidden">
@@ -64,7 +84,9 @@ export const ProviderCard = ({ provider, rank, distance }: ProviderCardProps) =>
         <div className="flex flex-col items-center bg-warm-bg rounded-xl2 py-2">
           <ThumbsUp size={14} className="text-mint mb-0.5" />
           <span className="text-xs text-gray-500">好评率</span>
-          <span className="text-sm font-bold text-brand">{(provider.goodRate * 100).toFixed(0)}%</span>
+          <span className="text-sm font-bold text-brand">
+            {(provider.goodRate * 100).toFixed(0)}%
+          </span>
         </div>
         <div className="flex flex-col items-center bg-warm-bg rounded-xl2 py-2">
           <Clock size={14} className="text-brand-400 mb-0.5" />
@@ -81,26 +103,75 @@ export const ProviderCard = ({ provider, rank, distance }: ProviderCardProps) =>
         <span className="text-accent font-bold">{provider.priceRange}</span>
       </div>
 
-      <div className="space-y-2 mb-5">
-        {previewReviews.map((review) => (
-          <div key={review.id} className="bg-warm-bg rounded-xl2 p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-5 h-5 rounded-full bg-brand-100 flex items-center justify-center">
-                <User size={10} className="text-brand" />
+      <div className="space-y-2 mb-4">
+        <AnimatePresence initial={false}>
+          {displayReviews.map((review, i) => (
+            <motion.div
+              key={review.id}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, delay: i * 0.05 }}
+              className="bg-warm-bg rounded-xl2 p-3 overflow-hidden"
+            >
+              <div className="flex items-center gap-2 mb-1.5">
+                <img
+                  src={review.userAvatar}
+                  alt={review.userName}
+                  className="w-6 h-6 rounded-full object-cover"
+                />
+                <span className="text-xs font-medium text-brand">{review.userName}</span>
+                <StarRating rating={review.rating} size={10} />
+                <span className="text-xs text-gray-400 ml-auto">{review.date}</span>
               </div>
-              <span className="text-xs font-medium text-brand">{review.userName}</span>
-              <StarRating rating={review.rating} size={10} />
-            </div>
-            <p className="text-xs text-gray-600 line-clamp-1">{review.content}</p>
-          </div>
-        ))}
+              {expanded && (
+                <div className="flex flex-wrap gap-1 mb-1.5">
+                  {review.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-1.5 py-0.5 bg-mint/10 text-mint rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <p
+                className={cn(
+                  'text-xs text-gray-600',
+                  !expanded && 'line-clamp-1'
+                )}
+              >
+                {review.content}
+              </p>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
+
+      <button
+        onClick={onToggleExpand}
+        className="w-full flex items-center justify-center gap-1 text-xs text-brand-400 hover:text-brand transition-colors mb-4"
+      >
+        {expanded ? (
+          <>
+            收起评价 <ChevronUp size={14} />
+          </>
+        ) : (
+          <>
+            查看评价 <ChevronDown size={14} />
+          </>
+        )}
+      </button>
 
       <div className="flex gap-2">
         <button className="flex-1 py-2.5 rounded-xl2 border border-brand text-brand text-sm font-medium hover:bg-brand-50 transition-colors">
           查看详情
         </button>
-        <button className="flex-1 py-2.5 rounded-xl2 bg-accent text-white text-sm font-medium hover:bg-accent-600 transition-colors shadow-soft">
+        <button
+          onClick={onOrderClick}
+          className="flex-1 py-2.5 rounded-xl2 bg-accent text-white text-sm font-medium hover:bg-accent-600 transition-colors shadow-soft"
+        >
           立即下单
         </button>
       </div>

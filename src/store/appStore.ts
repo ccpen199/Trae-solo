@@ -5,12 +5,15 @@ import type {
   Evidence,
   ServiceProvider,
   GeoPoint,
+  ChatMessage,
+  OrderInfo,
 } from '@/types';
 import {
   CURRENT_CITY,
   CURRENT_LOCATION,
   CURRENT_GRID_CODE,
   mockDisputes,
+  mockHistoryOrders,
 } from '@/data/mockData';
 
 interface AppState {
@@ -31,8 +34,10 @@ interface AppState {
   setMatchedProviders: (providers: ServiceProvider[]) => void;
 
   disputes: Dispute[];
-  addDispute: (dispute: Omit<Dispute, 'id' | 'createdAt' | 'status' | 'statusLabel' | 'compensationStandard' | 'compensationAmount' | 'result'>) => void;
+  historyOrders: OrderInfo[];
+  addDispute: (dispute: Omit<Dispute, 'id' | 'createdAt' | 'status' | 'statusLabel' | 'compensationStandard' | 'compensationAmount' | 'result' | 'timeline' | 'messages' | 'progress' | 'orderInfo'> & { orderInfo: OrderInfo }) => void;
   addEvidence: (disputeId: string, evidence: Evidence) => void;
+  addMessage: (disputeId: string, message: Omit<ChatMessage, 'id' | 'time'>) => void;
 
   selectedProviderId: string | null;
   setSelectedProviderId: (id: string | null) => void;
@@ -71,6 +76,7 @@ export const useAppStore = create<AppState>((set) => ({
   setMatchedProviders: (matchedProviders) => set({ matchedProviders }),
 
   disputes: mockDisputes,
+  historyOrders: mockHistoryOrders,
   addDispute: (dispute) =>
     set((state) => ({
       disputes: [
@@ -83,6 +89,17 @@ export const useAppStore = create<AppState>((set) => ({
           compensationStandard: '等待平台匹配',
           compensationAmount: 0,
           result: '平台客服将在24小时内联系您',
+          progress: 10,
+          timeline: [
+            { label: '提交纠纷', time: new Date().toLocaleString('zh-CN'), done: true, description: '用户提交纠纷申请' },
+            { label: '客服介入', time: '待处理', done: false },
+            { label: '核实证据', time: '待处理', done: false },
+            { label: '仲裁结果', time: '待处理', done: false },
+            { label: '赔付完成', time: '待处理', done: false },
+          ],
+          messages: [
+            { id: `m-${Date.now()}`, sender: 'user', senderName: '我', content: dispute.description, time: new Date().toLocaleString('zh-CN'), avatar: '' },
+          ],
         },
         ...state.disputes,
       ],
@@ -91,6 +108,14 @@ export const useAppStore = create<AppState>((set) => ({
     set((state) => ({
       disputes: state.disputes.map((d) =>
         d.id === disputeId ? { ...d, evidences: [...d.evidences, evidence] } : d
+      ),
+    })),
+  addMessage: (disputeId, message) =>
+    set((state) => ({
+      disputes: state.disputes.map((d) =>
+        d.id === disputeId
+          ? { ...d, messages: [...d.messages, { ...message, id: `m-${Date.now()}`, time: new Date().toLocaleString('zh-CN') }] }
+          : d
       ),
     })),
 

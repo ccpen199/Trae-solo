@@ -1,6 +1,9 @@
+import { CompareView } from '@/components/demand/CompareView';
+import { FilterBar } from '@/components/demand/FilterBar';
+import { OrderModal } from '@/components/demand/OrderModal';
 import { ProviderCard } from '@/components/demand/ProviderCard';
 import { useAppStore } from '@/store/appStore';
-import type { ServiceCategory } from '@/types';
+import type { ServiceCategory, ServiceProvider } from '@/types';
 import { matchProviders, type MatchResult } from '@/utils/lbs';
 import { motion } from 'framer-motion';
 import {
@@ -9,10 +12,11 @@ import {
   FileText,
   Info,
   MapPin,
+  Shield,
   Sparkles,
   Tag,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const CATEGORIES: { value: ServiceCategory; label: string }[] = [
   { value: '家政', label: '家政服务' },
@@ -35,6 +39,10 @@ const TIME_SLOTS = [
   '自定义时间',
 ];
 
+type ViewMode = 'card' | 'compare';
+type StarFilter = 'all' | '3' | '4' | '5';
+type SortBy = 'distance' | 'rating' | 'response';
+
 export default function DemandPage() {
   const { location, addDemand, setMatchedProviders } = useAppStore();
 
@@ -46,26 +54,50 @@ export default function DemandPage() {
   const [showResults, setShowResults] = useState(false);
   const [isMatching, setIsMatching] = useState(false);
 
+  const [viewMode, setViewMode] = useState<ViewMode>('card');
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [starFilter, setStarFilter] = useState<StarFilter>('all');
+  const [sortBy, setSortBy] = useState<SortBy>('distance');
+
+  const [orderProvider, setOrderProvider] = useState<ServiceProvider | null>(null);
+  const [orderSuccess, setOrderSuccess] = useState(false);
+
   const handleMatch = () => {
     setIsMatching(true);
-
     setTimeout(() => {
       const results = matchProviders(category, location, 3000, 3);
       setMatches(results);
       setShowResults(true);
       setIsMatching(false);
-
       if (results.length > 0) {
         setMatchedProviders(results.map((r) => r.provider));
-        addDemand({
-          category,
-          description,
-          location,
-          address,
-          expectedTime,
-        });
+        addDemand({ category, description, location, address, expectedTime });
       }
     }, 1200);
+  };
+
+  const filteredMatches = useMemo(() => {
+    let result = [...matches];
+    if (starFilter !== 'all') {
+      const minStar = parseInt(starFilter);
+      result = result.filter((m) => m.provider.starLevel >= minStar);
+    }
+    result.sort((a, b) => {
+      if (sortBy === 'distance') return a.distance - b.distance;
+      if (sortBy === 'rating') return b.provider.starLevel - a.provider.starLevel;
+      return a.provider.responseSpeed - b.provider.responseSpeed;
+    });
+    return result;
+  }, [matches, starFilter, sortBy]);
+
+  const handleOrderClick = (provider: ServiceProvider) => {
+    setOrderProvider(provider);
+    setOrderSuccess(false);
+  };
+
+  const closeOrderModal = () => {
+    setOrderProvider(null);
+    setOrderSuccess(false);
   };
 
   return (
@@ -191,10 +223,7 @@ export default function DemandPage() {
           <motion.div
             initial="hidden"
             animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.1 } },
-            }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
           >
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
@@ -209,68 +238,114 @@ export default function DemandPage() {
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-5 mb-8">
-              {matches.map((m, idx) => (
-                <motion.div
-                  key={m.provider.id}
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <ProviderCard
-                    provider={m.provider}
-                    rank={idx + 1}
-                    distance={m.distance}
-                  />
-                </motion.div>
-              ))}
-            </div>
+            <FilterBar
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              starFilter={starFilter}
+              onStarFilterChange={setStarFilter}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+            />
+
+            {viewMode === 'card' && (
+              <div className="grid md:grid-cols-3 gap-5 mb-8">
+                {filteredMatches.map((m, idx) => (
+                  <motion.div
+                    key={m.provider.id}
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ delay: idx * 0.1 }}
+                  >
+                    <ProviderCard
+                      provider={m.provider}
+                      rank={idx + 1}
+                      distance={m.distance}
+                      expanded={expandedCardId === m.provider.id}
+                      onToggleExpand={() =>
+                        setExpandedCardId(
+                          expandedCardId === m.provider.id ? null : m.provider.id
+                        )
+                      }
+                      onOrderClick={() => handleOrderClick(m.provider)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            {viewMode === 'compare' && (
+              <CompareView
+                matches={filteredMatches}
+                onOrderClick={handleOrderClick}
+              />
+            )}
 
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              className="bg-white rounded-3xl2 p-6 shadow-soft border border-warm-card"
+              className="bg-white rounded-3xl2 p-6 shadow-soft border border-warm-card mb-8"
             >
               <div className="flex items-center gap-2 mb-4">
                 <Info size={18} className="text-brand" />
                 <span className="font-bold text-brand">匹配算法说明</span>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl2 bg-accent/10 flex items-center justify-center text-accent font-bold">
-                    40%
+                {[
+                  { pct: '40%', label: '星级评分', desc: '服务等级权重', color: 'accent' },
+                  { pct: '30%', label: '好评率', desc: '用户口碑权重', color: 'mint' },
+                  { pct: '20%', label: '响应速度', desc: '接单时效权重', color: 'brand' },
+                  { pct: '10%', label: '距离远近', desc: '地理位置权重', color: 'brand-200/40' },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3">
+                    <div
+                      className={`w-10 h-10 rounded-xl2 flex items-center justify-center font-bold bg-${item.color}/10 text-${item.color}`}
+                    >
+                      {item.pct}
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-brand">{item.label}</div>
+                      <div className="text-xs text-gray-500">{item.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              className="bg-gradient-to-r from-brand-50 to-accent-50 rounded-3xl2 p-6 border border-brand-100"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Shield size={18} className="text-accent" />
+                <span className="font-bold text-brand">需求发布须知</span>
+              </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-accent flex-shrink-0 shadow-sm">
+                    <CheckCircle2 size={16} />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-brand">星级评分</div>
-                    <div className="text-xs text-gray-500">服务等级权重</div>
+                    <div className="text-sm font-medium text-brand mb-0.5">平台担保交易</div>
+                    <div className="text-xs text-gray-500">服务满意后再付款，保障资金安全</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl2 bg-mint/10 flex items-center justify-center text-mint font-bold">
-                    30%
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-mint flex-shrink-0 shadow-sm">
+                    <Shield size={16} />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-brand">好评率</div>
-                    <div className="text-xs text-gray-500">用户口碑权重</div>
+                    <div className="text-sm font-medium text-brand mb-0.5">服务质量保障</div>
+                    <div className="text-xs text-gray-500">不满意可申请退款，平台介入仲裁</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl2 bg-brand/10 flex items-center justify-center text-brand font-bold">
-                    20%
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-brand flex-shrink-0 shadow-sm">
+                    <Info size={16} />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-brand">响应速度</div>
-                    <div className="text-xs text-gray-500">接单时效权重</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl2 bg-brand-200/40 flex items-center justify-center text-brand-400 font-bold">
-                    10%
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium text-brand">距离远近</div>
-                    <div className="text-xs text-gray-500">地理位置权重</div>
+                    <div className="text-sm font-medium text-brand mb-0.5">实名认证审核</div>
+                    <div className="text-xs text-gray-500">所有服务商均经过资质审核与实名认证</div>
                   </div>
                 </div>
               </div>
@@ -278,6 +353,16 @@ export default function DemandPage() {
           </motion.div>
         )}
       </div>
+
+      <OrderModal
+        provider={orderProvider}
+        category={category}
+        expectedTime={expectedTime}
+        address={address}
+        onClose={closeOrderModal}
+        onConfirm={() => setOrderSuccess(true)}
+        success={orderSuccess}
+      />
     </div>
   );
 }

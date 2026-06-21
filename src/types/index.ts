@@ -27,10 +27,24 @@ export interface ServiceGrid {
 export interface Review {
   id: string;
   userName: string;
+  userAvatar: string;
   rating: number;
   content: string;
   date: string;
   tags: string[];
+  reply?: string;
+  replyDate?: string;
+}
+
+export interface AchievementBadge {
+  id: string;
+  name: string;
+  description: string;
+  condition: string;
+  icon: string;
+  unlocked: boolean;
+  unlockedDate?: string;
+  progress?: number;
 }
 
 export interface ServiceProvider {
@@ -67,12 +81,41 @@ export interface ServiceDemand {
 
 export type DisputeType = 'service_quality' | 'delay' | 'overcharge' | 'damage';
 export type DisputeStatus = 'submitted' | 'reviewing' | 'resolved';
+export type SeverityLevel = 'mild' | 'normal' | 'serious' | 'critical';
+export type ExpectedSolution = 'refund' | 'redo' | 'compensation' | 'apology';
 
 export interface Evidence {
   id: string;
   type: 'image' | 'video';
   url: string;
   name?: string;
+}
+
+export interface OrderInfo {
+  orderId: string;
+  serviceType: string;
+  providerName: string;
+  orderTime: string;
+  amount: number;
+  disputeAmount?: number;
+  claimAmount?: number;
+  platformPayout?: number;
+}
+
+export interface TimelineStep {
+  label: string;
+  time: string;
+  done: boolean;
+  description?: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'user' | 'cs' | 'provider';
+  senderName: string;
+  content: string;
+  time: string;
+  avatar?: string;
 }
 
 export interface Dispute {
@@ -89,9 +132,43 @@ export interface Dispute {
   result: string;
   createdAt: string;
   csAgent?: string;
+  orderInfo: OrderInfo;
+  timeline: TimelineStep[];
+  messages: ChatMessage[];
+  severity?: SeverityLevel;
+  expectedSolution?: ExpectedSolution;
+  payoutTime?: string;
+  progress: number;
 }
 
 export type VirtualResourceType = 'ar_clothing' | 'vr_house' | 'shop_360';
+
+export interface DishItem {
+  id: string;
+  name: string;
+  price: string;
+  image: string;
+  taste: string;
+  sales: number;
+  desc: string;
+}
+
+export interface ClothingItem {
+  id: string;
+  name: string;
+  category: 'top' | 'bottom' | 'dress' | 'coat';
+  image: string;
+  price: string;
+  color: string;
+}
+
+export interface VrHotspot {
+  x: number;
+  y: number;
+  label: string;
+  desc: string;
+  icon: string;
+}
 
 export interface VirtualResource {
   id: string;
@@ -104,6 +181,14 @@ export interface VirtualResource {
   address?: string;
   price?: string;
   tags: string[];
+  rating: number;
+  experienceCount: number;
+  favoriteCount: number;
+  reviews: Review[];
+  distance?: number;
+  dishes?: DishItem[];
+  clothes?: ClothingItem[];
+  vrHotspots?: VrHotspot[];
 }
 
 export interface GrowthTrendItem {
