@@ -1,0 +1,24 @@
+{
+  "name": "cq-gov-frontend",
+  "version": "1.0.0",
+  "description": "重庆市全域政务服务移动中台系统 - 前端",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.7",
+    "axios": "^1.6.7",
+    "vant": "^4.8.7",
+    "dayjs": "^1.11.10",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.1.6"
+  }
+}
