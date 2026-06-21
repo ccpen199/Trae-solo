@@ -1,4 +1,5 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Shield, FileText, Landmark, Users, Check, X, RefreshCw, AlertTriangle, Star, Eye, ChevronDown, ChevronUp, ArrowUpRight, ArrowDownRight, Stamp, FileCheck } from 'lucide-react';
 type Role = '房源审核员' | '合同备案员' | '资金审计员' | '管理员';
 const roleTabs: Record<Role, string[]> = { '房源审核员': ['review'], '合同备案员': ['contract'], '资金审计员': ['audit', 'provider'], '管理员': ['review', 'contract', 'audit', 'provider'] };
@@ -7,6 +8,7 @@ const poolTabs = ['CCB自营', '合作运营', '个人房源'];
 const sc: Record<string, string> = { '待审核': 'bg-yellow-100 text-yellow-700', '已通过': 'bg-green-100 text-green-700', '已驳回': 'bg-red-100 text-red-700', '待备案': 'bg-yellow-100 text-yellow-700', '已备案': 'bg-green-100 text-green-700', '退回': 'bg-red-100 text-red-700', '正常': 'bg-green-100 text-green-700', '异常': 'bg-red-100 text-red-700' };
 
 export default function Admin() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [role, setRole] = useState<Role>('管理员');
   const [tab, setTab] = useState('review');
   const [pool, setPool] = useState(0);
@@ -48,6 +50,21 @@ export default function Admin() {
   const visibleTabs = allTabs.filter(t => roleTabs[role].includes(t.key));
   const filtered = reviews.filter(r => r.pool === pool);
   const mkFn = () => `BJ-2025-${Math.floor(10000 + Math.random() * 89999)}`;
+
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'filing') {
+      setTab('contract');
+      setRole('合同备案员');
+    } else if (tabParam && allTabs.some(t => t.key === tabParam)) {
+      setTab(tabParam);
+    }
+  }, [searchParams]);
+
+  const handleTabChange = (key: string) => {
+    setTab(key);
+    setSearchParams({ tab: key });
+  };
   const approve = (fi: number) => { const idx = reviews.indexOf(filtered[fi]); setReviews(reviews.map((r, i) => i === idx ? { ...r, status: '已通过' } : r)); };
   const reject = (fi: number) => { const reason = prompt('请输入驳回原因'); if (!reason) return; const idx = reviews.indexOf(filtered[fi]); setReviews(reviews.map((r, i) => i === idx ? { ...r, status: '已驳回' } : r)); };
   const batchFile = () => setContracts(contracts.map(c => c.status === '待备案' ? { ...c, status: '已备案', fn: mkFn(), fd: '2026-06-20', cmt: '批量备案通过' } : c));
@@ -76,7 +93,7 @@ export default function Admin() {
       </div>
       <div className="flex gap-2 mb-6">
         {visibleTabs.map(t => (
-          <button key={t.key} onClick={() => setTab(t.key)}
+          <button key={t.key} onClick={() => handleTabChange(t.key)}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === t.key ? 'bg-ccb-500 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border'}`}>
             <t.icon size={16} />{t.label}
           </button>
