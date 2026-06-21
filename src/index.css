@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Noto Sans SC", system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  body {
+    @apply bg-space-50 text-space-800;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-lg;
+  }
+  .ccb-btn-primary {
+    @apply bg-ccb-500 text-white px-6 py-2.5 rounded-lg font-medium
+      shadow-md shadow-ccb-500/20 hover:bg-ccb-600 hover:shadow-lg
+      hover:shadow-ccb-500/30 transition-all duration-200 active:scale-[0.98];
+  }
+  .ccb-btn-outline {
+    @apply border-2 border-ccb-500 text-ccb-500 px-6 py-2.5 rounded-lg font-medium
+      hover:bg-ccb-50 transition-all duration-200 active:scale-[0.98];
+  }
+  .ccb-btn-gold {
+    @apply bg-gradient-to-r from-gold-400 to-gold-500 text-white px-6 py-2.5
+      rounded-lg font-medium shadow-md shadow-gold-500/20 hover:from-gold-500
+      hover:to-gold-600 transition-all duration-200 active:scale-[0.98];
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+  .section-title {
+    @apply font-serif text-2xl font-semibold text-space-800;
+  }
+  .badge-ccb {
+    @apply bg-ccb-500 text-white text-xs px-2 py-0.5 rounded font-medium;
+  }
+  .badge-partner {
+    @apply bg-emerald-500 text-white text-xs px-2 py-0.5 rounded font-medium;
+  }
+  .badge-personal {
+    @apply bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-medium;
+  }
+}
