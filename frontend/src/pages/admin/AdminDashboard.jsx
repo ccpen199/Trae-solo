@@ -7,6 +7,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState(null);
   const [dailyData, setDailyData] = useState([]);
+  const [stationData, setStationData] = useState([]);
   const [alarms, setAlarms] = useState([]);
 
   useEffect(() => {
@@ -22,7 +23,8 @@ function AdminDashboard() {
         API.alarms.list({ limit: 5 })
       ]);
       setSummary(summaryRes.data);
-      setDailyData(dailyRes.data || []);
+      setDailyData(dailyRes.data?.chart_data || dailyRes.data?.list || []);
+      setStationData(dailyRes.data?.by_station || dailyRes.data?.list || []);
       setAlarms(alarmsRes.data || []);
     } catch (err) {
       console.error('加载数据失败:', err);
@@ -68,13 +70,10 @@ function AdminDashboard() {
   };
 
   const getStationCompareOption = () => {
-    const stationMap = {};
-    dailyData.forEach(d => {
-      if (d.station_name) {
-        stationMap[d.station_name] = (stationMap[d.station_name] || 0) + (d.total_energy || 0);
-      }
-    });
-    const sorted = Object.entries(stationMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const sorted = stationData
+      .map((station) => [station.station_name, station.total_energy || 0])
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
     return {
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
       grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
@@ -128,17 +127,17 @@ function AdminDashboard() {
           </div>
           <div className="stat-card orange">
             <div className="label">今日订单</div>
-            <div className="value">{todayData?.total_orders || summary.today || 0}<span className="unit">单</span></div>
+            <div className="value">{todayData?.total_orders ?? summary.today_orders ?? 0}<span className="unit">单</span></div>
             <div className="trend">充电中 {summary.charging_now} 辆</div>
           </div>
           <div className="stat-card red">
             <div className="label">今日电量</div>
-            <div className="value">{formatEnergy(todayData?.total_energy || 0)}</div>
+            <div className="value">{formatEnergy(todayData?.total_energy ?? summary.today_energy ?? 0)}</div>
             <div className="trend">周电量 {formatEnergy(summary.weekly_energy || 0)}</div>
           </div>
           <div className="stat-card">
             <div className="label">今日收入</div>
-            <div className="value">{formatMoney(todayData?.total_revenue || 0)}</div>
+            <div className="value">{formatMoney(todayData?.total_amount ?? summary.today_revenue ?? 0)}</div>
             <div className="trend">服务费 {formatMoney(todayData?.service_fee || 0)}</div>
           </div>
           <div className="stat-card green">

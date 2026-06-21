@@ -16,6 +16,45 @@ request.interceptors.response.use(
   }
 );
 
+const ensureArray = (value) => (Array.isArray(value) ? value : []);
+
+const normalizeRevenueSummary = (value) => {
+  const data = value && typeof value === 'object' ? value : {};
+  const today = data.today && typeof data.today === 'object' ? data.today : {};
+
+  return {
+    ...data,
+    today,
+    today_orders: data.today_orders ?? today.total_orders ?? 0,
+    today_energy: data.today_energy ?? today.total_energy ?? 0,
+    today_revenue: data.today_revenue ?? today.total_amount ?? 0
+  };
+};
+
+const normalizeRevenueDaily = (value) => {
+  const data = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  const list = ensureArray(Array.isArray(value) ? value : data.list);
+  const chartData = ensureArray(data.chart_data);
+
+  return {
+    ...data,
+    list,
+    chart_data: chartData.length > 0 ? chartData : list,
+    by_station: ensureArray(data.by_station),
+    summary: data.summary && typeof data.summary === 'object' ? data.summary : null
+  };
+};
+
+const normalizeRevenueMonthly = (value) => {
+  const data = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+
+  return {
+    ...data,
+    list: ensureArray(Array.isArray(value) ? value : data.list),
+    summary: data.summary && typeof data.summary === 'object' ? data.summary : null
+  };
+};
+
 export const API = {
   stations: {
     list: (params) => request.get('/stations', { params }),
@@ -38,9 +77,30 @@ export const API = {
     powerData: (id) => request.get(`/orders/${id}/power-data`)
   },
   revenue: {
-    summary: () => request.get('/revenue/summary'),
-    daily: (params) => request.get('/revenue/daily', { params }),
-    monthly: (params) => request.get('/revenue/monthly', { params })
+    summary: async () => {
+      const res = await request.get('/revenue/summary');
+      const payload = res?.data !== undefined ? res.data : res;
+      return {
+        ...res,
+        data: normalizeRevenueSummary(payload)
+      };
+    },
+    daily: async (params) => {
+      const res = await request.get('/revenue/daily', { params });
+      const payload = res?.data !== undefined ? res.data : res;
+      return {
+        ...res,
+        data: normalizeRevenueDaily(payload)
+      };
+    },
+    monthly: async (params) => {
+      const res = await request.get('/revenue/monthly', { params });
+      const payload = res?.data !== undefined ? res.data : res;
+      return {
+        ...res,
+        data: normalizeRevenueMonthly(payload)
+      };
+    }
   },
   alarms: {
     list: (params) => request.get('/alarms', { params }),

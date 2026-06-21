@@ -6,7 +6,12 @@ import ReactECharts from 'echarts-for-react';
 function RevenueReport() {
   const [loading, setLoading] = useState(true);
   const [reportType, setReportType] = useState('daily');
-  const [data, setData] = useState([]);
+  const [reportData, setReportData] = useState({
+    list: [],
+    summary: null,
+    chart_data: [],
+    by_station: []
+  });
   const [filters, setFilters] = useState({
     start_date: '',
     end_date: '',
@@ -27,7 +32,12 @@ function RevenueReport() {
       const res = reportType === 'daily'
         ? await API.revenue.daily(params)
         : await API.revenue.monthly(params);
-      setData(res.data || []);
+      setReportData(res.data || {
+        list: [],
+        summary: null,
+        chart_data: [],
+        by_station: []
+      });
     } catch (err) {
       console.error('加载数据失败:', err);
     } finally {
@@ -36,6 +46,21 @@ function RevenueReport() {
   };
 
   const getSummary = () => {
+    if (reportData.summary) {
+      return {
+        total_orders: reportData.summary.total_orders || 0,
+        total_energy: reportData.summary.total_energy || 0,
+        total_revenue: reportData.summary.total_amount || reportData.summary.total_revenue || 0,
+        total_service_fee: reportData.summary.service_fee || 0,
+        peak_energy: reportData.summary.peak_energy || 0,
+        flat_energy: reportData.summary.flat_energy || 0,
+        valley_energy: reportData.summary.valley_energy || 0,
+        peak_revenue: reportData.summary.peak_amount || reportData.summary.peak_revenue || 0,
+        flat_revenue: reportData.summary.flat_amount || reportData.summary.flat_revenue || 0,
+        valley_revenue: reportData.summary.valley_amount || reportData.summary.valley_revenue || 0
+      };
+    }
+
     const summary = {
       total_orders: 0,
       total_energy: 0,
@@ -48,29 +73,36 @@ function RevenueReport() {
       flat_revenue: 0,
       valley_revenue: 0
     };
-    data.forEach(d => {
+    reportData.list.forEach(d => {
       summary.total_orders += d.total_orders || 0;
       summary.total_energy += d.total_energy || 0;
-      summary.total_revenue += d.total_revenue || 0;
+      summary.total_revenue += d.total_amount || d.total_revenue || 0;
       summary.total_service_fee += d.service_fee || 0;
       summary.peak_energy += d.peak_energy || 0;
       summary.flat_energy += d.flat_energy || 0;
       summary.valley_energy += d.valley_energy || 0;
-      summary.peak_revenue += d.peak_revenue || 0;
-      summary.flat_revenue += d.flat_revenue || 0;
-      summary.valley_revenue += d.valley_revenue || 0;
+      summary.peak_revenue += d.peak_amount || d.peak_revenue || 0;
+      summary.flat_revenue += d.flat_amount || d.flat_revenue || 0;
+      summary.valley_revenue += d.valley_amount || d.valley_revenue || 0;
     });
     return summary;
   };
 
   const getTrendOption = () => {
+    const trendRows = reportType === 'daily'
+      ? (reportData.chart_data || [])
+      : (reportData.list || []);
+
     return {
       tooltip: { trigger: 'axis' },
       legend: { data: ['充电量', '电费', '服务费'] },
       grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
       xAxis: {
         type: 'category',
-        data: data.map(d => reportType === 'daily' ? d.date?.slice(5) : d.date?.slice(0, 7))
+        data: trendRows.map(d => {
+          const dateValue = reportType === 'daily' ? d.date || d.report_date : d.report_month || d.date;
+          return reportType === 'daily' ? dateValue?.slice(5) : dateValue?.slice(0, 7);
+        })
       },
       yAxis: [
         { type: 'value', name: '电量(kWh)' },
@@ -83,7 +115,7 @@ function RevenueReport() {
           smooth: true,
           yAxisIndex: 0,
           itemStyle: { color: '#1890ff' },
-          data: data.map(d => d.total_energy || 0)
+          data: trendRows.map(d => d.total_energy || 0)
         },
         {
           name: '电费',
@@ -91,7 +123,7 @@ function RevenueReport() {
           smooth: true,
           yAxisIndex: 1,
           itemStyle: { color: '#52c41a' },
-          data: data.map(d => (d.total_revenue || 0) - (d.service_fee || 0))
+          data: trendRows.map(d => (d.total_amount || d.total_revenue || 0) - (d.service_fee || 0))
         },
         {
           name: '服务费',
@@ -99,7 +131,7 @@ function RevenueReport() {
           smooth: true,
           yAxisIndex: 1,
           itemStyle: { color: '#faad14' },
-          data: data.map(d => d.service_fee || 0)
+          data: trendRows.map(d => d.service_fee || 0)
         }
       ]
     };
@@ -152,8 +184,20 @@ function RevenueReport() {
   };
 
   const getStationStats = () => {
+    if (reportType === 'daily' && reportData.by_station?.length) {
+      return reportData.by_station
+        .map((station) => ({
+          station_name: station.station_name,
+          orders: station.total_orders || 0,
+          energy: station.total_energy || 0,
+          total_revenue: station.total_amount || 0,
+          service_fee: station.service_fee || 0
+        }))
+        .sort((a, b) => b.total_revenue - a.total_revenue);
+    }
+
     const stationMap = {};
-    data.forEach(d => {
+    reportData.list.forEach(d => {
       if (d.station_name) {
         if (!stationMap[d.station_name]) {
           stationMap[d.station_name] = {
@@ -166,7 +210,7 @@ function RevenueReport() {
         }
         stationMap[d.station_name].orders += d.total_orders || 0;
         stationMap[d.station_name].energy += d.total_energy || 0;
-        stationMap[d.station_name].total_revenue += d.total_revenue || 0;
+        stationMap[d.station_name].total_revenue += d.total_amount || d.total_revenue || 0;
         stationMap[d.station_name].service_fee += d.service_fee || 0;
       }
     });

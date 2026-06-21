@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 49291 --strictPort",
+    "dev": "vite --host 127.0.0.1 --strictPort",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1 --port 49291 --strictPort",
-    "start": "vite --host 127.0.0.1 --port 49291 --strictPort"
+    "preview": "vite preview --host 127.0.0.1 --strictPort",
+    "start": "vite --host 127.0.0.1 --strictPort"
   },
   "dependencies": {
     "react": "^18.3.1",

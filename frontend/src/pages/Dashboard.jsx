@@ -28,10 +28,13 @@ function Dashboard() {
         API.revenue.daily({ days: 7 })
       ]);
 
-      setSummary(summaryRes.data);
+      const dailyRevenue = summaryRes.data || {};
+      const trendData = dailyRes.data?.chart_data || dailyRes.data?.list || [];
+
+      setSummary(dailyRevenue);
       setStations((stationsRes.data || []).slice(0, 6));
       setRecentOrders((ordersRes.data || []).slice(0, 5));
-      setDailyData(dailyRes.data || []);
+      setDailyData(trendData);
     } catch (err) {
       console.error('加载数据失败:', err);
       setError(err.message || '加载数据失败，请稍后重试');
@@ -189,6 +192,20 @@ function Dashboard() {
     return 0;
   };
 
+  const getTodayOrders = () => {
+    if (summary && summary.today_orders !== undefined) {
+      return summary.today_orders;
+    }
+    if (dailyData && dailyData.length > 0) {
+      const today = new Date().toISOString().split('T')[0];
+      const todayData = dailyData.find(d => d.date === today || d.date?.startsWith(today));
+      if (todayData && todayData.total_orders !== undefined) {
+        return todayData.total_orders;
+      }
+    }
+    return 0;
+  };
+
   if (loading) {
     return <div className="loading">加载中...</div>;
   }
@@ -244,7 +261,7 @@ function Dashboard() {
           </div>
           <div className="stat-card red">
             <div className="label">今日订单</div>
-            <div className="value">{summary.today_orders || summary.today || 0}<span className="unit">单</span></div>
+            <div className="value">{getTodayOrders()}<span className="unit">单</span></div>
             <div className="trend">今日充电 {formatEnergy(getTodayEnergy())}</div>
           </div>
         </div>
