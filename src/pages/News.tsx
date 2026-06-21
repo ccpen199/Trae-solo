@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Search,
   TrendingUp,
@@ -9,6 +9,10 @@ import {
   ArrowUpRight,
   Sparkles,
   ChevronRight,
+  ChevronDown,
+  X,
+  Send,
+  Check,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { mockNews } from "@/data/mock";
@@ -41,6 +45,54 @@ const topicTags = [
   { id: "general", zh: "综合资讯", it: "Generale" },
 ];
 
+type SourceType = "diplomatic" | "media" | "cultural" | "other";
+
+const sourceTypeConfig: Record<SourceType, { icon: string; labelZh: string; labelIt: string; colorClass: string }> = {
+  diplomatic: { icon: "🏛️", labelZh: "外交", labelIt: "Diplomatico", colorClass: "bg-blue-50 text-blue-600 border-blue-200" },
+  media: { icon: "📰", labelZh: "媒体", labelIt: "Media", colorClass: "bg-amber-50 text-amber-600 border-amber-200" },
+  cultural: { icon: "🎭", labelZh: "文化", labelIt: "Culturale", colorClass: "bg-purple-50 text-purple-600 border-purple-200" },
+  other: { icon: "📋", labelZh: "综合", labelIt: "Generale", colorClass: "bg-gray-50 text-gray-600 border-gray-200" },
+};
+
+function getSourceType(source: string): SourceType {
+  if (/使馆|领馆|Ambasciata/i.test(source)) return "diplomatic";
+  if (/新华社|人民日报|安莎|经济/i.test(source)) return "media";
+  if (/文化|艺术|Accademia/i.test(source)) return "cultural";
+  return "other";
+}
+
+const allTagOptions = [
+  { id: "trade", zh: "经贸合作", it: "Cooperazione" },
+  { id: "ev", zh: "新能源汽车", it: "Veicoli Elettrici" },
+  { id: "bilateral", zh: "双边贸易", it: "Commercio Bilaterale" },
+  { id: "heritage", zh: "文化遗产", it: "Patrimonio" },
+  { id: "academic", zh: "学术交流", it: "Scambio Accademico" },
+  { id: "ai", zh: "人工智能", it: "Intelligenza Artificiale" },
+  { id: "medical", zh: "医疗合作", it: "Cooperazione Medica" },
+  { id: "luxury", zh: "奢侈品", it: "Lusso" },
+  { id: "digital", zh: "数字化转型", it: "Trasformazione Digitale" },
+  { id: "legal", zh: "司法合作", it: "Cooperazione Giudiziaria" },
+];
+
+function generateTags(item: NewsItem): typeof allTagOptions {
+  const tags: typeof allTagOptions = [];
+  const text = `${item.titleZh} ${item.summaryZh} ${item.source}`.toLowerCase();
+
+  if (/经贸|贸易|备忘录|合作/.test(text)) tags.push(allTagOptions[0]);
+  if (/新能源|汽车|byd|nio|汽车品牌/.test(text)) tags.push(allTagOptions[1]);
+  if (/双边|进出口|贸易额/.test(text)) tags.push(allTagOptions[2]);
+  if (/文化|艺术|狂欢节|画展|遗产/.test(text)) tags.push(allTagOptions[3]);
+  if (/学术|大学|课程|学院|教育/.test(text)) tags.push(allTagOptions[4]);
+  if (/ai|人工智能|nlp|模型/.test(text)) tags.push(allTagOptions[5]);
+  if (/医疗|会诊|医院/.test(text)) tags.push(allTagOptions[6]);
+  if (/奢侈|lux|gucci|prada|时装/.test(text)) tags.push(allTagOptions[7]);
+  if (/数字化|新零售|体验中心/.test(text)) tags.push(allTagOptions[8]);
+  if (/司法|条约|引渡|法律/.test(text)) tags.push(allTagOptions[9]);
+
+  if (tags.length === 0) tags.push(allTagOptions[0]);
+  return tags.slice(0, 3);
+}
+
 function formatDate(dateStr: string, lang: "zh" | "it") {
   const date = new Date(dateStr);
   if (lang === "zh") {
@@ -49,9 +101,34 @@ function formatDate(dateStr: string, lang: "zh" | "it") {
   return `${date.getDate()}/${date.getMonth() + 1}`;
 }
 
-function NewsCard({ item, index }: { item: NewsItem; index: number }) {
+interface BriefPreview {
+  titleZh: string;
+  titleIt: string;
+  itemCount: number;
+  generatedAt: string;
+  selectedTags: string[];
+}
+
+function NewsCard({
+  item,
+  index,
+  isExpanded,
+  onToggleExpand,
+  activeTagFilter,
+  onTagClick,
+}: {
+  item: NewsItem;
+  index: number;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  activeTagFilter: string | null;
+  onTagClick: (tagId: string) => void;
+}) {
   const { lang } = useAppStore();
   const cat = categoryMap[item.category] || categoryMap.general;
+  const sourceType = getSourceType(item.source);
+  const srcConfig = sourceTypeConfig[sourceType];
+  const tags = generateTags(item);
 
   return (
     <article className="group relative pl-8 pb-8 last:pb-0">
@@ -67,6 +144,15 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className={cn(cat.className, "!text-[11px]")}>
               <BilingualText zh={cat.zh} it={cat.it} />
+            </span>
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 px-2 py-0.5 text-[11px] rounded-full border font-medium",
+                srcConfig.colorClass
+              )}
+            >
+              <span>{srcConfig.icon}</span>
+              <BilingualText zh={srcConfig.labelZh} it={srcConfig.labelIt} />
             </span>
             <span className="tag tag-gold !text-[11px]">{item.source}</span>
             <span className="flex items-center gap-1 text-[11px] text-charcoal-400">
@@ -97,6 +183,26 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
             </p>
           </div>
 
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {tags.map((tag) => (
+              <button
+                key={tag.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTagClick(tag.id);
+                }}
+                className={cn(
+                  "px-2.5 py-0.5 text-[11px] rounded-full transition-all border",
+                  activeTagFilter === tag.id
+                    ? "bg-cn-red-500 text-white border-cn-red-500"
+                    : "bg-ivory-50 text-charcoal-500 border-charcoal-200 hover:bg-cn-red-50 hover:text-cn-red-500 hover:border-cn-red-200"
+                )}
+              >
+                <BilingualText zh={tag.zh} it={tag.it} />
+              </button>
+            ))}
+          </div>
+
           <div className="flex items-center justify-between pt-3 border-t border-charcoal-500/5">
             <div className="flex gap-2">
               <span className="tag-cn !py-0.5 !px-2 !text-[10px]">ZH</span>
@@ -105,12 +211,48 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
                 <BilingualText zh="双语" it="Bilingue" />
               </span>
             </div>
-            <button className="flex items-center gap-1 text-sm font-medium text-warm-gold-600 hover:text-cn-red-500 transition-colors group/btn">
-              <BilingualText zh="阅读全文" it="Leggi tutto" />
-              <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+            <button
+              onClick={onToggleExpand}
+              className="flex items-center gap-1 text-sm font-medium text-warm-gold-600 hover:text-cn-red-500 transition-colors group/btn"
+            >
+              <BilingualText zh={isExpanded ? "收起详情" : "阅读全文"} it={isExpanded ? "Chiudi" : "Leggi tutto"} />
+              {isExpanded ? (
+                <ChevronDown className="w-4 h-4" />
+              ) : (
+                <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+              )}
             </button>
           </div>
         </div>
+
+        {isExpanded && (
+          <div className="px-6 pb-6 border-t border-charcoal-500/5 pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="tag-cn !py-0.5 !px-2 !text-[10px]">中文</span>
+                  <span className="text-sm font-medium text-charcoal-600">
+                    <BilingualText zh="中文详情" it="Dettagli in Cinese" />
+                  </span>
+                </div>
+                <p className="text-sm text-charcoal-500 leading-relaxed whitespace-pre-wrap">
+                  {item.contentZh}
+                </p>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="tag-it !py-0.5 !px-2 !text-[10px]">IT</span>
+                  <span className="text-sm font-medium text-charcoal-600">
+                    <BilingualText zh="意大利语详情" it="Dettagli in Italiano" />
+                  </span>
+                </div>
+                <p className="text-sm text-charcoal-400 leading-relaxed italic whitespace-pre-wrap">
+                  {item.contentIt}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </article>
   );
@@ -120,15 +262,62 @@ export default function News() {
   const { lang } = useAppStore();
   const [activeTag, setActiveTag] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
 
-  const filteredNews = mockNews.filter((item) => {
-    const matchesTag = activeTag === "all" || item.category === activeTag;
-    const matchesSearch =
-      !searchQuery ||
-      item.titleZh.includes(searchQuery) ||
-      item.titleIt.includes(searchQuery);
-    return matchesTag && matchesSearch;
-  });
+  const [briefType, setBriefType] = useState<"daily" | "weekly">("weekly");
+  const [briefSelectedTags, setBriefSelectedTags] = useState<string[]>([]);
+  const [briefPreview, setBriefPreview] = useState<BriefPreview | null>(null);
+  const [briefGenerating, setBriefGenerating] = useState(false);
+
+  const toggleBriefTag = (tagId: string) => {
+    setBriefSelectedTags((prev) =>
+      prev.includes(tagId) ? prev.filter((t) => t !== tagId) : [...prev, tagId]
+    );
+  };
+
+  const generateBrief = () => {
+    setBriefGenerating(true);
+    setTimeout(() => {
+      const now = new Date();
+      const dateStr = lang === "zh"
+        ? `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`
+        : `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+
+      setBriefPreview({
+        titleZh: briefType === "daily"
+          ? `中意合作每日简报 - ${dateStr}`
+          : `中意合作每周简报 - ${dateStr}`,
+        titleIt: briefType === "daily"
+          ? `Riepilogo Giornaliero Cooperazione Cina-Italia - ${dateStr}`
+          : `Riepilogo Settimanale Cooperazione Cina-Italia - ${dateStr}`,
+        itemCount: filteredNews.length,
+        generatedAt: now.toLocaleString(lang === "zh" ? "zh-CN" : "it-IT"),
+        selectedTags: briefSelectedTags,
+      });
+      setBriefGenerating(false);
+    }, 1500);
+  };
+
+  const handleTagClick = (tagId: string) => {
+    setActiveTagFilter((prev) => (prev === tagId ? null : tagId));
+  };
+
+  const filteredNews = useMemo(() => {
+    return mockNews.filter((item) => {
+      const matchesTag = activeTag === "all" || item.category === activeTag;
+      const matchesSearch =
+        !searchQuery ||
+        item.titleZh.includes(searchQuery) ||
+        item.titleIt.includes(searchQuery);
+
+      const matchesTagFilter =
+        !activeTagFilter ||
+        generateTags(item).some((t) => t.id === activeTagFilter);
+
+      return matchesTag && matchesSearch && matchesTagFilter;
+    });
+  }, [activeTag, searchQuery, activeTagFilter]);
 
   return (
     <div className="min-h-screen bg-ivory-100">
@@ -188,6 +377,22 @@ export default function News() {
               </button>
             ))}
           </div>
+          {activeTagFilter && (
+            <div className="pb-3 flex items-center gap-2">
+              <span className="text-xs text-charcoal-400">
+                <BilingualText zh="标签筛选：" it="Filtro tag: " />
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-cn-red-50 text-cn-red-500 border border-cn-red-200">
+                {(() => {
+                  const tag = allTagOptions.find((t) => t.id === activeTagFilter);
+                  return tag ? <BilingualText zh={tag.zh} it={tag.it} /> : null;
+                })()}
+                <button onClick={() => setActiveTagFilter(null)} className="ml-1 hover:text-cn-red-700">
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -207,7 +412,17 @@ export default function News() {
             <div className="relative">
               {filteredNews.length > 0 ? (
                 filteredNews.map((item, idx) => (
-                  <NewsCard key={item.id} item={item} index={idx} />
+                  <NewsCard
+                    key={item.id}
+                    item={item}
+                    index={idx}
+                    isExpanded={expandedId === item.id}
+                    onToggleExpand={() =>
+                      setExpandedId((prev) => (prev === item.id ? null : item.id))
+                    }
+                    activeTagFilter={activeTagFilter}
+                    onTagClick={handleTagClick}
+                  />
                 ))
               ) : (
                 <div className="text-center py-16">
@@ -277,16 +492,118 @@ export default function News() {
                     <BilingualText zh="双语简报" it="Riepilogo Bilingue" />
                   </h3>
                 </div>
-                <p className="text-sm text-charcoal-400 mb-5 leading-relaxed">
-                  <BilingualText
-                    zh="自动汇总本周中意双边要闻，一键生成中意双语简报，PDF格式精美排版。"
-                    it="Riepilogo automatico delle notizie principali bilaterali della settimana, genera riepilogo bilingue Cina-Italia in PDF con layout elegante."
-                  />
-                </p>
-                <button className="w-full btn-primary !py-3 group">
+
+                <div className="space-y-4 mb-5">
+                  <div>
+                    <label className="block text-xs font-medium text-charcoal-500 mb-2">
+                      <BilingualText zh="简报类型" it="Tipo riepilogo" />
+                    </label>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setBriefType("daily")}
+                        className={cn(
+                          "flex-1 px-3 py-2 text-xs rounded-lg transition-all",
+                          briefType === "daily"
+                            ? "bg-gradient-cnit text-white"
+                            : "bg-ivory-50 text-charcoal-500 border border-charcoal-100"
+                        )}
+                      >
+                        <BilingualText zh="日报" it="Giornaliero" />
+                      </button>
+                      <button
+                        onClick={() => setBriefType("weekly")}
+                        className={cn(
+                          "flex-1 px-3 py-2 text-xs rounded-lg transition-all",
+                          briefType === "weekly"
+                            ? "bg-gradient-cnit text-white"
+                            : "bg-ivory-50 text-charcoal-500 border border-charcoal-100"
+                        )}
+                      >
+                        <BilingualText zh="周报" it="Settimanale" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-charcoal-500 mb-2">
+                      <BilingualText zh="主题范围" it="Ambito tematico" />
+                    </label>
+                    <div className="flex flex-wrap gap-1.5">
+                      {allTagOptions.map((tag) => (
+                        <button
+                          key={tag.id}
+                          onClick={() => toggleBriefTag(tag.id)}
+                          className={cn(
+                            "px-2 py-1 text-[11px] rounded-full transition-all border",
+                            briefSelectedTags.includes(tag.id)
+                              ? "bg-warm-gold-500 text-white border-warm-gold-500"
+                              : "bg-ivory-50 text-charcoal-400 border-charcoal-200 hover:border-warm-gold-300"
+                          )}
+                        >
+                          <BilingualText zh={tag.zh} it={tag.it} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={generateBrief}
+                  disabled={briefGenerating}
+                  className={cn(
+                    "w-full btn-primary !py-3 group",
+                    briefGenerating && "opacity-70 cursor-wait"
+                  )}
+                >
                   <FileDown className="w-4 h-4" />
-                  <BilingualText zh="生成本周双语简报" it="Genera riepilogo settimanale" />
+                  <BilingualText
+                    zh={briefGenerating ? "生成中..." : "生成简报"}
+                    it={briefGenerating ? "Generazione..." : "Genera riepilogo"}
+                  />
                 </button>
+
+                {briefPreview && (
+                  <div className="mt-4 p-4 rounded-xl bg-ivory-50 border border-warm-gold-200">
+                    <div className="mb-3">
+                      <h4 className="text-sm font-semibold text-charcoal-600 leading-snug">
+                        {briefPreview.titleZh}
+                      </h4>
+                      <p className="text-xs text-charcoal-400 italic mt-0.5">
+                        {briefPreview.titleIt}
+                      </p>
+                    </div>
+                    <div className="space-y-1.5 text-xs text-charcoal-500 mb-4">
+                      <div className="flex items-center gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-it-green-500" />
+                        <span>
+                          <BilingualText
+                            zh={`包含 ${briefPreview.itemCount} 条资讯`}
+                            it={`${briefPreview.itemCount} notizie incluse`}
+                          />
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-charcoal-300" />
+                        <span>
+                          <BilingualText
+                            zh={`生成时间：${briefPreview.generatedAt}`}
+                            it={`Generato: ${briefPreview.generatedAt}`}
+                          />
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-cn-red-50 text-cn-red-600 hover:bg-cn-red-100 transition-colors">
+                        <FileDown className="w-3.5 h-3.5" />
+                        <BilingualText zh="下载PDF" it="Scarica PDF" />
+                      </button>
+                      <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-it-green-50 text-it-green-600 hover:bg-it-green-100 transition-colors">
+                        <Send className="w-3.5 h-3.5" />
+                        <BilingualText zh="发送至邮箱" it="Invia via email" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

@@ -17,6 +17,25 @@ import {
   Globe2,
   Palette,
   Send,
+  Upload,
+  CheckCircle2,
+  FileText,
+  Search,
+  PlusCircle,
+  GitBranch,
+  Download,
+  Eye,
+  Bell,
+  ListChecks,
+  Filter,
+  Fingerprint,
+  Heart,
+  History,
+  Settings,
+  Tag,
+  Paperclip,
+  Stethoscope,
+  CreditCard,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { mockProjects, mockNews } from "@/data/mock";
@@ -43,6 +62,15 @@ const stageLabels: Record<ProjectStage, { zh: string; it: string; progress: numb
   negotiation: { zh: "洽谈中", it: "In Negoziazione", progress: 50 },
   implementation: { zh: "实施中", it: "In Corso", progress: 75 },
   completed: { zh: "已完成", it: "Completato", progress: 100 },
+};
+
+const stageOrder: ProjectStage[] = ["planning", "negotiation", "implementation", "completed"];
+
+const categoryColorMap: Record<ProjectCategory, string> = {
+  economic: "bg-cn-red-100 text-cn-red-700 border-cn-red-200",
+  education: "bg-it-green-100 text-it-green-700 border-it-green-200",
+  tourism: "bg-warm-gold-100 text-warm-gold-700 border-warm-gold-200",
+  technology: "bg-blue-100 text-blue-700 border-blue-200",
 };
 
 function formatDate(dateStr: string, lang: "zh" | "it") {
@@ -82,6 +110,85 @@ function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
   return { ref, inView };
 }
 
+type SourceType = "embassy" | "media" | "culture";
+
+function getSourceType(source: string): SourceType {
+  const cultureKeywords = ["文化", "艺术", "Cultura", "Arte"];
+  const embassyKeywords = ["使领馆", "领事", "大使馆", "Ambasciata", "Consolato"];
+  if (embassyKeywords.some((k) => source.includes(k))) return "embassy";
+  if (cultureKeywords.some((k) => source.includes(k))) return "culture";
+  return "media";
+}
+
+const sourceIconMap: Record<SourceType, { icon: string; label: { zh: string; it: string } }> = {
+  embassy: { icon: "🇨🇳🇮🇹", label: { zh: "使领馆", it: "Ambasciata" } },
+  media: { icon: "📰", label: { zh: "主流媒体", it: "Stampa" } },
+  culture: { icon: "🎭", label: { zh: "文化机构", it: "Istituto Culturale" } },
+};
+
+const newsTagsMap: Record<string, { zh: string[]; it: string[] }> = {
+  n001: { zh: ["经贸合作", "备忘录", "双边贸易"], it: ["Cooperazione", "Memorandum", "Commercio"] },
+  n002: { zh: ["AI研究", "自然语言处理", "学术合作"], it: ["Ricerca IA", "NLP", "Cooperazione Accademica"] },
+  n003: { zh: ["威尼斯", "狂欢节", "文化展览"], it: ["Venezia", "Carnevale", "Mostra Culturale"] },
+  n004: { zh: ["远程会诊", "心血管", "医疗合作"], it: ["Telemedicina", "Cardiovascolare", "Cooperazione Medica"] },
+  n005: { zh: ["商务中文", "博洛尼亚", "教育"], it: ["Cinese Commerciale", "Bologna", "Educazione"] },
+  n006: { zh: ["新能源", "意大利市场", "汽车"], it: ["Nuove Energie", "Mercato Italiano", "Automobili"] },
+  n007: { zh: ["当代艺术", "联合画展", "青年艺术家"], it: ["Arte Contemporanea", "Mostra Congiunta", "Giovani Artisti"] },
+  n008: { zh: ["司法合作", "跨国案件", "引渡"], it: ["Cooperazione Giudiziaria", "Casi Transfrontalieri", "Estradizione"] },
+  n009: { zh: ["奢侈品", "数字化", "新零售"], it: ["Lusso", "Digitale", "Nuovo Retail"] },
+};
+
+const featureActions = [
+  {
+    route: "/translate",
+    actions: [
+      { labelZh: "上传政策文件翻译", labelIt: "Carica Documento", to: "/translate?mode=document&from=home", icon: Upload },
+      { labelZh: "术语校验", labelIt: "Verifica Termini", to: "/translate?mode=term-check&from=home", icon: CheckCircle2 },
+      { labelZh: "申请人工润色", labelIt: "Revisione Umana", to: "/translate?mode=polish&from=home", icon: FileText },
+    ],
+  },
+  {
+    route: "/projects",
+    actions: [
+      { labelZh: "检索经贸项目", labelIt: "Cerca Progetti", to: "/projects?tab=search&from=home", icon: Search },
+      { labelZh: "提交新项目", labelIt: "Nuovo Progetto", to: "/projects?action=new&from=home", icon: PlusCircle },
+      { labelZh: "查看阶段流转", labelIt: "Fasi del Progetto", to: "/projects?tab=stages&from=home", icon: GitBranch },
+    ],
+  },
+  {
+    route: "/pocket-translator",
+    actions: [
+      { labelZh: "签证场景翻译", labelIt: "Traduzione Visto", to: "/pocket-translator?scene=visa&from=home", icon: CreditCard },
+      { labelZh: "医疗问诊模式", labelIt: "Modalità Medica", to: "/pocket-translator?scene=medical&from=home", icon: Stethoscope },
+      { labelZh: "下载离线词包", labelIt: "Scarica Offline", to: "/pocket-translator?action=download&from=home", icon: Download },
+    ],
+  },
+  {
+    route: "/news",
+    actions: [
+      { labelZh: "浏览多源资讯", labelIt: "Sfoglia Notizie", to: "/news?from=home", icon: Eye },
+      { labelZh: "生成双语简报", labelIt: "Genera Riepilogo", to: "/news?action=briefing&from=home", icon: FileText },
+      { labelZh: "订阅推送", labelIt: "Iscriviti", to: "/news?action=subscribe&from=home", icon: Bell },
+    ],
+  },
+  {
+    route: "/admin",
+    actions: [
+      { labelZh: "审核队列", labelIt: "Coda di Revisione", to: "/admin?tab=queue&from=home", icon: ListChecks },
+      { labelZh: "敏感词过滤", labelIt: "Filtro Parole", to: "/admin?tab=filter&from=home", icon: Filter },
+      { labelZh: "发布溯源", labelIt: "Tracciamento", to: "/admin?tab=trace&from=home", icon: Fingerprint },
+    ],
+  },
+  {
+    route: "/profile",
+    actions: [
+      { labelZh: "我的收藏", labelIt: "I Miei Preferiti", to: "/profile?tab=favorites&from=home", icon: Heart },
+      { labelZh: "翻译历史", labelIt: "Cronologia", to: "/profile?tab=history&from=home", icon: History },
+      { labelZh: "订阅设置", labelIt: "Impostazioni", to: "/profile?tab=subscribe&from=home", icon: Settings },
+    ],
+  },
+];
+
 const features = [
   {
     icon: Languages,
@@ -111,7 +218,7 @@ const features = [
     it: "Traduttore Tascabile",
     descZh: "语音实时翻译，出行沟通无忧",
     descIt: "Traduzione vocale in tempo reale in viaggio",
-    route: "/pocket",
+    route: "/pocket-translator",
     gradient: "from-warm-gold-500 to-cn-red-500",
     iconBg: "bg-warm-gold-50",
     iconColor: "text-warm-gold-600",
@@ -197,12 +304,12 @@ function HeroSection() {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/translate" className="btn-primary">
-                <BilingualText zh="立即体验" it="Inizia Ora" />
+              <Link to="/translate?from=home" className="btn-primary">
+                <BilingualText zh="开始翻译" it="Inizia a Tradurre" />
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link to="/about" className="btn-secondary">
-                <BilingualText zh="了解更多" it="Scopri di Più" />
+              <Link to="/projects?from=home" className="btn-secondary">
+                <BilingualText zh="浏览项目库" it="Esplora Progetti" />
               </Link>
             </div>
 
@@ -295,6 +402,7 @@ function HeroSection() {
 
 function FeaturesSection() {
   const { ref, inView } = useInView<HTMLDivElement>();
+  const lang = useAppStore((s) => s.lang);
 
   return (
     <section ref={ref} className="py-24 relative">
@@ -320,12 +428,12 @@ function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => {
             const Icon = feature.icon;
+            const actions = featureActions.find((fa) => fa.route === feature.route)?.actions ?? [];
             return (
-              <Link
+              <div
                 key={feature.route}
-                to={feature.route}
                 className={cn(
-                  "group relative card card-hover p-8 overflow-hidden",
+                  "group relative card p-8 overflow-hidden",
                   "transition-all duration-700",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
                 )}
@@ -344,21 +452,89 @@ function FeaturesSection() {
                   {feature.zh}
                 </h3>
                 <p className="text-sm text-it-green-600 font-medium mb-3">{feature.it}</p>
-                <p className="text-charcoal-400 text-sm leading-relaxed">
+                <p className="text-charcoal-400 text-sm leading-relaxed mb-5">
                   <BilingualText zh={feature.descZh} it={feature.descIt} />
                 </p>
-                <div className="mt-6 flex items-center gap-2 text-warm-gold-600 opacity-0 translate-x-[-8px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                  <span className="text-sm font-medium">
-                    <BilingualText zh="了解更多" it="Scopri" />
-                  </span>
-                  <ArrowRight className="w-4 h-4" />
+                <div className="flex flex-col gap-2 mt-auto">
+                  {actions.map((action) => {
+                    const ActionIcon = action.icon;
+                    return (
+                      <Link
+                        key={action.to}
+                        to={action.to}
+                        className={cn(
+                          "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium",
+                          "bg-charcoal-50 hover:bg-charcoal-100 text-charcoal-600",
+                          "transition-all duration-200 hover:translate-x-0.5",
+                          "group/btn",
+                        )}
+                      >
+                        <ActionIcon className="w-4 h-4 text-charcoal-400 group-hover/btn:text-cn-red-500 transition-colors" />
+                        <BilingualText zh={action.labelZh} it={action.labelIt} />
+                        <ArrowRight className="w-3 h-3 ml-auto opacity-0 group-hover/btn:opacity-100 transition-opacity text-charcoal-300" />
+                      </Link>
+                    );
+                  })}
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>
       </div>
     </section>
+  );
+}
+
+function StageIndicator({ stage }: { stage: ProjectStage }) {
+  const lang = useAppStore((s) => s.lang);
+  const currentIndex = stageOrder.indexOf(stage);
+
+  return (
+    <div className="flex items-center gap-0.5">
+      {stageOrder.map((s, i) => {
+        const label = stageLabels[s];
+        const isReached = i <= currentIndex;
+        const isCurrent = i === currentIndex;
+        return (
+          <div key={s} className="flex items-center">
+            <div
+              className={cn(
+                "flex flex-col items-center",
+              )}
+            >
+              <div
+                className={cn(
+                  "w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all",
+                  isReached
+                    ? isCurrent
+                      ? "bg-cn-red-500 text-white ring-2 ring-cn-red-200"
+                      : "bg-it-green-500 text-white"
+                    : "bg-charcoal-100 text-charcoal-400",
+                )}
+              >
+                {isReached ? "✓" : i + 1}
+              </div>
+              <span
+                className={cn(
+                  "text-[10px] mt-0.5 whitespace-nowrap",
+                  isCurrent ? "text-cn-red-600 font-semibold" : "text-charcoal-400",
+                )}
+              >
+                {lang === "zh" ? label.zh : label.it}
+              </span>
+            </div>
+            {i < stageOrder.length - 1 && (
+              <div
+                className={cn(
+                  "w-4 h-0.5 mb-3",
+                  i < currentIndex ? "bg-it-green-500" : "bg-charcoal-200",
+                )}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -388,7 +564,7 @@ function ProjectsSection() {
               />
             </p>
           </div>
-          <Link to="/projects" className="btn-ghost self-start">
+          <Link to="/projects?from=home" className="btn-ghost self-start">
             <BilingualText zh="查看全部项目" it="Vedi tutti i progetti" />
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -397,27 +573,31 @@ function ProjectsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => {
             const cat = categoryLabels[project.category];
-            const stage = stageLabels[project.stage];
-            const progressColor =
-              project.stage === "completed"
-                ? "bg-it-green-500"
-                : project.stage === "implementation"
-                ? "bg-cn-red-500"
-                : "bg-warm-gold-500";
+            const catColor = categoryColorMap[project.category];
+            const primaryContact = project.partners[0];
 
             return (
-              <Link
+              <div
                 key={project.id}
-                to={`/projects/${project.id}`}
                 className={cn(
-                  "group card card-hover p-6 flex flex-col",
+                  "group card p-6 flex flex-col",
                   "transition-all duration-700",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
                 )}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start justify-between gap-3 mb-4">
-                  <span className={cat.className}>{lang === "zh" ? cat.zh : cat.it}</span>
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("px-2 py-0.5 rounded-full text-xs font-medium border", catColor)}>
+                      {lang === "zh" ? cat.zh : cat.it}
+                    </span>
+                    {project.attachments.length > 0 && (
+                      <span className="relative inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-charcoal-50 text-xs text-charcoal-500">
+                        <Paperclip className="w-3 h-3" />
+                        {project.attachments.length}
+                      </span>
+                    )}
+                  </div>
                   <span className="text-xs text-charcoal-400 flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
                     {formatDate(project.createdAt, lang)}
@@ -428,47 +608,64 @@ function ProjectsSection() {
                   {lang === "zh" ? project.titleZh : project.titleIt}
                 </h3>
 
-                <p className="text-sm text-charcoal-400 mb-5 line-clamp-2 leading-relaxed">
+                <p className="text-sm text-charcoal-400 mb-4 line-clamp-2 leading-relaxed">
                   {lang === "zh" ? project.descriptionZh : project.descriptionIt}
                 </p>
 
-                <div className="mb-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-charcoal-500">
-                      {lang === "zh" ? stage.zh : stage.it}
-                    </span>
-                    <span className="text-xs font-medium text-charcoal-400">
-                      {stage.progress}%
-                    </span>
-                  </div>
-                  <div className="h-1.5 w-full rounded-full bg-charcoal-100 overflow-hidden">
-                    <div
-                      className={cn("h-full rounded-full transition-all duration-1000", progressColor)}
-                      style={{ width: inView ? `${stage.progress}%` : "0%" }}
-                    />
-                  </div>
+                <div className="mb-4">
+                  <StageIndicator stage={project.stage} />
                 </div>
 
-                {project.partners.length > 0 && (
-                  <div className="mt-auto pt-5 border-t border-charcoal-500/5">
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-charcoal-300" />
-                      <span className="text-xs text-charcoal-400">
-                        <BilingualText zh="合作方：" it="Partner: " />
-                      </span>
-                      <span className="text-xs text-charcoal-600 font-medium truncate">
-                        {project.partners
-                          .slice(0, 2)
-                          .map((p) => (lang === "zh" ? p.nameZh : p.nameIt))
-                          .join("、")}
-                        {project.partners.length > 2 && ` ${lang === "zh" ? "等" : "etc."}`}
-                      </span>
+                {primaryContact && (
+                  <div className="mb-4 flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-gradient-cnit flex items-center justify-center text-white text-xs font-medium">
+                      {(lang === "zh" ? primaryContact.nameZh : primaryContact.nameIt).charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-medium text-charcoal-600 truncate">
+                        {lang === "zh" ? primaryContact.nameZh : primaryContact.nameIt}
+                      </div>
+                      <div className="text-[10px] text-charcoal-400 truncate">{primaryContact.email}</div>
                     </div>
                   </div>
                 )}
-              </Link>
+
+                <div className="mt-auto pt-4 border-t border-charcoal-500/5">
+                  <Link
+                    to={`/projects/${project.id}?from=home`}
+                    className="flex items-center justify-center gap-2 w-full py-2 rounded-lg text-sm font-medium bg-charcoal-50 hover:bg-cn-red-50 text-charcoal-500 hover:text-cn-red-600 transition-all duration-200"
+                  >
+                    <BilingualText zh="进入项目详情" it="Dettagli del Progetto" />
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
             );
           })}
+        </div>
+
+        <div className={cn("mt-10 transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+          <p className="text-sm text-charcoal-400 text-center mb-4">
+            <BilingualText zh="按分类浏览" it="Sfoglia per Categoria" />
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {Object.entries(categoryLabels).map(([key, label]) => {
+              const colorClass = categoryColorMap[key as ProjectCategory];
+              return (
+                <Link
+                  key={key}
+                  to={`/projects?category=${key}&from=home`}
+                  className={cn(
+                    "px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200",
+                    "hover:shadow-md hover:-translate-y-0.5",
+                    colorClass,
+                  )}
+                >
+                  {lang === "zh" ? label.zh : label.it}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
@@ -501,7 +698,7 @@ function NewsSection() {
               />
             </p>
           </div>
-          <Link to="/news" className="btn-ghost self-start">
+          <Link to="/news?from=home" className="btn-ghost self-start">
             <BilingualText zh="查看更多资讯" it="Altre notizie" />
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -513,11 +710,14 @@ function NewsSection() {
             const cat =
               catLabels[item.category as keyof typeof catLabels] ||
               generalCategoryLabels.general;
+            const sourceType = getSourceType(item.source);
+            const sourceInfo = sourceIconMap[sourceType];
+            const tags = newsTagsMap[item.id];
 
             return (
               <Link
                 key={item.id}
-                to={`/news/${item.id}`}
+                to={`/news/${item.id}?from=home`}
                 className={cn(
                   "group card card-hover p-6 flex flex-col",
                   "transition-all duration-700",
@@ -525,7 +725,7 @@ function NewsSection() {
                 )}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start justify-between gap-3 mb-4">
+                <div className="flex items-start justify-between gap-3 mb-3">
                   <span className={cat.className}>{lang === "zh" ? cat.zh : cat.it}</span>
                   <span className="text-xs text-charcoal-400 flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
@@ -537,14 +737,30 @@ function NewsSection() {
                   {lang === "zh" ? item.titleZh : item.titleIt}
                 </h3>
 
-                <p className="text-sm text-charcoal-400 mb-5 line-clamp-3 leading-relaxed flex-1">
+                <p className="text-sm text-charcoal-400 mb-4 line-clamp-3 leading-relaxed flex-1">
                   {lang === "zh" ? item.summaryZh : item.summaryIt}
                 </p>
 
+                {tags && (
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {(lang === "zh" ? tags.zh : tags.it).map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-charcoal-50 text-[11px] text-charcoal-500"
+                      >
+                        <Tag className="w-2.5 h-2.5" />
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 <div className="mt-auto pt-4 border-t border-charcoal-500/5 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs text-charcoal-400">
-                    <Globe2 className="w-3.5 h-3.5" />
-                    <span>{item.source}</span>
+                  <div className="flex items-center gap-1.5 text-xs">
+                    <span className="text-base leading-none">{sourceInfo.icon}</span>
+                    <span className="text-charcoal-400">{lang === "zh" ? sourceInfo.label.zh : sourceInfo.label.it}</span>
+                    <span className="text-charcoal-300">·</span>
+                    <span className="text-charcoal-400">{item.source}</span>
                   </div>
                   <div className="flex items-center gap-1 text-warm-gold-600 opacity-0 translate-x-[-4px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
                     <span className="text-xs font-medium">
@@ -556,6 +772,31 @@ function NewsSection() {
               </Link>
             );
           })}
+        </div>
+
+        <div className={cn("mt-10 transition-all duration-700 delay-500", inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              to="/news?action=briefing&from=home"
+              className="btn-primary"
+            >
+              <Sparkles className="w-4 h-4" />
+              <BilingualText zh="生成本周双语简报" it="Genera Riepilogo Settimanale" />
+            </Link>
+            <div className="card px-5 py-3 flex items-center gap-3 max-w-sm">
+              <div className="w-9 h-9 rounded-lg bg-warm-gold-50 flex items-center justify-center flex-shrink-0">
+                <FileText className="w-5 h-5 text-warm-gold-600" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-charcoal-600 truncate">
+                  <BilingualText zh="中意经贸文化周报 · 第24期" it="Riepilogo Settimanale Cina-Italia · N.24" />
+                </p>
+                <p className="text-[11px] text-charcoal-400">
+                  <BilingualText zh="2026年6月14日" it="14 Giugno 2026" />
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
