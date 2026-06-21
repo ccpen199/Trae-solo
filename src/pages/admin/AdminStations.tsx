@@ -185,20 +185,89 @@ const AdminStations: React.FC<AdminStationsProps> = ({ defaultTab = 'list', defa
     return true;
   }), [brandFilter, provinceFilter, statusFilter, searchText]);
 
-  const mapOption: EChartsOption = useMemo(() => {
-    const brandColors = {
-      sinopec: '#E53935', cnpc: '#1E88E5', shell: '#FDD835',
-      cnooc: '#00ACC1', private: '#8BC34A',
+  const provinceBarOption: EChartsOption = useMemo(() => {
+    const provinceStats = provinces.map((p) => ({
+      name: p,
+      value: filteredStations.filter((s) => s.province === p).length,
+      volume: filteredStations.filter((s) => s.province === p).reduce((sum, s) => sum + s.verifyAmount, 0),
+    })).filter((d) => d.value > 0).sort((a, b) => b.value - a.value);
+
+    return {
+      backgroundColor: 'transparent',
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(10,35,66,0.95)',
+        borderColor: 'rgba(255,107,26,0.3)',
+        textStyle: { color: '#fff', fontSize: 12 },
+        axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(255,107,26,0.08)' } },
+        formatter: (params: any) => {
+          const p = params[0];
+          const d = provinceStats[p.dataIndex];
+          return `<div class="font-bold text-primary-orange mb-1">${d.name}</div>
+                  <div class="text-white/70 text-xs">油站数量: <span class="text-white font-semibold">${d.value}</span> 家</div>
+                  <div class="text-white/70 text-xs">月核销额: <span class="text-success font-semibold">¥${(d.volume / 10000).toFixed(1)}万</span></div>`;
+        },
+      },
+      grid: { left: 50, right: 50, top: 20, bottom: 20 },
+      xAxis: {
+        type: 'value',
+        splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } },
+        axisLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 10 },
+        axisLine: { show: false },
+        axisTick: { show: false },
+      },
+      yAxis: {
+        type: 'category',
+        inverse: true,
+        data: provinceStats.map((d) => d.name),
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: {
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: 11,
+          fontWeight: 500,
+        },
+      },
+      series: [
+        {
+          type: 'bar',
+          data: provinceStats.map((d, i) => ({
+            value: d.value,
+            itemStyle: {
+              borderRadius: [0, 6, 6, 0],
+              color: {
+                type: 'linear',
+                x: 0, y: 0, x2: 1, y2: 0,
+                colorStops: [
+                  { offset: 0, color: i === 0 ? '#FF6B1A' : i === 1 ? '#F59E0B' : 'rgba(59,130,246,0.7)' },
+                  { offset: 1, color: i === 0 ? '#FFB347' : i === 1 ? '#FBBF24' : '#06B6D4' },
+                ],
+              },
+              shadowBlur: 8,
+              shadowColor: i < 2 ? 'rgba(255,107,26,0.3)' : 'rgba(59,130,246,0.2)',
+            },
+          })),
+          barWidth: 14,
+          label: {
+            show: true,
+            position: 'right',
+            color: 'rgba(255,255,255,0.75)',
+            fontSize: 11,
+            fontWeight: 600,
+            formatter: (p: any) => `${p.value}家`,
+          },
+        },
+      ],
     };
-    const scatterData = (Object.keys(brandColors) as StationItem['brand'][]).flatMap((b) => {
-      const list = filteredStations.filter((s) => s.brand === b);
-      return list.map((s) => ({
-        name: s.name,
-        value: [s.lng, s.lat, s.prices['0#']],
-        itemStyle: { color: brandColors[b] },
-        station: s,
-      }));
-    });
+  }, [filteredStations]);
+
+  const brandPieOption: EChartsOption = useMemo(() => {
+    const brandStats = (Object.keys(brandMap) as StationItem['brand'][]).map((b) => ({
+      name: brandMap[b].name,
+      value: filteredStations.filter((s) => s.brand === b).length,
+      itemStyle: { color: brandMap[b].color },
+    })).filter((d) => d.value > 0);
+
     return {
       backgroundColor: 'transparent',
       tooltip: {
@@ -206,56 +275,50 @@ const AdminStations: React.FC<AdminStationsProps> = ({ defaultTab = 'list', defa
         backgroundColor: 'rgba(10,35,66,0.95)',
         borderColor: 'rgba(255,107,26,0.3)',
         textStyle: { color: '#fff', fontSize: 12 },
-        formatter: (p: any) => {
-          const s = p.data.station as StationItem;
-          const b = brandMap[s.brand];
-          return `<div class="font-bold mb-2 flex items-center gap-2">
-                    <span class="inline-block w-2 h-2 rounded-full" style="background:${b.color}"></span>
-                    <span class="text-${b.color.replace('#', '')}">${s.name}</span>
-                  </div>
-                  <div class="space-y-0.5 text-[11px] text-white/70">
-                    <div>📍 ${s.address}</div>
-                    <div>☎ ${s.contact} ${s.phone}</div>
-                    <div class="pt-1 mt-1 border-t border-white/10 grid grid-cols-2 gap-x-3 gap-y-0.5">
-                      <span>0#柴油: <span class="text-success font-bold">¥${s.prices['0#'].toFixed(2)}</span></span>
-                      <span>-10#: <span class="text-warning font-bold">¥${s.prices['-10#'].toFixed(2)}</span></span>
-                      <span>92#: <span class="text-info font-bold">¥${s.prices['92#'].toFixed(2)}</span></span>
-                      <span>95#: <span class="text-primary-orange font-bold">¥${s.prices['95#'].toFixed(2)}</span></span>
-                    </div>
-                    <div class="pt-1 mt-1 border-t border-white/10">
-                      ⛽ 今日核销: <span class="text-white font-semibold">${s.verifyCount}笔</span>
-                      <span class="ml-2 text-success font-semibold">¥${(s.verifyAmount / 10000).toFixed(1)}万</span>
-                    </div>
-                  </div>`;
-        },
-      },
-      geo: {
-        map: 'china', roam: true, zoom: 1.15,
-        itemStyle: {
-          areaColor: 'rgba(59,130,246,0.05)',
-          borderColor: 'rgba(59,130,246,0.2)',
-          borderWidth: 1,
-        },
-        emphasis: { itemStyle: { areaColor: 'rgba(255,107,26,0.1)', borderColor: '#FF6B1A' }, label: { show: true, color: '#fff', fontSize: 11 } },
+        formatter: (p: any) => `<div class="font-bold mb-1">${p.name}</div>
+                                <div class="text-white/70 text-xs">油站数量: <span class="text-white font-semibold">${p.value}</span> 家</div>
+                                <div class="text-white/70 text-xs">占比: <span class="text-primary-orange font-semibold">${p.percent}%</span></div>`,
       },
       legend: {
-        top: 10, right: 10,
         orient: 'vertical',
+        right: 10,
+        top: 'center',
         textStyle: { color: 'rgba(255,255,255,0.7)', fontSize: 11 },
-        itemWidth: 8, itemHeight: 8,
-        data: Object.entries(brandMap).map(([k, v]) => ({ name: v.name, itemStyle: { color: v.color } })),
+        itemWidth: 10,
+        itemHeight: 10,
       },
-      series: Object.keys(brandColors).map((b) => ({
-        name: brandMap[b as StationItem['brand']].name,
-        type: 'scatter',
-        coordinateSystem: 'geo',
-        symbolSize: 12,
-        data: scatterData.filter((d) => d.station.brand === b),
-        emphasis: {
-          scale: 1.8,
-          itemStyle: { shadowBlur: 16, shadowColor: brandColors[b as keyof typeof brandColors] },
+      series: [
+        {
+          type: 'pie',
+          radius: ['45%', '70%'],
+          center: ['35%', '50%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 6,
+            borderColor: 'rgba(10,35,66,0.9)',
+            borderWidth: 2,
+          },
+          label: {
+            show: false,
+            position: 'center',
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: '#fff',
+              formatter: (p: any) => `{name|${p.name}}\n{val|${p.value}家}`,
+              rich: {
+                name: { fontSize: 12, color: 'rgba(255,255,255,0.6)', padding: [0, 0, 4, 0] },
+                val: { fontSize: 20, color: '#FF6B1A', fontWeight: 'bold' },
+              },
+            },
+          },
+          labelLine: { show: false },
+          data: brandStats,
         },
-      })),
+      ],
     };
   }, [filteredStations]);
 
@@ -493,20 +556,66 @@ const AdminStations: React.FC<AdminStationsProps> = ({ defaultTab = 'list', defa
                   </div>
                 ) : (
                   <div className="p-5">
-                    <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <div className="flex items-center gap-2 text-[11px] text-white/60">
-                        <span className="font-semibold text-white/80 mr-2">品牌图例:</span>
-                        {Object.entries(brandMap).map(([k, v]) => (
-                          <span key={k} className="inline-flex items-center gap-1.5">
-                            <span className="w-2.5 h-2.5 rounded-full" style={{ background: v.color }} />
-                            {v.name}
-                          </span>
-                        ))}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4" style={{ height: 560 }}>
+                      <div className="lg:col-span-2 dashboard-panel">
+                        <div className="dashboard-title">
+                          <Building2 size={14} className="text-primary-orange" />
+                          <span className="text-sm">省份油站分布 TOP10</span>
+                          <Tag color="blue" className="ml-auto !rounded-md !text-[10px]">按数量</Tag>
+                        </div>
+                        <div className="p-3" style={{ height: 500 }}>
+                          <ReactECharts option={provinceBarOption} style={{ height: '100%', width: '100%' }} theme="dark" opts={{ renderer: 'canvas' }} />
+                        </div>
                       </div>
-                      <div className="ml-auto text-[11px] text-white/50">点击气泡查看详情 · 支持缩放/拖动</div>
-                    </div>
-                    <div className="rounded-xl overflow-hidden border border-white/10" style={{ height: 600 }}>
-                      <ReactECharts option={mapOption} style={{ height: '100%', width: '100%' }} theme="dark" opts={{ renderer: 'canvas' }} />
+                      <div className="space-y-4">
+                        <div className="dashboard-panel" style={{ height: 270 }}>
+                          <div className="dashboard-title">
+                            <Fuel size={14} className="text-primary-orange" />
+                            <span className="text-sm">品牌占比</span>
+                          </div>
+                          <div className="p-3" style={{ height: 210 }}>
+                            <ReactECharts option={brandPieOption} style={{ height: '100%', width: '100%' }} theme="dark" opts={{ renderer: 'canvas' }} />
+                          </div>
+                        </div>
+                        <div className="dashboard-panel" style={{ height: 270 }}>
+                          <div className="dashboard-title">
+                            <Banknote size={14} className="text-primary-orange" />
+                            <span className="text-sm">今日核销概览</span>
+                          </div>
+                          <div className="p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-white/60">核销订单</span>
+                              <span className="text-lg font-bold text-success font-mono">2,856<span className="text-xs text-white/50 ml-1">笔</span></span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-white/60">核销金额</span>
+                              <span className="text-lg font-bold text-primary-orange font-mono">¥158.6<span className="text-xs text-white/50 ml-1">万</span></span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-white/60">优惠让利</span>
+                              <span className="text-sm font-semibold text-warning font-mono">¥9.32<span className="text-xs text-white/50 ml-1">万</span></span>
+                            </div>
+                            <div className="pt-2 border-t border-white/10">
+                              <div className="flex items-center justify-between text-[11px] mb-1.5">
+                                <span className="text-white/50">完成率</span>
+                                <span className="text-white/80 font-medium">86.5%</span>
+                              </div>
+                              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                <div className="h-full w-[86.5%] bg-gradient-to-r from-success to-emerald-400 rounded-full" />
+                              </div>
+                            </div>
+                            <div className="pt-1">
+                              <div className="flex items-center justify-between text-[11px] mb-1.5">
+                                <span className="text-white/50">异常订单</span>
+                                <span className="text-danger font-medium">32 笔待复核</span>
+                              </div>
+                              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                <div className="h-full w-[3.2%] bg-gradient-to-r from-danger to-red-400 rounded-full" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

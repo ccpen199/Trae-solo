@@ -11,6 +11,7 @@ import {
   Progress,
   Space,
   Button,
+  message,
 } from 'antd';
 import ReactECharts from 'echarts-for-react';
 import type { EChartsOption } from 'echarts';
@@ -320,109 +321,112 @@ const AdminDashboard: React.FC = () => {
     [range]
   );
 
-  const mapOption = useMemo<EChartsOption>(
+  const cityHeatOption = useMemo<EChartsOption>(
     () => ({
       backgroundColor: 'transparent',
       tooltip: {
-        trigger: 'item',
+        trigger: 'axis',
         backgroundColor: 'rgba(10,35,66,0.95)',
         borderColor: 'rgba(255,107,26,0.3)',
         textStyle: { color: '#fff', fontSize: 12 },
-        formatter: (p: any) => {
-          if (p.seriesType === 'effectScatter') {
-            return `<div class="font-bold text-primary-orange mb-1">${p.name}</div>
-                    <div class="text-white/70 text-xs">运输热度: <span class="text-white font-semibold">${p.value[2]}</span></div>
-                    <div class="text-white/70 text-xs">今日单量: <span class="text-primary-orange font-semibold">${Math.round(p.value[2] * 12.8)}</span></div>`;
-          }
-          if (p.seriesType === 'lines') {
-            return `<div class="font-bold text-info mb-1">${p.data.fromName} → ${p.data.toName}</div>
-                    <div class="text-white/70 text-xs">本周运单: <span class="text-white font-semibold">${Math.floor(500 + Math.random() * 1500)}</span> 单</div>
-                    <div class="text-white/70 text-xs">平均时效: <span class="text-success font-semibold">${(12 + Math.random() * 24).toFixed(1)}</span>h</div>`;
-          }
-          return '';
+        axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(255,107,26,0.08)' } },
+        formatter: (params: any) => {
+          const p = params[0];
+          const d = hotCities[p.dataIndex];
+          return `<div class="font-bold text-primary-orange mb-1">${d.name}</div>
+                  <div class="text-white/70 text-xs">运输热度指数: <span class="text-white font-semibold">${d.value[2]}</span></div>
+                  <div class="text-white/70 text-xs">今日运单: <span class="text-primary-orange font-semibold">${Math.round(d.value[2] * 12.8)}</span> 单</div>
+                  <div class="text-white/70 text-xs">在途车辆: <span class="text-info font-semibold">${Math.round(d.value[2] * 5.6)}</span> 辆</div>`;
         },
       },
-      geo: {
-        map: 'china',
-        roam: true,
-        zoom: 1.2,
-        label: { show: false },
-        itemStyle: {
-          areaColor: 'rgba(59,130,246,0.06)',
-          borderColor: 'rgba(59,130,246,0.25)',
-          borderWidth: 1,
-        },
-        emphasis: {
-          itemStyle: {
-            areaColor: 'rgba(255,107,26,0.15)',
-            borderColor: '#FF6B1A',
+      grid: { left: 70, right: 80, top: 20, bottom: 20 },
+      xAxis: {
+        type: 'value',
+        splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } },
+        axisLabel: { show: false },
+        axisLine: { show: false },
+        axisTick: { show: false },
+      },
+      yAxis: {
+        type: 'category',
+        inverse: true,
+        data: hotCities.map((c) => c.name),
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: {
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: 11,
+          fontWeight: 500,
+          formatter: (val: string, idx: number) =>
+            idx < 3
+              ? `{top${idx}|NO.${idx + 1}}  ${val}`
+              : `  ${idx + 1}   ${val}`,
+          rich: {
+            top0: { color: '#FF6B1A', fontWeight: 'bold', padding: [0, 4, 0, 0] },
+            top1: { color: '#9CA3AF', fontWeight: 'bold', padding: [0, 4, 0, 0] },
+            top2: { color: '#B45309', fontWeight: 'bold', padding: [0, 4, 0, 0] },
           },
-          label: { show: true, color: '#fff', fontSize: 11 },
         },
       },
       series: [
         {
-          name: '飞线',
-          type: 'lines',
-          coordinateSystem: 'geo',
-          zlevel: 2,
-          effect: {
-            show: true,
-            period: 5,
-            trailLength: 0.3,
-            symbol: 'arrow',
-            symbolSize: 8,
-            color: '#FF6B1A',
-          },
-          lineStyle: {
-            color: 'rgba(255,107,26,0.5)',
-            width: 1.2,
-            opacity: 0.8,
-            curveness: 0.3,
-          },
-          data: flightLines.map(([from, to]) => {
-            const f = hotCities.find((c) => c.name === from);
-            const t = hotCities.find((c) => c.name === to);
-            return {
-              fromName: from,
-              toName: to,
-              coords: f && t ? [f.value.slice(0, 2), t.value.slice(0, 2)] : [[0, 0], [0, 0]],
-            };
-          }),
-        },
-        {
-          name: '城市热度',
-          type: 'effectScatter',
-          coordinateSystem: 'geo',
-          zlevel: 3,
-          rippleEffect: {
-            period: 4,
-            scale: 4,
-            brushType: 'stroke',
-          },
-          symbolSize: (v: number[]) => 6 + v[2] / 10,
-          itemStyle: {
-            color: (p: any) => {
-              const val = p.value[2];
-              if (val > 85) return '#EF4444';
-              if (val > 70) return '#FF6B1A';
-              if (val > 55) return '#F59E0B';
-              return '#3B82F6';
+          type: 'bar',
+          data: hotCities.map((c, i) => ({
+            value: c.value[2],
+            itemStyle: {
+              borderRadius: [0, 8, 8, 0],
+              color: {
+                type: 'linear',
+                x: 0, y: 0, x2: 1, y2: 0,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color:
+                      i === 0 ? '#EF4444' : i === 1 ? '#FF6B1A' : i === 2 ? '#F59E0B' : 'rgba(59,130,246,0.7)',
+                  },
+                  {
+                    offset: 1,
+                    color:
+                      i === 0 ? '#FCA5A5' : i === 1 ? '#FFB347' : i === 2 ? '#FBBF24' : '#06B6D4',
+                  },
+                ],
+              },
+              shadowBlur: 10,
+              shadowColor: i < 3 ? 'rgba(255,107,26,0.3)' : 'rgba(59,130,246,0.2)',
             },
-            shadowBlur: 12,
-            shadowColor: 'rgba(255,107,26,0.6)',
-          },
+          })),
+          barWidth: 16,
           label: {
             show: true,
-            formatter: '{b}',
             position: 'right',
-            color: 'rgba(255,255,255,0.7)',
-            fontSize: 10,
+            color: 'rgba(255,255,255,0.75)',
+            fontSize: 11,
+            fontWeight: 600,
+            formatter: (p: any) => `${p.value}  🔥`,
           },
-          data: hotCities,
         },
       ],
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [tick]
+  );
+
+  const topRoutes = useMemo(
+    () =>
+      flightLines.map(([from, to], i) => {
+        const f = hotCities.find((c) => c.name === from);
+        const t = hotCities.find((c) => c.name === to);
+        const heat = f && t ? Math.round((f.value[2] + t.value[2]) * 0.6) + i * 8 : 0;
+        return {
+          id: i + 1,
+          from,
+          to,
+          orders: 520 + Math.floor(Math.random() * 1200),
+          avgTime: (12 + Math.random() * 24).toFixed(1),
+          heat,
+          avgPrice: Math.round(2.8 + Math.random() * 2.5),
+        };
+      }).sort((a, b) => b.orders - a.orders),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [tick]
   );
@@ -686,36 +690,83 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-        <div className="xl:col-span-2 dashboard-panel" style={{ minHeight: 480 }}>
-          <div className="dashboard-title">
-            <MapPin size={16} className="text-primary-orange" />
-            <span>全国运输热力图</span>
-            <div className="ml-auto flex items-center gap-4 text-xs text-white/50">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-danger animate-pulse" />
-                高热度（大于85）
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-primary-orange" />
-                中热度(70-85)
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-warning" />
-                次热度(55-70)
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-info" />
-                一般热度
-              </span>
+        <div className="xl:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="dashboard-panel" style={{ minHeight: 480 }}>
+            <div className="dashboard-title">
+              <MapPin size={16} className="text-primary-orange" />
+              <span>城市运输热度 TOP12</span>
+              <Tag color="red" className="ml-auto !rounded-md !text-xs">
+                实时
+              </Tag>
+            </div>
+            <div className="p-3" style={{ height: 420 }}>
+              <ReactECharts
+                option={cityHeatOption}
+                style={{ height: '100%' }}
+                theme="dark"
+                opts={{ renderer: 'canvas' }}
+              />
             </div>
           </div>
-          <div className="p-4" style={{ height: 420 }}>
-            <ReactECharts
-              option={mapOption}
-              style={{ height: '100%' }}
-              theme="dark"
-              opts={{ renderer: 'canvas' }}
-            />
+
+          <div className="dashboard-panel" style={{ minHeight: 480 }}>
+            <div className="dashboard-title">
+              <Activity size={16} className="text-primary-orange" />
+              <span>热门线路 TOP10</span>
+              <Tag color="orange" className="ml-auto !rounded-md !text-xs">
+                本周
+              </Tag>
+            </div>
+            <div className="p-3 overflow-auto" style={{ height: 420 }}>
+              <List
+                size="small"
+                dataSource={topRoutes}
+                renderItem={(item, idx) => (
+                  <List.Item
+                    className="!px-3 !py-3 !border-b !border-white/5 hover:!bg-white/5 cursor-pointer transition-colors !rounded-lg"
+                    onClick={() => message.info(`查看线路详情: ${item.from} → ${item.to}`)}
+                  >
+                    <div className="w-full flex items-center gap-3">
+                      <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${
+                        idx < 3 ? 'bg-gradient-to-br from-primary-orange to-orange-400 text-white' : 'bg-white/5 text-white/40'
+                      }`}>
+                        {idx + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 text-sm text-white/90 font-medium mb-1">
+                          <span className="truncate">{item.from}</span>
+                          <ArrowUpRight size={12} className="text-primary-orange flex-shrink-0" />
+                          <span className="truncate">{item.to}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-[11px] text-white/50">
+                          <span className="flex items-center gap-1">
+                            <Car size={10} /> {item.orders}单
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock size={10} /> {item.avgTime}h
+                          </span>
+                          <span className="text-success font-medium">¥{item.avgPrice}/km</span>
+                        </div>
+                      </div>
+                      <div className="flex-shrink-0 text-right">
+                        <div className="text-[11px] text-white/40 mb-0.5">热度</div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-primary-orange to-orange-400"
+                              style={{ width: `${Math.min(100, item.heat)}%` }}
+                            />
+                          </div>
+                          <span className="text-[10px] text-primary-orange font-mono font-bold w-8">
+                            {item.heat}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </List.Item>
+                )}
+              />
+            </div>
           </div>
         </div>
 
