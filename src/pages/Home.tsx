@@ -7,13 +7,14 @@ import {
   XCircle, Zap, Bot, HandCoins, Package, Gem, ScrollText,
   Coins, Puzzle, TreePine, Brush, Shirt, PenTool, Coffee,
   Flame, Palette, Gavel, FileText, Building2, ChevronDown,
-  ChevronUp, Calculator, Wallet, BarChart3,
+  ChevronUp, Calculator, Wallet, BarChart3, X, CheckCircle,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { Modal } from '@/components/ui/Modal';
 import {
   mockExperts, mockKnowledgeArticles, mockCommunityQuestions,
-  mockCertificates, mockArtworks,
+  mockCertificates, mockArtworks, mockDisputes,
 } from '@/lib/mockData';
 import { ExpertLevel, Category, AuthenticityLevel, OrderStatus } from '../../shared/types';
 
@@ -151,6 +152,14 @@ const conditionFactors: Record<string, number> = {
   '完美': 1.3, '良好': 1.0, '一般': 0.7, '有残': 0.4,
 };
 
+interface DisputeDetail {
+  reason: string;
+  reviewOpinion: string;
+  conclusion: string;
+  disputeDate: string;
+  resolutionDate: string;
+}
+
 interface LiveOrder {
   id: string; name: string; category: string; image: string; status: OrderStatus;
   expertCount: number; bidCount: number; minPrice: number; maxPrice: number;
@@ -159,6 +168,23 @@ interface LiveOrder {
   expertLevel: ExpertLevel;
   hasDispute: boolean;
   disputeCount?: number;
+  disputeDetail?: DisputeDetail;
+}
+
+interface RecentlyCertifiedExpert {
+  id: string; name: string; avatar: string; level: ExpertLevel; category: string; certifyDate: string;
+}
+
+interface ResolvedDispute {
+  id: string; orderNo: string; artworkName: string; type: string; result: string; date: string; userWin: boolean;
+}
+
+interface CertTemplate {
+  id: string; name: string; category: string; usageCount: number; thumb: string;
+}
+
+interface PartnerOrg {
+  id: string; name: string; logo: string; scenario: string;
 }
 
 function getConclusionBadge(conclusion: string) {
@@ -176,6 +202,48 @@ function formatTime(seconds: number): string {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
+const recentlyCertifiedExperts: RecentlyCertifiedExpert[] = [
+  { id: 'rc_1', name: '周文博', avatar: 'https://picsum.photos/seed/rce1/60/60', level: ExpertLevel.NATIONAL, category: '陶瓷', certifyDate: '2024-06-18' },
+  { id: 'rc_2', name: '吴静怡', avatar: 'https://picsum.photos/seed/rce2/60/60', level: ExpertLevel.PROVINCIAL, category: '玉器', certifyDate: '2024-06-17' },
+  { id: 'rc_3', name: '郑浩然', avatar: 'https://picsum.photos/seed/rce3/60/60', level: ExpertLevel.SENIOR, category: '书画', certifyDate: '2024-06-16' },
+  { id: 'rc_4', name: '孙雅琴', avatar: 'https://picsum.photos/seed/rce4/60/60', level: ExpertLevel.PROVINCIAL, category: '青铜器', certifyDate: '2024-06-15' },
+  { id: 'rc_5', name: '钱志远', avatar: 'https://picsum.photos/seed/rce5/60/60', level: ExpertLevel.NATIONAL, category: '钱币', certifyDate: '2024-06-14' },
+  { id: 'rc_6', name: '李淑华', avatar: 'https://picsum.photos/seed/rce6/60/60', level: ExpertLevel.SENIOR, category: '紫砂', certifyDate: '2024-06-13' },
+];
+
+const resolvedDisputes: ResolvedDispute[] = [
+  { id: 'rd_1', orderNo: 'JZG-202406-00892', artworkName: '清代粉彩花卉纹盘', type: '鉴定结论争议', result: '部分支持用户，退款50%', date: '2024-06-18', userWin: true },
+  { id: 'rd_2', orderNo: 'JZG-202406-00756', artworkName: '和田玉籽料把件', type: '服务超时纠纷', result: '支持用户，全额退款', date: '2024-06-16', userWin: true },
+  { id: 'rd_3', orderNo: 'JZG-202406-00634', artworkName: '齐白石款虾图', type: '鉴定结论争议', result: '维持原鉴定，驳回申诉', date: '2024-06-14', userWin: false },
+];
+
+const certTemplates: CertTemplate[] = [
+  { id: 'tpl_1', name: '陶瓷标准版', category: '陶瓷', usageCount: 12856, thumb: 'https://picsum.photos/seed/tpl1/160/220' },
+  { id: 'tpl_2', name: '玉器典藏版', category: '玉器', usageCount: 8432, thumb: 'https://picsum.photos/seed/tpl2/160/220' },
+  { id: 'tpl_3', name: '书画名家版', category: '书画', usageCount: 6720, thumb: 'https://picsum.photos/seed/tpl3/160/220' },
+  { id: 'tpl_4', name: '青铜庄重版', category: '青铜器', usageCount: 3248, thumb: 'https://picsum.photos/seed/tpl4/160/220' },
+  { id: 'tpl_5', name: '钱币珍藏版', category: '钱币', usageCount: 5186, thumb: 'https://picsum.photos/seed/tpl5/160/220' },
+  { id: 'tpl_6', name: '通用标准版', category: '通用', usageCount: 6418, thumb: 'https://picsum.photos/seed/tpl6/160/220' },
+];
+
+const partnerOrgs: PartnerOrg[] = [
+  { id: 'po_1', name: '故宫博物院', logo: 'https://picsum.photos/seed/po1/100/100', scenario: '文物批量初鉴' },
+  { id: 'po_2', name: '中国国家博物馆', logo: 'https://picsum.photos/seed/po2/100/100', scenario: '藏品建档存证' },
+  { id: 'po_3', name: '苏富比', logo: 'https://picsum.photos/seed/po3/100/100', scenario: '拍卖品前置筛查' },
+  { id: 'po_4', name: '嘉德拍卖', logo: 'https://picsum.photos/seed/po4/100/100', scenario: '拍品鉴定协作' },
+  { id: 'po_5', name: '阿里拍卖', logo: 'https://picsum.photos/seed/po5/100/100', scenario: '电商品控接入' },
+  { id: 'po_6', name: '京东拍卖', logo: 'https://picsum.photos/seed/po6/100/100', scenario: '平台质检对接' },
+];
+
+const expertBriefIntro: Record<string, string> = {
+  'expert_001': '从事陶瓷鉴定35年，故宫博物院退休研究员',
+  'expert_002': '国家级书画鉴定师，师从启功先生',
+  'expert_003': '青铜器研究会副会长，深耕商周秦汉铜器',
+  'expert_004': '织绣漆器鉴定专家，原首博研究员',
+  'expert_005': '木器紫砂文房杂项鉴定行家',
+  'expert_006': '钱币杂项资深鉴定师，藏界公认泉学大家',
+};
+
 export default function Home() {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -188,6 +256,11 @@ export default function Home() {
   const [selectedSample, setSelectedSample] = useState<typeof sampleArtworks[0] | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiResult, setAiResult] = useState<typeof sampleArtworks[0] | null>(null);
+
+  const [showBiddingModal, setShowBiddingModal] = useState(false);
+  const [selectedExpertForBidding, setSelectedExpertForBidding] = useState<string | null>(null);
+  const [showOrderConfirmModal, setShowOrderConfirmModal] = useState(false);
+  const [expandedDisputeOrderId, setExpandedDisputeOrderId] = useState<string | null>(null);
 
   const [activeEraFilter, setActiveEraFilter] = useState<string>('清');
   const [activeCraftFilter, setActiveCraftFilter] = useState<string>('青花');
@@ -218,8 +291,8 @@ export default function Home() {
   useEffect(() => {
     const orders: LiveOrder[] = [
       { id: 'live_001', name: '清乾隆粉彩百花不落地纹瓶', category: Category.CERAMIC, image: 'https://picsum.photos/seed/live1/100/100', status: OrderStatus.PENDING, expertCount: 3, bidCount: 5, minPrice: 1200, maxPrice: 2800, slaTotal: 1800, slaRemaining: 755, experts: mockExperts.slice(0, 3).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 10}/60/60`, level: e.level })), expertLevel: ExpertLevel.NATIONAL, hasDispute: false },
-      { id: 'live_002', name: '和田白玉籽料把件', category: Category.JADE, image: 'https://picsum.photos/seed/live2/100/100', status: OrderStatus.APPRAISING, expertCount: 1, bidCount: 1, minPrice: 800, maxPrice: 800, slaTotal: 1800, slaRemaining: 1200, experts: mockExperts.slice(0, 1).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 20}/60/60`, level: e.level })), expertLevel: ExpertLevel.PROVINCIAL, hasDispute: true, disputeCount: 2 },
-      { id: 'live_003', name: '齐白石虾蟹图立轴', category: Category.CALLIGRAPHY_PAINTING, image: 'https://picsum.photos/seed/live3/100/100', status: OrderStatus.PENDING, expertCount: 2, bidCount: 4, minPrice: 2000, maxPrice: 5000, slaTotal: 1800, slaRemaining: 240, experts: mockExperts.slice(1, 4).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 30}/60/60`, level: e.level })), expertLevel: ExpertLevel.SENIOR, hasDispute: true, disputeCount: 1 },
+      { id: 'live_002', name: '和田白玉籽料把件', category: Category.JADE, image: 'https://picsum.photos/seed/live2/100/100', status: OrderStatus.APPRAISING, expertCount: 1, bidCount: 1, minPrice: 800, maxPrice: 800, slaTotal: 1800, slaRemaining: 1200, experts: mockExperts.slice(0, 1).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 20}/60/60`, level: e.level })), expertLevel: ExpertLevel.PROVINCIAL, hasDispute: true, disputeCount: 2, disputeDetail: { reason: '用户认为专家把件材质判定有误，主张为青海料而非和田籽料，并提供第三方检测报告佐证', reviewOpinion: '仲裁庭调阅高清显微照片并对比送检报告：皮壳存在人工加强痕迹，内部结构符合青海料特征，原专家鉴定存在瑕疵', conclusion: '部分支持用户，退还50%鉴定费，专家记警告一次', disputeDate: '2024-05-28', resolutionDate: '2024-06-02' } },
+      { id: 'live_003', name: '齐白石虾蟹图立轴', category: Category.CALLIGRAPHY_PAINTING, image: 'https://picsum.photos/seed/live3/100/100', status: OrderStatus.PENDING, expertCount: 2, bidCount: 4, minPrice: 2000, maxPrice: 5000, slaTotal: 1800, slaRemaining: 240, experts: mockExperts.slice(1, 4).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 30}/60/60`, level: e.level })), expertLevel: ExpertLevel.SENIOR, hasDispute: true, disputeCount: 1, disputeDetail: { reason: '用户主张画作有明确收藏著录，应为真迹，但原鉴定判定为存疑仿品', reviewOpinion: '仲裁庭三位资深书画专家联合复核：笔墨功力差距明显，与齐白石成熟期风格不符，印泥年份偏新，原鉴定结论审慎合理', conclusion: '维持原鉴定结论，驳回用户申诉', disputeDate: '2024-06-05', resolutionDate: '2024-06-10' } },
       { id: 'live_004', name: '商周青铜爵杯', category: Category.BRONZE, image: 'https://picsum.photos/seed/live4/100/100', status: OrderStatus.ACCEPTED, expertCount: 1, bidCount: 1, minPrice: 1500, maxPrice: 1500, slaTotal: 1800, slaRemaining: 0, experts: mockExperts.slice(2, 3).map((e, i) => ({ name: e.name, avatar: `https://picsum.photos/seed/expert${i + 40}/60/60`, level: e.level })), expertLevel: ExpertLevel.NATIONAL, hasDispute: false },
     ];
     setLiveOrders(orders);
@@ -259,6 +332,40 @@ export default function Home() {
   const handleCategoryClick = (category: string) => { navigate(`/appraise?category=${encodeURIComponent(category)}`); };
   const handleCertSearch = () => { if (certInput.trim()) { navigate(`/certificate/${encodeURIComponent(certInput.trim())}`); } };
   const handleFileDrop = (e: React.DragEvent) => { e.preventDefault(); setIsDragging(false); navigate('/appraise'); };
+
+  const handleOpenBidding = () => {
+    setShowBiddingModal(true);
+  };
+
+  const handleSelectExpert = (expertId: string) => {
+    setSelectedExpertForBidding(expertId);
+    setShowBiddingModal(false);
+    setShowOrderConfirmModal(true);
+  };
+
+  const handleGoToOrders = () => {
+    setShowOrderConfirmModal(false);
+    navigate('/user/orders');
+  };
+
+  const handleContinueAppraise = () => {
+    setShowOrderConfirmModal(false);
+    setAiResult(null);
+    setSelectedSample(null);
+  };
+
+  const toggleDisputeDetail = (orderId: string) => {
+    setExpandedDisputeOrderId(prev => prev === orderId ? null : orderId);
+  };
+
+  const filteredBiddingExperts = useMemo(() => {
+    const category = aiResult?.category || Category.CERAMIC;
+    const matched = mockExperts.filter(e => e.categories.includes(category as Category));
+    if (matched.length >= 6) return matched.slice(0, 6);
+    const needed = 6 - matched.length;
+    const others = mockExperts.filter(e => !e.categories.includes(category as Category)).slice(0, needed);
+    return [...matched, ...others];
+  }, [aiResult]);
 
   const handleSampleClick = (sample: typeof sampleArtworks[0]) => {
     setSelectedSample(sample);
@@ -601,7 +708,7 @@ export default function Home() {
                             </div>
                           </div>
                           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                            onClick={() => handleCategoryClick(aiResult.category)}
+                            onClick={handleOpenBidding}
                             className="w-full py-2.5 bg-gold-gradient text-jade-900 rounded-md font-semibold text-sm hover:shadow-gold-glow transition-all"
                           >立即找专家鉴定</motion.button>
                         </motion.div>
@@ -724,8 +831,9 @@ export default function Home() {
                   <div className="mt-3 pt-3 border-t border-gold-200/50 flex items-center justify-between">
                     <div>
                       {order.hasDispute && (
-                        <button onClick={() => navigate('/admin/disputes')} className="inline-flex items-center gap-1 text-xs text-cinnabar-500 hover:text-cinnabar-600 font-medium mr-3">
+                        <button onClick={() => toggleDisputeDetail(order.id)} className="inline-flex items-center gap-1 text-xs text-cinnabar-500 hover:text-cinnabar-600 font-medium mr-3">
                           <Gavel className="w-3 h-3" /> 纠纷记录 {order.disputeCount}
+                          {expandedDisputeOrderId === order.id ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                         </button>
                       )}
                     </div>
@@ -733,6 +841,43 @@ export default function Home() {
                       查看竞价 <ChevronRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
+                  <AnimatePresence>
+                    {order.hasDispute && order.disputeDetail && expandedDisputeOrderId === order.id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-3 pt-3 border-t border-gold-200/50 grid grid-cols-1 md:grid-cols-3 gap-3">
+                          <div className="p-3 rounded-lg bg-cinnabar-50 border border-cinnabar-200">
+                            <div className="flex items-center gap-1.5 mb-2">
+                              <AlertTriangle className="w-4 h-4 text-cinnabar-500" />
+                              <span className="text-xs font-bold text-cinnabar-700">争议原因</span>
+                            </div>
+                            <p className="text-xs text-cinnabar-600 leading-relaxed mb-2">{order.disputeDetail.reason}</p>
+                            <p className="text-[10px] text-cinnabar-500">发起日期：{order.disputeDetail.disputeDate}</p>
+                          </div>
+                          <div className="p-3 rounded-lg bg-gold-50 border-2 border-gold-300">
+                            <div className="flex items-center gap-1.5 mb-2">
+                              <FileText className="w-4 h-4 text-gold-600" />
+                              <span className="text-xs font-bold text-gold-700">复核意见</span>
+                            </div>
+                            <p className="text-xs text-jade-700 leading-relaxed">{order.disputeDetail.reviewOpinion}</p>
+                          </div>
+                          <div className={`p-3 rounded-lg border ${order.disputeDetail.conclusion.includes('支持') || order.disputeDetail.conclusion.includes('退款') ? 'bg-jade-50 border-jade-300' : 'bg-cinnabar-50 border-cinnabar-300'}`}>
+                            <div className="flex items-center gap-1.5 mb-2">
+                              <Gavel className={`w-4 h-4 ${order.disputeDetail.conclusion.includes('支持') || order.disputeDetail.conclusion.includes('退款') ? 'text-jade-600' : 'text-cinnabar-600'}`} />
+                              <span className={`text-xs font-bold ${order.disputeDetail.conclusion.includes('支持') || order.disputeDetail.conclusion.includes('退款') ? 'text-jade-700' : 'text-cinnabar-700'}`}>处理结论</span>
+                            </div>
+                            <p className={`text-xs font-semibold leading-relaxed mb-2 ${order.disputeDetail.conclusion.includes('支持') || order.disputeDetail.conclusion.includes('退款') ? 'text-jade-700' : 'text-cinnabar-700'}`}>{order.disputeDetail.conclusion}</p>
+                            <p className="text-[10px] text-jade-500">处理日期：{order.disputeDetail.resolutionDate}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               );
             })}
@@ -1244,38 +1389,205 @@ export default function Home() {
       {/* ========== Section 10: 服务生态 ========== */}
       <motion.section variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} className="bg-jade-50/50 py-16 border-y border-gold-200/50 mb-20">
         <div className="container">
-          <motion.div variants={fadeInUp} className="text-center mb-8">
-            <h2 className="section-title">服务生态</h2>
-            <p className="section-subtitle mb-0">后台管理与 B 端开放平台</p>
+          <motion.div variants={fadeInUp} className="text-center mb-10">
+            <h2 className="section-title">平台服务生态</h2>
+            <p className="section-subtitle mb-0">覆盖认证、仲裁、出证、B端合作的全链路服务体系</p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { icon: Award, title: '专家资质认证', desc: '国家级/省级/行内资深三级认证审核', stat1: '本月审核 48 名', stat2: '待审核 12 名', link: '/admin/experts' },
-              { icon: Gavel, title: '鉴定纠纷仲裁', desc: '三级仲裁机制保障鉴定公正', stat1: '待处理 3 件', stat2: '平均结案 48.5h', link: '/admin/disputes' },
-              { icon: FileText, title: '证书模板配置', desc: '6套官方模板可自定义', stat1: '6 套模板', stat2: '可视化编辑', link: '/admin/templates' },
-              { icon: Building2, title: 'B端开放平台', desc: '博物馆批量初鉴·电商品控·拍卖行筛查', stat1: '合作机构 128 家', stat2: '日调用 50万+', link: '/openapi' },
-            ].map((item, idx) => {
-              const ItemIcon = item.icon;
-              return (
-                <motion.div key={idx} variants={fadeInUp} whileHover={{ y: -4, boxShadow: '0 0 0 1px rgba(201,169,97,0.5)' }}
-                  className="card card-hover p-5 group"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gold-gradient/20 flex items-center justify-center border border-gold-200 mb-4">
-                    <ItemIcon className="w-6 h-6 text-gold-600" />
+
+          {/* 区块1：专家资质认证 */}
+          <motion.div variants={fadeInUp} className="card p-5 mb-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gold-gradient/20 flex items-center justify-center border border-gold-200">
+                  <Award className="w-5 h-5 text-gold-600" />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-jade-700">专家资质认证</h3>
+              </div>
+              <Link to="/admin/experts" className="inline-flex items-center gap-1 text-sm text-gold-600 hover:text-gold-700 font-medium">
+                进入认证后台 <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div className="lg:col-span-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-2">
+                {[
+                  { label: '待审核', value: '12', color: 'text-cinnabar-600' },
+                  { label: '本月通过', value: '48', color: 'text-jade-600' },
+                  { label: '累计认证', value: '326', color: 'text-gold-600' },
+                  { label: '通过率', value: '87%', color: 'text-jade-700' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-3 rounded-lg bg-rice-50 border border-gold-200/50 text-center">
+                    <p className={`font-serif text-xl font-black ${stat.color}`}>{stat.value}</p>
+                    <p className="text-[11px] text-jade-500 mt-0.5">{stat.label}</p>
                   </div>
-                  <h4 className="font-serif font-bold text-jade-700 group-hover:text-gold-600 transition-colors mb-1.5">{item.title}</h4>
-                  <p className="text-xs text-jade-500 mb-3 leading-relaxed">{item.desc}</p>
-                  <div className="space-y-1 mb-4">
-                    <p className="text-xs text-jade-500">· <span className="font-semibold text-gold-600">{item.stat1.split(' ').slice(0, -1).join(' ')}</span> {item.stat1.split(' ').slice(-1)}</p>
-                    <p className="text-xs text-jade-500">· <span className="font-semibold text-gold-600">{item.stat2.split(' ').slice(0, -1).join(' ')}</span> {item.stat2.split(' ').slice(-1)}</p>
+                ))}
+              </div>
+              <div className="lg:col-span-8">
+                <p className="text-xs text-jade-500 mb-2">最近通过认证</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                  {recentlyCertifiedExperts.map((e) => (
+                    <div key={e.id} className="p-2.5 rounded-lg bg-rice-50 border border-gold-200/50 hover:border-gold-400 transition-colors">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <div className="relative shrink-0">
+                          <div className="w-9 h-9 rounded-full border border-gold-300 overflow-hidden bg-rice-100">
+                            <img src={e.avatar} alt={e.name} className="w-full h-full object-cover" />
+                          </div>
+                          <span className={`absolute -bottom-0.5 -right-0.5 px-1 text-[8px] text-white rounded font-medium ${levelColors[e.level]}`}>{levelLabels[e.level]}</span>
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-semibold text-jade-700 truncate">{e.name}</p>
+                          <p className="text-[10px] text-jade-500">{e.category}</p>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-jade-400 text-center">{e.certifyDate} 认证</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 区块2：鉴定纠纷仲裁 */}
+          <motion.div variants={fadeInUp} className="card p-5 mb-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gold-gradient/20 flex items-center justify-center border border-gold-200">
+                  <Gavel className="w-5 h-5 text-gold-600" />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-jade-700">鉴定纠纷仲裁</h3>
+              </div>
+              <Link to="/admin/disputes" className="inline-flex items-center gap-1 text-sm text-gold-600 hover:text-gold-700 font-medium">
+                进入仲裁中心 <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div className="lg:col-span-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-2">
+                {[
+                  { label: '待处理', value: '3', color: 'text-cinnabar-600' },
+                  { label: '本周新增', value: '18', color: 'text-gold-600' },
+                  { label: '平均结案', value: '48.5h', color: 'text-jade-600' },
+                  { label: '满意度', value: '92%', color: 'text-jade-700' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-3 rounded-lg bg-rice-50 border border-gold-200/50 text-center">
+                    <p className={`font-serif text-xl font-black ${stat.color}`}>{stat.value}</p>
+                    <p className="text-[11px] text-jade-500 mt-0.5">{stat.label}</p>
                   </div>
-                  <Link to={item.link} className="inline-flex items-center gap-1 text-sm text-gold-600 hover:text-gold-700 font-medium">
-                    进入 <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
+                ))}
+              </div>
+              <div className="lg:col-span-8">
+                <p className="text-xs text-jade-500 mb-2">最近结案</p>
+                <div className="space-y-1.5">
+                  {resolvedDisputes.map((d) => (
+                    <div key={d.id} className="flex items-center gap-3 p-2.5 rounded-lg bg-rice-50 border border-gold-200/50">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${d.userWin ? 'bg-jade-100' : 'bg-cinnabar-100'}`}>
+                        {d.userWin ? <CheckCircle className="w-4 h-4 text-jade-600" /> : <XCircle className="w-4 h-4 text-cinnabar-500" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono text-jade-400">{d.orderNo}</span>
+                          <span className="px-1.5 py-0.5 bg-gold-100 text-[10px] text-gold-700 rounded">{d.type}</span>
+                        </div>
+                        <p className="text-xs font-medium text-jade-700 truncate">{d.artworkName}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className={`text-xs font-semibold ${d.userWin ? 'text-jade-600' : 'text-cinnabar-500'}`}>{d.result}</p>
+                        <p className="text-[10px] text-jade-400">{d.date}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 区块3：证书模板配置 */}
+          <motion.div variants={fadeInUp} className="card p-5 mb-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gold-gradient/20 flex items-center justify-center border border-gold-200">
+                  <FileText className="w-5 h-5 text-gold-600" />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-jade-700">证书模板配置</h3>
+              </div>
+              <Link to="/admin/templates" className="inline-flex items-center gap-1 text-sm text-gold-600 hover:text-gold-700 font-medium">
+                配置模板 <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div className="lg:col-span-4 grid grid-cols-3 gap-2 content-start">
+                {[
+                  { label: '官方模板', value: '6', color: 'text-gold-600' },
+                  { label: '累计使用', value: '42,860', color: 'text-jade-600' },
+                  { label: '自定义', value: '128', color: 'text-jade-700' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-3 rounded-lg bg-rice-50 border border-gold-200/50 text-center">
+                    <p className={`font-serif text-xl font-black ${stat.color}`}>{stat.value}</p>
+                    <p className="text-[11px] text-jade-500 mt-0.5">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="lg:col-span-8">
+                <p className="text-xs text-jade-500 mb-2">官方模板库</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                  {certTemplates.map((t) => (
+                    <div key={t.id} className="group cursor-pointer">
+                      <div className="relative aspect-[3/4] rounded-lg border border-gold-200 overflow-hidden bg-rice-50 mb-1.5 group-hover:border-gold-400 transition-colors">
+                        <img src={t.thumb} alt={t.name} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-jade-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-1.5">
+                          <span className="text-[10px] text-gold-200 font-medium">{t.category}</span>
+                        </div>
+                      </div>
+                      <p className="text-xs font-medium text-jade-700 truncate">{t.name}</p>
+                      <p className="text-[10px] text-jade-500">{t.usageCount.toLocaleString()} 次使用</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 区块4：B端开放平台 */}
+          <motion.div variants={fadeInUp} className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-gold-gradient/20 flex items-center justify-center border border-gold-200">
+                  <Building2 className="w-5 h-5 text-gold-600" />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-jade-700">B 端开放平台</h3>
+              </div>
+              <Link to="/openapi" className="inline-flex items-center gap-1 text-sm text-gold-600 hover:text-gold-700 font-medium">
+                API 文档 <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div className="lg:col-span-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-2">
+                {[
+                  { label: '合作机构', value: '128', color: 'text-gold-600' },
+                  { label: '今日调用', value: '50,284', color: 'text-jade-600' },
+                  { label: '平均响应', value: '120ms', color: 'text-jade-700' },
+                  { label: '可用性', value: '99.99%', color: 'text-jade-600' },
+                ].map((stat, i) => (
+                  <div key={i} className="p-3 rounded-lg bg-rice-50 border border-gold-200/50 text-center">
+                    <p className={`font-serif text-xl font-black ${stat.color}`}>{stat.value}</p>
+                    <p className="text-[11px] text-jade-500 mt-0.5">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="lg:col-span-8">
+                <p className="text-xs text-jade-500 mb-2">合作机构</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                  {partnerOrgs.map((p) => (
+                    <div key={p.id} className="p-2.5 rounded-lg bg-rice-50 border border-gold-200/50 hover:border-gold-400 transition-colors text-center">
+                      <div className="w-10 h-10 mx-auto mb-1.5 rounded-full border border-gold-300 overflow-hidden bg-ink-gradient/10 flex items-center justify-center">
+                        <img src={p.logo} alt={p.name} className="w-full h-full object-cover" />
+                      </div>
+                      <p className="text-xs font-semibold text-jade-700 truncate">{p.name}</p>
+                      <p className="text-[10px] text-gold-600 mt-0.5">{p.scenario}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </motion.section>
 
@@ -1296,6 +1608,148 @@ export default function Home() {
           })}
         </div>
       </motion.section>
+
+      {/* 专家竞价弹窗 */}
+      <Modal
+        open={showBiddingModal}
+        onClose={() => setShowBiddingModal(false)}
+        size="xl"
+        title={
+          <div className="flex items-center gap-2">
+            <HandCoins className="w-5 h-5 text-gold-600" />
+            <span>为您匹配的 {categoryLabels[aiResult?.category || Category.CERAMIC]} 类专家</span>
+          </div>
+        }
+        description="AI 智能匹配 6 位专家，点击选择即可下单"
+      >
+        <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredBiddingExperts.map((expert, idx) => (
+            <motion.div
+              key={expert.id}
+              variants={fadeInUp}
+              whileHover={{ y: -4 }}
+              className="relative card p-4 border border-gold-200 hover:border-gold-400 transition-colors"
+            >
+              {idx < 2 && (
+                <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-gold-gradient text-jade-900 text-[10px] font-bold rounded-full shadow-gold-glow/50">
+                  AI优先推荐
+                </div>
+              )}
+              <div className="flex items-start gap-3 mb-3">
+                <div className="relative shrink-0">
+                  <div className="w-14 h-14 rounded-full border-2 border-gold-300 overflow-hidden bg-rice-100">
+                    <img src={`https://picsum.photos/seed/bid${expert.id}/80/80`} alt={expert.name} className="w-full h-full object-cover" />
+                  </div>
+                  <span className={`absolute -bottom-1 -right-1 px-1.5 py-0.5 text-[10px] text-white rounded font-medium ${levelColors[expert.level]}`}>
+                    {levelLabels[expert.level]}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-serif font-bold text-jade-700">{expert.name}</h4>
+                  <div className="flex flex-wrap gap-1 mt-0.5">
+                    {expert.categories.slice(0, 2).map((cat) => (
+                      <span key={cat} className="px-1.5 py-0.5 bg-gold-50 text-[10px] text-gold-600 rounded border border-gold-200">
+                        {categoryLabels[cat] || cat}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-jade-500 mt-1 line-clamp-2">{expertBriefIntro[expert.id] || '资深鉴定专家，行业经验丰富'}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-1 mb-3 text-center py-2 border-y border-gold-100">
+                <div>
+                  <div className="flex items-center justify-center gap-0.5">
+                    <Star className="w-3 h-3 text-gold-500 fill-gold-500" />
+                    <span className="text-xs font-semibold text-jade-700">{expert.rating}</span>
+                  </div>
+                  <p className="text-[10px] text-jade-400">评分</p>
+                </div>
+                <div>
+                  <div className="flex items-center justify-center gap-0.5">
+                    <Clock className="w-3 h-3 text-gold-500" />
+                    <span className="text-xs font-semibold text-jade-700">{expert.responseTime}m</span>
+                  </div>
+                  <p className="text-[10px] text-jade-400">响应</p>
+                </div>
+                <div>
+                  <div className="flex items-center justify-center gap-0.5">
+                    <TrendingUp className="w-3 h-3 text-gold-500" />
+                    <span className="text-xs font-semibold text-jade-700">{expert.orderCount}</span>
+                  </div>
+                  <p className="text-[10px] text-jade-400">完成</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-black text-gold-600">¥{expert.basePrice}</span>
+                    <span className="text-[10px] text-jade-400">起</span>
+                  </div>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <Shield className="w-3 h-3 text-jade-500" />
+                    <span className="text-[10px] text-jade-500">30分钟SLA保障</span>
+                  </div>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleSelectExpert(expert.id)}
+                  className="px-4 py-2 bg-gold-gradient text-jade-900 rounded-md text-xs font-bold hover:shadow-gold-glow transition-all"
+                >
+                  选择下单
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Modal>
+
+      {/* 订单创建确认弹窗 */}
+      <Modal
+        open={showOrderConfirmModal}
+        onClose={() => setShowOrderConfirmModal(false)}
+        size="md"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+          className="text-center py-6"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', delay: 0.1, damping: 15 }}
+            className="w-20 h-20 mx-auto mb-5 rounded-full bg-jade-100 flex items-center justify-center border-4 border-jade-200"
+          >
+            <CheckCircle className="w-12 h-12 text-jade-500" />
+          </motion.div>
+          <h3 className="font-serif text-2xl font-bold text-jade-700 mb-2">订单已创建</h3>
+          <p className="text-sm text-jade-500 mb-1">专家将在 30 分钟内响应</p>
+          <p className="text-xs text-gold-600 font-medium mb-8">
+            <Shield className="w-3.5 h-3.5 inline mr-1" />
+            订单编号：JZG-{new Date().getFullYear()}{String(new Date().getMonth() + 1).padStart(2, '0')}-{Math.floor(Math.random() * 90000 + 10000)}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleGoToOrders}
+              className="px-6 py-2.5 bg-gold-gradient text-jade-900 rounded-md font-bold text-sm hover:shadow-gold-glow transition-all"
+            >
+              查看订单详情
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleContinueAppraise}
+              className="px-6 py-2.5 border border-gold-300 text-jade-600 rounded-md font-semibold text-sm hover:bg-gold-50 transition-all"
+            >
+              继续鉴定其他藏品
+            </motion.button>
+          </div>
+        </motion.div>
+      </Modal>
     </div>
   );
 }
