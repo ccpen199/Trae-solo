@@ -126,10 +126,12 @@ const MainLayout: React.FC = observer(() => {
   ];
 
   useEffect(() => {
-    appStore.refreshAll();
-    const interval = setInterval(() => appStore.refreshAll(), 30000);
-    return () => clearInterval(interval);
-  }, []);
+    if (appStore.isLoggedIn) {
+      appStore.refreshAll();
+      const interval = setInterval(() => appStore.refreshAll(), 30000);
+      return () => clearInterval(interval);
+    }
+  }, [appStore.isLoggedIn]);
 
   useEffect(() => {
     if (!appStore.token) return;

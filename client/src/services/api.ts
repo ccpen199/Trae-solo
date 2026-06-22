@@ -30,6 +30,7 @@ request.interceptors.response.use(
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       if (window.location.pathname !== '/login') {
+        message.warning('登录状态已过期，请重新登录');
         window.location.href = '/login';
       }
       return Promise.reject({
@@ -62,8 +63,16 @@ request.interceptors.response.use(
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       if (window.location.pathname !== '/login') {
+        message.warning('登录状态已过期，请重新登录');
         window.location.href = '/login';
       }
+      const code = 401;
+      const msg = error.response?.data?.message || '未登录或令牌已过期';
+      return Promise.reject({
+        code,
+        message: msg,
+        data: error.response?.data,
+      });
     }
     const code = error.response?.data?.code || error.response?.status || 500;
     const msg = error.response?.data?.message || error.message || '网络请求失败';
