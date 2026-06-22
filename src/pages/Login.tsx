@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Phone, CreditCard, Shield, Sparkles, ArrowRight, Loader2 } from 'lucide-react'
+import { Phone, CreditCard, Shield, Sparkles, ArrowRight, Loader2, CheckCircle, XCircle } from 'lucide-react'
 import { useUserStore, demoUser } from '@/store/user'
 import { useToastStore } from '@/store/toast'
 import { cn } from '@/lib/utils'
@@ -16,6 +16,8 @@ interface LoginApiResponse {
   error?: string
 }
 
+type LoginStatus = 'idle' | 'loading' | 'success' | 'error'
+
 export default function Login() {
   const [activeTab, setActiveTab] = useState<LoginTab>('phone')
   const [phone, setPhone] = useState('')
@@ -23,73 +25,98 @@ export default function Login() {
   const [idCard, setIdCard] = useState('')
   const [realName, setRealName] = useState('')
   const [countdown, setCountdown] = useState(0)
-  const [loading, setLoading] = useState(false)
   const [codeSent, setCodeSent] = useState(false)
+  const [loginStatus, setLoginStatus] = useState<LoginStatus>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   const login = useUserStore((state) => state.login)
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated)
   const toast = useToastStore((state) => state)
   const navigate = useNavigate()
   const location = useLocation()
 
   const from = (location.state as { from?: Location })?.from?.pathname || '/'
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      window.location.href = from
+    }
+  }, [isAuthenticated, from])
+
   const validatePhone = (val: string): boolean => {
     const phoneRegex = /^1[3-9]\d{9}$/
     if (!val) {
-      toast.error('请输入手机号')
+      setErrorMessage('请输入手机号')
       return false
     }
     if (!phoneRegex.test(val)) {
-      toast.error('请输入正确的11位手机号码')
+      setErrorMessage('请输入正确的11位手机号码')
       return false
     }
+    setErrorMessage('')
     return true
   }
 
   const validateIdCard = (val: string): boolean => {
     const idRegex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
     if (!val) {
-      toast.error('请输入身份证号码')
+      setErrorMessage('请输入身份证号码')
       return false
     }
     if (!idRegex.test(val)) {
-      toast.error('请输入正确的15或18位身份证号码')
+      setErrorMessage('请输入正确的15或18位身份证号码')
       return false
     }
+    setErrorMessage('')
     return true
   }
 
   const validateVerifyCode = (val: string): boolean => {
     if (!val) {
-      toast.error('请输入验证码')
+      setErrorMessage('请输入验证码')
       return false
     }
     if (val.length < 4) {
-      toast.error('验证码至少4位')
+      setErrorMessage('验证码至少4位')
       return false
     }
+    setErrorMessage('')
     return true
   }
 
   const validateRealName = (val: string): boolean => {
     if (!val || val.trim().length < 2) {
-      toast.error('请输入真实姓名')
+      setErrorMessage('请输入真实姓名')
       return false
     }
+    setErrorMessage('')
     return true
   }
 
+  const doLogin = (user: User, token: string, name: string) => {
+    login(user, token)
+    setLoginStatus('success')
+    setSuccessMessage(`欢迎回来，${name}！正在跳转...`)
+    toast.success(`欢迎回来，${name}！`)
+    
+    setTimeout(() => {
+      window.location.href = from
+    }, 500)
+  }
+
   const handleGetCode = async () => {
-    if (countdown > 0 || loading) return
+    if (countdown > 0 || loginStatus === 'loading') return
     if (!validatePhone(phone)) return
 
-    setLoading(true)
+    setLoginStatus('loading')
     try {
       const res = await api.post('/auth/send-code', { phone })
-      if (res.data?.success) {
+      if (res.data?.success !== false) {
         toast.success('验证码已发送，测试验证码：123456')
         setCodeSent(true)
         setCountdown(60)
+        setErrorMessage('')
         const timer = setInterval(() => {
           setCountdown((prev) => {
             if (prev <= 1) {
@@ -100,22 +127,25 @@ export default function Login() {
           })
         }, 1000)
       } else {
+        setErrorMessage(res.data?.error || '验证码发送失败')
         toast.error(res.data?.error || '验证码发送失败')
       }
     } catch (err: any) {
-      const errorMsg = err.response?.data?.error || '网络异常，请稍后重试'
+      const errorMsg = err.response?.data?.error || err.message || '网络异常，请稍后重试'
+      setErrorMessage(errorMsg)
       toast.error(errorMsg)
     } finally {
-      setLoading(false)
+      setLoginStatus('idle')
     }
   }
 
   const handleLogin = async (type: LoginTab) => {
-    if (loading) return
+    if (loginStatus === 'loading' || loginStatus === 'success') return
 
     if (type === 'phone') {
       if (!validatePhone(phone) || !validateVerifyCode(verifyCode)) return
       if (!codeSent) {
+        setErrorMessage('请先获取验证码')
         toast.warning('请先获取验证码')
         return
       }
@@ -123,7 +153,9 @@ export default function Login() {
       if (!validateIdCard(idCard) || !validateRealName(realName)) return
     }
 
-    setLoading(true)
+    setLoginStatus('loading')
+    setErrorMessage('')
+    
     try {
       let payload: Record<string, string> = {}
       if (type === 'phone') {
@@ -137,58 +169,40 @@ export default function Login() {
       const res = await api.post<LoginApiResponse>('/auth/login', payload)
       const data = res.data
 
-      if (!data?.success) {
+      if (data?.success && data.user && data.token) {
+        doLogin(data.user, data.token, data.user.name)
+      } else {
         throw new Error(data?.error || '登录失败')
       }
-
-      if (!data.token || !data.user) {
-        throw new Error('登录数据异常，请重试')
-      }
-
-      login(data.user, data.token)
-      toast.success(`欢迎回来，${data.user.name}！`)
-      setTimeout(() => {
-        navigate(from, { replace: true })
-      }, 300)
     } catch (err: any) {
       const errorMsg = err.response?.data?.error || err.message || '登录失败，请检查网络'
+      setErrorMessage(errorMsg)
+      setLoginStatus('error')
       toast.error(errorMsg)
       console.error('[Login Error]:', err)
-    } finally {
-      setLoading(false)
     }
   }
 
   const handleDemoLogin = async () => {
-    if (loading) return
-    setLoading(true)
+    if (loginStatus === 'loading' || loginStatus === 'success') return
+
+    setLoginStatus('loading')
+    setErrorMessage('')
+
     try {
-      await api.post('/auth/send-code', { phone: '13800138000' })
+      await api.post('/auth/send-code', { phone: '13800138000' }).catch(() => {})
       const res = await api.post<LoginApiResponse>('/auth/login', {
         phone: '13800138000',
         verifyCode: '123456',
       })
+      
       if (res.data?.success && res.data.user && res.data.token) {
-        login(res.data.user, res.data.token)
-        toast.success(`欢迎回来，${res.data.user.name}！`)
-        setTimeout(() => {
-          navigate(from, { replace: true })
-        }, 300)
+        doLogin(res.data.user, res.data.token, res.data.user.name)
       } else {
-        login(demoUser, 'demo-token')
-        toast.success('演示账号登录成功')
-        setTimeout(() => {
-          navigate(from, { replace: true })
-        }, 300)
+        throw new Error('API返回失败')
       }
     } catch {
-      login(demoUser, 'demo-token')
-      toast.success('演示账号登录成功')
-      setTimeout(() => {
-        navigate(from, { replace: true })
-      }, 300)
-    } finally {
-      setLoading(false)
+      doLogin(demoUser, 'demo-token', demoUser.name)
     }
   }
 
@@ -252,8 +266,10 @@ export default function Login() {
                     onClick={() => {
                       setActiveTab(tab.key)
                       setCodeSent(false)
+                      setErrorMessage('')
+                      setLoginStatus('idle')
                     }}
-                    disabled={loading}
+                    disabled={loginStatus === 'loading' || loginStatus === 'success'}
                     className={cn(
                       'flex-1 flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-medium transition-all',
                       activeTab === tab.key
@@ -269,6 +285,20 @@ export default function Login() {
               })}
             </div>
 
+            {errorMessage && (
+              <div className="mb-4 p-3 rounded-xl bg-red-500/20 border border-red-400/30 flex items-start gap-2">
+                <XCircle className="w-5 h-5 text-red-300 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-red-200">{errorMessage}</p>
+              </div>
+            )}
+
+            {successMessage && (
+              <div className="mb-4 p-3 rounded-xl bg-green-500/20 border border-green-400/30 flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-green-300 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-green-200">{successMessage}</p>
+              </div>
+            )}
+
             {activeTab === 'phone' && (
               <div className="space-y-4">
                 <div>
@@ -281,7 +311,8 @@ export default function Login() {
                       onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 11))}
                       placeholder="请输入手机号"
                       maxLength={11}
-                      className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
+                      disabled={loginStatus === 'loading' || loginStatus === 'success'}
+                      className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -294,35 +325,40 @@ export default function Login() {
                         type="text"
                         value={verifyCode}
                         onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                        placeholder="请输入验证码"
+                        placeholder="请输入验证码（测试：123456）"
                         maxLength={6}
-                        className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
+                        disabled={loginStatus === 'loading' || loginStatus === 'success'}
+                        className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent disabled:opacity-50"
                       />
                     </div>
                     <button
                       onClick={handleGetCode}
-                      disabled={countdown > 0 || loading || !phone}
+                      disabled={countdown > 0 || loginStatus === 'loading' || loginStatus === 'success' || !phone}
                       className={cn(
                         'h-12 px-4 rounded-xl text-sm font-medium whitespace-nowrap transition-colors',
-                        countdown > 0 || loading || !phone
+                        countdown > 0 || loginStatus === 'loading' || loginStatus === 'success' || !phone
                           ? 'bg-white/5 text-white/40 cursor-not-allowed'
                           : 'bg-white/10 text-white hover:bg-white/20'
                       )}
                     >
-                      {loading && <Loader2 className="w-4 h-4 animate-spin inline mr-1" />}
                       {countdown > 0 ? `${countdown}s` : '获取验证码'}
                     </button>
                   </div>
                 </div>
                 <button
                   onClick={() => handleLogin('phone')}
-                  disabled={loading}
+                  disabled={loginStatus === 'loading' || loginStatus === 'success'}
                   className="w-full h-12 rounded-xl bg-white text-indigo-600 font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {loading ? (
+                  {loginStatus === 'loading' ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       登录中...
+                    </>
+                  ) : loginStatus === 'success' ? (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      登录成功
                     </>
                   ) : (
                     <>
@@ -346,7 +382,8 @@ export default function Login() {
                       onChange={(e) => setIdCard(e.target.value.toUpperCase().slice(0, 18))}
                       placeholder="请输入身份证号码"
                       maxLength={18}
-                      className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
+                      disabled={loginStatus === 'loading' || loginStatus === 'success'}
+                      className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -362,19 +399,25 @@ export default function Login() {
                       value={realName}
                       onChange={(e) => setRealName(e.target.value)}
                       placeholder="请输入真实姓名"
-                      className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent"
+                      disabled={loginStatus === 'loading' || loginStatus === 'success'}
+                      className="w-full h-12 pl-11 pr-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-transparent disabled:opacity-50"
                     />
                   </div>
                 </div>
                 <button
                   onClick={() => handleLogin('idcard')}
-                  disabled={loading}
+                  disabled={loginStatus === 'loading' || loginStatus === 'success'}
                   className="w-full h-12 rounded-xl bg-white text-indigo-600 font-semibold hover:bg-white/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {loading ? (
+                  {loginStatus === 'loading' ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       登录中...
+                    </>
+                  ) : loginStatus === 'success' ? (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      登录成功
                     </>
                   ) : (
                     <>
@@ -397,13 +440,18 @@ export default function Login() {
                 </div>
                 <button
                   onClick={() => handleLogin('sso')}
-                  disabled={loading}
+                  disabled={loginStatus === 'loading' || loginStatus === 'success'}
                   className="w-full h-12 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold hover:from-red-600 hover:to-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {loading ? (
+                  {loginStatus === 'loading' ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       跳转中...
+                    </>
+                  ) : loginStatus === 'success' ? (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      登录成功
                     </>
                   ) : (
                     <>
@@ -429,16 +477,22 @@ export default function Login() {
 
             <button
               onClick={handleDemoLogin}
-              disabled={loading}
+              disabled={loginStatus === 'loading' || loginStatus === 'success'}
               className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-semibold hover:from-amber-500 hover:to-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25"
             >
-              {loading ? (
+              {loginStatus === 'loading' && activeTab === 'phone' ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
+              ) : loginStatus === 'success' ? (
+                <CheckCircle className="w-5 h-5" />
               ) : (
                 <Sparkles className="w-5 h-5" />
               )}
-              演示账号一键登录
+              演示账号一键登录（免输入）
             </button>
+
+            <p className="text-center text-white/30 text-xs mt-4">
+              测试手机号：13800138000 ｜ 验证码：123456
+            </p>
           </div>
 
           <p className="text-center text-white/40 text-xs mt-6">

@@ -12,7 +12,6 @@ interface UserState {
   voiceNav: boolean;
   fontScale: number;
   actingAs: string | null;
-  _hasHydrated: boolean;
   login: (user: User, token: string) => void;
   logout: () => void;
   setUser: (user: User) => void;
@@ -20,7 +19,6 @@ interface UserState {
   toggleVoiceNav: () => void;
   setFontScale: (scale: number) => void;
   setActingAs: (id: string | null) => void;
-  _setHasHydrated: (v: boolean) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -33,7 +31,6 @@ export const useUserStore = create<UserState>()(
       voiceNav: false,
       fontScale: 1,
       actingAs: null,
-      _hasHydrated: false,
       login: (user, token) =>
         set({
           user,
@@ -68,7 +65,6 @@ export const useUserStore = create<UserState>()(
         })),
       setFontScale: (scale) => set({ fontScale: scale }),
       setActingAs: (id) => set({ actingAs: id }),
-      _setHasHydrated: (v) => set({ _hasHydrated: v }),
     }),
     {
       name: "user-storage",
@@ -81,9 +77,6 @@ export const useUserStore = create<UserState>()(
         fontScale: state.fontScale,
         actingAs: state.actingAs,
       }),
-      onRehydrateStorage: () => (state) => {
-        state?._setHasHydrated(true);
-      },
     }
   )
 );
