@@ -185,7 +185,7 @@ export default function UserWorksPage() {
             >
               <div className="relative aspect-[3/4] overflow-hidden bg-paper-100">
                 <img
-                  src={work.thumbnailUrl || work.imageUrl}
+                  src={work.coverUrl}
                   alt={work.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -253,11 +253,11 @@ export default function UserWorksPage() {
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1">
                       <Heart className="w-3 h-3" />
-                      {work.likes}
+                      {work.likesCount}
                     </div>
                     <div className="flex items-center gap-1">
                       <MessageCircle className="w-3 h-3" />
-                      {work.comments}
+                      {work.commentsCount}
                     </div>
                   </div>
                 </div>

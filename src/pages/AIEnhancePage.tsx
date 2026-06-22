@@ -17,6 +17,7 @@ import PhotoUploader from '@/components/photo/PhotoUploader';
 import CompareViewer from '@/components/photo/CompareViewer';
 import SectionTitle from '@/components/common/SectionTitle';
 import { photos } from '@/mock/data/photos';
+import { products } from '@/mock/data/products';
 import { Photo } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -91,10 +92,11 @@ export default function AIEnhancePage() {
   };
 
   const handleDownload = () => {
-    alert('下载功能演示');
+    alert('高清原图已开始下载');
   };
 
   const handleStartCreate = () => {
+    alert('请选择要制作的产品');
     navigate('/products');
   };
 
@@ -440,6 +442,173 @@ export default function AIEnhancePage() {
                 )}
               </div>
             </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          variants={containerVariants}
+          className="mt-16"
+        >
+          <motion.div variants={itemVariants}>
+            <SectionTitle
+              title="AI 处理说明"
+              subtitle="了解AI智能处理的三大核心功能"
+              align="center"
+              className="mb-12"
+            />
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            className="grid gap-8 md:grid-cols-3"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="group rounded-2xl bg-white p-8 shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-medium"
+            >
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow transition-all duration-300 group-hover:scale-110">
+                <Sparkles className="h-8 w-8" />
+              </div>
+              <h3 className="mb-3 font-display text-xl font-semibold text-paper-900">
+                画质增强
+              </h3>
+              <p className="text-paper-500">
+                AI智能降噪、锐化、超分辨率技术，让模糊照片变得清晰锐利，
+                细节丰富，重现照片的每一个精彩瞬间。
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-paper-600">
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+                  智能降噪，去除照片噪点
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+                  边缘锐化，提升细节清晰度
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+                  超分辨率，放大不失真
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="group rounded-2xl bg-white p-8 shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-medium"
+            >
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-gold-400 to-gold-600 text-white shadow-glow transition-all duration-300 group-hover:scale-110">
+                <Palette className="h-8 w-8" />
+              </div>
+              <h3 className="mb-3 font-display text-xl font-semibold text-paper-900">
+                肤色校正
+              </h3>
+              <p className="text-paper-500">
+                智能白平衡、磨皮提亮算法，呈现自然健康的肤色，
+                让皮肤看起来光滑细腻，焕发光彩。
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-paper-600">
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+                  自动白平衡，还原真实色彩
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+                  智能磨皮，保留皮肤质感
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+                  肤色提亮，打造好气色
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="group rounded-2xl bg-white p-8 shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-medium"
+            >
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-forest-400 to-forest-600 text-white shadow-glow transition-all duration-300 group-hover:scale-110">
+                <Camera className="h-8 w-8" />
+              </div>
+              <h3 className="mb-3 font-display text-xl font-semibold text-paper-900">
+                背景虚化
+              </h3>
+              <p className="text-paper-500">
+                AI主体识别技术，精准分离前景与背景，模拟单反相机的景深效果，
+                让主体更加突出，照片更有层次感。
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-paper-600">
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-forest-500" />
+                  智能主体识别，精准抠图
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-forest-500" />
+                  景深调节，控制虚化程度
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-forest-500" />
+                  自然过渡，边缘更柔和
+                </li>
+              </ul>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          variants={containerVariants}
+          className="mt-16 rounded-3xl bg-gradient-to-br from-brand-50 via-white to-gold-50 p-8 md:p-12"
+        >
+          <motion.div variants={itemVariants}>
+            <SectionTitle
+              title="用AI美化的照片，制作成专属好物"
+              subtitle="精选12类定制产品，把美好回忆变成触手可及的实物"
+              align="center"
+              className="mb-10"
+            />
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+          >
+            {products.map((product) => (
+              <motion.button
+                key={product.id}
+                variants={itemVariants}
+                onClick={() => navigate(`/products/${product.id}`)}
+                className="group flex flex-col items-center gap-3 rounded-xl bg-white p-5 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-medium"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-3xl transition-all duration-300 group-hover:bg-brand-100 group-hover:scale-110">
+                  {product.icon}
+                </div>
+                <h3 className="font-display text-sm font-semibold text-paper-900">
+                  {product.name}
+                </h3>
+                <p className="text-xs text-paper-500">
+                  {product.templateCount} 个模板
+                </p>
+                <p className="text-xs font-medium text-brand-600">
+                  ¥{product.priceRange.min}起
+                </p>
+              </motion.button>
+            ))}
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mt-10 text-center">
+            <Button
+              size="lg"
+              className="bg-gradient-brand shadow-glow transition-transform hover:scale-105"
+              onClick={() => navigate('/products')}
+            >
+              <Grid3X3 className="h-5 w-5" />
+              查看全部产品
+            </Button>
           </motion.div>
         </motion.div>
       </div>

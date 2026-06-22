@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Input } from '@/components/ui/Input';
@@ -7,6 +7,8 @@ import { Slider } from '@/components/ui/Slider';
 import { Select } from '@/components/ui/Select';
 import LayerPanel from '@/components/editor/LayerPanel';
 import { photos } from '@/mock/data/photos';
+import { templates } from '@/mock/data/templates';
+import { products } from '@/mock/data/products';
 import { useEditorStore } from '@/store/editorStore';
 import { useCartStore } from '@/store/cartStore';
 import { cn } from '@/lib/utils';
@@ -94,12 +96,30 @@ const fontOptions = [
 
 export default function EditorPage() {
   const navigate = useNavigate();
-  const { layers, selectedLayerId, canvasWidth, canvasHeight, selectLayer, updateLayer, addLayer, removeLayer, undo, redo, historyIndex, history } = useEditorStore();
+  const { templateId } = useParams<{ templateId: string }>();
+  const { layers, selectedLayerId, canvasWidth, canvasHeight, selectLayer, updateLayer, addLayer, removeLayer, undo, redo, historyIndex, history, setLayers, setCanvasSize } = useEditorStore();
   const { addItem } = useCartStore();
   const [zoom, setZoom] = useState(100);
   const [leftTab, setLeftTab] = useState('materials');
   const [materialCategory, setMaterialCategory] = useState('background');
   const [rightTab, setRightTab] = useState('layers');
+
+  useEffect(() => {
+    if (templateId) {
+      const template = templates.find((t) => t.id === templateId);
+      if (template) {
+        if (template.canvasWidth && template.canvasHeight) {
+          setCanvasSize(template.canvasWidth, template.canvasHeight);
+        }
+        if (template.layers && template.layers.length > 0) {
+          setLayers(template.layers as any);
+        }
+      }
+    }
+  }, [templateId, setCanvasSize, setLayers]);
+
+  const currentTemplate = templates.find((t) => t.id === templateId);
+  const currentProduct = currentTemplate ? products.find((p) => p.id === currentTemplate.productId) : null;
 
   const selectedLayer = layers.find(l => l.id === selectedLayerId);
 
@@ -112,23 +132,28 @@ export default function EditorPage() {
   }, []);
 
   const handleAddToCart = useCallback(() => {
+    const productName = currentProduct?.name || '相册';
+    const productId = currentProduct?.id || 'album';
+    const material = currentProduct?.materialOptions?.[0];
+    const unitPrice = currentProduct ? Math.round(currentProduct.priceRange.min * 100) : 12800;
+
     const cartItem = {
       id: `cart-${Date.now()}`,
-      templateId: 'custom',
-      templateName: '自定义设计',
-      templateThumbnail: 'https://picsum.photos/seed/editor-preview/200/150',
-      productId: 'album',
-      productName: '相册',
-      materialId: 'mat-001',
-      materialName: '哑面相纸',
+      templateId: templateId || 'custom',
+      templateName: currentTemplate?.name || '自定义设计',
+      templateThumbnail: currentTemplate?.thumbnailUrl || 'https://picsum.photos/seed/editor-preview/200/150',
+      productId,
+      productName,
+      materialId: material?.name || 'mat-001',
+      materialName: material?.name || '哑面相纸',
       quantity: 1,
-      unitPrice: 12800,
+      unitPrice,
       editorSnapshot: JSON.stringify(layers),
-      renderedPreview: 'https://picsum.photos/seed/editor-preview/200/150',
+      renderedPreview: currentTemplate?.thumbnailUrl || 'https://picsum.photos/seed/editor-preview/200/150',
     };
     addItem(cartItem as any);
     navigate('/cart');
-  }, [addItem, layers, navigate]);
+  }, [addItem, layers, navigate, currentProduct, currentTemplate, templateId]);
 
   const handleSaveDraft = useCallback(() => {
     alert('草稿已保存');

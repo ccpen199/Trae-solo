@@ -14,6 +14,10 @@ import {
   Camera,
   Sparkles,
   MessageCircle,
+  Shield,
+  Building2,
+  Factory,
+  Search,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -26,11 +30,13 @@ import { useUserStore } from '@/store/userStore';
 import { cn } from '@/lib/utils';
 
 const menuItems = [
-  { icon: ShoppingBag, label: '我的订单', path: '/user/orders', key: 'orders' },
+  { icon: ShoppingBag, label: '我的订单', path: '/orders', key: 'orders' },
   { icon: Image, label: '我的照片', path: '/user/photos', key: 'photos' },
   { icon: Palette, label: '我的作品', path: '/user/works', key: 'works' },
+  { icon: MapPin, label: '收货地址', path: '/user/addresses', key: 'addresses' },
+  { icon: Shield, label: '账户安全', path: '/user/security', key: 'security' },
+  { icon: Building2, label: '企业中心', path: '/user/enterprise', key: 'enterprise' },
   { icon: Heart, label: '我的收藏', path: '/user/favorites', key: 'favorites' },
-  { icon: MapPin, label: '地址管理', path: '/user/addresses', key: 'addresses' },
   { icon: FileText, label: '发票管理', path: '/user/invoices', key: 'invoices' },
   { icon: Settings, label: '账号设置', path: '/user/settings', key: 'settings' },
 ];
@@ -38,8 +44,8 @@ const menuItems = [
 const quickActions = [
   { icon: Camera, label: '上传照片', path: '/user/photos/upload', color: 'bg-brand-500' },
   { icon: Palette, label: '开始创作', path: '/editor', color: 'bg-forest-500' },
-  { icon: ShoppingBag, label: '我的订单', path: '/user/orders', color: 'bg-gold-500' },
-  { icon: Heart, label: '我的收藏', path: '/user/favorites', color: 'bg-darkroom-500' },
+  { icon: ShoppingBag, label: '我的订单', path: '/orders', color: 'bg-gold-500' },
+  { icon: Factory, label: '工厂工单', path: '/orders', color: 'bg-darkroom-500' },
 ];
 
 export default function UserCenterPage() {
@@ -156,6 +162,48 @@ export default function UserCenterPage() {
           ))}
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card hoverable className="cursor-pointer" onClick={() => navigate('/orders')}>
+            <CardContent className="p-5">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gold-50 flex items-center justify-center flex-shrink-0">
+                  <ShoppingBag className="w-6 h-6 text-gold-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-paper-900 mb-1">订单管理</h3>
+                  <p className="text-sm text-paper-500 mb-3">查看所有订单、追踪生产进度</p>
+                  <div className="flex items-center gap-2">
+                    <Tag variant="brand" size="sm">待付款 {displayUser.stats.totalOrders}</Tag>
+                    <Tag variant="gold" size="sm">进行中 2</Tag>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-paper-400 flex-shrink-0" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card hoverable className="cursor-pointer" onClick={() => navigate('/orders')}>
+            <CardContent className="p-5">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-darkroom-50 flex items-center justify-center flex-shrink-0">
+                  <Factory className="w-6 h-6 text-darkroom-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-paper-900 mb-1">生产工单</h3>
+                  <p className="text-sm text-paper-500 mb-3">按订单号查看胶片冲洗、装帧、物流节点</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 text-xs text-paper-500">
+                      <Search className="w-3 h-3" />
+                      输入订单号查询
+                    </div>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-paper-400 flex-shrink-0" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -166,7 +214,7 @@ export default function UserCenterPage() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/user/orders')}
+                onClick={() => navigate('/orders')}
               >
                 查看全部
                 <ChevronRight className="w-4 h-4 ml-1" />
@@ -252,7 +300,7 @@ export default function UserCenterPage() {
                 >
                   <div className="relative aspect-[3/4] rounded-lg overflow-hidden bg-paper-100">
                     <img
-                      src={work.thumbnailUrl || work.imageUrl}
+                      src={work.coverUrl}
                       alt={work.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
@@ -266,11 +314,11 @@ export default function UserCenterPage() {
                   <div className="mt-2 flex items-center justify-between">
                     <div className="flex items-center gap-1 text-xs text-paper-500">
                       <Heart className="w-3 h-3" />
-                      {work.likes}
+                      {work.likesCount}
                     </div>
                     <div className="flex items-center gap-1 text-xs text-paper-500">
                       <MessageCircle className="w-3 h-3" />
-                      {work.comments}
+                      {work.commentsCount}
                     </div>
                   </div>
                 </div>

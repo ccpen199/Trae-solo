@@ -21,6 +21,7 @@ interface EditorActions {
   selectLayer: (id: string | null) => void;
   moveLayerOrder: (fromIndex: number, toIndex: number) => void;
   setCanvasSize: (width: number, height: number) => void;
+  setLayers: (layers: EditorLayer[]) => void;
   undo: () => void;
   redo: () => void;
   saveSnapshot: () => void;
@@ -102,6 +103,18 @@ export const useEditorStore = create<EditorState & EditorActions>((set, get) => 
 
   setCanvasSize: (width: number, height: number) => {
     set({ canvasWidth: width, canvasHeight: height });
+  },
+
+  setLayers: (layers: EditorLayer[]) => {
+    set((state) => {
+      const newHistory = state.history.slice(0, state.historyIndex + 1);
+      newHistory.push({ layers });
+      return {
+        layers,
+        history: newHistory,
+        historyIndex: newHistory.length - 1,
+      };
+    });
   },
 
   undo: () => {

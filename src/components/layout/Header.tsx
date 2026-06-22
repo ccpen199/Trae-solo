@@ -11,6 +11,7 @@ import {
   Heart,
   Settings,
   LogOut,
+  Package,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCartStore } from '@/store/cartStore';
@@ -19,9 +20,9 @@ import { useUserStore } from '@/store/userStore';
 const navItems = [
   { label: '首页', path: '/' },
   { label: '产品', path: '/products' },
-  { label: 'AI处理', path: '/ai-process' },
+  { label: 'AI处理', path: '/ai-enhance' },
   { label: '社区', path: '/community' },
-  { label: '我的', path: '/profile' },
+  { label: '我的', path: '/user' },
 ];
 
 export default function Header() {
@@ -79,7 +80,7 @@ export default function Header() {
 
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
+              const isActive = location.pathname.startsWith(item.path);
               return (
                 <Link
                   key={item.path}
@@ -176,11 +177,18 @@ export default function Header() {
                   {isUserMenuOpen && (
                     <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-paper-100 py-2 animate-fade-in">
                       <Link
-                        to="/profile"
+                        to="/user"
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 hover:text-brand-500"
                       >
                         <User className="w-4 h-4" />
                         个人中心
+                      </Link>
+                      <Link
+                        to="/orders"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 hover:text-brand-500"
+                      >
+                        <Package className="w-4 h-4" />
+                        我的订单
                       </Link>
                       <Link
                         to="/favorites"
@@ -240,7 +248,7 @@ export default function Header() {
         <div className="md:hidden bg-white border-t border-paper-100 shadow-lg animate-slide-in-right">
           <div className="px-4 py-4 space-y-1">
             {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
+              const isActive = location.pathname.startsWith(item.path);
               return (
                 <Link
                   key={item.path}
@@ -269,11 +277,18 @@ export default function Header() {
             {isLoggedIn ? (
               <div className="space-y-1">
                 <Link
-                  to="/profile"
+                  to="/user"
                   className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 rounded-lg"
                 >
                   <User className="w-4 h-4" />
                   个人中心
+                </Link>
+                <Link
+                  to="/orders"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 rounded-lg"
+                >
+                  <Package className="w-4 h-4" />
+                  我的订单
                 </Link>
                 <Link
                   to="/cart"

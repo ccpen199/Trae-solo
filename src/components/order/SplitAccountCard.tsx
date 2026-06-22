@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ChevronDown, ChevronUp, Building2, Palette, Factory, Receipt } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { ChevronDown, ChevronUp, Building2, Palette, Factory, Receipt, Wallet, CreditCard, Banknote, TrendingUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import PriceTag from '@/components/common/PriceTag'
 import { OrderSplitDetails } from '@/types'
@@ -18,21 +18,58 @@ interface SplitItem {
   bgColor: string
 }
 
-const splitItems: SplitItem[] = [
+const baseSplitItems: SplitItem[] = [
   { key: 'platformFee', label: '平台服务费', icon: Building2, color: 'text-brand-600', bgColor: 'bg-brand-500' },
   { key: 'designerRoyalty', label: '设计师版税', icon: Palette, color: 'text-gold-600', bgColor: 'bg-gold-500' },
   { key: 'factoryCost', label: '工厂成本', icon: Factory, color: 'text-forest-600', bgColor: 'bg-forest-500' },
 ]
 
+const paymentChannelItems: Record<string, SplitItem> = {
+  wechat: { key: 'wechatFee', label: '微信支付手续费', icon: Wallet, color: 'text-green-600', bgColor: 'bg-green-500' },
+  alipay: { key: 'alipayFee', label: '支付宝手续费', icon: CreditCard, color: 'text-blue-600', bgColor: 'bg-blue-500' },
+  bank: { key: 'platformFee', label: '对公转账', icon: Banknote, color: 'text-gold-600', bgColor: 'bg-gold-500' },
+  monthly: { key: 'platformFee', label: '企业月结', icon: TrendingUp, color: 'text-forest-600', bgColor: 'bg-forest-500' },
+}
+
+const paymentChannelNames: Record<string, string> = {
+  wechat: '微信支付',
+  alipay: '支付宝',
+  bank: '对公转账',
+  monthly: '企业月结',
+}
+
 export default function SplitAccountCard({ splitDetails, totalAmount, className }: SplitAccountCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const totalSplit = splitItems.reduce((sum, item) => sum + splitDetails[item.key], 0)
+  const splitItems = useMemo(() => {
+    const items = [...baseSplitItems]
+    const channel = splitDetails.paymentChannel
+    if (channel && (channel === 'wechat' || channel === 'alipay')) {
+      const channelItem = paymentChannelItems[channel]
+      if (channelItem) {
+        items.push(channelItem)
+      }
+    }
+    return items
+  }, [splitDetails.paymentChannel])
+
+  const totalSplit = splitItems.reduce((sum, item) => {
+    const value = splitDetails[item.key]
+    return sum + (typeof value === 'number' ? value : 0)
+  }, 0)
 
   const getPercentage = (value: number) => {
     if (totalAmount === 0) return 0
     return (value / totalAmount) * 100
   }
+
+  const paymentChannelName = splitDetails.paymentChannel
+    ? paymentChannelNames[splitDetails.paymentChannel]
+    : '未选择'
+
+  const paymentChannelItem = splitDetails.paymentChannel
+    ? paymentChannelItems[splitDetails.paymentChannel]
+    : null
 
   return (
     <div className={cn('rounded-lg bg-white shadow-soft overflow-hidden', className)}>
@@ -50,6 +87,12 @@ export default function SplitAccountCard({ splitDetails, totalAmount, className 
             </h3>
             <p className="text-xs text-paper-500">
               共 {splitItems.length} 项分账
+              {paymentChannelItem && (
+                <span className="ml-2 inline-flex items-center gap-1">
+                  <paymentChannelItem.icon className={cn('h-3 w-3', paymentChannelItem.color)} />
+                  {paymentChannelName}
+                </span>
+              )}
             </p>
           </div>
         </div>
@@ -74,7 +117,9 @@ export default function SplitAccountCard({ splitDetails, totalAmount, className 
           <div className="relative mb-6 h-4 w-full overflow-hidden rounded-full bg-paper-100">
             <div className="absolute inset-0 flex">
               {splitItems.map((item, index) => {
-                const percentage = getPercentage(splitDetails[item.key])
+                const value = splitDetails[item.key]
+                const numValue = typeof value === 'number' ? value : 0
+                const percentage = getPercentage(numValue)
                 if (percentage === 0) return null
 
                 return (
@@ -95,7 +140,8 @@ export default function SplitAccountCard({ splitDetails, totalAmount, className 
           <div className="space-y-3">
             {splitItems.map(item => {
               const value = splitDetails[item.key]
-              const percentage = getPercentage(value)
+              const numValue = typeof value === 'number' ? value : 0
+              const percentage = getPercentage(numValue)
               const Icon = item.icon
 
               return (
@@ -115,7 +161,7 @@ export default function SplitAccountCard({ splitDetails, totalAmount, className 
                     </div>
                   </div>
                   <div className="text-right">
-                    <PriceTag price={value} size="sm" />
+                    <PriceTag price={numValue} size="sm" />
                   </div>
                 </div>
               )

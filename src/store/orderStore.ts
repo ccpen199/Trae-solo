@@ -45,6 +45,7 @@ export const useOrderStore = create<OrderState & OrderActions>((set) => ({
         id: Date.now().toString(),
         orderNo: `ORD${Date.now()}`,
         userId: '',
+        isEnterprise: false,
         items,
         totalAmount,
         shippingFee: 0,

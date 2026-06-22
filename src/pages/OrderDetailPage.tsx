@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   Package,
   Truck,
@@ -10,6 +10,10 @@ import {
   ShieldCheck,
   ChevronRight,
   Clock,
+  Building2,
+  CheckCircle2,
+  AlertCircle,
+  ExternalLink,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -22,10 +26,11 @@ import { cn } from '@/lib/utils';
 import type { ProductionNode } from '@/types';
 
 export default function OrderDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  const { orderId } = useParams<{ orderId: string }>();
   const { user } = useUserStore();
+  const navigate = useNavigate();
 
-  const order = orders.find((o) => o.id === id) || orders[0];
+  const order = orders.find((o) => o.id === orderId) || orders[0];
 
   const statusColors: Record<string, string> = {
     pending: 'warning',
@@ -47,18 +52,30 @@ export default function OrderDetailPage() {
       delivered: { nodeName: '已送达', nodeKey: 'delivered' },
     };
 
+    const findProcessingIndex = () => {
+      for (let i = order.productionNodes.length - 1; i >= 0; i--) {
+        if (order.productionNodes[i].completed) {
+          return i + 1 < order.productionNodes.length ? i + 1 : i;
+        }
+      }
+      return 0;
+    };
+
+    const processingIndex = findProcessingIndex();
+
     return order.productionNodes.map((node, index) => {
       const info = nodeMap[node.status] || {
         nodeName: node.description,
         nodeKey: node.status,
       };
+      const isProcessing = !node.completed && index === processingIndex;
       return {
         id: `node-${index}`,
         nodeKey: info.nodeKey,
         nodeName: info.nodeName,
         status: node.completed
           ? 'completed'
-          : node.status === 'printing' || node.status === 'binding'
+          : isProcessing
             ? 'processing'
             : 'pending',
         timestamp: node.completedAt || node.estimatedAt || '',
@@ -123,7 +140,7 @@ export default function OrderDetailPage() {
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm text-paper-500">运单号</p>
+                    <p className="text-sm text-paper-500">物流单号</p>
                     <div className="flex items-center gap-2">
                       <p className="font-mono font-medium text-paper-900">
                         {order.logistics.trackingNumber}
@@ -134,16 +151,30 @@ export default function OrderDetailPage() {
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm text-paper-500">预计送达</p>
+                    <p className="text-sm text-paper-500">更新时间</p>
                     <p className="font-medium text-paper-900">
-                      {order.logistics.estimatedDelivery || '待发货'}
+                      {order.logistics.updatedAt}
                     </p>
                   </div>
-                  {order.logistics.updates?.length > 0 && (
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">物流状态</p>
+                    <p className="font-medium text-paper-900">
+                      {order.logistics.status}
+                    </p>
+                  </div>
+                  {order.logistics.estimatedDelivery && (
                     <div className="space-y-1">
-                      <p className="text-sm text-paper-500">最新状态</p>
+                      <p className="text-sm text-paper-500">预计送达</p>
                       <p className="font-medium text-paper-900">
-                        {order.logistics.updates[order.logistics.updates.length - 1].description}
+                        {order.logistics.estimatedDelivery}
+                      </p>
+                    </div>
+                  )}
+                  {order.logistics.currentLocation && (
+                    <div className="space-y-1">
+                      <p className="text-sm text-paper-500">当前位置</p>
+                      <p className="font-medium text-paper-900">
+                        {order.logistics.currentLocation}
                       </p>
                     </div>
                   )}
@@ -261,6 +292,74 @@ export default function OrderDetailPage() {
               </div>
             </CardContent>
           </Card>
+
+          {order.isEnterprise && order.splitAccountInfo && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Building2 className="w-5 h-5 text-brand-500" />
+                  分账信息
+                  <Badge variant="brand" size="sm">
+                    企业订单
+                  </Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-paper-500">分账方式</span>
+                  <span className="font-medium text-paper-900">
+                    {order.splitAccountInfo.paymentMethodName}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-paper-500">分账状态</span>
+                  <span className={cn(
+                    'flex items-center gap-1 font-medium',
+                    order.splitAccountInfo.status === 'completed' ? 'text-forest-600' :
+                    order.splitAccountInfo.status === 'processing' ? 'text-brand-600' :
+                    order.splitAccountInfo.status === 'failed' ? 'text-red-600' : 'text-paper-600'
+                  )}>
+                    {order.splitAccountInfo.status === 'completed' && <CheckCircle2 className="w-4 h-4" />}
+                    {order.splitAccountInfo.status === 'failed' && <AlertCircle className="w-4 h-4" />}
+                    {order.splitAccountInfo.status === 'completed' ? '已完成' :
+                     order.splitAccountInfo.status === 'processing' ? '处理中' :
+                     order.splitAccountInfo.status === 'failed' ? '失败' : '待处理'}
+                  </span>
+                </div>
+                {order.splitAccountInfo.completedAt && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-paper-500">完成时间</span>
+                    <span className="font-medium text-paper-900">
+                      {order.splitAccountInfo.completedAt}
+                    </span>
+                  </div>
+                )}
+                <div className="mt-4 pt-4 border-t border-paper-200">
+                  <p className="text-sm font-medium text-paper-900 mb-3">分账明细</p>
+                  <div className="space-y-3">
+                    {order.splitAccountInfo.items.map((item, index) => (
+                      <div key={index} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className={cn(
+                            'w-2 h-2 rounded-full',
+                            item.status === 'completed' ? 'bg-forest-500' :
+                            item.status === 'failed' ? 'bg-red-500' : 'bg-brand-500'
+                          )} />
+                          <span className="text-sm text-paper-700">{item.party}</span>
+                          <span className="text-xs text-paper-400">
+                            ({(item.ratio * 100).toFixed(0)}%)
+                          </span>
+                        </div>
+                        <span className="text-sm font-medium text-paper-900">
+                          ¥{(item.amount / 100).toFixed(2)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         <div className="space-y-6">
@@ -312,6 +411,11 @@ export default function OrderDetailPage() {
 
           <Card>
             <CardContent className="space-y-3">
+              {order.status === 'pending' && (
+                <Button className="w-full" variant="primary">
+                  去支付
+                </Button>
+              )}
               {order.status === 'shipped' && (
                 <Button className="w-full" variant="primary">
                   <ShieldCheck className="w-4 h-4 mr-2" />
@@ -324,16 +428,21 @@ export default function OrderDetailPage() {
                   再次购买
                 </Button>
               )}
-              <Button className="w-full" variant="secondary">
+              {(order.status === 'producing' || order.status === 'shipped') && (
+                <Button className="w-full" variant="secondary">
+                  <Truck className="w-4 h-4 mr-2" />
+                  查看物流
+                </Button>
+              )}
+              {(order.status === 'shipped' || order.status === 'completed') && (
+                <Button className="w-full" variant="secondary">
+                  申请售后
+                </Button>
+              )}
+              <Button className="w-full" variant="ghost">
                 <Phone className="w-4 h-4 mr-2" />
                 联系客服
               </Button>
-              {(order.status === 'shipped' || order.status === 'completed') && (
-                <Button className="w-full" variant="ghost">
-                  申请售后
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              )}
             </CardContent>
           </Card>
         </div>

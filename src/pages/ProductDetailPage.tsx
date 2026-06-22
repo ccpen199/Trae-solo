@@ -17,11 +17,21 @@ import {
   Palette,
   ChevronDown,
   ChevronUp,
+  Truck,
+  MapPin,
+  Package,
+  ShieldCheck,
+  Lock,
+  EyeOff,
+  Users,
+  Database,
+  CheckCircle2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import { Tag } from '@/components/ui/Tag';
+import { Card, CardContent } from '@/components/ui/Card';
 import SectionTitle from '@/components/common/SectionTitle';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import TemplateCard from '@/components/product/TemplateCard';
@@ -62,6 +72,87 @@ const faqList = [
     question: '模板可以修改吗？',
     answer: '所有模板都支持在线编辑修改。您可以更换照片、修改文字、调整布局等，打造专属于您的定制产品。',
   },
+];
+
+const shippingMethods = [
+  {
+    id: 'standard',
+    name: '普通快递',
+    icon: Package,
+    description: '中通/圆通/韵达等',
+    days: '2-3天',
+    price: '¥8起',
+    freeThreshold: '满99元包邮',
+  },
+  {
+    id: 'sf',
+    name: '顺丰速运',
+    icon: Truck,
+    description: '快速安全配送',
+    days: '1-2天',
+    price: '¥15起',
+    freeThreshold: '满199元包邮',
+  },
+  {
+    id: 'pickup',
+    name: '到店自取',
+    icon: MapPin,
+    description: '线下门店自提',
+    days: '生产完成即可取',
+    price: '免费',
+    freeThreshold: '无需运费',
+  },
+];
+
+const shippingRegionRules = [
+  { region: '华东地区', provinces: '上海、江苏、浙江、安徽', fee: '包邮', remark: '满99元' },
+  { region: '华北地区', provinces: '北京、天津、河北、山西、内蒙古', fee: '包邮', remark: '满99元' },
+  { region: '华南地区', provinces: '广东、广西、海南、福建', fee: '包邮', remark: '满99元' },
+  { region: '华中地区', provinces: '湖北、湖南、河南、江西', fee: '包邮', remark: '满99元' },
+  { region: '西南地区', provinces: '四川、重庆、贵州、云南', fee: '包邮', remark: '满129元' },
+  { region: '东北地区', provinces: '辽宁、吉林、黑龙江', fee: '包邮', remark: '满129元' },
+  { region: '西北地区', provinces: '陕西、甘肃、青海、宁夏', fee: '¥10', remark: '满149元包邮' },
+  { region: '偏远地区', provinces: '新疆、西藏', fee: '¥20', remark: '不参与包邮' },
+];
+
+const auditProcessSteps = [
+  { step: 1, title: '提交素材', description: '设计师上传原创素材并提交审核' },
+  { step: 2, title: '初审', description: '审核专员检查素材质量与完整性' },
+  { step: 3, title: '复审', description: '资深审核员确认版权与合规性' },
+  { step: 4, title: '上架', description: '审核通过后素材正式上架展示' },
+];
+
+const privacySettings = [
+  {
+    id: 'public',
+    name: '公开',
+    icon: Eye,
+    description: '所有人可见，可在社区广场展示',
+    color: 'text-forest-500',
+    bgColor: 'bg-forest-50',
+  },
+  {
+    id: 'private',
+    name: '仅自己',
+    icon: EyeOff,
+    description: '只有您自己可以查看',
+    color: 'text-brand-500',
+    bgColor: 'bg-brand-50',
+  },
+  {
+    id: 'friends',
+    name: '指定好友',
+    icon: Users,
+    description: '仅您指定的好友可见',
+    color: 'text-gold-500',
+    bgColor: 'bg-gold-50',
+  },
+];
+
+const privacyGuarantees = [
+  { icon: Lock, title: '照片仅用于生产', description: '您上传的照片仅用于定制产品生产，不会用于其他用途' },
+  { icon: Database, title: '云端加密存储', description: '所有照片采用银行级加密存储，保障数据安全' },
+  { icon: ShieldCheck, title: '隐私承诺保障', description: '严格遵守隐私保护法规，确保您的个人信息安全' },
 ];
 
 export default function ProductDetailPage() {
@@ -502,15 +593,62 @@ export default function ProductDetailPage() {
                 </Button>
               </div>
 
-              <div className="space-y-3 rounded-xl bg-white p-4 shadow-soft">
-                <div className="flex items-center gap-3 text-sm text-paper-600">
-                  <Clock className="h-4 w-4 text-brand-500" />
-                  <span>生产周期：3-5个工作日，全国包邮</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm text-paper-600">
-                  <Shield className="h-4 w-4 text-forest-500" />
-                  <span>隐私设置：支持公开、私密、仅好友可见</span>
-                </div>
+              <div className="space-y-4">
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-500">
+                        <Truck className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-paper-900">配送说明</h4>
+                        <p className="text-xs text-paper-500">预计发货时间</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-paper-600">生产周期</span>
+                        <span className="font-medium text-paper-900">3-5个工作日</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-paper-600">发货地</span>
+                        <span className="font-medium text-paper-900">广东深圳</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-paper-600">运费政策</span>
+                        <Badge variant="success" size="sm">全国包邮</Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-forest-50 text-forest-500">
+                        <ShieldCheck className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-paper-900">隐私保障</h4>
+                        <p className="text-xs text-paper-500">支持私密设置</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-paper-600">
+                        <CheckCircle2 className="h-4 w-4 text-forest-500 flex-shrink-0" />
+                        <span>照片仅用于生产，不对外展示</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-paper-600">
+                        <CheckCircle2 className="h-4 w-4 text-forest-500 flex-shrink-0" />
+                        <span>支持公开/私密/好友可见设置</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-paper-600">
+                        <CheckCircle2 className="h-4 w-4 text-forest-500 flex-shrink-0" />
+                        <span>云端加密存储，数据安全</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>

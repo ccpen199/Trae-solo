@@ -377,6 +377,38 @@ export interface CartItem {
 }
 
 /**
+ * 分账明细项
+ */
+export interface SplitAccountItem {
+  /** 分账方 */
+  party: string;
+  /** 分账金额（分） */
+  amount: number;
+  /** 分账比例 */
+  ratio: number;
+  /** 分账状态 */
+  status: 'pending' | 'completed' | 'failed';
+  /** 分账完成时间 */
+  completedAt?: string;
+}
+
+/**
+ * 分账信息
+ */
+export interface SplitAccountInfo {
+  /** 支付方式 */
+  paymentMethod: 'wechat' | 'alipay' | 'other';
+  /** 支付方式名称 */
+  paymentMethodName: string;
+  /** 分账状态 */
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  /** 分账明细 */
+  items: SplitAccountItem[];
+  /** 分账完成时间 */
+  completedAt?: string;
+}
+
+/**
  * 订单金额拆分明细
  */
 export interface OrderSplitDetails {
@@ -386,6 +418,12 @@ export interface OrderSplitDetails {
   designerRoyalty: number;
   /** 工厂成本 */
   factoryCost: number;
+  /** 微信支付手续费 */
+  wechatFee?: number;
+  /** 支付宝手续费 */
+  alipayFee?: number;
+  /** 支付渠道 */
+  paymentChannel?: 'wechat' | 'alipay' | 'bank' | 'monthly';
 }
 
 /**
@@ -418,6 +456,8 @@ export interface Order {
   orderNo: string;
   /** 用户 ID */
   userId: string;
+  /** 是否企业订单 */
+  isEnterprise: boolean;
   /** 订单商品列表 */
   items: CartItem[];
   /** 商品总金额（分） */
@@ -432,6 +472,8 @@ export interface Order {
   paymentMethod: string;
   /** 金额拆分明细 */
   splitDetails: OrderSplitDetails;
+  /** 分账信息（企业订单） */
+  splitAccountInfo?: SplitAccountInfo;
   /** 收货地址 */
   shippingAddress: ShippingAddress;
   /** 订单状态 */
@@ -618,6 +660,8 @@ export interface CommunityWork {
   userAvatar: string;
   /** 作品标题 */
   title: string;
+  /** 作品描述 */
+  description: string;
   /** 封面图 URL */
   coverUrl: string;
   /** 点赞数 */
@@ -630,4 +674,10 @@ export interface CommunityWork {
   privacy: PrivacyType;
   /** 创建时间 */
   createdAt: string;
+  /** 标签数组 */
+  tags: string[];
+  /** 产品类型 */
+  productType: string;
+  /** 瀑布流高度类 */
+  heightClass?: 'tall' | 'normal' | 'short';
 }

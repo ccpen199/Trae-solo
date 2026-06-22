@@ -20,13 +20,14 @@ import {
   ShoppingCart,
   ChevronRight,
   FileText,
+  ShieldCheck,
 } from 'lucide-react';
 
 const statusTabs = [
   { id: 'all', label: '全部', icon: FileText },
-  { id: 'pending', label: '待付款', icon: CreditCard },
+  { id: 'pending', label: '待支付', icon: CreditCard },
   { id: 'producing', label: '生产中', icon: Package },
-  { id: 'shipped', label: '已发货', icon: Truck },
+  { id: 'shipped', label: '待收货', icon: Truck },
   { id: 'completed', label: '已完成', icon: CheckCircle },
   { id: 'cancelled', label: '已取消', icon: XCircle },
 ];
@@ -40,9 +41,9 @@ const statusColors: Record<string, { bg: string; text: string; icon: string }> =
 };
 
 const statusLabels: Record<string, string> = {
-  pending: '待付款',
+  pending: '待支付',
   producing: '生产中',
-  shipped: '已发货',
+  shipped: '待收货',
   completed: '已完成',
   cancelled: '已取消',
 };
@@ -73,6 +74,16 @@ export default function OrderListPage() {
 
   const handlePay = (orderId: string) => {
     navigate('/checkout');
+  };
+
+  const handleConfirmReceive = (orderId: string) => {
+    if (confirm('确认已收到商品吗？')) {
+      alert('确认收货成功');
+    }
+  };
+
+  const handleViewLogistics = (orderId: string) => {
+    navigate(`/orders/${orderId}`);
   };
 
   const getStatusIcon = (status: string) => {
@@ -267,15 +278,35 @@ export default function OrderListPage() {
                             </>
                           )}
 
-                          {(order.status === 'producing' || order.status === 'shipped') && (
+                          {order.status === 'producing' && (
                             <Button
                               size="sm"
                               variant="secondary"
-                              onClick={() => handleViewDetail(order.id)}
+                              onClick={() => handleViewLogistics(order.id)}
                               leftIcon={<Package className="h-4 w-4" />}
                             >
                               查看物流
                             </Button>
+                          )}
+
+                          {order.status === 'shipped' && (
+                            <>
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                onClick={() => handleViewLogistics(order.id)}
+                                leftIcon={<Truck className="h-4 w-4" />}
+                              >
+                                查看物流
+                              </Button>
+                              <Button
+                                size="sm"
+                                onClick={() => handleConfirmReceive(order.id)}
+                                leftIcon={<ShieldCheck className="h-4 w-4" />}
+                              >
+                                确认收货
+                              </Button>
+                            </>
                           )}
 
                           {order.status === 'completed' && (

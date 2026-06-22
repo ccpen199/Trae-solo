@@ -115,7 +115,7 @@ export default function EmptyState({
       </p>
 
       {action && (
-        typeof action === 'object' && action !== null && 'label' in action ? (
+        typeof action === 'object' && action !== null && 'label' in (action as any) ? (
           (action as EmptyStateActionObject).href ? (
             <a
               href={(action as EmptyStateActionObject).href}
@@ -142,7 +142,7 @@ export default function EmptyState({
             </button>
           )
         ) : (
-          action
+          action as React.ReactNode
         )
       )}
     </div>

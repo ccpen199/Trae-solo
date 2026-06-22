@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-export type BadgeVariant = 'default' | 'brand' | 'gold' | 'success' | 'warning' | 'error';
+export type BadgeVariant = 'default' | 'secondary' | 'brand' | 'gold' | 'success' | 'warning' | 'error';
 export type BadgeSize = 'xs' | 'sm' | 'md';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -14,6 +14,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ className, variant = 'default', size = 'md', dot = false, children, ...props }, ref) => {
     const variants: Record<BadgeVariant, string> = {
       default: 'bg-paper-200 text-paper-700',
+      secondary: 'bg-paper-100 text-paper-700',
       brand: 'bg-brand-100 text-brand-700',
       gold: 'bg-gold-100 text-gold-700',
       success: 'bg-forest-100 text-forest-700',
@@ -29,6 +30,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 
     const dotVariants: Record<BadgeVariant, string> = {
       default: 'bg-paper-500',
+      secondary: 'bg-paper-500',
       brand: 'bg-brand-500',
       gold: 'bg-gold-500',
       success: 'bg-forest-500',

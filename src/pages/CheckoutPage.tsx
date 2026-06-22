@@ -105,11 +105,32 @@ export default function CheckoutPage() {
   const discount = 0;
   const total = subtotal + shippingFee - discount;
 
-  const splitDetails = {
-    platformFee: Math.floor(total * 0.1),
-    designerRoyalty: Math.floor(total * 0.15),
-    factoryCost: Math.floor(total * 0.75),
+  const paymentChannel = paymentTab as 'wechat' | 'alipay' | 'bank' | 'monthly';
+
+  const calculateSplitDetails = () => {
+    const baseDetails = {
+      platformFee: Math.floor(total * 0.1),
+      designerRoyalty: Math.floor(total * 0.15),
+      factoryCost: Math.floor(total * 0.75),
+      paymentChannel,
+    };
+
+    if (paymentTab === 'wechat') {
+      return {
+        ...baseDetails,
+        wechatFee: Math.floor(total * 0.006),
+      };
+    } else if (paymentTab === 'alipay') {
+      return {
+        ...baseDetails,
+        alipayFee: Math.floor(total * 0.006),
+      };
+    }
+
+    return baseDetails;
   };
+
+  const splitDetails = calculateSplitDetails();
 
   const handleSubmitOrder = () => {
     if (!selectedAddressId) {

@@ -3,18 +3,20 @@ import { cn } from '@/lib/utils'
 interface PriceTagProps {
   price: number
   originalPrice?: number
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   className?: string
 }
 
 export default function PriceTag({ price, originalPrice, size = 'md', className }: PriceTagProps) {
   const sizeClasses = {
+    xs: 'text-xs',
     sm: 'text-sm',
     md: 'text-base',
     lg: 'text-xl',
   }
 
   const symbolSizeClasses = {
+    xs: 'text-[10px]',
     sm: 'text-xs',
     md: 'text-sm',
     lg: 'text-base',

@@ -51,7 +51,7 @@ export default function CommunityPage() {
           ? {
               ...work,
               isLiked: !work.isLiked,
-              likes: work.isLiked ? work.likes - 1 : work.likes + 1,
+              likesCount: work.isLiked ? work.likesCount - 1 : work.likesCount + 1,
             }
           : work
       )
@@ -134,7 +134,7 @@ export default function CommunityPage() {
           >
             <div className={cn('relative overflow-hidden bg-paper-100', work.heightClass)}>
               <img
-                src={work.thumbnailUrl || work.imageUrl}
+                src={work.coverUrl}
                 alt={work.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -183,13 +183,13 @@ export default function CommunityPage() {
             <div className="p-4">
               <div className="flex items-center gap-3">
                 <Avatar
-                  src={work.authorAvatar}
-                  alt={work.authorName}
+                  src={work.userAvatar}
+                  alt={work.userName}
                   size="sm"
                 />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-paper-900 truncate">
-                    {work.authorName}
+                    {work.userName}
                   </p>
                   <p className="text-xs text-paper-400">{work.productType}</p>
                 </div>
@@ -206,11 +206,11 @@ export default function CommunityPage() {
                   )}
                 >
                   <Heart className={cn('w-4 h-4', work.isLiked && 'fill-current')} />
-                  <span>{work.likes}</span>
+                  <span>{work.likesCount}</span>
                 </button>
                 <div className="flex items-center gap-1.5 text-sm text-paper-500">
                   <MessageCircle className="w-4 h-4" />
-                  <span>{work.comments}</span>
+                  <span>{work.commentsCount}</span>
                 </div>
               </div>
             </div>
