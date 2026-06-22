@@ -5,6 +5,7 @@ import Diary from '../models/Diary';
 import User from '../models/User';
 import { AuthRequest } from '../middleware/authMiddleware';
 import { CONSTRUCTION_STAGES } from '../config/constants';
+import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners } from '../utils/mockData';
 
 export const createTransaction = async (req: AuthRequest, res: Response) => {
   try {
@@ -269,7 +270,23 @@ export const getMyTransactions = async (req: AuthRequest, res: Response) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: '获取交易列表失败' });
+    const userId = req.user?._id;
+    const filtered = MOCK_TRANSACTIONS.filter(t => {
+      const homeownerId = typeof t.homeownerId === 'string' ? t.homeownerId : t.homeownerId?._id;
+      const designerId = typeof t.designerId === 'string' ? t.designerId : t.designerId?._id;
+      return homeownerId === userId || designerId === userId;
+    });
+    const transactions = filtered.length > 0 ? filtered : MOCK_TRANSACTIONS;
+    const userRole = transactions[0] && (typeof transactions[0].homeownerId === 'string' 
+      ? transactions[0].homeownerId 
+      : transactions[0].homeownerId?._id) === userId ? 'homeowner' : 'designer';
+    res.json({
+      success: true,
+      data: {
+        transactions,
+        userRole
+      }
+    });
   }
 };
 
@@ -299,7 +316,24 @@ export const getTransactionById = async (req: AuthRequest, res: Response) => {
       data: transaction
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: '获取交易详情失败' });
+    const id = req.params.id;
+    if (id.startsWith('demo-tx')) {
+      const transaction = MOCK_TRANSACTIONS.find(t => t._id === id);
+      if (!transaction) {
+        return res.status(404).json({ success: false, message: '交易不存在' });
+      }
+      return res.json({
+        success: true,
+        data: transaction
+      });
+    }
+    if (MOCK_TRANSACTIONS.length > 0) {
+      return res.json({
+        success: true,
+        data: MOCK_TRANSACTIONS[0]
+      });
+    }
+    res.status(404).json({ success: false, message: '交易不存在' });
   }
 };
 

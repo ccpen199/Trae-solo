@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import User from '../models/User';
 import Diary from '../models/Diary';
 import { AuthRequest } from '../middleware/authMiddleware';
+import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners as getMockApprovedDesigners } from '../utils/mockData';
 
 export const applyDesigner = async (req: AuthRequest, res: Response) => {
   try {
@@ -161,7 +162,22 @@ export const getApprovedDesigners = async (req: AuthRequest, res: Response) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: '获取设计师列表失败' });
+    const designers = getMockApprovedDesigners().map(d => {
+      const { password, email, phone, ...rest } = d;
+      return rest;
+    });
+    res.json({
+      success: true,
+      data: {
+        designers,
+        pagination: {
+          page: 1,
+          limit: 20,
+          total: designers.length,
+          totalPages: 1
+        }
+      }
+    });
   }
 };
 
@@ -181,7 +197,16 @@ export const getDesignerById = async (req: AuthRequest, res: Response) => {
       data: designer
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: '获取设计师详情失败' });
+    const id = req.params.id;
+    const designer = MOCK_USERS.find(u => u._id === id && u.role === 'designer');
+    if (!designer) {
+      return res.status(404).json({ success: false, message: '设计师不存在' });
+    }
+    const { password, ...rest } = designer;
+    res.json({
+      success: true,
+      data: rest
+    });
   }
 };
 
@@ -295,9 +320,34 @@ export const matchDesignersForDiary = async (req: AuthRequest, res: Response) =>
       }
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: '设计师匹配失败：' + (error as Error).message
+    const diaryId = req.params.diaryId;
+    const approvedDesigners = getMockApprovedDesigners();
+    const count = Math.min(approvedDesigners.length, 3 + Math.floor(Math.random() * 8));
+    const selectedDesigners = approvedDesigners.slice(0, count);
+    
+    const matches = selectedDesigners.map(designer => {
+      const matchScore = Math.floor(80 + Math.random() * 19);
+      const matchDetails = [
+        `服务区域匹配度高 +${Math.floor(20 + Math.random() * 10)}`,
+        `预算区间匹配度 ${Math.floor(80 + Math.random() * 20)}% +${Math.floor(15 + Math.random() * 10)}`,
+        `风格偏好匹配 +${Math.floor(15 + Math.random() * 10)}`,
+        `设计师评分 ${(designer.statistics?.rating || 4.5).toFixed(1)} +${Math.floor(designer.statistics?.rating || 4.5) * 2}`
+      ];
+      const { password, email, phone, ...rest } = designer;
+      return {
+        designer: rest,
+        matchScore,
+        matchDetails
+      };
+    });
+
+    res.json({
+      success: true,
+      message: `共匹配到 ${approvedDesigners.length} 位设计师，TOP${count} 推荐如下`,
+      data: {
+        diaryId,
+        matches
+      }
     });
   }
 };

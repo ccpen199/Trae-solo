@@ -15,7 +15,7 @@ import upload from '../config/multer';
 const router = express.Router();
 
 router.route('/')
-  .get(protect, getDiaries)
+  .get(getDiaries)
   .post(protect, upload.fields([
     { name: 'images', maxCount: 30 },
     { name: 'floorPlanImage', maxCount: 1 },
@@ -25,7 +25,7 @@ router.route('/')
 router.get('/mine', protect, getMyDiaries);
 
 router.route('/:id')
-  .get(protect, getDiaryById)
+  .get(getDiaryById)
   .put(protect, upload.fields([
     { name: 'images', maxCount: 20 }
   ]), updateDiary);

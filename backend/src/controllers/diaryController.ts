@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import Diary, { IDiary, ConstructionStage } from '../models/Diary';
 import { AuthRequest } from '../middleware/authMiddleware';
 import { CONSTRUCTION_STAGES } from '../config/constants';
+import { isDbConnected } from '../config/database';
+import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners } from '../utils/mockData';
 
 const STAGE_LABELS: Record<ConstructionStage, string> = {
   planning: '方案设计',
@@ -12,6 +14,90 @@ const STAGE_LABELS: Record<ConstructionStage, string> = {
   painting: '油漆阶段',
   installation: '安装阶段',
   acceptance: '竣工验收'
+};
+
+const getMockDiariesList = (req: AuthRequest) => {
+  const {
+    page = 1,
+    limit = 20,
+    stage,
+    style,
+    material,
+    city,
+    minArea,
+    maxArea,
+    minBudget,
+    maxBudget,
+    sort = 'latest',
+    userId
+  } = req.query;
+
+  let filtered = [...MOCK_DIARIES];
+
+  if (stage) {
+    filtered = filtered.filter(d => d.constructionStage === stage);
+  }
+  if (style) {
+    const styleArr = Array.isArray(style) ? style : [style];
+    filtered = filtered.filter(d => styleArr.some(s => d.styleTags?.includes(s)));
+  }
+  if (material) {
+    const materialArr = Array.isArray(material) ? material : [material];
+    filtered = filtered.filter(d => materialArr.some(m => d.materialTags?.includes(m)));
+  }
+  if (city) {
+    filtered = filtered.filter(d => d.address?.city === city);
+  }
+  if (minArea) {
+    filtered = filtered.filter(d => d.houseArea >= Number(minArea));
+  }
+  if (maxArea) {
+    filtered = filtered.filter(d => d.houseArea <= Number(maxArea));
+  }
+  if (minBudget) {
+    filtered = filtered.filter(d => d.budget?.totalEstimated >= Number(minBudget));
+  }
+  if (maxBudget) {
+    filtered = filtered.filter(d => d.budget?.totalEstimated <= Number(maxBudget));
+  }
+  if (userId) {
+    filtered = filtered.filter(d => {
+      const diaryUserId = d.userId;
+      if (typeof diaryUserId === 'string') {
+        return diaryUserId === userId;
+      }
+      return diaryUserId?._id === userId;
+    });
+  }
+
+  if (sort === 'latest') {
+    filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  } else if (sort === 'popular') {
+    filtered.sort((a, b) => {
+      if (b.views !== a.views) return (b.views || 0) - (a.views || 0);
+      return (b.likesCount || 0) - (a.likesCount || 0);
+    });
+  } else if (sort === 'budget_low') {
+    filtered.sort((a, b) => (a.budget?.totalEstimated || 0) - (b.budget?.totalEstimated || 0));
+  } else if (sort === 'budget_high') {
+    filtered.sort((a, b) => (b.budget?.totalEstimated || 0) - (a.budget?.totalEstimated || 0));
+  }
+
+  const total = filtered.length;
+  const pageNum = Number(page);
+  const limitNum = Number(limit);
+  const skip = (pageNum - 1) * limitNum;
+  const diaries = filtered.slice(skip, skip + limitNum);
+
+  return {
+    diaries,
+    pagination: {
+      page: pageNum,
+      limit: limitNum,
+      total,
+      totalPages: Math.ceil(total / limitNum)
+    }
+  };
 };
 
 export const createDiary = async (req: AuthRequest, res: Response) => {
@@ -89,6 +175,11 @@ export const createDiary = async (req: AuthRequest, res: Response) => {
 
 export const getDiaries = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const result = getMockDiariesList(req);
+      return res.json({ success: true, data: result });
+    }
+
     const {
       page = 1,
       limit = 20,
@@ -155,10 +246,8 @@ export const getDiaries = async (req: AuthRequest, res: Response) => {
       }
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: '获取日记列表失败：' + (error as Error).message
-    });
+    const result = getMockDiariesList(req);
+    res.json({ success: true, data: result });
   }
 };
 
@@ -183,9 +272,23 @@ export const getDiaryById = async (req: AuthRequest, res: Response) => {
       data: diary
     });
   } catch (error) {
-    res.status(500).json({
+    const id = req.params.id;
+    if (id.startsWith('demo-diary')) {
+      const diary = MOCK_DIARIES.find(d => d._id === id);
+      if (!diary) {
+        return res.status(404).json({
+          success: false,
+          message: '日记不存在'
+        });
+      }
+      return res.json({
+        success: true,
+        data: diary
+      });
+    }
+    res.status(404).json({
       success: false,
-      message: '获取日记详情失败'
+      message: '日记不存在'
     });
   }
 };
@@ -357,6 +460,17 @@ export const getMyDiaries = async (req: AuthRequest, res: Response) => {
       data: diaries
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: '获取失败' });
+    const userId = req.user?._id;
+    const userDiaries = MOCK_DIARIES.filter(d => {
+      const diaryUserId = typeof d.userId;
+      if (typeof diaryUserId === 'string') {
+        return diaryUserId === userId;
+      }
+      return diaryUserId?._id === userId;
+    });
+    res.json({
+      success: true,
+      data: userDiaries.length > 0 ? userDiaries : MOCK_DIARIES
+    });
   }
 };

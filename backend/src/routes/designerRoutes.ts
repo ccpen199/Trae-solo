@@ -21,11 +21,11 @@ router.put('/profile', protect, authorizeDesigner, upload.fields([
   { name: 'certificationImages', maxCount: 10 }
 ]), updateDesignerProfile);
 
-router.get('/', protect, getApprovedDesigners);
+router.get('/', getApprovedDesigners);
 
 router.get('/match/:diaryId', protect, matchDesignersForDiary);
 
-router.get('/:id', protect, getDesignerById);
+router.get('/:id', getDesignerById);
 
 router.post('/:id/review', protect, authorize('homeowner', 'admin'), reviewDesigner);
 

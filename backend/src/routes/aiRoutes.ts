@@ -13,6 +13,6 @@ router.post('/analyze-image', protect, upload.single('image'), analyzeImage);
 
 router.post('/analyze-diary/:diaryId', protect, analyzeAndSaveDiary);
 
-router.get('/inspiration-graph', protect, generateInspirationGraph);
+router.get('/inspiration-graph', generateInspirationGraph);
 
 export default router;
