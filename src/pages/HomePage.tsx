@@ -177,7 +177,7 @@ export default function HomePage() {
                 <h4 className="font-semibold text-gray-900">办事堵点预警</h4>
               </div>
               <button
-                onClick={() => navigate('/analytics')}
+                onClick={() => navigate('/analytics?tab=complaints')}
                 className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-0.5"
               >
                 查看全部
@@ -273,7 +273,7 @@ export default function HomePage() {
                         </button>
                       )}
                       <button
-                        onClick={() => navigate('/analytics')}
+                        onClick={() => navigate('/analytics?tab=complaints')}
                         className="text-[11px] text-gray-500 hover:text-gray-700 flex items-center gap-0.5"
                       >
                         <BarChart3 className="w-3 h-3" />

@@ -39,18 +39,27 @@ type AppContextType = {
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 
+const defaultFilters: SearchFilters = {
+  keyword: '',
+  category: 'all',
+  subjectType: 'all',
+  materialCount: 'all',
+  promiseTime: 'all',
+  hasOnlineEntry: 'all',
+  hasExampleImage: 'all',
+}
+
 export function AppProvider({ children }: { children: ReactNode }) {
   const [currentCity, setCurrentCity] = useState<City>(cities[0])
   const [guides, setGuides] = useState<ServiceGuide[]>(initialGuides)
-  const [filters, setFilters] = useState<SearchFilters>({
-    keyword: '',
-    category: 'all',
-    subjectType: 'all',
-    materialCount: 'all',
-    promiseTime: 'all',
-    hasOnlineEntry: 'all',
-    hasExampleImage: 'all',
-  })
+  const [filters, setFiltersRaw] = useState<SearchFilters>({ ...defaultFilters })
+
+  const setFilters: React.Dispatch<React.SetStateAction<SearchFilters>> = (action) => {
+    setFiltersRaw((prev) => {
+      const merged = typeof action === 'function' ? action(prev) : action
+      return { ...defaultFilters, ...prev, ...merged }
+    })
+  }
   const [currentUser] = useState<User>(users[0])
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -130,15 +139,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [guides, currentCity, filters])
 
   const resetFilters = () => {
-    setFilters({
-      keyword: '',
-      category: 'all',
-      subjectType: 'all',
-      materialCount: 'all',
-      promiseTime: 'all',
-      hasOnlineEntry: 'all',
-      hasExampleImage: 'all',
-    })
+    setFilters({ ...defaultFilters })
   }
 
   const updateGuideStatus = (guideId: string, status: ReviewStatus, _comment?: string) => {

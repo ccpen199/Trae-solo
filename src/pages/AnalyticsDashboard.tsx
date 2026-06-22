@@ -9,7 +9,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Legend, Area, AreaChart
 } from 'recharts'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { searchRecords, complaintPoints, optimizationSuggestions, dailyVisitTrend, categoryDistribution } from '../data/analytics'
 import { categoryLabels } from '../data/constants'
@@ -22,7 +22,9 @@ const CHART_COLORS = {
 }
 
 export default function AnalyticsDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'searches' | 'complaints' | 'suggestions'>('overview')
+  const [searchParams] = useSearchParams()
+  const initialTab = searchParams.get('tab') as 'overview' | 'searches' | 'complaints' | 'suggestions' | null
+  const [activeTab, setActiveTab] = useState<'overview' | 'searches' | 'complaints' | 'suggestions'>(initialTab || 'overview')
   const [dateRange, setDateRange] = useState<'7d' | '30d' | '90d'>('7d')
   const [selectedSearchTerm, setSelectedSearchTerm] = useState<string | null>(null)
   const [acceptedSuggestions, setAcceptedSuggestions] = useState<Set<string>>(new Set())
