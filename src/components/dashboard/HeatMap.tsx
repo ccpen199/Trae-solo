@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { dashboardStats } from '@/data'
 
+type ChartTheme = 'dark' | 'light'
+
+interface HeatMapProps {
+  theme?: ChartTheme
+}
+
 const townshipShapes = [
   { name: '乌峰街道', points: '155,35 215,25 245,55 225,95 165,85 135,55' },
   { name: '南台街道', points: '135,165 195,155 225,195 195,235 145,225' },
@@ -16,7 +22,7 @@ const townshipShapes = [
 
 const maxUsers = Math.max(...dashboardStats.activeTownships.map(t => t.activeUsers))
 
-function getColor(activeUsers: number): string {
+function getColorDark(activeUsers: number): string {
   const ratio = activeUsers / maxUsers
   if (ratio > 0.8) return '#0C4F3A'
   if (ratio > 0.6) return '#0A6346'
@@ -25,9 +31,24 @@ function getColor(activeUsers: number): string {
   return '#76D9B3'
 }
 
-export default function TownshipHeatMap() {
+function getColorLight(activeUsers: number): string {
+  const ratio = activeUsers / maxUsers
+  if (ratio > 0.8) return '#0A6346'
+  if (ratio > 0.6) return '#0D9B6A'
+  if (ratio > 0.4) return '#3EC093'
+  if (ratio > 0.2) return '#76D9B3'
+  return '#ACEBD0'
+}
+
+export default function TownshipHeatMap({ theme = 'dark' }: HeatMapProps) {
   const [hovered, setHovered] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
+
+  const getColor = theme === 'light' ? getColorLight : getColorDark
+  const strokeColor = theme === 'light' ? '#D1D9E6' : '#1A2332'
+  const textColor = theme === 'light' ? '#FFFFFF' : 'white'
+  const tooltipBg = theme === 'light' ? 'bg-white border-rock-200' : 'bg-rock-800 border-rock-600'
+  const tooltipText = theme === 'light' ? 'text-rock-900' : 'text-white'
 
   const handleHover = (name: string, e: React.MouseEvent) => {
     setHovered(name)
@@ -49,9 +70,9 @@ export default function TownshipHeatMap() {
               key={shape.name}
               points={shape.points}
               fill={getColor(activeUsers)}
-              stroke="#1A2332"
+              stroke={strokeColor}
               strokeWidth={1.5}
-              opacity={hovered === shape.name ? 1 : 0.75}
+              opacity={hovered === shape.name ? 1 : 0.85}
               className="transition-opacity duration-200 cursor-pointer"
               onMouseEnter={(e) => handleHover(shape.name, e)}
               onMouseMove={(e) => handleHover(shape.name, e)}
@@ -70,9 +91,9 @@ export default function TownshipHeatMap() {
               y={cy}
               textAnchor="middle"
               dominantBaseline="central"
-              fill="white"
+              fill={textColor}
               fontSize={10}
-              opacity={0.9}
+              opacity={0.95}
               className="pointer-events-none select-none"
             >
               {shape.name.replace(/街道|镇/, '')}
@@ -84,12 +105,12 @@ export default function TownshipHeatMap() {
         const township = dashboardStats.activeTownships.find(t => t.name === hovered)
         return township ? (
           <div
-            className="absolute bg-rock-800 border border-rock-600 rounded-lg px-3 py-2 shadow-xl pointer-events-none z-10 text-sm whitespace-nowrap"
+            className={`absolute ${tooltipBg} border rounded-lg px-3 py-2 shadow-xl pointer-events-none z-10 text-sm whitespace-nowrap`}
             style={{ left: tooltipPos.x, top: tooltipPos.y - 70, transform: 'translateX(-50%)' }}
           >
-            <p className="text-white font-medium">{township.name}</p>
-            <p className="text-jade-400 font-number">{township.activeUsers.toLocaleString()} 活跃用户</p>
-            <p className="text-ember-400 font-number">{township.postCount} 帖子</p>
+            <p className={`${tooltipText} font-medium`}>{township.name}</p>
+            <p className="text-jade-500 font-number">{township.activeUsers.toLocaleString()} 活跃用户</p>
+            <p className="text-ember-500 font-number">{township.postCount} 帖子</p>
           </div>
         ) : null
       })()}

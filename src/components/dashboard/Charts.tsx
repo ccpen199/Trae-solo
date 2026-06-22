@@ -4,14 +4,36 @@ import {
 } from 'recharts'
 import { dashboardStats } from '@/data'
 
-const tooltipStyle = {
-  backgroundColor: '#3D4759',
-  border: '1px solid #46536B',
-  borderRadius: '8px',
-  color: '#F5F7FA',
+type ChartTheme = 'dark' | 'light'
+
+interface ChartProps {
+  theme?: ChartTheme
 }
 
-const labelStyle = { color: '#8A9BB8' }
+const getColors = (theme: ChartTheme) => {
+  if (theme === 'light') {
+    return {
+      tooltipBg: '#FFFFFF',
+      tooltipBorder: '#D1D9E6',
+      tooltipText: '#1A2332',
+      labelColor: '#6B7F9E',
+      gridColor: '#E8ECF2',
+      axisLine: '#D1D9E6',
+      tickColor: '#6B7F9E',
+      legendColor: '#46536B',
+    }
+  }
+  return {
+    tooltipBg: '#3D4759',
+    tooltipBorder: '#46536B',
+    tooltipText: '#F5F7FA',
+    labelColor: '#8A9BB8',
+    gridColor: '#2D3748',
+    axisLine: '#46536B',
+    tickColor: '#8A9BB8',
+    legendColor: '#8A9BB8',
+  }
+}
 
 interface TrendLabelProps {
   x?: number
@@ -38,22 +60,31 @@ function renderTrendLabel(props: TrendLabelProps) {
   )
 }
 
-export function HotCategoriesChart() {
+export function HotCategoriesChart({ theme = 'dark' }: ChartProps) {
+  const colors = getColors(theme)
+  const tooltipStyle = {
+    backgroundColor: colors.tooltipBg,
+    border: `1px solid ${colors.tooltipBorder}`,
+    borderRadius: '8px',
+    color: colors.tooltipText,
+  }
+  const labelStyle = { color: colors.labelColor }
+
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart
         data={dashboardStats.hotCategories}
         margin={{ top: 20, right: 10, left: -10, bottom: 0 }}
       >
-        <CartesianGrid strokeDasharray="3 3" stroke="#2D3748" />
+        <CartesianGrid strokeDasharray="3 3" stroke={colors.gridColor} />
         <XAxis
           dataKey="name"
-          tick={{ fill: '#8A9BB8', fontSize: 12 }}
-          axisLine={{ stroke: '#46536B' }}
+          tick={{ fill: colors.tickColor, fontSize: 12 }}
+          axisLine={{ stroke: colors.axisLine }}
         />
         <YAxis
-          tick={{ fill: '#8A9BB8', fontSize: 12 }}
-          axisLine={{ stroke: '#46536B' }}
+          tick={{ fill: colors.tickColor, fontSize: 12 }}
+          axisLine={{ stroke: colors.axisLine }}
         />
         <Tooltip contentStyle={tooltipStyle} labelStyle={labelStyle} />
         <Bar
@@ -67,26 +98,35 @@ export function HotCategoriesChart() {
   )
 }
 
-export function UpdateTrendChart() {
+export function UpdateTrendChart({ theme = 'dark' }: ChartProps) {
+  const colors = getColors(theme)
+  const tooltipStyle = {
+    backgroundColor: colors.tooltipBg,
+    border: `1px solid ${colors.tooltipBorder}`,
+    borderRadius: '8px',
+    color: colors.tooltipText,
+  }
+  const labelStyle = { color: colors.labelColor }
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <LineChart
         data={dashboardStats.updateFrequency}
         margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
       >
-        <CartesianGrid strokeDasharray="3 3" stroke="#2D3748" />
+        <CartesianGrid strokeDasharray="3 3" stroke={colors.gridColor} />
         <XAxis
           dataKey="date"
-          tick={{ fill: '#8A9BB8', fontSize: 11 }}
-          axisLine={{ stroke: '#46536B' }}
+          tick={{ fill: colors.tickColor, fontSize: 11 }}
+          axisLine={{ stroke: colors.axisLine }}
           tickFormatter={(v: string) => v.slice(5)}
         />
         <YAxis
-          tick={{ fill: '#8A9BB8', fontSize: 12 }}
-          axisLine={{ stroke: '#46536B' }}
+          tick={{ fill: colors.tickColor, fontSize: 12 }}
+          axisLine={{ stroke: colors.axisLine }}
         />
         <Tooltip contentStyle={tooltipStyle} labelStyle={labelStyle} />
-        <Legend wrapperStyle={{ color: '#8A9BB8' }} />
+        <Legend wrapperStyle={{ color: colors.legendColor }} />
         <Line type="monotone" dataKey="jobs" stroke="#0D9B6A" name="招聘" strokeWidth={2} dot={false} />
         <Line type="monotone" dataKey="housing" stroke="#3B82F6" name="房产" strokeWidth={2} dot={false} />
         <Line type="monotone" dataKey="food" stroke="#F28C38" name="美食" strokeWidth={2} dot={false} />
