@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:frontend": "vite",
+    "dev:backend": "node server/index.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "check:backend": "node --check server/index.mjs",
     "lint": "eslint ."
   },
   "dependencies": {

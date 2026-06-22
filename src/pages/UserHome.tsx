@@ -12,9 +12,11 @@ import {
   X,
   ChevronRight,
   Search,
+  ChevronDown,
+  ShieldAlert,
 } from 'lucide-react'
 import { useAppStore } from '../store'
-import { getSubCategories, getCategoryPath } from '../data/mockData'
+import { getSubCategories, getCategoryPath, getCategoryById, mockSkillTags } from '../data/mockData'
 import type { ServiceCategory } from '../types'
 import { RiskWarningModal } from '../components/RiskWarningModal'
 import { Modal } from '../components/Modal'
@@ -28,9 +30,17 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
   'cat-4': Droplets,
 }
 
+const hotItemToCategory: Record<string, string> = {
+  '空调不制冷': 'cat-1-1',
+  '水管漏水': 'cat-2-2',
+  '电路跳闸': 'cat-2-1',
+  '马桶堵塞': 'cat-4-1',
+}
+
 export const UserHome: React.FC = () => {
   const navigate = useNavigate()
   const { createTask, technicians } = useAppStore()
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null)
   const [showRiskWarning, setShowRiskWarning] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null)
@@ -46,6 +56,21 @@ export const UserHome: React.FC = () => {
   const [showMatchingResult, setShowMatchingResult] = useState(false)
 
   const mainCategories = getSubCategories(null)
+
+  const openCreateForm = (presetTitle?: string, presetCategoryId?: string) => {
+    setShowRiskWarning(true)
+    if (presetTitle) setTitle(presetTitle)
+    if (presetCategoryId) {
+      const cat = getCategoryById(presetCategoryId)
+      if (cat) {
+        setSubCategory(cat)
+        if (cat.parentId) {
+          const parent = getCategoryById(cat.parentId)
+          if (parent) setSelectedCategory(parent)
+        }
+      }
+    }
+  }
 
   const handleSubmit = async () => {
     if (!subCategory || !title || !description || !address) return
@@ -88,6 +113,15 @@ export const UserHome: React.FC = () => {
     })
   }
 
+  const toggleCategory = (catId: string) => {
+    setExpandedCategory(expandedCategory === catId ? null : catId)
+  }
+
+  const handleRiskConfirm = () => {
+    setShowRiskWarning(false)
+    setShowCreateModal(true)
+  }
+
   return (
     <div className="space-y-6">
       <div className="card">
@@ -102,50 +136,120 @@ export const UserHome: React.FC = () => {
       </div>
 
       <div className="card">
-        <h2 className="font-semibold text-lg mb-4">服务品类</h2>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-lg">服务品类</h2>
+          <span className="text-xs text-gray-400">点击展开查看细分服务</span>
+        </div>
+        <div className="space-y-1">
           {mainCategories.map(cat => {
             const Icon = categoryIcons[cat.id] || Zap
+            const subCats = getSubCategories(cat.id)
+            const isExpanded = expandedCategory === cat.id
+            const relatedSkills = mockSkillTags.filter(s => subCats.some(sc => sc.id === s.categoryId))
+
             return (
-              <button
-                key={cat.id}
-                onClick={() => {
-                  setSelectedCategory(cat)
-                  setShowRiskWarning(true)
-                }}
-                className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-colors"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary-50 flex items-center justify-center">
-                  <Icon className="w-6 h-6 text-primary-600" />
-                </div>
-                <span className="text-sm font-medium">{cat.name}</span>
-              </button>
+              <div key={cat.id} className="rounded-xl overflow-hidden">
+                <button
+                  onClick={() => toggleCategory(cat.id)}
+                  className={`w-full flex items-center gap-3 p-4 transition-colors ${
+                    isExpanded ? 'bg-primary-50' : 'hover:bg-gray-50'
+                  }`}
+                >
+                  <div className={`w-11 h-11 rounded-full flex items-center justify-center ${
+                    isExpanded ? 'bg-primary-100' : 'bg-primary-50'
+                  }`}>
+                    <Icon className={`w-5 h-5 ${isExpanded ? 'text-primary-700' : 'text-primary-600'}`} />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="font-medium">{cat.name}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {subCats.length} 项细分服务 · {relatedSkills.length} 个专业技能
+                    </p>
+                  </div>
+                  <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${
+                    isExpanded ? 'rotate-180' : ''
+                  }`} />
+                </button>
+
+                {isExpanded && (
+                  <div className="bg-gray-50 px-4 pb-4">
+                    <div className="grid grid-cols-2 gap-2 pt-3">
+                      {subCats.map(sub => {
+                        const subSkills = mockSkillTags.filter(s => s.categoryId === sub.id)
+                        return (
+                          <button
+                            key={sub.id}
+                            onClick={() => openCreateForm(sub.name, sub.id)}
+                            className="p-3 rounded-lg bg-white border border-gray-200 hover:border-primary-400 hover:bg-primary-50 transition-all text-left"
+                          >
+                            <p className="font-medium text-sm">{sub.name}</p>
+                            {subSkills.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {subSkills.slice(0, 2).map(s => (
+                                  <span key={s.id} className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-600">
+                                    {s.name}
+                                  </span>
+                                ))}
+                                {subSkills.length > 2 && (
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">
+                                    +{subSkills.length - 2}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
             )
           })}
         </div>
       </div>
 
       <div className="card">
-        <h2 className="font-semibold text-lg mb-4">热门维修</h2>
-        <div className="space-y-2">
-          {['空调不制冷', '水管漏水', '电路跳闸', '马桶堵塞'].map(item => (
-            <button
-              key={item}
-              onClick={() => {
-                setTitle(item)
-                setShowRiskWarning(true)
-              }}
-              className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 text-left"
-            >
-              <span className="text-gray-700">{item}</span>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-            </button>
-          ))}
+        <h2 className="font-semibold text-lg mb-4">热门维修快捷发单</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {Object.entries(hotItemToCategory).map(([item, catId]) => {
+            const cat = getCategoryById(catId)
+            const parentCat = cat?.parentId ? getCategoryById(cat.parentId) : null
+            return (
+              <button
+                key={item}
+                onClick={() => openCreateForm(item, catId)}
+                className="p-4 rounded-xl bg-gradient-to-br from-primary-50 to-white border border-primary-100 hover:border-primary-300 transition-all text-left"
+              >
+                <p className="font-medium">{item}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {parentCat?.name} / {cat?.name}
+                </p>
+                <p className="text-xs text-primary-600 mt-2 flex items-center gap-1">
+                  <ShieldAlert className="w-3 h-3" />
+                  一键发单 · 含风险提示
+                </p>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="card bg-gradient-to-br from-warning-50 to-white border-warning-200">
+        <div className="flex items-start gap-3">
+          <ShieldAlert className="w-6 h-6 text-warning-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h3 className="font-medium text-warning-800">安全交易提示</h3>
+            <p className="text-sm text-warning-700 mt-1">
+              本平台不抽取任何佣金，所有交易由双方自主协商。建议维修完成验收合格后再付款，
+              如需预付款请留存支付凭证。警惕"上门费"、"检测费"等预收费陷阱！
+            </p>
+          </div>
         </div>
       </div>
 
       <button
-        onClick={() => setShowRiskWarning(true)}
+        onClick={() => openCreateForm()}
         className="fixed bottom-24 right-6 w-14 h-14 bg-primary-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-700 transition-colors z-30"
       >
         <Plus className="w-7 h-7" />
@@ -154,10 +258,7 @@ export const UserHome: React.FC = () => {
       <RiskWarningModal
         isOpen={showRiskWarning}
         onClose={() => setShowRiskWarning(false)}
-        onConfirm={() => {
-          setShowRiskWarning(false)
-          setShowCreateModal(true)
-        }}
+        onConfirm={handleRiskConfirm}
       />
 
       <Modal
@@ -167,207 +268,18 @@ export const UserHome: React.FC = () => {
         size="lg"
       >
         <div className="space-y-4">
-          {!selectedCategory ? (
-            <div>
-              <label className="label">选择服务大类</label>
-              <div className="grid grid-cols-2 gap-2">
-                {mainCategories.map(cat => {
-                  const Icon = categoryIcons[cat.id] || Zap
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat)}
-                      className="flex items-center gap-2 p-3 rounded-lg border border-gray-200 hover:border-gray-300"
-                    >
-                      <Icon className="w-5 h-5 text-primary-600" />
-                      <span>{cat.name}</span>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <label className="label">选择细分服务</label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  className="flex items-center gap-1 p-3 rounded-lg border border-gray-200 text-gray-600 hover:border-gray-300"
-                >
-                  <ChevronRight className="w-4 h-4 rotate-180" />
-                  返回上级
-                </button>
-                {getSubCategories(selectedCategory.id).map(cat => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSubCategory(cat)}
-                    className={`p-3 rounded-lg border text-left ${
-                      subCategory?.id === cat.id
-                        ? 'border-primary-600 bg-primary-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    {cat.name}
-                  </button>
-                ))}
-              </div>
-              {(selectedCategory || subCategory) && (
-                <div className="mt-2 text-sm text-gray-500">
-                  已选：{getCategoryPath(subCategory?.id || selectedCategory.id).map(c => c.name).join(' / ')}
-                </div>
-              )}
-            </div>
-          )}
-
           <div>
-            <label className="label">故障标题</label>
-            <input
-              type="text"
-              className="input"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-              placeholder="例如：空调不制冷"
-            />
-          </div>
-
-          <div>
-            <label className="label">故障描述</label>
-            <textarea
-              className="input min-h-[100px]"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              placeholder="请详细描述故障现象，如品牌型号、出现的问题等"
-            />
-          </div>
-
-          <div>
-            <label className="label">上传故障图片（最多6张）</label>
-            <div className="grid grid-cols-3 gap-2">
-              {images.map((img, i) => (
-                <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                  <button
-                    onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}
-                    className="absolute top-1 right-1 w-6 h-6 bg-black/50 rounded-full flex items-center justify-center"
-                  >
-                    <X className="w-4 h-4 text-white" />
-                  </button>
-                </div>
-              ))}
-              {images.length < 6 && (
-                <label className="aspect-square rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:border-primary-500">
-                  <Upload className="w-6 h-6 text-gray-400" />
-                  <span className="text-xs text-gray-500 mt-1">上传图片</span>
-                  <input type="file" accept="image/*" multiple className="hidden" onChange={handleImageUpload} />
-                </label>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="label flex items-center gap-1">
-              <MapPin className="w-4 h-4" /> 服务地址
-            </label>
-            <input
-              type="text"
-              className="input"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-              placeholder="请输入详细地址"
-            />
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <input
-                type="number"
-                step="any"
-                className="input text-sm"
-                value={lat}
-                onChange={e => setLat(parseFloat(e.target.value))}
-                placeholder="纬度"
-              />
-              <input
-                type="number"
-                step="any"
-                className="input text-sm"
-                value={lng}
-                onChange={e => setLng(parseFloat(e.target.value))}
-                placeholder="经度"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="label flex items-center gap-1">
-              <Clock className="w-4 h-4" /> 期望响应时间（分钟）
-            </label>
-            <input
-              type="number"
-              className="input"
-              value={expectedResponseTime}
-              onChange={e => setExpectedResponseTime(parseInt(e.target.value))}
-              min={15}
-              step={15}
-            />
-          </div>
-
-          <div className="flex gap-3 pt-2">
-            <button onClick={() => setShowCreateModal(false)} className="btn-secondary flex-1">
-              取消
-            </button>
-            <button
-              onClick={handleSubmit}
-              disabled={!subCategory || !title || !description}
-              className="btn-primary flex-1"
-            >
-              发布并广播派单
-            </button>
-          </div>
-        </div>
-      </Modal>
-
-      <Modal
-        isOpen={showMatchingResult}
-        onClose={() => {
-          setShowMatchingResult(false)
-          navigate('/my-tasks')
-        }}
-        title="派单结果：匹配到的师傅"
-      >
-        <div className="space-y-3">
-          {matchedTechs.length === 0 ? (
-            <p className="text-center text-gray-500 py-8">暂无匹配的师傅，请稍后查看订单状态</p>
-          ) : (
-            matchedTechs.map((m, idx) => (
-              <div key={m.technician.id} className="flex items-center gap-4 p-3 rounded-lg border border-gray-200">
-                <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-semibold">
-                  {m.technician.name[0]}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{m.technician.name}</span>
-                    {idx === 0 && <span className="badge-info">最佳匹配</span>}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {formatDistance(m.distanceKm)} · 评分{m.technician.rating} · {m.technician.reviewCount}单
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm text-gray-500">匹配度</div>
-                  <div className="font-semibold text-primary-600">{Math.round(m.totalScore * 100)}%</div>
-                </div>
-              </div>
-            ))
-          )}
-          <button
-            onClick={() => {
-              setShowMatchingResult(false)
-              navigate('/my-tasks')
-            }}
-            className="btn-primary w-full"
-          >
-            查看我的订单
-          </button>
-        </div>
-      </Modal>
-    </div>
-  )
-}
+            <label className="label">服务分类 <span className="text-danger-500">*</span></label>
+            {!selectedCategory ? (
+              <div>
+                <p className="text-sm text-gray-500 mb-2">选择服务大类：</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {mainCategories.map(cat => {
+                    const Icon = categoryIcons[cat.id] || Zap
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => setSelectedCategory(cat)}
+                        className="flex items-center gap-2 p-3 rounded-lg border border-gray-200 hover:border-gray-300"
+                      >
+                        <Icon className="w-
