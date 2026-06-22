@@ -389,5 +389,72 @@ export function initDatabase(): void {
     `).run('admin', '13800000000', hash, '系统管理员', 'active');
   }
 
+  const demoWorker = db.prepare('SELECT id FROM users WHERE phone = ? AND role = ?').get('13900000001', 'worker') as { id: number } | undefined;
+  if (!demoWorker) {
+    const bcrypt = require('bcryptjs');
+    const hash = bcrypt.hashSync('worker123', 10);
+    const workerUser = db.prepare(`
+      INSERT INTO users (role, phone, password_hash, real_name, id_card_number, face_verified, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run('worker', '13900000001', hash, '演示工人', '110101199001011234', 1, 'active');
+
+    db.prepare(`
+      INSERT INTO workers (
+        user_id, gender, age, work_years, hometown, current_location, primary_skill,
+        secondary_skills, daily_wage_expected, craftsman_level, craftsman_score,
+        quality_score, peer_score, attendance_score, total_projects, total_work_days,
+        bio, emergency_contact, emergency_phone
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      Number(workerUser.lastInsertRowid),
+      'male',
+      34,
+      9,
+      '河南周口',
+      '北京市朝阳区',
+      '电工',
+      '水管工,焊工',
+      450,
+      4,
+      96,
+      95,
+      94,
+      98,
+      58,
+      1260,
+      '平台演示工人账号，可直接体验申请岗位流程',
+      '演示家属',
+      '13900000009'
+    );
+  }
+
+  const demoEnterprise = db.prepare('SELECT id FROM users WHERE phone = ? AND role = ?').get('13900000002', 'enterprise') as { id: number } | undefined;
+  if (!demoEnterprise) {
+    const bcrypt = require('bcryptjs');
+    const hash = bcrypt.hashSync('company123', 10);
+    const enterpriseUser = db.prepare(`
+      INSERT INTO users (role, phone, password_hash, real_name, status)
+      VALUES (?, ?, ?, ?, ?)
+    `).run('enterprise', '13900000002', hash, '演示企业法人', 'active');
+
+    db.prepare(`
+      INSERT INTO enterprises (
+        user_id, company_name, legal_person, company_address, company_phone,
+        industry_type, verified, credit_score, total_projects, total_workers_hired
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      Number(enterpriseUser.lastInsertRowid),
+      '演示建工集团',
+      '演示企业法人',
+      '北京市朝阳区建国路88号',
+      '010-66668888',
+      '建筑工程',
+      1,
+      96,
+      42,
+      680
+    );
+  }
+
   console.log('✅ Database initialized successfully');
 }

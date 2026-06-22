@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Form, Input, Button, Tabs, Typography, message, Card } from 'antd'
+import { Form, Input, Button, Tabs, Typography, message, Card, Alert } from 'antd'
 import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import authApi from '../api/auth'
 import { tokenUtils } from '../utils/request'
+import { useAuth } from '../App'
 import type { UserRole } from '../types'
 import type { TabsProps } from 'antd'
 
@@ -11,17 +12,20 @@ const { Title, Text } = Typography
 
 function Login() {
   const navigate = useNavigate()
+  const { refreshUser } = useAuth()
   const [loading, setLoading] = useState(false)
   const [form] = Form.useForm()
   const [activeRole, setActiveRole] = useState<UserRole>('worker')
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
-  const handleLogin = async (values: { phone: string; password: string }) => {
+  const performLogin = async (phone: string, password: string, role: UserRole) => {
     setLoading(true)
+    setSubmitError(null)
     try {
       const res = await authApi.login({
-        phone: values.phone,
-        password: values.password,
-        role: activeRole,
+        phone,
+        password,
+        role,
       })
       if (res.code === 0 && res.data) {
         tokenUtils.setToken(res.data.token)
@@ -32,26 +36,46 @@ function Login() {
         if (res.data.enterprise) {
           tokenUtils.setEnterpriseInfo(res.data.enterprise)
         }
-        message.success('登录成功')
-        switch (res.data.user.role) {
-          case 'worker':
-            navigate('/worker/dashboard', { replace: true })
-            break
-          case 'enterprise':
-            navigate('/enterprise/dashboard', { replace: true })
-            break
-          case 'admin':
-            navigate('/admin/dashboard', { replace: true })
-            break
-        }
+        message.success(`欢迎回来，${res.data.user.real_name || phone}`)
+        await refreshUser()
+        const role = res.data.user.role
+        setTimeout(() => {
+          navigate(
+            role === 'worker'
+              ? '/worker/dashboard'
+              : role === 'enterprise'
+              ? '/enterprise/dashboard'
+              : '/admin/dashboard',
+            { replace: true }
+          )
+        }, 100)
       } else {
-        message.error(res.message || '登录失败')
+        const errMsg = res.message || '登录失败，请检查账号密码'
+        setSubmitError(errMsg)
+        message.error(errMsg)
       }
-    } catch (err) {
-      message.error(err instanceof Error ? err.message : '登录失败')
+    } catch (err: any) {
+      const errMsg = err?.response?.data?.message || err?.message || '网络异常，请稍后重试'
+      setSubmitError(errMsg)
+      message.error(errMsg, 3)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleLogin = async (values: { phone: string; password: string }) => {
+    await performLogin(values.phone, values.password, activeRole)
+  }
+
+  const handleDemoLogin = async (role: UserRole) => {
+    const demos: Record<UserRole, { phone: string; password: string }> = {
+      worker: { phone: '13900000001', password: 'worker123' },
+      enterprise: { phone: '13900000002', password: 'company123' },
+      admin: { phone: '13800000000', password: 'admin123' },
+    }
+    setActiveRole(role)
+    form.setFieldsValue(demos[role])
+    await performLogin(demos[role].phone, demos[role].password, role)
   }
 
   const tabItems: TabsProps['items'] = [
@@ -126,11 +150,25 @@ function Login() {
 
         <Tabs
           activeKey={activeRole}
-          onChange={(key) => setActiveRole(key as UserRole)}
+          onChange={(key) => {
+            setActiveRole(key as UserRole)
+            setSubmitError(null)
+          }}
           items={tabItems}
           centered
           style={{ marginBottom: 24 }}
         />
+
+        {submitError && (
+          <Alert
+            type="error"
+            message={submitError}
+            showIcon
+            closable
+            onClose={() => setSubmitError(null)}
+            style={{ marginBottom: 20 }}
+          />
+        )}
 
         <Form form={form} layout="vertical" onFinish={handleLogin} size="large">
           <Form.Item
@@ -167,6 +205,23 @@ function Login() {
             </Text>
           </div>
         </Form>
+
+        <div style={{ marginTop: 20 }}>
+          <Text type="secondary" style={{ display: 'block', marginBottom: 10 }}>
+            演示账号快速进入
+          </Text>
+          <div style={{ display: 'grid', gap: 8 }}>
+            <Button onClick={() => void handleDemoLogin('worker')} disabled={loading}>
+              一键进入工人演示
+            </Button>
+            <Button onClick={() => void handleDemoLogin('enterprise')} disabled={loading}>
+              一键进入企业演示
+            </Button>
+            <Button onClick={() => void handleDemoLogin('admin')} disabled={loading}>
+              一键进入管理员演示
+            </Button>
+          </div>
+        </div>
       </Card>
     </div>
   )

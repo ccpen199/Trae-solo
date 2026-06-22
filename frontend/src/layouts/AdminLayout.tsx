@@ -52,7 +52,7 @@ type MenuItem = Required<MenuProps>['items'][number]
 function AdminLayout() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
   const [collapsed, setCollapsed] = useState(false)
   const [passwordModalOpen, setPasswordModalOpen] = useState(false)
   const [passwordForm] = Form.useForm()
@@ -66,6 +66,7 @@ function AdminLayout() {
       cancelText: '取消',
       onOk: () => {
         tokenUtils.clearAll()
+        void refreshUser()
         navigate('/login', { replace: true })
       },
     })

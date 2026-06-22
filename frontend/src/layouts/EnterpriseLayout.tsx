@@ -17,6 +17,7 @@ import {
 import {
   DashboardOutlined,
   ShopOutlined,
+  FileTextOutlined,
   TeamOutlined,
   FileProtectOutlined,
   SafetyCertificateOutlined,
@@ -55,7 +56,7 @@ type MenuItem = Required<MenuProps>['items'][number]
 function EnterpriseLayout() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, enterprise } = useAuth()
+  const { user, enterprise, refreshUser } = useAuth()
   const [collapsed, setCollapsed] = useState(false)
   const [passwordModalOpen, setPasswordModalOpen] = useState(false)
   const [passwordForm] = Form.useForm()
@@ -69,6 +70,7 @@ function EnterpriseLayout() {
       cancelText: '取消',
       onOk: () => {
         tokenUtils.clearAll()
+        void refreshUser()
         navigate('/login', { replace: true })
       },
     })
@@ -105,7 +107,7 @@ function EnterpriseLayout() {
     },
     {
       key: '/enterprise/jobs',
-      icon: <BriefcaseOutlined />,
+      icon: <FileTextOutlined />,
       label: <Link to="/enterprise/jobs">用工管理</Link>,
     },
     {

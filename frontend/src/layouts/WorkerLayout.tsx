@@ -70,6 +70,7 @@ function WorkerLayout() {
       cancelText: '取消',
       onOk: () => {
         tokenUtils.clearAll()
+        void refreshUser()
         navigate('/login', { replace: true })
       },
     })
@@ -131,7 +132,7 @@ function WorkerLayout() {
     },
     {
       key: '/worker/certificates',
-      icon: <CertificateOutlined />,
+      icon: <SafetyCertificateOutlined />,
       label: <Link to="/worker/certificates">技能证书</Link>,
     },
     {

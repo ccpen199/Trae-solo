@@ -214,7 +214,7 @@ router.get('/me', authMiddleware(), (req: Request, res: Response) => {
     }
   }
 
-  return success(res, { ...user, ...detail });
+  return success(res, { user: { ...user }, ...detail });
 });
 
 router.post('/change-password', authMiddleware(), (req: Request, res: Response) => {

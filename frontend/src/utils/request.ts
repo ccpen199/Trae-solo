@@ -79,9 +79,10 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
     const res = response.data
-    if (res.code !== 0) {
-      console.error('Request error:', res.message)
-      return Promise.reject(new Error(res.message || 'Error'))
+    if (res.code === 401) {
+      tokenUtils.clearAll()
+      window.location.href = '/login'
+      return Promise.reject(new Error(res.message || '登录已过期'))
     }
     return response
   },
