@@ -55,6 +55,25 @@ const USER_MAP: Record<string, UserInfo> = {
   },
 };
 
+const USERNAME_MAP: Record<string, string> = {
+  user: '13800138000',
+  zhangwei: '13800138000',
+  personal: '13800138000',
+  '个人': '13800138000',
+  hr: '13800138001',
+  lina: '13800138001',
+  '企业hr': '13800138001',
+  finance: '13800138002',
+  wangfang: '13800138002',
+  '财务': '13800138002',
+  admin: '13800138003',
+  platform: '13800138003',
+  ops: '13800138003',
+  administrator: '13800138003',
+  '管理员': '13800138003',
+  '平台管理员': '13800138003',
+};
+
 const ENTERPRISE_MAP: Record<string, UserInfo> = {
   '91110000MA01234567': {
     id: 'E001',
@@ -101,7 +120,7 @@ const AUTH_PROGRESS_MAP: Record<string, AuthProgress> = {
 };
 
 router.post('/login', (req: Request, res: Response) => {
-  const { phone, code, password, creditCode, enterprise } = req.body;
+  const { phone, code, password, creditCode, enterprise, account } = req.body;
 
   if (enterprise) {
     if (!creditCode || !password) {
@@ -117,19 +136,26 @@ router.post('/login', (req: Request, res: Response) => {
     return res.json(sendResponse({ token, user: ENTERPRISE_MAP[creditCode] }));
   }
 
-  if (!phone) {
-    return res.json(sendResponse(null, '手机号不能为空', 400));
-  }
-  if (!/^1[3-9]\d{9}$/.test(phone)) {
-    return res.json(sendResponse(null, '手机号格式错误', 400));
+  const loginAccount = account || phone;
+  if (!loginAccount) {
+    return res.json(sendResponse(null, '请输入账号', 400));
   }
   if ((code && code.length !== 6) || (!code && !password)) {
     return res.json(sendResponse(null, '请输入验证码或密码', 400));
   }
 
-  const user = USER_MAP[phone];
+  let matchedPhone = loginAccount;
+  if (!/^1[3-9]\d{9}$/.test(loginAccount)) {
+    const lowerAccount = loginAccount.toLowerCase().trim();
+    matchedPhone = USERNAME_MAP[lowerAccount] || USERNAME_MAP[loginAccount] || null;
+    if (!matchedPhone) {
+      return res.json(sendResponse(null, `账号 "${loginAccount}" 不存在，请检查账号或手机号`, 401));
+    }
+  }
+
+  const user = USER_MAP[matchedPhone];
   if (!user) {
-    return res.json(sendResponse(null, '手机号未注册，请先注册账号', 401));
+    return res.json(sendResponse(null, '账号不存在，请先注册', 401));
   }
 
   if (code && code !== '123456') {
