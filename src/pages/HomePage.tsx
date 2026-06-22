@@ -1,4 +1,4 @@
-import { TrendingUp, FileCheck, AlertTriangle, Star, ChevronRight, CheckCircle, Clock, Lightbulb, BarChart3 } from 'lucide-react'
+import { TrendingUp, FileCheck, AlertTriangle, Star, ChevronRight, CheckCircle, Clock, Lightbulb, BarChart3, Building2, User, Calendar, ClipboardCheck } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import SearchFilters from '../components/SearchFilters'
@@ -6,12 +6,11 @@ import GuideCard from '../components/GuideCard'
 import { searchRecords, complaintPoints, optimizationSuggestions } from '../data/analytics'
 import { categoryLabels } from '../data/constants'
 
-const complaintStatusMap: Record<string, { status: string; statusText: string; color: string; progress: number }> = {
-  cp1: { status: 'processing', statusText: '处理中', color: 'orange', progress: 60 },
-  cp2: { status: 'processing', statusText: '处理中', color: 'orange', progress: 35 },
-  cp3: { status: 'resolved', statusText: '已跟进', color: 'green', progress: 100 },
-  cp4: { status: 'pending', statusText: '待处理', color: 'red', progress: 10 },
-  cp5: { status: 'resolved', statusText: '已复查', color: 'green', progress: 100 },
+const statusConfig: Record<string, { label: string; color: string; bg: string; border: string; progress: string }> = {
+  pending: { label: '待处理', color: 'text-red-700', bg: 'bg-red-100', border: 'border-red-200', progress: 'bg-red-400' },
+  processing: { label: '处理中', color: 'text-orange-700', bg: 'bg-orange-100', border: 'border-orange-200', progress: 'bg-orange-400' },
+  resolved: { label: '已解决', color: 'text-green-700', bg: 'bg-green-100', border: 'border-green-200', progress: 'bg-green-500' },
+  reviewed: { label: '已复查', color: 'text-blue-700', bg: 'bg-blue-100', border: 'border-blue-200', progress: 'bg-blue-500' },
 }
 
 export default function HomePage() {
@@ -186,49 +185,26 @@ export default function HomePage() {
             </div>
             <div className="space-y-3">
               {hotComplaints.map((item) => {
-                const statusInfo = complaintStatusMap[item.id] || { statusText: '待处理', color: 'gray', progress: 0 }
-                const relatedSuggestion = optimizationSuggestions.find(
-                  s => s.title.includes(item.keyword.slice(0, 4))
-                )
-                const colorClasses = {
-                  green: 'bg-green-100 text-green-700 border-green-200',
-                  orange: 'bg-orange-100 text-orange-700 border-orange-200',
-                  red: 'bg-red-100 text-red-700 border-red-200',
-                  gray: 'bg-gray-100 text-gray-700 border-gray-200',
-                }
-                const bgClasses = {
-                  green: 'bg-green-50 border-green-100',
-                  orange: 'bg-orange-50 border-orange-100',
-                  red: 'bg-red-50 border-red-100',
-                  gray: 'bg-gray-50 border-gray-100',
-                }
-                const progressColor = {
-                  green: 'bg-green-500',
-                  orange: 'bg-orange-500',
-                  red: 'bg-red-500',
-                  gray: 'bg-gray-400',
-                }
+                const sc = statusConfig[item.status] || statusConfig.pending
+                const relatedSuggestion = optimizationSuggestions.find(s => s.id === item.relatedSuggestionId)
+                const latestRecord = item.disposalRecords.length > 0
+                  ? item.disposalRecords[item.disposalRecords.length - 1]
+                  : null
 
                 return (
-                  <div key={item.id} className={`p-3 rounded-lg border ${bgClasses[statusInfo.color as keyof typeof bgClasses]}`}>
+                  <div key={item.id} className={`p-3 rounded-lg border ${sc.bg.replace('bg-', 'bg-').replace('100', '50')} ${sc.border}`}>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className={`font-medium text-sm ${
-                        statusInfo.color === 'green' ? 'text-green-700' :
-                        statusInfo.color === 'orange' ? 'text-orange-700' :
-                        statusInfo.color === 'red' ? 'text-red-700' : 'text-gray-700'
-                      }`}>
+                      <span className={`font-medium text-sm ${sc.color}`}>
                         {item.keyword}
                       </span>
-                      <span className={`text-xs font-medium ${
-                        item.trend > 0 ? 'text-red-500' : 'text-green-500'
-                      }`}>
+                      <span className={`text-xs font-medium ${item.trend > 0 ? 'text-red-500' : 'text-green-500'}`}>
                         {item.trend > 0 ? '+' : ''}{item.trend}%
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 mb-2">
-                      <span className={`text-xs px-2 py-0.5 rounded-full border ${colorClasses[statusInfo.color as keyof typeof colorClasses]}`}>
-                        {statusInfo.statusText}
+                      <span className={`text-xs px-2 py-0.5 rounded-full border ${sc.bg} ${sc.color} ${sc.border}`}>
+                        {sc.label}
                       </span>
                       <span className="text-xs text-gray-500">
                         {item.count} 次反馈
@@ -238,24 +214,83 @@ export default function HomePage() {
                     <div className="mb-2">
                       <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                         <span>处置进度</span>
-                        <span>{statusInfo.progress}%</span>
+                        <span>{item.progress}%</span>
                       </div>
                       <div className="w-full h-1.5 bg-white/50 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${progressColor[statusInfo.color as keyof typeof progressColor]}`}
-                          style={{ width: `${statusInfo.progress}%` }}
+                          className={`h-full rounded-full transition-all ${sc.progress}`}
+                          style={{ width: `${item.progress}%` }}
                         />
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-3 gap-2 mb-2">
+                      <div className="bg-white/60 rounded p-1.5">
+                        <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                          <Building2 className="w-2.5 h-2.5" />
+                          责任部门
+                        </div>
+                        <p className="text-[10px] font-medium text-gray-700 mt-0.5 truncate">{item.responsibleDept.replace(/市/g, '').substring(0, 6)}</p>
+                      </div>
+                      <div className="bg-white/60 rounded p-1.5">
+                        <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                          <User className="w-2.5 h-2.5" />
+                          责任人
+                        </div>
+                        <p className="text-[10px] font-medium text-gray-700 mt-0.5 truncate">{item.responsiblePerson}</p>
+                      </div>
+                      <div className="bg-white/60 rounded p-1.5">
+                        <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                          <Calendar className="w-2.5 h-2.5" />
+                          完成时限
+                        </div>
+                        <p className="text-[10px] font-medium text-gray-700 mt-0.5 truncate">{item.disposalDeadline.substring(5)}</p>
+                      </div>
+                    </div>
+
+                    {item.disposalConclusion && (
+                      <div className="flex items-start gap-1.5 p-2 bg-green-50/80 rounded-lg mb-2 border border-green-100">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" />
+                        <p className="text-[10px] text-green-700 line-clamp-2">{item.disposalConclusion}</p>
+                      </div>
+                    )}
+
+                    {item.reviewRecords.length > 0 && (
+                      <div className="flex items-start gap-1.5 p-2 bg-blue-50/80 rounded-lg mb-2 border border-blue-100">
+                        <ClipboardCheck className="w-3.5 h-3.5 text-blue-500 mt-0.5 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-[10px] text-blue-700 line-clamp-1">
+                            {item.reviewRecords[item.reviewRecords.length - 1].content}
+                          </p>
+                          <p className="text-[9px] text-blue-400 mt-0.5">
+                            {item.reviewRecords[item.reviewRecords.length - 1].operator} · {item.reviewRecords[item.reviewRecords.length - 1].date.substring(5, 10)}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {latestRecord && !item.disposalConclusion && (
+                      <div className="flex items-start gap-1.5 p-2 bg-white/60 rounded-lg mb-2">
+                        <Clock className="w-3.5 h-3.5 text-gray-400 mt-0.5 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-[10px] text-gray-600 line-clamp-1">
+                            {latestRecord.action}：{latestRecord.content.substring(0, 20)}...
+                          </p>
+                          <p className="text-[9px] text-gray-400 mt-0.5">
+                            {latestRecord.operator} · {latestRecord.date.substring(5, 10)}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
                     {relatedSuggestion && (
-                      <div className="flex items-start gap-1.5 p-2 bg-white/60 rounded-lg">
+                      <div className="flex items-start gap-1.5 p-2 bg-white/60 rounded-lg mb-2">
                         <Lightbulb className="w-3.5 h-3.5 text-yellow-500 mt-0.5 shrink-0" />
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs font-medium text-gray-700 line-clamp-1">
+                          <p className="text-[10px] font-medium text-gray-700 line-clamp-1">
                             优化建议：{relatedSuggestion.title}
                           </p>
-                          <p className="text-[10px] text-gray-500 mt-0.5">
+                          <p className="text-[9px] text-gray-400 mt-0.5">
                             优先级：{relatedSuggestion.priority === 'high' ? '高' : relatedSuggestion.priority === 'medium' ? '中' : '低'}
                           </p>
                         </div>
@@ -288,7 +323,7 @@ export default function HomePage() {
             <div className="mt-4 pt-4 border-t border-gray-100">
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span>本周新增堵点 3 个</span>
-                <span>已处置 12 个 · 处置率 80%</span>
+                <span>已处置 {complaintPoints.filter(c => c.status === 'resolved' || c.status === 'reviewed').length} 个 · 处置率 {Math.round(complaintPoints.filter(c => c.status === 'resolved' || c.status === 'reviewed').length / complaintPoints.length * 100)}%</span>
               </div>
             </div>
           </div>

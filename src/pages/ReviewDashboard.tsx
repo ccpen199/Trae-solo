@@ -67,8 +67,9 @@ export default function ReviewDashboard() {
 
   const [selectedGuideId, setSelectedGuideId] = useState<string | null>(null)
   const [reviewComment, setReviewComment] = useState('')
+  const currentUserRole = currentUser.role as 'editor' | 'supervisor' | 'legal' | 'admin'
   const [filterStatus, setFilterStatus] = useState<ReviewStatus | 'all'>('all')
-  const [filterStage, setFilterStage] = useState<'all' | 'editor' | 'supervisor' | 'legal'>('all')
+  const [filterStage, setFilterStage] = useState<'all' | 'editor' | 'supervisor' | 'legal' | 'my'>('my')
   const [reviewRecords, setReviewRecords] = useState<ReviewRecordType[]>(initialReviewRecords)
   const [activeView, setActiveView] = useState<'list' | 'detail'>('list')
   const [isRefreshing, setIsRefreshing] = useState(false)
@@ -81,7 +82,19 @@ export default function ReviewDashboard() {
 
   const filteredGuides = useMemo(() => {
     let result = filterStatus === 'all' ? pendingGuides : pendingGuides.filter(g => g.reviewStatus === filterStatus)
-    if (filterStage !== 'all') {
+    if (filterStage === 'my') {
+      if (currentUserRole === 'admin') {
+        // admin sees everything
+      } else {
+        const stageStatusMap: Record<string, ReviewStatus> = {
+          editor: 'pending_editor',
+          supervisor: 'pending_supervisor',
+          legal: 'pending_legal',
+        }
+        const myStatus = stageStatusMap[currentUserRole]
+        result = result.filter(g => g.reviewStatus === myStatus)
+      }
+    } else if (filterStage !== 'all') {
       const stageStatusMap: Record<string, ReviewStatus> = {
         editor: 'pending_editor',
         supervisor: 'pending_supervisor',
@@ -90,7 +103,7 @@ export default function ReviewDashboard() {
       result = result.filter(g => g.reviewStatus === stageStatusMap[filterStage])
     }
     return result.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime())
-  }, [pendingGuides, filterStatus, filterStage])
+  }, [pendingGuides, filterStatus, filterStage, currentUserRole])
 
   const selectedGuide = selectedGuideId ? guides.find(g => g.id === selectedGuideId) : null
   const selectedGuideRecords = selectedGuideId
@@ -250,6 +263,21 @@ export default function ReviewDashboard() {
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div
+          className={`card p-4 cursor-pointer transition-all bg-primary-50 border-primary-200 ${filterStage === 'my' ? 'ring-2 ring-primary-500 ring-offset-2' : ''}`}
+          onClick={() => { setFilterStage('my'); setFilterStatus('all') }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center">
+              <AlertCircle className="w-5 h-5 text-primary-600" />
+            </div>
+            <div>
+              <p className="text-sm text-primary-600">我的待办</p>
+              <p className="text-2xl font-bold text-primary-700">{stats.myTasks}</p>
+            </div>
+          </div>
+        </div>
+
+        <div
           className={`card p-4 cursor-pointer transition-all ${filterStatus === 'all' && filterStage === 'all' ? 'ring-2 ring-primary-500 ring-offset-2' : ''}`}
           onClick={() => { setFilterStatus('all'); setFilterStage('all') }}
         >
@@ -296,18 +324,6 @@ export default function ReviewDashboard() {
             </div>
           )
         })}
-
-        <div className="card p-4 bg-primary-50 border-primary-200">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center">
-              <AlertCircle className="w-5 h-5 text-primary-600" />
-            </div>
-            <div>
-              <p className="text-sm text-primary-600">我的待办</p>
-              <p className="text-2xl font-bold text-primary-700">{stats.myTasks}</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
@@ -318,6 +334,16 @@ export default function ReviewDashboard() {
                 <Filter className="w-4 h-4 text-gray-500" />
                 <span className="text-sm text-gray-600 font-medium">筛选：</span>
                 <div className="flex gap-2 flex-wrap">
+                  <button
+                    onClick={() => { setFilterStage('my'); setFilterStatus('all') }}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                      filterStage === 'my'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    我的待办
+                  </button>
                   {(['all', 'pending_editor', 'pending_supervisor', 'pending_legal'] as const).map((s) => (
                     <button
                       key={s}
@@ -618,17 +644,84 @@ export default function ReviewDashboard() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-4">
-                    <div className="flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
-                      <div className="text-sm text-yellow-800">
-                        <p className="font-medium">您没有权限审核该事项</p>
-                        <p className="text-yellow-700 mt-1">
-                          当前审核阶段：{getCurrentStage(selectedGuide.reviewStatus) ? STAGE_CONFIG[getCurrentStage(selectedGuide.reviewStatus)!].title : '—'}
-                          ，您的角色：{reviewStageLabels[currentUserRole as 'editor' | 'supervisor' | 'legal'] || '系统管理员'}
-                        </p>
+                  <div className="space-y-4">
+                    <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-4">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
+                        <div className="text-sm text-yellow-800">
+                          <p className="font-medium">当前事项不在您的审核范围内</p>
+                          <p className="text-yellow-700 mt-1">
+                            当前审核阶段：{getCurrentStage(selectedGuide.reviewStatus) ? STAGE_CONFIG[getCurrentStage(selectedGuide.reviewStatus)!].title : '—'}
+                            ，您的角色：{reviewStageLabels[currentUserRole as 'editor' | 'supervisor' | 'legal'] || '系统管理员'}
+                          </p>
+                        </div>
                       </div>
                     </div>
+
+                    {selectedGuideRecords.filter(r => r.stage !== currentUserRole).length > 0 && (
+                      <div>
+                        <h5 className="font-medium text-gray-700 mb-3 flex items-center gap-1.5 text-sm">
+                          <Gavel className="w-4 h-4" />
+                          其他阶段审核意见
+                        </h5>
+                        <div className="space-y-2">
+                          {selectedGuideRecords.filter(r => r.stage !== currentUserRole).map((r) => {
+                            const config = STAGE_CONFIG[r.stage]
+                            const colors = COLOR_CLASSES[config.color]
+                            return (
+                              <div key={r.id} className="p-3 bg-gray-50 rounded-lg">
+                                <div className="flex items-center gap-2 flex-wrap mb-1">
+                                  <span className="text-xs font-medium text-gray-700">{r.reviewer}</span>
+                                  <span className={`badge ${colors.bg} ${colors.text} text-xs`}>{config.title}</span>
+                                  <span className={`badge text-xs ${
+                                    r.action === 'approve' ? 'bg-green-100 text-green-700' :
+                                    r.action === 'reject' ? 'bg-red-100 text-red-700' :
+                                    'bg-blue-100 text-blue-700'
+                                  }`}>
+                                    {r.action === 'approve' ? '通过' : r.action === 'reject' ? '驳回' : '评论'}
+                                  </span>
+                                  <span className="text-[10px] text-gray-400">{r.createdAt}</span>
+                                </div>
+                                {r.comment && (
+                                  <p className="text-xs text-gray-600 bg-white rounded p-2 border border-gray-100">{r.comment}</p>
+                                )}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedGuideRecords.filter(r => r.stage === 'legal' && r.action === 'approve').length > 0 && (
+                      <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <Scale className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+                          <div>
+                            <p className="font-medium text-blue-800 text-sm">法务结论</p>
+                            <p className="text-sm text-blue-700 mt-1">
+                              {selectedGuideRecords.find(r => r.stage === 'legal' && r.action === 'approve')?.comment || '法务审核已通过'}
+                            </p>
+                            <p className="text-xs text-blue-400 mt-1">
+                              {selectedGuideRecords.find(r => r.stage === 'legal')?.reviewer} · {selectedGuideRecords.find(r => r.stage === 'legal')?.createdAt}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedGuide.reviewStatus === 'published' && (
+                      <div className="bg-green-50 border border-green-100 rounded-xl p-4">
+                        <div className="flex items-start gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
+                          <div>
+                            <p className="font-medium text-green-800 text-sm">上线复核记录</p>
+                            <p className="text-sm text-green-700 mt-1">
+                              该指南已通过三级审核并发布上线。版本 {selectedGuide.version}，更新时间 {selectedGuide.updatedAt}。
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

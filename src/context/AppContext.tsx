@@ -6,8 +6,10 @@ import { users } from '../data/analytics'
 
 type MaterialCountRange = 'all' | 'few' | 'medium' | 'many'
 type PromiseTimeRange = 'all' | 'instant' | 'short' | 'medium' | 'long'
+type LegalTimeRange = 'all' | 'short' | 'medium' | 'long'
 type HasOnlineEntry = 'all' | 'yes' | 'no'
 type HasExampleImage = 'all' | 'yes' | 'no'
+type OnlinePlatform = 'all' | 'province_gov' | 'city_gov' | 'wechat_mini' | 'app'
 
 type SearchFilters = {
   keyword: string
@@ -15,8 +17,10 @@ type SearchFilters = {
   subjectType: SubjectType | 'all'
   materialCount: MaterialCountRange
   promiseTime: PromiseTimeRange
+  legalTime: LegalTimeRange
   hasOnlineEntry: HasOnlineEntry
   hasExampleImage: HasExampleImage
+  onlinePlatform: OnlinePlatform
 }
 
 type AppContextType = {
@@ -45,8 +49,10 @@ const defaultFilters: SearchFilters = {
   subjectType: 'all',
   materialCount: 'all',
   promiseTime: 'all',
+  legalTime: 'all',
   hasOnlineEntry: 'all',
   hasExampleImage: 'all',
+  onlinePlatform: 'all',
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -77,15 +83,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const subjectType = filters.subjectType || 'all'
     const materialCount = filters.materialCount || 'all'
     const promiseTime = filters.promiseTime || 'all'
+    const legalTime = filters.legalTime || 'all'
     const hasOnlineEntry = filters.hasOnlineEntry || 'all'
     const hasExampleImage = filters.hasExampleImage || 'all'
+    const onlinePlatform = filters.onlinePlatform || 'all'
 
     const parseWorkDays = (str: string): number => {
+      if (!str) return 999
+      if (str.includes('当日') || str.includes('即时') || str.includes('当场') || str.includes('按当年')) return 0
       const match = str.match(/(\d+)/)
-      if (!match) return 0
-      const num = parseInt(match[1], 10)
-      if (str.includes('当日') || str.includes('即时') || str.includes('当场')) return 0
-      return num
+      return match ? parseInt(match[1], 10) : 999
     }
 
     return guides.filter((guide) => {
@@ -100,8 +107,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       if (materialCount !== 'all') {
         const count = guide.materials.length
-        if (materialCount === 'few' && count > 2) return false
-        if (materialCount === 'medium' && (count < 3 || count > 5)) return false
+        if (materialCount === 'few' && count > 3) return false
+        if (materialCount === 'medium' && (count < 4 || count > 5)) return false
         if (materialCount === 'many' && count < 6) return false
       }
 
@@ -113,10 +120,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (promiseTime === 'long' && days < 8) return false
       }
 
+      if (legalTime !== 'all') {
+        const days = parseWorkDays(guide.timeLimit.legal)
+        if (legalTime === 'short' && days > 5) return false
+        if (legalTime === 'medium' && (days < 6 || days > 15)) return false
+        if (legalTime === 'long' && days < 16) return false
+      }
+
       if (hasOnlineEntry !== 'all') {
         const hasOnline = guide.onlineEntries && guide.onlineEntries.length > 0
         if (hasOnlineEntry === 'yes' && !hasOnline) return false
         if (hasOnlineEntry === 'no' && hasOnline) return false
+      }
+
+      if (onlinePlatform !== 'all') {
+        const hasPlatform = guide.onlineEntries && guide.onlineEntries.some(e => e.platform === onlinePlatform)
+        if (!hasPlatform) return false
       }
 
       if (hasExampleImage !== 'all') {
@@ -139,7 +158,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [guides, currentCity, filters])
 
   const resetFilters = () => {
-    setFilters({ ...defaultFilters })
+    setFiltersRaw({ ...defaultFilters })
   }
 
   const updateGuideStatus = (guideId: string, status: ReviewStatus, _comment?: string) => {

@@ -1,30 +1,43 @@
-import { Search, Filter, X, Layers, Clock, Globe, Image } from 'lucide-react'
+import { Search, Filter, X, Layers, Clock, Globe, Image, Scale, Monitor } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { ItemCategory, SubjectType } from '../types'
 import { categoryLabels, subjectLabels } from '../data/constants'
 
 export default function SearchFilters() {
-  const { filters, setFilters } = useApp()
+  const { filters, setFilters, resetFilters } = useApp()
 
   const categories: (ItemCategory | 'all')[] = ['all', 'household', 'education', 'traffic', 'social_security', 'medical', 'housing', 'business']
   const subjectTypes: (SubjectType | 'all')[] = ['all', 'personal', 'enterprise']
   const materialCountOptions = [
     { value: 'all', label: '全部' },
-    { value: 'few', label: '1-2项' },
-    { value: 'medium', label: '3-5项' },
+    { value: 'few', label: '1-3项' },
+    { value: 'medium', label: '4-5项' },
     { value: 'many', label: '6项+' },
   ]
   const promiseTimeOptions = [
     { value: 'all', label: '全部' },
     { value: 'instant', label: '当日/即时' },
-    { value: 'short', label: '1-3日' },
-    { value: 'medium', label: '4-7日' },
-    { value: 'long', label: '8日+' },
+    { value: 'short', label: '1-3工作日' },
+    { value: 'medium', label: '4-7工作日' },
+    { value: 'long', label: '8工作日+' },
+  ]
+  const legalTimeOptions = [
+    { value: 'all', label: '全部' },
+    { value: 'short', label: '≤5工作日' },
+    { value: 'medium', label: '6-15工作日' },
+    { value: 'long', label: '16工作日+' },
   ]
   const hasOnlineEntryOptions = [
     { value: 'all', label: '全部' },
     { value: 'yes', label: '可在线办理' },
     { value: 'no', label: '仅线下' },
+  ]
+  const onlinePlatformOptions = [
+    { value: 'all', label: '全部' },
+    { value: 'province_gov', label: '省级政务网' },
+    { value: 'city_gov', label: '市级政务网' },
+    { value: 'wechat_mini', label: '微信小程序' },
+    { value: 'app', label: 'APP' },
   ]
   const hasExampleImageOptions = [
     { value: 'all', label: '全部' },
@@ -32,25 +45,15 @@ export default function SearchFilters() {
     { value: 'no', label: '无示例图' },
   ]
 
-  const clearFilters = () => {
-    setFilters({
-      keyword: '',
-      category: 'all',
-      subjectType: 'all',
-      materialCount: 'all',
-      promiseTime: 'all',
-      hasOnlineEntry: 'all',
-      hasExampleImage: 'all',
-    })
-  }
-
   const hasActiveFilters =
     filters.keyword ||
     filters.category !== 'all' ||
     filters.subjectType !== 'all' ||
     filters.materialCount !== 'all' ||
     filters.promiseTime !== 'all' ||
+    filters.legalTime !== 'all' ||
     filters.hasOnlineEntry !== 'all' ||
+    filters.onlinePlatform !== 'all' ||
     filters.hasExampleImage !== 'all'
 
   return (
@@ -76,7 +79,7 @@ export default function SearchFilters() {
 
       <div className="space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
             <Filter className="w-4 h-4" />
             <span>事项类型</span>
           </div>
@@ -96,7 +99,7 @@ export default function SearchFilters() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
             <Filter className="w-4 h-4" />
             <span>办理主体</span>
           </div>
@@ -116,7 +119,7 @@ export default function SearchFilters() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
             <Layers className="w-4 h-4" />
             <span>材料数量</span>
           </div>
@@ -136,7 +139,7 @@ export default function SearchFilters() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
             <Clock className="w-4 h-4" />
             <span>承诺时限</span>
           </div>
@@ -156,7 +159,27 @@ export default function SearchFilters() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
+            <Scale className="w-4 h-4" />
+            <span>法定时限</span>
+          </div>
+          {legalTimeOptions.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setFilters({ ...filters, legalTime: opt.value as any })}
+              className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                filters.legalTime === opt.value
+                  ? 'bg-primary-600 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
             <Globe className="w-4 h-4" />
             <span>办理渠道</span>
           </div>
@@ -176,9 +199,29 @@ export default function SearchFilters() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
+            <Monitor className="w-4 h-4" />
+            <span>线上平台</span>
+          </div>
+          {onlinePlatformOptions.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setFilters({ ...filters, onlinePlatform: opt.value as any })}
+              className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                filters.onlinePlatform === opt.value
+                  ? 'bg-primary-600 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 font-medium shrink-0 w-20">
             <Image className="w-4 h-4" />
-            <span>材料示例图</span>
+            <span>示例图</span>
           </div>
           {hasExampleImageOptions.map((opt) => (
             <button
@@ -198,7 +241,7 @@ export default function SearchFilters() {
         {hasActiveFilters && (
           <div className="pt-2 border-t border-gray-100">
             <button
-              onClick={clearFilters}
+              onClick={resetFilters}
               className="text-sm text-gray-500 hover:text-gray-700 underline"
             >
               清除全部筛选条件
