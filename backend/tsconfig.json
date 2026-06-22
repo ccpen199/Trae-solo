@@ -3,8 +3,11 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "isolatedModules": false,
     "strictPropertyInitialization": false,
     "baseUrl": "./",
     "paths": {

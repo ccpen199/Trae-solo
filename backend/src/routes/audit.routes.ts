@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { authenticateRider } from '../middleware/auth';
-import { validate } from '../middleware/validation';
-import { success, error } from '../utils/response';
-import { AppDataSource } from '../config/database';
-import { AuditFlowEntity } from '../entities/AuditFlow.entity';
-import { ComplaintEntity } from '../entities/Complaint.entity';
-import { NotFoundError, ValidationError } from '../middleware/errorHandler';
+import { authenticateRider } from '../middleware/auth.js';
+import { validate } from '../middleware/validation.js';
+import { success, error } from '../utils/response.js';
+import { AppDataSource } from '../config/database.js';
+import { AuditFlowEntity } from '../entities/AuditFlow.entity.js';
+import { ComplaintEntity } from '../entities/Complaint.entity.js';
+import { NotFoundError, ValidationError } from '../middleware/errorHandler.js';
 import { v4 as uuidv4 } from 'uuid';
 import { AuditType, AppealRequest } from '@shared/types';
 

@@ -14,7 +14,7 @@ export class GeofenceEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   name: string;
 
   @Column({
@@ -39,7 +39,7 @@ export class GeofenceEntity {
   @Column({ default: true })
   isEnabled: boolean;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   color?: string;
 
   @Column({ type: 'jsonb', nullable: true })

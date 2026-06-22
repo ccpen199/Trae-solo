@@ -8,12 +8,12 @@ import {
   OneToMany,
   Index,
 } from 'typeorm';
-import { RiderPreferenceEntity } from './RiderPreference.entity';
-import { OrderEntity } from './Order.entity';
-import { LocationReportEntity } from './LocationReport.entity';
-import { CreditHistoryEntity } from './CreditHistory.entity';
-import { AuditFlowEntity } from './AuditFlow.entity';
-import { ComplaintEntity } from './Complaint.entity';
+import { RiderPreferenceEntity } from './RiderPreference.entity.js';
+import { OrderEntity } from './Order.entity.js';
+import { LocationReportEntity } from './LocationReport.entity.js';
+import { CreditHistoryEntity } from './CreditHistory.entity.js';
+import { AuditFlowEntity } from './AuditFlow.entity.js';
+import { ComplaintEntity } from './Complaint.entity.js';
 import { VehicleType, AuditStatus, Coordinate } from '@shared/types';
 
 @Entity('riders')
@@ -23,28 +23,28 @@ export class RiderEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 20, unique: true })
+  @Column({ type: 'varchar', length: 20, unique: true })
   phone: string;
 
-  @Column({ length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   nickname: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   avatar?: string;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   realName?: string;
 
-  @Column({ length: 18, nullable: true })
+  @Column({ type: 'varchar', length: 18, nullable: true })
   idCard?: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   idCardFront?: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   idCardBack?: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   healthCertificate?: string;
 
   @Column({
@@ -54,10 +54,10 @@ export class RiderEntity {
   })
   vehicleType: VehicleType;
 
-  @Column({ length: 20, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   vehiclePlate?: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   vehicleLicense?: string;
 
   @Column({ default: false })
@@ -73,7 +73,7 @@ export class RiderEntity {
   })
   auditStatus: AuditStatus;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   auditRemark?: string;
 
   @Column({ type: 'int', default: 100 })
@@ -82,7 +82,7 @@ export class RiderEntity {
   @Column({ default: false })
   isFrozen: boolean;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   frozenReason?: string;
 
   @Column({ type: 'timestamp', nullable: true })
@@ -97,7 +97,7 @@ export class RiderEntity {
   @Column({ default: false })
   isOnline: boolean;
 
-  @Column({ length: 36, nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   currentTaskId?: string;
 
   @Column({ type: 'int', default: 0 })

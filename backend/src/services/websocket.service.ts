@@ -2,9 +2,9 @@ import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
 import jwt from 'jsonwebtoken';
 import { TokenPayload, TaskPushMessage, RealtimeRiderStatus, LocationReport } from '@shared/types';
-import { AppDataSource } from '../config/database';
-import { RiderEntity } from '../entities/Rider.entity';
-import { LocationReportEntity } from '../entities/LocationReport.entity';
+import { AppDataSource } from '../config/database.js';
+import { RiderEntity } from '../entities/Rider.entity.js';
+import { LocationReportEntity } from '../entities/LocationReport.entity.js';
 
 interface ConnectedRider {
   socketId: string;

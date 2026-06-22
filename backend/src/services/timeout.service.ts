@@ -1,7 +1,7 @@
-import { AppDataSource } from '../config/database';
-import { OrderEntity } from '../entities/Order.entity';
-import { TimeoutWarningEntity } from '../entities/TimeoutWarning.entity';
-import { getWebSocketService } from './websocket.service';
+import { AppDataSource } from '../config/database.js';
+import { OrderEntity } from '../entities/Order.entity.js';
+import { TimeoutWarningEntity } from '../entities/TimeoutWarning.entity.js';
+import { getWebSocketService } from './websocket.service.js';
 import { MoreThan } from 'typeorm';
 
 export class TimeoutService {

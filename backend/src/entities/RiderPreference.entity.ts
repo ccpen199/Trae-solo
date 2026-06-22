@@ -7,14 +7,14 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { RiderEntity } from './Rider.entity';
+import { RiderEntity } from './Rider.entity.js';
 
 @Entity('rider_preferences')
 export class RiderPreferenceEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   riderId: string;
 
   @Column({ type: 'int', default: 5000 })

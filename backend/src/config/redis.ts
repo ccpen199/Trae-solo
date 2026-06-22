@@ -1,22 +1,45 @@
 import { createClient } from 'redis';
-import dotenv from 'dotenv';
+import { loadProjectEnv } from '../utils/loadEnv.js';
 
-dotenv.config();
+loadProjectEnv();
 
-const redisClient = createClient({
-  url: `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || '6379'}`,
-});
+const memoryRedisClient = {
+  isMemoryClient: true,
+  async connect() {
+    return this;
+  },
+  async quit() {
+    return undefined;
+  },
+  on() {
+    return this;
+  },
+};
 
-redisClient.on('error', (err) => {
-  console.error('Redis Client Error:', err);
-});
+const useMemoryRedis = (process.env.REDIS_MODE || 'memory').toLowerCase() !== 'external';
 
-redisClient.on('connect', () => {
-  console.log('Redis Client Connected');
-});
+const redisClient = useMemoryRedis
+  ? memoryRedisClient
+  : createClient({
+      url: `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || '6379'}`,
+    });
+
+if (!useMemoryRedis) {
+  redisClient.on('error', (err) => {
+    console.error('Redis Client Error:', err);
+  });
+
+  redisClient.on('connect', () => {
+    console.log('Redis Client Connected');
+  });
+}
 
 export const connectRedis = async () => {
   try {
+    if (useMemoryRedis) {
+      console.log('Redis 已切换为本地内存模式');
+      return redisClient;
+    }
     await redisClient.connect();
     return redisClient;
   } catch (error) {

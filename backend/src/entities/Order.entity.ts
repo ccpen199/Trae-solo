@@ -9,13 +9,13 @@ import {
   OneToMany,
   Index,
 } from 'typeorm';
-import { RiderEntity } from './Rider.entity';
-import { TaskPoolEntity } from './TaskPool.entity';
-import { LocationReportEntity } from './LocationReport.entity';
-import { OrderTrajectoryEntity } from './OrderTrajectory.entity';
-import { TimeoutWarningEntity } from './TimeoutWarning.entity';
-import { ComplaintEntity } from './Complaint.entity';
-import { OfflineSyncRecordEntity } from './OfflineSyncRecord.entity';
+import { RiderEntity } from './Rider.entity.js';
+import { TaskPoolEntity } from './TaskPool.entity.js';
+import { LocationReportEntity } from './LocationReport.entity.js';
+import { OrderTrajectoryEntity } from './OrderTrajectory.entity.js';
+import { TimeoutWarningEntity } from './TimeoutWarning.entity.js';
+import { ComplaintEntity } from './Complaint.entity.js';
+import { OfflineSyncRecordEntity } from './OfflineSyncRecord.entity.js';
 import { Coordinate, OrderType, OrderStatus } from '@shared/types';
 
 @Entity('orders')
@@ -26,7 +26,7 @@ export class OrderEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 32, unique: true })
+  @Column({ type: 'varchar', length: 32, unique: true })
   orderNo: string;
 
   @Column({
@@ -36,7 +36,7 @@ export class OrderEntity {
   })
   type: OrderType;
 
-  @Column({ length: 200 })
+  @Column({ type: 'varchar', length: 200 })
   title: string;
 
   @Column({ type: 'text', nullable: true })
@@ -54,34 +54,34 @@ export class OrderEntity {
   @Column({ type: 'int' })
   estimatedTime: number;
 
-  @Column({ length: 500 })
+  @Column({ type: 'varchar', length: 500 })
   pickupAddress: string;
 
   @Column({ type: 'jsonb' })
   pickupLocation: Coordinate;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   pickupName?: string;
 
-  @Column({ length: 20, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   pickupPhone?: string;
 
-  @Column({ length: 500 })
+  @Column({ type: 'varchar', length: 500 })
   deliveryAddress: string;
 
   @Column({ type: 'jsonb' })
   deliveryLocation: Coordinate;
 
-  @Column({ length: 50 })
+  @Column({ type: 'varchar', length: 50 })
   deliveryName: string;
 
-  @Column({ length: 20 })
+  @Column({ type: 'varchar', length: 20 })
   deliveryPhone: string;
 
   @Column({ type: 'float', nullable: true })
   weight?: number;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   size?: string;
 
   @Column({ type: 'text', nullable: true })
@@ -109,7 +109,7 @@ export class OrderEntity {
   })
   status: OrderStatus;
 
-  @Column({ length: 36, nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   riderId?: string;
 
   @Column({ type: 'text', nullable: true })
@@ -134,7 +134,7 @@ export class OrderEntity {
   })
   source: 'system' | 'api' | 'manual';
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   externalOrderNo?: string;
 
   @CreateDateColumn()

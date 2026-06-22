@@ -1,17 +1,20 @@
 import 'reflect-metadata';
 import { createServer } from 'http';
-import dotenv from 'dotenv';
-import app from './app';
-import { AppDataSource } from './config/database';
-import { connectRedis } from './config/redis';
-import { initWebSocketService } from './services/websocket.service';
-import { startDispatchScheduler } from './services/dispatch.service';
-import { startTimeoutMonitor } from './services/timeout.service';
+import path from 'path';
+import app from './app.js';
+import { AppDataSource } from './config/database.js';
+import { connectRedis } from './config/redis.js';
+import { initWebSocketService } from './services/websocket.service.js';
+import { startDispatchScheduler } from './services/dispatch.service.js';
+import { startTimeoutMonitor } from './services/timeout.service.js';
+import { seedDemoData } from './utils/seed.js';
+import { loadProjectEnv } from './utils/loadEnv.js';
 
-dotenv.config();
+loadProjectEnv();
 
-const PORT = parseInt(process.env.SERVER_PORT || '3000');
-const WS_PORT = parseInt(process.env.WS_PORT || '3001');
+const PORT = parseInt(process.env.BACKEND_PORT || process.env.SERVER_PORT || '59312');
+const WS_PORT = parseInt(process.env.WS_PORT || '59313');
+const HOST = '127.0.0.1';
 
 const startServer = async () => {
   try {
@@ -19,6 +22,8 @@ const startServer = async () => {
 
     await AppDataSource.initialize();
     console.log('数据库连接成功');
+    await seedDemoData();
+    console.log('演示数据已就绪');
 
     await connectRedis();
     console.log('Redis 连接成功');
@@ -35,13 +40,13 @@ const startServer = async () => {
     startTimeoutMonitor();
     console.log('超时监控服务已启动');
 
-    httpServer.listen(PORT, () => {
-      console.log(`HTTP 服务运行在 http://localhost:${PORT}`);
-      console.log(`API 文档: http://localhost:${PORT}/api/v1/docs`);
+    httpServer.listen(PORT, HOST, () => {
+      console.log(`HTTP 服务运行在 http://${HOST}:${PORT}`);
+      console.log(`健康检查: http://${HOST}:${PORT}/api/health`);
     });
 
-    wsServer.listen(WS_PORT, () => {
-      console.log(`WebSocket 服务运行在 ws://localhost:${WS_PORT}`);
+    wsServer.listen(WS_PORT, HOST, () => {
+      console.log(`WebSocket 服务运行在 ws://${HOST}:${WS_PORT}`);
     });
 
     const shutdown = async (signal: string) => {

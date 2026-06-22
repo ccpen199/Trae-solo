@@ -13,7 +13,7 @@ export const authService = {
   },
 
   register: (data: RiderRegisterRequest) => {
-    return post<Rider>('/auth/register', data);
+    return post<{ token: string; rider: Rider }>('/auth/register', data).then((result) => result.rider);
   },
 
   login: (data: RiderLoginRequest) => {
@@ -25,7 +25,7 @@ export const authService = {
   },
 
   getProfile: () => {
-    return get<Rider>('/auth/me');
+    return get<Rider>('/auth/profile');
   },
 
   submitRealNameAuth: (data: RiderRealNameRequest) => {

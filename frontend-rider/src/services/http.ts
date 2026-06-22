@@ -28,7 +28,7 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response: AxiosResponse) => {
     const { code, message: msg, data } = response.data;
-    if (code === 0) {
+    if (code === 0 || code === 200 || code === 201) {
       return data;
     } else {
       message.error(msg || '请求失败');

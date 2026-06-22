@@ -8,8 +8,8 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { RiderEntity } from './Rider.entity';
-import { OrderEntity } from './Order.entity';
+import { RiderEntity } from './Rider.entity.js';
+import { OrderEntity } from './Order.entity.js';
 
 @Entity('complaints')
 @Index(['orderId', 'status'])
@@ -18,10 +18,10 @@ export class ComplaintEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   orderId: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   reporterId: string;
 
   @Column({
@@ -50,7 +50,7 @@ export class ComplaintEntity {
   })
   status: 'pending' | 'processing' | 'resolved' | 'rejected';
 
-  @Column({ length: 36, nullable: true })
+  @Column({ type: 'varchar', length: 36, nullable: true })
   handlerId?: string;
 
   @Column({ type: 'text', nullable: true })

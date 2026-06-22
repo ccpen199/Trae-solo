@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { authenticateRider } from '../middleware/auth';
-import { validate } from '../middleware/validation';
-import { success, error } from '../utils/response';
-import { AppDataSource } from '../config/database';
-import { OrderEntity } from '../entities/Order.entity';
-import { TaskPoolEntity } from '../entities/TaskPool.entity';
-import { RiderEntity } from '../entities/Rider.entity';
-import { OrderTrajectoryEntity } from '../entities/OrderTrajectory.entity';
-import { OfflineSyncRecordEntity } from '../entities/OfflineSyncRecord.entity';
-import { getDispatchService } from '../services/dispatch.service';
-import { generateOrderNo, calculateDistance } from '../utils/geolocation';
-import { NotFoundError, ValidationError } from '../middleware/errorHandler';
+import { authenticateRider } from '../middleware/auth.js';
+import { validate } from '../middleware/validation.js';
+import { success, error } from '../utils/response.js';
+import { AppDataSource } from '../config/database.js';
+import { OrderEntity } from '../entities/Order.entity.js';
+import { TaskPoolEntity } from '../entities/TaskPool.entity.js';
+import { RiderEntity } from '../entities/Rider.entity.js';
+import { OrderTrajectoryEntity } from '../entities/OrderTrajectory.entity.js';
+import { OfflineSyncRecordEntity } from '../entities/OfflineSyncRecord.entity.js';
+import { getDispatchService } from '../services/dispatch.service.js';
+import { generateOrderNo, calculateDistance } from '../utils/geolocation.js';
+import { NotFoundError, ValidationError } from '../middleware/errorHandler.js';
 import { OrderCreateRequest, OrderStatus, OrderStatusUpdateRequest } from '@shared/types';
 
 const router = Router();
@@ -93,7 +93,7 @@ router.post('/', validate(createOrderSchema), async (req, res, next) => {
   }
 });
 
-router.get('/my-orders', authenticateRider, async (req, res, next) => {
+router.get(['/my', '/my-orders'], authenticateRider, async (req, res, next) => {
   try {
     const riderId = req.user!.riderId;
     const { status, page = 1, pageSize = 20 } = req.query;
@@ -112,7 +112,7 @@ router.get('/my-orders', authenticateRider, async (req, res, next) => {
     });
 
     success(res, {
-      data: orders,
+      items: orders,
       total,
       page: Number(page),
       pageSize: Number(pageSize),

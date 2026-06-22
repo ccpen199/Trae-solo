@@ -7,7 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { OrderEntity } from './Order.entity';
+import { OrderEntity } from './Order.entity.js';
 import { Coordinate } from '@shared/types';
 
 @Entity('order_trajectories')
@@ -15,10 +15,10 @@ export class OrderTrajectoryEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   orderId: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   riderId: string;
 
   @Column({ type: 'jsonb' })

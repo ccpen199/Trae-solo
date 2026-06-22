@@ -8,7 +8,7 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { RiderEntity } from './Rider.entity';
+import { RiderEntity } from './Rider.entity.js';
 import { AuditType, AuditLevel, AuditStatus } from '@shared/types';
 
 @Entity('audit_flows')
@@ -24,13 +24,13 @@ export class AuditFlowEntity {
   })
   type: AuditType;
 
-  @Column({ length: 200 })
+  @Column({ type: 'varchar', length: 200 })
   title: string;
 
   @Column({ type: 'text', nullable: true })
   description?: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   applicantId: string;
 
   @Column({

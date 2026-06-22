@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, message } from 'antd';
+import { Form, Input, Button, Checkbox, message, Typography } from 'antd';
 import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { useAuthStore } from '@/store/authStore';
 import { authService } from '@/services/auth.service';
+
+const { Text } = Typography;
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -45,6 +47,16 @@ const Login: React.FC = () => {
     } catch (error) {
       console.error('Login error:', error);
     }
+  };
+
+  const handleDemoLogin = async () => {
+    const demoValues = {
+      phone: '13900000001',
+      password: 'rider123',
+      code: '123456',
+    };
+    form.setFieldsValue(demoValues);
+    await handleSubmit(demoValues);
   };
 
   return (
@@ -94,7 +106,7 @@ const Login: React.FC = () => {
             {codeVisible && (
               <Form.Item
                 name="code"
-                rules={[{ required: true, message: '请输入验证码' }]}
+                extra="本地演示环境下验证码可留空"
               >
                 <div className="flex gap-2">
                   <Input
@@ -135,6 +147,19 @@ const Login: React.FC = () => {
               </Button>
             </Form.Item>
           </Form>
+
+          <div className="mt-4 rounded-xl bg-blue-50 px-4 py-3">
+            <Text className="block text-sm text-blue-700">演示账号：13900000001 / rider123</Text>
+            <Button type="default" block className="mt-3" onClick={() => void handleDemoLogin()} disabled={loading}>
+              一键进入骑手演示
+            </Button>
+            <a
+              className="mt-3 block text-center text-sm text-blue-600"
+              href={(import.meta.env.VITE_ADMIN_URL as string) || 'http://127.0.0.1:49313/login'}
+            >
+              打开管理后台
+            </a>
+          </div>
 
           <div className="text-center text-sm text-gray-500">
             还没有账号？

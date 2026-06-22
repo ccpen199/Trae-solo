@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import authRoutes from './auth.routes';
-import riderRoutes from './rider.routes';
-import orderRoutes from './order.routes';
-import taskRoutes from './task.routes';
-import trackingRoutes from './tracking.routes';
-import auditRoutes from './audit.routes';
-import adminRoutes from './admin.routes';
-import apiRoutes from './api.routes';
+import authRoutes from './auth.routes.js';
+import riderRoutes from './rider.routes.js';
+import orderRoutes from './order.routes.js';
+import taskRoutes from './task.routes.js';
+import trackingRoutes from './tracking.routes.js';
+import auditRoutes from './audit.routes.js';
+import adminRoutes from './admin.routes.js';
+import apiRoutes from './api.routes.js';
 
 const router = Router();
 

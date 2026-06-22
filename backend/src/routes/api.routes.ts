@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { validate } from '../middleware/validation';
-import { success, error } from '../utils/response';
-import { AppDataSource } from '../config/database';
-import { OrderEntity } from '../entities/Order.entity';
-import { RiderEntity } from '../entities/Rider.entity';
-import { getDispatchService } from '../services/dispatch.service';
-import { NotFoundError, ValidationError } from '../middleware/errorHandler';
+import { validate } from '../middleware/validation.js';
+import { success, error } from '../utils/response.js';
+import { AppDataSource } from '../config/database.js';
+import { OrderEntity } from '../entities/Order.entity.js';
+import { RiderEntity } from '../entities/Rider.entity.js';
+import { getDispatchService } from '../services/dispatch.service.js';
+import { NotFoundError, ValidationError } from '../middleware/errorHandler.js';
 import axios from 'axios';
 import { ApiDispatchRequest, ApiDispatchResponse } from '@shared/types';
 

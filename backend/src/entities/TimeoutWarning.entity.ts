@@ -8,7 +8,7 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { OrderEntity } from './Order.entity';
+import { OrderEntity } from './Order.entity.js';
 
 @Entity('timeout_warnings')
 @Index(['orderId', 'warningType'])
@@ -17,10 +17,10 @@ export class TimeoutWarningEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   orderId: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   riderId: string;
 
   @Column({

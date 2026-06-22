@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { authenticateRider, generateToken } from '../middleware/auth';
-import { validate } from '../middleware/validation';
-import { success, error } from '../utils/response';
-import { AppDataSource } from '../config/database';
-import { RiderEntity } from '../entities/Rider.entity';
-import { RiderPreferenceEntity } from '../entities/RiderPreference.entity';
+import { authenticateRider, generateToken } from '../middleware/auth.js';
+import { validate } from '../middleware/validation.js';
+import { success, error } from '../utils/response.js';
+import { AppDataSource } from '../config/database.js';
+import { RiderEntity } from '../entities/Rider.entity.js';
+import { RiderPreferenceEntity } from '../entities/RiderPreference.entity.js';
 import bcrypt from 'bcryptjs';
-import { NotFoundError, ValidationError } from '../middleware/errorHandler';
+import jwt from 'jsonwebtoken';
+import { NotFoundError, ValidationError } from '../middleware/errorHandler.js';
 import { VehicleType } from '@shared/types';
 
 const router = Router();
@@ -26,6 +27,15 @@ const loginSchema = Joi.object({
   phone: Joi.string().length(11).pattern(/^1[3-9]\d{9}$/).required(),
   password: Joi.string().min(6).max(32).required(),
 });
+
+function serializeRider(rider: RiderEntity) {
+  const { password, ...rest } = rider;
+  return {
+    ...rest,
+    name: rider.realName || rider.nickname,
+    onlineStatus: rider.isOnline ? 'online' : 'offline',
+  };
+}
 
 router.post('/register', validate(registerSchema), async (req, res, next) => {
   try {
@@ -78,11 +88,9 @@ router.post('/register', validate(registerSchema), async (req, res, next) => {
       phone: rider.phone,
     });
 
-    const { password: _, ...riderWithoutPassword } = rider;
-
     success(res, {
       token,
-      rider: riderWithoutPassword,
+      rider: serializeRider(rider),
     }, '注册成功');
   } catch (err) {
     next(err);
@@ -113,18 +121,16 @@ router.post('/login', validate(loginSchema), async (req, res, next) => {
       phone: rider.phone,
     });
 
-    const { password: _, ...riderWithoutPassword } = rider;
-
     success(res, {
       token,
-      rider: riderWithoutPassword,
+      rider: serializeRider(rider),
     }, '登录成功');
   } catch (err) {
     next(err);
   }
 });
 
-router.get('/profile', authenticateRider, async (req, res, next) => {
+router.get(['/profile', '/me'], authenticateRider, async (req, res, next) => {
   try {
     const riderId = req.user!.riderId;
     const riderRepo = AppDataSource.getRepository(RiderEntity);
@@ -138,9 +144,7 @@ router.get('/profile', authenticateRider, async (req, res, next) => {
       throw new NotFoundError('骑手不存在');
     }
 
-    const { password: _, ...riderWithoutPassword } = rider;
-
-    success(res, riderWithoutPassword);
+    success(res, serializeRider(rider));
   } catch (err) {
     next(err);
   }
@@ -171,6 +175,42 @@ router.post('/send-code', async (req, res, next) => {
     console.log(`发送验证码到 ${phone}: ${code}`);
 
     success(res, { sent: true }, '验证码已发送');
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/admin-login', async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const adminUsername = process.env.ADMIN_USERNAME || 'admin';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+
+    if (username !== adminUsername || password !== adminPassword) {
+      throw new ValidationError('用户名或密码错误');
+    }
+
+    const token = jwt.sign(
+      {
+        riderId: 'admin',
+        phone: adminUsername,
+        isAdmin: true,
+      },
+      process.env.JWT_SECRET || 'dispatch-secret-key-2024',
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN || '24h',
+      }
+    );
+
+    success(res, {
+      token,
+      admin: {
+        id: 'admin',
+        username: adminUsername,
+        name: '本地管理员',
+        role: 'admin',
+      },
+    }, '登录成功');
   } catch (err) {
     next(err);
   }

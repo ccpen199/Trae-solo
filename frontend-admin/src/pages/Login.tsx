@@ -18,6 +18,14 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleDemoFill = () => {
+    const form = {
+      username: 'admin',
+      password: 'admin123',
+    };
+    void onFinish(form);
+  };
+
   return (
     <div className="login-container">
       <Card className="login-card" title="运营管理后台">
@@ -37,6 +45,11 @@ const Login: React.FC = () => {
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} block>
               登录
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button onClick={handleDemoFill} block disabled={loading}>
+              一键进入演示后台
             </Button>
           </Form.Item>
         </Form>

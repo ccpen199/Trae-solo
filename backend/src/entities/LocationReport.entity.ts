@@ -8,8 +8,8 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { RiderEntity } from './Rider.entity';
-import { OrderEntity } from './Order.entity';
+import { RiderEntity } from './Rider.entity.js';
+import { OrderEntity } from './Order.entity.js';
 import { Coordinate } from '@shared/types';
 
 @Entity('location_reports')
@@ -19,10 +19,10 @@ export class LocationReportEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   riderId: string;
 
-  @Column({ length: 36, nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   orderId?: string;
 
   @Column({ type: 'jsonb' })

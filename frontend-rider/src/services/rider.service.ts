@@ -10,15 +10,15 @@ import type {
 
 export const riderService = {
   getPreferences: () => {
-    return get<RiderPreference>('/rider/preferences');
+    return get<RiderPreference>('/rider/preference');
   },
 
   updatePreferences: (data: RiderPreferenceRequest) => {
-    return put<RiderPreference>('/rider/preferences', data);
+    return put<RiderPreference>('/rider/preference', data);
   },
 
   getStats: () => {
-    return get<RiderStats>('/rider/stats');
+    return get<RiderStats>('/rider/statistics');
   },
 
   getCreditHistory: (page = 1, pageSize = 20) => {
@@ -28,6 +28,6 @@ export const riderService = {
   },
 
   updateOnlineStatus: (data: OnlineStatusRequest) => {
-    return post<Rider>('/rider/online-status', data);
+    return post<Rider>('/rider/online-status', { isOnline: data.online });
   },
 };

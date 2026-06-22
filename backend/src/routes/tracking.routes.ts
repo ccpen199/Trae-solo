@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { authenticateRider } from '../middleware/auth';
-import { validate } from '../middleware/validation';
-import { success } from '../utils/response';
-import { AppDataSource } from '../config/database';
-import { LocationReportEntity } from '../entities/LocationReport.entity';
-import { OrderTrajectoryEntity } from '../entities/OrderTrajectory.entity';
-import { getTimeoutService } from '../services/timeout.service';
+import { authenticateRider } from '../middleware/auth.js';
+import { validate } from '../middleware/validation.js';
+import { success } from '../utils/response.js';
+import { AppDataSource } from '../config/database.js';
+import { LocationReportEntity } from '../entities/LocationReport.entity.js';
+import { OrderTrajectoryEntity } from '../entities/OrderTrajectory.entity.js';
+import { getTimeoutService } from '../services/timeout.service.js';
 import { LocationReport } from '@shared/types';
 
 const router = Router();

@@ -1,11 +1,11 @@
-import { AppDataSource } from '../config/database';
-import { TaskPoolEntity } from '../entities/TaskPool.entity';
-import { OrderEntity } from '../entities/Order.entity';
-import { RiderEntity } from '../entities/Rider.entity';
-import { RiderPreferenceEntity } from '../entities/RiderPreference.entity';
-import { DispatchRuleEntity } from '../entities/DispatchRule.entity';
-import { getWebSocketService } from './websocket.service';
-import { calculateDistance } from '../utils/geolocation';
+import { AppDataSource } from '../config/database.js';
+import { TaskPoolEntity } from '../entities/TaskPool.entity.js';
+import { OrderEntity } from '../entities/Order.entity.js';
+import { RiderEntity } from '../entities/Rider.entity.js';
+import { RiderPreferenceEntity } from '../entities/RiderPreference.entity.js';
+import { DispatchRuleEntity } from '../entities/DispatchRule.entity.js';
+import { getWebSocketService } from './websocket.service.js';
+import { calculateDistance } from '../utils/geolocation.js';
 import { DispatchResult, TaskPushMessage, DispatchMode, TaskPoolStatus } from '@shared/types';
 
 export class DispatchService {
@@ -405,7 +405,6 @@ export class DispatchService {
 
   public async getAvailableTasks(riderId: string, page: number = 1, pageSize: number = 20) {
     const taskRepo = AppDataSource.getRepository(TaskPoolEntity);
-    const orderRepo = AppDataSource.getRepository(OrderEntity);
     const riderRepo = AppDataSource.getRepository(RiderEntity);
     const prefRepo = AppDataSource.getRepository(RiderPreferenceEntity);
 
@@ -417,40 +416,58 @@ export class DispatchService {
     }
 
     const now = new Date();
-    const query = taskRepo
-      .createQueryBuilder('task')
-      .innerJoinAndMapOne('task.order', OrderEntity, 'order', 'task.orderId = order.id')
-      .where('task.status = :status', { status: 'available' })
-      .andWhere('task.dispatchMode IN (:...modes)', { modes: ['manual', 'hybrid'] })
-      .andWhere('task.expireTime > :now', { now })
-      .andWhere('order.status = :orderStatus', { orderStatus: 'pending' });
+    const tasks = await taskRepo.find({
+      where: { status: 'available' },
+      relations: ['order'],
+      order: { priority: 'DESC', createdAt: 'DESC' },
+    });
 
-    if (preference) {
-      query.andWhere('order.type IN (:...types)', { types: preference.orderTypes });
-      query.andWhere('order.amount >= :minAmount', { minAmount: preference.minOrderAmount });
-    }
+    const filteredTasks = tasks
+      .filter((task) => {
+        if (!task.order) return false;
+        if (!['manual', 'hybrid'].includes(task.dispatchMode)) return false;
+        if (task.expireTime <= now) return false;
+        if (task.order.status !== 'pending') return false;
+        if (preference?.orderTypes?.length && !preference.orderTypes.includes(task.order.type)) {
+          return false;
+        }
+        if (preference && Number(task.order.amount) < Number(preference.minOrderAmount || 0)) {
+          return false;
+        }
+        return true;
+      })
+      .map((task) => {
+        const distance = rider.currentLocation
+          ? calculateDistance(rider.currentLocation, task.order.pickupLocation)
+          : undefined;
 
-    if (rider.currentLocation) {
-      query.addSelect(
-        `ST_Distance_Sphere(
-          ST_MakePoint(${rider.currentLocation.longitude}, ${rider.currentLocation.latitude}),
-          ST_MakePoint((order.pickupLocation->>'longitude')::float, (order.pickupLocation->>'latitude')::float)
-        )`,
-        'distance'
-      );
-      query.orderBy('distance', 'ASC');
-    } else {
-      query.orderBy('task.priority', 'DESC');
-    }
+        return {
+          task,
+          distance,
+        };
+      })
+      .filter(({ distance }) => {
+        if (!preference || distance === undefined) return true;
+        return distance <= preference.maxDistance;
+      })
+      .sort((left, right) => {
+        if (left.distance !== undefined && right.distance !== undefined) {
+          return left.distance - right.distance;
+        }
+        return right.task.priority - left.task.priority;
+      });
 
-    query.addOrderBy('task.createdAt', 'DESC');
+    const total = filteredTasks.length;
+    const pagedTasks = filteredTasks
+      .slice((page - 1) * pageSize, page * pageSize)
+      .map(({ task, distance }) => {
+        task.distance = distance;
+        task.estimatedAmount = Number(task.order.amount) + Number(task.order.tip || 0);
+        task.estimatedTime = task.order.estimatedTime;
+        return task;
+      });
 
-    const [tasks, total] = await query
-      .skip((page - 1) * pageSize)
-      .take(pageSize)
-      .getManyAndCount();
-
-    return { data: tasks, total, page, pageSize };
+    return { data: pagedTasks, total, page, pageSize };
   }
 }
 

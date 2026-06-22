@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { authenticateRider } from '../middleware/auth';
-import { validate } from '../middleware/validation';
-import { success, error } from '../utils/response';
-import { getDispatchService } from '../services/dispatch.service';
-import { NotFoundError, ValidationError } from '../middleware/errorHandler';
+import { authenticateRider } from '../middleware/auth.js';
+import { validate } from '../middleware/validation.js';
+import { success, error } from '../utils/response.js';
+import { getDispatchService } from '../services/dispatch.service.js';
+import { AppDataSource } from '../config/database.js';
+import { OrderEntity } from '../entities/Order.entity.js';
+import { TaskPoolEntity } from '../entities/TaskPool.entity.js';
 
 const router = Router();
 
@@ -28,7 +30,12 @@ router.get('/available', authenticateRider, async (req, res, next) => {
       Number(pageSize)
     );
 
-    success(res, result);
+    success(res, {
+      items: result.data,
+      total: result.total,
+      page: result.page,
+      pageSize: result.pageSize,
+    });
   } catch (err) {
     next(err);
   }
@@ -43,7 +50,10 @@ router.post('/grab', authenticateRider, validate(grabOrderSchema), async (req, r
     const result = await dispatchService.grabTask(taskId, riderId);
 
     if (result.success) {
-      success(res, { orderId: result.orderId }, result.message);
+      const order = result.orderId
+        ? await AppDataSource.getRepository(OrderEntity).findOne({ where: { id: result.orderId } })
+        : null;
+      success(res, { success: true, orderId: result.orderId, order }, result.message);
     } else {
       error(res, result.message, 400);
     }
@@ -61,7 +71,8 @@ router.post('/accept', authenticateRider, validate(acceptTaskSchema), async (req
     const result = await dispatchService.acceptTask(taskId, riderId);
 
     if (result) {
-      success(res, result, '接单成功');
+      const order = await AppDataSource.getRepository(OrderEntity).findOne({ where: { id: result.orderId } });
+      success(res, { ...result, success: true, order }, '接单成功');
     } else {
       error(res, '接单失败，任务可能已被其他骑手接走或已过期', 400);
     }
@@ -70,23 +81,20 @@ router.post('/accept', authenticateRider, validate(acceptTaskSchema), async (req
   }
 });
 
-router.get('/my-current', authenticateRider, async (req, res, next) => {
+router.get(['/current', '/my-current'], authenticateRider, async (req, res, next) => {
   try {
     const riderId = req.user!.riderId;
-    const { AppDataSource } = await import('../config/database');
-    const { OrderEntity } = await import('../entities/Order.entity');
-
-    const orderRepo = AppDataSource.getRepository(OrderEntity);
-    const currentOrder = await orderRepo.findOne({
+    const taskRepo = AppDataSource.getRepository(TaskPoolEntity);
+    const currentTask = await taskRepo.findOne({
       where: [
-        { riderId, status: 'accepted' },
-        { riderId, status: 'picking_up' },
-        { riderId, status: 'delivering' },
+        { assignedRiderId: riderId, status: 'accepted' },
+        { assignedRiderId: riderId, status: 'dispatched' },
       ],
-      order: { createdAt: 'DESC' },
+      relations: ['order'],
+      order: { updatedAt: 'DESC' },
     });
 
-    success(res, currentOrder || null);
+    success(res, currentTask || null);
   } catch (err) {
     next(err);
   }

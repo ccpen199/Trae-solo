@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { error } from '../utils/response';
+import { error } from '../utils/response.js';
 import { TokenPayload } from '@shared/types';
 
 declare module 'express' {

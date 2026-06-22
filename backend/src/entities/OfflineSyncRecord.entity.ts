@@ -14,7 +14,7 @@ export class OfflineSyncRecordEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   riderId: string;
 
   @Column({

@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import Joi from 'joi';
-import { authenticateRider } from '../middleware/auth';
-import { validate } from '../middleware/validation';
-import { success, error } from '../utils/response';
-import { AppDataSource } from '../config/database';
-import { RiderEntity } from '../entities/Rider.entity';
-import { RiderPreferenceEntity } from '../entities/RiderPreference.entity';
-import { CreditHistoryEntity } from '../entities/CreditHistory.entity';
-import { AuditFlowEntity } from '../entities/AuditFlow.entity';
-import { NotFoundError, ValidationError } from '../middleware/errorHandler';
+import { authenticateRider } from '../middleware/auth.js';
+import { validate } from '../middleware/validation.js';
+import { success, error } from '../utils/response.js';
+import { AppDataSource } from '../config/database.js';
+import { RiderEntity } from '../entities/Rider.entity.js';
+import { RiderPreferenceEntity } from '../entities/RiderPreference.entity.js';
+import { CreditHistoryEntity } from '../entities/CreditHistory.entity.js';
+import { AuditFlowEntity } from '../entities/AuditFlow.entity.js';
+import { NotFoundError, ValidationError } from '../middleware/errorHandler.js';
 import { RealNameAuthRequest, RiderStatistics } from '@shared/types';
 
 const router = Router();

@@ -8,7 +8,7 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { OrderEntity } from './Order.entity';
+import { OrderEntity } from './Order.entity.js';
 import { DispatchMode, TaskPoolStatus, OrderType } from '@shared/types';
 
 @Entity('task_pool')
@@ -18,7 +18,7 @@ export class TaskPoolEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 36 })
+  @Column({ type: 'uuid' })
   orderId: string;
 
   @Column({
@@ -45,7 +45,7 @@ export class TaskPoolEntity {
   @Column({ type: 'int', default: 0 })
   priority: number;
 
-  @Column({ length: 36, nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   assignedRiderId?: string;
 
   @Column({ type: 'timestamp', nullable: true })
