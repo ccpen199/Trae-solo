@@ -18,13 +18,13 @@ class AlertController {
         return res.status(400).json({ code: 400, message: '无效的策略类型' });
       }
 
-      const result = db.prepare(`
+      const result = await db.run(`
         INSERT INTO storage_policies (
           name, owner_id, device_id, group_id,
           policy_type, retention_days,
           schedule_config, smart_tags
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
+      `,
         name, req.user.id,
         deviceId || null,
         groupId || null,
@@ -34,7 +34,7 @@ class AlertController {
         smartTags ? JSON.stringify(smartTags) : null
       );
 
-      const policy = db.prepare('SELECT * FROM storage_policies WHERE id = ?').get(result.lastInsertRowid);
+      const policy = await db.get('SELECT * FROM storage_policies WHERE id = ?', result.lastID);
       res.json({ code: 200, message: '创建成功', data: policy });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -44,7 +44,7 @@ class AlertController {
   async updateStoragePolicy(req, res) {
     try {
       const { id } = req.params;
-      const policy = db.prepare('SELECT * FROM storage_policies WHERE id = ? AND owner_id = ?').get(id, req.user.id);
+      const policy = await db.get('SELECT * FROM storage_policies WHERE id = ? AND owner_id = ?', id, req.user.id);
       if (!policy) return res.status(404).json({ code: 404, message: '策略不存在' });
 
       const {
@@ -52,7 +52,7 @@ class AlertController {
         retentionDays, scheduleConfig, smartTags, status
       } = req.body;
 
-      db.prepare(`
+      await db.run(`
         UPDATE storage_policies SET
           name = COALESCE(?, name),
           device_id = ?,
@@ -63,7 +63,7 @@ class AlertController {
           smart_tags = ?,
           status = COALESCE(?, status)
         WHERE id = ?
-      `).run(
+      `,
         name || null,
         deviceId === undefined ? null : deviceId,
         groupId === undefined ? null : groupId,
@@ -83,14 +83,14 @@ class AlertController {
 
   async listStoragePolicies(req, res) {
     try {
-      const policies = db.prepare(`
+      const policies = await db.all(`
         SELECT sp.*, d.name as device_name, dg.name as group_name
         FROM storage_policies sp
         LEFT JOIN devices d ON sp.device_id = d.id
         LEFT JOIN device_groups dg ON sp.group_id = dg.id
         WHERE sp.owner_id = ?
         ORDER BY sp.created_at DESC
-      `).all(req.user.id);
+      `, req.user.id);
 
       res.json({ code: 200, data: policies });
     } catch (e) {
@@ -101,10 +101,10 @@ class AlertController {
   async deleteStoragePolicy(req, res) {
     try {
       const { id } = req.params;
-      const policy = db.prepare('SELECT * FROM storage_policies WHERE id = ? AND owner_id = ?').get(id, req.user.id);
+      const policy = await db.get('SELECT * FROM storage_policies WHERE id = ? AND owner_id = ?', id, req.user.id);
       if (!policy) return res.status(404).json({ code: 404, message: '策略不存在' });
 
-      db.prepare('DELETE FROM storage_policies WHERE id = ?').run(id);
+      await db.run('DELETE FROM storage_policies WHERE id = ?', id);
       res.json({ code: 200, message: '删除成功' });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -123,7 +123,7 @@ class AlertController {
         return res.status(400).json({ code: 400, message: '必要参数缺失' });
       }
 
-      const device = db.prepare('SELECT * FROM devices WHERE device_sn = ?').get(deviceSN);
+      const device = await db.get('SELECT * FROM devices WHERE device_sn = ?', deviceSN);
       if (!device) return res.status(404).json({ code: 404, message: '设备未注册' });
 
       const snapshotDir = path.join(config.uploadPath, 'snapshots', String(device.owner_id));
@@ -148,14 +148,14 @@ class AlertController {
         }
       }
 
-      const result = db.prepare(`
+      const result = await db.run(`
         INSERT INTO ai_events (
           device_id, event_type, event_level, confidence,
           snapshot_path,
           location_x, location_y, location_w, location_h,
           description, smart_tags
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
+      `,
         device.id,
         eventType,
         eventLevel,
@@ -169,7 +169,7 @@ class AlertController {
         smartTags ? JSON.stringify(smartTags) : null
       );
 
-      const eventId = result.lastInsertRowid;
+      const eventId = result.lastID;
 
       await this.triggerAlerts(eventId, device, eventType, eventLevel, description, snapshotPath);
 
@@ -178,24 +178,24 @@ class AlertController {
         fs.mkdirSync(recordDir, { recursive: true });
       }
 
-      const policies = db.prepare(`
+      const policies = await db.all(`
         SELECT * FROM storage_policies
         WHERE owner_id = ? AND status = 1
           AND (device_id = ? OR group_id = ? OR (device_id IS NULL AND group_id IS NULL))
           AND policy_type IN ('event', 'smart')
-      `).all(device.owner_id, device.id, device.group_id);
+      `, device.owner_id, device.id, device.group_id);
 
       if (policies.length > 0) {
         const startTime = new Date();
         const fileName = `${device.id}_event_${eventId}_${startTime.getTime()}.mp4`;
         const filePath = path.join(recordDir, fileName);
 
-        db.prepare(`
+        await db.run(`
           INSERT INTO recordings (
             device_id, file_path, file_name, start_time,
             record_type, event_id, duration
           ) VALUES (?, ?, ?, ?, 'event', ?, 30)
-        `).run(device.id, filePath, fileName, startTime.toISOString(), eventId);
+        `, device.id, filePath, fileName, startTime.toISOString(), eventId);
       }
 
       const wss = require('../websocket/streamServer');
@@ -221,7 +221,7 @@ class AlertController {
   async triggerAlerts(eventId, device, eventType, eventLevel, description, snapshotPath) {
     try {
       const userId = device.owner_id;
-      const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+      const user = await db.get('SELECT * FROM users WHERE id = ?', userId);
       if (!user) return;
 
       const titleMap = {
@@ -240,12 +240,12 @@ class AlertController {
       if (user.phone && ['high', 'critical'].includes(eventLevel)) channels.push('sms');
       channels.push('wechat');
 
-      const alertResult = db.prepare(`
+      const alertResult = await db.run(`
         INSERT INTO alerts (
           event_id, device_id, user_id, alert_type,
           title, content, channels
         ) VALUES (?, ?, ?, ?, ?, ?, ?)
-      `).run(
+      `,
         eventId, device.id, userId,
         eventType,
         title,
@@ -253,7 +253,7 @@ class AlertController {
         JSON.stringify(channels)
       );
 
-      const alertId = alertResult.lastInsertRowid;
+      const alertId = alertResult.lastID;
       const sentChannels = [];
       sentChannels.push('inapp');
 
@@ -280,18 +280,18 @@ class AlertController {
         }
       }
 
-      db.prepare('UPDATE alerts SET sent_channels = ?, status = 1 WHERE id = ?').run(
+      await db.run('UPDATE alerts SET sent_channels = ?, status = 1 WHERE id = ?',
         JSON.stringify(sentChannels), alertId
       );
 
-      const familyMembers = db.prepare('SELECT id FROM users WHERE parent_id = ?').all(userId);
+      const familyMembers = await db.all('SELECT id FROM users WHERE parent_id = ?', userId);
       for (const member of familyMembers) {
-        db.prepare(`
+        await db.run(`
           INSERT INTO alerts (
             event_id, device_id, user_id, alert_type,
             title, content, channels, status, sent_channels
           ) VALUES (?, ?, ?, ?, ?, ?, ?, 1, '["inapp"]')
-        `).run(
+        `,
           eventId, device.id, member.id, eventType,
           title,
           description || `${device.name} 触发了${title}`,
@@ -358,16 +358,16 @@ class AlertController {
       }
 
       const where = 'WHERE ' + conditions.join(' AND ');
-      const events = db.prepare(`
+      const events = await db.all(`
         SELECT e.*, d.name as device_name, d.device_sn
         FROM ai_events e
         JOIN devices d ON e.device_id = d.id
         ${where}
         ORDER BY e.created_at DESC
         LIMIT ? OFFSET ?
-      `).all(...params, pageSize, offset);
+      `, ...params, pageSize, offset);
 
-      const total = db.prepare(`SELECT COUNT(*) as count FROM ai_events e JOIN devices d ON e.device_id = d.id ${where}`).get(...params).count;
+      const total = (await db.get(`SELECT COUNT(*) as count FROM ai_events e JOIN devices d ON e.device_id = d.id ${where}`, ...params)).count;
 
       res.json({
         code: 200,
@@ -413,7 +413,7 @@ class AlertController {
       }
 
       const where = 'WHERE ' + conditions.join(' AND ');
-      const alerts = db.prepare(`
+      const alerts = await db.all(`
         SELECT a.*, d.name as device_name,
           e.snapshot_path, e.event_level, e.confidence
         FROM alerts a
@@ -422,10 +422,10 @@ class AlertController {
         ${where}
         ORDER BY a.created_at DESC
         LIMIT ? OFFSET ?
-      `).all(...params, pageSize, offset);
+      `, ...params, pageSize, offset);
 
-      const total = db.prepare(`SELECT COUNT(*) as count FROM alerts a ${where}`).get(...params).count;
-      const unreadCount = db.prepare(`SELECT COUNT(*) as count FROM alerts a WHERE user_id = ? AND read_status = 0`).get(req.user.id).count;
+      const total = (await db.get(`SELECT COUNT(*) as count FROM alerts a ${where}`, ...params)).count;
+      const unreadCount = (await db.get(`SELECT COUNT(*) as count FROM alerts a WHERE user_id = ? AND read_status = 0`, req.user.id)).count;
 
       res.json({
         code: 200,
@@ -441,16 +441,16 @@ class AlertController {
     try {
       const { ids = [] } = req.body;
       if (ids.length === 0) {
-        db.prepare('UPDATE alerts SET read_status = 1 WHERE user_id = ? AND read_status = 0').run(req.user.id);
+        await db.run('UPDATE alerts SET read_status = 1 WHERE user_id = ? AND read_status = 0', req.user.id);
       } else {
         const placeholders = ids.map(() => '?').join(',');
-        db.prepare(`UPDATE alerts SET read_status = 1 WHERE user_id = ? AND id IN (${placeholders})`).run(req.user.id, ...ids);
+        await db.run(`UPDATE alerts SET read_status = 1 WHERE user_id = ? AND id IN (${placeholders})`, req.user.id, ...ids);
       }
 
-      db.prepare(`
+      await db.run(`
         INSERT INTO alert_audit_logs (alert_id, user_id, action, action_detail)
         VALUES (?, ?, 'read', '标记为已读')
-      `).run(ids[0] || 0, req.user.id);
+      `, ids[0] || 0, req.user.id);
 
       res.json({ code: 200, message: '操作成功' });
     } catch (e) {
@@ -463,10 +463,10 @@ class AlertController {
       const { alertId, action, detail } = req.body;
       const { getClientIp } = require('../utils/common');
 
-      db.prepare(`
+      await db.run(`
         INSERT INTO alert_audit_logs (alert_id, user_id, action, action_detail, ip)
         VALUES (?, ?, ?, ?, ?)
-      `).run(alertId, req.user.id, action, detail || '', getClientIp(req));
+      `, alertId, req.user.id, action, detail || '', getClientIp(req));
 
       res.json({ code: 200, message: '记录成功' });
     } catch (e) {
@@ -487,7 +487,7 @@ class AlertController {
         params.push(alertId);
       }
 
-      const logs = db.prepare(`
+      const logs = await db.all(`
         SELECT a.*, u.username, u.nickname,
           al.title as alert_title
         FROM alert_audit_logs a
@@ -496,9 +496,9 @@ class AlertController {
         ${where}
         ORDER BY a.created_at DESC
         LIMIT ? OFFSET ?
-      `).all(...params, pageSize, offset);
+      `, ...params, pageSize, offset);
 
-      const total = db.prepare(`SELECT COUNT(*) as count FROM alert_audit_logs a ${where}`).get(...params).count;
+      const total = (await db.get(`SELECT COUNT(*) as count FROM alert_audit_logs a ${where}`, ...params)).count;
 
       res.json({
         code: 200,
@@ -513,25 +513,25 @@ class AlertController {
     try {
       const userId = req.user.id;
 
-      const deviceCount = db.prepare('SELECT COUNT(*) as count FROM devices WHERE owner_id = ?').get(userId).count;
-      const onlineCount = db.prepare('SELECT COUNT(*) as count FROM devices WHERE owner_id = ? AND online_status = 1').get(userId).count;
+      const deviceCount = (await db.get('SELECT COUNT(*) as count FROM devices WHERE owner_id = ?', userId)).count;
+      const onlineCount = (await db.get('SELECT COUNT(*) as count FROM devices WHERE owner_id = ? AND online_status = 1', userId)).count;
       const today = new Date().toISOString().split('T')[0];
 
-      const todayEventCount = db.prepare(`
+      const todayEventCount = (await db.get(`
         SELECT COUNT(*) as count FROM ai_events e
         JOIN devices d ON e.device_id = d.id
         WHERE d.owner_id = ? AND DATE(e.created_at) = ?
-      `).get(userId, today).count;
+      `, userId, today)).count;
 
-      const eventTypeStats = db.prepare(`
+      const eventTypeStats = await db.all(`
         SELECT e.event_type, COUNT(*) as count
         FROM ai_events e
         JOIN devices d ON e.device_id = d.id
         WHERE d.owner_id = ? AND e.created_at >= DATE('now', '-7 days')
         GROUP BY e.event_type
-      `).all(userId);
+      `, userId);
 
-      const alertLevelStats = db.prepare(`
+      const alertLevelStats = await db.get(`
         SELECT 
           SUM(CASE WHEN e.event_level = 'low' THEN 1 ELSE 0 END) as low,
           SUM(CASE WHEN e.event_level = 'normal' THEN 1 ELSE 0 END) as normal,
@@ -540,14 +540,14 @@ class AlertController {
         FROM ai_events e
         JOIN devices d ON e.device_id = d.id
         WHERE d.owner_id = ? AND e.created_at >= DATE('now', '-7 days')
-      `).get(userId);
+      `, userId);
 
-      const recordingCount = db.prepare(`
+      const recordingCount = await db.get(`
         SELECT COUNT(*) as count, COALESCE(SUM(file_size), 0) as total_size
         FROM recordings r
         JOIN devices d ON r.device_id = d.id
         WHERE d.owner_id = ?
-      `).get(userId);
+      `, userId);
 
       res.json({
         code: 200,

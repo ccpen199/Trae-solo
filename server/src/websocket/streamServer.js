@@ -118,7 +118,7 @@ class StreamWebSocketServer {
     }));
   }
 
-  handleDeviceConnection(ws, queryParams) {
+  async handleDeviceConnection(ws, queryParams) {
     const deviceSN = queryParams.get('sn');
     const token = queryParams.get('token');
 
@@ -127,7 +127,7 @@ class StreamWebSocketServer {
       return;
     }
 
-    const device = db.prepare('SELECT * FROM devices WHERE device_sn = ?').get(deviceSN);
+    const device = await db.get('SELECT * FROM devices WHERE device_sn = ?', deviceSN);
     if (!device) {
       ws.close(1008, 'Device not registered');
       return;
@@ -140,16 +140,16 @@ class StreamWebSocketServer {
 
     this.deviceConnections.set(device.id, ws);
 
-    db.prepare(`
+    await db.run(`
       UPDATE devices SET online_status = 1, 
       last_heartbeat_at = CURRENT_TIMESTAMP,
       last_online_at = CURRENT_TIMESTAMP
       WHERE id = ?
-    `).run(device.id);
+    `, device.id);
 
     ws.on('pong', () => { ws.isAlive = true; });
 
-    ws.on('message', (data) => {
+    ws.on('message', async (data) => {
       try {
         let message;
         if (typeof data === 'string') {
@@ -164,7 +164,7 @@ class StreamWebSocketServer {
         }
 
         if (message.type === 'heartbeat') {
-          db.prepare('UPDATE devices SET last_heartbeat_at = CURRENT_TIMESTAMP WHERE id = ?').run(device.id);
+          await db.run('UPDATE devices SET last_heartbeat_at = CURRENT_TIMESTAMP WHERE id = ?', device.id);
           this.safeSend(ws, JSON.stringify({ type: 'heartbeat_ack', serverTime: Date.now() }));
         }
 
@@ -185,9 +185,9 @@ class StreamWebSocketServer {
       }
     });
 
-    ws.on('close', () => {
+    ws.on('close', async () => {
       this.deviceConnections.delete(device.id);
-      db.prepare('UPDATE devices SET online_status = 0 WHERE id = ?').run(device.id);
+      await db.run('UPDATE devices SET online_status = 0 WHERE id = ?', device.id);
       this.notifyDeviceStatus(device.owner_id, device.id, 0);
     });
 
@@ -314,7 +314,7 @@ class StreamWebSocketServer {
     }));
   }
 
-  broadcastEvent(userId, eventData) {
+  async broadcastEvent(userId, eventData) {
     const userConnections = this.userConnections.get(userId);
     if (!userConnections) return;
 
@@ -325,7 +325,7 @@ class StreamWebSocketServer {
       }
     });
 
-    const familyMembers = db.prepare('SELECT id FROM users WHERE parent_id = ?').all(userId);
+    const familyMembers = await db.all('SELECT id FROM users WHERE parent_id = ?', userId);
     familyMembers.forEach((member) => {
       const memberConnections = this.userConnections.get(member.id);
       if (memberConnections) {
@@ -407,16 +407,16 @@ class StreamWebSocketServer {
   }
 
   startOfflineMonitor() {
-    setInterval(() => {
+    setInterval(async () => {
       const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
-      const offlineDevices = db.prepare(`
+      const offlineDevices = await db.all(`
         SELECT id, owner_id, name FROM devices
         WHERE online_status = 1
           AND (last_heartbeat_at IS NULL OR last_heartbeat_at < ?)
-      `).all(fiveMinutesAgo);
+      `, fiveMinutesAgo);
 
-      offlineDevices.forEach((device) => {
-        db.prepare('UPDATE devices SET online_status = 0 WHERE id = ?').run(device.id);
+      for (const device of offlineDevices) {
+        await db.run('UPDATE devices SET online_status = 0 WHERE id = ?', device.id);
         this.notifyDeviceStatus(device.owner_id, device.id, 0);
 
         try {
@@ -428,7 +428,7 @@ class StreamWebSocketServer {
             device_sn: ''
           }, 'offline', 'high', `设备 ${device.name} 已离线超过5分钟`, null);
         } catch (e) {}
-      });
+      }
     }, 60 * 1000);
 
     setInterval(() => {

@@ -16,7 +16,7 @@ class UserController {
         return res.status(400).json({ code: 400, message: '用户名和密码不能为空' });
       }
 
-      const user = db.prepare('SELECT * FROM users WHERE username = ? OR phone = ? OR email = ?').get(username, username, username);
+      const user = await db.get('SELECT * FROM users WHERE username = ? OR phone = ? OR email = ?', username, username, username);
       const ip = getClientIp(req);
       const userAgent = req.headers['user-agent'] || '';
       let riskLevel = 'low';
@@ -30,37 +30,37 @@ class UserController {
       } catch (e) {}
 
       if (!user) {
-        db.prepare(`INSERT INTO login_logs (username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, 0, ?, ?)`).run(username, ip, userAgent, location, 'medium', '用户不存在');
+        await db.run(`INSERT INTO login_logs (username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, 0, ?, ?)`, username, ip, userAgent, location, 'medium', '用户不存在');
         return res.status(401).json({ code: 401, message: '用户名或密码错误' });
       }
 
       if (user.status !== 1) {
-        db.prepare(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, ?, 0, ?, ?)`).run(user.id, username, ip, userAgent, location, 'high', '账号已禁用');
+        await db.run(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, ?, 0, ?, ?)`, user.id, username, ip, userAgent, location, 'high', '账号已禁用');
         return res.status(403).json({ code: 403, message: '账号已被禁用' });
       }
 
       if (!comparePassword(password, user.password)) {
-        db.prepare(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, ?, 0, ?, ?)`).run(user.id, username, ip, userAgent, location, 'medium', '密码错误');
+        await db.run(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, ?, 0, ?, ?)`, user.id, username, ip, userAgent, location, 'medium', '密码错误');
         return res.status(401).json({ code: 401, message: '用户名或密码错误' });
       }
 
       if (imei) {
         if (!validateIMEI(imei)) {
           riskLevel = 'high';
-          db.prepare(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, ?, 0, ?, ?)`).run(user.id, username, ip, userAgent, location, 'high', 'IMEI格式无效');
+          await db.run(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level, fail_reason) VALUES (?, ?, ?, ?, ?, 0, ?, ?)`, user.id, username, ip, userAgent, location, 'high', 'IMEI格式无效');
         } else {
-          const existingDevice = db.prepare('SELECT * FROM user_devices WHERE user_id = ? AND imei = ?').get(user.id, imei);
+          const existingDevice = await db.get('SELECT * FROM user_devices WHERE user_id = ? AND imei = ?', user.id, imei);
           if (!existingDevice) {
-            db.prepare('INSERT INTO user_devices (user_id, imei, device_model, last_login_at, is_trusted) VALUES (?, ?, ?, ?, 0)').run(user.id, imei, deviceModel || '', new Date().toISOString());
+            await db.run('INSERT INTO user_devices (user_id, imei, device_model, last_login_at, is_trusted) VALUES (?, ?, ?, ?, 0)', user.id, imei, deviceModel || '', new Date().toISOString());
             riskLevel = 'medium';
           } else {
-            db.prepare('UPDATE user_devices SET last_login_at = ?, device_model = COALESCE(?, device_model) WHERE id = ?').run(new Date().toISOString(), deviceModel, existingDevice.id);
+            await db.run('UPDATE user_devices SET last_login_at = ?, device_model = COALESCE(?, device_model) WHERE id = ?', new Date().toISOString(), deviceModel, existingDevice.id);
             if (!existingDevice.is_trusted) riskLevel = 'medium';
           }
         }
       }
 
-      db.prepare(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level) VALUES (?, ?, ?, ?, ?, 1, ?)`).run(user.id, username, ip, userAgent, location, riskLevel);
+      await db.run(`INSERT INTO login_logs (user_id, username, ip, user_agent, location, status, risk_level) VALUES (?, ?, ?, ?, ?, 1, ?)`, user.id, username, ip, userAgent, location, riskLevel);
 
       const token = generateToken(user);
 
@@ -98,23 +98,23 @@ class UserController {
         return res.status(400).json({ code: 400, message: '密码长度至少8位' });
       }
 
-      const exists = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+      const exists = await db.get('SELECT id FROM users WHERE username = ?', username);
       if (exists) {
         return res.status(400).json({ code: 400, message: '用户名已存在' });
       }
 
       if (phone) {
-        const phoneExists = db.prepare('SELECT id FROM users WHERE phone = ?').get(phone);
+        const phoneExists = await db.get('SELECT id FROM users WHERE phone = ?', phone);
         if (phoneExists) return res.status(400).json({ code: 400, message: '手机号已被注册' });
       }
 
       const hashedPwd = hashPassword(password);
-      const result = db.prepare(`
+      const result = await db.run(`
         INSERT INTO users (username, password, phone, email, nickname, role)
         VALUES (?, ?, ?, ?, ?, 'owner')
-      `).run(username, hashedPwd, phone || null, email || null, nickname || username);
+      `, username, hashedPwd, phone || null, email || null, nickname || username);
 
-      const user = db.prepare('SELECT id, username, nickname, role, phone, email FROM users WHERE id = ?').get(result.lastInsertRowid);
+      const user = await db.get('SELECT id, username, nickname, role, phone, email FROM users WHERE id = ?', result.lastID);
       const token = generateToken(user);
 
       res.json({
@@ -138,7 +138,7 @@ class UserController {
 
   async getCurrentUser(req, res) {
     try {
-      const user = db.prepare('SELECT id, username, nickname, role, phone, email, avatar, status, created_at FROM users WHERE id = ?').get(req.user.id);
+      const user = await db.get('SELECT id, username, nickname, role, phone, email, avatar, status, created_at FROM users WHERE id = ?', req.user.id);
       res.json({ code: 200, data: user });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -148,16 +148,16 @@ class UserController {
   async updateProfile(req, res) {
     try {
       const { nickname, phone, email, avatar } = req.body;
-      db.prepare(`
+      await db.run(`
         UPDATE users SET nickname = COALESCE(?, nickname), 
         phone = COALESCE(?, phone), 
         email = COALESCE(?, email),
         avatar = COALESCE(?, avatar),
         updated_at = CURRENT_TIMESTAMP
         WHERE id = ?
-      `).run(nickname || null, phone || null, email || null, avatar || null, req.user.id);
+      `, nickname || null, phone || null, email || null, avatar || null, req.user.id);
 
-      const user = db.prepare('SELECT id, username, nickname, role, phone, email, avatar FROM users WHERE id = ?').get(req.user.id);
+      const user = await db.get('SELECT id, username, nickname, role, phone, email, avatar FROM users WHERE id = ?', req.user.id);
       res.json({ code: 200, message: '更新成功', data: user });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -171,12 +171,12 @@ class UserController {
         return res.status(400).json({ code: 400, message: '参数无效，新密码至少8位' });
       }
 
-      const user = db.prepare('SELECT password FROM users WHERE id = ?').get(req.user.id);
+      const user = await db.get('SELECT password FROM users WHERE id = ?', req.user.id);
       if (!comparePassword(oldPassword, user.password)) {
         return res.status(400).json({ code: 400, message: '原密码错误' });
       }
 
-      db.prepare('UPDATE users SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(hashPassword(newPassword), req.user.id);
+      await db.run('UPDATE users SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?', hashPassword(newPassword), req.user.id);
       res.json({ code: 200, message: '密码修改成功' });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -198,15 +198,15 @@ class UserController {
         return res.status(400).json({ code: 400, message: '角色无效' });
       }
 
-      const exists = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+      const exists = await db.get('SELECT id FROM users WHERE username = ?', username);
       if (exists) return res.status(400).json({ code: 400, message: '用户名已存在' });
 
-      const result = db.prepare(`
+      const result = await db.run(`
         INSERT INTO users (username, password, phone, nickname, role, parent_id)
         VALUES (?, ?, ?, ?, ?, ?)
-      `).run(username, hashPassword(password), phone || null, nickname || username, role, req.user.id);
+      `, username, hashPassword(password), phone || null, nickname || username, role, req.user.id);
 
-      const user = db.prepare('SELECT id, username, nickname, role, phone, created_at FROM users WHERE id = ?').get(result.lastInsertRowid);
+      const user = await db.get('SELECT id, username, nickname, role, phone, created_at FROM users WHERE id = ?', result.lastID);
       res.json({ code: 200, message: '创建成功', data: user });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -222,13 +222,13 @@ class UserController {
       const { page = 1, pageSize = 20 } = req.query;
       const offset = (page - 1) * pageSize;
 
-      const users = db.prepare(`
+      const users = await db.all(`
         SELECT id, username, nickname, role, phone, email, status, created_at
         FROM users WHERE parent_id = ? OR (parent_id IN (SELECT id FROM users WHERE parent_id = ?))
         ORDER BY created_at DESC LIMIT ? OFFSET ?
-      `).all(req.user.id, req.user.id, pageSize, offset);
+      `, req.user.id, req.user.id, pageSize, offset);
 
-      const total = db.prepare('SELECT COUNT(*) as count FROM users WHERE parent_id = ?').get(req.user.id).count;
+      const total = (await db.get('SELECT COUNT(*) as count FROM users WHERE parent_id = ?', req.user.id)).count;
 
       res.json({ code: 200, data: { list: users, total, page: +page, pageSize: +pageSize } });
     } catch (e) {
@@ -241,17 +241,17 @@ class UserController {
       const { id } = req.params;
       const { nickname, role, status, phone } = req.body;
 
-      const account = db.prepare('SELECT * FROM users WHERE id = ? AND parent_id = ?').get(id, req.user.id);
+      const account = await db.get('SELECT * FROM users WHERE id = ? AND parent_id = ?', id, req.user.id);
       if (!account) return res.status(404).json({ code: 404, message: '子账号不存在' });
 
-      db.prepare(`
+      await db.run(`
         UPDATE users SET nickname = COALESCE(?, nickname),
         role = COALESCE(?, role),
         status = COALESCE(?, status),
         phone = COALESCE(?, phone),
         updated_at = CURRENT_TIMESTAMP
         WHERE id = ?
-      `).run(nickname || null, role || null, status !== undefined ? status : null, phone || null, id);
+      `, nickname || null, role || null, status !== undefined ? status : null, phone || null, id);
 
       res.json({ code: 200, message: '更新成功' });
     } catch (e) {
@@ -262,10 +262,10 @@ class UserController {
   async deleteSubAccount(req, res) {
     try {
       const { id } = req.params;
-      const account = db.prepare('SELECT * FROM users WHERE id = ? AND parent_id = ?').get(id, req.user.id);
+      const account = await db.get('SELECT * FROM users WHERE id = ? AND parent_id = ?', id, req.user.id);
       if (!account) return res.status(404).json({ code: 404, message: '子账号不存在' });
 
-      db.prepare('DELETE FROM users WHERE id = ?').run(id);
+      await db.run('DELETE FROM users WHERE id = ?', id);
       res.json({ code: 200, message: '删除成功' });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -284,13 +284,13 @@ class UserController {
         params.push(+status);
       }
 
-      const logs = db.prepare(`
+      const logs = await db.all(`
         SELECT id, username, ip, location, status, risk_level, fail_reason, created_at
         FROM login_logs ${where}
         ORDER BY created_at DESC LIMIT ? OFFSET ?
-      `).all(...params, pageSize, offset);
+      `, ...params, pageSize, offset);
 
-      const total = db.prepare(`SELECT COUNT(*) as count FROM login_logs ${where}`).get(...params).count;
+      const total = (await db.get(`SELECT COUNT(*) as count FROM login_logs ${where}`, ...params)).count;
 
       res.json({ code: 200, data: { list: logs, total, page: +page, pageSize: +pageSize } });
     } catch (e) {
@@ -301,10 +301,10 @@ class UserController {
   async verifyTrustedDevice(req, res) {
     try {
       const { deviceId, isTrusted } = req.body;
-      const device = db.prepare('SELECT * FROM user_devices WHERE id = ? AND user_id = ?').get(deviceId, req.user.id);
+      const device = await db.get('SELECT * FROM user_devices WHERE id = ? AND user_id = ?', deviceId, req.user.id);
       if (!device) return res.status(404).json({ code: 404, message: '设备不存在' });
 
-      db.prepare('UPDATE user_devices SET is_trusted = ? WHERE id = ?').run(isTrusted ? 1 : 0, deviceId);
+      await db.run('UPDATE user_devices SET is_trusted = ? WHERE id = ?', isTrusted ? 1 : 0, deviceId);
       res.json({ code: 200, message: '操作成功' });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -313,7 +313,7 @@ class UserController {
 
   async listTrustedDevices(req, res) {
     try {
-      const devices = db.prepare('SELECT * FROM user_devices WHERE user_id = ? ORDER BY last_login_at DESC').all(req.user.id);
+      const devices = await db.all('SELECT * FROM user_devices WHERE user_id = ? ORDER BY last_login_at DESC', req.user.id);
       res.json({ code: 200, data: devices });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });

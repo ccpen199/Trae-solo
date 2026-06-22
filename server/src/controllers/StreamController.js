@@ -9,10 +9,10 @@ class StreamController {
   async getStreamInfo(req, res) {
     try {
       const { id } = req.params;
-      const permission = validateDevicePermission(req.user.id, id, 'view');
+      const permission = await validateDevicePermission(req.user.id, id, 'view');
       if (!permission.allowed) return res.status(403).json({ code: 403, message: permission.message });
 
-      const device = db.prepare('SELECT * FROM devices WHERE id = ?').get(id);
+      const device = await db.get('SELECT * FROM devices WHERE id = ?', id);
       const sessionId = generateUUID();
 
       const wss = require('../websocket/streamServer');
@@ -49,13 +49,13 @@ class StreamController {
       const tempToken = req.headers['x-temp-token'] || req.query.temp_token;
       if (!tempToken) return res.status(400).json({ code: 400, message: '缺少临时令牌' });
 
-      const share = db.prepare(`
+      const share = await db.get(`
         SELECT ds.*, d.*
         FROM device_shares ds 
         JOIN devices d ON ds.device_id = d.id
         WHERE ds.temporary_token = ? AND ds.status = 1
           AND (ds.temporary_token_expire IS NULL OR ds.temporary_token_expire > CURRENT_TIMESTAMP)
-      `).get(tempToken);
+      `, tempToken);
 
       if (!share) return res.status(401).json({ code: 401, message: '临时令牌无效或已过期' });
 
@@ -88,10 +88,10 @@ class StreamController {
     try {
       const { id } = req.params;
       const { duration = 300, recordType = 'manual' } = req.body;
-      const permission = validateDevicePermission(req.user.id, id, 'config');
+      const permission = await validateDevicePermission(req.user.id, id, 'config');
       if (!permission.allowed) return res.status(403).json({ code: 403, message: permission.message });
 
-      const device = db.prepare('SELECT * FROM devices WHERE id = ?').get(id);
+      const device = await db.get('SELECT * FROM devices WHERE id = ?', id);
       const recordDir = path.join(config.recordPath, String(req.user.id), String(id));
       if (!fs.existsSync(recordDir)) {
         fs.mkdirSync(recordDir, { recursive: true });
@@ -104,12 +104,12 @@ class StreamController {
       const wss = require('../websocket/streamServer');
       wss.startRecording(id, filePath, duration);
 
-      const result = db.prepare(`
+      const result = await db.run(`
         INSERT INTO recordings (
           device_id, file_path, file_name, start_time,
           record_type, duration
         ) VALUES (?, ?, ?, ?, ?, ?)
-      `).run(
+      `,
         id, filePath, fileName,
         startTime.toISOString(),
         recordType,
@@ -120,7 +120,7 @@ class StreamController {
         code: 200,
         message: '已开始录制',
         data: {
-          recordingId: result.lastInsertRowid,
+          recordingId: result.lastID,
           duration,
           recordType
         }
@@ -134,7 +134,7 @@ class StreamController {
   async stopRecording(req, res) {
     try {
       const { recordingId } = req.body;
-      const recording = db.prepare('SELECT r.*, d.owner_id FROM recordings r JOIN devices d ON r.device_id = d.id WHERE r.id = ?').get(recordingId);
+      const recording = await db.get('SELECT r.*, d.owner_id FROM recordings r JOIN devices d ON r.device_id = d.id WHERE r.id = ?', recordingId);
       if (!recording) return res.status(404).json({ code: 404, message: '录制记录不存在' });
       if (recording.owner_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权限' });
 
@@ -151,14 +151,14 @@ class StreamController {
 
       const actualDuration = Math.floor((endTime - new Date(recording.start_time)) / 1000);
 
-      db.prepare(`
+      await db.run(`
         UPDATE recordings SET
           end_time = ?,
           duration = COALESCE(?, duration),
           file_size = ?,
           status = 1
         WHERE id = ?
-      `).run(endTime.toISOString(), actualDuration, fileSize, recordingId);
+      `, endTime.toISOString(), actualDuration, fileSize, recordingId);
 
       res.json({
         code: 200,
@@ -203,16 +203,16 @@ class StreamController {
       }
 
       const where = 'WHERE ' + conditions.join(' AND ');
-      const recordings = db.prepare(`
+      const recordings = await db.all(`
         SELECT r.*, d.name as device_name, d.device_sn
         FROM recordings r
         JOIN devices d ON r.device_id = d.id
         ${where}
         ORDER BY r.start_time DESC
         LIMIT ? OFFSET ?
-      `).all(...params, pageSize, offset);
+      `, ...params, pageSize, offset);
 
-      const total = db.prepare(`SELECT COUNT(*) as count FROM recordings r JOIN devices d ON r.device_id = d.id ${where}`).get(...params).count;
+      const total = (await db.get(`SELECT COUNT(*) as count FROM recordings r JOIN devices d ON r.device_id = d.id ${where}`, ...params)).count;
 
       res.json({
         code: 200,
@@ -235,10 +235,10 @@ class StreamController {
   async getRecordingPlayback(req, res) {
     try {
       const { id } = req.params;
-      const recording = db.prepare('SELECT r.*, d.owner_id FROM recordings r JOIN devices d ON r.device_id = d.id WHERE r.id = ?').get(id);
+      const recording = await db.get('SELECT r.*, d.owner_id FROM recordings r JOIN devices d ON r.device_id = d.id WHERE r.id = ?', id);
       if (!recording) return res.status(404).json({ code: 404, message: '录像不存在' });
 
-      const permission = validateDevicePermission(req.user.id, recording.device_id, 'view');
+      const permission = await validateDevicePermission(req.user.id, recording.device_id, 'view');
       if (!permission.allowed) return res.status(403).json({ code: 403, message: permission.message });
 
       if (!fs.existsSync(recording.file_path)) {
@@ -280,7 +280,7 @@ class StreamController {
   async deleteRecording(req, res) {
     try {
       const { id } = req.params;
-      const recording = db.prepare('SELECT r.*, d.owner_id FROM recordings r JOIN devices d ON r.device_id = d.id WHERE r.id = ?').get(id);
+      const recording = await db.get('SELECT r.*, d.owner_id FROM recordings r JOIN devices d ON r.device_id = d.id WHERE r.id = ?', id);
       if (!recording) return res.status(404).json({ code: 404, message: '录像不存在' });
       if (recording.owner_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权限' });
 
@@ -292,7 +292,7 @@ class StreamController {
         console.error('Delete file error:', e);
       }
 
-      db.prepare('DELETE FROM recordings WHERE id = ?').run(id);
+      await db.run('DELETE FROM recordings WHERE id = ?', id);
       res.json({ code: 200, message: '删除成功' });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -302,7 +302,7 @@ class StreamController {
   async sendAudio(req, res) {
     try {
       const { id } = req.params;
-      const permission = validateDevicePermission(req.user.id, id, 'talk');
+      const permission = await validateDevicePermission(req.user.id, id, 'talk');
       if (!permission.allowed) return res.status(403).json({ code: 403, message: permission.message });
 
       const { audioData, format = 'pcm' } = req.body;
