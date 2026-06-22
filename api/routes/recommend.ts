@@ -33,11 +33,7 @@ router.get('/services', authMiddleware(), async (req: Request, res: Response): P
 
   res.json({
     success: true,
-    data: {
-      recommended: services,
-      hot: hotServices,
-      other: otherServices,
-    },
+    data: services,
   })
 })
 

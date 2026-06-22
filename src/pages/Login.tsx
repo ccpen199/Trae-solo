@@ -85,7 +85,7 @@ export default function Login() {
 
     setLoading(true)
     try {
-      const res = await api.post('/api/auth/send-code', { phone })
+      const res = await api.post('/auth/send-code', { phone })
       if (res.data?.success) {
         toast.success('验证码已发送，测试验证码：123456')
         setCodeSent(true)
@@ -134,7 +134,7 @@ export default function Login() {
         payload = { ssoToken: 'sso-demo-token' }
       }
 
-      const res = await api.post<LoginApiResponse>('/api/auth/login', payload)
+      const res = await api.post<LoginApiResponse>('/auth/login', payload)
       const data = res.data
 
       if (!data?.success) {
@@ -163,7 +163,7 @@ export default function Login() {
     if (loading) return
     setLoading(true)
     try {
-      const res = await api.post<LoginApiResponse>('/api/auth/login', {
+      const res = await api.post<LoginApiResponse>('/auth/login', {
         phone: '13800138000',
         verifyCode: '123456',
       })
