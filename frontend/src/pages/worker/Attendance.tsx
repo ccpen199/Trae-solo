@@ -396,7 +396,7 @@ function Attendance() {
       dataIndex: 'check_in_time',
       key: 'check_in_time',
       width: 120,
-      render: (v: any, record: AttendanceRecord) =>
+      render: (v: string | null | undefined, record: AttendanceRecord) =>
         v ? (
           <Space>
             <LoginOutlined style={{ color: '#52c41a' }} />
@@ -412,7 +412,7 @@ function Attendance() {
       dataIndex: 'check_out_time',
       key: 'check_out_time',
       width: 120,
-      render: (v: any, record: AttendanceRecord) =>
+      render: (v: string | null | undefined, record: AttendanceRecord) =>
         v ? (
           <Space>
             <LogoutOutlined style={{ color: '#1677ff' }} />
@@ -452,7 +452,7 @@ function Attendance() {
     {
       title: '地点',
       key: 'location',
-      render: (record: AttendanceRecord) =>
+      render: (_: unknown, record: AttendanceRecord) =>
         record.check_in_lat ? (
           <Tooltip title={`经度: ${record.check_in_lng?.toFixed(4)}, 纬度: ${record.check_in_lat.toFixed(4)}`}>
             <Space size={4} style={{ color: '#8c8c8c', fontSize: 12 }}>

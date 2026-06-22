@@ -1,5 +1,12 @@
 #!/bin/bash
-API="http://127.0.0.1:58930/api"
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ -f "$ROOT_DIR/.env" ]; then
+  # shellcheck disable=SC1091
+  source "$ROOT_DIR/.env"
+fi
+
+BACKEND_PORT="${BACKEND_PORT:-60306}"
+API="${BACKEND_URL:-http://127.0.0.1:${BACKEND_PORT}}/api"
 
 WT=$(curl -sS --max-time 5 -X POST "$API/auth/login" -H "Content-Type: application/json" -d '{"phone":"13900001111","password":"worker123","role":"worker"}' | python3 -c "import sys,json;print(json.load(sys.stdin)['data']['token'])" 2>/dev/null)
 ET=$(curl -sS --max-time 5 -X POST "$API/auth/login" -H "Content-Type: application/json" -d '{"phone":"13800002222","password":"ent123456","role":"enterprise"}' | python3 -c "import sys,json;print(json.load(sys.stdin)['data']['token'])" 2>/dev/null)

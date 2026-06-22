@@ -1,9 +1,9 @@
-import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dayjs from 'dayjs';
 import path from 'path';
+import dotenv from 'dotenv';
 import { initDatabase } from './utils/initDB';
 import { success } from './utils/response';
 
@@ -15,10 +15,13 @@ import wageRouter from './routes/wage';
 import riskRouter from './routes/risk';
 import serviceRouter from './routes/service';
 
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') });
+
 const app = express();
-const PORT = Number(process.env.BACKEND_PORT) || 58930;
+const PORT = Number(process.env.BACKEND_PORT) || 59306;
 const HOST = '127.0.0.1';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://127.0.0.1:48930';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://127.0.0.1:49306';
+const allowedOrigins = Array.from(new Set([FRONTEND_URL, 'http://127.0.0.1:49306']));
 
 initDatabase();
 
@@ -26,7 +29,7 @@ app.use(helmet({
   contentSecurityPolicy: false,
 }));
 app.use(cors({
-  origin: [FRONTEND_URL, 'http://127.0.0.1:48930'],
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

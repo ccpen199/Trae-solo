@@ -665,9 +665,8 @@ router.get('/wages', authMiddleware(['worker']), (req: Request, res: Response) =
       wp.amount as paid_amount,
       wp.payslip_url
     FROM wage_releases wr
-    INNER JOIN job_posts jp ON wr.job_post_id = (
-      SELECT ja.job_post_id FROM job_applications ja WHERE ja.id = wr.job_application_id
-    )
+    INNER JOIN job_applications ja ON ja.id = wr.job_application_id
+    INNER JOIN job_posts jp ON ja.job_post_id = jp.id
     LEFT JOIN wage_payments wp ON wp.wage_release_id = wr.id
     WHERE ${whereClause}
     ORDER BY wr.scheduled_release_date DESC, wr.created_at DESC

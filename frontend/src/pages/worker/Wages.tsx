@@ -260,7 +260,7 @@ function Wages() {
       dataIndex: 'actual_release_date',
       key: 'actual_release_date',
       width: 150,
-      render: (v: any, record: WageRelease) => (
+      render: (v: string | null | undefined, record: WageRelease) => (
         <Space direction="vertical" size={2}>
           <Space size={4}>
             <CalendarOutlined style={{ color: '#8c8c8c' }} />
@@ -324,7 +324,7 @@ function Wages() {
       title: '收款账户',
       key: 'bank',
       width: 180,
-      render: (record: WageRelease) =>
+      render: (_: unknown, record: WageRelease) =>
         record.bank_name ? (
           <Space direction="vertical" size={2}>
             <Space size={4}>
@@ -343,7 +343,7 @@ function Wages() {
       title: '操作',
       key: 'action',
       width: 140,
-      render: (record: WageRelease) => (
+      render: (_: unknown, record: WageRelease) => (
         <Space size={6}>
           <Button
             size="small"
