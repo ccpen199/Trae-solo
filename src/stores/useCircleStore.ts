@@ -26,6 +26,7 @@ interface CircleStoreActions {
   publishActivity: (data: Partial<Activity>) => Promise<Activity>;
   registerActivity: (activityId: string) => Promise<boolean>;
   unregisterActivity: (activityId: string) => Promise<boolean>;
+  updateParticipantStatus: (activityId: string, userId: string, status: 'registered' | 'checked_in' | 'cancelled') => Promise<boolean>;
 }
 
 type CircleStore = CircleStoreState & CircleStoreActions;
@@ -230,6 +231,39 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
             isRegistered: false,
             currentParticipants: state.currentActivity.currentParticipants - 1,
             participants: state.currentActivity.participants.filter(p => p.id !== currentUser.id),
+          }
+        : state.currentActivity;
+
+      return { activities, currentActivity };
+    });
+
+    return success;
+  },
+
+  updateParticipantStatus: async (activityId: string, userId: string, status: 'registered' | 'checked_in' | 'cancelled'): Promise<boolean> => {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const success = true;
+
+    set(state => {
+      const activities = state.activities.map(a => {
+        if (a.id === activityId) {
+          const updatedParticipants = a.participants.map(p => {
+            if (p.id === userId) {
+              return { ...p, status };
+            }
+            return p;
+          });
+          return { ...a, participants: updatedParticipants };
+        }
+        return a;
+      });
+
+      const currentActivity = state.currentActivity?.id === activityId
+        ? {
+            ...state.currentActivity,
+            participants: state.currentActivity.participants.map(p =>
+              p.id === userId ? { ...p, status } : p
+            )
           }
         : state.currentActivity;
 

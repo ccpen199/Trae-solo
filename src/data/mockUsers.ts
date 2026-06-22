@@ -4,6 +4,7 @@ export const mockUsers: User[] = [
   {
     id: 'u001',
     phone: '13800138001',
+    email: 'user001@huizhou.com',
     nickname: '惠州小市民',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou1',
     role: 'user',
@@ -20,6 +21,7 @@ export const mockUsers: User[] = [
   {
     id: 'u002',
     phone: '13800138002',
+    email: 'user002@huizhou.com',
     nickname: '西湖摄影师',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou2',
     role: 'creator',
@@ -36,6 +38,7 @@ export const mockUsers: User[] = [
   {
     id: 'u003',
     phone: '13800138003',
+    email: 'user003@huizhou.com',
     nickname: '美食探店达人',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou3',
     role: 'circle_admin',
@@ -52,6 +55,7 @@ export const mockUsers: User[] = [
   {
     id: 'u004',
     phone: '13800138004',
+    email: 'user004@huizhou.com',
     nickname: '小编辑',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou4',
     role: 'editor',
@@ -68,6 +72,7 @@ export const mockUsers: User[] = [
   {
     id: 'u005',
     phone: '13800138005',
+    email: 'user005@huizhou.com',
     nickname: '政务服务专员',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou5',
     role: 'government',
@@ -84,6 +89,7 @@ export const mockUsers: User[] = [
   {
     id: 'u006',
     phone: '13800138006',
+    email: 'user006@huizhou.com',
     nickname: '巽寮湾海鲜店',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou6',
     role: 'merchant',
@@ -100,6 +106,7 @@ export const mockUsers: User[] = [
   {
     id: 'u007',
     phone: '13800138007',
+    email: 'user007@huizhou.com',
     nickname: '罗浮山居民',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou7',
     role: 'user',
@@ -116,6 +123,7 @@ export const mockUsers: User[] = [
   {
     id: 'u008',
     phone: '13800138008',
+    email: 'user008@huizhou.com',
     nickname: '大亚湾户外',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou8',
     role: 'creator',
@@ -132,6 +140,7 @@ export const mockUsers: User[] = [
   {
     id: 'u009',
     phone: '13800138009',
+    email: 'user009@huizhou.com',
     nickname: '龙门笋干',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou9',
     role: 'merchant',
@@ -148,6 +157,7 @@ export const mockUsers: User[] = [
   {
     id: 'u010',
     phone: '13800138010',
+    email: 'user010@huizhou.com',
     nickname: '仲恺创客',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=huizhou10',
     role: 'user',

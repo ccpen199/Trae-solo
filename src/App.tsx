@@ -24,6 +24,10 @@ import GovernmentService from "@/pages/services/Government";
 import PointCenter from "@/pages/points/Center";
 import PointMall from "@/pages/points/Mall";
 import PointDonate from "@/pages/points/Donate";
+import PointRecords from "@/pages/points/Records";
+import PointHelp from "@/pages/points/Help";
+
+import ActivityManage from "@/pages/activity/Manage";
 
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminReview from "@/pages/admin/Review";
@@ -161,6 +165,11 @@ const AppLayout = () => {
             <Route path="/points" element={<AnimatedPage><PointCenter /></AnimatedPage>} />
             <Route path="/points/mall" element={<AnimatedPage><PointMall /></AnimatedPage>} />
             <Route path="/points/donate" element={<AnimatedPage><PointDonate /></AnimatedPage>} />
+            <Route path="/points/records" element={<AnimatedPage><PointRecords /></AnimatedPage>} />
+            <Route path="/points/help" element={<AnimatedPage><PointHelp /></AnimatedPage>} />
+            
+            <Route path="/activity/:id" element={<AnimatedPage><ActivityDetail /></AnimatedPage>} />
+            <Route path="/activity/:activityId/manage" element={<AnimatedPage><ActivityManage /></AnimatedPage>} />
             
             <Route 
               path="*" 

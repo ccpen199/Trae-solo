@@ -621,6 +621,35 @@ export default function ActivityDetail() {
                 <Card>
                   <h3 className="font-bold text-neutral-800 mb-4">报名操作</h3>
                   
+                  {currentUser && activity.organizer.id === currentUser.id && (
+                    <div className="mb-4 p-3 bg-westlake-50 border border-westlake-200 rounded-xl">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-medium text-westlake-700 text-sm flex items-center gap-2">
+                          <Users className="w-4 h-4" />
+                          组织者管理
+                        </h4>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          leftIcon={<Users className="w-4 h-4" />}
+                          onClick={() => navigate(`/activity/${activity.id}/manage`)}
+                        >
+                          报名名单
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          leftIcon={<Award className="w-4 h-4" />}
+                          onClick={() => navigate(`/activity/${activity.id}/manage`)}
+                        >
+                          成果管理
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
                   {activity.status === 'ended' ? (
                     <div className="text-center py-4">
                       <div className="text-neutral-400 mb-2">活动已结束</div>

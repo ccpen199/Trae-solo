@@ -208,6 +208,53 @@ export default function BaoliaoList() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-4">
+        {statusTab === 'all' && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 p-4 bg-gradient-to-r from-westlake-50 to-honghua-50 border border-westlake-200 rounded-xl"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <h3 className="font-semibold text-westlake-700 mb-2 flex items-center gap-2">
+                  <Plus className="w-5 h-5" />
+                  发布您身边的新鲜事
+                </h3>
+                <p className="text-sm text-neutral-600 mb-3">
+                  支持图文、短视频发布，自动获取地理位置。爆料经审核通过后进入公共信息流，
+                  <span className="text-chaojing-600 font-semibold"> +20 小红花</span> 积分奖励！
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-neutral-600 border border-neutral-200">
+                    📷 图文/视频
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-neutral-600 border border-neutral-200">
+                    📍 自动定位
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-neutral-600 border border-neutral-200">
+                    🏷️ 事件分类
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-neutral-600 border border-neutral-200">
+                    ✅ 编辑初审
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-neutral-600 border border-neutral-200">
+                    🌊 公共信息流
+                  </span>
+                </div>
+              </div>
+              <Button
+                size="md"
+                variant="primary"
+                leftIcon={<Plus className="w-4 h-4" />}
+                onClick={handlePublish}
+                className="flex-shrink-0"
+              >
+                立即发布
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
         {statusTab === 'pending' && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}

@@ -1,151 +1,81 @@
 import type { BusSchedule, Movie, CinemaSchedule, Job, GovernmentService } from '../types';
 
-export const mockBusSchedules: BusSchedule[] = [
-  {
-    id: 'bus001',
-    from: '惠州汽车总站',
-    to: '广州天河客运站',
-    departureTime: '06:30',
-    arrivalTime: '08:45',
-    duration: '2小时15分',
-    price: 68,
-    seatsAvailable: 28,
-    busType: '豪华大巴',
-    operator: '惠州汽运集团'
-  },
-  {
-    id: 'bus002',
-    from: '惠州汽车总站',
-    to: '深圳福田汽车站',
-    departureTime: '07:00',
-    arrivalTime: '08:30',
-    duration: '1小时30分',
-    price: 55,
-    seatsAvailable: 35,
-    busType: '豪华大巴',
-    operator: '惠州汽运集团'
-  },
-  {
-    id: 'bus003',
-    from: '惠州汽车总站',
-    to: '东莞南城汽车站',
-    departureTime: '07:30',
-    arrivalTime: '09:00',
-    duration: '1小时30分',
-    price: 45,
-    seatsAvailable: 42,
-    busType: '普通大巴',
-    operator: '惠州汽运集团'
-  },
-  {
-    id: 'bus004',
-    from: '惠州汽车总站',
-    to: '珠海拱北汽车站',
-    departureTime: '08:00',
-    arrivalTime: '10:30',
-    duration: '2小时30分',
-    price: 85,
-    seatsAvailable: 22,
-    busType: '豪华大巴',
-    operator: '惠州汽运集团'
-  },
-  {
-    id: 'bus005',
-    from: '惠州汽车总站',
-    to: '佛山汽车站',
-    departureTime: '08:30',
-    arrivalTime: '10:45',
-    duration: '2小时15分',
-    price: 62,
-    seatsAvailable: 38,
-    busType: '普通大巴',
-    operator: '惠州汽运集团'
-  },
-  {
-    id: 'bus006',
-    from: '惠州汽车总站',
-    to: '中山汽车总站',
-    departureTime: '09:00',
-    arrivalTime: '11:15',
-    duration: '2小时15分',
-    price: 58,
-    seatsAvailable: 31,
-    busType: '豪华大巴',
-    operator: '惠州汽运集团'
-  },
-  {
-    id: 'bus007',
-    from: '惠州汽车总站',
-    to: '汕头汽车总站',
-    departureTime: '09:30',
-    arrivalTime: '13:00',
-    duration: '3小时30分',
-    price: 120,
-    seatsAvailable: 18,
-    busType: '豪华大巴',
-    operator: '汕头汽运'
-  },
-  {
-    id: 'bus008',
-    from: '惠州汽车总站',
-    to: '惠东巽寮湾',
-    departureTime: '10:00',
-    arrivalTime: '11:30',
-    duration: '1小时30分',
-    price: 35,
-    seatsAvailable: 45,
-    busType: '普通大巴',
-    operator: '惠东汽运'
-  },
-  {
-    id: 'bus009',
-    from: '惠州汽车总站',
-    to: '博罗罗浮山',
-    departureTime: '10:30',
-    arrivalTime: '11:45',
-    duration: '1小时15分',
-    price: 25,
-    seatsAvailable: 33,
-    busType: '普通大巴',
-    operator: '博罗汽运'
-  },
-  {
-    id: 'bus010',
-    from: '惠州汽车总站',
-    to: '龙门南昆山',
-    departureTime: '11:00',
-    arrivalTime: '13:30',
-    duration: '2小时30分',
-    price: 48,
-    seatsAvailable: 25,
-    busType: '普通大巴',
-    operator: '龙门汽运'
-  },
-  {
-    id: 'bus011',
-    from: '惠州汽车总站',
-    to: '惠阳大亚湾',
-    departureTime: '11:30',
-    arrivalTime: '12:45',
-    duration: '1小时15分',
-    price: 28,
-    seatsAvailable: 38,
-    busType: '普通大巴',
-    operator: '惠阳汽运'
-  },
-  {
-    id: 'bus012',
-    from: '惠州汽车总站',
-    to: '香港太子地铁站',
-    departureTime: '12:00',
-    arrivalTime: '15:00',
-    duration: '3小时',
-    price: 150,
-    seatsAvailable: 15,
-    busType: '跨境大巴',
-    operator: '粤港直通巴'
-  }
-];
+const generateBusSchedules = (): BusSchedule[] => {
+  const schedules: BusSchedule[] = [];
+  const routes = [
+    { from: '惠州汽车总站', to: '广州天河客运站', price: 68, duration: '2小时15分', operator: '惠州汽运集团', busType: '豪华大巴' },
+    { from: '惠州汽车总站', to: '广州天河客运站', price: 58, duration: '2小时30分', operator: '粤运快车', busType: '普通大巴' },
+    { from: '惠州南线客运站', to: '广州天河客运站', price: 65, duration: '2小时20分', operator: '惠州汽运集团', busType: '豪华大巴' },
+    { from: '惠州汽车总站', to: '深圳福田汽车站', price: 55, duration: '1小时30分', operator: '惠州汽运集团', busType: '豪华大巴' },
+    { from: '惠州南线客运站', to: '深圳福田汽车站', price: 50, duration: '1小时40分', operator: '粤运快车', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '深圳北汽车站', price: 60, duration: '1小时20分', operator: '惠州汽运集团', busType: '豪华大巴' },
+    { from: '惠州汽车总站', to: '东莞南城汽车站', price: 45, duration: '1小时30分', operator: '惠州汽运集团', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '东莞总站', price: 48, duration: '1小时40分', operator: '粤运快车', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '珠海拱北汽车站', price: 85, duration: '2小时30分', operator: '惠州汽运集团', busType: '豪华大巴' },
+    { from: '惠州汽车总站', to: '佛山汽车站', price: 62, duration: '2小时15分', operator: '惠州汽运集团', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '中山汽车总站', price: 58, duration: '2小时15分', operator: '惠州汽运集团', busType: '豪华大巴' },
+    { from: '惠州汽车总站', to: '汕头汽车总站', price: 120, duration: '3小时30分', operator: '汕头汽运', busType: '豪华大巴' },
+    { from: '惠州汽车总站', to: '惠东巽寮湾', price: 35, duration: '1小时30分', operator: '惠东汽运', busType: '普通大巴' },
+    { from: '惠州南线客运站', to: '惠东巽寮湾', price: 38, duration: '1小时20分', operator: '惠东汽运', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '博罗罗浮山', price: 25, duration: '1小时15分', operator: '博罗汽运', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '龙门南昆山', price: 48, duration: '2小时30分', operator: '龙门汽运', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '惠阳大亚湾', price: 28, duration: '1小时15分', operator: '惠阳汽运', busType: '普通大巴' },
+    { from: '惠州仲恺汽车站', to: '惠阳大亚湾', price: 30, duration: '1小时', operator: '惠阳汽运', busType: '普通大巴' },
+    { from: '惠州汽车总站', to: '香港太子地铁站', price: 150, duration: '3小时', operator: '粤港直通巴', busType: '跨境大巴' },
+    { from: '惠州汽车总站', to: '香港太子地铁站', price: 180, duration: '2小时45分', operator: '环岛大陆通', busType: '跨境大巴' },
+  ];
+
+  const departureTimes = [
+    '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
+    '18:00', '18:30', '19:00', '19:30', '20:00'
+  ];
+
+  let idCounter = 1;
+
+  routes.forEach((route, routeIndex) => {
+    const timesPerRoute = route.to.includes('广州') || route.to.includes('深圳') 
+      ? [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
+      : route.to.includes('香港') 
+      ? [3, 9, 15, 21]
+      : [1, 5, 9, 13, 17, 21];
+    
+    timesPerRoute.forEach((timeIdx) => {
+      if (timeIdx < departureTimes.length) {
+        const depTime = departureTimes[timeIdx];
+        const durationMatch = route.duration.match(/(\d+)小时(\d+)?/);
+        let addHours = 0, addMinutes = 0;
+        if (durationMatch) {
+          addHours = parseInt(durationMatch[1]);
+          addMinutes = durationMatch[2] ? parseInt(durationMatch[2]) : 0;
+        }
+        
+        const [h, m] = depTime.split(':').map(Number);
+        const totalMin = h * 60 + m + addHours * 60 + addMinutes;
+        const arrH = Math.floor(totalMin / 60) % 24;
+        const arrM = totalMin % 60;
+        const arrTime = `${arrH.toString().padStart(2, '0')}:${arrM.toString().padStart(2, '0')}`;
+
+        schedules.push({
+          id: `bus${String(idCounter++).padStart(3, '0')}`,
+          from: route.from,
+          to: route.to,
+          departureTime: depTime,
+          arrivalTime: arrTime,
+          duration: route.duration,
+          price: route.price + (timeIdx % 3 === 0 ? 5 : timeIdx % 3 === 1 ? 0 : -3),
+          seatsAvailable: 20 + Math.floor(Math.random() * 30),
+          busType: route.busType,
+          operator: route.operator
+        });
+      }
+    });
+  });
+
+  return schedules;
+};
+
+export const mockBusSchedules: BusSchedule[] = generateBusSchedules();
 
 export const mockMovies: Movie[] = [
   {

@@ -62,6 +62,7 @@ const mockComments: BaoliaoComment[] = [
     user: {
       id: 'u002',
       phone: '13800138002',
+      email: 'user002@huizhou.com',
       nickname: '惠州街坊',
       avatar: 'https://picsum.photos/seed/user2/100',
       role: 'user',
@@ -82,6 +83,7 @@ const mockComments: BaoliaoComment[] = [
     user: {
       id: 'u003',
       phone: '13800138003',
+      email: 'user003@huizhou.com',
       nickname: '山水之间',
       avatar: 'https://picsum.photos/seed/user3/100',
       role: 'creator',
@@ -102,6 +104,7 @@ const mockComments: BaoliaoComment[] = [
     user: {
       id: 'u004',
       phone: '13800138004',
+      email: 'user004@huizhou.com',
       nickname: '惠州政务',
       avatar: 'https://picsum.photos/seed/user4/100',
       role: 'government',
