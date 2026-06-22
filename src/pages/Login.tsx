@@ -24,7 +24,7 @@ interface SmsLoginValues {
 }
 
 interface PasswordLoginValues {
-  phone: string;
+  account: string;
   password: string;
 }
 
@@ -102,10 +102,10 @@ function Login() {
       localStorage.setItem('user', JSON.stringify(user));
 
       setLoginStep(4);
-      message.success(`登录成功，欢迎回来${user.realName || user.nickname || '用户'}！`);
+      message.success(`登录成功，欢迎${ROLE_LABELS[user.role]}${user.realName || user.nickname || '用户'}！`);
 
       const target = from || ROLE_HOME_MAP[user.role] || '/dashboard';
-      setTimeout(() => navigate(target, { replace: true }), 300);
+      navigate(target, { replace: true });
     } catch (err: any) {
       setErrorMsg(err.message || '登录失败，请检查账号密码');
       message.error(err.message || '登录失败');
@@ -144,7 +144,7 @@ function Login() {
   };
 
   const handlePasswordLogin = async (values: PasswordLoginValues) => {
-    await doLogin({ phone: values.phone, password: values.password }, 'password');
+    await doLogin({ account: values.account, password: values.password }, 'password');
   };
 
   const handleEnterpriseLogin = async (values: EnterpriseLoginValues) => {
@@ -155,7 +155,7 @@ function Login() {
   };
 
   const fillQuickAccount = (account: (typeof QUICK_ACCOUNTS)[number]) => {
-    pwdForm.setFieldsValue({ phone: account.phone, password: account.password });
+    pwdForm.setFieldsValue({ account: account.phone, password: account.password });
     setActiveTab('password');
     message.info(`已填入${account.label}测试账号`);
   };
@@ -232,21 +232,19 @@ function Login() {
                 onFinish={handlePasswordLogin}
                 size="large"
                 className="pt-4"
-                initialValues={{ phone: '13800138000', password: '123456' }}
+                initialValues={{ account: '13800138000', password: '123456' }}
               >
                 <Form.Item
-                  name="phone"
-                  label="手机号"
+                  name="account"
+                  label="账号 / 手机号"
                   rules={[
-                    { required: true, message: '请输入手机号' },
-                    { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号' },
+                    { required: true, message: '请输入账号或手机号' },
                   ]}
                   validateTrigger={['onBlur', 'onChange']}
                 >
                   <Input
                     prefix={<Phone size={18} className="text-slate-400" />}
-                    placeholder="请输入手机号"
-                    maxLength={11}
+                    placeholder="请输入账号或手机号"
                     autoComplete="username"
                   />
                 </Form.Item>
