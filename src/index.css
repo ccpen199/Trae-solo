@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply font-sans text-slate-800 bg-slate-50 antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    @apply outline-none;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg text-white font-medium transition-all duration-200
+           bg-gradient-to-r from-insurance-500 to-insurance-600
+           hover:from-insurance-600 hover:to-insurance-700
+           shadow-btn hover:shadow-btn-hover
+           active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-btn;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200
+           bg-white text-insurance-600 border border-insurance-200
+           hover:bg-insurance-50 hover:border-insurance-300
+           active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-success {
+    @apply px-6 py-3 rounded-lg text-white font-medium transition-all duration-200
+           bg-medical-500 hover:bg-medical-600
+           active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply px-6 py-3 rounded-lg text-white font-medium transition-all duration-200
+           bg-danger-500 hover:bg-danger-600
+           active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-card transition-all duration-200
+           hover:shadow-card-hover;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-0.5 hover:shadow-card-hover;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-slate-200
+           focus:border-insurance-400 focus:ring-2 focus:ring-insurance-100
+           transition-all duration-200
+           placeholder:text-slate-400;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply badge bg-medical-100 text-medical-700;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning-500/10 text-warning-600;
+  }
+
+  .badge-danger {
+    @apply badge bg-danger-500/10 text-danger-600;
+  }
+
+  .badge-info {
+    @apply badge bg-insurance-100 text-insurance-700;
+  }
+
+  .tab-item {
+    @apply px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer
+           text-slate-600 hover:text-insurance-600 hover:bg-insurance-50;
+  }
+
+  .tab-item-active {
+    @apply tab-item bg-insurance-500 text-white hover:text-white hover:bg-insurance-500;
+  }
+
+  .skeleton {
+    @apply animate-pulse bg-slate-200 rounded;
+  }
+
+  .page-container {
+    @apply min-h-screen bg-slate-50;
+  }
+
+  .page-content {
+    @apply max-w-7xl mx-auto px-6 py-6;
+  }
+
+  .section-title {
+    @apply text-xl font-semibold text-slate-900 mb-4;
+  }
+
+  .amount-display {
+    @apply font-mono font-semibold tabular-nums;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .grid-bg {
+    background-image: 
+      linear-gradient(rgba(22, 119, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22, 119, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
