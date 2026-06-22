@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Grid3x3,
   ChevronRight,
@@ -198,9 +198,10 @@ export default function Services() {
             {filtered.map((s, idx) => {
               const Icon = s.icon;
               return (
-                <button
+                <Link
                   key={s.id}
-                  className="card p-4 md:p-5 text-left hover:-translate-y-1 animate-fade-in-up group relative overflow-hidden"
+                  to={`/services/${s.id}`}
+                  className="card p-4 md:p-5 text-left hover:-translate-y-1 animate-fade-in-up group relative overflow-hidden block"
                   style={{ animationDelay: `${idx * 40}ms` }}
                 >
                   {(s.hot || s.new) && (
@@ -225,7 +226,7 @@ export default function Services() {
                     {s.title}
                   </h3>
                   {s.desc && <p className="text-xs text-gray-400 mt-1 line-clamp-1">{s.desc}</p>}
-                </button>
+                </Link>
               );
             })}
           </div>

@@ -34,6 +34,7 @@ export default function App() {
           <Route path="/emergency" element={<Emergency />} />
           <Route path="/map" element={<ServiceMap />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/admin/content" element={<AdminContent />} />
           <Route path="/admin/analytics" element={<AdminAnalytics />} />
           <Route path="/elderly-settings" element={<ElderlySettings />} />

@@ -14,6 +14,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html.font-large {
+  font-size: 17px;
+}
+
+html.font-xlarge {
+  font-size: 19px;
+}
+
 html.elderly-mode {
   font-size: 20px;
 }
@@ -24,72 +32,174 @@ html.elderly-mode a {
   min-height: 48px;
 }
 
-html.high-contrast {
-  filter: contrast(1.5);
-}
-
-html.high-contrast body {
+/* ============== 高对比度模式：使用强覆盖，所有组件必须生效 ============== */
+html.high-contrast,
+html.high-contrast * {
   background-color: #000 !important;
   color: #fff !important;
-}
-
-html.high-contrast .card,
-html.high-contrast .bg-white {
-  background-color: #1a1a1a !important;
   border-color: #fff !important;
-  color: #fff !important;
 }
 
+html.high-contrast .bg-white,
 html.high-contrast .bg-gray-50,
-html.high-contrast .bg-gray-100 {
-  background-color: #111 !important;
+html.high-contrast .bg-gray-100,
+html.high-contrast .card {
+  background-color: #000 !important;
+  border: 2px solid #fff !important;
+}
+
+html.high-contrast .bg-gov-50,
+html.high-contrast .bg-warm-50,
+html.high-contrast .bg-red-50,
+html.high-contrast .bg-orange-50,
+html.high-contrast .bg-green-50,
+html.high-contrast .bg-blue-50 {
+  background-color: #000 !important;
+  border: 2px solid #ffd700 !important;
+}
+
+html.high-contrast .bg-red-500,
+html.high-contrast .bg-red-600,
+html.high-contrast .bg-orange-500,
+html.high-contrast .bg-gov-500,
+html.high-contrast .bg-gov-600,
+html.high-contrast .bg-gov-700,
+html.high-contrast .bg-gov-800,
+html.high-contrast .bg-warm-400,
+html.high-contrast .bg-warm-500,
+html.high-contrast .bg-gradient-to-br,
+html.high-contrast .bg-gradient-to-r {
+  background: #000 !important;
+  border: 3px solid #ffd700 !important;
+}
+
+html.high-contrast footer,
+html.high-contrast header {
+  background-color: #000 !important;
+  border-bottom: 3px solid #ffd700 !important;
+}
+
+html.high-contrast footer {
+  border-top: 3px solid #ffd700 !important;
+  border-bottom: none !important;
 }
 
 html.high-contrast h1,
 html.high-contrast h2,
 html.high-contrast h3,
-html.high-contrast h4 {
-  color: #fff !important;
+html.high-contrast h4,
+html.high-contrast h5,
+html.high-contrast strong,
+html.high-contrast b,
+html.high-contrast .font-bold,
+html.high-contrast .font-semibold,
+html.high-contrast .font-serif {
+  color: #ffd700 !important;
+  font-weight: 900 !important;
 }
 
 html.high-contrast p,
 html.high-contrast span,
-html.high-contrast li {
-  color: #e0e0e0 !important;
+html.high-contrast li,
+html.high-contrast label,
+html.high-contrast a {
+  color: #fff !important;
 }
 
+html.high-contrast .text-gray-400,
 html.high-contrast .text-gray-500,
 html.high-contrast .text-gray-600,
 html.high-contrast .text-gray-700,
 html.high-contrast .text-gray-800 {
-  color: #e0e0e0 !important;
+  color: #fff !important;
 }
 
 html.high-contrast .text-gov-600,
 html.high-contrast .text-gov-700,
-html.high-contrast .text-gov-800 {
-  color: #60a5fa !important;
+html.high-contrast .text-gov-800,
+html.high-contrast .text-warm-500,
+html.high-contrast .text-warm-600,
+html.high-contrast .text-red-500,
+html.high-contrast .text-green-500,
+html.high-contrast .text-blue-500,
+html.high-contrast .text-red-600,
+html.high-contrast .text-green-600,
+html.high-contrast .text-blue-600 {
+  color: #ffd700 !important;
 }
 
-html.high-contrast .border-gray-100,
-html.high-contrast .border-gray-200 {
-  border-color: #555 !important;
+html.high-contrast .chip,
+html.high-contrast .badge {
+  background: #000 !important;
+  border: 2px solid #ffd700 !important;
+  color: #ffd700 !important;
 }
 
-html.high-contrast input {
-  background-color: #222 !important;
+html.high-contrast input,
+html.high-contrast select,
+html.high-contrast textarea {
+  background-color: #000 !important;
   color: #fff !important;
-  border-color: #fff !important;
+  border: 2px solid #ffd700 !important;
+}
+
+html.high-contrast button,
+html.high-contrast a {
+  border: 2px solid #ffd700 !important;
+}
+
+html.high-contrast button:hover,
+html.high-contrast a:hover {
+  background-color: #1a1a1a !important;
+  border: 3px solid #ffd700 !important;
+}
+
+html.high-contrast svg {
+  color: #ffd700 !important;
+}
+
+html.high-contrast img {
+  border: 2px solid #ffd700 !important;
+  filter: grayscale(1) contrast(1.5);
 }
 
 html.high-contrast .shadow-card,
 html.high-contrast .shadow-sm,
-html.high-contrast .shadow-md {
-  box-shadow: 0 0 0 1px #fff !important;
+html.high-contrast .shadow-md,
+html.high-contrast .shadow-lg,
+html.high-contrast .shadow-2xl,
+html.high-contrast .shadow-card-hover {
+  box-shadow: none !important;
+  border: 2px solid #ffd700 !important;
 }
 
-html.high-contrast button {
-  border: 2px solid #fff !important;
+html.high-contrast .divide-y > *,
+html.high-contrast .border-b,
+html.high-contrast .border-t,
+html.high-contrast .border-l,
+html.high-contrast .border-r,
+html.high-contrast .border,
+html.high-contrast .border-gray-100,
+html.high-contrast .border-gray-200 {
+  border-color: #888 !important;
+  border-width: 1px !important;
+}
+
+html.high-contrast .animate-pulse {
+  animation: none !important;
+  border: 2px dashed #ffd700 !important;
+}
+
+html.high-contrast tr:nth-child(even) > *,
+html.high-contrast li:nth-child(even) {
+  background-color: #0a0a0a !important;
+}
+
+html.high-contrast .hover\:bg-gray-50:hover,
+html.high-contrast .hover\:bg-gov-50:hover,
+html.high-contrast .hover\:-translate-y-1:hover {
+  background-color: #1a1a1a !important;
+  transform: none !important;
 }
 
 ::-webkit-scrollbar {
