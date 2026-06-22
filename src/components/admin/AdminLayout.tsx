@@ -5,7 +5,7 @@ import type { LucideIcon } from 'lucide-react'
 import {
   Shield, LayoutDashboard, Store, Newspaper, LayoutGrid,
   ClipboardCheck, ClipboardList, MapPin, HeartHandshake,
-  UserRound, Truck, LogOut, Bell, ChevronRight, Menu, X
+  ShieldCheck, Truck, LogOut, Bell, ChevronRight, Menu, X
 } from 'lucide-react'
 
 type MenuItem = {
@@ -21,64 +21,66 @@ type NavSection = {
 
 const navSections: NavSection[] = [
   {
-    label: '概览',
+    label: '运营概览',
     items: [
-      { label: '运营看板', to: '/admin/overview', icon: LayoutDashboard },
+      { label: '县域运营看板', to: '/admin/overview', icon: LayoutDashboard },
     ],
   },
   {
-    label: '信息管理',
+    label: '镇雄县信息管理',
     items: [
-      { label: '商户管理', to: '/admin/merchants', icon: Store },
-      { label: '资讯栏目', to: '/admin/news', icon: Newspaper },
-      { label: '分类信息', to: '/admin/posts', icon: LayoutGrid },
+      { label: '本地商户入驻', to: '/admin/merchants', icon: Store },
+      { label: '资讯栏目管理', to: '/admin/news', icon: Newspaper },
+      { label: '分类信息（招聘/房产/美食/交友）', to: '/admin/posts', icon: LayoutGrid },
     ],
   },
   {
-    label: '内容审核',
+    label: '内容可信度审核',
     items: [
-      { label: '审核管理', to: '/admin/audit', icon: ClipboardCheck },
+      { label: '审核管理（图文/短视频/资质）', to: '/admin/audit', icon: ClipboardCheck },
+      { label: '可信度复核中心', to: '/admin/riders', icon: ShieldCheck },
     ],
   },
   {
-    label: '订单分发',
+    label: '信息分发调度',
     items: [
-      { label: '订单管理', to: '/admin/orders', icon: ClipboardList },
-      { label: '乡镇分发', to: '/admin/distribution', icon: MapPin },
+      { label: '订单与发布管理', to: '/admin/orders', icon: ClipboardList },
+      { label: '按乡镇/社区分发', to: '/admin/distribution', icon: MapPin },
     ],
   },
   {
-    label: '服务对接',
+    label: '民生服务对接',
     items: [
-      { label: '民生服务', to: '/admin/services', icon: HeartHandshake },
+      { label: '民生服务跳转配置', to: '/admin/services', icon: HeartHandshake },
     ],
   },
   {
-    label: '骑手配送',
+    label: '配送辅助（非主线）',
     items: [
-      { label: '骑手管理', to: '/admin/riders', icon: UserRound },
       { label: '配送订单', to: '/admin/delivery', icon: Truck },
     ],
   },
 ]
 
 const breadcrumbMap: Record<string, string[]> = {
-  '/admin/overview': ['运营管理', '运营看板'],
-  '/admin/merchants': ['信息管理', '商户管理'],
-  '/admin/news': ['信息管理', '资讯栏目'],
-  '/admin/posts': ['信息管理', '分类信息'],
-  '/admin/audit': ['内容审核', '审核管理'],
-  '/admin/orders': ['订单分发', '订单管理'],
-  '/admin/distribution': ['订单分发', '乡镇分发'],
-  '/admin/services': ['服务对接', '民生服务'],
-  '/admin/riders': ['骑手配送', '骑手管理'],
-  '/admin/delivery': ['骑手配送', '配送订单'],
+  '/admin/overview': ['运营概览', '县域运营看板'],
+  '/admin/merchants': ['镇雄县信息管理', '本地商户入驻'],
+  '/admin/news': ['镇雄县信息管理', '资讯栏目管理'],
+  '/admin/posts': ['镇雄县信息管理', '分类信息（招聘/房产/美食/交友）'],
+  '/admin/audit': ['内容可信度审核', '审核管理（图文/短视频/资质）'],
+  '/admin/riders': ['内容可信度审核', '可信度复核中心'],
+  '/admin/orders': ['信息分发调度', '订单与发布管理'],
+  '/admin/orders/': ['信息分发调度', '订单详情'],
+  '/admin/distribution': ['信息分发调度', '按乡镇/社区分发'],
+  '/admin/services': ['民生服务对接', '民生服务跳转配置'],
+  '/admin/delivery': ['配送辅助（非主线）', '配送订单'],
 }
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
-  const breadcrumbs = breadcrumbMap[location.pathname] || ['运营管理']
+  const pathKey = location.pathname.startsWith('/admin/orders/') ? '/admin/orders/' : location.pathname
+  const breadcrumbs = breadcrumbMap[pathKey] || ['运营概览']
 
   return (
     <div className="flex h-screen bg-rock-50 overflow-hidden">
@@ -104,7 +106,7 @@ export default function AdminLayout() {
       <motion.aside
         initial={false}
         animate={{ x: sidebarOpen ? 0 : -256 }}
-        className={`fixed md:static inset-y-0 left-0 z-50 w-64 bg-rock-900 text-white flex flex-col md:translate-x-0 transition-transform duration-300`}
+        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-rock-900 text-white flex flex-col md:translate-x-0 transition-transform duration-300`}
       >
         <div className="flex items-center justify-between p-5 border-b border-rock-800">
           <div className="flex items-center gap-3">
@@ -115,7 +117,7 @@ export default function AdminLayout() {
               <h1 className="font-serif text-jade-400 font-bold text-base leading-tight">
                 镇雄本地通
               </h1>
-              <p className="text-rock-400 text-xs">运营后台</p>
+              <p className="text-rock-400 text-xs">县域信息运营管理后台</p>
             </div>
           </div>
           <button
@@ -126,10 +128,12 @@ export default function AdminLayout() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-6">
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-5">
           {navSections.map((section) => (
             <div key={section.label}>
-              <h2 className="px-3 mb-2 text-xs font-semibold text-rock-500 uppercase tracking-wider">
+              <h2 className={`px-3 mb-2 text-xs font-semibold uppercase tracking-wider ${
+                section.label.includes('非主线') ? 'text-rock-600' : 'text-rock-500'
+              }`}>
                 {section.label}
               </h2>
               <div className="space-y-1">
@@ -142,12 +146,14 @@ export default function AdminLayout() {
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all border-l-2 ${
                         isActive
                           ? 'bg-jade-500/20 text-jade-400 border-l-jade-400'
+                          : section.label.includes('非主线')
+                          ? 'text-rock-500 hover:bg-rock-800 hover:text-rock-300 border-l-transparent'
                           : 'text-rock-300 hover:bg-rock-800 hover:text-white border-l-transparent'
                       }`
                     }
                   >
                     <Icon size={18} />
-                    <span>{label}</span>
+                    <span className="leading-tight">{label}</span>
                   </NavLink>
                 ))}
               </div>
@@ -162,7 +168,7 @@ export default function AdminLayout() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">平台管理员</p>
-              <p className="text-xs text-rock-500">超级管理员</p>
+              <p className="text-xs text-rock-500">镇雄县运营中心</p>
             </div>
             <button className="text-rock-400 hover:text-white transition-colors">
               <LogOut size={18} />
