@@ -1,0 +1,532 @@
+import type { PointRecord, PointTask, MallItem } from '../types';
+
+export const mockPointRecords: PointRecord[] = [
+  {
+    id: 'pr001',
+    userId: 'u001',
+    type: 'earn',
+    amount: 10,
+    balance: 1250,
+    reason: '每日签到',
+    source: 'login',
+    createdAt: new Date('2026-06-21T08:00:00')
+  },
+  {
+    id: 'pr002',
+    userId: 'u001',
+    type: 'earn',
+    amount: 50,
+    balance: 1240,
+    reason: '发布爆料',
+    source: 'publish_baoliao',
+    relatedId: 'b016',
+    createdAt: new Date('2026-06-21T10:30:00')
+  },
+  {
+    id: 'pr003',
+    userId: 'u001',
+    type: 'earn',
+    amount: 30,
+    balance: 1190,
+    reason: '参加活动',
+    source: 'join_activity',
+    relatedId: 'a003',
+    createdAt: new Date('2026-06-21T09:00:00')
+  },
+  {
+    id: 'pr004',
+    userId: 'u001',
+    type: 'spend',
+    amount: 200,
+    balance: 1160,
+    reason: '兑换西湖景区门票',
+    source: 'exchange',
+    relatedId: 'mi003',
+    createdAt: new Date('2026-06-20T15:00:00')
+  },
+  {
+    id: 'pr005',
+    userId: 'u002',
+    type: 'earn',
+    amount: 100,
+    balance: 5680,
+    reason: '邀请好友注册',
+    source: 'invite',
+    createdAt: new Date('2026-06-21T09:15:00')
+  },
+  {
+    id: 'pr006',
+    userId: 'u002',
+    type: 'earn',
+    amount: 50,
+    balance: 5580,
+    reason: '发布爆料',
+    source: 'publish_baoliao',
+    relatedId: 'b010',
+    createdAt: new Date('2026-06-07T14:20:00')
+  },
+  {
+    id: 'pr007',
+    userId: 'u002',
+    type: 'spend',
+    amount: 500,
+    balance: 5530,
+    reason: '兑换万达影城电影票',
+    source: 'exchange',
+    relatedId: 'mi001',
+    createdAt: new Date('2026-06-15T20:00:00')
+  },
+  {
+    id: 'pr008',
+    userId: 'u003',
+    type: 'earn',
+    amount: 200,
+    balance: 8900,
+    reason: '爆料审核通过奖励',
+    source: 'publish_baoliao',
+    relatedId: 'b006',
+    createdAt: new Date('2026-06-11T12:00:00')
+  },
+  {
+    id: 'pr009',
+    userId: 'u003',
+    type: 'spend',
+    amount: 300,
+    balance: 8700,
+    reason: '兑换巽寮湾海鲜餐厅优惠券',
+    source: 'exchange',
+    relatedId: 'mi002',
+    createdAt: new Date('2026-06-18T18:30:00')
+  },
+  {
+    id: 'pr010',
+    userId: 'u006',
+    type: 'spend',
+    amount: 1000,
+    balance: 15600,
+    reason: '捐赠积分用于公益活动',
+    source: 'donate',
+    createdAt: new Date('2026-06-01T10:00:00')
+  },
+  {
+    id: 'pr011',
+    userId: 'u006',
+    type: 'earn',
+    amount: 30,
+    balance: 16600,
+    reason: '每日签到',
+    source: 'login',
+    createdAt: new Date('2026-06-21T07:30:00')
+  },
+  {
+    id: 'pr012',
+    userId: 'u008',
+    type: 'earn',
+    amount: 50,
+    balance: 4200,
+    reason: '发布爆料',
+    source: 'publish_baoliao',
+    relatedId: 'b005',
+    createdAt: new Date('2026-06-12T08:00:00')
+  },
+  {
+    id: 'pr013',
+    userId: 'u008',
+    type: 'earn',
+    amount: 30,
+    balance: 4150,
+    reason: '参加活动',
+    source: 'join_activity',
+    relatedId: 'a007',
+    createdAt: new Date('2026-06-18T10:00:00')
+  },
+  {
+    id: 'pr014',
+    userId: 'u010',
+    type: 'spend',
+    amount: 150,
+    balance: 1800,
+    reason: '兑换惠州公交月卡',
+    source: 'exchange',
+    relatedId: 'mi004',
+    createdAt: new Date('2026-06-19T12:00:00')
+  },
+  {
+    id: 'pr015',
+    userId: 'u010',
+    type: 'earn',
+    amount: 10,
+    balance: 1950,
+    reason: '每日签到',
+    source: 'login',
+    createdAt: new Date('2026-06-21T06:45:00')
+  }
+];
+
+export const mockPointTasks: PointTask[] = [
+  {
+    id: 'pt001',
+    name: '每日签到',
+    description: '每日登录签到获得积分',
+    points: 10,
+    type: 'daily',
+    icon: '📅',
+    action: '签到',
+    completed: true,
+    progress: 1,
+    target: 1
+  },
+  {
+    id: 'pt002',
+    name: '发布爆料',
+    description: '发布一条爆料并通过审核',
+    points: 50,
+    type: 'daily',
+    icon: '📝',
+    action: '去发布',
+    completed: false,
+    progress: 0,
+    target: 1
+  },
+  {
+    id: 'pt003',
+    name: '浏览资讯',
+    description: '浏览10篇资讯文章',
+    points: 20,
+    type: 'daily',
+    icon: '📰',
+    action: '去浏览',
+    completed: false,
+    progress: 3,
+    target: 10
+  },
+  {
+    id: 'pt004',
+    name: '点赞互动',
+    description: '对5条爆料进行点赞',
+    points: 15,
+    type: 'daily',
+    icon: '👍',
+    action: '去点赞',
+    completed: true,
+    progress: 5,
+    target: 5
+  },
+  {
+    id: 'pt005',
+    name: '评论互动',
+    description: '对3条爆料进行评论',
+    points: 25,
+    type: 'daily',
+    icon: '💬',
+    action: '去评论',
+    completed: false,
+    progress: 1,
+    target: 3
+  },
+  {
+    id: 'pt006',
+    name: '周累计发布爆料',
+    description: '一周内发布3条爆料并通过审核',
+    points: 200,
+    type: 'weekly',
+    icon: '🏆',
+    action: '去发布',
+    completed: false,
+    progress: 1,
+    target: 3
+  },
+  {
+    id: 'pt007',
+    name: '周累计参加活动',
+    description: '一周内参加2个圈子活动',
+    points: 100,
+    type: 'weekly',
+    icon: '🎉',
+    action: '去参加',
+    completed: false,
+    progress: 1,
+    target: 2
+  },
+  {
+    id: 'pt008',
+    name: '周累计邀请好友',
+    description: '一周内邀请3位好友注册',
+    points: 300,
+    type: 'weekly',
+    icon: '👥',
+    action: '去邀请',
+    completed: true,
+    progress: 3,
+    target: 3
+  },
+  {
+    id: 'pt009',
+    name: '完善个人资料',
+    description: '完善头像、昵称、地区等个人信息',
+    points: 100,
+    type: 'one_time',
+    icon: '👤',
+    action: '去完善',
+    completed: true
+  },
+  {
+    id: 'pt010',
+    name: '实名认证',
+    description: '完成实名认证获得积分奖励',
+    points: 500,
+    type: 'one_time',
+    icon: '✅',
+    action: '去认证',
+    completed: true
+  },
+  {
+    id: 'pt011',
+    name: '首次发布爆料',
+    description: '首次发布爆料并通过审核',
+    points: 200,
+    type: 'one_time',
+    icon: '🌟',
+    action: '去发布',
+    completed: true
+  },
+  {
+    id: 'pt012',
+    name: '首次加入圈子',
+    description: '首次加入一个兴趣圈子',
+    points: 50,
+    type: 'one_time',
+    icon: '🔘',
+    action: '去加入',
+    completed: true
+  },
+  {
+    id: 'pt013',
+    name: '周累计浏览时长',
+    description: '一周内累计浏览时长达到2小时',
+    points: 80,
+    type: 'weekly',
+    icon: '⏱️',
+    action: '去浏览',
+    completed: false,
+    progress: 45,
+    target: 120
+  }
+];
+
+export const mockMallItems: MallItem[] = [
+  {
+    id: 'mi001',
+    name: '万达影城电影票',
+    description: '惠州万达影城2D/3D通兑券，IMAX需补差价',
+    image: 'https://picsum.photos/seed/mall1/300/300',
+    price: 500,
+    category: 'coupon',
+    merchantName: '万达影城（惠州华贸店）',
+    stock: 100,
+    sold: 256,
+    expiryDate: new Date('2026-12-31'),
+    discountRate: 0.8
+  },
+  {
+    id: 'mi002',
+    name: '巽寮湾海鲜餐厅50元代金券',
+    description: '巽寮湾德泽园海鲜餐厅满200减50元代金券',
+    image: 'https://picsum.photos/seed/mall2/300/300',
+    price: 300,
+    category: 'coupon',
+    merchantName: '巽寮湾德泽园海鲜餐厅',
+    stock: 50,
+    sold: 128,
+    expiryDate: new Date('2026-09-30'),
+    discountRate: 0.6
+  },
+  {
+    id: 'mi003',
+    name: '惠州西湖景区门票',
+    description: '惠州西湖风景区套票，含丰渚园、九曲桥等景点',
+    image: 'https://picsum.photos/seed/mall3/300/300',
+    price: 200,
+    category: 'coupon',
+    merchantName: '惠州西湖风景区',
+    stock: 200,
+    sold: 512,
+    expiryDate: new Date('2026-12-31')
+  },
+  {
+    id: 'mi004',
+    name: '惠州公交月卡',
+    description: '惠州市区公交月卡，可乘坐所有市区公交线路',
+    image: 'https://picsum.photos/seed/mall4/300/300',
+    price: 150,
+    category: 'coupon',
+    merchantName: '惠州市公共交通总公司',
+    stock: 300,
+    sold: 1024,
+    expiryDate: new Date('2026-07-31')
+  },
+  {
+    id: 'mi005',
+    name: '罗浮山风景区门票',
+    description: '罗浮山风景区大门票，含飞云顶登山道',
+    image: 'https://picsum.photos/seed/mall5/300/300',
+    price: 300,
+    category: 'coupon',
+    merchantName: '罗浮山风景区',
+    stock: 150,
+    sold: 356,
+    expiryDate: new Date('2026-12-31'),
+    discountRate: 0.7
+  },
+  {
+    id: 'mi006',
+    name: '惠州梅菜礼盒（500g）',
+    description: '惠州特产梅菜，精选优质菜芯，真空包装',
+    image: 'https://picsum.photos/seed/mall6/300/300',
+    price: 400,
+    category: 'physical',
+    merchantName: '惠州梅菜产销有限公司',
+    stock: 80,
+    sold: 168,
+    expiryDate: new Date('2027-06-01')
+  },
+  {
+    id: 'mi007',
+    name: '龙门蜂蜜（1kg装）',
+    description: '南昆山纯天然野生蜂蜜，无添加，健康养生',
+    image: 'https://picsum.photos/seed/mall7/300/300',
+    price: 350,
+    category: 'physical',
+    merchantName: '龙门南昆山蜂蜜合作社',
+    stock: 60,
+    sold: 89,
+    expiryDate: new Date('2027-03-15')
+  },
+  {
+    id: 'mi008',
+    name: '惠阳胡须鸡（约2kg）',
+    description: '正宗惠阳三黄胡须鸡，农家散养，冷链配送',
+    image: 'https://picsum.photos/seed/mall8/300/300',
+    price: 600,
+    category: 'physical',
+    merchantName: '惠阳农特产品有限公司',
+    stock: 30,
+    sold: 45,
+    expiryDate: new Date('2026-08-01')
+  },
+  {
+    id: 'mi009',
+    name: '客家娘酒（500ml）',
+    description: '惠州特产客家娘酒，传统工艺酿造，口感醇厚',
+    image: 'https://picsum.photos/seed/mall9/300/300',
+    price: 250,
+    category: 'physical',
+    merchantName: '惠州客家酒厂',
+    stock: 100,
+    sold: 234,
+    expiryDate: new Date('2028-06-01')
+  },
+  {
+    id: 'mi010',
+    name: '南昆山竹笋干（250g）',
+    description: '南昆山特产竹笋干，天然日晒，脆嫩爽口',
+    image: 'https://picsum.photos/seed/mall10/300/300',
+    price: 180,
+    category: 'physical',
+    merchantName: '龙门笋干专业合作社',
+    stock: 120,
+    sold: 312,
+    expiryDate: new Date('2027-04-01')
+  },
+  {
+    id: 'mi011',
+    name: '公益捐赠1元',
+    description: '捐赠1元用于惠州山区儿童助学项目',
+    image: 'https://picsum.photos/seed/mall11/300/300',
+    price: 10,
+    category: 'donation',
+    stock: 9999,
+    sold: 15680
+  },
+  {
+    id: 'mi012',
+    name: '公益捐赠10元',
+    description: '捐赠10元用于惠州山区儿童助学项目',
+    image: 'https://picsum.photos/seed/mall12/300/300',
+    price: 100,
+    category: 'donation',
+    stock: 9999,
+    sold: 8920
+  },
+  {
+    id: 'mi013',
+    name: '公益捐赠50元',
+    description: '捐赠50元用于惠州山区儿童助学项目',
+    image: 'https://picsum.photos/seed/mall13/300/300',
+    price: 500,
+    category: 'donation',
+    stock: 9999,
+    sold: 3450
+  },
+  {
+    id: 'mi014',
+    name: '红花湖骑行券（2小时）',
+    description: '红花湖绿道自行车骑行券，含山地车租赁',
+    image: 'https://picsum.photos/seed/mall14/300/300',
+    price: 80,
+    category: 'coupon',
+    merchantName: '红花湖自行车租赁中心',
+    stock: 200,
+    sold: 678,
+    expiryDate: new Date('2026-10-31'),
+    discountRate: 0.8
+  },
+  {
+    id: 'mi015',
+    name: '大亚湾黄金海岸快艇游',
+    description: '黄金海岸快艇环岛游体验券，可乘坐6人',
+    image: 'https://picsum.photos/seed/mall15/300/300',
+    price: 450,
+    category: 'coupon',
+    merchantName: '大亚湾黄金海岸旅游中心',
+    stock: 80,
+    sold: 156,
+    expiryDate: new Date('2026-11-30')
+  },
+  {
+    id: 'mi016',
+    name: '惠州体育馆游泳券',
+    description: '惠州江北体育馆标准游泳池单次入场券',
+    image: 'https://picsum.photos/seed/mall16/300/300',
+    price: 60,
+    category: 'coupon',
+    merchantName: '惠州市体育馆',
+    stock: 300,
+    sold: 890,
+    expiryDate: new Date('2026-12-31')
+  },
+  {
+    id: 'mi017',
+    name: '东平窑陶瓷体验券',
+    description: '惠州东平窑陶瓷艺术体验课，含拉坯、彩绘',
+    image: 'https://picsum.photos/seed/mall17/300/300',
+    price: 200,
+    category: 'coupon',
+    merchantName: '惠州东平窑陶艺馆',
+    stock: 50,
+    sold: 78,
+    expiryDate: new Date('2026-09-30')
+  },
+  {
+    id: 'mi018',
+    name: '镇隆荔枝（5斤装）',
+    description: '惠州镇隆特产糯米糍荔枝，新鲜采摘，冷链配送',
+    image: 'https://picsum.photos/seed/mall18/300/300',
+    price: 800,
+    category: 'physical',
+    merchantName: '惠阳区镇隆荔枝合作社',
+    stock: 40,
+    sold: 223,
+    expiryDate: new Date('2026-07-15')
+  }
+];
