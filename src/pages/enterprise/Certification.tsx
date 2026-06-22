@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Upload, Check, X, Smartphone, FileText, ShieldCheck, Loader2, Briefcase } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Upload, Check, X, Smartphone, FileText, ShieldCheck, Loader2, Briefcase, ArrowRight } from 'lucide-react';
 import { mockCertification } from '@/mock/data';
 import { useAuthStore } from '@/store/authStore';
 
@@ -8,7 +8,9 @@ type Step = 'ocr' | 'confirm' | 'verify' | 'result';
 
 export default function Certification() {
   const navigate = useNavigate();
+  const location = useLocation();
   const setCertified = useAuthStore((s) => s.setCertified);
+  const from = (location.state as any)?.from || '/enterprise/jobs';
   const [step, setStep] = useState<Step>('confirm');
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -16,6 +18,7 @@ export default function Certification() {
   const [code, setCode] = useState('');
   const [countdown, setCountdown] = useState(0);
   const [verifyStatus, setVerifyStatus] = useState<'idle' | 'verifying' | 'success' | 'fail'>('idle');
+  const [resultCountdown, setResultCountdown] = useState(5);
   const codeRef = useRef(code);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -70,6 +73,32 @@ export default function Certification() {
       }, 1000);
     }, 1500);
   };
+
+  useEffect(() => {
+    if (step === 'verify' && verifyStatus === 'idle') {
+      const timer = setTimeout(() => {
+        handleSendCode();
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [step, verifyStatus]);
+
+  useEffect(() => {
+    if (step === 'result' && cert.status === 'approved') {
+      setResultCountdown(5);
+      const timer = setInterval(() => {
+        setResultCountdown((c) => {
+          if (c <= 1) {
+            clearInterval(timer);
+            navigate(from, { replace: true });
+            return 0;
+          }
+          return c - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [step, cert.status, navigate, from]);
 
   return (
     <div className="max-w-3xl mx-auto animate-fade-in">
@@ -273,6 +302,16 @@ export default function Certification() {
               </div>
             </div>
 
+            {verifyStatus === 'idle' && (
+              <div className="p-4 bg-sand-50 rounded-xl flex items-center gap-3">
+                <Loader2 size={20} className="text-sand-500 animate-spin" />
+                <div>
+                  <p className="text-sm text-sand-700 font-medium">正在准备发送验证码...</p>
+                  <p className="text-xs text-sand-600 mt-0.5">系统将自动发送并完成验证，无需手动操作</p>
+                </div>
+              </div>
+            )}
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-ash-600 mb-1.5">
@@ -405,15 +444,19 @@ export default function Certification() {
                   </div>
                 </div>
 
-                <div className="flex gap-3 justify-center mt-8">
-                  <button onClick={() => navigate('/enterprise/jobs')} className="btn-primary flex items-center gap-2">
+                <div className="flex gap-3 justify-center mt-8 flex-col sm:flex-row">
+                  <button onClick={() => navigate(from, { replace: true })} className="btn-primary flex items-center justify-center gap-2 px-8 py-3 text-base">
                     <Briefcase size={18} />
-                    前往发布职位
+                    前往职位管理
+                    <ArrowRight size={16} />
                   </button>
-                  <button onClick={() => navigate('/enterprise/jobs/create')} className="btn-outline flex items-center gap-2">
+                  <button onClick={() => navigate('/enterprise/jobs/create')} className="btn-outline flex items-center justify-center gap-2 px-8 py-3 text-base">
                     立即发布新职位
                   </button>
                 </div>
+                <p className="text-sm text-ash-400 mt-4">
+                  {resultCountdown} 秒后自动跳转 →
+                </p>
               </>
             ) : cert.status === 'rejected' ? (
               <>

@@ -33,7 +33,7 @@ export default function Layout({ children, requiredRole, pageTitle, pageSubtitle
   }
 
   if (requireCertification && role === 'enterprise' && !isCertified) {
-    return <Navigate to="/enterprise/certification" replace />;
+    return <Navigate to="/enterprise/certification" state={{ from: location.pathname }} replace />;
   }
 
   return (
