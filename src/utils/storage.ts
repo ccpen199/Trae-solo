@@ -160,3 +160,71 @@ export const clearOfflineQueueItem = async (id: string): Promise<void> => {
   await tx.store.delete(id)
   await tx.done
 }
+
+export interface DBStats {
+  tasks: number
+  technicians: number
+  reviews: number
+  reports: number
+  payments: number
+  offlineQueue: number
+  users: number
+  totalEncryptedBytes: number
+}
+
+export const getDbStats = async (): Promise<DBStats> => {
+  const database = await initDB()
+  const stores = ['users', 'technicians', 'tasks', 'reviews', 'reports', 'payments', 'offlineQueue'] as const
+
+  const counts: Record<string, number> = {}
+  let totalBytes = 0
+
+  for (const store of stores) {
+    const all = await database.getAll(store as keyof DBSchema)
+    counts[store] = all.length
+    for (const item of all) {
+      totalBytes += JSON.stringify(item).length * 2
+    }
+  }
+
+  return {
+    users: counts['users'] || 0,
+    tasks: counts['tasks'] || 0,
+    technicians: counts['technicians'] || 0,
+    reviews: counts['reviews'] || 0,
+    reports: counts['reports'] || 0,
+    payments: counts['payments'] || 0,
+    offlineQueue: counts['offlineQueue'] || 0,
+    totalEncryptedBytes: totalBytes,
+  }
+}
+
+export const clearAllData = async (): Promise<void> => {
+  const database = await initDB()
+  const stores = ['users', 'technicians', 'tasks', 'reviews', 'reports', 'payments', 'offlineQueue'] as const
+  for (const store of stores) {
+    const tx = database.transaction(store, 'readwrite')
+    await tx.store.clear()
+    await tx.done
+  }
+}
+
+export const exportAllData = async (): Promise<string> => {
+  const [users, technicians, tasks, reviews, reports, payments, offlineQueue] = await Promise.all([
+    getAllData<AppUser>('users'),
+    getAllData<Technician>('technicians'),
+    getAllData<RepairTask>('tasks'),
+    getAllData<Review>('reviews'),
+    getAllData<ServiceReport>('reports'),
+    getAllData<PaymentProof>('payments'),
+    getOfflineQueue(),
+  ])
+
+  const exportObj = {
+    exportedAt: new Date().toISOString(),
+    version: '1.0',
+    data: { users, technicians, tasks, reviews, reports, payments, offlineQueue },
+  }
+
+  return JSON.stringify(exportObj, null, 2)
+}

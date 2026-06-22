@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppStore } from '../store'
 import { Modal } from '../components/Modal'
 import { StarRating } from '../components/StarRating'
 import { mockSkillTags } from '../data/mockData'
 import { formatDateTime } from '../utils/geo'
+import { getDbStats, clearAllData, exportAllData, type DBStats } from '../utils/storage'
 import type { Technician } from '../types'
 import {
   Shield,
@@ -23,12 +24,71 @@ import {
   Unlock,
   Eye,
   EyeOff,
+  Download,
+  Trash2,
+  HardDrive,
+  CheckCircle2,
+  Info,
+  RefreshCw,
 } from 'lucide-react'
 
 export const Profile: React.FC = () => {
-  const { currentUser, tasks, reviews, technicians, unfreezeTechnician } = useAppStore()
+  const { currentUser, tasks, reviews, technicians, unfreezeTechnician, initApp } = useAppStore()
   const [expandedTechId, setExpandedTechId] = useState<string | null>(null)
   const [showTechDetail, setShowTechDetail] = useState<Technician | null>(null)
+  const [dbStats, setDbStats] = useState<DBStats | null>(null)
+  const [showClearConfirm, setShowClearConfirm] = useState(false)
+  const [clearDone, setClearDone] = useState(false)
+  const [actionLoading, setActionLoading] = useState<string | null>(null)
+
+  useEffect(() => {
+    loadStats()
+  }, [])
+
+  const loadStats = async () => {
+    const stats = await getDbStats()
+    setDbStats(stats)
+  }
+
+  const handleExport = async () => {
+    setActionLoading('export')
+    try {
+      const data = await exportAllData()
+      const blob = new Blob([data], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `repair-platform-backup-${new Date().toISOString().slice(0, 10)}.json`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } finally {
+      setActionLoading(null)
+    }
+  }
+
+  const handleClear = async () => {
+    setActionLoading('clear')
+    try {
+      await clearAllData()
+      setClearDone(true)
+      await loadStats()
+      setTimeout(() => {
+        setShowClearConfirm(false)
+        setClearDone(false)
+        window.location.reload()
+      }, 1500)
+    } finally {
+      setActionLoading(null)
+    }
+  }
+
+  const formatBytes = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
+  }
 
   const myTasks = tasks.filter(t => t.userId === currentUser?.id)
   const myReviews = reviews.filter(r => r.fromUserId === currentUser?.id)
@@ -84,41 +144,113 @@ export const Profile: React.FC = () => {
       </div>
 
       <div className="card">
-        <h3 className="font-medium mb-3 flex items-center gap-2">
-          <Shield className="w-5 h-5 text-gray-600" />
-          数据安全与隐私
-        </h3>
-        <div className="space-y-3">
-          <div className="flex items-start gap-3 p-3 bg-success-50 rounded-lg">
-            <Lock className="w-5 h-5 text-success-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="font-medium text-success-800 text-sm">本地 AES-256 加密存储</p>
-              <p className="text-xs text-success-700 mt-1">
-                所有订单、评价、支付凭证均使用 AES-256 加密存储在浏览器本地 IndexedDB 中，
-                平台不存储任何交易数据，保障您的交易自主权。
-              </p>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-medium flex items-center gap-2">
+            <Shield className="w-5 h-5 text-gray-600" />
+            数据安全与隐私
+          </h3>
+          <button
+            onClick={loadStats}
+            className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+            title="刷新存储统计"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        </div>
+
+        {dbStats && (
+          <div className="grid grid-cols-4 gap-2 mb-4 p-3 bg-gray-50 rounded-lg">
+            <div className="text-center">
+              <p className="text-lg font-bold text-primary-600">{dbStats.tasks}</p>
+              <p className="text-[10px] text-gray-500">订单</p>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-bold text-warning-600">{dbStats.reviews}</p>
+              <p className="text-[10px] text-gray-500">评价</p>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-bold text-success-600">{dbStats.reports + dbStats.payments}</p>
+              <p className="text-[10px] text-gray-500">报告/凭证</p>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-bold text-gray-700">{formatBytes(dbStats.totalEncryptedBytes)}</p>
+              <p className="text-[10px] text-gray-500">加密存储</p>
             </div>
           </div>
-          <div className="flex items-start gap-3 p-3 bg-primary-50 rounded-lg">
-            <Database className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
-            <div>
+        )}
+
+        <div className="space-y-2.5">
+          <div className="flex items-start gap-3 p-3 bg-success-50 rounded-lg border border-success-100">
+            <div className="w-10 h-10 rounded-full bg-success-100 flex items-center justify-center flex-shrink-0">
+              <Lock className="w-5 h-5 text-success-600" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <p className="font-medium text-success-800 text-sm">AES-256 本地加密存储</p>
+                <span className="badge-success text-[10px]">已启用</span>
+              </div>
+              <p className="text-xs text-success-700 mt-0.5">
+                订单/评价/凭证均加密后存入浏览器 IndexedDB，平台零存储，数据完全自主可控。
+              </p>
+            </div>
+            <CheckCircle2 className="w-5 h-5 text-success-500 flex-shrink-0 mt-1" />
+          </div>
+
+          <div className="flex items-start gap-3 p-3 bg-primary-50 rounded-lg border border-primary-100">
+            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+              <Database className="w-5 h-5 text-primary-600" />
+            </div>
+            <div className="flex-1">
               <p className="font-medium text-primary-800 text-sm">零佣金 · 去中心化交易</p>
-              <p className="text-xs text-primary-700 mt-1">
-                平台不收取任何佣金，交易由发单方和接单方直接协商完成。
-                所有数据仅存储在您的设备本地，完全自主可控。
+              <p className="text-xs text-primary-700 mt-0.5">
+                不收任何抽佣，交易双方直接协商；IndexedDB 仅您当前设备可访问，离线亦可使用。
               </p>
             </div>
+            <CheckCircle2 className="w-5 h-5 text-primary-500 flex-shrink-0 mt-1" />
           </div>
-          <div className="flex items-start gap-3 p-3 bg-warning-50 rounded-lg">
-            <UserIcon className="w-5 h-5 text-warning-600 flex-shrink-0 mt-0.5" />
-            <div>
+
+          <div className="flex items-start gap-3 p-3 bg-warning-50 rounded-lg border border-warning-100">
+            <div className="w-10 h-10 rounded-full bg-warning-100 flex items-center justify-center flex-shrink-0">
+              <UserIcon className="w-5 h-5 text-warning-600" />
+            </div>
+            <div className="flex-1">
               <p className="font-medium text-warning-800 text-sm">双向互评 · 差评自动冻结</p>
-              <p className="text-xs text-warning-700 mt-1">
-                用户与师傅可互相评价。差评将触发对方账号自动冻结，
-                需人工复核后方可解禁，有效保障交易双方权益。
+              <p className="text-xs text-warning-700 mt-0.5">
+                任一方差评（≤2星）自动冻结对方账号，需人工复核后方可解禁，双向保障交易安全。
               </p>
             </div>
+            <Info className="w-5 h-5 text-warning-500 flex-shrink-0 mt-1" />
           </div>
+        </div>
+
+        <div className="mt-4 pt-4 border-t space-y-2">
+          <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+            <HardDrive className="w-3.5 h-3.5" /> 数据管理操作
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              onClick={handleExport}
+              disabled={actionLoading === 'export'}
+              className="flex items-center justify-center gap-1.5 p-2.5 rounded-lg border border-primary-200 bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors text-sm font-medium disabled:opacity-60"
+            >
+              {actionLoading === 'export' ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4" />
+              )}
+              导出备份（JSON）
+            </button>
+            <button
+              onClick={() => setShowClearConfirm(true)}
+              className="flex items-center justify-center gap-1.5 p-2.5 rounded-lg border border-danger-200 bg-danger-50 text-danger-700 hover:bg-danger-100 transition-colors text-sm font-medium"
+            >
+              <Trash2 className="w-4 h-4" />
+              清空本地数据
+            </button>
+          </div>
+          <p className="text-[11px] text-gray-400 mt-1 text-center">
+            💡 建议定期导出备份，清空数据将无法恢复
+          </p>
         </div>
       </div>
 
@@ -523,6 +655,76 @@ export const Profile: React.FC = () => {
             </div>
           )
         })()}
+      </Modal>
+
+      <Modal
+        isOpen={showClearConfirm}
+        onClose={() => !actionLoading && !clearDone && setShowClearConfirm(false)}
+        title="⚠️ 确认清空本地数据"
+      >
+        {clearDone ? (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 rounded-full bg-success-100 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-8 h-8 text-success-600" />
+            </div>
+            <p className="font-medium text-success-700 text-lg">本地数据已清空！</p>
+            <p className="text-sm text-gray-500 mt-1">即将刷新页面重新初始化...</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="p-4 bg-danger-50 border border-danger-200 rounded-lg">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-6 h-6 text-danger-600 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="font-medium text-danger-800">此操作不可撤销！</p>
+                  <p className="text-sm text-danger-700 mt-1">
+                    将永久删除您本地 IndexedDB 中所有数据，包括：订单、评价、服务报告、支付凭证、师傅档案、
+                    离线队列记录。删除后无法恢复！
+                  </p>
+                </div>
+              </div>
+            </div>
+            {dbStats && (
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs font-medium text-gray-600 mb-2">即将删除以下数据：</p>
+                <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                  <div>📋 订单：<b>{dbStats.tasks}</b> 条</div>
+                  <div>⭐ 评价：<b>{dbStats.reviews}</b> 条</div>
+                  <div>📄 服务报告：<b>{dbStats.reports}</b> 份</div>
+                  <div>💰 支付凭证：<b>{dbStats.payments}</b> 张</div>
+                  <div>🔧 师傅档案：<b>{dbStats.technicians}</b> 位</div>
+                  <div>📡 离线队列：<b>{dbStats.offlineQueue}</b> 条</div>
+                </div>
+              </div>
+            )}
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => setShowClearConfirm(false)}
+                disabled={actionLoading === 'clear'}
+                className="btn-secondary flex-1"
+              >
+                取消
+              </button>
+              <button
+                onClick={handleClear}
+                disabled={actionLoading === 'clear'}
+                className="btn-danger flex-1"
+              >
+                {actionLoading === 'clear' ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 inline mr-1 animate-spin" />
+                    正在清空...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4 inline mr-1" />
+                    确认清空所有数据
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   )

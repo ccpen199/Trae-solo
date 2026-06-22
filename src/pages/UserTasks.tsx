@@ -58,11 +58,22 @@ const getStepStatus = (taskStatus: string, stepKey: string): 'done' | 'current' 
   return 'pending'
 }
 
+type TaskTabKey = 'all' | 'broadcasting' | 'in_progress' | 'completed' | 'pending_review'
+
+const taskTabs: { key: TaskTabKey; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { key: 'all', label: '全部', icon: FileText },
+  { key: 'broadcasting', label: '待响应', icon: Radio },
+  { key: 'in_progress', label: '进行中', icon: Play },
+  { key: 'completed', label: '已完工', icon: CheckCircle2 },
+  { key: 'pending_review', label: '待评价', icon: Star },
+]
+
 export const UserTasks: React.FC = () => {
   const navigate = useNavigate()
   const { tasks, technicians, addReview, uploadPaymentProof, currentUser, reviews, reports, payments, unfreezeTechnician } = useAppStore()
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<TaskTabKey>('all')
   const [showReviewModal, setShowReviewModal] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const [showTechDetailModal, setShowTechDetailModal] = useState(false)
@@ -113,6 +124,30 @@ export const UserTasks: React.FC = () => {
 
   const myTasks = tasks.filter(t => t.userId === currentUser?.id || currentUser?.role === 'user')
 
+  const getTabFiltered = (list: typeof myTasks) => {
+    switch (activeTab) {
+      case 'broadcasting':
+        return list.filter(t => t.status === 'broadcasting')
+      case 'in_progress':
+        return list.filter(t => ['accepted', 'arrived', 'in_progress'].includes(t.status))
+      case 'completed':
+        return list.filter(t => ['completed', 'paid', 'reviewed'].includes(t.status))
+      case 'pending_review':
+        return list.filter(t => t.status === 'paid' && !reviews.find(r => r.taskId === t.id && r.fromRole === 'user'))
+      default:
+        return list
+    }
+  }
+
+  const filteredTasks = getTabFiltered(myTasks)
+  const tabCounts = {
+    all: myTasks.length,
+    broadcasting: myTasks.filter(t => t.status === 'broadcasting').length,
+    in_progress: myTasks.filter(t => ['accepted', 'arrived', 'in_progress'].includes(t.status)).length,
+    completed: myTasks.filter(t => ['completed', 'paid', 'reviewed'].includes(t.status)).length,
+    pending_review: myTasks.filter(t => t.status === 'paid' && !reviews.find(r => r.taskId === t.id && r.fromRole === 'user')).length,
+  }
+
   const getTaskReport = (taskId: string) => reports.find(r => r.taskId === taskId)
   const getTaskPayment = (taskId: string) => payments.find(p => p.taskId === taskId)
   const getTaskUserReview = (taskId: string) => reviews.find(r => r.taskId === taskId && r.fromRole === 'user')
@@ -130,21 +165,95 @@ export const UserTasks: React.FC = () => {
         <span className="text-sm text-gray-500">共 {myTasks.length} 单</span>
       </div>
 
-      {myTasks.length === 0 ? (
+      <div className="card p-1.5 flex gap-1 overflow-x-auto">
+        {taskTabs.map(tab => {
+          const TabIcon = tab.icon
+          const isActive = activeTab === tab.key
+          const count = tabCounts[tab.key]
+          return (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                isActive
+                  ? 'bg-primary-600 text-white shadow-sm'
+                  : count > 0
+                    ? 'text-gray-600 hover:bg-gray-100'
+                    : 'text-gray-400 hover:bg-gray-50'
+              }`}
+            >
+              <TabIcon className="w-4 h-4" />
+              {tab.label}
+              <span className={`text-[11px] px-1.5 py-0.5 rounded-full ${
+                isActive
+                  ? 'bg-white/20 text-white'
+                  : count > 0
+                    ? 'bg-gray-100 text-gray-600'
+                    : 'bg-gray-50 text-gray-400'
+              }`}>
+                {count}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      {filteredTasks.length === 0 ? (
         <div className="card text-center py-12">
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
             <FileText className="w-8 h-8 text-gray-400" />
           </div>
-          <p className="text-gray-500">暂无订单</p>
-          <button
-            onClick={() => navigate('/')}
-            className="btn-primary mt-4"
-          >
-            去发布维修任务
-          </button>
+          <p className="font-medium text-gray-700">
+            {activeTab === 'all' ? '还没有任何订单' : `暂无"${taskTabs.find(t => t.key === activeTab)?.label}"的订单`}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">
+            {activeTab === 'all'
+              ? '首页选择服务品类或热门维修即可发布'
+              : '您可以切换到其他状态查看，或前往首页发布新订单'}
+          </p>
+          <div className="mt-6 space-y-2">
+            <button
+              onClick={() => navigate('/')}
+              className="btn-primary"
+            >
+              👉 去首页发布维修任务
+            </button>
+            {activeTab !== 'all' && (
+              <button
+                onClick={() => setActiveTab('all')}
+                className="btn-secondary w-full"
+              >
+                查看全部订单
+              </button>
+            )}
+          </div>
+          <div className="mt-8 p-4 bg-gray-50 rounded-lg text-left max-w-sm mx-auto">
+            <p className="text-xs font-medium text-gray-700 mb-3 flex items-center gap-1">
+              <ShieldCheck className="w-4 h-4 text-success-600" />
+              订单状态流转说明
+            </p>
+            <div className="space-y-2 text-xs text-gray-600">
+              <div className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-[10px]">1</span>
+                <span><b>待响应</b>：发布后正在向周边师傅广播派单</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 text-[10px]">2</span>
+                <span><b>进行中</b>：师傅已接单 → 到现场 → 维修施工</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-success-100 flex items-center justify-center text-success-600 text-[10px]">3</span>
+                <span><b>已完工</b>：维修完成 → 上传支付凭证</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-warning-100 flex items-center justify-center text-warning-600 text-[10px]">4</span>
+                <span><b>待评价</b>：支付完成后双方互评 · 差评自动冻结</span>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
-        myTasks.map(task => {
+        filteredTasks.map(task => {
           const cat = getCategoryById(task.categoryId)
           const tech = task.technicianId ? technicians.find(t => t.id === task.technicianId) : null
           const report = getTaskReport(task.id)
