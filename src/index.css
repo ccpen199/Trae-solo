@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html, body, #root {
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  body {
+    @apply bg-night-900 text-night-100 font-sans antialiased;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(6, 182, 212, 0.06) 0%, transparent 45%),
+      linear-gradient(180deg, #08080F 0%, #0F0F1A 50%, #1F1F2E 100%);
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+
+  ::selection {
+    @apply bg-esports-400/40 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-night-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-esports-700/60 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-esports-600;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-night-800/70 backdrop-blur-xl border border-white/5 rounded-2xl shadow-card;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1 hover:border-esports-400/30;
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+           bg-gradient-esports text-white font-semibold
+           shadow-esports-glow transition-all duration-300
+           hover:shadow-esports-glow-lg hover:scale-[1.02]
+           active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+    background-size: 200% 200%;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+           bg-night-700/80 border border-white/10 text-night-100 font-medium
+           hover:bg-night-600 hover:border-esports-400/40 transition-all duration-200
+           active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg
+           text-night-200 hover:text-white hover:bg-white/5
+           transition-all duration-200;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
+           bg-gradient-to-r from-victory-red to-rose-500 text-white font-semibold
+           shadow-lg shadow-victory-red/25
+           hover:shadow-victory-red/40 transition-all duration-300
+           active:scale-[0.98];
+  }
+
+  .input-base {
+    @apply w-full px-4 py-3 rounded-xl bg-night-900/80 border border-night-600
+           text-night-100 placeholder-night-400
+           focus:outline-none focus:border-esports-400 focus:ring-2 focus:ring-esports-400/20
+           transition-all duration-200;
+  }
+
+  .badge-base {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .cert-diamond {
+    @apply badge-base bg-gradient-diamond text-slate-900 shadow-diamond-glow;
+  }
+
+  .cert-gold {
+    @apply badge-base bg-gradient-gold text-slate-900 shadow-gold-glow;
+  }
+
+  .cert-silver {
+    @apply badge-base bg-gradient-to-r from-slate-400 to-slate-300 text-slate-900;
+  }
+
+  .status-pending {
+    @apply badge-base bg-amber-500/15 text-amber-400 border border-amber-500/30;
+  }
+
+  .status-progress {
+    @apply badge-base bg-esports-400/15 text-esports-300 border border-esports-400/30;
+  }
+
+  .status-success {
+    @apply badge-base bg-victory-green/15 text-emerald-400 border border-emerald-500/30;
+  }
+
+  .status-dispute {
+    @apply badge-base bg-victory-red/15 text-red-400 border border-red-500/30;
+  }
+
+  .heading-display {
+    @apply font-display font-black tracking-wider;
+  }
+
+  .section-title {
+    @apply font-display font-bold text-2xl md:text-3xl tracking-wide;
+  }
+
+  .data-number {
+    @apply font-mono font-semibold tabular-nums;
+  }
+
+  .divider-glow {
+    @apply h-px bg-gradient-to-r from-transparent via-esports-400/40 to-transparent;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(168, 85, 247, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+@layer utilities {
+  .text-gradient-esports {
+    @apply bg-clip-text text-transparent bg-gradient-esports bg-[length:200%_200%];
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-gold;
+  }
+
+  .text-gradient-diamond {
+    @apply bg-clip-text text-transparent bg-gradient-diamond;
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
