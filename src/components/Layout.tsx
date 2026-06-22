@@ -363,7 +363,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      <SOSButton />
     </div>
   );
 }

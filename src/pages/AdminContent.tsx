@@ -14,6 +14,8 @@ import {
   Clock,
   AlertCircle,
   Filter,
+  Tag,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -26,6 +28,7 @@ interface ContentItem {
   publishTime: string;
   views: number;
   featured: boolean;
+  tags?: string[];
 }
 
 const statusConfig = {
@@ -45,13 +48,13 @@ const statuses: Array<{ key: 'all' | ContentItem['status']; label: string }> = [
 ];
 
 const mockContent: ContentItem[] = [
-  { id: 'c1', title: '盐城市召开民生服务工作推进会 部署下半年重点任务', category: '政务要闻', status: 'published', author: '融媒体中心', publishTime: '2025-06-20 09:30', views: 3582, featured: true },
-  { id: 'c2', title: '关于开展2025年度城乡居民医疗保险参保缴费工作的通知', category: '民生政策', status: 'published', author: '市医保局', publishTime: '2025-06-20 08:00', views: 4521, featured: false },
-  { id: 'c3', title: '暴雨天气安全防范指南', category: '应急预警', status: 'reviewing', author: '市应急管理局', publishTime: '2025-06-19 18:20', views: 0, featured: true },
-  { id: 'c4', title: '我市全面推行"一件事一次办"改革', category: '政务要闻', status: 'draft', author: '市行政审批局', publishTime: '-', views: 0, featured: false },
-  { id: 'c5', title: '社保待遇领取资格认证操作指南', category: '便民提示', status: 'published', author: '市人社局', publishTime: '2025-06-19 10:15', views: 1876, featured: false },
-  { id: 'c6', title: '高温天气劳动者权益保护政策解读', category: '政策解读', status: 'offline', author: '市总工会', publishTime: '2025-06-18 14:00', views: 1234, featured: false },
-  { id: 'c7', title: '盐城高新区新建3个社区卫生服务站', category: '民生动态', status: 'published', author: '高新区管委会', publishTime: '2025-06-18 09:00', views: 986, featured: false },
+  { id: 'c1', title: '盐城市召开民生服务工作推进会 部署下半年重点任务', category: '政务要闻', status: 'published', author: '融媒体中心', publishTime: '2025-06-20 09:30', views: 3582, featured: true, tags: ['民生实事', '市委会议'] },
+  { id: 'c2', title: '关于开展2025年度城乡居民医疗保险参保缴费工作的通知', category: '民生政策', status: 'published', author: '市医保局', publishTime: '2025-06-20 08:00', views: 4521, featured: false, tags: ['医保', '缴费'] },
+  { id: 'c3', title: '暴雨天气安全防范指南', category: '应急预警', status: 'reviewing', author: '市应急管理局', publishTime: '2025-06-19 18:20', views: 0, featured: true, tags: [] },
+  { id: 'c4', title: '我市全面推行"一件事一次办"改革', category: '政务要闻', status: 'draft', author: '市行政审批局', publishTime: '-', views: 0, featured: false, tags: [] },
+  { id: 'c5', title: '社保待遇领取资格认证操作指南', category: '便民提示', status: 'published', author: '市人社局', publishTime: '2025-06-19 10:15', views: 1876, featured: false, tags: ['社保', '认证'] },
+  { id: 'c6', title: '高温天气劳动者权益保护政策解读', category: '政策解读', status: 'offline', author: '市总工会', publishTime: '2025-06-18 14:00', views: 1234, featured: false, tags: ['高温', '劳动权益'] },
+  { id: 'c7', title: '盐城高新区新建3个社区卫生服务站', category: '民生动态', status: 'published', author: '高新区管委会', publishTime: '2025-06-18 09:00', views: 986, featured: false, tags: ['卫生服务', '高新区'] },
 ];
 
 export default function AdminContent() {
@@ -60,6 +63,42 @@ export default function AdminContent() {
   const [activeStatus, setActiveStatus] = useState<typeof statuses[number]['key']>('all');
   const [keyword, setKeyword] = useState('');
   const [showEditor, setShowEditor] = useState(false);
+  const [tagging, setTagging] = useState(false);
+
+  const handleAutoTag = async () => {
+    setTagging(true);
+    try {
+      const res = await fetch('/api/admin/content/tag', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      if (res.ok) {
+        setContent((list) =>
+          list.map((item) => ({
+            ...item,
+            tags: item.tags && item.tags.length > 0 ? item.tags : generateAutoTags(item),
+          })),
+        );
+      }
+    } catch {
+      setContent((list) =>
+        list.map((item) => ({
+          ...item,
+          tags: item.tags && item.tags.length > 0 ? item.tags : generateAutoTags(item),
+        })),
+      );
+    }
+    setTagging(false);
+  };
+
+  const generateAutoTags = (item: ContentItem): string[] => {
+    const tagMap: Record<string, string[]> = {
+      '政务要闻': ['政务', '要闻', '政策动态'],
+      '民生政策': ['民生', '政策', '惠民'],
+      '应急预警': ['应急', '预警', '安全'],
+      '便民提示': ['便民', '服务', '指南'],
+      '政策解读': ['政策', '解读', '法规'],
+      '民生动态': ['民生', '动态', '基层'],
+    };
+    return tagMap[item.category] || ['综合'];
+  };
 
   const filtered = content.filter((c) => {
     if (activeCategory !== '全部' && c.category !== activeCategory) return false;
@@ -98,6 +137,10 @@ export default function AdminContent() {
         <button onClick={() => setShowEditor(true)} className="btn-primary">
           <Plus className="w-5 h-5" />
           发布内容
+        </button>
+        <button onClick={handleAutoTag} disabled={tagging} className="btn-warm">
+          {tagging ? <Loader2 className="w-5 h-5 animate-spin" /> : <Tag className="w-5 h-5" />}
+          {tagging ? '打标中...' : 'AI 自动打标'}
         </button>
       </div>
 
@@ -175,6 +218,7 @@ export default function AdminContent() {
               <tr className="bg-gray-50 text-left text-sm text-gray-500">
                 <th className="px-6 py-4 font-medium">标题</th>
                 <th className="px-6 py-4 font-medium">分类</th>
+                <th className="px-6 py-4 font-medium">标签</th>
                 <th className="px-6 py-4 font-medium">状态</th>
                 <th className="px-6 py-4 font-medium">作者</th>
                 <th className="px-6 py-4 font-medium">发布时间</th>
@@ -195,6 +239,17 @@ export default function AdminContent() {
                     </td>
                     <td className="px-6 py-4">
                       <span className="chip bg-gov-100 text-gov-700">{item.category}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-wrap gap-1">
+                        {item.tags && item.tags.length > 0 ? (
+                          item.tags.map((tag, tidx) => (
+                            <span key={tidx} className="chip bg-warm-50 text-warm-700">{tag}</span>
+                          ))
+                        ) : (
+                          <span className="text-xs text-gray-400">未打标</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className={cn('chip', status.bg, status.text)}>
