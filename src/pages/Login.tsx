@@ -89,7 +89,7 @@ export default function Login() {
       if (success) {
         navigate(from, { replace: true });
       } else {
-        setLoginError('验证码错误，请重新输入（测试验证码：123456）');
+        setLoginError('登录失败，请检查手机号格式是否正确');
       }
     } catch (error) {
       setLoginError('登录失败，请稍后重试');
@@ -278,9 +278,11 @@ export default function Login() {
                   {countdown > 0 ? `${countdown}s后重发` : '获取验证码'}
                 </Button>
               </div>
-              <p className="mt-1 text-xs text-neutral-400">
-                测试验证码：123456
-              </p>
+              <div className="mt-1 p-2 bg-neutral-50 rounded-lg p-2">
+                <p className="text-xs text-neutral-500">
+                  💡 <span className="font-medium">演示提示</span>：输入任意6位数字即可完成登录演示
+                </p>
+              </div>
             </div>
 
             <Button

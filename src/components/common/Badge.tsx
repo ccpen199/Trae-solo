@@ -3,11 +3,13 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 type BadgeVariant = 'westlake' | 'honghua' | 'chaojing' | 'neutral' | 'red' | 'green';
+type BadgeSize = 'sm' | 'md';
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
   dot?: boolean;
   count?: number;
+  size?: BadgeSize;
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
@@ -28,16 +30,19 @@ const dotVariantClasses: Record<BadgeVariant, string> = {
   green: 'bg-green-500',
 };
 
+const sizeClasses: Record<BadgeSize, string> = {
+  sm: 'px-2 py-0.5 text-[10px]',
+  md: 'px-2.5 py-0.5 text-xs',
+};
+
 const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ className, variant = 'neutral', dot = false, count, children, ...props }, ref) => {
+  ({ className, variant = 'neutral', dot = false, count, size = 'md', children, ...props }, ref) => {
     const displayCount = count !== undefined ? (count > 99 ? '99+' : count.toString()) : '';
 
     if (dot) {
       return (
-        <motion.span
+        <span
           ref={ref}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
           className={cn(
             'inline-block w-2.5 h-2.5 rounded-full',
             dotVariantClasses[variant],
@@ -52,8 +57,9 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         className={cn(
-          'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium',
+          'inline-flex items-center gap-1 rounded-full font-medium',
           variantClasses[variant],
+          sizeClasses[size],
           className
         )}
         {...props}

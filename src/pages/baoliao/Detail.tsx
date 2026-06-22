@@ -15,6 +15,10 @@ import {
   Send,
   Eye,
   MoreHorizontal,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Gift,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useBaoliaoStore } from '@/stores/useBaoliaoStore';
@@ -301,6 +305,69 @@ export default function BaoliaoDetail() {
       </div>
 
       <div className="max-w-2xl mx-auto">
+        {baoliao.status !== 'approved' && (
+          <div className={cn(
+            'mx-4 mt-4 rounded-xl p-4 flex items-start gap-3',
+            baoliao.status === 'pending' && 'bg-chaojing-50 border border-chaojing-200',
+            baoliao.status === 'rejected' && 'bg-red-50 border border-red-200'
+          )}>
+            <div className={cn(
+              'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0',
+              baoliao.status === 'pending' && 'bg-chaojing-100 text-chaojing-600',
+              baoliao.status === 'rejected' && 'bg-red-100 text-red-600'
+            )}>
+              {baoliao.status === 'pending' ? (
+                <Clock className="w-5 h-5" />
+              ) : (
+                <XCircle className="w-5 h-5" />
+              )}
+            </div>
+            <div className="flex-1">
+              <h3 className={cn(
+                'font-semibold mb-1',
+                baoliao.status === 'pending' && 'text-chaojing-700',
+                baoliao.status === 'rejected' && 'text-red-700'
+              )}>
+                {baoliao.status === 'pending' ? '📝 内容审核中' : '⛔ 内容未通过审核'}
+              </h3>
+              <p className={cn(
+                'text-sm',
+                baoliao.status === 'pending' && 'text-chaojing-600',
+                baoliao.status === 'rejected' && 'text-red-600'
+              )}>
+                {baoliao.status === 'pending'
+                  ? '您的爆料已提交，编辑正在进行初审。审核通过后将进入公共信息流，其他用户即可看到您的爆料内容。'
+                  : `审核未通过原因：${baoliao.rejectReason || '内容不符合社区规范，请修改后重新发布。'}`
+                }
+              </p>
+              {baoliao.status === 'pending' && (
+                <div className="mt-3 flex items-center gap-2 text-xs text-chaojing-600 bg-chaojing-100/50 rounded-lg px-3 py-2">
+                  <Gift className="w-4 h-4" />
+                  <span>审核通过后可获得 <span className="font-bold">+20 小红花积分</span> 奖励！</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {baoliao.status === 'approved' && baoliao.reviewedAt && (
+          <div className="mx-4 mt-4 rounded-xl p-4 bg-honghua-50 border border-honghua-200 flex items-start gap-3">
+            <div className="w-10 h-10 rounded-full bg-honghua-100 text-honghua-600 flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-honghua-700 mb-1">✅ 审核已通过</h3>
+              <p className="text-sm text-honghua-600">
+                您的爆料于 {formatDate(baoliao.reviewedAt)} 通过审核，已进入公共信息流。
+              </p>
+              <div className="mt-3 flex items-center gap-2 text-xs text-honghua-600 bg-honghua-100/50 rounded-lg px-3 py-2">
+                <Gift className="w-4 h-4" />
+                <span>已获得 <span className="font-bold">+20 小红花积分</span> 奖励！</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="bg-white px-4 py-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

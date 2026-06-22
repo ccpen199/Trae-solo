@@ -10,7 +10,7 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, hover = false, shadow = true, padding = true, onClick, children, ...props }, ref) => {
+  ({ className, hover = false, shadow = true, padding = true, onClick, onDrag, children, ...props }, ref) => {
     return (
       <motion.div
         ref={ref}

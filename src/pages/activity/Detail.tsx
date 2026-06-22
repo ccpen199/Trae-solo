@@ -18,6 +18,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useCircleStore } from '@/stores/useCircleStore';
+import { useUserStore } from '@/stores/useUserStore';
 import { mockUsers } from '@/data/mockUsers';
 import Avatar from '@/components/common/Avatar';
 import Button from '@/components/common/Button';
@@ -35,14 +36,14 @@ const statusConfig: Record<string, { label: string; variant: 'westlake' | 'hongh
   upcoming: { label: '即将开始', variant: 'westlake' },
   ongoing: { label: '进行中', variant: 'honghua' },
   ended: { label: '已结束', variant: 'neutral' },
-  取消ed: { label: '已取消', variant: 'neutral' },
+  cancelled: { label: '已取消', variant: 'neutral' },
 };
 
 export default function ActivityDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { activities, fetchActivities, registerActivity, unregisterActivity } = useCircleStore();
-  const [currentUser] = useState(mockUsers[0]);
+  const { user: currentUser, isLoggedIn } = useUserStore();
   
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -87,6 +88,10 @@ export default function ActivityDetail() {
 
   const handleRegister = async () => {
     if (!activity) return;
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
     setActionLoading(true);
     if (activity.isRegistered) {
       await unregisterActivity(activity.id);
@@ -97,7 +102,11 @@ export default function ActivityDetail() {
   };
 
   const handleSubmitComment = () => {
-    if (!commentText.trim()) return;
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+    if (!commentText.trim() || !currentUser) return;
     
     const newComment: BaoliaoComment = {
       id: 'cmt' + Date.now(),

@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import type { PointRecord, PointTask, MallItem } from '../types';
+import type { PointRecord, PointTask, MallItem, User } from '../types';
 import { mockPointRecords, mockPointTasks, mockMallItems } from '../data/mockPoints';
 import { mockUsers } from '../data/mockUsers';
+import { getStorage, setStorage } from '../utils/storage';
 
 interface PointStoreState {
   pointRecords: PointRecord[];
@@ -21,6 +22,24 @@ interface PointStoreActions {
 
 type PointStore = PointStoreState & PointStoreActions;
 
+const getCurrentUser = (): User => {
+  const stored = getStorage<{ user: User | null }>('user_store', { user: null });
+  return stored.user || mockUsers[0];
+};
+
+const updateUserPoints = (delta: number): User => {
+  const stored = getStorage<{ user: User | null; token: string | null }>('user_store', { user: null, token: null });
+  if (stored.user) {
+    const updatedUser = {
+      ...stored.user,
+      points: stored.user.points + delta,
+    };
+    setStorage('user_store', { user: updatedUser, token: stored.token });
+    return updatedUser;
+  }
+  return mockUsers[0];
+};
+
 export const usePointStore = create<PointStore>((set, get) => ({
   pointRecords: [],
   tasks: [],
@@ -31,7 +50,7 @@ export const usePointStore = create<PointStore>((set, get) => ({
     set({ loading: true });
     await new Promise(resolve => setTimeout(resolve, 400));
 
-    const currentUser = mockUsers[0];
+    const currentUser = getCurrentUser();
     const records = mockPointRecords.filter(r => r.userId === currentUser.id);
     set({ pointRecords: records, loading: false });
   },
@@ -66,15 +85,16 @@ export const usePointStore = create<PointStore>((set, get) => ({
       ),
     }));
 
-    const currentUser = mockUsers[0];
+    const currentUser = updateUserPoints(task.points);
+
     const newRecord: PointRecord = {
       id: 'pr' + Date.now(),
       userId: currentUser.id,
       type: 'earn',
       amount: task.points,
-      balance: currentUser.points + task.points,
+      balance: currentUser.points,
       reason: task.name,
-      source: 'login',
+      source: task.source || 'login',
       createdAt: new Date(),
     };
 
@@ -89,7 +109,7 @@ export const usePointStore = create<PointStore>((set, get) => ({
     await new Promise(resolve => setTimeout(resolve, 500));
 
     const item = get().mallItems.find(i => i.id === itemId);
-    const currentUser = mockUsers[0];
+    const currentUser = getCurrentUser();
 
     if (!item) {
       return { success: false, message: '商品不存在' };
@@ -111,12 +131,14 @@ export const usePointStore = create<PointStore>((set, get) => ({
       ),
     }));
 
+    const updatedUser = updateUserPoints(-item.price);
+
     const newRecord: PointRecord = {
       id: 'pr' + Date.now(),
       userId: currentUser.id,
       type: 'spend',
       amount: item.price,
-      balance: currentUser.points - item.price,
+      balance: updatedUser.points,
       reason: `兑换${item.name}`,
       source: 'exchange',
       relatedId: itemId,
@@ -133,18 +155,20 @@ export const usePointStore = create<PointStore>((set, get) => ({
   donatePoints: async (amount: number, projectId: string): Promise<{ success: boolean; certificate?: string }> => {
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    const currentUser = mockUsers[0];
+    const currentUser = getCurrentUser();
 
     if (currentUser.points < amount) {
       return { success: false };
     }
+
+    const updatedUser = updateUserPoints(-amount);
 
     const newRecord: PointRecord = {
       id: 'pr' + Date.now(),
       userId: currentUser.id,
       type: 'spend',
       amount,
-      balance: currentUser.points - amount,
+      balance: updatedUser.points,
       reason: `公益捐赠${amount / 10}元`,
       source: 'donate',
       relatedId: projectId,

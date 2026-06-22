@@ -16,6 +16,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { useCircleStore } from '@/stores/useCircleStore';
+import { useUserStore } from '@/stores/useUserStore';
 import { mockUsers } from '@/data/mockUsers';
 import ActivityCard from '@/components/business/ActivityCard';
 import Avatar from '@/components/common/Avatar';
@@ -47,11 +48,11 @@ export default function CircleDetail() {
     registerActivity,
     unregisterActivity,
   } = useCircleStore();
+  const { user: currentUser, isLoggedIn } = useUserStore();
 
   const [activeTab, setActiveTab] = useState('home');
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
-  const [currentUser] = useState(mockUsers[0]);
   const [membersPage, setMembersPage] = useState(1);
   const membersPerPage = 8;
 
@@ -72,6 +73,10 @@ export default function CircleDetail() {
 
   const handleJoinLeave = async () => {
     if (!currentCircle) return;
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
     setActionLoading(true);
     if (currentCircle.isJoined) {
       await leaveCircle(currentCircle.id);
@@ -82,6 +87,10 @@ export default function CircleDetail() {
   };
 
   const handleRegisterActivity = async (activityId: string) => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
     const activity = activities.find(a => a.id === activityId);
     if (!activity) return;
     
@@ -92,7 +101,7 @@ export default function CircleDetail() {
     }
   };
 
-  const isAdmin = currentCircle?.adminId === currentUser.id;
+  const isAdmin = currentUser && currentCircle?.adminId === currentUser.id;
 
   const paginatedMembers = () => {
     const allMembers: User[] = [];
@@ -357,7 +366,7 @@ export default function CircleDetail() {
                     variant="primary"
                     size="sm"
                     leftIcon={<Plus className="w-4 h-4" />}
-                    onClick={() => navigate(`/circles/${currentCircle.id}/publish-activity`)}
+                    onClick={() => navigate(`/circles/${currentCircle.id}/activity/publish`)}
                   >
                     发起活动
                   </Button>
@@ -618,7 +627,7 @@ export default function CircleDetail() {
                   size="lg"
                   className="w-14 h-14 rounded-full shadow-lg"
                   leftIcon={<Plus className="w-6 h-6" />}
-                  onClick={() => navigate(`/circles/${currentCircle.id}/publish-activity`)}
+                  onClick={() => navigate(`/circles/${currentCircle.id}/activity/publish`)}
                 />
               </motion.div>
             )}

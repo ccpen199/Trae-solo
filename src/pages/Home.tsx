@@ -51,13 +51,13 @@ const bannerImages = [
 
 const quickEntries = [
   { icon: Megaphone, name: '发布爆料', color: 'from-westlake-400 to-westlake-600', path: '/baoliao/publish' },
-  { icon: Bus, name: '客运查询', color: 'from-honghua-400 to-honghua-600', path: '/transport' },
-  { icon: Ticket, name: '影院购票', color: 'from-chaojing-400 to-chaojing-600', path: '/cinema' },
-  { icon: Building2, name: '政务预约', color: 'from-purple-400 to-purple-600', path: '/government' },
-  { icon: Briefcase, name: '招聘求职', color: 'from-pink-400 to-pink-600', path: '/jobs' },
-  { icon: Gift, name: '积分商城', color: 'from-orange-400 to-orange-600', path: '/mall' },
+  { icon: Bus, name: '客运查询', color: 'from-honghua-400 to-honghua-600', path: '/services/bus' },
+  { icon: Ticket, name: '影院购票', color: 'from-chaojing-400 to-chaojing-600', path: '/services/cinema' },
+  { icon: Building2, name: '政务预约', color: 'from-purple-400 to-purple-600', path: '/services/government' },
+  { icon: Briefcase, name: '招聘求职', color: 'from-pink-400 to-pink-600', path: '/services/job' },
+  { icon: Gift, name: '积分商城', color: 'from-orange-400 to-orange-600', path: '/points/mall' },
   { icon: Users, name: '兴趣圈子', color: 'from-teal-400 to-teal-600', path: '/circles' },
-  { icon: Calendar, name: '活动报名', color: 'from-indigo-400 to-indigo-600', path: '/activities' }
+  { icon: Calendar, name: '活动报名', color: 'from-indigo-400 to-indigo-600', path: '/circles' }
 ];
 
 const fadeInUp = {

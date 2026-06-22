@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import type { Baoliao, BaoliaoComment } from '../types';
+import type { Baoliao, BaoliaoComment, User } from '../types';
 import { mockBaoliaos } from '../data/mockBaoliaos';
 import { mockUsers } from '../data/mockUsers';
+import { getStorage } from '../utils/storage';
 
 interface BaoliaoStoreState {
   baoliaos: Baoliao[];
@@ -28,11 +29,17 @@ export const useBaoliaoStore = create<BaoliaoStore>((set, get) => ({
   currentBaoliao: null,
   loading: false,
 
-  fetchBaoliaos: async (params?: { category?: string; district?: string; sort?: string }): Promise<void> => {
+  fetchBaoliaos: async (params?: { category?: string; district?: string; sort?: string; status?: string }): Promise<void> => {
     set({ loading: true });
     await new Promise(resolve => setTimeout(resolve, 500));
 
     let filtered = [...mockBaoliaos];
+
+    if (params?.status) {
+      filtered = filtered.filter(b => b.status === params.status);
+    } else {
+      filtered = filtered.filter(b => b.status === 'approved');
+    }
 
     if (params?.category) {
       filtered = filtered.filter(b => b.category === params.category);
@@ -54,7 +61,22 @@ export const useBaoliaoStore = create<BaoliaoStore>((set, get) => ({
     set({ loading: true });
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    const baoliao = mockBaoliaos.find(b => b.id === id) || null;
+    const stored = getStorage<{ user: User | null }>('user_store', { user: null });
+    const currentUserId = stored.user?.id;
+
+    let baoliao = mockBaoliaos.find(b => b.id === id) || null;
+    if (!baoliao) {
+      const state = get();
+      baoliao = state.baoliaos.find(b => b.id === id) || 
+                state.pendingBaoliaos.find(b => b.id === id) || null;
+    }
+
+    if (baoliao && baoliao.status !== 'approved') {
+      if (currentUserId !== baoliao.userId) {
+        baoliao = null;
+      }
+    }
+
     set({ currentBaoliao: baoliao, loading: false });
     return baoliao;
   },
@@ -63,7 +85,8 @@ export const useBaoliaoStore = create<BaoliaoStore>((set, get) => ({
     set({ loading: true });
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    const currentUser = mockUsers[0];
+    const stored = getStorage<{ user: User | null }>('user_store', { user: null });
+    const currentUser = stored.user || mockUsers[0];
     const newBaoliao: Baoliao = {
       id: 'b' + Date.now(),
       userId: currentUser.id,
@@ -144,7 +167,8 @@ export const useBaoliaoStore = create<BaoliaoStore>((set, get) => ({
   addComment: async (baoliaoId: string, content: string): Promise<BaoliaoComment> => {
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    const currentUser = mockUsers[0];
+    const stored = getStorage<{ user: User | null }>('user_store', { user: null });
+    const currentUser = stored.user || mockUsers[0];
     const newComment: BaoliaoComment = {
       id: 'c' + Date.now(),
       baoliaoId,

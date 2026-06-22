@@ -1,8 +1,14 @@
 import { create } from 'zustand';
-import type { Circle, Activity } from '../types';
+import type { Circle, Activity, User } from '../types';
 import { mockCircles } from '../data/mockCircles';
 import { mockActivities } from '../data/mockActivities';
 import { mockUsers } from '../data/mockUsers';
+import { getStorage } from '../utils/storage';
+
+const getCurrentUser = (): User => {
+  const stored = getStorage<{ user: User | null }>('user_store', { user: null });
+  return stored.user || mockUsers[0];
+};
 
 interface CircleStoreState {
   circles: Circle[];
@@ -127,7 +133,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
   publishActivity: async (data: Partial<Activity>): Promise<Activity> => {
     await new Promise(resolve => setTimeout(resolve, 600));
 
-    const currentUser = mockUsers[0];
+    const currentUser = getCurrentUser();
     const circle = mockCircles.find(c => c.id === data.circleId) || mockCircles[0];
 
     const newActivity: Activity = {
@@ -165,6 +171,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
     await new Promise(resolve => setTimeout(resolve, 300));
 
     let success = false;
+    const currentUser = getCurrentUser();
 
     set(state => {
       const activities = state.activities.map(a => {
@@ -174,7 +181,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
             ...a,
             isRegistered: true,
             currentParticipants: a.currentParticipants + 1,
-            participants: [...a.participants, mockUsers[0]],
+            participants: [...a.participants, currentUser],
           };
         }
         return a;
@@ -187,7 +194,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
             ...state.currentActivity,
             isRegistered: true,
             currentParticipants: state.currentActivity.currentParticipants + 1,
-            participants: [...state.currentActivity.participants, mockUsers[0]],
+            participants: [...state.currentActivity.participants, currentUser],
           }
         : state.currentActivity;
 
@@ -201,6 +208,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
     await new Promise(resolve => setTimeout(resolve, 300));
 
     let success = false;
+    const currentUser = getCurrentUser();
 
     set(state => {
       const activities = state.activities.map(a => {
@@ -210,7 +218,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
             ...a,
             isRegistered: false,
             currentParticipants: a.currentParticipants - 1,
-            participants: a.participants.filter(p => p.id !== mockUsers[0].id),
+            participants: a.participants.filter(p => p.id !== currentUser.id),
           };
         }
         return a;
@@ -221,7 +229,7 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
             ...state.currentActivity,
             isRegistered: false,
             currentParticipants: state.currentActivity.currentParticipants - 1,
-            participants: state.currentActivity.participants.filter(p => p.id !== mockUsers[0].id),
+            participants: state.currentActivity.participants.filter(p => p.id !== currentUser.id),
           }
         : state.currentActivity;
 

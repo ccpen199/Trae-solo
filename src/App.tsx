@@ -51,8 +51,8 @@ const pageVariants = {
 };
 
 const pageTransition = {
-  type: "tween",
-  ease: "anticipate",
+  type: "tween" as const,
+  ease: "easeOut",
   duration: 0.3,
 };
 
@@ -88,7 +88,7 @@ const AppLayout = () => {
   const isPublishPage = location.pathname === "/baoliao/publish";
 
   if (isAdminPage) {
-    const hasAccess = user?.role === "editor" || user?.role === "government" || user?.role === "admin";
+    const hasAccess = user?.role === "editor" || user?.role === "government";
     
     return (
       <div className="min-h-screen bg-neutral-900 flex">

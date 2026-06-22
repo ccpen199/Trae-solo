@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-type TagColor = 'westlake' | 'honghua' | 'chaojing' | 'neutral';
+type TagColor = 'westlake' | 'honghua' | 'chaojing' | 'neutral' | 'red' | 'green';
 type TagSize = 'sm' | 'md';
 
 interface TagProps extends HTMLAttributes<HTMLSpanElement> {
@@ -18,6 +18,8 @@ const colorClasses: Record<TagColor, string> = {
   honghua: 'bg-honghua-50 text-honghua-600',
   chaojing: 'bg-chaojing-50 text-chaojing-700',
   neutral: 'bg-neutral-100 text-neutral-600',
+  red: 'bg-red-50 text-red-600',
+  green: 'bg-green-50 text-green-600',
 };
 
 const sizeClasses: Record<TagSize, string> = {
@@ -26,7 +28,7 @@ const sizeClasses: Record<TagSize, string> = {
 };
 
 const Tag = forwardRef<HTMLSpanElement, TagProps>(
-  ({ className, color = 'neutral', size = 'md', closable = false, onClose, children, ...props }, ref) => {
+  ({ className, color = 'neutral', size = 'md', closable = false, onClose, onDrag, children, ...props }, ref) => {
     return (
       <motion.span
         ref={ref}

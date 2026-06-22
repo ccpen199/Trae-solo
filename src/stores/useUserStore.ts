@@ -40,17 +40,43 @@ export const useUserStore = create<UserStore>((set, get) => ({
   ...getInitialState(),
 
   login: async (phone: string, code: string): Promise<boolean> => {
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 800));
 
-    if (code !== '123456') {
+    const phoneRegex = /^1[3-9]\d{9}$/;
+    if (!phoneRegex.test(phone)) {
       return false;
     }
 
-    const user = mockUsers.find(u => u.phone === phone) || mockUsers[0];
-    const token = 'mock_token_' + Date.now();
+    if (code.length !== 6 || !/^\d+$/.test(code)) {
+      return false;
+    }
 
-    set({ user, token, isLoggedIn: true });
-    setStorage(STORAGE_KEY, { user, token });
+    let user = mockUsers.find(u => u.phone === phone);
+    if (!user) {
+      const roleMap: Record<string, 'user' | 'creator' | 'circle_admin' | 'editor' | 'government' | 'merchant'> = {
+        '13800138000': 'user',
+        '13900139000': 'editor',
+        '13700137000': 'government',
+        '13600136000': 'circle_admin',
+        '13500135000': 'creator',
+        '13400134000': 'merchant',
+      };
+      user = {
+        ...mockUsers[0],
+        id: 'u_' + Date.now(),
+        phone,
+        role: roleMap[phone] || 'user',
+        nickname: '市民' + phone.slice(-4),
+        isSignedInToday: false,
+        lastLoginAt: new Date(),
+      };
+    }
+
+    const token = 'mock_token_' + Date.now();
+    const loggedInUser = { ...user, lastLoginAt: new Date() };
+
+    set({ user: loggedInUser, token, isLoggedIn: true });
+    setStorage(STORAGE_KEY, { user: loggedInUser, token });
 
     return true;
   },

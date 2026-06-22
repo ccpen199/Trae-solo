@@ -1,4 +1,4 @@
-import { forwardRef, useState, useRef, useEffect, type SelectHTMLAttributes } from 'react';
+import { forwardRef, useState, useRef, useEffect, type SelectHTMLAttributes, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Search, Check, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,13 +9,16 @@ interface SelectOption {
   disabled?: boolean;
 }
 
-interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size' | 'onChange'> {
+type OmittedSelectAttrs = 'size' | 'onChange' | 'prefix';
+
+interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, OmittedSelectAttrs> {
   options: SelectOption[];
   placeholder?: string;
   size?: 'sm' | 'md' | 'lg';
   searchable?: boolean;
   error?: string;
   onChange?: (value: string) => void;
+  prefix?: ReactNode;
 }
 
 const sizeClasses = {
@@ -36,6 +39,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
       value,
       onChange,
       disabled,
+      prefix,
       ...props
     },
     ref
@@ -69,7 +73,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
     return (
       <div ref={containerRef} className="w-full relative">
-        <motion.button
+        <button
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           className={cn(
@@ -80,13 +84,14 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             disabled && 'opacity-50 cursor-not-allowed bg-neutral-100',
             className
           )}
-          whileTap={!disabled ? { scale: 0.99 } : undefined}
           disabled={disabled}
-          {...props}
         >
-          <span className={cn(selectedOption ? 'text-neutral-800' : 'text-neutral-400')}>
-            {selectedOption?.label || placeholder}
-          </span>
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            {prefix && <span className="text-neutral-400 flex-shrink-0">{prefix}</span>}
+            <span className={cn(selectedOption ? 'text-neutral-800' : 'text-neutral-400')}>
+              {selectedOption?.label || placeholder}
+            </span>
+          </div>
           <div className="flex items-center gap-2">
             {error && <AlertCircle className="w-4 h-4 text-red-500" />}
             <motion.div
@@ -96,7 +101,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               <ChevronDown className="w-4 h-4 text-neutral-400" />
             </motion.div>
           </div>
-        </motion.button>
+        </button>
 
         <AnimatePresence>
           {isOpen && (
@@ -171,6 +176,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           onChange={(e) => onChange?.(e.target.value)}
           disabled={disabled}
           className="hidden"
+          {...props}
         >
           {options.map((option) => (
             <option key={option.value} value={option.value} disabled={option.disabled}>

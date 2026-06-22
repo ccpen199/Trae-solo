@@ -193,6 +193,7 @@ export interface PointTask {
   type: 'daily' | 'weekly' | 'one_time';
   icon: string;
   action: string;
+  source?: 'login' | 'publish_baoliao' | 'join_activity' | 'invite' | 'exchange' | 'donate';
   completed: boolean;
   progress?: number;
   target?: number;

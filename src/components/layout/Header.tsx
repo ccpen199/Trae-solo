@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import Button from '@/components/common/Button';
 import Avatar from '@/components/common/Avatar';
 import Badge from '@/components/common/Badge';
+import { useUserStore } from '@/stores/useUserStore';
 
 interface HeaderProps {
   className?: string;
@@ -22,10 +23,11 @@ const navItems = [
 
 export default function Header({ className }: HeaderProps) {
   const navigate = useNavigate();
+  const { user, isLoggedIn, logout } = useUserStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const user = null;
   const hasNotification = true;
 
   const handleLogoClick = () => {
@@ -114,15 +116,60 @@ export default function Header({ className }: HeaderProps) {
         </AnimatePresence>
       </motion.button>
 
-        {user ? (
-          <Avatar
-            size="sm"
-            name={user.nickname}
-            src={user.avatar}
-            online
-            onClick={() => navigate('/profile')}
-            className="cursor-pointer hidden sm:flex"
-          />
+        {isLoggedIn && user ? (
+          <div className="hidden sm:flex relative">
+            <Avatar
+              size="sm"
+              name={user.nickname}
+              src={user.avatar}
+              online
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className="cursor-pointer"
+            />
+            <AnimatePresence>
+              {showUserMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute right-0 top-full mt-2 w-48 bg-white rounded-card shadow-card border border-neutral-100 overflow-hidden z-50"
+                >
+                  <div className="p-3 border-b border-neutral-100">
+                    <p className="font-medium text-neutral-800">{user.nickname}</p>
+                    <p className="text-xs text-neutral-500">{user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}</p>
+                  </div>
+                  <button
+                    onClick={() => { navigate('/profile'); setShowUserMenu(false); }}
+                    className="w-full px-4 py-2.5 text-left text-sm text-neutral-700 hover:bg-neutral-50 transition-colors flex items-center gap-2"
+                  >
+                    <User className="w-4 h-4" /> 个人中心
+                  </button>
+                  <button
+                    onClick={() => { navigate('/points'); setShowUserMenu(false); }}
+                    className="w-full px-4 py-2.5 text-left text-sm text-neutral-700 hover:bg-neutral-50 transition-colors flex items-center gap-2"
+                  >
+                    <span className="text-chaojing-500">🌸</span> 我的红花
+                  </button>
+                  {user.role === 'editor' || user.role === 'government' ? (
+                    <button
+                      onClick={() => { navigate('/admin'); setShowUserMenu(false); }}
+                      className="w-full px-4 py-2.5 text-left text-sm text-neutral-700 hover:bg-neutral-50 transition-colors flex items-center gap-2"
+                    >
+                      <Bell className="w-4 h-4" /> 管理后台
+                    </button>
+                  ) : null}
+                  <div className="border-t border-neutral-100">
+                    <button
+                      onClick={() => { logout(); setShowUserMenu(false); }}
+                      className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      退出登录
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         ) : (
           <Button
             variant="primary"
@@ -190,7 +237,7 @@ export default function Header({ className }: HeaderProps) {
               </motion.div>
             ))}
 
-            {!user && (
+            {!isLoggedIn ? (
               <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -206,6 +253,31 @@ export default function Header({ className }: HeaderProps) {
                   }}
                 >
                   登录 / 注册
+                </Button>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="px-4 pt-2 space-y-2"
+              >
+                <div className="flex items-center gap-3 p-3 bg-neutral-50 rounded-card">
+                  <Avatar size="md" src={user?.avatar} name={user?.nickname} />
+                  <div>
+                    <p className="font-medium text-neutral-800">{user?.nickname}</p>
+                    <p className="text-xs text-chaojing-600">🌸 {user?.points} 小红花</p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    logout();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  退出登录
                 </Button>
               </motion.div>
             )}

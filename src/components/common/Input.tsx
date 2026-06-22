@@ -6,13 +6,14 @@ import { cn } from '@/lib/utils';
 type InputVariant = 'default' | 'filled' | 'outlined';
 type InputSize = 'sm' | 'md' | 'lg';
 
-interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
   variant?: InputVariant;
   size?: InputSize;
   prefix?: ReactNode;
   suffix?: ReactNode;
   clearable?: boolean;
   error?: string;
+  showCount?: boolean;
 }
 
 const variantClasses: Record<InputVariant, string> = {
@@ -40,6 +41,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       value,
       onChange,
       disabled,
+      showCount,
+      maxLength,
       ...props
     },
     ref
@@ -51,9 +54,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       onChange?.(event);
     };
 
+    const currentLength = typeof value === 'string' ? value.length : 0;
+
     return (
       <div className="w-full">
-        <motion.div
+        <div
           className={cn(
             'flex items-center rounded-button transition-all duration-200 overflow-hidden',
             variantClasses[variant],
@@ -63,7 +68,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled && 'opacity-50 cursor-not-allowed bg-neutral-100',
             className
           )}
-          animate={isFocused ? { scale: 1.01 } : { scale: 1 }}
         >
           {prefix && <span className="mr-2 text-neutral-400">{prefix}</span>}
           <input
@@ -74,6 +78,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            maxLength={maxLength}
             {...props}
           />
           <AnimatePresence>
@@ -92,16 +97,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </AnimatePresence>
           {error && <AlertCircle className="w-4 h-4 text-red-500 ml-2" />}
           {suffix && !error && <span className="ml-2 text-neutral-400">{suffix}</span>}
-        </motion.div>
-        {error && (
-          <motion.p
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-1 text-xs text-red-500"
-          >
-            {error}
-          </motion.p>
-        )}
+        </div>
+        <div className="flex justify-between items-start mt-1">
+          {error && <p className="text-xs text-red-500">{error}</p>}
+          {showCount && maxLength && (
+            <p className={cn('text-xs ml-auto', error ? 'text-red-400' : 'text-neutral-400')}>
+              {currentLength}/{maxLength}
+            </p>
+          )}
+        </div>
       </div>
     );
   }
