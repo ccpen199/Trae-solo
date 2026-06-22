@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>__PROJECT_TITLE__</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script>
+      window.APP_CONFIG = {
+        projectTitle: "__PROJECT_TITLE__",
+        orderId: "__ORDER_ID__",
+        apiBaseUrl: "__API_BASE_URL__",
+        backendUrl: "__BACKEND_URL__",
+        frontendUrl: "__FRONTEND_URL__"
+      };
+    </script>
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">PinAI Local Web Repair</p>
+          <h1 id="project-title">__PROJECT_TITLE__</h1>
+          <p class="hero-subtitle">
+            用一个本地可运行的前后端链路，管理线索状态、预算和跟进行为。所有新增与更新动作都会写入 SQLite。
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-card">
+            <span>Order</span>
+            <strong id="order-id">__ORDER_ID__</strong>
+          </div>
+          <div class="meta-card">
+            <span>Frontend</span>
+            <strong id="frontend-url">__FRONTEND_URL__</strong>
+          </div>
+          <div class="meta-card">
+            <span>Backend</span>
+            <strong id="backend-url">__BACKEND_URL__</strong>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="metrics-panel">
+          <div class="panel-heading">
+            <h2>经营概览</h2>
+            <button id="refresh-button" class="ghost-button">刷新数据</button>
+          </div>
+          <div id="metrics-grid" class="metrics-grid"></div>
+          <div id="status-grid" class="chip-grid"></div>
+        </section>
+
+        <section class="composer-panel">
+          <div class="panel-heading">
+            <h2>新增线索</h2>
+            <span class="muted">录入后立即落库</span>
+          </div>
+          <form id="lead-form" class="lead-form">
+            <label>
+              线索名称
+              <input name="name" placeholder="例如：区域连锁升级计划" required />
+            </label>
+            <label>
+              客户/项目
+              <input name="company" placeholder="例如：星河零售" />
+            </label>
+            <label>
+              来源渠道
+              <input name="channel" placeholder="官网留资 / 转介绍 / 活动会场" />
+            </label>
+            <label>
+              负责人
+              <input name="owner" placeholder="负责人姓名" />
+            </label>
+            <label>
+              优先级
+              <select name="priority">
+                <option value="high">高</option>
+                <option value="medium" selected>中</option>
+                <option value="low">低</option>
+              </select>
+            </label>
+            <label>
+              预算金额
+              <input name="budget" type="number" min="0" step="1000" placeholder="100000" />
+            </label>
+            <label class="full-span">
+              下一步动作
+              <input name="next_action" placeholder="例如：安排产品演示并确认采购角色" />
+            </label>
+            <button type="submit" class="primary-button">创建线索</button>
+          </form>
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </section>
+
+        <section class="pipeline-panel">
+          <div class="panel-heading">
+            <h2>跟进列表</h2>
+            <span class="muted">支持更新状态和补充跟进记录</span>
+          </div>
+          <div id="lead-list" class="lead-list"></div>
+        </section>
+
+        <section class="activity-panel">
+          <div class="panel-heading">
+            <h2>最近动态</h2>
+            <span class="muted">按时间倒序展示</span>
+          </div>
+          <div id="activity-list" class="activity-list"></div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
