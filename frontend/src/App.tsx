@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
-import { ConfigProvider, Spin } from 'antd'
+import { ConfigProvider, Spin, message } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import type { UserRole, User, Worker, Enterprise } from './types'
 import { tokenUtils } from './utils/request'
@@ -17,6 +17,8 @@ interface AuthContextType {
   enterprise: Enterprise | null
   loading: boolean
   refreshUser: () => Promise<void>
+  loginSuccess: (user: User, worker?: Worker | null, enterprise?: Enterprise | null) => void
+  logout: () => void
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null)
@@ -45,7 +47,12 @@ function AuthRoute({ allowedRoles }: { allowedRoles?: UserRole[] }) {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />
+    const redirectMap: Record<UserRole, string> = {
+      worker: '/worker/dashboard',
+      enterprise: '/enterprise/dashboard',
+      admin: '/admin/dashboard',
+    }
+    return <Navigate to={redirectMap[user.role]} replace />
   }
 
   return <Outlet />
@@ -66,25 +73,21 @@ function HomeRedirect() {
     return <Navigate to="/login" replace />
   }
 
-  switch (user.role) {
-    case 'worker':
-      return <Navigate to="/worker/dashboard" replace />
-    case 'enterprise':
-      return <Navigate to="/enterprise/dashboard" replace />
-    case 'admin':
-      return <Navigate to="/admin/dashboard" replace />
-    default:
-      return <Navigate to="/login" replace />
+  const redirectMap: Record<UserRole, string> = {
+    worker: '/worker/dashboard',
+    enterprise: '/enterprise/dashboard',
+    admin: '/admin/dashboard',
   }
+  return <Navigate to={redirectMap[user.role] || '/login'} replace />
 }
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [worker, setWorker] = useState<Worker | null>(null)
-  const [enterprise, setEnterprise] = useState<Enterprise | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<User | null>(() => tokenUtils.getUserInfo())
+  const [worker, setWorker] = useState<Worker | null>(() => tokenUtils.getWorkerInfo())
+  const [enterprise, setEnterprise] = useState<Enterprise | null>(() => tokenUtils.getEnterpriseInfo())
+  const [loading, setLoading] = useState(!tokenUtils.getToken())
 
-  const refreshUser = async () => {
+  const refreshUser = useCallback(async () => {
     const token = tokenUtils.getToken()
     if (!token) {
       setUser(null)
@@ -97,16 +100,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const res = await authApi.getMe()
       if (res.code === 0 && res.data) {
-        setUser(res.data.user)
+        setUser(res.data.user || null)
         setWorker(res.data.worker || null)
         setEnterprise(res.data.enterprise || null)
-        tokenUtils.setUserInfo(res.data.user)
-        if (res.data.worker) {
-          tokenUtils.setWorkerInfo(res.data.worker)
-        }
-        if (res.data.enterprise) {
-          tokenUtils.setEnterpriseInfo(res.data.enterprise)
-        }
+        if (res.data.user) tokenUtils.setUserInfo(res.data.user)
+        if (res.data.worker) tokenUtils.setWorkerInfo(res.data.worker)
+        if (res.data.enterprise) tokenUtils.setEnterpriseInfo(res.data.enterprise)
       } else {
         tokenUtils.clearAll()
         setUser(null)
@@ -114,21 +113,40 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         setEnterprise(null)
       }
     } catch {
-      tokenUtils.clearAll()
-      setUser(null)
-      setWorker(null)
-      setEnterprise(null)
+      const cached = tokenUtils.getUserInfo()
+      if (!cached) {
+        tokenUtils.clearAll()
+        setUser(null)
+        setWorker(null)
+        setEnterprise(null)
+      }
     } finally {
       setLoading(false)
     }
-  }
-
-  useEffect(() => {
-    void refreshUser()
   }, [])
 
+  const loginSuccess = useCallback((u: User, w?: Worker | null, e?: Enterprise | null) => {
+    setUser(u)
+    setWorker(w || null)
+    setEnterprise(e || null)
+    setLoading(false)
+  }, [])
+
+  const logout = useCallback(() => {
+    tokenUtils.clearAll()
+    setUser(null)
+    setWorker(null)
+    setEnterprise(null)
+  }, [])
+
+  useEffect(() => {
+    if (tokenUtils.getToken()) {
+      void refreshUser()
+    }
+  }, [refreshUser])
+
   return (
-    <AuthContext.Provider value={{ user, worker, enterprise, loading, refreshUser }}>
+    <AuthContext.Provider value={{ user, worker, enterprise, loading, refreshUser, loginSuccess, logout }}>
       {children}
     </AuthContext.Provider>
   )

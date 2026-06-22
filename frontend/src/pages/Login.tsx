@@ -12,7 +12,7 @@ const { Title, Text } = Typography
 
 function Login() {
   const navigate = useNavigate()
-  const { refreshUser } = useAuth()
+  const { loginSuccess } = useAuth()
   const [loading, setLoading] = useState(false)
   const [form] = Form.useForm()
   const [activeRole, setActiveRole] = useState<UserRole>('worker')
@@ -22,33 +22,21 @@ function Login() {
     setLoading(true)
     setSubmitError(null)
     try {
-      const res = await authApi.login({
-        phone,
-        password,
-        role,
-      })
+      const res = await authApi.login({ phone, password, role })
       if (res.code === 0 && res.data) {
         tokenUtils.setToken(res.data.token)
         tokenUtils.setUserInfo(res.data.user)
-        if (res.data.worker) {
-          tokenUtils.setWorkerInfo(res.data.worker)
-        }
-        if (res.data.enterprise) {
-          tokenUtils.setEnterpriseInfo(res.data.enterprise)
-        }
+        if (res.data.worker) tokenUtils.setWorkerInfo(res.data.worker)
+        if (res.data.enterprise) tokenUtils.setEnterpriseInfo(res.data.enterprise)
+        loginSuccess(res.data.user, res.data.worker, res.data.enterprise)
         message.success(`欢迎回来，${res.data.user.real_name || phone}`)
-        await refreshUser()
-        const role = res.data.user.role
-        setTimeout(() => {
-          navigate(
-            role === 'worker'
-              ? '/worker/dashboard'
-              : role === 'enterprise'
-              ? '/enterprise/dashboard'
-              : '/admin/dashboard',
-            { replace: true }
-          )
-        }, 100)
+        const loggedInRole = res.data.user.role
+        const dest = loggedInRole === 'worker'
+          ? '/worker/dashboard'
+          : loggedInRole === 'enterprise'
+          ? '/enterprise/dashboard'
+          : '/admin/dashboard'
+        navigate(dest, { replace: true })
       } else {
         const errMsg = res.message || '登录失败，请检查账号密码'
         setSubmitError(errMsg)

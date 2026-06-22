@@ -56,7 +56,7 @@ type MenuItem = Required<MenuProps>['items'][number]
 function WorkerLayout() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, worker, refreshUser } = useAuth()
+  const { user, worker, logout } = useAuth()
   const [collapsed, setCollapsed] = useState(false)
   const [passwordModalOpen, setPasswordModalOpen] = useState(false)
   const [passwordForm] = Form.useForm()
@@ -69,8 +69,7 @@ function WorkerLayout() {
       okText: '确定',
       cancelText: '取消',
       onOk: () => {
-        tokenUtils.clearAll()
-        void refreshUser()
+        logout()
         navigate('/login', { replace: true })
       },
     })

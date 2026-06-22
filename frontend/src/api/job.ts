@@ -1,5 +1,33 @@
 import { http } from '../utils/request'
-import type { ApiResponse, JobPost, JobApplication, PaginationResult } from '../types'
+import type { ApiResponse, JobPost, JobApplication, PaginationResult, Enterprise } from '../types'
+
+export interface ApplicationDetail extends JobApplication {
+  job_post: JobPost
+  enterprise: Enterprise
+}
+
+export interface JobPostWithEnterprise extends JobPost {
+  enterprise: Enterprise
+  application_count: number
+}
+
+export interface ContractDetail {
+  id: number
+  job_application_id: number
+  contract_no: string
+  start_date: string
+  end_date: string
+  daily_wage: number
+  work_hours: string
+  accommodation_detail: string
+  meals_detail: string
+  insurance_detail: string
+  worker_sign: number
+  worker_sign_at?: string
+  enterprise_sign: number
+  enterprise_sign_at?: string
+  created_at: string
+}
 
 export interface CreateJobPostParams {
   title: string
