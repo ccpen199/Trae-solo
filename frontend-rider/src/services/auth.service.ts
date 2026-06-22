@@ -22,8 +22,6 @@ const mockDemoRider = (): Rider => ({
   id: 'rider-demo-001',
   phone: DEMO_RIDER_PHONE,
   name: '演示骑手',
-  password: DEMO_RIDER_PASSWORD,
-  salt: 'demo-salt',
   creditScore: 95,
   onlineStatus: 'offline',
   realNameAuditStatus: 'approved',
@@ -44,6 +42,7 @@ const mockDemoRider = (): Rider => ({
   auditRemark: '',
   frozenReason: '',
   frozenUntil: undefined,
+  ...({ password: DEMO_RIDER_PASSWORD, salt: 'demo-salt' } as any),
 });
 
 const isDemoAccount = (phone: string, password: string): boolean => {
