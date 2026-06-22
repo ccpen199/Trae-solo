@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Phone, Lock, Shield, Scale, Gavel, FileText, Eye, EyeOff, ArrowRight, Zap } from 'lucide-react';
 import { Button, Form, Input, Tabs, message, Divider } from 'antd';
 import { useUserStore } from '@/store/userStore';
 import { validatePhone } from '@/utils/validator';
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
 
@@ -18,40 +14,40 @@ const Login: React.FC = () => {
   const login = useUserStore((state) => state.login);
   const quickLogin = useUserStore((state) => state.quickLogin);
 
-  const redirectTo = (location.state as any)?.from || '/';
+  if (token && user) {
+    window.location.href = '/';
+    return null;
+  }
 
-  useEffect(() => {
-    if (token && user) {
-      navigate(redirectTo, { replace: true });
-    }
-  }, [token, user, navigate, redirectTo]);
-
-  const handlePhoneLogin = useCallback(async (values: { phone: string; code: string }) => {
+  const handlePhoneLogin = async (values: { phone: string; code: string }) => {
     setLoading(true);
     try {
       await login({ phone: values.phone, code: values.code });
-      message.success('登录成功');
+      message.success('登录成功，正在跳转...');
+      setTimeout(() => { window.location.href = '/'; }, 300);
     } catch (error: any) {
-      message.error(error.message || '登录失败');
+      message.error(error.message || '登录失败，请重试');
       setLoading(false);
     }
-  }, [login]);
+  };
 
-  const handlePasswordLogin = useCallback(async (values: { phone: string; password: string }) => {
+  const handlePasswordLogin = async (values: { phone: string; password: string }) => {
     setLoading(true);
     try {
       await login({ phone: values.phone, password: values.password });
-      message.success('登录成功');
+      message.success('登录成功，正在跳转...');
+      setTimeout(() => { window.location.href = '/'; }, 300);
     } catch (error: any) {
-      message.error(error.message || '登录失败');
+      message.error(error.message || '登录失败，请重试');
       setLoading(false);
     }
-  }, [login]);
+  };
 
-  const handleQuickLogin = useCallback(() => {
+  const handleQuickLogin = () => {
     quickLogin();
-    message.success('演示登录成功');
-  }, [quickLogin]);
+    message.success('演示登录成功，正在跳转...');
+    setTimeout(() => { window.location.href = '/'; }, 300);
+  };
 
   const handleSendCode = (phone: string) => {
     if (!validatePhone(phone)) {
@@ -72,10 +68,6 @@ const Login: React.FC = () => {
       });
     }, 1000);
   };
-
-  if (token && user) {
-    return <Navigate to={redirectTo} replace />;
-  }
 
   const tabItems = [
     {

@@ -61,9 +61,9 @@ const TopBar: React.FC = () => {
 
   const breadcrumb = getBreadcrumb();
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
+  const handleLogout = () => {
+    logout();
+    window.location.href = '/login';
   };
 
   const handleSearch = (e: React.FormEvent) => {

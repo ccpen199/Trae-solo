@@ -14,10 +14,15 @@ const request: AxiosInstance = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    try {
+      const raw = localStorage.getItem('lc_auth');
+      if (raw) {
+        const auth = JSON.parse(raw);
+        if (auth.token) {
+          config.headers.Authorization = `Bearer ${auth.token}`;
+        }
+      }
+    } catch {}
     return config;
   },
   (error) => {
@@ -28,25 +33,23 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response: AxiosResponse<ApiResponse<any>>) => {
     const { code, message: msg, data } = response.data;
-    
+
     if (code === 200) {
       return data;
     }
-    
+
     if (code === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('lc_auth');
       window.location.href = '/login';
       return Promise.reject(new Error('未授权，请重新登录'));
     }
-    
+
     message.error(msg || '请求失败');
     return Promise.reject(new Error(msg || '请求失败'));
   },
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('lc_auth');
       window.location.href = '/login';
     } else {
       message.error(error.message || '网络错误');
@@ -79,5 +82,3 @@ export function postForm<T = any>(url: string, data?: any, config?: AxiosRequest
     },
   });
 }
-
-export default request;

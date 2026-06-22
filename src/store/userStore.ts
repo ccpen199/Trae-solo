@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { User, LoginParams, LoginResponse } from '@/types';
 import { userApi } from '@/services/user';
+
+const STORAGE_KEY = 'lc_auth';
 
 const MOCK_USER: User = {
   id: 'user-001',
@@ -29,86 +30,76 @@ const MOCK_USER: User = {
 
 const generateToken = () => `token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
+function loadAuth(): { token: string | null; user: User | null } {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.token && parsed.user) {
+        return parsed;
+      }
+    }
+  } catch {}
+  return { token: null, user: null };
+}
+
+function saveAuth(token: string, user: User) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ token, user }));
+}
+
+function clearAuth() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 interface UserState {
   user: User | null;
   token: string | null;
   loading: boolean;
+  initialized: boolean;
   login: (params: LoginParams) => Promise<LoginResponse>;
-  quickLogin: () => LoginResponse;
-  logout: () => Promise<void>;
-  setUser: (user: User | null) => void;
-  fetchCurrentUser: () => Promise<void>;
+  quickLogin: () => void;
+  logout: () => void;
+  init: () => void;
 }
 
-export const useUserStore = create<UserState>()(
-  persist(
-    (set, get) => ({
-      user: null,
-      token: null,
-      loading: false,
+export const useUserStore = create<UserState>()((set, get) => ({
+  user: null,
+  token: null,
+  loading: false,
+  initialized: false,
 
-      login: async (params: LoginParams) => {
-        set({ loading: true });
-        try {
-          const response = await userApi.login(params);
-          set({ 
-            user: response.user, 
-            token: response.token,
-            loading: false 
-          });
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
-          return response;
-        } catch (error) {
-          const token = generateToken();
-          const response: LoginResponse = { token, user: MOCK_USER };
-          set({ user: MOCK_USER, token, loading: false });
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(MOCK_USER));
-          return response;
-        }
-      },
+  init: () => {
+    const { token, user } = loadAuth();
+    set({ token, user, initialized: true });
+  },
 
-      quickLogin: () => {
-        const token = generateToken();
-        const response: LoginResponse = { token, user: MOCK_USER };
-        set({ user: { ...MOCK_USER }, token, loading: false });
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(MOCK_USER));
-        return response;
-      },
-
-      logout: async () => {
-        try {
-          await userApi.logout();
-        } catch (error) {
-          console.error('Logout error:', error);
-        }
-        set({ user: null, token: null });
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-      },
-
-      setUser: (user) => set({ user }),
-
-      fetchCurrentUser: async () => {
-        try {
-          const user = await userApi.getCurrentUser();
-          set({ user });
-        } catch (error) {
-          console.error('Fetch user error:', error);
-        }
-      },
-    }),
-    {
-      name: 'user-storage',
-      partialize: (state) => ({ user: state.user, token: state.token }),
-      onRehydrateStorage: () => (state) => {
-        if (state?.token && state?.user) {
-          localStorage.setItem('token', state.token);
-          localStorage.setItem('user', JSON.stringify(state.user));
-        }
-      },
+  login: async (params: LoginParams) => {
+    set({ loading: true });
+    try {
+      const response = await userApi.login(params);
+      saveAuth(response.token, response.user);
+      set({ user: response.user, token: response.token, loading: false });
+      return response;
+    } catch (error) {
+      const token = generateToken();
+      const response: LoginResponse = { token, user: MOCK_USER };
+      saveAuth(token, MOCK_USER);
+      set({ user: MOCK_USER, token, loading: false });
+      return response;
     }
-  )
-);
+  },
+
+  quickLogin: () => {
+    const token = generateToken();
+    saveAuth(token, MOCK_USER);
+    set({ user: { ...MOCK_USER }, token, loading: false });
+  },
+
+  logout: () => {
+    clearAuth();
+    set({ user: null, token: null });
+    try {
+      userApi.logout();
+    } catch {}
+  },
+}));
