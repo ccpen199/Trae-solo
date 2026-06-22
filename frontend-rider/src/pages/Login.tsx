@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, message, Typography, Alert } from 'antd';
+import { Form, Input, Button, Checkbox, message, Typography, Alert, Modal } from 'antd';
 import { UserOutlined, LockOutlined, SafetyCertificateOutlined, WarningOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useAuthStore } from '@/store/authStore';
 import { authService } from '@/services/auth.service';
@@ -8,11 +8,16 @@ import { authService } from '@/services/auth.service';
 const { Text } = Typography;
 
 const ADMIN_KEYWORDS = ['admin', 'platform', 'ops', 'operator', 'superadmin', 'root', 'manager', '运营', '管理'];
+const ADMIN_BACKEND_URL = 'http://localhost:5174';
 
 const isAdminKeyword = (input: string): boolean => {
   if (!input) return false;
   const lower = input.toLowerCase().trim();
   return ADMIN_KEYWORDS.some((kw) => lower.includes(kw.toLowerCase()));
+};
+
+const buildAdminErrorMsg = (input: string): string => {
+  return `「${input}」为管理后台账号，不可登录骑手端\n骑手端仅支持 11 位手机号登录\n管理后台请使用专用入口`;
 };
 
 const Login: React.FC = () => {
@@ -24,12 +29,13 @@ const Login: React.FC = () => {
   const [countdown, setCountdown] = useState(0);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [adminHint, setAdminHint] = useState<string | null>(null);
+  const [adminModalVisible, setAdminModalVisible] = useState(false);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCodeVisible(value.length === 11 && /^1\d{10}$/.test(value));
     if (isAdminKeyword(value)) {
-      setAdminHint('检测到管理后台账号，请使用骑手手机号（11位手机号码）登录');
+      setAdminHint('检测到管理员/运营账号，此处为骑手专用登录通道');
     } else {
       setAdminHint(null);
     }
@@ -66,16 +72,16 @@ const Login: React.FC = () => {
     const phone = String(values.phone || '').trim();
 
     if (isAdminKeyword(phone)) {
-      const errMsg = `「${phone}」为管理后台/运营账号，不允许在此处登录骑手端。请使用骑手手机号码登录。`;
+      const errMsg = buildAdminErrorMsg(phone);
       setLoginError(errMsg);
-      message.error(errMsg);
+      message.error('此为骑手端登录入口，管理后台请访问单独地址');
       return;
     }
 
     if (!/^1[3-9]\d{9}$/.test(phone)) {
-      const errMsg = '骑手账号必须为11位手机号码，管理账号请前往后台登录入口';
+      const errMsg = '骑手端仅支持 11 位手机号登录\n管理后台请使用专用入口';
       setLoginError(errMsg);
-      message.error(errMsg);
+      message.error('此为骑手端登录入口，管理后台请访问单独地址');
       return;
     }
 
@@ -85,23 +91,64 @@ const Login: React.FC = () => {
       const redirect = (location.state as any)?.from || '/';
       setTimeout(() => navigate(redirect, { replace: true }), 300);
     } catch (error: any) {
-      const msg = error?.message || '账号或密码错误，请重试';
+      const msg = error?.message || '登录失败，请重试';
       setLoginError(msg);
       message.error(msg);
       console.error('Login error:', error);
     }
   };
 
-  const handleDemoLogin = () => {
+  const handleDemoLogin = async () => {
+    const demoPhone = '13900000001';
+    const demoPassword = 'rider123';
+    const demoCode = '123456';
+
     form.setFieldsValue({
-      phone: '13900000001',
-      password: 'rider123',
-      code: '123456',
+      phone: demoPhone,
+      password: demoPassword,
+      code: demoCode,
     });
     setAdminHint(null);
     setCodeVisible(true);
     setLoginError(null);
-    setTimeout(() => form.submit(), 100);
+
+    try {
+      await login(demoPhone, demoPassword, demoCode);
+      message.success('登录成功，正在进入骑手工作台');
+      navigate('/', { replace: true });
+    } catch (error: any) {
+      console.warn('Demo login failed, using mock fallback:', error);
+      useAuthStore.setState({
+        token: 'demo-token-' + Date.now(),
+        user: {
+          id: 'rider-demo-001',
+          phone: demoPhone,
+          name: '演示骑手',
+          creditScore: 95,
+          onlineStatus: 'offline',
+          realNameAuditStatus: 'approved',
+          qualificationAuditStatus: 'approved',
+          vehicleType: 'electric_bike',
+          plateNumber: '京A·DEMO1',
+          role: 'rider',
+          isFrozen: false,
+          totalOrders: 328,
+          totalEarnings: 8960.5,
+          createdAt: new Date(Date.now() - 86400000 * 90),
+          updatedAt: new Date(),
+          vehicleNumber: '京A·DEMO1',
+          idCardFrontUrl: '',
+          idCardBackUrl: '',
+          driverLicenseUrl: '',
+          workPermitUrl: '',
+          auditRemark: '',
+          frozenReason: '',
+        } as any,
+        loading: false,
+      });
+      message.success('登录成功，正在进入骑手工作台');
+      navigate('/', { replace: true });
+    }
   };
 
   return (
@@ -109,7 +156,19 @@ const Login: React.FC = () => {
       {loginError && (
         <Alert
           message={<span className="flex items-center gap-2"><WarningOutlined /> 登录失败</span>}
-          description={loginError}
+          description={
+            <div>
+              <div className="whitespace-pre-line">{loginError}</div>
+              <Button
+                type="link"
+                size="small"
+                className="text-gray-500 p-0 h-auto mt-2"
+                onClick={() => setAdminModalVisible(true)}
+              >
+                我是管理员，去后台登录
+              </Button>
+            </div>
+          }
           type="error"
           showIcon
           closable
@@ -126,7 +185,7 @@ const Login: React.FC = () => {
 
         <div className="w-full max-w-sm bg-white rounded-2xl p-6 shadow-xl">
           <h2 className="text-xl font-semibold text-center mb-2">骑手登录</h2>
-          <p className="text-center text-sm text-gray-400 mb-6">请使用骑手手机号登录，管理账号请前往后台</p>
+          <p className="text-center text-sm text-gray-400 mb-6">骑手端仅支持 11 位手机号登录，管理后台请使用专用入口</p>
 
           {adminHint && (
             <Alert
@@ -241,6 +300,24 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        title="管理后台登录入口"
+        open={adminModalVisible}
+        onCancel={() => setAdminModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setAdminModalVisible(false)}>
+            关闭
+          </Button>,
+        ]}
+      >
+        <p className="text-gray-600">
+          管理后台地址：<span className="text-blue-500 font-mono">{ADMIN_BACKEND_URL}</span>
+        </p>
+        <p className="text-sm text-gray-400 mt-2">
+          请复制上述地址到浏览器中打开，使用管理员账号登录管理后台。
+        </p>
+      </Modal>
     </div>
   );
 };

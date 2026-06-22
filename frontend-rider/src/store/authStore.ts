@@ -36,6 +36,9 @@ export const useAuthStore = create<AuthState>()(
             user: riderWithDefaults,
             loading: false,
           });
+          setTimeout(() => {
+            set((state) => ({ ...state }));
+          }, 0);
         } catch (error: any) {
           set({ loading: false });
           const errorMessage = error?.message || '登录失败，请重试';

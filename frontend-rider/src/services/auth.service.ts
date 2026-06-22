@@ -7,7 +7,7 @@ import type {
   SendCodeRequest,
 } from '@shared/types';
 
-const ADMIN_KEYWORDS = ['admin', 'platform', 'ops', 'operator', 'superadmin', 'root', 'manager'];
+const ADMIN_KEYWORDS = ['admin', 'platform', 'ops', 'operator', 'superadmin', 'root', 'manager', '运营', '管理'];
 
 const isAdminKeyword = (input: string): boolean => {
   if (!input) return false;
@@ -54,7 +54,7 @@ const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export const authService = {
   sendCode: async (phone: string) => {
     if (isAdminKeyword(phone)) {
-      throw new Error('管理账号不支持验证码登录，请使用后台登录入口');
+      throw new Error(`「${phone}」为管理后台账号，不可登录骑手端\n骑手端仅支持 11 位手机号登录\n管理后台请使用专用入口`);
     }
     try {
       return await post<{ success: boolean }>('/auth/send-code', { phone });
@@ -65,7 +65,7 @@ export const authService = {
 
   register: async (data: RiderRegisterRequest) => {
     if (isAdminKeyword(data.phone)) {
-      throw new Error('管理账号不可注册为骑手账号');
+      throw new Error(`「${data.phone}」为管理后台账号，不可注册为骑手账号\n骑手端仅支持 11 位手机号注册\n管理后台请使用专用入口`);
     }
     const result = await post<{ token: string; rider: Rider }>('/auth/register', data);
     if (result.rider.role && result.rider.role !== 'rider') {
@@ -79,11 +79,11 @@ export const authService = {
     const password = String(data.password || '');
 
     if (isAdminKeyword(phone)) {
-      throw new Error(`「${phone}」为管理后台/运营账号，不允许登录骑手端。请前往管理后台登录。`);
+      throw new Error(`「${phone}」为管理后台账号，不可登录骑手端\n骑手端仅支持 11 位手机号登录\n管理后台请使用专用入口`);
     }
 
     if (!/^1[3-9]\d{9}$/.test(phone)) {
-      throw new Error('骑手账号必须为11位手机号码，管理账号请前往后台登录入口');
+      throw new Error('骑手端仅支持 11 位手机号登录\n管理后台请使用专用入口');
     }
 
     try {

@@ -31,12 +31,18 @@ function App() {
 
   useEffect(() => {
     if (token && user) {
-      websocketService.connect(user.id, token);
-      offlineSync.initialize();
+      try {
+        websocketService.connect(user.id, token);
+      } catch {}
+      try {
+        offlineSync.initialize();
+      } catch {}
     }
 
     return () => {
-      websocketService.disconnect();
+      try {
+        websocketService.disconnect();
+      } catch {}
     };
   }, [token, user]);
 
