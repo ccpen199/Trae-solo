@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronRight, AlertCircle, Check, FileText, Briefcase, DollarSign, Calendar, MapPin, Users } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ChevronRight, AlertCircle, Check, FileText, Briefcase, DollarSign, Calendar, MapPin, Users, Edit2 } from 'lucide-react';
 import { z } from 'zod';
+import { mockJobs } from '@/mock/data';
+import type { Job } from '@/types';
 
 const formSchema = z.object({
   title: z.string().min(2, '职位名称至少2个字符'),
@@ -18,8 +20,13 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 type FormStep = 'basic' | 'detail' | 'review';
 
-export default function JobCreate() {
+interface JobCreateProps {
+  isEdit?: boolean;
+}
+
+export default function JobCreate({ isEdit = false }: JobCreateProps) {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [step, setStep] = useState<FormStep>('basic');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [form, setForm] = useState<FormData>({
@@ -31,6 +38,23 @@ export default function JobCreate() {
     employmentType: 'fulltime',
     location: '昆明市五华区',
   });
+
+  useEffect(() => {
+    if (isEdit && id) {
+      const job = mockJobs.find((j: Job) => j.id === id);
+      if (job) {
+        setForm({
+          title: job.title,
+          jd: job.jd,
+          salaryMin: job.salaryMin,
+          salaryMax: job.salaryMax,
+          arrivalTime: job.arrivalTime,
+          employmentType: job.employmentType,
+          location: job.location,
+        });
+      }
+    }
+  }, [isEdit, id]);
 
   const updateField = (key: keyof FormData, value: string | number) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -109,7 +133,7 @@ export default function JobCreate() {
       setErrors(newErrors);
       return;
     }
-    alert('职位发布成功！');
+    alert(isEdit ? '职位修改成功！' : '职位发布成功！');
     navigate('/enterprise/jobs');
   };
 
@@ -138,8 +162,13 @@ export default function JobCreate() {
       <div className="card p-8 mb-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="font-serif text-2xl font-bold text-ash-700">发布新职位</h2>
-            <p className="text-sm text-ash-500 mt-1">完成以下三步，即可发布职位开始招聘</p>
+            <h2 className="font-serif text-2xl font-bold text-ash-700 flex items-center gap-2">
+              {isEdit ? <Edit2 size={24} className="text-terracotta-500" /> : null}
+              {isEdit ? '编辑职位' : '发布新职位'}
+            </h2>
+            <p className="text-sm text-ash-500 mt-1">
+              {isEdit ? '修改职位信息，更新后将同步展示给求职者' : '完成以下三步，即可发布职位开始招聘'}
+            </p>
           </div>
           <div className="text-sm text-ash-500">
             当前进度：<span className="font-semibold text-terracotta-600">{currentStepIdx + 1}</span> / {steps.length}
@@ -469,7 +498,7 @@ export default function JobCreate() {
           </button>
         ) : (
           <button onClick={handleSubmit} className="btn-success">
-            确认发布
+            {isEdit ? '确认修改' : '确认发布'}
           </button>
         )}
       </div>

@@ -45,7 +45,7 @@ export default function App() {
         <Route
           path="/enterprise/jobs"
           element={
-            <Layout requiredRole="enterprise" pageTitle="职位管理" pageSubtitle="发布、管理您的招聘职位">
+            <Layout requiredRole="enterprise" requireCertification pageTitle="职位管理" pageSubtitle="发布、管理您的招聘职位">
               <JobList />
             </Layout>
           }
@@ -53,15 +53,23 @@ export default function App() {
         <Route
           path="/enterprise/jobs/create"
           element={
-            <Layout requiredRole="enterprise" pageTitle="发布新职位" pageSubtitle="完善职位信息，吸引优质人才">
+            <Layout requiredRole="enterprise" requireCertification pageTitle="发布新职位" pageSubtitle="完善职位信息，吸引优质人才">
               <JobCreate />
+            </Layout>
+          }
+        />
+        <Route
+          path="/enterprise/jobs/:id/edit"
+          element={
+            <Layout requiredRole="enterprise" requireCertification pageTitle="编辑职位" pageSubtitle="修改职位信息">
+              <JobCreate isEdit />
             </Layout>
           }
         />
         <Route
           path="/enterprise/jobs/:id"
           element={
-            <Layout requiredRole="enterprise" pageTitle="职位详情" pageSubtitle="查看职位信息与投递情况">
+            <Layout requiredRole="enterprise" requireCertification pageTitle="职位详情" pageSubtitle="查看职位信息与投递情况">
               <JobDetail />
             </Layout>
           }
@@ -69,7 +77,7 @@ export default function App() {
         <Route
           path="/enterprise/resumes"
           element={
-            <Layout requiredRole="enterprise" pageTitle="简历智能匹配" pageSubtitle="NLP解析简历关键词，智能匹配度排序">
+            <Layout requiredRole="enterprise" requireCertification pageTitle="简历智能匹配" pageSubtitle="NLP解析简历关键词，智能匹配度排序">
               <ResumeMatch />
             </Layout>
           }
@@ -77,7 +85,7 @@ export default function App() {
         <Route
           path="/enterprise/interviews"
           element={
-            <Layout requiredRole="enterprise" pageTitle="面试邀约管理" pageSubtitle="一键邀约、日历占位、短信提醒">
+            <Layout requiredRole="enterprise" requireCertification pageTitle="面试邀约管理" pageSubtitle="一键邀约、日历占位、短信提醒">
               <InterviewSchedule />
             </Layout>
           }

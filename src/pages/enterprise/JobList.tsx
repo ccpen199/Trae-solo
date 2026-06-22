@@ -173,6 +173,7 @@ export default function JobList() {
                       <Eye size={16} />
                     </button>
                     <button
+                      onClick={() => navigate(`/enterprise/jobs/${job.id}/edit`)}
                       className="p-2 hover:bg-ash-100 rounded-lg transition-colors text-ash-500 hover:text-ash-700"
                       title="编辑"
                     >

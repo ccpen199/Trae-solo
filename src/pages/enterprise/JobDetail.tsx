@@ -104,7 +104,7 @@ export default function JobDetail() {
             <div className="flex gap-3 border-t border-ash-100 pt-6">
               {job.status === 'active' && (
                 <>
-                  <button className="btn-secondary flex items-center gap-2">
+                  <button onClick={() => navigate(`/enterprise/jobs/${job.id}/edit`)} className="btn-secondary flex items-center gap-2">
                     <Edit2 size={16} />
                     编辑职位
                   </button>

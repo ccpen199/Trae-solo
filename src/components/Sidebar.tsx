@@ -10,6 +10,8 @@ import {
   Eye,
   FileCheck,
   LogOut,
+  AlertTriangle,
+  Check,
 } from 'lucide-react';
 import type { UserRole } from '@/types';
 import { useAuthStore } from '@/store/authStore';
@@ -44,6 +46,7 @@ export default function Sidebar({ role }: SidebarProps) {
   const navigate = useNavigate();
   const logout = useAuthStore((s) => s.logout);
   const user = useAuthStore((s) => s.user);
+  const isCertified = useAuthStore((s) => s.isCertified);
 
   const navItems =
     role === 'enterprise'
@@ -71,17 +74,54 @@ export default function Sidebar({ role }: SidebarProps) {
         </div>
       </div>
 
-      <nav className="flex-1 p-4 space-y-1">
+      {role === 'enterprise' && !isCertified && (
+        <div className="mx-4 mt-4 p-3 bg-terracotta-50 border border-terracotta-200 rounded-xl">
+          <div className="flex items-start gap-2">
+            <AlertTriangle size={16} className="text-terracotta-500 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-xs font-medium text-terracotta-700">企业认证未完成</p>
+              <p className="text-xs text-terracotta-600 mt-0.5">
+                完成营业执照核验和法人实名绑定后，才能发布职位、查看简历、邀约面试。
+              </p>
+              <button
+                onClick={() => navigate('/enterprise/certification')}
+                className="mt-2 w-full text-xs py-1.5 bg-terracotta-500 text-white rounded-lg hover:bg-terracotta-600 transition-colors font-medium"
+              >
+                立即完成认证
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {role === 'enterprise' && isCertified && (
+        <div className="mx-4 mt-4 p-3 bg-spruce-50 border border-spruce-200 rounded-xl">
+          <div className="flex items-center gap-2">
+            <Check size={16} className="text-spruce-500 flex-shrink-0" />
+            <div>
+              <p className="text-xs font-medium text-spruce-700">企业认证已通过</p>
+              <p className="text-xs text-spruce-600 mt-0.5">全部招聘功能已解锁</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <nav className="flex-1 p-4 space-y-1 mt-2">
         {navItems.map((item) => {
           const isActive = location.pathname.startsWith(item.path);
+          const locked = role === 'enterprise' && !isCertified && item.path !== '/enterprise/certification';
           return (
             <NavLink
               key={item.path}
-              to={item.path}
-              className={`nav-item ${isActive ? 'nav-item-active' : ''}`}
+              to={locked ? '/enterprise/certification' : item.path}
+              className={`nav-item ${isActive ? 'nav-item-active' : ''} ${locked ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={(e) => {
+                if (locked) e.preventDefault();
+              }}
             >
               <item.icon size={20} strokeWidth={2} />
               <span className="font-medium">{item.label}</span>
+              {locked && <span className="text-xs text-terracotta-500 ml-auto">🔒</span>}
             </NavLink>
           );
         })}

@@ -1,12 +1,14 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Upload, Check, X, Smartphone, FileText, ShieldCheck, Loader2, Briefcase } from 'lucide-react';
 import { mockCertification } from '@/mock/data';
+import { useAuthStore } from '@/store/authStore';
 
 type Step = 'ocr' | 'confirm' | 'verify' | 'result';
 
 export default function Certification() {
   const navigate = useNavigate();
+  const setCertified = useAuthStore((s) => s.setCertified);
   const [step, setStep] = useState<Step>('confirm');
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -14,7 +16,12 @@ export default function Certification() {
   const [code, setCode] = useState('');
   const [countdown, setCountdown] = useState(0);
   const [verifyStatus, setVerifyStatus] = useState<'idle' | 'verifying' | 'success' | 'fail'>('idle');
+  const codeRef = useRef(code);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    codeRef.current = code;
+  }, [code]);
 
   const cert = mockCertification;
 
@@ -38,7 +45,9 @@ export default function Certification() {
   const handleSendCode = () => {
     if (!phone || phone.length !== 11) return;
     setCountdown(60);
-    setCode('888888');
+    const codeValue = '888888';
+    setCode(codeValue);
+    codeRef.current = codeValue;
     const timer = setInterval(() => {
       setCountdown((c) => {
         if (c <= 1) clearInterval(timer);
@@ -47,17 +56,18 @@ export default function Certification() {
     }, 1000);
     setTimeout(() => {
       handleVerify();
-    }, 1200);
+    }, 1500);
   };
 
   const handleVerify = () => {
-    if (code.length !== 6) return;
+    if (codeRef.current.length !== 6) return;
     setVerifyStatus('verifying');
     setTimeout(() => {
       setVerifyStatus('success');
+      setCertified(true);
       setTimeout(() => {
         setStep('result');
-      }, 800);
+      }, 1000);
     }, 1500);
   };
 
