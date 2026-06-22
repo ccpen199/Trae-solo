@@ -174,6 +174,32 @@ export interface Photo {
 }
 
 /**
+ * 材质规格选项
+ */
+export interface MaterialOption {
+  /** 材质名称 */
+  name: string;
+  /** 价格（分） */
+  price: number;
+  /** 材质描述 */
+  description: string;
+  /** 材质图片 */
+  image: string;
+}
+
+/**
+ * 产品特点
+ */
+export interface ProductFeature {
+  /** 图标 */
+  icon: string;
+  /** 标题 */
+  title: string;
+  /** 描述 */
+  description: string;
+}
+
+/**
  * 产品分类接口
  */
 export interface ProductCategory {
@@ -194,6 +220,26 @@ export interface ProductCategory {
   monthlySales: number;
   /** 标签列表 */
   tags: string[];
+  /** 模板数量 */
+  templateCount: number;
+  /** 可编辑能力 */
+  editableFeatures: string[];
+  /** 材质规格选项 */
+  materialOptions: MaterialOption[];
+  /** 装帧选项 */
+  bindingOptions: string[];
+  /** 尺寸规格 */
+  sizeOptions: string[];
+  /** 隐私支持 */
+  privacySupport: string[];
+  /** 生产周期 */
+  productionDays: string;
+  /** 产品封面图 */
+  coverImage: string;
+  /** 详情页轮播图 */
+  detailImages: string[];
+  /** 产品特点列表 */
+  features: ProductFeature[];
 }
 
 /**

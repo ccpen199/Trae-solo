@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
@@ -61,6 +61,7 @@ const aiFeatures = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -93,6 +94,18 @@ export default function Home() {
   }));
 
   const adaptedWorks: CommunityWork[] = communityWorks;
+
+  const handleTemplateClick = (templateId: string) => {
+    navigate(`/editor/${templateId}`);
+  };
+
+  const handleStartCreate = (templateId: string) => {
+    navigate(`/editor/${templateId}`);
+  };
+
+  const handleWorkClick = () => {
+    navigate('/community');
+  };
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -179,13 +192,17 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
           >
-            <Button size="lg" className="bg-gradient-brand shadow-glow">
-              <Wand2 className="h-5 w-5" />
-              开始制作
-            </Button>
-            <Button size="lg" variant="outline" className="border-white/50 text-white hover:bg-white/10">
-              了解更多
-            </Button>
+            <Link to="/products">
+              <Button size="lg" className="bg-gradient-brand shadow-glow transition-transform hover:scale-105">
+                <Wand2 className="h-5 w-5" />
+                开始制作
+              </Button>
+            </Link>
+            <Link to="/ai-enhance">
+              <Button size="lg" variant="outline" className="border-white/50 text-white hover:bg-white/10 transition-transform hover:scale-105">
+                了解更多
+              </Button>
+            </Link>
           </motion.div>
         </div>
 
@@ -247,7 +264,7 @@ export default function Home() {
             >
               {adaptedProducts.map((product) => (
                 <motion.div key={product.id} variants={itemVariants}>
-                  <Link to={`/products/${product.id}`}>
+                  <Link to={`/templates/${product.id}`}>
                     <div className="group flex flex-col items-center gap-3 rounded-xl bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-medium">
                       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-4xl transition-all duration-300 group-hover:bg-brand-100 group-hover:scale-110">
                         {product.icon}
@@ -282,8 +299,8 @@ export default function Home() {
                 subtitle="精选优质模板，一键套用快速出片"
               />
               <Link
-                to="/templates"
-                className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700"
+                to="/products"
+                className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 transition-all hover:gap-2"
               >
                 查看全部
                 <ArrowRight className="h-4 w-4" />
@@ -300,7 +317,11 @@ export default function Home() {
                     key={template.id}
                     className="w-64 flex-shrink-0 sm:w-72"
                   >
-                    <TemplateCard template={template} />
+                    <TemplateCard
+                      template={template}
+                      onClick={() => handleTemplateClick(template.id)}
+                      onStartCreate={() => handleStartCreate(template.id)}
+                    />
                   </div>
                 ))}
               </div>
@@ -355,7 +376,7 @@ export default function Home() {
               className="mt-12 text-center"
             >
               <Link to="/ai-enhance">
-                <Button size="lg" className="bg-gradient-brand shadow-glow">
+                <Button size="lg" className="bg-gradient-brand shadow-glow transition-transform hover:scale-105">
                   <Wand2 className="h-5 w-5" />
                   立即体验 AI 处理
                 </Button>
@@ -393,7 +414,7 @@ export default function Home() {
                   variants={itemVariants}
                   className="mb-6 break-inside-avoid"
                 >
-                  <WorkCard work={work} />
+                  <WorkCard work={work} onClick={handleWorkClick} />
                 </motion.div>
               ))}
             </motion.div>
@@ -434,7 +455,7 @@ export default function Home() {
             </motion.p>
             <motion.div variants={itemVariants} className="mt-10">
               <Link to="/products">
-                <Button size="lg" className="bg-white text-brand-600 hover:bg-paper-100">
+                <Button size="lg" className="bg-white text-brand-600 hover:bg-paper-100 transition-transform hover:scale-105">
                   <Grid3X3 className="h-5 w-5" />
                   开始制作
                 </Button>
