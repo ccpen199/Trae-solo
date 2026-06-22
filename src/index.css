@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #1f2937;
+  background-color: #f6f9fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.elderly-mode {
+  font-size: 20px;
+}
+
+html.elderly-mode button,
+html.elderly-mode a {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+html.high-contrast {
+  filter: contrast(1.3);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c2cbd8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-gov-500 to-gov-600 text-white font-medium shadow-card hover:shadow-card-hover hover:from-gov-600 hover:to-gov-700 transition-all duration-200 active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-gov-200 bg-white text-gov-700 font-medium hover:bg-gov-50 hover:border-gov-300 transition-all duration-200;
+  }
+  .btn-warm {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-warm-400 to-warm-500 text-white font-medium shadow-card hover:shadow-card-hover transition-all duration-200 active:scale-[0.98];
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden;
+  }
+  .chip {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .section-title {
+    @apply font-serif text-2xl md:text-3xl font-bold text-gov-800 mb-1;
+  }
+  .section-subtitle {
+    @apply text-sm md:text-base text-gray-500 mb-6;
+  }
+}
