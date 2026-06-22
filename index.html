@@ -10,7 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
+    <div id="error-display" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99999;background:#fef2f2;color:#dc2626;padding:12px 20px;font-size:14px;border-bottom:2px solid #fecaca;font-family:monospace;"></div>
     <div id="root"></div>
+    <script>
+      window.__APP_START_TIME = Date.now();
+      console.log('[HTML] 页面加载开始');
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

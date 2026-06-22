@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QrCode, Camera, Shield, CheckCircle, XCircle, Loader2, AlertTriangle, Info } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
-import { authApi } from '@/services/api';
 import type { AuthResponse } from '@shared/types';
 
 type AuthMode = 'qrcode' | 'face';
@@ -17,60 +16,88 @@ function AuthPage() {
   const [errorMsg, setErrorMsg] = useState('');
   const [result, setResult] = useState<AuthResponse | null>(null);
   const [pct, setPct] = useState(0);
+  const [diags, setDiags] = useState<string[]>([]);
   const mountedRef = useRef(true);
+
+  const diag = (msg: string) => {
+    const t = new Date().toLocaleTimeString();
+    console.log(`[Auth][${t}] ${msg}`);
+    setDiags((prev) => [...prev.slice(-14), `[${t}] ${msg}`]);
+  };
 
   useEffect(() => {
     mountedRef.current = true;
+    diag(`组件挂载, isAuthenticated=${isAuthenticated}`);
     return () => { mountedRef.current = false; };
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated && step !== 'authenticating') {
+    if (isAuthenticated) {
+      diag('检测到已登录，跳转 /home');
       navigate('/home', { replace: true });
     }
-  }, [isAuthenticated, navigate, step]);
+  }, [isAuthenticated, navigate]);
 
   const doLogin = async (authMode: AuthMode) => {
     if (step === 'authenticating') return;
+
+    diag(`▶ 开始认证: mode=${authMode}`);
     setStep('authenticating');
     setPct(0);
     setErrorMsg('');
     setResult(null);
 
     const start = Date.now();
-    const dur = 2000;
     const timer = setInterval(() => {
       if (!mountedRef.current) { clearInterval(timer); return; }
-      const p = Math.min(95, ((Date.now() - start) / dur) * 100);
-      setPct(p);
-    }, 60);
+      setPct(Math.min(90, ((Date.now() - start) / 2500) * 100));
+    }, 80);
 
     try {
-      const resp = await authApi.login({
-        credentialType: authMode,
-        credentialData: `mock_${authMode}_${Date.now()}`,
-        deviceId: `terminal_${Date.now()}`,
+      diag('发起 fetch /api/auth/login ...');
+      const resp = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          credentialType: authMode,
+          credentialData: `mock_${authMode}_${Date.now()}`,
+          deviceId: `terminal_${Date.now()}`,
+        }),
       });
+
+      diag(`HTTP 状态: ${resp.status} ${resp.statusText}`);
+      const json = await resp.json();
+      diag(`响应: code=${json.code}, msg=${json.message}, hasData=${!!json.data}`);
+
       clearInterval(timer);
       if (!mountedRef.current) return;
-
       setPct(100);
 
-      if (resp.code === 0 && resp.data) {
-        setResult(resp.data);
-        storeLogin(resp.data.token, resp.data.userInfo, resp.data.expiresAt);
+      if (json.code === 0 && json.data) {
+        const d = json.data as AuthResponse;
+        diag(`认证成功! user=${d.userInfo?.name}, area=${d.userInfo?.insuredArea}`);
+        setResult(d);
+        storeLogin(d.token, d.userInfo, d.expiresAt);
+        diag('storeLogin 已调用, 设置 step=success');
         setStep('success');
+        diag('1秒后 navigate /home');
         setTimeout(() => {
-          if (mountedRef.current) navigate('/home', { replace: true });
+          if (mountedRef.current) {
+            diag('执行 navigate /home');
+            navigate('/home', { replace: true });
+          }
         }, 1000);
       } else {
-        setErrorMsg(resp.message || '认证失败');
+        const msg = json.message || '认证失败（服务端返回非成功状态）';
+        diag(`认证失败: ${msg}`);
+        setErrorMsg(msg);
         setStep('failed');
       }
     } catch (err: unknown) {
       clearInterval(timer);
       if (!mountedRef.current) return;
-      const msg = err instanceof Error ? err.message : '网络连接失败，请检查网络后重试';
+      const msg = err instanceof Error ? err.message : String(err);
+      diag(`异常: ${msg}`);
       setErrorMsg(msg);
       setStep('failed');
     }
@@ -103,18 +130,9 @@ function AuthPage() {
               </div>
             </div>
             <div className="space-y-2 pt-3 border-t border-insurance-100 text-sm">
-              <div className="flex justify-between">
-                <span className="text-slate-500">认证方式</span>
-                <span className="font-medium text-slate-700">{mode === 'qrcode' ? '电子医保凭证扫码' : '人脸识别'}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">认证结果</span>
-                <span className="text-medical-600 font-medium flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" />已通过</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">社保卡号</span>
-                <span className="font-mono text-slate-700">{result.userInfo.socialSecurityNo.replace(/(\d{4})\d+(\d{4})/, '$1****$2')}</span>
-              </div>
+              <div className="flex justify-between"><span className="text-slate-500">认证方式</span><span className="font-medium text-slate-700">{mode === 'qrcode' ? '电子医保凭证扫码' : '人脸识别'}</span></div>
+              <div className="flex justify-between"><span className="text-slate-500">认证结果</span><span className="text-medical-600 font-medium flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5" />已通过</span></div>
+              <div className="flex justify-between"><span className="text-slate-500">社保卡号</span><span className="font-mono text-slate-700">{result.userInfo.socialSecurityNo.replace(/(\d{4})\d+(\d{4})/, '$1****$2')}</span></div>
             </div>
           </div>
           <div className="flex items-center justify-center gap-2 text-insurance-600">
@@ -129,13 +147,13 @@ function AuthPage() {
   if (step === 'failed') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-insurance-600 via-insurance-500 to-insurance-700 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center animate-fade-in-up">
+        <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-lg w-full text-center animate-fade-in-up">
           <div className="w-20 h-20 mx-auto mb-5 rounded-full bg-danger-50 flex items-center justify-center">
             <XCircle className="w-14 h-14 text-danger-500" />
           </div>
           <h2 className="text-2xl font-bold text-slate-900 mb-1">认证失败</h2>
           <p className="text-slate-500 mb-5">身份认证未通过</p>
-          <div className="bg-danger-50 rounded-2xl p-5 mb-6 text-left">
+          <div className="bg-danger-50 rounded-2xl p-5 mb-5 text-left">
             <div className="flex items-start gap-2.5 mb-3">
               <AlertTriangle className="w-5 h-5 text-danger-500 shrink-0 mt-0.5" />
               <div>
@@ -153,6 +171,12 @@ function AuthPage() {
               </ul>
             </div>
           </div>
+          {diags.length > 0 && (
+            <div className="bg-slate-50 rounded-xl p-4 mb-5 text-left max-h-36 overflow-y-auto">
+              <p className="text-xs text-slate-400 mb-1">诊断日志：</p>
+              {diags.map((d, i) => <p key={i} className="text-xs text-slate-500 font-mono">{d}</p>)}
+            </div>
+          )}
           <div className="space-y-2.5">
             <button onClick={() => doLogin(mode)} className="w-full btn-primary py-3.5 text-lg">重新{mode === 'qrcode' ? '扫码' : '识别'}</button>
             <button onClick={retry} className="w-full py-3 text-slate-600 hover:bg-slate-100 rounded-xl font-medium transition-colors">选择其他认证方式</button>
@@ -205,10 +229,16 @@ function AuthPage() {
               <p className="text-slate-500 text-center mb-6">请选择认证方式完成登录</p>
 
               <div className="flex gap-3 mb-6">
-                <button onClick={() => { if (step !== 'authenticating') setMode('qrcode'); }} className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all duration-200 ${mode === 'qrcode' ? 'bg-insurance-500 text-white shadow-lg shadow-insurance-500/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                <button
+                  onClick={() => { if (step !== 'authenticating') setMode('qrcode'); }}
+                  className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all duration-200 ${mode === 'qrcode' ? 'bg-insurance-500 text-white shadow-lg shadow-insurance-500/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                >
                   <QrCode className="w-5 h-5 mx-auto mb-1" />扫码登录
                 </button>
-                <button onClick={() => { if (step !== 'authenticating') setMode('face'); }} className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all duration-200 ${mode === 'face' ? 'bg-insurance-500 text-white shadow-lg shadow-insurance-500/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                <button
+                  onClick={() => { if (step !== 'authenticating') setMode('face'); }}
+                  className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all duration-200 ${mode === 'face' ? 'bg-insurance-500 text-white shadow-lg shadow-insurance-500/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                >
                   <Camera className="w-5 h-5 mx-auto mb-1" />人脸识别
                 </button>
               </div>
@@ -252,7 +282,11 @@ function AuthPage() {
                     )}
                   </div>
                   <p className="text-center text-slate-500 text-sm">请打开<span className="font-medium text-insurance-600">国家医保服务平台APP</span>，点击"医保码"扫描上方二维码</p>
-                  <button onClick={() => doLogin('qrcode')} disabled={step === 'authenticating'} className="w-full btn-primary py-4 text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                  <button
+                    onClick={() => doLogin('qrcode')}
+                    disabled={step === 'authenticating'}
+                    className="w-full btn-primary py-4 text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
                     {step === 'authenticating' ? <><Loader2 className="w-5 h-5 animate-spin" />认证中...</> : <><QrCode className="w-5 h-5" />点击开始扫码认证</>}
                   </button>
                 </div>
@@ -278,9 +312,20 @@ function AuthPage() {
                     </div>
                   </div>
                   <p className="text-center text-slate-500 text-sm">请将<span className="font-medium text-insurance-600">面部完整对准框内</span>，保持光线充足</p>
-                  <button onClick={() => doLogin('face')} disabled={step === 'authenticating'} className="w-full btn-primary py-4 text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                  <button
+                    onClick={() => doLogin('face')}
+                    disabled={step === 'authenticating'}
+                    className="w-full btn-primary py-4 text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
                     {step === 'authenticating' ? <><Loader2 className="w-5 h-5 animate-spin" />认证中...</> : <><Camera className="w-5 h-5" />开始人脸识别认证</>}
                   </button>
+                </div>
+              )}
+
+              {diags.length > 0 && step !== 'authenticating' && (
+                <div className="mt-4 bg-slate-50 rounded-xl p-3 max-h-28 overflow-y-auto">
+                  <p className="text-xs text-slate-400 mb-1">诊断信息：</p>
+                  {diags.map((d, i) => <p key={i} className="text-xs text-slate-500 font-mono">{d}</p>)}
                 </div>
               )}
 
