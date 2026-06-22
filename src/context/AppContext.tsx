@@ -25,6 +25,7 @@ type AppContextType = {
   updateGuideStatus: (guideId: string, status: ReviewStatus, comment?: string) => void
   getGuideById: (id: string) => ServiceGuide | undefined
   withLoading: <T>(fn: () => Promise<T>) => Promise<T>
+  resetFilters: () => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -50,15 +51,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const filteredGuides = useMemo(() => {
+    const category = filters.category || 'all'
+    const subjectType = filters.subjectType || 'all'
+
     return guides.filter((guide) => {
       if (guide.cityId !== currentCity.id) return false
       if (guide.reviewStatus !== 'published') return false
-      if (filters.category && filters.category !== 'all' && guide.category !== filters.category) return false
-      if (filters.subjectType && filters.subjectType !== 'all') {
-        if (guide.subjectType !== 'both' && guide.subjectType !== filters.subjectType) return false
+
+      if (category !== 'all' && guide.category !== category) return false
+
+      if (subjectType !== 'all') {
+        if (guide.subjectType !== 'both' && guide.subjectType !== subjectType) return false
       }
-      if (filters.keyword) {
-        const kw = filters.keyword.toLowerCase()
+
+      if (filters.keyword && filters.keyword.trim()) {
+        const kw = filters.keyword.trim().toLowerCase()
         return (
           guide.title.toLowerCase().includes(kw) ||
           guide.description.toLowerCase().includes(kw) ||
@@ -69,6 +76,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       return true
     })
   }, [guides, currentCity, filters])
+
+  const resetFilters = () => {
+    setFilters({ keyword: '', category: 'all', subjectType: 'all' })
+  }
 
   const updateGuideStatus = (guideId: string, status: ReviewStatus, _comment?: string) => {
     setGuides((prev) =>
@@ -99,6 +110,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         updateGuideStatus,
         getGuideById,
         withLoading,
+        resetFilters,
       }}
     >
       {children}
