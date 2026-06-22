@@ -1,16 +1,20 @@
 import {
   FileCheck2,
-  CarTaxiFront,
+  Car,
   Stethoscope,
   GraduationCap,
   Home as HomeIcon,
   Users,
-  BadgeYen,
+  Receipt,
   Wallet,
   Trees,
   ClipboardList,
   Building2,
   MoreHorizontal,
+  Phone,
+  ShieldAlert,
+  Zap,
+  Droplets,
   type LucideIcon,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -23,21 +27,31 @@ export interface ServiceItem {
   color: string;
   bgColor: string;
   category: string;
+  route?: string;
 }
 
 export const defaultServices: ServiceItem[] = [
-  { id: 'cert', title: '证件办理', icon: FileCheck2, color: 'text-gov-600', bgColor: 'bg-gov-100', category: '政务' },
-  { id: 'traffic', title: '交通出行', icon: CarTaxiFront, color: 'text-blue-600', bgColor: 'bg-blue-100', category: '生活' },
-  { id: 'health', title: '医疗健康', icon: Stethoscope, color: 'text-rose-600', bgColor: 'bg-rose-100', category: '生活' },
-  { id: 'edu', title: '教育服务', icon: GraduationCap, color: 'text-purple-600', bgColor: 'bg-purple-100', category: '生活' },
-  { id: 'house', title: '住房服务', icon: HomeIcon, color: 'text-amber-600', bgColor: 'bg-amber-100', category: '政务' },
-  { id: 'social', title: '社会保障', icon: Users, color: 'text-teal-600', bgColor: 'bg-teal-100', category: '政务' },
-  { id: 'tax', title: '税务服务', icon: BadgeYen, color: 'text-emerald-600', bgColor: 'bg-emerald-100', category: '政务' },
-  { id: 'finance', title: '便民缴费', icon: Wallet, color: 'text-warm-600', bgColor: 'bg-warm-100', category: '生活' },
-  { id: 'env', title: '环境保护', icon: Trees, color: 'text-green-600', bgColor: 'bg-green-100', category: '生活' },
-  { id: 'work', title: '劳动就业', icon: Building2, color: 'text-indigo-600', bgColor: 'bg-indigo-100', category: '政务' },
-  { id: 'report', title: '投诉建议', icon: ClipboardList, color: 'text-orange-600', bgColor: 'bg-orange-100', category: '互动' },
-  { id: 'more', title: '全部服务', icon: MoreHorizontal, color: 'text-gray-600', bgColor: 'bg-gray-100', category: '其他' },
+  { id: 'cert', title: '证件办理', icon: FileCheck2, color: 'text-gov-600', bgColor: 'bg-gov-100', category: '政务', route: '/services' },
+  { id: 'traffic', title: '交通出行', icon: Car, color: 'text-blue-600', bgColor: 'bg-blue-100', category: '生活', route: '/services' },
+  { id: 'health', title: '医疗健康', icon: Stethoscope, color: 'text-rose-600', bgColor: 'bg-rose-100', category: '生活', route: '/services' },
+  { id: 'edu', title: '教育服务', icon: GraduationCap, color: 'text-purple-600', bgColor: 'bg-purple-100', category: '生活', route: '/services' },
+  { id: 'house', title: '住房服务', icon: HomeIcon, color: 'text-amber-600', bgColor: 'bg-amber-100', category: '政务', route: '/services' },
+  { id: 'social', title: '社会保障', icon: Users, color: 'text-teal-600', bgColor: 'bg-teal-100', category: '政务', route: '/services' },
+  { id: 'tax', title: '税务服务', icon: Receipt, color: 'text-emerald-600', bgColor: 'bg-emerald-100', category: '政务', route: '/services' },
+  { id: 'finance', title: '便民缴费', icon: Wallet, color: 'text-warm-600', bgColor: 'bg-warm-100', category: '生活', route: '/services' },
+  { id: 'env', title: '环境保护', icon: Trees, color: 'text-green-600', bgColor: 'bg-green-100', category: '生活', route: '/services' },
+  { id: 'work', title: '劳动就业', icon: Building2, color: 'text-indigo-600', bgColor: 'bg-indigo-100', category: '政务', route: '/services' },
+  { id: 'report', title: '投诉建议', icon: ClipboardList, color: 'text-orange-600', bgColor: 'bg-orange-100', category: '互动', route: '/workorders/submit' },
+  { id: 'more', title: '全部服务', icon: MoreHorizontal, color: 'text-gray-600', bgColor: 'bg-gray-100', category: '其他', route: '/services' },
+];
+
+export const quickAccessServices: ServiceItem[] = [
+  { id: 'news', title: '新闻资讯', icon: FileCheck2, color: 'text-gov-600', bgColor: 'bg-gov-100', category: '信息', route: '/news' },
+  { id: 'hotline', title: '12345热线', icon: Phone, color: 'text-warm-600', bgColor: 'bg-warm-100', category: '诉求', route: '/workorders/submit' },
+  { id: 'emergency', title: '应急广播', icon: ShieldAlert, color: 'text-red-600', bgColor: 'bg-red-100', category: '预警', route: '/emergency' },
+  { id: 'map', title: '服务地图', icon: Droplets, color: 'text-blue-600', bgColor: 'bg-blue-100', category: '网点', route: '/map' },
+  { id: 'electric', title: '电力服务', icon: Zap, color: 'text-yellow-600', bgColor: 'bg-yellow-100', category: '生活', route: '/map' },
+  { id: 'water', title: '水务服务', icon: Droplets, color: 'text-cyan-600', bgColor: 'bg-cyan-100', category: '生活', route: '/map' },
 ];
 
 interface ServiceGridProps {
@@ -58,6 +72,8 @@ export default function ServiceGrid({
   const handleClick = (service: ServiceItem) => {
     if (onServiceClick) {
       onServiceClick(service);
+    } else if (service.route) {
+      navigate(service.route);
     } else if (service.id === 'more') {
       navigate('/services');
     } else if (service.id === 'report') {
