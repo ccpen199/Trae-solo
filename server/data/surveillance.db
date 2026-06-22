@@ -44,6 +44,140 @@
         "status": "low",
         "id": 3,
         "created_at": "2026-06-22T05:48:40.868Z"
+      },
+      {
+        "username": "H.264",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 4,
+        "created_at": "2026-06-22T06:59:06.107Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "密码错误",
+        "id": 5,
+        "created_at": "2026-06-22T06:59:13.269Z"
+      },
+      {
+        "username": "platform",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 6,
+        "created_at": "2026-06-22T06:59:18.739Z"
+      },
+      {
+        "username": "H.264",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 7,
+        "created_at": "2026-06-22T06:59:27.973Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "密码错误",
+        "id": 8,
+        "created_at": "2026-06-22T06:59:35.717Z"
+      },
+      {
+        "username": "platform",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 9,
+        "created_at": "2026-06-22T06:59:42.120Z"
+      },
+      {
+        "username": "H.264",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 10,
+        "created_at": "2026-06-22T07:00:35.841Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "密码错误",
+        "id": 11,
+        "created_at": "2026-06-22T07:00:45.093Z"
+      },
+      {
+        "username": "platform",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 12,
+        "created_at": "2026-06-22T07:00:50.566Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "curl/8.4.0",
+        "location": "",
+        "status": "low",
+        "id": 13,
+        "created_at": "2026-06-22T07:08:35.095Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "curl/8.4.0",
+        "location": "",
+        "status": "low",
+        "id": 14,
+        "created_at": "2026-06-22T07:08:50.179Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "curl/8.4.0",
+        "location": "",
+        "status": "low",
+        "id": 15,
+        "created_at": "2026-06-22T07:12:58.018Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "curl/8.4.0",
+        "location": "",
+        "status": "medium",
+        "risk_level": "密码错误",
+        "id": 16,
+        "created_at": "2026-06-22T07:13:33.454Z"
       }
     ],
     "device_groups": [],
@@ -58,7 +192,7 @@
   },
   "sequences": {
     "users": 1,
-    "login_logs": 3,
+    "login_logs": 16,
     "device_groups": 0,
     "devices": 0,
     "device_shares": 0,

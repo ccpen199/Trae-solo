@@ -35,7 +35,9 @@ class AppStore {
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
       });
-      return res;
+      this.loadUnreadAlerts().catch(() => {});
+      this.loadStatistics().catch(() => {});
+      return { riskLevel: (res as any).riskLevel || 'low', ...res };
     } finally {
       runInAction(() => {
         this.loading = false;

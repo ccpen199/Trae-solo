@@ -32,15 +32,28 @@ request.interceptors.response.use(
       if (window.location.pathname !== '/login') {
         window.location.href = '/login';
       }
-      return Promise.reject(res);
+      return Promise.reject({
+        code: res.code,
+        message: res.message || '未登录或令牌已过期',
+        data: res.data,
+      });
     }
     if (res.code === 403) {
       message.error(res.message || '权限不足');
-      return Promise.reject(res);
+      return Promise.reject({
+        code: res.code,
+        message: res.message || '权限不足',
+        data: res.data,
+      });
     }
     if (res.code !== 200 && res.code !== 206) {
-      message.error(res.message || '请求失败');
-      return Promise.reject(res);
+      const errMsg = res.message || '请求失败';
+      message.error(errMsg);
+      return Promise.reject({
+        code: res.code,
+        message: errMsg,
+        data: res.data,
+      });
     }
     return response;
   },
@@ -52,12 +65,18 @@ request.interceptors.response.use(
         window.location.href = '/login';
       }
     }
+    const code = error.response?.data?.code || error.response?.status || 500;
+    const msg = error.response?.data?.message || error.message || '网络请求失败';
     if (error.response?.status === 429) {
-      message.error(error.response.data?.message || '请求过于频繁，请稍后再试');
+      message.error(msg || '请求过于频繁，请稍后再试');
     } else if (!axios.isCancel(error)) {
-      message.error(error.message || '网络请求失败');
+      message.error(msg);
     }
-    return Promise.reject(error);
+    return Promise.reject({
+      code,
+      message: msg,
+      data: error.response?.data,
+    });
   }
 );
 

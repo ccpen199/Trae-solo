@@ -28,21 +28,28 @@ const Login: React.FC = observer(() => {
       }
       message.success('登录成功，正在进入工作台...');
       setTimeout(() => {
-        navigate('/dashboard', { replace: true });
-      }, 800);
+        window.location.href = '/dashboard';
+      }, 600);
     } catch (e: any) {
-      const msg = e?.message || e?.data?.message || '登录失败，请重试';
-      const code = e?.code || e?.response?.status;
-      setErrorMsg(msg);
-      setErrorType(code === 429 ? 'warning' : 'error');
+      const msg = e?.message || '登录失败，请重试';
+      const code = e?.code;
       if (code === 401) {
         setErrorMsg('账号或密码错误，请检查后重试');
+        setErrorType('error');
       } else if (code === 403) {
         setErrorMsg('账号已被禁用，请联系管理员');
+        setErrorType('error');
       } else if (code === 429) {
         setErrorMsg('登录失败次数过多，已被临时限制，请1小时后再试');
+        setErrorType('warning');
+      } else if (code === 400) {
+        setErrorMsg(msg || '参数错误，请检查输入');
+        setErrorType('error');
+      } else {
+        setErrorMsg(msg);
+        setErrorType('error');
       }
-      message.error(msg);
+      if (msg) message.error(msg);
     } finally {
       setLoading(false);
     }
@@ -55,13 +62,18 @@ const Login: React.FC = observer(() => {
       await appStore.register(values);
       message.success('注册成功，正在进入工作台...');
       setTimeout(() => {
-        navigate('/dashboard', { replace: true });
-      }, 800);
+        window.location.href = '/dashboard';
+      }, 600);
     } catch (e: any) {
-      const msg = e?.message || e?.data?.message || '注册失败，请重试';
-      setErrorMsg(msg);
+      const msg = e?.message || '注册失败，请重试';
+      const code = e?.code;
+      if (code === 400) {
+        setErrorMsg(msg || '参数错误，请检查输入');
+      } else {
+        setErrorMsg(msg);
+      }
       setErrorType('error');
-      message.error(msg);
+      if (msg) message.error(msg);
     } finally {
       setLoading(false);
     }

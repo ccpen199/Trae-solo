@@ -29,10 +29,37 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = observer(({ chil
   const navigate = useNavigate();
   useEffect(() => {
     if (!appStore.isLoggedIn) {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
-  }, []);
-  return appStore.isLoggedIn ? <>{children}</> : null;
+  }, [appStore.isLoggedIn, navigate]);
+  if (!appStore.isLoggedIn) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
+        <span>正在跳转登录页...</span>
+      </div>
+    );
+  }
+  return <>{children}</>;
+});
+
+const LoginRedirect: React.FC = observer(() => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (appStore.isLoggedIn) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [appStore.isLoggedIn, navigate]);
+  return <Login />;
+});
+
+const RegisterRedirect: React.FC = observer(() => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (appStore.isLoggedIn) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [appStore.isLoggedIn, navigate]);
+  return <Register />;
 });
 
 const MainLayout: React.FC = observer(() => {
@@ -243,8 +270,8 @@ const AppRouter: React.FC = () => {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<LoginRedirect />} />
+        <Route path="/register" element={<RegisterRedirect />} />
         <Route path="/temp-view" element={<TemporaryView />} />
         <Route path="/*" element={<MainLayout />} />
       </Routes>
