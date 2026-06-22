@@ -48,7 +48,7 @@ import {
   Tooltip,
 } from 'antd';
 import { TASK_STATUS_CONFIG, WORK_CASE_STATUS_CONFIG } from '@/constants';
-import { mockTasks, mockWorkCases, mockUser } from '../../../api/mock/data';
+import { mockTasks, mockWorkCases, mockUser } from '@/mock/data';
 import { formatDate, isOverdue, isUpcoming } from '@/utils/format';
 import { cn } from '@/lib/utils';
 import type { Task, TaskStatus, Priority, CreateTaskParams } from '@/types/workspace';

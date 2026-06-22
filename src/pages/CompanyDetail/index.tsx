@@ -44,7 +44,7 @@ import {
 } from 'antd';
 import ReactECharts from 'echarts-for-react';
 import RiskBadge from '@/components/common/RiskBadge';
-import { mockCompanies } from '../../../api/mock/data';
+import { mockCompanies } from '@/mock/data';
 import {
   formatDate,
   formatMoney,

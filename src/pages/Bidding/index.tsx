@@ -45,7 +45,7 @@ import {
   Rate,
   Table,
 } from 'antd';
-import { mockCaseSources } from '../../../api/mock/data';
+import { mockCaseSources } from '@/mock/data';
 import { CASE_CAUSES, PROVINCES } from '@/constants';
 import { formatMoney, formatDate, formatDateTime, isOverdue, isUpcoming } from '@/utils/format';
 import type { CaseSource, CaseSourceStatus, CaseBid } from '@/types/case';

@@ -29,7 +29,7 @@ import {
   Tabs,
 } from 'antd';
 import ReactECharts from 'echarts-for-react';
-import { mockCaseSources } from '../../../api/mock/data';
+import { mockCaseSources } from '@/mock/data';
 import { CASE_CAUSES, PROVINCES } from '@/constants';
 import { formatMoney, formatDate, isOverdue, isUpcoming } from '@/utils/format';
 import type { CaseSource, CaseSourceStatus } from '@/types/case';

@@ -18,7 +18,7 @@ import { Input, Select, Checkbox, Slider, Button, Pagination, Empty, Spin, Tag, 
 import CompanyCard from '@/components/search/CompanyCard';
 import { useSearchStore } from '@/store/searchStore';
 import { INDUSTRIES, PROVINCES, RISK_LEVEL_CONFIG } from '@/constants';
-import { mockCompanies } from '../../../api/mock/data';
+import { mockCompanies } from '@/mock/data';
 import ReactECharts from 'echarts-for-react';
 
 const SearchPage: React.FC = () => {

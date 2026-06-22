@@ -42,7 +42,7 @@ import {
   Divider,
   Empty,
 } from 'antd';
-import { mockCaseSources, mockContracts } from '../../../api/mock/data';
+import { mockCaseSources, mockContracts } from '@/mock/data';
 import { CASE_CAUSES, PROVINCES } from '@/constants';
 import {
   formatMoney,

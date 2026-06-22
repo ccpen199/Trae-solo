@@ -1,6 +1,5 @@
 import { Router, type Request, type Response } from 'express';
 import { successResponse, mockUser } from '../mock/data.js';
-import { generateId } from '../../src/utils/format.js';
 
 const router = Router();
 
@@ -16,7 +15,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  const token = `token_${generateId()}`;
+  const token = `token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
   res.json(successResponse({
     token,

@@ -32,7 +32,7 @@ import {
 import type { ColumnsType } from 'antd/es/table';
 import DataCard from '@/components/common/DataCard';
 import { WORK_CASE_STATUS_CONFIG } from '@/constants';
-import { mockWorkCases, mockUser } from '../../../api/mock/data';
+import { mockWorkCases, mockUser } from '@/mock/data';
 import { formatDate } from '@/utils/format';
 import { cn } from '@/lib/utils';
 import type { WorkCase, Priority, WorkCaseStatus, CreateCaseParams } from '@/types/workspace';

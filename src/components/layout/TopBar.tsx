@@ -12,6 +12,7 @@ import {
 import { Badge, Dropdown, Avatar } from 'antd';
 import { useUserStore } from '@/store/userStore';
 import { formatRelativeTime } from '@/utils/format';
+import { cn } from '@/lib/utils';
 
 const mockNotifications = [
   { id: 1, type: 'case', title: '新案源匹配', content: '有3个新案源符合您的专长领域', time: '2024-03-21T10:30:00Z', unread: true },
@@ -212,9 +213,5 @@ const TopBar: React.FC = () => {
     </header>
   );
 };
-
-function cn(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default TopBar;

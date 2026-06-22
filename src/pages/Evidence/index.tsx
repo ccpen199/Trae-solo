@@ -41,7 +41,7 @@ import {
   Avatar,
 } from 'antd';
 import type { MenuProps } from 'antd';
-import { mockWorkCases } from '../../../api/mock/data';
+import { mockWorkCases } from '@/mock/data';
 import type { WorkCase, EvidenceItem, EvidenceFolder, EvidenceType } from '@/types/workspace';
 import { formatFileSize, formatDate } from '@/utils/format';
 import { cn } from '@/lib/utils';

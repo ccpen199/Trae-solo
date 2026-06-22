@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { Table, Tag, Input, Select, Button, Modal, message, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { mockContracts, Contract } from '../../../api/mock/data';
+import { mockContracts, Contract } from '@/mock/data';
 import { formatDate, downloadFile } from '@/utils/format';
 import { cn } from '@/lib/utils';
 

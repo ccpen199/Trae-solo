@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Briefcase,
@@ -8,41 +8,90 @@ import {
   Search,
   Calendar,
   Clock,
-  AlertCircle,
   ArrowRight,
   FolderKanban,
   Gavel,
   Scale,
+  Database,
+  Bot,
+  Calculator,
+  Library,
+  Send,
+  FileSignature,
+  KanbanSquare,
+  FolderOpen,
+  Wrench,
+  ChevronRight,
+  Zap,
+  Shield,
+  Building2,
 } from 'lucide-react';
-import { Card, Tag, Progress, Avatar, Empty } from 'antd';
+import { Card, Tag, Avatar, Empty, Divider } from 'antd';
 import ReactECharts from 'echarts-for-react';
 import DataCard from '@/components/common/DataCard';
 import { useCaseStore } from '@/store/caseStore';
 import { formatMoney, formatDate, isUpcoming, isOverdue } from '@/utils/format';
-import { mockCaseSources, mockWorkCases, mockTasks } from '../../../api/mock/data';
+import { mockCaseSources, mockWorkCases, mockTasks, mockCompanies } from '@/mock/data';
+import { cn } from '@/lib/utils';
+
+const moduleEntries = [
+  {
+    group: '法律大数据引擎',
+    icon: <Database className="w-6 h-6" />,
+    color: 'from-primary-900 to-primary-500',
+    items: [
+      { path: '/search', icon: <Search className="w-5 h-5" />, label: '大数据检索', desc: '企业/裁判文书/执行信息/招投标' },
+      { path: '/search/company/comp-001', icon: <Building2 className="w-5 h-5" />, label: '企业详情', desc: '风险雷达/工商/股权/涉诉' },
+      { path: '/reports', icon: <FileText className="w-5 h-5" />, label: '报告中心', desc: '尽职调查/信用/涉诉分析' },
+      { path: '/developers', icon: <Scale className="w-5 h-5" />, label: 'API管理', desc: '开放接口/Key管理/文档' },
+    ],
+  },
+  {
+    group: '案源交易市场',
+    icon: <Gavel className="w-6 h-6" />,
+    color: 'from-accent-gold-dark to-accent-gold',
+    items: [
+      { path: '/cases', icon: <Briefcase className="w-5 h-5" />, label: '案源市场', desc: '标的额/地域/案由标签化' },
+      { path: '/cases/publish', icon: <Send className="w-5 h-5" />, label: '发布案源', desc: '在线发布/保证金托管' },
+      { path: '/cases/bidding', icon: <Gavel className="w-5 h-5" />, label: '竞标大厅', desc: '律师认证/在线竞标/选标' },
+      { path: '/contracts', icon: <FileSignature className="w-5 h-5" />, label: '合同签署', desc: '电子委托协议/在线签署' },
+    ],
+  },
+  {
+    group: '协作办案中台',
+    icon: <FolderKanban className="w-6 h-6" />,
+    color: 'from-green-600 to-green-500',
+    items: [
+      { path: '/workspace', icon: <FolderKanban className="w-5 h-5" />, label: '办案中台', desc: '案件管理/进度协同看板' },
+      { path: '/workspace/board', icon: <KanbanSquare className="w-5 h-5" />, label: '任务看板', desc: '拖拽看板/任务分派/提醒' },
+      { path: '/workspace/evidence', icon: <FolderOpen className="w-5 h-5" />, label: '证据库', desc: '音视频/扫描件/OCR归集' },
+    ],
+  },
+  {
+    group: '智能工具集',
+    icon: <Wrench className="w-6 h-6" />,
+    color: 'from-accent-red to-accent-red-light',
+    items: [
+      { path: '/tools/calculator', icon: <Calculator className="w-5 h-5" />, label: '法律计算器', desc: '诉讼费/工伤赔偿/利息等7类' },
+      { path: '/tools/ai', icon: <Bot className="w-5 h-5" />, label: 'AI法条助手', desc: '法条解释/类案推荐' },
+      { path: '/tools/templates', icon: <Library className="w-5 h-5" />, label: '文书模板', desc: '诉状/合同/意见书模板' },
+    ],
+  },
+];
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
-  const { matchedCases, fetchMatchedCases } = useCaseStore();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
 
   const stats = [
     { title: '在办案件', value: mockWorkCases.length, icon: <FolderKanban className="w-5 h-5" />, color: 'primary' as const, trend: { value: 12, isUp: true } },
     { title: '待处理任务', value: mockTasks.filter(t => t.status === 'todo' || t.status === 'in_progress').length, icon: <FileText className="w-5 h-5" />, color: 'gold' as const },
-    { title: '匹配案源', value: 12, icon: <Briefcase className="w-5 h-5" />, color: 'success' as const, trend: { value: 8, isUp: true } },
+    { title: '匹配案源', value: mockCaseSources.length, icon: <Briefcase className="w-5 h-5" />, color: 'success' as const, trend: { value: 8, isUp: true } },
     { title: '本月创收', value: '¥128,500', icon: <TrendingUp className="w-5 h-5" />, color: 'warning' as const, trend: { value: 15, isUp: true } },
   ];
 
   const upcomingNodes = mockWorkCases.flatMap(c =>
     c.nodes
-      .filter(n => n.reminder && !n.completed && (isUpcoming(n.date, 7) || isOverdue(n.date)))
+      .filter(n => n.reminder && !n.completed)
       .map(n => ({ ...n, caseTitle: c.title, caseId: c.id }))
   ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).slice(0, 5);
 
@@ -120,7 +169,7 @@ const Dashboard: React.FC = () => {
         <div>
           <h1 className="text-2xl font-serif font-bold text-primary-900">工作台</h1>
           <p className="text-neutral-ink-500 mt-1">
-            今天是 {formatDate(new Date(), 'YYYY年MM月DD日 dddd')}，祝您工作顺利
+            今天是 {formatDate(new Date(), 'YYYY年MM月DD日')}，祝您工作顺利
           </p>
         </div>
         <div className="flex gap-3">
@@ -153,9 +202,48 @@ const Dashboard: React.FC = () => {
             onClick={() => {
               if (stat.title === '在办案件') navigate('/workspace');
               if (stat.title === '匹配案源') navigate('/cases');
+              if (stat.title === '待处理任务') navigate('/workspace/board');
             }}
           />
         ))}
+      </div>
+
+      <div>
+        <h2 className="lc-section-title">业务入口</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+          {moduleEntries.map((mod) => (
+            <Card
+              key={mod.group}
+              className="lc-card border-0 overflow-hidden"
+              styles={{ body: { padding: 0 } }}
+            >
+              <div className={cn('px-5 py-4 bg-gradient-to-r text-white', mod.color)}>
+                <div className="flex items-center gap-3">
+                  {mod.icon}
+                  <span className="font-serif font-semibold text-lg">{mod.group}</span>
+                </div>
+              </div>
+              <div className="p-4 space-y-1">
+                {mod.items.map((item) => (
+                  <div
+                    key={item.path}
+                    onClick={() => navigate(item.path)}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-50 cursor-pointer transition-all group"
+                  >
+                    <div className="text-primary-500 group-hover:text-primary-700 transition-colors">
+                      {item.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-neutral-ink-900 group-hover:text-primary-900">{item.label}</div>
+                      <div className="text-xs text-neutral-ink-400 truncate">{item.desc}</div>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-neutral-ink-300 group-hover:text-primary-500 transition-colors" />
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -164,14 +252,14 @@ const Dashboard: React.FC = () => {
           title={<span className="font-serif text-base font-semibold">案件办理趋势</span>}
           extra={<span className="text-sm text-primary-500 cursor-pointer hover:underline">查看详情 →</span>}
         >
-          <ReactECharts option={caseTrendOption} style={{ height: 300 }} />
+          <ReactECharts option={caseTrendOption} style={{ height: 280 }} />
         </Card>
 
         <Card
           className="lc-card border-0"
           title={<span className="font-serif text-base font-semibold">案件类型分布</span>}
         >
-          <ReactECharts option={causeDistributionOption} style={{ height: 300 }} />
+          <ReactECharts option={causeDistributionOption} style={{ height: 280 }} />
         </Card>
       </div>
 
@@ -182,7 +270,7 @@ const Dashboard: React.FC = () => {
           extra={<span className="text-sm text-primary-500 cursor-pointer hover:underline">全部 →</span>}
         >
           {upcomingNodes.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {upcomingNodes.map((node) => (
                 <div
                   key={node.id}
@@ -223,7 +311,7 @@ const Dashboard: React.FC = () => {
           title={<span className="font-serif text-base font-semibold">为您推荐案源</span>}
           extra={<span className="text-sm text-primary-500 cursor-pointer hover:underline" onClick={() => navigate('/cases')}>更多 →</span>}
         >
-          <div className="space-y-4">
+          <div className="space-y-3">
             {mockCaseSources.slice(0, 3).map((cs) => (
               <div
                 key={cs.id}
@@ -263,7 +351,7 @@ const Dashboard: React.FC = () => {
           title={<span className="font-serif text-base font-semibold">最近任务</span>}
           extra={<span className="text-sm text-primary-500 cursor-pointer hover:underline" onClick={() => navigate('/workspace/board')}>任务看板 →</span>}
         >
-          <div className="space-y-3">
+          <div className="space-y-2">
             {mockTasks.slice(0, 4).map((task) => (
               <div
                 key={task.id}
@@ -297,12 +385,40 @@ const Dashboard: React.FC = () => {
           </div>
         </Card>
       </div>
+
+      <Card
+        className="lc-card border-0"
+        title={<span className="font-serif text-base font-semibold">热门企业检索</span>}
+        extra={<span className="text-sm text-primary-500 cursor-pointer hover:underline" onClick={() => navigate('/search')}>更多 →</span>}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {mockCompanies.map((company) => (
+            <div
+              key={company.id}
+              onClick={() => navigate(`/search/company/${company.id}`)}
+              className="p-4 rounded-lg border border-neutral-ink-100 hover:border-primary-300 hover:shadow-card-hover cursor-pointer transition-all"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-primary-500" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-neutral-ink-900 truncate">{company.name}</div>
+                  <div className="text-xs text-neutral-ink-400">{company.creditCode.slice(0, 10)}...</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-neutral-ink-500">{company.registeredCapital}</span>
+                <Tag color={company.riskLevel === 'low' ? 'success' : company.riskLevel === 'medium' ? 'warning' : company.riskLevel === 'high' ? 'error' : 'red'} className="!m-0 !text-xs">
+                  {company.riskLevel === 'low' ? '低风险' : company.riskLevel === 'medium' ? '中风险' : company.riskLevel === 'high' ? '高风险' : '极高风险'}
+                </Tag>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 };
-
-function cn(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default Dashboard;

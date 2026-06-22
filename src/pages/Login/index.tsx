@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { Phone, Lock, Shield, Scale, Gavel, FileText, Eye, EyeOff, ArrowRight } from 'lucide-react';
-import { Button, Form, Input, Tabs, message } from 'antd';
+import { Phone, Lock, Shield, Scale, Gavel, FileText, Eye, EyeOff, ArrowRight, Zap } from 'lucide-react';
+import { Button, Form, Input, Tabs, message, Divider } from 'antd';
 import { useUserStore } from '@/store/userStore';
 import { validatePhone } from '@/utils/validator';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, token, user } = useUserStore();
+  const { login, quickLogin, token, user } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
@@ -44,6 +44,12 @@ const Login: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleQuickLogin = () => {
+    quickLogin();
+    message.success('演示登录成功');
+    navigate(redirectTo, { replace: true });
   };
 
   const handleSendCode = (phone: string) => {
@@ -143,6 +149,7 @@ const Login: React.FC = () => {
           layout="vertical"
           onFinish={handlePasswordLogin}
           className="pt-4"
+          initialValues={{ phone: '13800138000', password: '123456' }}
         >
           <Form.Item
             name="phone"
@@ -264,6 +271,18 @@ const Login: React.FC = () => {
               size="large"
               className="login-tabs"
             />
+
+            <Divider style={{ margin: '12px 0 16px', color: '#ADB5BD', fontSize: 12 }}>
+              或
+            </Divider>
+
+            <button
+              onClick={handleQuickLogin}
+              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg border-2 border-dashed border-accent-gold/50 bg-accent-gold/5 text-accent-gold-dark font-medium transition-all duration-200 hover:border-accent-gold hover:bg-accent-gold/10 hover:shadow-gold-glow"
+            >
+              <Zap className="w-5 h-5" />
+              一键体验演示账号
+            </button>
           </div>
 
           <div className="mt-6 text-center">

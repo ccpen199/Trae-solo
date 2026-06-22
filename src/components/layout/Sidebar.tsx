@@ -120,7 +120,7 @@ const Sidebar: React.FC<{ collapsed: boolean; onToggle: () => void }> = ({ colla
         {Object.entries(groupedItems).map(([group, items]) => (
           <div key={group} className="mb-4">
             {!collapsed && (
-              <div className="px-4 mb-2 text-xs font-medium text-neutral-ink-500 uppercase tracking-wider">
+              <div className="px-4 mb-2 text-xs font-medium text-neutral-ink-400 uppercase tracking-wider">
                 {group}
               </div>
             )}
@@ -133,8 +133,10 @@ const Sidebar: React.FC<{ collapsed: boolean; onToggle: () => void }> = ({ colla
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    'lc-nav-item mx-2 mb-1',
-                    isActive && 'lc-nav-item-active',
+                    'flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 cursor-pointer',
+                    isActive
+                      ? 'bg-white/15 text-white font-medium'
+                      : 'text-neutral-ink-300 hover:bg-white/10 hover:text-white',
                     collapsed && 'justify-center px-0'
                   )}
                   title={collapsed ? item.label : undefined}

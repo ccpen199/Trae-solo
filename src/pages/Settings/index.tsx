@@ -36,7 +36,7 @@ import {
   Tooltip,
 } from 'antd';
 import type { UploadProps } from 'antd';
-import { mockUser } from '../../../api/mock/data';
+import { mockUser } from '@/mock/data';
 import { formatDate } from '@/utils/format';
 import { cn } from '@/lib/utils';
 

@@ -43,7 +43,7 @@ import {
   Badge,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { mockWorkCases, mockTasks } from '../../../api/mock/data';
+import { mockWorkCases, mockTasks } from '@/mock/data';
 import { WORK_CASE_STATUS_CONFIG, TASK_STATUS_CONFIG } from '@/constants';
 import { formatDate, formatMoney, formatFileSize } from '@/utils/format';
 import { cn } from '@/lib/utils';
