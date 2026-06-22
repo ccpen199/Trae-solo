@@ -18,9 +18,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const frontendOrigin = process.env.FRONTEND_URL || 'http://127.0.0.1:49309';
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: frontendOrigin,
   credentials: true
 }));
 app.use(express.json({ limit: '50mb' }));
