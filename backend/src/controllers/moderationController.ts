@@ -5,6 +5,7 @@ import Diary from '../models/Diary';
 import User from '../models/User';
 import { AuthRequest } from '../middleware/authMiddleware';
 import { NON_STANDARD_QUOTE_PHRASES, INAPPROPRIATE_WORDS, SUSPICIOUS_PATTERNS } from '../config/constants';
+import { isDbConnected } from '../config/database';
 import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners } from '../utils/mockData';
 
 export interface FilterResult {
@@ -100,6 +101,22 @@ export const filterContent = (
 
 export const checkContent = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const { content = '' } = req.body;
+      return res.json({
+        success: true,
+        data: {
+          passed: true,
+          originalContent: content,
+          filteredContent: content,
+          matchedWords: [],
+          matchedPatterns: [],
+          action: 'pass' as const,
+          riskLevel: 'low' as const
+        }
+      });
+    }
+
     const { content, contentType = 'comment' } = req.body;
     const result = filterContent(content, contentType);
 
@@ -212,6 +229,16 @@ export const submitReport = async (req: AuthRequest, res: Response) => {
 
 export const getMyReports = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const userId = req.user?._id;
+      const filtered = MOCK_REPORTS.filter(r => r.reporterId === userId);
+      const reports = filtered.length > 0 ? filtered : MOCK_REPORTS;
+      return res.json({
+        success: true,
+        data: reports
+      });
+    }
+
     const reports = await Report.find({ reporterId: req.user?._id })
       .sort({ createdAt: -1 })
       .populate('targetUserId', 'username avatar');

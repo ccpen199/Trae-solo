@@ -3,7 +3,64 @@ import mongoose from 'mongoose';
 import User from '../models/User';
 import Diary from '../models/Diary';
 import { AuthRequest } from '../middleware/authMiddleware';
+import { isDbConnected } from '../config/database';
 import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners as getMockApprovedDesigners } from '../utils/mockData';
+
+const getMockDesignersList = (req: AuthRequest) => {
+  const {
+    page = 1,
+    limit = 20,
+    city,
+    minRating,
+    style,
+    sort = 'rating'
+  } = req.query;
+
+  let filtered = [...getMockApprovedDesigners()];
+
+  if (city) {
+    filtered = filtered.filter(d => d.serviceAreas?.includes(city));
+  }
+  if (minRating) {
+    filtered = filtered.filter(d => (d.statistics?.rating || 0) >= Number(minRating));
+  }
+  if (style) {
+    const styleArr = Array.isArray(style) ? style : [style];
+    filtered = filtered.filter(d => {
+      const designerStyles = new Set(
+        d.portfolio?.flatMap((p: any) => p.style ? [p.style] : []) || []
+      );
+      return styleArr.some((s: string) => designerStyles.has(s));
+    });
+  }
+
+  if (sort === 'rating') {
+    filtered.sort((a, b) => (b.statistics?.rating || 0) - (a.statistics?.rating || 0));
+  } else if (sort === 'projects') {
+    filtered.sort((a, b) => (b.statistics?.completedProjects || 0) - (a.statistics?.completedProjects || 0));
+  } else if (sort === 'latest') {
+    filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  const total = filtered.length;
+  const pageNum = Number(page);
+  const limitNum = Number(limit);
+  const skip = (pageNum - 1) * limitNum;
+  const designers = filtered.slice(skip, skip + limitNum).map(d => {
+    const { password, email, phone, ...rest } = d;
+    return rest;
+  });
+
+  return {
+    designers,
+    pagination: {
+      page: pageNum,
+      limit: limitNum,
+      total,
+      totalPages: Math.ceil(total / limitNum)
+    }
+  };
+};
 
 export const applyDesigner = async (req: AuthRequest, res: Response) => {
   try {
@@ -114,6 +171,11 @@ export const updateDesignerProfile = async (req: AuthRequest, res: Response) => 
 
 export const getApprovedDesigners = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const r = getMockDesignersList(req);
+      return res.json({ success: true, data: r });
+    }
+
     const {
       page = 1,
       limit = 20,
@@ -162,27 +224,23 @@ export const getApprovedDesigners = async (req: AuthRequest, res: Response) => {
       }
     });
   } catch (error) {
-    const designers = getMockApprovedDesigners().map(d => {
-      const { password, email, phone, ...rest } = d;
-      return rest;
-    });
-    res.json({
-      success: true,
-      data: {
-        designers,
-        pagination: {
-          page: 1,
-          limit: 20,
-          total: designers.length,
-          totalPages: 1
-        }
-      }
-    });
+    const r = getMockDesignersList(req);
+    res.json({ success: true, data: r });
   }
 };
 
 export const getDesignerById = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const id = req.params.id;
+      const designer = MOCK_USERS.find(u => u._id === id && u.role === 'designer');
+      if (!designer) {
+        return res.status(404).json({ success: false, message: '设计师不存在' });
+      }
+      const { password, ...rest } = designer;
+      return res.json({ success: true, data: rest });
+    }
+
     const designer = await User.findOne({
       _id: req.params.id,
       role: 'designer'
@@ -233,6 +291,95 @@ const calculateStyleMatch = (userStyles: string[], designerStyles: string[]) => 
 
 export const matchDesignersForDiary = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const diaryId = req.params.diaryId;
+      let diary: any = null;
+      if (diaryId.startsWith('demo-diary')) {
+        diary = MOCK_DIARIES.find(d => d._id === diaryId);
+      }
+
+      const approvedDesigners = getMockApprovedDesigners();
+
+      const matched = approvedDesigners.map(designer => {
+        let score = 0;
+        const details: string[] = [];
+
+        if (diary) {
+          const cityMatch = diary.address?.city && designer.serviceAreas?.includes(diary.address.city);
+          if (cityMatch && diary.address?.city) {
+            score += 30;
+            details.push(`服务区域匹配（${diary.address!.city}）+30`);
+          } else {
+            details.push('服务区域不匹配 +0');
+          }
+
+          const portfolioBudgets = designer.portfolio
+            ?.filter((p: any) => p.budgetRange?.min && p.budgetRange?.max)
+            .map((p: any) => ({ min: p.budgetRange!.min, max: p.budgetRange!.max }));
+
+          if (portfolioBudgets?.length && diary.budget?.totalEstimated) {
+            const avgBudgetScore = portfolioBudgets.reduce((sum: number, b: any) => {
+              return sum + calculateBudgetMatch(diary.budget.totalEstimated, b.min, b.max);
+            }, 0) / portfolioBudgets.length;
+            const weighted = avgBudgetScore * 25;
+            score += weighted;
+            details.push(`预算区间匹配度 ${(avgBudgetScore * 100).toFixed(0)}% +${weighted.toFixed(0)}`);
+          }
+
+          const houseTypeScore = designer.portfolio?.some((p: any) => p.style === diary.houseType) ? 15 :
+            calculateHouseTypeSimilarity(diary.houseType, 'apartment') * 15;
+          score += houseTypeScore;
+          details.push(`户型相似度 +${houseTypeScore.toFixed(0)}`);
+
+          const allDesignerStyles = new Set(
+            designer.portfolio?.flatMap((p: any) => p.style ? [p.style] : []) || []
+          );
+          const styleScore = calculateStyleMatch(diary.styleTags || [], Array.from(allDesignerStyles));
+          const weightedStyle = styleScore * 20;
+          score += weightedStyle;
+          details.push(`风格偏好匹配 +${weightedStyle.toFixed(0)}`);
+
+          const materialMatch = diary.materialTags?.length ? diary.materialTags.filter((m: string) => {
+            return designer.portfolio?.some((p: any) => p.description.includes(m));
+          }).length * 0.5 : 0;
+          const materialScore = Math.min(materialMatch, 10);
+          score += materialScore;
+          details.push(`材质偏好匹配 +${materialScore.toFixed(0)}`);
+        } else {
+          score += 60 + Math.floor(Math.random() * 20);
+          details.push('基础匹配分 +' + Math.floor(60 + Math.random() * 20));
+        }
+
+        score += (designer.statistics?.rating || 0) * 1;
+        details.push(`设计师评分 +${(designer.statistics?.rating || 0).toFixed(0)}`);
+
+        const finalScore = Math.min(Math.max(score, 60), 98);
+        const { password, email, phone, ...rest } = designer;
+
+        return {
+          designer: rest,
+          score: finalScore,
+          details
+        };
+      });
+
+      matched.sort((a, b) => b.score - a.score);
+      const topMatches = matched.slice(0, 10);
+
+      return res.json({
+        success: true,
+        message: `共匹配到 ${approvedDesigners.length} 位设计师，TOP${topMatches.length} 推荐如下`,
+        data: {
+          diaryId,
+          matches: topMatches.map(m => ({
+            designer: m.designer,
+            matchScore: Math.round(m.score),
+            matchDetails: m.details
+          }))
+        }
+      });
+    }
+
     const diary = await Diary.findById(req.params.diaryId);
     if (!diary) {
       return res.status(404).json({ success: false, message: '装修日记不存在' });

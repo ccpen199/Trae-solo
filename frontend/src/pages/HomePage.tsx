@@ -13,12 +13,14 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
-        const [dRes, dsRes, gRes]: any = await Promise.all([
-          diaryApi.getList({ limit: 8, sort: 'latest' }),
+        const [dRes, dsRes, gRes]: any = await Promise.allSettled([
+          diaryApi.getList({ limit: 8, sort: 'latest', style: activeStyle || undefined }),
           designerApi.getList({ limit: 6 }),
           aiApi.getInspirationGraph({ limit: 100 })
-        ]);
+        ]).then(results => results.map(r => r.status === 'fulfilled' ? r.value : null));
+
         if (dRes?.success) setDiaries(dRes.data.diaries || []);
         if (dsRes?.success) setDesigners(dsRes.data.designers || []);
         if (gRes?.success) setGraphData(gRes.data);
@@ -31,7 +33,7 @@ export default function HomePage() {
       }
     };
     fetchData();
-  }, []);
+  }, [activeStyle]);
 
   if (loading) {
     return <div className="text-center py-20 text-gray-500">加载中...</div>;

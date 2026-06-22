@@ -5,6 +5,7 @@ import Diary from '../models/Diary';
 import User from '../models/User';
 import { AuthRequest } from '../middleware/authMiddleware';
 import { CONSTRUCTION_STAGES } from '../config/constants';
+import { isDbConnected } from '../config/database';
 import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners } from '../utils/mockData';
 
 export const createTransaction = async (req: AuthRequest, res: Response) => {
@@ -240,6 +241,40 @@ export const confirmStageAndRelease = async (req: AuthRequest, res: Response) =>
 
 export const getMyTransactions = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const userId = req.user?._id;
+      const { status, role } = req.query;
+
+      let filtered = MOCK_TRANSACTIONS.filter(t => {
+        const homeownerId = typeof t.homeownerId === 'string' ? t.homeownerId : t.homeownerId?._id;
+        const designerId = typeof t.designerId === 'string' ? t.designerId : t.designerId?._id;
+        return homeownerId === userId || designerId === userId;
+      });
+
+      if (status) {
+        filtered = filtered.filter(t => t.status === status);
+      }
+
+      const transactions = filtered.length > 0 ? filtered : MOCK_TRANSACTIONS;
+      const userRole = role || (transactions[0] && (typeof transactions[0].homeownerId === 'string'
+        ? transactions[0].homeownerId
+        : transactions[0].homeownerId?._id) === userId ? 'homeowner' : 'designer');
+
+      return res.json({
+        success: true,
+        data: {
+          transactions,
+          userRole,
+          pagination: {
+            page: 1,
+            limit: transactions.length,
+            total: transactions.length,
+            totalPages: 1
+          }
+        }
+      });
+    }
+
     const { status, role } = req.query;
     const userId = new mongoose.Types.ObjectId(req.user?._id);
 
@@ -292,6 +327,31 @@ export const getMyTransactions = async (req: AuthRequest, res: Response) => {
 
 export const getTransactionById = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const id = req.params.id;
+      const transaction = MOCK_TRANSACTIONS.find(t => t._id === id);
+      if (!transaction) {
+        return res.status(404).json({ success: false, message: '交易不存在' });
+      }
+
+      const userId = req.user?._id;
+      const homeownerId = typeof transaction.homeownerId === 'string'
+        ? transaction.homeownerId
+        : transaction.homeownerId?._id;
+      const designerId = typeof transaction.designerId === 'string'
+        ? transaction.designerId
+        : transaction.designerId?._id;
+
+      if (homeownerId !== userId && designerId !== userId && req.user?.role !== 'admin') {
+        return res.status(403).json({ success: false, message: '无权查看此交易' });
+      }
+
+      return res.json({
+        success: true,
+        data: transaction
+      });
+    }
+
     const transaction = await Transaction.findById(req.params.id)
       .populate('homeownerId', 'username avatar nickname phone')
       .populate('designerId', 'username avatar nickname phone serviceAreas statistics')

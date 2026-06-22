@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import { isDbConnected } from '../config/database';
+import { findMockUserById } from '../utils/mockData';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -25,8 +27,22 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as jwt.JwtPayload;
-    const user = await User.findById(decoded.id).select('-password');
-    
+    const uid = decoded.id;
+
+    let user: any = null;
+
+    // 1. 优先查真实DB
+    if (isDbConnected()) {
+      try {
+        user = await User.findById(uid).select('-password');
+      } catch (_) { /* DB查询失败，fallback到mock */ }
+    }
+
+    // 2. DB不可用或未找到，查mock用户
+    if (!user) {
+      user = findMockUserById(String(uid));
+    }
+
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -35,7 +51,7 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
     }
 
     req.user = {
-      _id: user._id.toString(),
+      _id: String(user._id),
       role: user.role
     };
 

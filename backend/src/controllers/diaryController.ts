@@ -253,6 +253,13 @@ export const getDiaries = async (req: AuthRequest, res: Response) => {
 
 export const getDiaryById = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const id = req.params.id;
+      const diary = MOCK_DIARIES.find(d => d._id === id);
+      if (!diary) return res.status(404).json({ success: false, message: '日记不存在' });
+      return res.json({ success: true, data: diary });
+    }
+
     const diary = await Diary.findById(req.params.id)
       .populate('userId', 'username avatar nickname bio statistics')
       .populate('matchedDesigners', 'username avatar nickname serviceAreas statistics portfolio');
@@ -451,6 +458,21 @@ export const addBudgetItem = async (req: AuthRequest, res: Response) => {
 
 export const getMyDiaries = async (req: AuthRequest, res: Response) => {
   try {
+    if (!isDbConnected()) {
+      const userId = req.user?._id;
+      const userDiaries = MOCK_DIARIES.filter(d => {
+        const diaryUserId = d.userId;
+        if (typeof diaryUserId === 'string') {
+          return diaryUserId === userId;
+        }
+        return diaryUserId?._id === userId;
+      });
+      return res.json({
+        success: true,
+        data: userDiaries.length > 0 ? userDiaries : MOCK_DIARIES
+      });
+    }
+
     const diaries = await Diary.find({ userId: req.user?._id })
       .sort({ createdAt: -1 })
       .populate('userId', 'username avatar nickname');
