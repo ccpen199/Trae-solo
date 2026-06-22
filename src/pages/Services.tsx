@@ -21,6 +21,8 @@ import {
   Plane,
   Droplets,
   Zap,
+  MapPin,
+  Flame,
   Wifi,
   Phone as PhoneIcon,
   Mail,

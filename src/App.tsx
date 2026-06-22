@@ -13,6 +13,7 @@ import Services from "@/pages/Services";
 import AdminContent from "@/pages/AdminContent";
 import AdminAnalytics from "@/pages/AdminAnalytics";
 import ElderlySettings from "@/pages/ElderlySettings";
+import ServiceDetail from "@/pages/ServiceDetail";
 import { initAccessibility } from "@/store";
 
 export default function App() {

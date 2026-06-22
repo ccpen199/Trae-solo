@@ -28,11 +28,12 @@ const navItems = [
   { path: '/workorders', label: '工单中心', icon: ClipboardList },
   { path: '/map', label: '服务地图', icon: Map },
   { path: '/emergency', label: '应急预警', icon: Phone },
+  { path: '/admin/analytics', label: '内容中台', icon: BarChart3 },
 ];
 
 const adminItems = [
-  { path: '/admin/content', label: '内容管理', icon: Newspaper },
-  { path: '/admin/analytics', label: '数据统计', icon: BarChart3 },
+  { path: '/admin/content', label: '稿件管理与打标', icon: Newspaper },
+  { path: '/admin/analytics', label: '舆情与热点聚类', icon: BarChart3 },
   { path: '/elderly-settings', label: '适老设置', icon: Sparkles },
 ];
 
