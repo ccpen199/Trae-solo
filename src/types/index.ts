@@ -136,6 +136,17 @@ export type SearchRecord = {
   category?: ItemCategory
 }
 
+export type ComplaintStatus = 'pending' | 'processing' | 'resolved' | 'reviewed'
+
+export type DisposalRecord = {
+  id: string
+  date: string
+  action: string
+  operator: string
+  department: string
+  content: string
+}
+
 export type ComplaintPoint = {
   id: string
   keyword: string
@@ -143,6 +154,15 @@ export type ComplaintPoint = {
   trend: number
   relatedGuideIds: string[]
   description: string
+  status: ComplaintStatus
+  progress: number
+  responsibleDept: string
+  responsiblePerson: string
+  disposalDeadline: string
+  disposalConclusion?: string
+  disposalRecords: DisposalRecord[]
+  reviewRecords: DisposalRecord[]
+  relatedSuggestionId?: string
 }
 
 export type OptimizationSuggestion = {

@@ -2,7 +2,8 @@ import React, { useMemo, useState } from 'react'
 import {
   BarChart3, TrendingUp, AlertTriangle, Lightbulb, Users, Search as SearchIcon,
   FileText, ChevronRight, AlertCircle, CheckCircle2, Clock, Zap, Eye,
-  Filter, Calendar, Download, RefreshCw, X
+  Filter, Calendar, Download, RefreshCw, X, Building2, User, Target,
+  MessageSquare, CheckCircle, ChevronDown, ChevronUp, ClipboardCheck
 } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -26,6 +27,7 @@ export default function AnalyticsDashboard() {
   const [selectedSearchTerm, setSelectedSearchTerm] = useState<string | null>(null)
   const [acceptedSuggestions, setAcceptedSuggestions] = useState<Set<string>>(new Set())
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [expandedComplaints, setExpandedComplaints] = useState<Set<string>>(new Set())
 
   const navigate = useNavigate()
   const { filteredGuides, guides } = useApp()
@@ -625,79 +627,294 @@ export default function AnalyticsDashboard() {
 
       {activeTab === 'complaints' && (
         <div className="space-y-4">
-          <div className="bg-red-50 border border-red-100 rounded-xl p-4 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
-            <div className="text-sm text-red-800">
-              <p className="font-medium">共检测到 {complaintPoints.length} 个办事堵点</p>
-              <p className="text-red-700 mt-0.5">基于用户投诉、搜索失败、客服反馈等多渠道数据综合识别，建议优先处理高增长趋势问题</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="card p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-gray-900">{complaintPoints.length}</p>
+                  <p className="text-xs text-gray-500">堵点总数</p>
+                </div>
+              </div>
+            </div>
+            <div className="card p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-orange-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-gray-900">{complaintPoints.filter(c => c.status === 'processing').length}</p>
+                  <p className="text-xs text-gray-500">处理中</p>
+                </div>
+              </div>
+            </div>
+            <div className="card p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-gray-900">{complaintPoints.filter(c => c.status === 'resolved' || c.status === 'reviewed').length}</p>
+                  <p className="text-xs text-gray-500">已解决</p>
+                </div>
+              </div>
+            </div>
+            <div className="card p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                  <ClipboardCheck className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-gray-900">{Math.round(complaintPoints.filter(c => c.status === 'resolved' || c.status === 'reviewed').length / complaintPoints.length * 100)}%</p>
+                  <p className="text-xs text-gray-500">处置率</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="space-y-4">
             {complaintPoints.map((point, idx) => {
               const relatedGuides = guides.filter(g => point.relatedGuideIds.includes(g.id))
+              const relatedSuggestion = optimizationSuggestions.find(s => s.id === point.relatedSuggestionId)
               const severity = point.trend > 50 ? 'critical' : point.trend > 20 ? 'high' : 'medium'
+              const expanded = expandedComplaints.has(point.id)
+
+              const toggleExpanded = (id: string) => {
+                setExpandedComplaints(prev => {
+                  const next = new Set(prev)
+                  if (next.has(id)) {
+                    next.delete(id)
+                  } else {
+                    next.add(id)
+                  }
+                  return next
+                })
+              }
+
+              const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
+                pending: { label: '待处理', color: 'text-gray-600', bg: 'bg-gray-100' },
+                processing: { label: '处理中', color: 'text-orange-600', bg: 'bg-orange-100' },
+                resolved: { label: '已解决', color: 'text-green-600', bg: 'bg-green-100' },
+                reviewed: { label: '已复查', color: 'text-blue-600', bg: 'bg-blue-100' },
+              }
+              const status = statusConfig[point.status] || statusConfig.pending
+
               return (
-                <div key={point.id} className={`card p-5 border-l-4 ${
-                  severity === 'critical' ? 'border-l-red-600' : severity === 'high' ? 'border-l-red-400' : 'border-l-orange-400'
+                <div key={point.id} className={`card overflow-hidden ${
+                  point.status === 'reviewed' ? 'border-blue-200' :
+                  point.status === 'resolved' ? 'border-green-200' : ''
                 }`}>
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <div className="flex items-center gap-3">
-                      <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        severity === 'critical' ? 'bg-red-100 text-red-600' :
-                        severity === 'high' ? 'bg-orange-100 text-orange-600' :
-                        'bg-yellow-100 text-yellow-600'
-                      }`}>
-                        {idx + 1}
-                      </span>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">{point.keyword}</h4>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className={`text-xs font-bold ${
-                            severity === 'critical' ? 'text-red-600' :
-                            severity === 'high' ? 'text-orange-500' :
-                            'text-yellow-600'
-                          }`}>
-                            ↑ {point.trend}%
-                          </span>
-                          <span className="text-xs text-gray-400">周环比</span>
-                          <span className="text-xs text-gray-400">•</span>
-                          <span className="text-xs text-gray-500">{point.count} 次反馈</span>
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div className="flex items-start gap-3">
+                        <span className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                          severity === 'critical' ? 'bg-red-100 text-red-600' :
+                          severity === 'high' ? 'bg-orange-100 text-orange-600' :
+                          'bg-yellow-100 text-yellow-600'
+                        }`}>
+                          {idx + 1}
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h4 className="font-semibold text-gray-900 text-lg">{point.keyword}</h4>
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${status.bg} ${status.color}`}>
+                              {status.label}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                            <span className={`text-sm font-medium ${
+                              severity === 'critical' ? 'text-red-600' :
+                              severity === 'high' ? 'text-orange-500' :
+                              'text-yellow-600'
+                            }`}>
+                              {point.trend > 0 ? '↑' : '↓'} {Math.abs(point.trend)}%
+                            </span>
+                            <span className="text-sm text-gray-500">周环比</span>
+                            <span className="text-gray-300">•</span>
+                            <span className="text-sm text-gray-500">{point.count} 次反馈</span>
+                          </div>
                         </div>
                       </div>
+                      <button
+                        onClick={() => toggleExpanded(point.id)}
+                        className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors shrink-0"
+                      >
+                        {expanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                      </button>
                     </div>
+
+                    <p className="text-gray-600 text-sm mb-4">{point.description}</p>
+
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between text-sm mb-1.5">
+                        <span className="text-gray-600 flex items-center gap-1">
+                          <Target className="w-4 h-4" />
+                          处置进度
+                        </span>
+                        <span className="font-medium text-gray-900">{point.progress}%</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${
+                            point.status === 'reviewed' ? 'bg-blue-500' :
+                            point.status === 'resolved' ? 'bg-green-500' :
+                            point.status === 'processing' ? 'bg-orange-500' :
+                            'bg-gray-400'
+                          }`}
+                          style={{ width: `${point.progress}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                          <Building2 className="w-3.5 h-3.5" />
+                          责任部门
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">{point.responsibleDept}</p>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                          <User className="w-3.5 h-3.5" />
+                          责任人
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">{point.responsiblePerson}</p>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                          <Calendar className="w-3.5 h-3.5" />
+                          完成时限
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">{point.disposalDeadline}</p>
+                      </div>
+                    </div>
+
+                    {point.disposalConclusion && (
+                      <div className="bg-green-50 border border-green-100 rounded-lg p-4 mb-4">
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
+                          <div>
+                            <p className="font-medium text-green-800 text-sm mb-1">处置结论</p>
+                            <p className="text-sm text-green-700">{point.disposalConclusion}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {relatedSuggestion && (
+                      <div className="bg-yellow-50 border border-yellow-100 rounded-lg p-4 mb-4">
+                        <div className="flex items-start gap-2">
+                          <Lightbulb className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-yellow-800 text-sm mb-1">关联优化方案</p>
+                            <p className="text-sm text-yellow-700 line-clamp-2">{relatedSuggestion.title}</p>
+                            <button
+                              onClick={() => setActiveTab('suggestions')}
+                              className="text-xs text-yellow-700 hover:text-yellow-800 mt-1.5 flex items-center gap-0.5"
+                            >
+                              查看详情 <ChevronRight className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  <p className="text-gray-600 text-sm mb-4">{point.description}</p>
+                  {expanded && (
+                    <div className="border-t border-gray-100 bg-gray-50/50">
+                      {point.disposalRecords.length > 0 && (
+                        <div className="p-5 border-b border-gray-100">
+                          <h5 className="font-medium text-gray-900 mb-4 flex items-center gap-2">
+                            <MessageSquare className="w-4 h-4 text-primary-600" />
+                            处置时间轴
+                          </h5>
+                          <div className="space-y-4">
+                            {point.disposalRecords.map((record, i) => (
+                              <div key={record.id} className="flex gap-3">
+                                <div className="flex flex-col items-center">
+                                  <div className={`w-3 h-3 rounded-full ${
+                                    i === 0 ? 'bg-primary-500' : 'bg-gray-300'
+                                  }`} />
+                                  {i < point.disposalRecords.length - 1 && (
+                                    <div className="w-0.5 flex-1 bg-gray-200 mt-1" />
+                                  )}
+                                </div>
+                                <div className="flex-1 pb-4">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="font-medium text-gray-900 text-sm">{record.action}</span>
+                                    <span className="text-xs text-gray-400">{record.date}</span>
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-0.5">
+                                    {record.department} · {record.operator}
+                                  </p>
+                                  <p className="text-sm text-gray-600 mt-1">{record.content}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
-                  <div className="border-t border-gray-50 pt-4">
-                    <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
-                      <FileText className="w-3.5 h-3.5" />
-                      关联办事指南 ({relatedGuides.length})
-                    </p>
-                    <div className="space-y-2">
-                      {relatedGuides.map(g => (
-                        <button
-                          key={g.id}
-                          onClick={() => handleJumpToGuide(g.id)}
-                          className="w-full flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
-                        >
-                          <span className="text-sm text-gray-700 truncate">{g.title}</span>
-                          <ChevronRight className="w-4 h-4 text-gray-400 shrink-0 ml-2" />
-                        </button>
-                      ))}
-                      {relatedGuides.length === 0 && (
-                        <p className="text-sm text-gray-400 text-center py-2">暂无关联指南</p>
+                      {point.reviewRecords.length > 0 && (
+                        <div className="p-5 border-b border-gray-100">
+                          <h5 className="font-medium text-gray-900 mb-4 flex items-center gap-2">
+                            <ClipboardCheck className="w-4 h-4 text-blue-600" />
+                            复查记录
+                          </h5>
+                          <div className="space-y-3">
+                            {point.reviewRecords.map((record) => (
+                              <div key={record.id} className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="font-medium text-blue-800 text-sm">{record.action}</span>
+                                  <span className="text-xs text-blue-400">{record.date}</span>
+                                </div>
+                                <p className="text-xs text-blue-600">
+                                  {record.department} · {record.operator}
+                                </p>
+                                <p className="text-sm text-blue-700 mt-1">{record.content}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {relatedGuides.length > 0 && (
+                        <div className="p-5">
+                          <h5 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                            <FileText className="w-4 h-4 text-gray-500" />
+                            关联办事指南 ({relatedGuides.length})
+                          </h5>
+                          <div className="space-y-2">
+                            {relatedGuides.map(g => (
+                              <button
+                                key={g.id}
+                                onClick={() => handleJumpToGuide(g.id)}
+                                className="w-full flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 hover:bg-gray-50 hover:border-gray-200 transition-colors text-left"
+                              >
+                                <span className="text-sm text-gray-700 truncate">{g.title}</span>
+                                <ChevronRight className="w-4 h-4 text-gray-400 shrink-0 ml-2" />
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       )}
                     </div>
-                  </div>
+                  )}
 
-                  <div className="flex gap-2 mt-4">
-                    <button className="flex-1 btn-primary text-sm py-2">
-                      <Lightbulb className="w-4 h-4 mr-1.5" />
-                      查看优化方案
-                    </button>
-                  </div>
+                  {!expanded && (
+                    <div className="px-5 pb-5">
+                      <button
+                        onClick={() => toggleExpanded(point.id)}
+                        className="w-full text-sm text-primary-600 hover:text-primary-700 flex items-center justify-center gap-1 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                      >
+                        展开详情
+                        <ChevronDown className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               )
             })}
