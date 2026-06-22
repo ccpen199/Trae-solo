@@ -12,7 +12,7 @@ interface BaoliaoStoreState {
 }
 
 interface BaoliaoStoreActions {
-  fetchBaoliaos: (params?: { category?: string; district?: string; sort?: string }) => Promise<void>;
+  fetchBaoliaos: (params?: { category?: string; district?: string; sort?: string; status?: string }) => Promise<void>;
   fetchBaoliaoById: (id: string) => Promise<Baoliao | null>;
   publishBaoliao: (data: Partial<Baoliao>) => Promise<Baoliao>;
   likeBaoliao: (id: string) => Promise<boolean>;

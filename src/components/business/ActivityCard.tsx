@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Users, Clock } from 'lucide-react';
+import { Calendar, MapPin, Users, Clock, Flower2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Activity } from '@/types';
 import Button from '@/components/common/Button';
@@ -111,9 +111,15 @@ export default function ActivityCard({ activity, className, onRegister }: Activi
         </div>
 
         <div className="flex items-center justify-between">
-          <p className="text-sm text-neutral-500 line-clamp-1 flex-1 mr-4">
-            {activity.description}
-          </p>
+          <div className="flex-1 mr-4">
+            <p className="text-sm text-neutral-500 line-clamp-1 mb-1">
+              {activity.description}
+            </p>
+            <div className="flex items-center gap-1 text-xs text-chaojing-600">
+              <Flower2 className="w-3 h-3" />
+              <span>参与得 <span className="font-semibold">+30</span> 小红花</span>
+            </div>
+          </div>
           <Button
             variant={activity.isRegistered ? 'outline' : activity.status === 'ended' || activity.status === 'cancelled' ? 'ghost' : 'primary'}
             size="sm"

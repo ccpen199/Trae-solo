@@ -91,7 +91,7 @@ export default function BusService() {
   const navigate = useNavigate();
   const { busSchedules, fetchBusSchedules } = useServiceStore();
   const [departure, setDeparture] = useState('惠州汽车总站');
-  const [destination, setDestination] = useState('');
+  const [destination, setDestination] = useState('广州天河客运站');
   const [departureDate, setDepartureDate] = useState(new Date().toISOString().split('T')[0]);
   const [timeFilter, setTimeFilter] = useState('all');
   const [priceFilter, setPriceFilter] = useState('all');
@@ -124,6 +124,19 @@ export default function BusService() {
     e.preventDefault();
     loadSchedules();
   };
+
+  const activeFilters = [];
+  if (timeFilter !== 'all') {
+    const label = timeFilters.find(f => f.value === timeFilter)?.label;
+    activeFilters.push({ key: 'time', label: label || '' });
+  }
+  if (priceFilter !== 'all') {
+    const label = priceFilters.find(f => f.value === priceFilter)?.label;
+    activeFilters.push({ key: 'price', label: label || '' });
+  }
+  if (busTypeFilter !== 'all') {
+    activeFilters.push({ key: 'busType', label: busTypeFilter });
+  }
 
   const filteredSchedules = useMemo(() => {
     return busSchedules.filter(schedule => {
@@ -377,13 +390,26 @@ export default function BusService() {
           initial="hidden"
           animate="visible"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <h2 className="text-lg font-bold text-neutral-800">
               {destination ? `${departure} → ${destination}` : '全部班次'}
               <span className="text-sm font-normal text-neutral-500 ml-2">
-                {getDateDisplay()} · 共 {filteredSchedules.length} 班
+                {getDateDisplay()} · 共 <span className="font-semibold text-westlake-600">{filteredSchedules.length}</span> 班
               </span>
             </h2>
+            {activeFilters.length > 0 && (
+              <div className="flex items-center gap-2 flex-wrap">
+                {activeFilters.map(filter => (
+                  <Tag key={filter.key} size="sm" color="westlake" closable onClose={() => {
+                    if (filter.key === 'time') setTimeFilter('all');
+                    if (filter.key === 'price') setPriceFilter('all');
+                    if (filter.key === 'busType') setBusTypeFilter('all');
+                  }}>
+                    {filter.label}
+                  </Tag>
+                ))}
+              </div>
+            )}
           </div>
 
           {loading ? (

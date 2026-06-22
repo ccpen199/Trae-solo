@@ -30,6 +30,13 @@ export default function Header({ className }: HeaderProps) {
 
   const hasNotification = true;
 
+  const visibleNavItems = navItems.filter(item => {
+    if (item.path === '/admin') {
+      return user?.role === 'editor' || user?.role === 'government';
+    }
+    return true;
+  });
+
   const handleLogoClick = () => {
     navigate('/');
   };
@@ -66,7 +73,7 @@ export default function Header({ className }: HeaderProps) {
       </motion.div>
 
       <nav className="hidden md:flex items-center gap-1">
-        {navItems.map((item) => (
+        {visibleNavItems.map((item) => (
           <motion.div
             key={item.path}
             whileHover={{ y: -1 }}
@@ -220,7 +227,7 @@ export default function Header({ className }: HeaderProps) {
               />
             </form>
 
-            {navItems.map((item, index) => (
+            {visibleNavItems.map((item, index) => (
               <motion.div
                 key={item.path}
                 initial={{ x: -20, opacity: 0 }}

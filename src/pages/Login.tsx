@@ -98,9 +98,30 @@ export default function Login() {
     }
   };
 
+  const handleQuickLogin = async (rolePhone: string) => {
+    setPhone(rolePhone);
+    setCode('123456');
+    setLoading(true);
+    try {
+      const success = await login(rolePhone, '123456');
+      if (success) {
+        navigate(from, { replace: true });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleThirdPartyLogin = (platform: string) => {
     alert(`${platform}登录功能开发中，请使用手机号登录`);
   };
+
+  const testAccounts = [
+    { phone: '13800138000', label: '普通用户', desc: '体验发帖/活动/积分' },
+    { phone: '13900139000', label: '编辑审核', desc: '体验爆料审核后台' },
+    { phone: '13700137000', label: '政务用户', desc: '体验舆情热力图' },
+    { phone: '13600136000', label: '圈主用户', desc: '体验圈子活动管理' },
+  ];
 
   return (
     <motion.div
@@ -319,7 +340,43 @@ export default function Login() {
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.6 }}
+            className="mt-8"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-neutral-200" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-neutral-50 text-neutral-500">体验账号快捷登录</span>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {testAccounts.map((account, index) => (
+                <motion.button
+                  key={account.phone}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.65 + index * 0.05 }}
+                  onClick={() => handleQuickLogin(account.phone)}
+                  className="p-3 bg-white border border-neutral-200 rounded-xl hover:border-westlake-300 hover:bg-westlake-50 transition-all text-left group"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <p className="font-medium text-neutral-800 text-sm group-hover:text-westlake-600 transition-colors">
+                    {account.label}
+                  </p>
+                  <p className="text-xs text-neutral-500 mt-1">{account.desc}</p>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.8 }}
             className="mt-8"
           >
             <div className="relative">

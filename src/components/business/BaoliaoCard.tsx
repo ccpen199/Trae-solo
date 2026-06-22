@@ -10,6 +10,7 @@ interface BaoliaoCardProps {
   baoliao: Baoliao;
   className?: string;
   onLike?: (id: string) => void;
+  showStatus?: boolean;
 }
 
 const categoryColors: Record<string, 'westlake' | 'honghua' | 'chaojing' | 'neutral'> = {
@@ -27,7 +28,7 @@ const sentimentColors: Record<string, string> = {
   negative: 'text-red-500',
 };
 
-export default function BaoliaoCard({ baoliao, className, onLike }: BaoliaoCardProps) {
+export default function BaoliaoCard({ baoliao, className, onLike, showStatus = false }: BaoliaoCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -51,6 +52,14 @@ export default function BaoliaoCard({ baoliao, className, onLike }: BaoliaoCardP
     if (minutes > 0) return `${minutes}分钟前`;
     return '刚刚';
   };
+
+  const statusConfig: Record<string, { label: string; color: string }> = {
+    pending: { label: '审核中', color: 'bg-chaojing-500' },
+    approved: { label: '已通过', color: 'bg-honghua-500' },
+    rejected: { label: '未通过', color: 'bg-red-500' },
+  };
+
+  const statusInfo = statusConfig[baoliao.status];
 
   return (
     <motion.article
@@ -78,6 +87,14 @@ export default function BaoliaoCard({ baoliao, className, onLike }: BaoliaoCardP
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-300 flex items-center justify-center">
               <span className="text-neutral-400 text-xs">暂无图片</span>
+            </div>
+          )}
+          {showStatus && statusInfo && (
+            <div className={cn(
+              'absolute top-1.5 left-1.5 px-2 py-0.5 rounded text-xs font-medium text-white shadow-sm',
+              statusInfo.color
+            )}>
+              {statusInfo.label}
             </div>
           )}
           {baoliao.images.length > 1 && (

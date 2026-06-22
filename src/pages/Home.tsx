@@ -391,7 +391,7 @@ export default function Home() {
             </motion.h2>
             <motion.button
               variants={fadeInUp}
-              onClick={() => navigate('/activities')}
+              onClick={() => navigate('/circles')}
               className="flex items-center gap-1 text-sm text-neutral-500 hover:text-westlake-600 transition-colors"
             >
               更多活动

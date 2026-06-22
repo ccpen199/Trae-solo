@@ -28,7 +28,7 @@ const sizeClasses: Record<TagSize, string> = {
 };
 
 const Tag = forwardRef<HTMLSpanElement, TagProps>(
-  ({ className, color = 'neutral', size = 'md', closable = false, onClose, onDrag, children, ...props }, ref) => {
+  ({ className, color = 'neutral', size = 'md', closable = false, onClose, children, ...props }, ref) => {
     return (
       <motion.span
         ref={ref}
@@ -42,7 +42,7 @@ const Tag = forwardRef<HTMLSpanElement, TagProps>(
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.2 }}
-        {...props}
+        {...props as any}
       >
         {children}
         {closable && (

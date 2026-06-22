@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, TrendingUp, Clock, MapPin } from 'lucide-react';
+import { Plus, TrendingUp, Clock, MapPin, Eye, CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useBaoliaoStore } from '@/stores/useBaoliaoStore';
 import { useUserStore } from '@/stores/useUserStore';
@@ -38,25 +38,34 @@ const sortOptions = [
   { value: 'hot', label: '最热' },
 ];
 
+const statusTabs = [
+  { value: 'all', label: '公开列表', icon: Eye },
+  { value: 'pending', label: '审核中', icon: Clock },
+  { value: 'mine', label: '我的爆料', icon: CheckCircle },
+];
+
 export default function BaoliaoList() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useUserStore();
-  const { baoliaos, loading, fetchBaoliaos, likeBaoliao } = useBaoliaoStore();
+  const { isLoggedIn, user } = useUserStore();
+  const { baoliaos, loading, fetchBaoliaos, likeBaoliao, pendingBaoliaos } = useBaoliaoStore();
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [sortBy, setSortBy] = useState('latest');
+  const [statusTab, setStatusTab] = useState('all');
   const [displayCount, setDisplayCount] = useState(5);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
 
   const loadData = useCallback(() => {
+    const status = statusTab === 'all' ? 'approved' : statusTab === 'pending' ? 'pending' : undefined;
     fetchBaoliaos({
       category: selectedCategory || undefined,
       district: selectedDistrict || undefined,
       sort: sortBy,
+      status: status,
     });
-  }, [selectedCategory, selectedDistrict, sortBy, fetchBaoliaos]);
+  }, [selectedCategory, selectedDistrict, sortBy, statusTab, fetchBaoliaos]);
 
   useEffect(() => {
     loadData();
@@ -102,7 +111,17 @@ export default function BaoliaoList() {
     navigate('/baoliao/publish');
   };
 
-  const displayedBaoliaos = baoliaos.slice(0, displayCount);
+  const allMyBaoliaos = user
+    ? [...baoliaos, ...pendingBaoliaos].filter(b => b.userId === user.id)
+    : [];
+
+  const displayList = statusTab === 'pending'
+    ? pendingBaoliaos.filter(b => !user || b.userId === user.id)
+    : statusTab === 'mine'
+    ? allMyBaoliaos
+    : baoliaos;
+
+  const displayedBaoliaos = displayList.slice(0, displayCount);
 
   return (
     <motion.div
@@ -113,6 +132,28 @@ export default function BaoliaoList() {
     >
       <div className="sticky top-0 z-40 bg-white border-b border-neutral-100 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-3">
+          <div className="flex items-center gap-2 mb-3 bg-neutral-100 rounded-full p-1">
+            {statusTabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = statusTab === tab.value;
+              return (
+                <button
+                  key={tab.value}
+                  onClick={() => setStatusTab(tab.value)}
+                  className={cn(
+                    'flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full text-sm font-medium transition-all duration-200',
+                    isActive
+                      ? 'bg-white text-westlake-600 shadow-sm'
+                      : 'text-neutral-500 hover:text-neutral-700'
+                  )}
+                >
+                  <Icon className="w-4 h-4" />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="flex items-center gap-3 mb-3">
             <MapPin className="w-4 h-4 text-westlake-600" />
             <Select
@@ -167,7 +208,55 @@ export default function BaoliaoList() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-4">
-        {loading && baoliaos.length === 0 ? (
+        {statusTab === 'pending' && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 p-4 bg-chaojing-50 border border-chaojing-200 rounded-xl flex items-start gap-3"
+          >
+            <Clock className="w-5 h-5 text-chaojing-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="font-medium text-chaojing-700 mb-1">审核说明</h3>
+              <p className="text-sm text-chaojing-600">
+                您发布的爆料正在等待编辑初审，通常1-2小时内完成审核。审核通过后将进入公共信息流，其他用户即可看到您的爆料，并获得 <span className="font-semibold">+20 小红花</span> 积分奖励。
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+        {statusTab === 'mine' && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 p-4 bg-westlake-50 border border-westlake-200 rounded-xl"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-medium text-westlake-700">我的爆料统计</h3>
+              <Button size="sm" variant="primary" leftIcon={<Plus className="w-4 h-4" />} onClick={handlePublish}>
+                发布爆料
+              </Button>
+            </div>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <p className="text-2xl font-bold text-westlake-600">{allMyBaoliaos.length}</p>
+                <p className="text-xs text-westlake-500">全部爆料</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-honghua-600">
+                  {allMyBaoliaos.filter(b => b.status === 'approved').length}
+                </p>
+                <p className="text-xs text-honghua-500">已通过</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-chaojing-600">
+                  {allMyBaoliaos.filter(b => b.status === 'pending').length}
+                </p>
+                <p className="text-xs text-chaojing-500">审核中</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+        {loading && displayList.length === 0 ? (
           <div className="space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="bg-white rounded-card p-4">
@@ -192,10 +281,10 @@ export default function BaoliaoList() {
               </div>
             ))}
           </div>
-        ) : baoliaos.length === 0 ? (
+        ) : displayedBaoliaos.length === 0 ? (
           <Empty
-            title="暂无爆料"
-            description="还没有相关爆料，快来发布第一条吧"
+            title={statusTab === 'pending' ? '暂无审核中爆料' : statusTab === 'mine' ? '暂无我的爆料' : '暂无爆料'}
+            description={statusTab === 'mine' ? '快去发布第一条爆料吧，审核通过+20小红花' : '还没有相关爆料，快来发布第一条吧'}
             action={{
               label: '发布爆料',
               onClick: handlePublish,
@@ -213,7 +302,7 @@ export default function BaoliaoList() {
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   layout
                 >
-                  <BaoliaoCard baoliao={baoliao} onLike={handleLike} />
+                  <BaoliaoCard baoliao={baoliao} onLike={handleLike} showStatus />
                 </motion.div>
               ))}
             </div>

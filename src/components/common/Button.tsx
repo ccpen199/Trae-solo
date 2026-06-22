@@ -48,7 +48,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       rightIcon,
       fullWidth,
       children,
-      onDrag,
       ...props
     },
     ref
@@ -66,7 +65,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         whileHover={!disabled && !loading ? { scale: 1.02 } : undefined}
         whileTap={!disabled && !loading ? { scale: 0.98 } : undefined}
-        {...props}
+        {...props as any}
       >
         {loading && <Loader2 className="w-4 h-4 animate-spin" />}
         {!loading && leftIcon}

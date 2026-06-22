@@ -30,7 +30,7 @@ const onlineSizeClasses: Record<AvatarSize, string> = {
 };
 
 const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-  ({ className, size = 'md', src, name, online = false, onClick, onDrag, ...props }, ref) => {
+  ({ className, size = 'md', src, name, online = false, onClick, ...props }, ref) => {
     const getInitials = (name: string) => {
       return name
         .split(' ')
@@ -66,7 +66,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
         onClick={onClick}
         whileHover={onClick ? { scale: 1.05 } : undefined}
         whileTap={onClick ? { scale: 0.95 } : undefined}
-        {...props}
+        {...props as any}
       >
         {src ? (
           <img
