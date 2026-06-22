@@ -3,7 +3,7 @@ import type { ApiResponse, CityCode, InsuranceType, CalculatorResult, Calculator
 import { cityRatePlans, cityPolicies } from '../shared/mockData';
 import { CITY_NAMES, INSURANCE_NAMES } from '../shared/types';
 
-export function sendResponse<T>(data: T, message = 'ok', code = 0): ApiResponse<T> {
+export function sendResponse<T>(data: T, message = 'ok', code = 200): ApiResponse<T> {
   return {
     code,
     message,

@@ -11,8 +11,11 @@ import financeRouter from './routes/finance';
 import adminRouter from './routes/admin';
 import dashboardRouter from './routes/dashboard';
 
+process.loadEnvFile?.();
+
 const app = express();
-const PORT = 4001;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.PORT || 4001);
 
 app.use(cors());
 app.use(express.json());
@@ -48,8 +51,8 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`API Server running at http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`API Server running at http://${HOST}:${PORT}`);
 });
 
 export default app;

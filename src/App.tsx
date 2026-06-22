@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import Login from './pages/Login';
@@ -17,6 +17,8 @@ import AdminMonitor from './pages/AdminMonitor';
 import AdminAudit from './pages/AdminAudit';
 import MainLayout from './components/MainLayout';
 import AuthLayout from './components/AuthLayout';
+import ProtectedRoute from './components/ProtectedRoute';
+import { useUserStore } from './store/userStore';
 
 const theme = {
   token: {
@@ -52,132 +54,49 @@ const theme = {
   },
 };
 
+function LoginPage() {
+  const { isLoggedIn } = useUserStore();
+  const location = useLocation();
+  const from = (location.state as any)?.from?.pathname || '/dashboard';
+  if (isLoggedIn) {
+    return <Navigate to={from} replace />;
+  }
+  return (
+    <AuthLayout>
+      <Login />
+    </AuthLayout>
+  );
+}
+
+function ProtectedPage({ children }: { children: React.ReactNode }) {
+  return (
+    <ProtectedRoute>
+      <MainLayout>{children}</MainLayout>
+    </ProtectedRoute>
+  );
+}
+
 function App() {
   return (
     <ConfigProvider locale={zhCN} theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route
-            path="/login"
-            element={
-              <AuthLayout>
-                <Login />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <MainLayout>
-                <Dashboard />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/auth"
-            element={
-              <MainLayout>
-                <AuthCenter />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/insurance"
-            element={
-              <MainLayout>
-                <InsurancePlan />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/calculator"
-            element={
-              <MainLayout>
-                <Calculator />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/transaction"
-            element={
-              <MainLayout>
-                <TransactionCenter />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/certificates"
-            element={
-              <MainLayout>
-                <Certificates />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/policy"
-            element={
-              <MainLayout>
-                <PolicyGraph />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/support"
-            element={
-              <MainLayout>
-                <SupportCenter />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/finance"
-            element={
-              <MainLayout>
-                <FinanceConsole />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <MainLayout>
-                <AdminDashboard />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <MainLayout>
-                <AdminDashboard />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/admin/policy"
-            element={
-              <MainLayout>
-                <AdminPolicy />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/admin/monitor"
-            element={
-              <MainLayout>
-                <AdminMonitor />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/admin/audit"
-            element={
-              <MainLayout>
-                <AdminAudit />
-              </MainLayout>
-            }
-          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={<ProtectedPage><Dashboard /></ProtectedPage>} />
+          <Route path="/auth" element={<ProtectedPage><AuthCenter /></ProtectedPage>} />
+          <Route path="/insurance" element={<ProtectedPage><InsurancePlan /></ProtectedPage>} />
+          <Route path="/calculator" element={<ProtectedPage><Calculator /></ProtectedPage>} />
+          <Route path="/transaction" element={<ProtectedPage><TransactionCenter /></ProtectedPage>} />
+          <Route path="/certificates" element={<ProtectedPage><Certificates /></ProtectedPage>} />
+          <Route path="/policy" element={<ProtectedPage><PolicyGraph /></ProtectedPage>} />
+          <Route path="/support" element={<ProtectedPage><SupportCenter /></ProtectedPage>} />
+          <Route path="/finance" element={<ProtectedPage><FinanceConsole /></ProtectedPage>} />
+          <Route path="/admin" element={<ProtectedPage><AdminDashboard /></ProtectedPage>} />
+          <Route path="/admin/dashboard" element={<ProtectedPage><AdminDashboard /></ProtectedPage>} />
+          <Route path="/admin/policy" element={<ProtectedPage><AdminPolicy /></ProtectedPage>} />
+          <Route path="/admin/monitor" element={<ProtectedPage><AdminMonitor /></ProtectedPage>} />
+          <Route path="/admin/audit" element={<ProtectedPage><AdminAudit /></ProtectedPage>} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>
