@@ -195,19 +195,22 @@ export default function InspirationPage() {
           {activeStyle && <span className="badge bg-primary-100 text-primary-700">筛选: {activeStyle}</span>}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {(data?.recommendations || data?.rawDiaries || []).slice(0, 12).filter((d: Diary) => !activeStyle || d.styleTags?.includes(activeStyle)).map((d: Diary) => {
+          {(data?.recommendations || data?.rawDiaries || []).slice(0, 12).filter((d: Diary) => {
+            if (!activeStyle) return true;
+            return d.styleTags?.some(s => s === activeStyle || s.includes(activeStyle) || activeStyle.includes(s));
+          }).map((d: Diary) => {
             const stageInfo = CONSTRUCTION_STAGE_LABELS[d.constructionStage];
             const author = typeof d.userId === 'string' ? { username: '用户', avatar: '', nickname: '' } : d.userId as any;
             return (
               <Link key={d._id} to={`/diaries/${d._id}`} className="card group hover:-translate-y-1 transition-all">
                 <div className="aspect-[4/3] bg-gray-100 overflow-hidden relative">
                   <img src={d.coverImage || `https://picsum.photos/seed/${d._id}/600/450`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color} text-[10px]`}>{stageInfo.label}</div>
+                  {stageInfo && <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color} text-[10px]`}>{stageInfo.label}</div>}
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">{d.title}</h3>
                   <div className="flex items-center justify-between mt-2 text-xs">
-                    <span className="text-gray-500">{HOUSE_TYPE_LABELS[d.houseType]} · {d.houseArea}㎡</span>
+                    <span className="text-gray-500">{HOUSE_TYPE_LABELS[d.houseType] || d.houseType} · {d.houseArea}㎡</span>
                     <span className="font-semibold text-primary-700">{formatCurrency(d.budget?.totalEstimated || 0)}</span>
                   </div>
                   <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">

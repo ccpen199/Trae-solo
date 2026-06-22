@@ -107,12 +107,12 @@ export default function DiariesPage() {
                 <Link key={diary._id} to={`/diaries/${diary._id}`} className="card group hover:-translate-y-1 transition-all">
                   <div className="aspect-video bg-gray-100 overflow-hidden relative">
                     <img src={diary.coverImage || `https://picsum.photos/seed/${diary._id}/600/400`} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                    <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color}`}>{stageInfo.label}</div>
+                    {stageInfo && <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color}`}>{stageInfo.label}</div>}
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-700">{diary.title}</h3>
                     <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                      <span>🏠 {HOUSE_TYPE_LABELS[diary.houseType]} · {diary.houseArea}㎡</span>
+                      <span>🏠 {HOUSE_TYPE_LABELS[diary.houseType] || diary.houseType} · {diary.houseArea}㎡</span>
                       {diary.address?.city && <span>📍 {diary.address.city}</span>}
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">

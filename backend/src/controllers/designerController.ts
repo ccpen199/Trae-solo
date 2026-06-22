@@ -6,6 +6,39 @@ import { AuthRequest } from '../middleware/authMiddleware';
 import { isDbConnected } from '../config/database';
 import { MOCK_DIARIES, MOCK_TRANSACTIONS, MOCK_REPORTS, MOCK_USERS, findMockUserById, getApprovedDesigners as getMockApprovedDesigners } from '../utils/mockData';
 
+const STYLE_SYNONYMS: Record<string, string[]> = {
+  '北欧': ['北欧风格'],
+  '北欧风格': ['北欧'],
+  '日式': ['日式极简'],
+  '日式极简': ['日式'],
+  '轻奢': ['轻奢风格'],
+  '轻奢风格': ['轻奢'],
+  '美式': ['美式风格'],
+  '美式风格': ['美式'],
+  '法式': ['法式风格'],
+  '法式风格': ['法式'],
+  '工业': ['工业风'],
+  '工业风': ['工业'],
+  '田园': ['田园风格'],
+  '田园风格': ['田园'],
+  '东南亚': ['东南亚风格'],
+  '东南亚风格': ['东南亚'],
+  '欧式': ['欧式古典'],
+  '欧式古典': ['欧式'],
+  '现代': ['现代简约'],
+  '现代简约': ['现代'],
+};
+
+const expandStyleQuery = (style: string | string[]): string[] => {
+  const base = Array.isArray(style) ? style : [style];
+  const expanded = new Set<string>();
+  base.forEach(s => {
+    expanded.add(s);
+    STYLE_SYNONYMS[s]?.forEach(syn => expanded.add(syn));
+  });
+  return Array.from(expanded);
+};
+
 const getMockDesignersList = (req: AuthRequest) => {
   const {
     page = 1,
@@ -25,10 +58,10 @@ const getMockDesignersList = (req: AuthRequest) => {
     filtered = filtered.filter(d => (d.statistics?.rating || 0) >= Number(minRating));
   }
   if (style) {
-    const styleArr = Array.isArray(style) ? style : [style];
+    const styleArr = expandStyleQuery(Array.isArray(style) ? style : [style]);
     filtered = filtered.filter(d => {
       const designerStyles = new Set(
-        d.portfolio?.flatMap((p: any) => p.style ? [p.style] : []) || []
+        d.portfolio?.flatMap((p: any) => p.style ? expandStyleQuery([p.style]) : []) || []
       );
       return styleArr.some((s: string) => designerStyles.has(s));
     });

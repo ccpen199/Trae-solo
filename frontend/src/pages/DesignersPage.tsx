@@ -59,7 +59,9 @@ export default function DesignersPage() {
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {designers.map(d => (
+            {designers.map(d => {
+              const cred = (d as any).credentials || d.qualifications;
+              return (
               <Link key={d._id} to={`/designers/${d._id}`} className="card p-5 hover:-translate-y-1 transition-all">
                 <div className="flex items-start space-x-4">
                   {d.avatar ? <img src={d.avatar} className="w-16 h-16 rounded-2xl object-cover" /> :
@@ -70,22 +72,40 @@ export default function DesignersPage() {
                       {d.designerStatus === 'approved' && <span className="badge bg-accent-50 text-accent-700 text-[10px]">✓认证</span>}
                     </div>
                     <p className="text-xs text-gray-500 mt-0.5">{d.serviceAreas?.slice(0, 3).join(' · ') || '全国服务'}</p>
+                    {(d as any).serviceRadius && <p className="text-xs text-gray-400 mt-0.5">服务半径: {(d as any).serviceRadius}km</p>}
                     <div className="flex items-center mt-2">
                       <span className="text-amber-500">★</span>
                       <span className="text-sm font-semibold text-gray-900 ml-1">{d.statistics?.rating || 4.8}</span>
-                      <span className="text-xs text-gray-400 ml-1">({d.statistics?.reviewCount || 0})</span>
+                      <span className="text-xs text-gray-400 ml-1">({d.statistics?.reviewCount || 0}条评价)</span>
                     </div>
                   </div>
                 </div>
                 <p className="mt-4 text-sm text-gray-600 line-clamp-2">{d.bio || '专业室内设计师，为您打造理想家居空间。'}</p>
-                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1">
-                    {(d.portfolio || []).slice(0, 2).map((p, i) => p.style ? <span key={i} className="badge bg-gray-100 text-gray-600">{p.style}</span> : null)}
+                {cred && (cred as any).certificationType && (
+                  <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                    <p className="text-xs font-semibold text-blue-700">📜 {(cred as any).certificationType}</p>
+                    {(cred as any).issuingAuthority && <p className="text-xs text-blue-500 mt-0.5">颁证机构: {(cred as any).issuingAuthority}</p>}
                   </div>
-                  <span className="text-xs text-gray-400">{d.statistics?.completedProjects || 0}个项目</span>
+                )}
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {(d.portfolio || []).slice(0, 3).map((p, i) => p.style ? <span key={i} className="badge bg-gray-100 text-gray-600">{p.style}</span> : null)}
+                    <span className="badge bg-primary-50 text-primary-700">{d.statistics?.completedProjects || 0}个项目</span>
+                  </div>
+                  {d.portfolio && d.portfolio.length > 0 && (
+                    <div className="space-y-2 mt-2">
+                      {d.portfolio.slice(0, 2).map((p, i) => (
+                        <div key={i} className="flex items-center text-xs text-gray-500">
+                          <span className="font-medium text-gray-700 truncate flex-1">{p.title}</span>
+                          {p.houseArea && <span className="ml-2 shrink-0">{p.houseArea}㎡</span>}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
 
           {pagination.totalPages > 1 && (

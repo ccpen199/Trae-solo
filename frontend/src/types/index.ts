@@ -38,6 +38,8 @@ export interface PortfolioItem {
   description: string;
   images: string[];
   style?: string;
+  houseType?: string;
+  houseArea?: number;
   budgetRange?: { min: number; max: number };
 }
 

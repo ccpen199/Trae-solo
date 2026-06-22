@@ -171,9 +171,9 @@ export default function HomePage() {
                     alt=""
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color}`}>
+                  {stageInfo && <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color}`}>
                     {stageInfo.label}
-                  </div>
+                  </div>}
                   <div className="absolute top-3 right-3 flex items-center space-x-1">
                     <span className="bg-black/50 text-white text-xs px-2 py-0.5 rounded-full backdrop-blur">
                       👁 {diary.views || 0}
@@ -185,7 +185,7 @@ export default function HomePage() {
                     {diary.title}
                   </h3>
                   <div className="flex items-center space-x-2 mt-2 text-xs text-gray-500">
-                    <span>🏠 {HOUSE_TYPE_LABELS[diary.houseType]} · {diary.houseArea}㎡</span>
+                    <span>🏠 {HOUSE_TYPE_LABELS[diary.houseType] || diary.houseType} · {diary.houseArea}㎡</span>
                   </div>
                   <div className="flex items-center justify-between mt-3 text-xs">
                     <div className="flex items-center space-x-1.5">

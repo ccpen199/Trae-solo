@@ -16,6 +16,39 @@ const STAGE_LABELS: Record<ConstructionStage, string> = {
   acceptance: '竣工验收'
 };
 
+const STYLE_SYNONYMS: Record<string, string[]> = {
+  '北欧': ['北欧风格'],
+  '北欧风格': ['北欧'],
+  '日式': ['日式极简'],
+  '日式极简': ['日式'],
+  '轻奢': ['轻奢风格'],
+  '轻奢风格': ['轻奢'],
+  '美式': ['美式风格'],
+  '美式风格': ['美式'],
+  '法式': ['法式风格'],
+  '法式风格': ['法式'],
+  '工业': ['工业风'],
+  '工业风': ['工业'],
+  '田园': ['田园风格'],
+  '田园风格': ['田园'],
+  '东南亚': ['东南亚风格'],
+  '东南亚风格': ['东南亚'],
+  '欧式': ['欧式古典'],
+  '欧式古典': ['欧式'],
+  '现代': ['现代简约'],
+  '现代简约': ['现代'],
+};
+
+const expandStyleQuery = (style: string | string[]): string[] => {
+  const base = Array.isArray(style) ? style : [style];
+  const expanded = new Set<string>();
+  base.forEach(s => {
+    expanded.add(s);
+    STYLE_SYNONYMS[s]?.forEach(syn => expanded.add(syn));
+  });
+  return Array.from(expanded);
+};
+
 const getMockDiariesList = (req: AuthRequest) => {
   const {
     page = 1,
@@ -38,8 +71,10 @@ const getMockDiariesList = (req: AuthRequest) => {
     filtered = filtered.filter(d => d.constructionStage === stage);
   }
   if (style) {
-    const styleArr = Array.isArray(style) ? style : [style];
-    filtered = filtered.filter(d => styleArr.some(s => d.styleTags?.includes(s)));
+    const styleArr = expandStyleQuery(Array.isArray(style) ? style : [style]);
+    filtered = filtered.filter(d =>
+      styleArr.some(s => d.styleTags?.includes(s))
+    );
   }
   if (material) {
     const materialArr = Array.isArray(material) ? material : [material];

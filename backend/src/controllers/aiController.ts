@@ -473,16 +473,9 @@ export const generateInspirationGraph = async (req: AuthRequest, res: Response) 
       });
 
       const recommendations = diaries
-        .slice(0, 12)
-        .map((d: any) => ({
-          id: d._id,
-          title: d.title,
-          coverImage: d.coverImage,
-          style: d.styleTags?.[0],
-          budget: d.budget?.totalEstimated,
-          area: d.houseArea,
-          likes: Array.isArray(d.likes) ? d.likes.length : (d.likesCount || 0)
-        }));
+        .slice()
+        .sort((a: any, b: any) => (b.views || 0) + (b.likesCount || 0) - ((a.views || 0) + (a.likesCount || 0)))
+        .slice(0, 12);
 
       return res.json({
         success: true,
