@@ -85,14 +85,6 @@ export default function Home() {
 
   const hotTemplates = templates.slice(0, 8);
 
-  const adaptedProducts: ProductCategory[] = products.map((p) => ({
-    ...p,
-    priceRange: {
-      min: p.priceRange[0],
-      max: p.priceRange[1],
-    },
-  }));
-
   const adaptedWorks: CommunityWork[] = communityWorks;
 
   const handleTemplateClick = (templateId: string) => {
@@ -262,9 +254,9 @@ export default function Home() {
               variants={containerVariants}
               className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
             >
-              {adaptedProducts.map((product) => (
+              {products.map((product) => (
                 <motion.div key={product.id} variants={itemVariants}>
-                  <Link to={`/templates/${product.id}`}>
+                  <Link to={`/products/${product.id}`}>
                     <div className="group flex flex-col items-center gap-3 rounded-xl bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-medium">
                       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-4xl transition-all duration-300 group-hover:bg-brand-100 group-hover:scale-110">
                         {product.icon}
@@ -273,7 +265,10 @@ export default function Home() {
                         {product.name}
                       </h3>
                       <p className="text-xs text-paper-500">
-                        起售 ¥{product.priceRange.min}
+                        {product.templateCount} 个模板
+                      </p>
+                      <p className="text-xs font-medium text-brand-600">
+                        ¥{product.priceRange.min}-{product.priceRange.max}
                       </p>
                     </div>
                   </Link>

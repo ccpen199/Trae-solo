@@ -105,7 +105,7 @@ export default function ProductDetailPage() {
   })
   .map((m) => ({
     name: m.name,
-    price: Math.round((product?.priceRange[0] || 39) * (m.priceMultiplier - 1) * 100),
+    price: Math.round((product?.priceRange.min || 39) * (m.priceMultiplier - 1) * 100),
     description: m.description,
     image: `https://picsum.photos/seed/${m.id}/200/150`,
   }));
@@ -204,7 +204,7 @@ export default function ProductDetailPage() {
     );
   }
 
-  const currentPrice = product.priceRange[0] + (materialOptions[selectedMaterial]?.price || 0) / 100;
+  const currentPrice = product.priceRange.min + (materialOptions[selectedMaterial]?.price || 0) / 100;
 
   const handleAddToCart = () => {
     const newItem = {
@@ -255,7 +255,7 @@ export default function ProductDetailPage() {
                   className="h-full w-full object-cover"
                 />
                 <button
-                  onClick={() => setCurrentImageIndex((prev) => (prev - 1 + detailImages.length) % detailImages.length}
+                  onClick={() => setCurrentImageIndex((prev) => (prev - 1 + detailImages.length) % detailImages.length)}
                   className="absolute left-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-paper-700 shadow-md transition-all hover:bg-white hover:text-brand-600"
                 >
                   <ChevronLeft className="h-5 w-5" />
@@ -513,6 +513,7 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             </div>
+          </div>
           </motion.div>
         </div>
 

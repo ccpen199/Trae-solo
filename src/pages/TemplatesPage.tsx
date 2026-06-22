@@ -1,17 +1,21 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Sparkles,
   Palette,
   Grid3X3,
   ChevronDown,
+  Layers,
+  Wand2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Pagination } from '@/components/ui/Pagination';
+import { Badge } from '@/components/ui/Badge';
 import SectionTitle from '@/components/common/SectionTitle';
 import TemplateCard from '@/components/product/TemplateCard';
 import { templates } from '@/mock/data/templates';
+import { products } from '@/mock/data/products';
 import { cn } from '@/lib/utils';
 
 const sceneTags = [
@@ -37,13 +41,19 @@ const styleCategories = [
 const ITEMS_PER_PAGE = 12;
 
 export default function TemplatesPage() {
+  const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const [selectedScene, setSelectedScene] = useState('all');
   const [selectedStyle, setSelectedStyle] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const product = products.find((p) => p.id === productId);
+  const showAllTemplates = !productId || productId === 'all' || !product;
+
   const filteredTemplates = useMemo(() => {
     return templates.filter((template) => {
+      const productMatch = showAllTemplates || template.productId === productId;
+
       const styleMatch =
         selectedStyle === 'all' || template.category === selectedStyle;
 
@@ -55,9 +65,9 @@ export default function TemplatesPage() {
           )
         );
 
-      return styleMatch && sceneMatch;
+      return productMatch && styleMatch && sceneMatch;
     });
-  }, [selectedScene, selectedStyle]);
+  }, [selectedScene, selectedStyle, productId, showAllTemplates]);
 
   const totalPages = Math.ceil(filteredTemplates.length / ITEMS_PER_PAGE);
   const paginatedTemplates = filteredTemplates.slice(
@@ -66,11 +76,11 @@ export default function TemplatesPage() {
   );
 
   const handleTemplateClick = (templateId: string) => {
-    navigate(`/templates/${templateId}`);
+    navigate(`/editor/${templateId}`);
   };
 
   const handleStartCreate = (templateId: string) => {
-    navigate(`/editor?template=${templateId}`);
+    navigate(`/editor/${templateId}`);
   };
 
   const handleSceneChange = (sceneId: string) => {
@@ -102,21 +112,81 @@ export default function TemplatesPage() {
     },
   };
 
+  const pageTitle = showAllTemplates ? '模板中心' : `${product?.name}模板`;
+  const pageSubtitle = showAllTemplates
+    ? '海量优质模板，一键套用，轻松制作专业作品'
+    : product?.description || '';
+
   return (
     <div className="min-h-screen bg-paper-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Product Info Card */}
+        {!showAllTemplates && product && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8"
+          >
+            <div className="rounded-2xl bg-gradient-brand p-6 md:p-8 text-white">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 text-4xl backdrop-blur-sm">
+                    {product.icon}
+                  </div>
+                  <div>
+                    <h1 className="font-display text-2xl font-bold md:text-3xl">
+                      {product.name}模板
+                    </h1>
+                    <p className="mt-1 text-white/80">
+                      {product.description}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex-1" />
+                <div className="flex items-center gap-6">
+                  <div className="text-center">
+                    <div className="flex items-center gap-1.5 text-2xl font-bold">
+                      <Layers className="h-6 w-6" />
+                      <span>{filteredTemplates.length}</span>
+                    </div>
+                    <p className="text-sm text-white/70">模板数量</p>
+                  </div>
+                  <div className="hidden h-10 w-px bg-white/20 md:block" />
+                  <div className="hidden md:block">
+                    <p className="mb-2 text-sm text-white/70">可编辑能力</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {product.editableFeatures.slice(0, 4).map((feature) => (
+                        <Badge
+                          key={feature}
+                          variant="secondary"
+                          className="bg-white/20 text-white hover:bg-white/30"
+                        >
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <SectionTitle
-            title="模板中心"
-            subtitle="海量优质模板，一键套用，轻松制作专业作品"
-          />
-        </motion.div>
+        {showAllTemplates && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8"
+          >
+            <SectionTitle
+              title={pageTitle}
+              subtitle={pageSubtitle}
+            />
+          </motion.div>
+        )}
 
         {/* Scene Tags Filter */}
         <motion.div

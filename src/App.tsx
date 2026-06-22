@@ -4,6 +4,7 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import Home from '@/pages/Home';
 import AIEnhancePage from '@/pages/AIEnhancePage';
 import ProductsPage from '@/pages/ProductsPage';
+import ProductDetailPage from '@/pages/ProductDetailPage';
 import TemplatesPage from '@/pages/TemplatesPage';
 import EditorPage from '@/pages/EditorPage';
 import CartPage from '@/pages/CartPage';
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/ai-enhance" element={<AIEnhancePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/templates/:productId" element={<TemplatesPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />

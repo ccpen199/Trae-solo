@@ -8,9 +8,12 @@ import {
   Grid3X3,
   List,
   Filter,
+  Layers,
+  Palette,
 } from 'lucide-react';
 import SectionTitle from '@/components/common/SectionTitle';
 import ProductCard from '@/components/product/ProductCard';
+import PriceTag from '@/components/common/PriceTag';
 import { products } from '@/mock/data/products';
 import { ProductCategory } from '@/types';
 import { cn } from '@/lib/utils';
@@ -24,20 +27,12 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState<SortType>('default');
   const [viewType, setViewType] = useState<ViewType>('grid');
 
-  const adaptedProducts: ProductCategory[] = products.map((p) => ({
-    ...p,
-    priceRange: {
-      min: p.priceRange[0],
-      max: p.priceRange[1],
-    },
-  }));
-
   const allCategories = [
     { id: 'all', name: '全部产品', icon: '📦' },
-    ...adaptedProducts.map((p) => ({ id: p.id, name: p.name, icon: p.icon })),
+    ...products.map((p) => ({ id: p.id, name: p.name, icon: p.icon })),
   ];
 
-  const filteredProducts = adaptedProducts.filter((p) =>
+  const filteredProducts = products.filter((p) =>
     selectedCategory === 'all' ? true : p.id === selectedCategory
   );
 
@@ -53,6 +48,10 @@ export default function ProductsPage() {
         return 0;
     }
   });
+
+  const handleProductClick = (productId: string) => {
+    navigate(`/products/${productId}`);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -116,9 +115,12 @@ export default function ProductsPage() {
                     <span className="font-medium">{category.name}</span>
                     {selectedCategory !== 'all' &&
                       category.id !== 'all' && (
-                        <span className="ml-auto text-xs text-paper-400">
+                        <span className={cn(
+                          'ml-auto text-xs',
+                          selectedCategory === category.id ? 'text-white/80' : 'text-paper-400'
+                        )}>
                           {
-                            adaptedProducts.find((p) => p.id === category.id)
+                            products.find((p) => p.id === category.id)
                               ?.monthlySales
                           }
                         </span>
@@ -237,16 +239,37 @@ export default function ProductsPage() {
                   {viewType === 'grid' ? (
                     <ProductCard
                       product={product}
-                      onClick={() => navigate(`/products/${product.id}`)}
+                      onClick={() => handleProductClick(product.id)}
                     />
                   ) : (
                     <div
-                      onClick={() => navigate(`/products/${product.id}`)}
-                      className="flex cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-medium"
+                      onClick={() => handleProductClick(product.id)}
+                      className="group flex cursor-pointer gap-6 rounded-xl bg-white p-4 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-medium"
                     >
-                      <div className="relative h-32 w-40 flex-shrink-0 overflow-hidden rounded-lg bg-paper-100">
-                        <div className="flex h-full w-full items-center justify-center text-5xl">
-                          {product.icon}
+                      <div className="relative h-36 w-48 flex-shrink-0 overflow-hidden rounded-lg bg-paper-100">
+                        <img
+                          src={product.coverImage}
+                          alt={product.name}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute left-2 top-2 flex gap-1.5">
+                          {product.tags.slice(0, 2).map((tag) => {
+                            const isHot = tag === '热销';
+                            const isNew = tag === '新品';
+                            return (
+                              <span
+                                key={tag}
+                                className={cn(
+                                  'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium text-white',
+                                  isHot && 'bg-brand-500',
+                                  isNew && 'bg-forest-500',
+                                  !isHot && !isNew && 'bg-paper-600/80'
+                                )}
+                              >
+                                {tag}
+                              </span>
+                            );
+                          })}
                         </div>
                       </div>
                       <div className="flex flex-1 flex-col justify-between">
@@ -254,30 +277,72 @@ export default function ProductsPage() {
                           <h3 className="font-display text-lg font-semibold text-paper-900">
                             {product.name}
                           </h3>
-                          <p className="mt-2 text-sm text-paper-500">
+                          <p className="mt-1.5 text-sm text-paper-500 line-clamp-2">
                             {product.description}
                           </p>
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {product.tags.slice(0, 3).map((tag) => (
+                          <div className="mt-3 flex items-center gap-4 text-xs text-paper-600">
+                            <span className="inline-flex items-center gap-1">
+                              <Layers className="h-3.5 w-3.5 text-brand-500" />
+                              {product.templateCount}+ 模板
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                              <Palette className="h-3.5 w-3.5 text-brand-500" />
+                              {product.materialOptions.length} 种材质
+                            </span>
+                          </div>
+                          <div className="mt-3 flex flex-wrap gap-1.5">
+                            {product.editableFeatures.slice(0, 4).map((feature) => (
                               <span
-                                key={tag}
-                                className="rounded-full bg-paper-100 px-2.5 py-0.5 text-xs text-paper-600"
+                                key={feature}
+                                className="inline-flex items-center rounded bg-paper-100 px-2 py-0.5 text-xs text-paper-600"
                               >
-                                {tag}
+                                {feature}
                               </span>
                             ))}
                           </div>
+                          <div className="mt-3 flex items-center gap-2">
+                            <span className="text-xs text-paper-500">材质：</span>
+                            <div className="flex gap-1.5">
+                              {product.materialOptions.slice(0, 4).map((material) => (
+                                <div
+                                  key={material.name}
+                                  className="h-6 w-6 overflow-hidden rounded-full border-2 border-white shadow-sm"
+                                  title={material.name}
+                                >
+                                  <img
+                                    src={material.image}
+                                    alt={material.name}
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                              {product.materialOptions.length > 4 && (
+                                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-paper-100 text-xs text-paper-500">
+                                  +{product.materialOptions.length - 4}
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         </div>
                         <div className="mt-4 flex items-center justify-between">
-                          <div className="text-brand-600">
-                            <span className="font-display text-2xl font-bold">
-                              ¥{product.priceRange.min}
-                            </span>
-                            <span className="text-sm text-paper-500"> 起</span>
+                          <div className="flex items-baseline gap-1">
+                            <PriceTag price={product.priceRange.min} size="lg" />
+                            <span className="text-sm text-paper-500">起</span>
                           </div>
-                          <div className="flex items-center gap-1 text-sm text-paper-500">
-                            <TrendingUp className="h-4 w-4" />
-                            <span>月销 {product.monthlySales.toLocaleString()}</span>
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1 text-sm text-paper-500">
+                              <TrendingUp className="h-4 w-4" />
+                              <span>月销 {product.monthlySales.toLocaleString()}</span>
+                            </div>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleProductClick(product.id);
+                              }}
+                              className="rounded-full bg-brand-500 px-5 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-brand-600 hover:shadow-md"
+                            >
+                              立即制作
+                            </button>
                           </div>
                         </div>
                       </div>
