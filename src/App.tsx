@@ -19,6 +19,7 @@ import MainLayout from './components/MainLayout';
 import AuthLayout from './components/AuthLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useUserStore } from './store/userStore';
+import type { UserRole } from 'shared/types';
 
 const theme = {
   token: {
@@ -55,11 +56,20 @@ const theme = {
 };
 
 function LoginPage() {
-  const { isLoggedIn } = useUserStore();
+  const { isLoggedIn, user } = useUserStore();
   const location = useLocation();
-  const from = (location.state as any)?.from?.pathname || '/dashboard';
-  if (isLoggedIn) {
-    return <Navigate to={from} replace />;
+  const from = (location.state as any)?.from?.pathname;
+
+  if (isLoggedIn && user) {
+    const ROLE_HOME_MAP: Record<UserRole, string> = {
+      PERSONAL: '/dashboard',
+      ENTERPRISE_HR: '/dashboard',
+      FINANCE: '/finance',
+      CS_AGENT: '/support',
+      ADMIN: '/admin/dashboard',
+    };
+    const target = from || ROLE_HOME_MAP[user.role] || '/dashboard';
+    return <Navigate to={target} replace />;
   }
   return (
     <AuthLayout>
@@ -68,13 +78,23 @@ function LoginPage() {
   );
 }
 
-function ProtectedPage({ children }: { children: React.ReactNode }) {
+function ProtectedPage({
+  children,
+  requireRoles,
+}: {
+  children: React.ReactNode;
+  requireRoles?: UserRole[];
+}) {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requireRoles={requireRoles}>
       <MainLayout>{children}</MainLayout>
     </ProtectedRoute>
   );
 }
+
+const ADMIN_ROLES: UserRole[] = ['ADMIN'];
+const FINANCE_ROLES: UserRole[] = ['FINANCE', 'ADMIN', 'ENTERPRISE_HR'];
+const HR_ROLES: UserRole[] = ['ENTERPRISE_HR', 'ADMIN', 'FINANCE', 'PERSONAL'];
 
 function App() {
   return (
@@ -83,20 +103,118 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<ProtectedPage><Dashboard /></ProtectedPage>} />
-          <Route path="/auth" element={<ProtectedPage><AuthCenter /></ProtectedPage>} />
-          <Route path="/insurance" element={<ProtectedPage><InsurancePlan /></ProtectedPage>} />
-          <Route path="/calculator" element={<ProtectedPage><Calculator /></ProtectedPage>} />
-          <Route path="/transaction" element={<ProtectedPage><TransactionCenter /></ProtectedPage>} />
-          <Route path="/certificates" element={<ProtectedPage><Certificates /></ProtectedPage>} />
-          <Route path="/policy" element={<ProtectedPage><PolicyGraph /></ProtectedPage>} />
-          <Route path="/support" element={<ProtectedPage><SupportCenter /></ProtectedPage>} />
-          <Route path="/finance" element={<ProtectedPage><FinanceConsole /></ProtectedPage>} />
-          <Route path="/admin" element={<ProtectedPage><AdminDashboard /></ProtectedPage>} />
-          <Route path="/admin/dashboard" element={<ProtectedPage><AdminDashboard /></ProtectedPage>} />
-          <Route path="/admin/policy" element={<ProtectedPage><AdminPolicy /></ProtectedPage>} />
-          <Route path="/admin/monitor" element={<ProtectedPage><AdminMonitor /></ProtectedPage>} />
-          <Route path="/admin/audit" element={<ProtectedPage><AdminAudit /></ProtectedPage>} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedPage>
+                <Dashboard />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/auth"
+            element={
+              <ProtectedPage>
+                <AuthCenter />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/insurance"
+            element={
+              <ProtectedPage requireRoles={HR_ROLES}>
+                <InsurancePlan />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/calculator"
+            element={
+              <ProtectedPage>
+                <Calculator />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/transaction"
+            element={
+              <ProtectedPage>
+                <TransactionCenter />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/certificates"
+            element={
+              <ProtectedPage>
+                <Certificates />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/policy"
+            element={
+              <ProtectedPage>
+                <PolicyGraph />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <ProtectedPage>
+                <SupportCenter />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/finance"
+            element={
+              <ProtectedPage requireRoles={FINANCE_ROLES}>
+                <FinanceConsole />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedPage requireRoles={ADMIN_ROLES}>
+                <AdminDashboard />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedPage requireRoles={ADMIN_ROLES}>
+                <AdminDashboard />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/admin/policy"
+            element={
+              <ProtectedPage requireRoles={ADMIN_ROLES}>
+                <AdminPolicy />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/admin/monitor"
+            element={
+              <ProtectedPage requireRoles={ADMIN_ROLES}>
+                <AdminMonitor />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/admin/audit"
+            element={
+              <ProtectedPage requireRoles={ADMIN_ROLES}>
+                <AdminAudit />
+              </ProtectedPage>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>

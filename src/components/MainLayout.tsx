@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useMemo } from 'react';
 import { Layout, Menu, Segmented, Avatar, Dropdown, Badge, Tag, message } from 'antd';
 import type { MenuProps } from 'antd';
 import {
@@ -49,80 +49,108 @@ function MainLayout({ children }: MainLayoutProps) {
   const { user, currentCity, switchCity, logout } = useUserStore();
   const [collapsed, setCollapsed] = useState(false);
 
-  const menuItems: MenuProps['items'] = [
-    {
-      key: '/dashboard',
-      icon: <LayoutDashboard size={18} />,
-      label: '工作台',
-    },
-    {
-      key: '/auth',
-      icon: <ShieldCheck size={18} />,
-      label: '认证中心',
-    },
-    {
-      key: '/insurance',
-      icon: <Shield size={18} />,
-      label: '参保方案',
-    },
-    {
+  const menuItems = useMemo<MenuProps['items']>(() => {
+    const role = user?.role || 'PERSONAL';
+    const isAdmin = role === 'ADMIN';
+    const isFinance = role === 'FINANCE' || isAdmin;
+    const isHR = role === 'ENTERPRISE_HR' || isFinance || isAdmin;
+    const isCS = role === 'CS_AGENT' || isAdmin;
+
+    const baseItems: MenuProps['items'] = [
+      {
+        key: '/dashboard',
+        icon: <LayoutDashboard size={18} />,
+        label: '工作台',
+      },
+      {
+        key: '/auth',
+        icon: <ShieldCheck size={18} />,
+        label: '认证中心',
+      },
+    ];
+
+    if (isHR || role === 'PERSONAL') {
+      baseItems.push({
+        key: '/insurance',
+        icon: <Shield size={18} />,
+        label: '参保方案',
+      });
+    }
+
+    baseItems.push({
       key: '/calculator',
       icon: <Calculator size={18} />,
       label: '社保计算器',
-    },
-    {
-      key: '/transaction',
-      icon: <ArrowLeftRight size={18} />,
-      label: '业务办理',
-    },
-    {
+    });
+
+    if (isHR || role === 'PERSONAL') {
+      baseItems.push({
+        key: '/transaction',
+        icon: <ArrowLeftRight size={18} />,
+        label: '业务办理',
+      });
+    }
+
+    baseItems.push({
       key: '/certificates',
       icon: <IdCard size={18} />,
       label: '凭证中心',
-    },
-    {
+    });
+
+    baseItems.push({
       key: '/policy',
       icon: <Network size={18} />,
       label: '政策图谱',
-    },
-    {
-      key: '/support',
-      icon: <Headphones size={18} />,
-      label: '客服中心',
-    },
-    {
-      key: '/finance',
-      icon: <DollarSign size={18} />,
-      label: '财务控制台',
-    },
-    {
-      key: '/admin',
-      icon: <Settings size={18} />,
-      label: '系统管理',
-      children: [
-        {
-          key: '/admin/dashboard',
-          icon: <LayoutDashboard size={16} />,
-          label: '管理概览',
-        },
-        {
-          key: '/admin/policy',
-          icon: <FileText size={16} />,
-          label: '政策管理',
-        },
-        {
-          key: '/admin/monitor',
-          icon: <Monitor size={16} />,
-          label: '系统监控',
-        },
-        {
-          key: '/admin/audit',
-          icon: <ClipboardList size={16} />,
-          label: '审计日志',
-        },
-      ],
-    },
-  ];
+    });
+
+    if (isCS || isHR || isAdmin) {
+      baseItems.push({
+        key: '/support',
+        icon: <Headphones size={18} />,
+        label: '客服中心',
+      });
+    }
+
+    if (isFinance) {
+      baseItems.push({
+        key: '/finance',
+        icon: <DollarSign size={18} />,
+        label: '财务控制台',
+      });
+    }
+
+    if (isAdmin) {
+      baseItems.push({
+        key: '/admin',
+        icon: <Settings size={18} />,
+        label: '系统管理',
+        children: [
+          {
+            key: '/admin/dashboard',
+            icon: <LayoutDashboard size={16} />,
+            label: '管理概览',
+          },
+          {
+            key: '/admin/policy',
+            icon: <FileText size={16} />,
+            label: '政策管理',
+          },
+          {
+            key: '/admin/monitor',
+            icon: <Monitor size={16} />,
+            label: '系统监控',
+          },
+          {
+            key: '/admin/audit',
+            icon: <ClipboardList size={16} />,
+            label: '审计日志',
+          },
+        ],
+      });
+    }
+
+    return baseItems;
+  }, [user?.role]);
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key);
