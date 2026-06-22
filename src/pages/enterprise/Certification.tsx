@@ -45,6 +45,9 @@ export default function Certification() {
         return c - 1;
       });
     }, 1000);
+    setTimeout(() => {
+      handleVerify();
+    }, 1200);
   };
 
   const handleVerify = () => {
