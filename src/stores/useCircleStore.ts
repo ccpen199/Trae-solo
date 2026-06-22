@@ -3,11 +3,21 @@ import type { Circle, Activity, User } from '../types';
 import { mockCircles } from '../data/mockCircles';
 import { mockActivities } from '../data/mockActivities';
 import { mockUsers } from '../data/mockUsers';
-import { getStorage } from '../utils/storage';
+import { getStorage, setStorage } from '../utils/storage';
 
 const getCurrentUser = (): User => {
   const stored = getStorage<{ user: User | null }>('user_store', { user: null });
   return stored.user || mockUsers[0];
+};
+
+const updateUserPoints = (amount: number): void => {
+  const stored = getStorage<{ user: User | null; token: string | null }>('user_store', { user: null, token: null });
+  if (!stored.user) return;
+  const updatedUser = {
+    ...stored.user,
+    points: stored.user.points + amount,
+  };
+  setStorage('user_store', { user: updatedUser, token: stored.token });
 };
 
 interface CircleStoreState {
@@ -202,6 +212,10 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
       return { activities, currentActivity };
     });
 
+    if (success) {
+      updateUserPoints(15);
+    }
+
     return success;
   },
 
@@ -236,6 +250,10 @@ export const useCircleStore = create<CircleStore>((set, get) => ({
 
       return { activities, currentActivity };
     });
+
+    if (success) {
+      updateUserPoints(-15);
+    }
 
     return success;
   },

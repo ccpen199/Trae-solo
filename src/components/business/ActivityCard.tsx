@@ -117,7 +117,7 @@ export default function ActivityCard({ activity, className, onRegister }: Activi
             </p>
             <div className="flex items-center gap-1 text-xs text-chaojing-600">
               <Flower2 className="w-3 h-3" />
-              <span>参与得 <span className="font-semibold">+30</span> 小红花</span>
+              <span>参与得 <span className="font-semibold">+15</span> 小红花</span>
             </div>
           </div>
           <Button

@@ -47,7 +47,7 @@ const statusTabs = [
 export default function BaoliaoList() {
   const navigate = useNavigate();
   const { isLoggedIn, user } = useUserStore();
-  const { baoliaos, loading, fetchBaoliaos, likeBaoliao, pendingBaoliaos } = useBaoliaoStore();
+  const { baoliaos, loading, fetchBaoliaos, likeBaoliao, pendingBaoliaos, fetchPendingBaoliaos } = useBaoliaoStore();
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
@@ -58,14 +58,18 @@ export default function BaoliaoList() {
   const observerRef = useRef<HTMLDivElement>(null);
 
   const loadData = useCallback(() => {
-    const status = statusTab === 'all' ? 'approved' : statusTab === 'pending' ? 'pending' : undefined;
-    fetchBaoliaos({
-      category: selectedCategory || undefined,
-      district: selectedDistrict || undefined,
-      sort: sortBy,
-      status: status,
-    });
-  }, [selectedCategory, selectedDistrict, sortBy, statusTab, fetchBaoliaos]);
+    if (statusTab === 'pending') {
+      fetchPendingBaoliaos();
+    } else {
+      const status = statusTab === 'all' ? 'approved' : undefined;
+      fetchBaoliaos({
+        category: selectedCategory || undefined,
+        district: selectedDistrict || undefined,
+        sort: sortBy,
+        status: status,
+      });
+    }
+  }, [selectedCategory, selectedDistrict, sortBy, statusTab, fetchBaoliaos, fetchPendingBaoliaos]);
 
   useEffect(() => {
     loadData();

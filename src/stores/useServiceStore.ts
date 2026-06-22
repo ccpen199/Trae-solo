@@ -51,43 +51,31 @@ export const useServiceStore = create<ServiceStore>((set, get) => ({
     let filtered = [...mockBusSchedules];
     
     if (from) {
-      filtered = filtered.filter(b => b.from.includes(from));
+      filtered = filtered.filter(b => b.from === from);
     }
     
     if (to) {
-      const toKeyword = to;
-      filtered = filtered.filter(b => {
-        if (b.to.includes(toKeyword)) return true;
-        if (toKeyword.includes('广州') && b.to.includes('广州')) return true;
-        if (toKeyword.includes('深圳') && b.to.includes('深圳')) return true;
-        if (toKeyword.includes('东莞') && b.to.includes('东莞')) return true;
-        if (toKeyword.includes('珠海') && b.to.includes('珠海')) return true;
-        return false;
-      });
+      filtered = filtered.filter(b => b.to === to);
     }
 
     if (date) {
       const targetDate = new Date(date);
-      const dayOfWeek = targetDate.getDay();
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const targetDay = new Date(targetDate);
       targetDay.setHours(0, 0, 0, 0);
       const diffDays = Math.floor((targetDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-
+      const dayOfWeek = targetDate.getDay();
       const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
       
-      if (isWeekend) {
-        filtered = filtered.filter((_, i) => i % 2 === 0 || i < 8);
-      }
-      
-      if (diffDays > 14) {
-        filtered = filtered.slice(0, Math.max(3, Math.floor(filtered.length * 0.4)));
-      } else if (diffDays > 7) {
-        filtered = filtered.slice(0, Math.max(5, Math.floor(filtered.length * 0.6)));
-      } else if (diffDays > 2) {
-        filtered = filtered.slice(0, Math.max(8, Math.floor(filtered.length * 0.8)));
-      }
+      filtered = filtered.filter((_, i) => {
+        if (diffDays === 0) return true;
+        if (diffDays === 1) return true;
+        if (isWeekend) return i % 2 === 0 || i < 10;
+        if (diffDays > 14) return i < Math.max(3, Math.floor(filtered.length * 0.4));
+        if (diffDays > 7) return i < Math.max(5, Math.floor(filtered.length * 0.6));
+        return i < Math.max(8, Math.floor(filtered.length * 0.8));
+      });
 
       filtered = filtered.map(schedule => {
         const seatsBase = schedule.seatsAvailable;
@@ -95,6 +83,7 @@ export const useServiceStore = create<ServiceStore>((set, get) => ({
         const weekendBonus = isWeekend ? 10 : 0;
         return {
           ...schedule,
+          date: date,
           seatsAvailable: Math.max(3, seatsBase + variation - weekendBonus),
         };
       });

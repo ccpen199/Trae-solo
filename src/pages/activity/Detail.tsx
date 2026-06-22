@@ -15,7 +15,8 @@ import {
   Camera,
   Award,
   ChevronRight,
-  AlertCircle
+  AlertCircle,
+  Sparkles
 } from 'lucide-react';
 import { useCircleStore } from '@/stores/useCircleStore';
 import { useUserStore } from '@/stores/useUserStore';
@@ -649,6 +650,15 @@ export default function ActivityDetail() {
                       </div>
                     </div>
                   )}
+
+                  <div className="mt-4 p-3 bg-chaojing-50 border border-chaojing-200 rounded-xl mb-4">
+                    <div className="flex items-center gap-2 text-chaojing-700">
+                      <Sparkles className="w-4 h-4" />
+                      <span className="text-sm font-medium">参与活动奖励</span>
+                      <span className="ml-auto font-bold text-chaojing-600">+15 小红花</span>
+                    </div>
+                    <p className="text-xs text-chaojing-600 mt-1">完成活动签到后积分自动到账，可在积分中心兑换优惠券</p>
+                  </div>
 
                   {activity.status === 'ended' ? (
                     <div className="text-center py-4">
