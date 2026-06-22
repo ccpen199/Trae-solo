@@ -35,19 +35,13 @@ api.interceptors.response.use(
       return { ...response, data: body.data };
     }
     if (body && typeof body === "object" && "success" in body && body.success === false) {
-      return Promise.reject({
-        response: {
-          data: body,
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers,
-          config: response.config,
-        },
-        message: body.error || "请求失败",
-        isAxiosError: false,
-        toJSON: () => ({}),
-        name: "BusinessError",
-      });
+      const error = new Error(body.error || "请求失败");
+      (error as any).response = {
+        ...response,
+        data: body,
+      };
+      (error as any).isAxiosError = true;
+      return Promise.reject(error);
     }
     return response;
   },

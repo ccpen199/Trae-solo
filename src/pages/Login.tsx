@@ -163,6 +163,7 @@ export default function Login() {
     if (loading) return
     setLoading(true)
     try {
+      await api.post('/auth/send-code', { phone: '13800138000' })
       const res = await api.post<LoginApiResponse>('/auth/login', {
         phone: '13800138000',
         verifyCode: '123456',
