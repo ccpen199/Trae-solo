@@ -180,7 +180,7 @@ function HospitalRegistrationPage() {
         departmentId: selectedDepartment,
         doctorId: selectedDoctor.id,
         date: selectedDate,
-        timeSlotId: selectedSlot.id,
+        timeSlot: selectedSlot.time,
       });
       setAppointment(res.data);
       await generateQRCode(res.data.qrCode);

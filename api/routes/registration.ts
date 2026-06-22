@@ -220,14 +220,22 @@ router.get('/doctors/:id/slots', async (req: AuthRequest, res: Response): Promis
 
 router.post('/appointment', async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.user?.id || 'user_001';
-  const { hospitalId, doctorId, date, timeSlot } = req.body as {
+  const { hospitalId, doctorId, date, timeSlot, timeSlotId } = req.body as {
     hospitalId: string;
     doctorId: string;
     date: string;
-    timeSlot: string;
+    timeSlot?: string;
+    timeSlotId?: string;
   };
+  const db = getDb();
+  let normalizedTimeSlot = timeSlot;
+
+  if (!normalizedTimeSlot && timeSlotId) {
+    const selectedSlot = db.prepare('SELECT * FROM time_slots WHERE id = ?').get(timeSlotId) as any;
+    normalizedTimeSlot = selectedSlot?.time;
+  }
   
-  if (!hospitalId || !doctorId || !date || !timeSlot) {
+  if (!hospitalId || !doctorId || !date || !normalizedTimeSlot) {
     const response: ApiResponse<null> = {
       code: 400,
       message: '缺少必要参数',
@@ -236,9 +244,7 @@ router.post('/appointment', async (req: AuthRequest, res: Response): Promise<voi
     res.status(400).json(response);
     return;
   }
-  
-  const db = getDb();
-  
+
   const hospital = db.prepare('SELECT * FROM hospitals WHERE id = ?').get(hospitalId) as any;
   const doctor = db.prepare('SELECT * FROM doctors WHERE id = ?').get(doctorId) as any;
   const department = db.prepare('SELECT * FROM departments WHERE id = ?').get(doctor.department_id) as any;
@@ -253,7 +259,7 @@ router.post('/appointment', async (req: AuthRequest, res: Response): Promise<voi
     return;
   }
   
-  const slotId = `${doctorId}_${date}_${timeSlot.replace(':', '')}`;
+  const slotId = timeSlotId || `${doctorId}_${date}_${normalizedTimeSlot.replace(':', '')}`;
   const slot = db.prepare('SELECT * FROM time_slots WHERE id = ?').get(slotId) as any;
   
   if (!slot || slot.available <= 0) {
@@ -269,7 +275,7 @@ router.post('/appointment', async (req: AuthRequest, res: Response): Promise<voi
   const existing = db.prepare(`
     SELECT * FROM appointments 
     WHERE user_id = ? AND doctor_id = ? AND date = ? AND time_slot = ?
-  `).get(userId, doctorId, date, timeSlot);
+  `).get(userId, doctorId, date, normalizedTimeSlot);
   
   if (existing) {
     const response: ApiResponse<null> = {
@@ -288,7 +294,7 @@ router.post('/appointment', async (req: AuthRequest, res: Response): Promise<voi
   db.prepare(`
     INSERT INTO appointments (id, user_id, hospital_id, doctor_id, date, time_slot, status, medical_code, qr_code)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(id, userId, hospitalId, doctorId, date, timeSlot, 'confirmed', medicalCode, qrCode);
+  `).run(id, userId, hospitalId, doctorId, date, normalizedTimeSlot, 'confirmed', medicalCode, qrCode);
   
   db.prepare('UPDATE time_slots SET available = available - 1 WHERE id = ?').run(slotId);
   
@@ -301,7 +307,7 @@ router.post('/appointment', async (req: AuthRequest, res: Response): Promise<voi
     doctor: doctor.name,
     doctorId,
     date,
-    timeSlot,
+    timeSlot: normalizedTimeSlot,
     status: 'confirmed',
     medicalCode,
     qrCode,

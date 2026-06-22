@@ -3,9 +3,10 @@ import type { ApiResponse, Notification, RemoteRecordStatus, PaginationParams, P
 import { getDb } from '../models/db.js';
 import { type AuthRequest } from '../middleware/auth.js';
 
-const router = Router();
+const notificationRouter = Router();
+const remoteRecordRouter = Router();
 
-router.get('/notifications', async (req: AuthRequest, res: Response): Promise<void> => {
+notificationRouter.get('/', async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.user?.id || 'user_001';
   const db = getDb();
   
@@ -67,7 +68,7 @@ router.get('/notifications', async (req: AuthRequest, res: Response): Promise<vo
   res.json(response);
 });
 
-router.patch('/notifications/:id/read', async (req: AuthRequest, res: Response): Promise<void> => {
+notificationRouter.patch('/:id/read', async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.user?.id || 'user_001';
   const { id } = req.params;
   const db = getDb();
@@ -95,7 +96,7 @@ router.patch('/notifications/:id/read', async (req: AuthRequest, res: Response):
   res.json(response);
 });
 
-router.post('/notifications/:id/retry', async (req: AuthRequest, res: Response): Promise<void> => {
+notificationRouter.post('/:id/retry', async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.user?.id || 'user_001';
   const { id } = req.params;
   const db = getDb();
@@ -149,7 +150,7 @@ router.post('/notifications/:id/retry', async (req: AuthRequest, res: Response):
   res.json(response);
 });
 
-router.get('/remote-record/status', async (req: AuthRequest, res: Response): Promise<void> => {
+remoteRecordRouter.get('/status', async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.user?.id || 'user_001';
   const db = getDb();
   
@@ -178,7 +179,7 @@ router.get('/remote-record/status', async (req: AuthRequest, res: Response): Pro
   res.json(response);
 });
 
-router.post('/remote-record/retry', async (req: AuthRequest, res: Response): Promise<void> => {
+remoteRecordRouter.post('/retry', async (req: AuthRequest, res: Response): Promise<void> => {
   const userId = req.user?.id || 'user_001';
   const { id } = req.body as { id?: string };
   const db = getDb();
@@ -224,4 +225,4 @@ router.post('/remote-record/retry', async (req: AuthRequest, res: Response): Pro
   res.json(response);
 });
 
-export default router;
+export { notificationRouter, remoteRecordRouter };

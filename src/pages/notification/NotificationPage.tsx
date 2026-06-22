@@ -210,8 +210,8 @@ function NotificationPage() {
           notificationApi.getList(params),
           notificationApi.getRemoteRecordStatus(),
         ]);
-        setNotifications(mockNotifications);
-        setRemoteStatus(mockRemoteStatus);
+        setNotifications(notifRes.data.list);
+        setRemoteStatus(remoteRes.data);
       } catch (error) {
         console.error('Failed to fetch notification data:', error);
         setNotifications(mockNotifications);

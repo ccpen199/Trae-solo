@@ -8,21 +8,16 @@ import express, {
   type NextFunction,
 } from 'express'
 import cors from 'cors'
-import path from 'path'
-import dotenv from 'dotenv'
-import { fileURLToPath } from 'url'
 import authRoutes from './routes/auth.js'
 
-// for esm mode
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-// load env
-dotenv.config()
-
 const app: express.Application = express()
+const frontendUrl = process.env.FRONTEND_URL || 'http://127.0.0.1:49308'
+const corsOrigins = (process.env.CORS_ORIGIN || frontendUrl)
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean)
 
-app.use(cors())
+app.use(cors({ origin: corsOrigins, credentials: true }))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 

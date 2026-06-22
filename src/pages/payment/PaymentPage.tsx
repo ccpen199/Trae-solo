@@ -45,7 +45,7 @@ function PaymentPage() {
     const fetchData = async () => {
       try {
         const res = await paymentApi.getOrders();
-        setOrders(res.data);
+        setOrders(res.data.list);
       } catch (error) {
         console.error('Failed to fetch payment orders:', error);
       } finally {

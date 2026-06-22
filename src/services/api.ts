@@ -15,6 +15,7 @@ import type {
   SettlementOrder,
   PaymentRequest,
   PaymentResponse,
+  ReceiptData,
   Notification,
   RemoteRecordStatus,
   PaginationParams,
@@ -84,7 +85,7 @@ export const registrationApi = {
     departmentId: string;
     doctorId: string;
     date: string;
-    timeSlotId: string;
+    timeSlot: string;
   }): Promise<ApiResponse<Appointment>> =>
     request.post('/registration/appointment', data),
   
@@ -93,7 +94,7 @@ export const registrationApi = {
 };
 
 export const paymentApi = {
-  getOrders: (params?: { status?: string }): Promise<ApiResponse<SettlementOrder[]>> =>
+  getOrders: (params?: { status?: string }): Promise<ApiResponse<PaginationResponse<SettlementOrder>>> =>
     request.get('/payment/orders', { params }),
   
   getOrderDetail: (id: string): Promise<ApiResponse<SettlementOrder>> =>
@@ -102,12 +103,12 @@ export const paymentApi = {
   pay: (data: PaymentRequest): Promise<ApiResponse<PaymentResponse>> =>
     request.post('/payment/pay', data),
   
-  getReceipt: (id: string): Promise<ApiResponse<{ url: string }>> =>
+  getReceipt: (id: string): Promise<ApiResponse<ReceiptData>> =>
     request.get(`/payment/orders/${id}/receipt`),
 };
 
 export const notificationApi = {
-  getList: (params?: { type?: string; level?: string }): Promise<ApiResponse<Notification[]>> =>
+  getList: (params?: { type?: string; level?: string }): Promise<ApiResponse<PaginationResponse<Notification>>> =>
     request.get('/notifications', { params }),
   
   markAsRead: (id: string): Promise<ApiResponse<void>> =>

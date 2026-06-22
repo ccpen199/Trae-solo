@@ -10,14 +10,20 @@ import medicalRouter from './routes/medical.js';
 import chronicRouter from './routes/chronic.js';
 import registrationRouter from './routes/registration.js';
 import paymentRouter from './routes/payment.js';
-import notificationRouter from './routes/notification.js';
+import { notificationRouter, remoteRecordRouter } from './routes/notification.js';
 import navigationRouter from './routes/navigation.js';
 
 const app = express();
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3001;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || '59308');
+const frontendUrl = process.env.FRONTEND_URL || 'http://127.0.0.1:49308';
+const corsOrigins = (process.env.CORS_ORIGIN || frontendUrl)
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: corsOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -51,7 +57,7 @@ app.use('/api/chronic', authMiddleware, chronicRouter);
 app.use('/api/registration', authMiddleware, registrationRouter);
 app.use('/api/payment', authMiddleware, paymentRouter);
 app.use('/api/notifications', authMiddleware, notificationRouter);
-app.use('/api/remote-record', authMiddleware, notificationRouter);
+app.use('/api/remote-record', authMiddleware, remoteRecordRouter);
 app.use('/api/navigation', authMiddleware, navigationRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -75,14 +81,14 @@ app.use((req: Request, res: Response) => {
 
 initDatabase();
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, HOST, () => {
   console.log(`
   ╔══════════════════════════════════════════════════════════╗
   ║                                                          ║
   ║   江苏省医保服务一体化数字终端 - 后端API服务              ║
   ║                                                          ║
-  ║   服务地址: http://localhost:${PORT}                     ║
-  ║   健康检查: http://localhost:${PORT}/api/health         ║
+  ║   服务地址: http://${HOST}:${PORT}                     ║
+  ║   健康检查: http://${HOST}:${PORT}/api/health         ║
   ║                                                          ║
   ║   服务已启动，等待请求...                                ║
   ║                                                          ║

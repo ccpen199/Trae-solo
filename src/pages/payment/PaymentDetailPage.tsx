@@ -21,7 +21,7 @@ import ReactECharts from 'echarts-for-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { paymentApi } from '@/services/api';
 import { formatCurrency, formatDate, formatDateTime } from '@/utils/format';
-import type { SettlementOrder, PaymentRequest } from '@shared/types';
+import type { SettlementOrder, PaymentRequest, ReceiptData } from '@shared/types';
 
 type PaymentMethod = 'account' | 'wechat' | 'alipay' | 'mixed';
 type PaymentStatus = 'idle' | 'processing' | 'success' | 'failed';
@@ -29,6 +29,75 @@ type PaymentStatus = 'idle' | 'processing' | 'success' | 'failed';
 interface PaymentStep {
   title: string;
   status: 'pending' | 'active' | 'completed';
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildReceiptUrl(receipt: ReceiptData) {
+  const itemsHtml = receipt.items
+    .map(
+      (item) => `
+        <tr>
+          <td>${escapeHtml(item.name)}</td>
+          <td>${escapeHtml(item.spec)}</td>
+          <td>${item.quantity}</td>
+          <td>${item.amount.toFixed(2)}</td>
+          <td>${escapeHtml(item.insuranceType)}</td>
+        </tr>`
+    )
+    .join('');
+
+  const html = `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>${escapeHtml(receipt.receiptType)}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 24px; color: #0f172a; }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    .meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 24px 0; }
+    .card { border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; background: #f8fafc; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+    th { background: #e2e8f0; }
+    .amount { margin-top: 24px; font-size: 18px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>${escapeHtml(receipt.receiptType)}</h1>
+  <div>${escapeHtml(receipt.hospital)}</div>
+  <div class="meta">
+    <div class="card">票据号：${escapeHtml(receipt.receiptNo)}</div>
+    <div class="card">流水号：${escapeHtml(receipt.transactionId || '-')}</div>
+    <div class="card">患者姓名：${escapeHtml(receipt.patientName)}</div>
+    <div class="card">社保卡号：${escapeHtml(receipt.socialSecurityNo)}</div>
+    <div class="card">支付时间：${escapeHtml(formatDateTime(receipt.paidAt))}</div>
+    <div class="card">校验码：${escapeHtml(receipt.validationCode)}</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>规格</th>
+        <th>数量</th>
+        <th>金额</th>
+        <th>医保类型</th>
+      </tr>
+    </thead>
+    <tbody>${itemsHtml}</tbody>
+  </table>
+  <div class="amount">合计：￥${receipt.amount.total.toFixed(2)}</div>
+</body>
+</html>`;
+
+  return `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
 }
 
 function PaymentDetailPage() {
@@ -178,7 +247,18 @@ function PaymentDetailPage() {
       };
 
       await new Promise((resolve) => setTimeout(resolve, 2500));
-      await paymentApi.pay(request);
+      const paymentResponse = await paymentApi.pay(request);
+
+      setOrder((prev) =>
+        prev
+          ? {
+              ...prev,
+              status: 'paid',
+              paidAt: new Date().toISOString(),
+              transactionId: paymentResponse.data.transactionId,
+            }
+          : prev
+      );
 
       clearInterval(progressInterval);
       setPaymentProgress(100);
@@ -198,7 +278,7 @@ function PaymentDetailPage() {
     if (!id) return;
     try {
       const res = await paymentApi.getReceipt(id);
-      window.open(res.data.url, '_blank');
+      window.open(buildReceiptUrl(res.data), '_blank', 'noopener,noreferrer');
     } catch (error) {
       console.error('Failed to download receipt:', error);
     }

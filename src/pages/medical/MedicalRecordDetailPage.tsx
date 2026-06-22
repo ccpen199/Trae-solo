@@ -16,7 +16,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import ReactECharts from 'echarts-for-react';
-import { medicalApi, paymentApi } from '@/services/api';
+import { medicalApi } from '@/services/api';
 import { formatCurrency, formatDate } from '@/utils/format';
 import type { MedicalRecord, Prescription, Examination } from '@shared/types';
 
@@ -28,6 +28,59 @@ const tabItems: { key: TabType; label: string; icon: React.ReactNode }[] = [
   { key: 'examination', label: '检查检验', icon: <FileText className="w-4 h-4" /> },
   { key: 'cost', label: '费用明细', icon: <Receipt className="w-4 h-4" /> },
 ];
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function buildMedicalReceiptUrl(record: MedicalRecord) {
+  const html = `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>就诊费用凭证</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 24px; color: #0f172a; }
+    h1 { margin-bottom: 8px; }
+    .card { border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; background: #f8fafc; margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+    th { background: #e2e8f0; }
+  </style>
+</head>
+<body>
+  <h1>就诊费用凭证</h1>
+  <div class="card">
+    <div>医院：${escapeHtml(record.hospital)}</div>
+    <div>科室：${escapeHtml(record.department)}</div>
+    <div>医生：${escapeHtml(record.doctor)}</div>
+    <div>就诊日期：${escapeHtml(formatDate(record.visitDate))}</div>
+    <div>诊断：${escapeHtml(record.diagnosis.join('、'))}</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>费用项目</th>
+        <th>金额</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>总费用</td><td>￥${record.cost.total.toFixed(2)}</td></tr>
+      <tr><td>统筹支付</td><td>￥${record.cost.overallPay.toFixed(2)}</td></tr>
+      <tr><td>账户支付</td><td>￥${record.cost.accountPay.toFixed(2)}</td></tr>
+      <tr><td>现金支付</td><td>￥${record.cost.selfPay.toFixed(2)}</td></tr>
+    </tbody>
+  </table>
+</body>
+</html>`;
+
+  return `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+}
 
 function MedicalRecordDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -122,14 +175,9 @@ function MedicalRecordDetailPage() {
   }, [record]);
 
   const handleViewReceipt = async () => {
-    if (!id) return;
-    try {
-      const res = await paymentApi.getReceipt(id);
-      setReceiptUrl(res.data.url);
-      setShowReceipt(true);
-    } catch (error) {
-      console.error('Failed to get receipt:', error);
-    }
+    if (!record) return;
+    setReceiptUrl(buildMedicalReceiptUrl(record));
+    setShowReceipt(true);
   };
 
   const getInsuranceTagColor = (coverage: string) => {

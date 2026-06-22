@@ -6,17 +6,18 @@
   "scripts": {
     "dev": "concurrently \"npm:dev:api\" \"npm:dev:web\"",
     "dev:web": "vite",
-    "dev:api": "tsx watch api/index.ts",
+    "dev:api": "set -a && . ./.env && set +a && ./node_modules/.bin/tsx watch api/index.ts",
     "build": "tsc -b && vite build",
     "build:api": "tsc -p tsconfig.api.json",
-    "start": "node dist-api/index.js",
+    "start": "npm run start:api",
+    "start:api": "set -a && . ./.env && set +a && ./node_modules/.bin/tsx api/index.ts",
     "check": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.6.7",
-    "better-sqlite3": "^9.4.3",
+    "better-sqlite3": "^12.11.1",
     "cors": "^2.8.5",
     "echarts": "^5.5.0",
     "echarts-for-react": "^3.0.2",
@@ -30,7 +31,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.9",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",

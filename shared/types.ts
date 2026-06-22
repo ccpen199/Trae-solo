@@ -213,6 +213,21 @@ export interface PaymentResponse {
   settlementNoteUrl: string;
 }
 
+export interface ReceiptData {
+  orderId: string;
+  receiptNo: string;
+  receiptType: string;
+  hospital: string;
+  patientName: string;
+  socialSecurityNo: string;
+  amount: SettlementOrder['amount'];
+  items: SettlementItem[];
+  paidAt: string;
+  transactionId?: string;
+  printTime: string;
+  validationCode: string;
+}
+
 export type NotificationType = 'treatment_abnormal' | 'policy' | 'record_failure' | 'system';
 export type NotificationLevel = 'info' | 'warning' | 'error';
 
