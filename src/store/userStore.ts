@@ -42,7 +42,7 @@ interface UserState {
 
 export const useUserStore = create<UserState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       token: null,
       loading: false,
@@ -72,7 +72,7 @@ export const useUserStore = create<UserState>()(
       quickLogin: () => {
         const token = generateToken();
         const response: LoginResponse = { token, user: MOCK_USER };
-        set({ user: MOCK_USER, token, loading: false });
+        set({ user: { ...MOCK_USER }, token, loading: false });
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(MOCK_USER));
         return response;
@@ -103,6 +103,12 @@ export const useUserStore = create<UserState>()(
     {
       name: 'user-storage',
       partialize: (state) => ({ user: state.user, token: state.token }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.token && state?.user) {
+          localStorage.setItem('token', state.token);
+          localStorage.setItem('user', JSON.stringify(state.user));
+        }
+      },
     }
   )
 );

@@ -24,7 +24,8 @@ const mockNotifications = [
 const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout } = useUserStore();
+  const user = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
 

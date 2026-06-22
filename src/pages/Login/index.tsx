@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { Phone, Lock, Shield, Scale, Gavel, FileText, Eye, EyeOff, ArrowRight, Zap } from 'lucide-react';
 import { Button, Form, Input, Tabs, message, Divider } from 'antd';
@@ -8,49 +8,50 @@ import { validatePhone } from '@/utils/validator';
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, quickLogin, token, user } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
 
-  if (token && user) {
-    return <Navigate to="/" replace />;
-  }
+  const token = useUserStore((state) => state.token);
+  const user = useUserStore((state) => state.user);
+  const login = useUserStore((state) => state.login);
+  const quickLogin = useUserStore((state) => state.quickLogin);
 
   const redirectTo = (location.state as any)?.from || '/';
 
-  const handlePhoneLogin = async (values: { phone: string; code: string }) => {
+  useEffect(() => {
+    if (token && user) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [token, user, navigate, redirectTo]);
+
+  const handlePhoneLogin = useCallback(async (values: { phone: string; code: string }) => {
     setLoading(true);
     try {
       await login({ phone: values.phone, code: values.code });
       message.success('登录成功');
-      navigate(redirectTo, { replace: true });
     } catch (error: any) {
       message.error(error.message || '登录失败');
-    } finally {
       setLoading(false);
     }
-  };
+  }, [login]);
 
-  const handlePasswordLogin = async (values: { phone: string; password: string }) => {
+  const handlePasswordLogin = useCallback(async (values: { phone: string; password: string }) => {
     setLoading(true);
     try {
       await login({ phone: values.phone, password: values.password });
       message.success('登录成功');
-      navigate(redirectTo, { replace: true });
     } catch (error: any) {
       message.error(error.message || '登录失败');
-    } finally {
       setLoading(false);
     }
-  };
+  }, [login]);
 
-  const handleQuickLogin = () => {
+  const handleQuickLogin = useCallback(() => {
     quickLogin();
     message.success('演示登录成功');
-    navigate(redirectTo, { replace: true });
-  };
+  }, [quickLogin]);
 
   const handleSendCode = (phone: string) => {
     if (!validatePhone(phone)) {
@@ -71,6 +72,10 @@ const Login: React.FC = () => {
       });
     }, 1000);
   };
+
+  if (token && user) {
+    return <Navigate to={redirectTo} replace />;
+  }
 
   const tabItems = [
     {
