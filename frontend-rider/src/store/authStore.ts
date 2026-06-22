@@ -25,14 +25,21 @@ export const useAuthStore = create<AuthState>()(
         set({ loading: true });
         try {
           const result = await authService.login({ phone, password, code });
+          const riderWithDefaults = {
+            ...result.rider,
+            role: result.rider.role ?? 'rider',
+            realNameAuditStatus: result.rider.realNameAuditStatus ?? 'pending',
+            qualificationAuditStatus: result.rider.qualificationAuditStatus ?? result.rider.auditStatus ?? 'pending',
+          };
           set({
             token: result.token,
-            user: result.rider,
+            user: riderWithDefaults,
             loading: false,
           });
-        } catch (error) {
+        } catch (error: any) {
           set({ loading: false });
-          throw error;
+          const errorMessage = error?.message || '登录失败，请重试';
+          throw new Error(errorMessage);
         }
       },
 

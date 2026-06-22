@@ -20,6 +20,7 @@ export interface Rider extends BaseEntity {
   realNameAuditRemark?: string;
   realNameAuditedAt?: Date;
   qualificationVerified: boolean;
+  qualificationAuditStatus?: AuditStatus;
   auditStatus: AuditStatus;
   auditRemark?: string;
   creditScore: number;
@@ -33,6 +34,7 @@ export interface Rider extends BaseEntity {
   completedOrders: number;
   totalDistance: number;
   totalEarnings: number;
+  role: 'rider' | 'admin' | 'operator';
 }
 
 export interface RiderPreference extends BaseEntity {

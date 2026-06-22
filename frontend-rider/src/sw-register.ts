@@ -43,9 +43,9 @@ export async function registerSW(): Promise<ServiceWorkerRegistration | null> {
       }
     });
 
-    if (registration.sync) {
+    if ('sync' in registration) {
       try {
-        await registration.sync.register('sync-offline-queue');
+        await (registration as any).sync.register('sync-offline-queue');
       } catch {}
     }
 
@@ -113,8 +113,8 @@ export async function requestSync(): Promise<void> {
   if (!swRegistration) return;
 
   try {
-    if ('SyncManager' in window) {
-      await swRegistration.sync.register('sync-offline-queue');
+    if ('SyncManager' in window && 'sync' in swRegistration) {
+      await (swRegistration as any).sync.register('sync-offline-queue');
     } else {
       await syncQueue.processQueue();
     }

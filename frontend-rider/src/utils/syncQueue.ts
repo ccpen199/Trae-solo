@@ -88,7 +88,7 @@ class SyncQueue {
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
       try {
         const reg = await navigator.serviceWorker.ready;
-        await reg.sync.register('sync-offline-queue');
+        await (reg as any).sync.register('sync-offline-queue');
       } catch {}
     }
 
@@ -106,9 +106,9 @@ class SyncQueue {
       const pendingItems = allItems
         .filter((item) => item.status === 'pending' || item.status === 'failed')
         .sort((a, b) => {
-          const priorityOrder: Record<SyncPriority, number> = { urgent: 0, normal: 1, low: 2 };
-          const pa = priorityOrder[a.priority] ?? 1;
-          const pb = priorityOrder[b.priority] ?? 1;
+          const priorityOrder: Record<string, number> = { urgent: 0, normal: 1, low: 2 };
+          const pa = priorityOrder[a.priority as string] ?? 1;
+          const pb = priorityOrder[b.priority as string] ?? 1;
           if (pa !== pb) return pa - pb;
           return a.timestamp - b.timestamp;
         });

@@ -16,6 +16,12 @@ import RealNameAuth from '@/pages/RealNameAuth';
 import Preferences from '@/pages/Preferences';
 import OrderHistory from '@/pages/OrderHistory';
 import CreditScore from '@/pages/CreditScore';
+import MessageCenter from '@/pages/MessageCenter';
+import AppealList from '@/pages/AppealList';
+import RiderStats from '@/pages/RiderStats';
+import OfflineCenter from '@/pages/OfflineCenter';
+import TrackingPage from '@/pages/TrackingPage';
+import GeofencePage from '@/pages/GeofencePage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 function App() {
@@ -149,6 +155,54 @@ function App() {
           element={
             <ProtectedRoute>
               <CreditScore />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
+              <MessageCenter />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/appeals"
+          element={
+            <ProtectedRoute>
+              <AppealList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/stats"
+          element={
+            <ProtectedRoute>
+              <RiderStats />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/offline"
+          element={
+            <ProtectedRoute>
+              <OfflineCenter />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tracking"
+          element={
+            <ProtectedRoute>
+              <TrackingPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/geofence"
+          element={
+            <ProtectedRoute>
+              <GeofencePage />
             </ProtectedRoute>
           }
         />
