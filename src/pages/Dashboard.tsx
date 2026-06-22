@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { FileText, Store, Users } from 'lucide-react'
+import { FileText, Store, Users, Shield, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { dashboardStats } from '@/data'
 import { HotCategoriesChart, UpdateTrendChart } from '@/components/dashboard/Charts'
 import TownshipHeatMap from '@/components/dashboard/HeatMap'
@@ -30,8 +31,31 @@ export default function Dashboard() {
     <div className="bg-rock-900 min-h-screen pb-10">
       <motion.div variants={containerVariants} initial="hidden" animate="visible">
         <motion.div variants={sectionVariants} className="px-4 pt-6 pb-2">
-          <h1 className="font-serif text-2xl font-bold text-white">数据看板</h1>
-          <p className="text-rock-400 text-sm mt-1">数据更新于 2025年6月20日 18:00</p>
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h1 className="font-serif text-2xl font-bold text-white">数据看板</h1>
+              <p className="text-rock-400 text-sm mt-1">数据更新于 2025年6月20日 18:00 · 面向公众的概览统计</p>
+            </div>
+            <Link
+              to="/admin/overview"
+              className="flex items-center gap-2 bg-jade-500 hover:bg-jade-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-jade-500/20"
+            >
+              <Shield size={16} />
+              进入运营管理后台
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="mt-4 p-4 rounded-xl bg-jade-500/10 border border-jade-500/30">
+            <div className="flex items-start gap-3">
+              <Shield size={20} className="text-jade-400 mt-0.5 flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-jade-300 text-sm font-medium">运营管理后台承接镇雄县全部业务</p>
+                <p className="text-rock-400 text-xs mt-1 leading-relaxed">
+                  商户入驻审核 · 资讯/分类信息管理 · 图文短视频可信度复查 · 订单与乡镇/社区分发 · 民生服务跳转配置
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div variants={sectionVariants} className="px-4 mt-4">

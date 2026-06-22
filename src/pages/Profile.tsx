@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   User, MapPin, FileText, Heart, Tags, Bell, Search, Info, LogOut,
-  ChevronRight, ChevronDown, X, Check
+  ChevronRight, ChevronDown, X, Check, Settings, Shield, Store
 } from 'lucide-react'
 import { useStore } from '@/store'
 import { jobPosts, housingPosts, foodPosts, datingPosts, townships } from '@/data'
@@ -188,6 +188,23 @@ export default function Profile() {
       </section>
 
       <section className="px-4 mt-4">
+        <div className="bg-white rounded-xl shadow-sm divide-y divide-rock-50 overflow-hidden">
+          <MenuItem
+            icon={Shield}
+            label="运营管理后台"
+            right={<span className="text-xs text-jade-600 bg-jade-50 px-2 py-0.5 rounded-full mr-1">镇雄全域</span>}
+            onClick={() => nav('/admin/overview')}
+          />
+          <MenuItem
+            icon={Store}
+            label="商户入驻管理"
+            right={<span className="text-xs text-rock-400 mr-1">资质/类目/状态</span>}
+            onClick={() => nav('/merchant/dashboard')}
+          />
+        </div>
+      </section>
+
+      <section className="px-4 mt-2">
         <div className="bg-white rounded-xl shadow-sm divide-y divide-rock-50">
           <div>
             <MenuItem icon={Search} label="搜索历史"
@@ -214,6 +231,9 @@ export default function Profile() {
           <MenuItem icon={Bell} label="消息通知"
             right={notifications > 0 ? <span className="bg-red-500 text-white text-[10px] rounded-full px-1.5 py-0.5 font-number">{notifications}</span> : undefined}
             onClick={() => setOpenNotify(!openNotify)} />
+          <MenuItem icon={Settings} label="系统设置"
+            right={<span className="text-xs text-rock-400 mr-1">偏好/隐私/缓存</span>}
+          />
           <MenuItem icon={Info} label="关于我们" onClick={() => setShowAbout(true)} />
           <MenuItem icon={LogOut} label="退出登录" onClick={() => setShowLogout(true)} />
         </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Triangle, Menu, X, PenSquare, User } from 'lucide-react'
+import { Triangle, Menu, X, PenSquare, User, Shield } from 'lucide-react'
 import { useStore } from '@/store'
 import TownshipSelector from './TownshipSelector'
 
@@ -10,6 +10,7 @@ const navLinks = [
   { to: '/news', label: '资讯' },
   { to: '/search', label: '搜索' },
   { to: '/services', label: '服务' },
+  { to: '/dashboard', label: '数据看板' },
 ]
 
 export default function Navbar() {
@@ -48,6 +49,13 @@ export default function Navbar() {
             <TownshipSelector />
           </div>
 
+          <Link
+            to="/admin/overview"
+            className="hidden md:flex items-center gap-1.5 bg-rock-800 hover:bg-rock-900 text-white text-sm font-medium px-3 py-2 rounded-lg transition-colors"
+          >
+            <Shield className="w-4 h-4" />
+            运营管理
+          </Link>
           <Link
             to="/publish"
             className="hidden md:flex items-center gap-1.5 bg-ember-400 hover:bg-ember-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
@@ -96,6 +104,14 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
+            <Link
+              to="/admin/overview"
+              onClick={() => setMobileOpen(false)}
+              className="mx-4 mt-2 flex items-center justify-center gap-1.5 bg-rock-800 hover:bg-rock-900 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors"
+            >
+              <Shield className="w-4 h-4" />
+              运营管理后台
+            </Link>
             <Link
               to="/publish"
               onClick={() => setMobileOpen(false)}
