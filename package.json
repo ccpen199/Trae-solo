@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "client:dev": "vite",
+    "server:dev": "node server.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },
