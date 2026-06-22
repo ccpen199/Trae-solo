@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Card, Tabs, Typography, Checkbox, Alert } from 'antd';
+import { Form, Input, Button, Card, Tabs, Typography, Checkbox, Alert, message } from 'antd';
 import { UserOutlined, LockOutlined, SafetyOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -11,19 +11,38 @@ const Login: React.FC = observer(() => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [riskWarn, setRiskWarn] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorType, setErrorType] = useState<'error' | 'warning' | 'info'>('error');
 
   const onFinish = async (values: any) => {
     setLoading(true);
     setRiskWarn('');
+    setErrorMsg('');
     try {
       const res = await appStore.login(values.username, values.password, values.imei);
       if (res.riskLevel === 'high' || res.riskLevel === 'medium') {
         setRiskWarn(res.riskLevel === 'high'
-          ? '检测到高风险登录！请确认是否为本人操作，建议立即修改密码。'
-          : '本次登录存在一定风险（新设备或异地登录），请确认账号安全。');
+          ? '⚠️ 高风险登录提示：检测到本次登录存在异常（新设备或异地），请确认是否为本人操作，建议立即修改密码。'
+          : '🔔 安全提醒：本次登录来自新设备或非常用地点，请注意账号安全。');
+        setErrorType('warning');
       }
-      setTimeout(() => navigate('/dashboard'), 500);
+      message.success('登录成功，正在进入工作台...');
+      setTimeout(() => {
+        navigate('/dashboard', { replace: true });
+      }, 800);
     } catch (e: any) {
+      const msg = e?.message || e?.data?.message || '登录失败，请重试';
+      const code = e?.code || e?.response?.status;
+      setErrorMsg(msg);
+      setErrorType(code === 429 ? 'warning' : 'error');
+      if (code === 401) {
+        setErrorMsg('账号或密码错误，请检查后重试');
+      } else if (code === 403) {
+        setErrorMsg('账号已被禁用，请联系管理员');
+      } else if (code === 429) {
+        setErrorMsg('登录失败次数过多，已被临时限制，请1小时后再试');
+      }
+      message.error(msg);
     } finally {
       setLoading(false);
     }
@@ -31,10 +50,18 @@ const Login: React.FC = observer(() => {
 
   const onRegister = async (values: any) => {
     setLoading(true);
+    setErrorMsg('');
     try {
       await appStore.register(values);
-      setTimeout(() => navigate('/dashboard'), 500);
-    } catch (e) {
+      message.success('注册成功，正在进入工作台...');
+      setTimeout(() => {
+        navigate('/dashboard', { replace: true });
+      }, 800);
+    } catch (e: any) {
+      const msg = e?.message || e?.data?.message || '注册失败，请重试';
+      setErrorMsg(msg);
+      setErrorType('error');
+      message.error(msg);
     } finally {
       setLoading(false);
     }
@@ -72,6 +99,16 @@ const Login: React.FC = observer(() => {
                 label: '账号登录',
                 children: (
                   <>
+                    {errorMsg && (
+                      <Alert
+                        message={errorMsg}
+                        type={errorType as any}
+                        showIcon
+                        className="mb-4"
+                        closable
+                        onClose={() => setErrorMsg('')}
+                      />
+                    )}
                     {riskWarn && (
                       <Alert
                         message={riskWarn}
@@ -100,7 +137,10 @@ const Login: React.FC = observer(() => {
                       >
                         <Input.Password prefix={<LockOutlined />} placeholder="登录密码" />
                       </Form.Item>
-                      <Form.Item name="imei">
+                      <Form.Item
+                        name="imei"
+                        help="填写手机IMEI可开启设备指纹校验，提升账号安全性"
+                      >
                         <Input prefix={<SafetyOutlined />} placeholder="设备IMEI（可选，增强安全）" maxLength={15} />
                       </Form.Item>
                       <div className="flex justify-between items-center mb-4">

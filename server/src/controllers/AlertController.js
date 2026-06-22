@@ -327,51 +327,56 @@ class AlertController {
         startTime, endTime, processed,
         page = 1, pageSize = 30
       } = req.query;
-      const offset = (page - 1) * pageSize;
 
-      const conditions = ['d.owner_id = ?'];
-      const params = [req.user.id];
+      const events = db.getTable('ai_events');
+      const devices = db.getTable('devices');
+      const shares = db.getTable('device_shares');
+      const userId = req.user.id;
 
-      if (deviceId) {
-        conditions.push('e.device_id = ?');
-        params.push(deviceId);
-      }
-      if (eventType) {
-        conditions.push('e.event_type = ?');
-        params.push(eventType);
-      }
-      if (eventLevel) {
-        conditions.push('e.event_level = ?');
-        params.push(eventLevel);
-      }
-      if (startTime) {
-        conditions.push('e.created_at >= ?');
-        params.push(startTime);
-      }
-      if (endTime) {
-        conditions.push('e.created_at <= ?');
-        params.push(endTime);
-      }
-      if (processed !== undefined) {
-        conditions.push('e.processed = ?');
-        params.push(+processed);
-      }
+      const allowedDeviceIds = new Set();
+      devices.forEach(d => {
+        if (d.owner_id === userId) allowedDeviceIds.add(d.id);
+      });
+      shares.forEach(s => {
+        if (s.share_to_user_id === userId && s.status === 1) {
+          allowedDeviceIds.add(s.device_id);
+        }
+      });
 
-      const where = 'WHERE ' + conditions.join(' AND ');
-      const events = await db.all(`
-        SELECT e.*, d.name as device_name, d.device_sn
-        FROM ai_events e
-        JOIN devices d ON e.device_id = d.id
-        ${where}
-        ORDER BY e.created_at DESC
-        LIMIT ? OFFSET ?
-      `, ...params, pageSize, offset);
+      const deviceMap = {};
+      devices.forEach(d => { deviceMap[d.id] = d; });
 
-      const total = (await db.get(`SELECT COUNT(*) as count FROM ai_events e JOIN devices d ON e.device_id = d.id ${where}`, ...params)).count;
+      let filtered = events.filter(e => {
+        if (!allowedDeviceIds.has(e.device_id)) return false;
+        if (deviceId && e.device_id !== +deviceId && e.device_id !== deviceId) return false;
+        if (eventType && e.event_type !== eventType) return false;
+        if (eventLevel && e.event_level !== eventLevel) return false;
+        if (startTime && e.created_at < startTime) return false;
+        if (endTime && e.created_at > endTime) return false;
+        if (processed !== undefined && e.processed !== +processed) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+      const total = filtered.length;
+      const pageNum = +page;
+      const pageSizeNum = +pageSize;
+      const start = (pageNum - 1) * pageSizeNum;
+      const paged = filtered.slice(start, start + pageSizeNum);
+
+      const list = paged.map(e => {
+        const device = deviceMap[e.device_id];
+        return {
+          ...e,
+          device_name: device ? device.name : null,
+          device_sn: device ? device.device_sn : null
+        };
+      });
 
       res.json({
         code: 200,
-        data: { list: events, total, page: +page, pageSize: +pageSize }
+        data: { list, total, page: pageNum, pageSize: pageSizeNum }
       });
     } catch (e) {
       console.error('List events error:', e);
@@ -386,50 +391,53 @@ class AlertController {
         startTime, endTime,
         page = 1, pageSize = 30
       } = req.query;
-      const offset = (page - 1) * pageSize;
 
-      const conditions = ['a.user_id = ?'];
-      const params = [req.user.id];
+      const alerts = db.getTable('alerts');
+      const devices = db.getTable('devices');
+      const events = db.getTable('ai_events');
+      const userId = req.user.id;
 
-      if (deviceId) {
-        conditions.push('a.device_id = ?');
-        params.push(deviceId);
-      }
-      if (alertType) {
-        conditions.push('a.alert_type = ?');
-        params.push(alertType);
-      }
-      if (readStatus !== undefined) {
-        conditions.push('a.read_status = ?');
-        params.push(+readStatus);
-      }
-      if (startTime) {
-        conditions.push('a.created_at >= ?');
-        params.push(startTime);
-      }
-      if (endTime) {
-        conditions.push('a.created_at <= ?');
-        params.push(endTime);
-      }
+      const deviceMap = {};
+      devices.forEach(d => { deviceMap[d.id] = d; });
 
-      const where = 'WHERE ' + conditions.join(' AND ');
-      const alerts = await db.all(`
-        SELECT a.*, d.name as device_name,
-          e.snapshot_path, e.event_level, e.confidence
-        FROM alerts a
-        JOIN devices d ON a.device_id = d.id
-        LEFT JOIN ai_events e ON a.event_id = e.id
-        ${where}
-        ORDER BY a.created_at DESC
-        LIMIT ? OFFSET ?
-      `, ...params, pageSize, offset);
+      const eventMap = {};
+      events.forEach(e => { eventMap[e.id] = e; });
 
-      const total = (await db.get(`SELECT COUNT(*) as count FROM alerts a ${where}`, ...params)).count;
-      const unreadCount = (await db.get(`SELECT COUNT(*) as count FROM alerts a WHERE user_id = ? AND read_status = 0`, req.user.id)).count;
+      let filtered = alerts.filter(a => {
+        if (a.user_id !== userId) return false;
+        if (deviceId && a.device_id !== +deviceId && a.device_id !== deviceId) return false;
+        if (alertType && a.alert_type !== alertType) return false;
+        if (readStatus !== undefined && a.read_status !== +readStatus) return false;
+        if (startTime && a.created_at < startTime) return false;
+        if (endTime && a.created_at > endTime) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+      const total = filtered.length;
+      const unreadCount = alerts.filter(a => a.user_id === userId && a.read_status === 0).length;
+
+      const pageNum = +page;
+      const pageSizeNum = +pageSize;
+      const start = (pageNum - 1) * pageSizeNum;
+      const paged = filtered.slice(start, start + pageSizeNum);
+
+      const list = paged.map(a => {
+        const device = deviceMap[a.device_id];
+        const event = eventMap[a.event_id];
+        return {
+          ...a,
+          device_name: device ? device.name : null,
+          snapshot_path: event ? event.snapshot_path : null,
+          event_level: event ? event.event_level : null,
+          confidence: event ? event.confidence : null
+        };
+      });
 
       res.json({
         code: 200,
-        data: { list: alerts, total, unreadCount, page: +page, pageSize: +pageSize }
+        data: { list, total, unreadCount, page: pageNum, pageSize: pageSizeNum }
       });
     } catch (e) {
       console.error('List alerts error:', e);
@@ -476,33 +484,63 @@ class AlertController {
 
   async listAuditLogs(req, res) {
     try {
-      const { alertId, page = 1, pageSize = 50 } = req.query;
-      const offset = (page - 1) * pageSize;
+      const {
+        alertId, action,
+        startDate, endDate,
+        startTime, endTime,
+        page = 1, pageSize = 50
+      } = req.query;
 
-      let where = 'WHERE a.alert_id IN (SELECT id FROM alerts WHERE user_id = ?)';
-      const params = [req.user.id];
+      const logs = db.getTable('alert_audit_logs');
+      const alerts = db.getTable('alerts');
+      const users = db.getTable('users');
+      const userId = req.user.id;
 
-      if (alertId) {
-        where += ' AND a.alert_id = ?';
-        params.push(alertId);
-      }
+      const userAlertIds = new Set();
+      alerts.forEach(a => {
+        if (a.user_id === userId) userAlertIds.add(a.id);
+      });
 
-      const logs = await db.all(`
-        SELECT a.*, u.username, u.nickname,
-          al.title as alert_title
-        FROM alert_audit_logs a
-        JOIN users u ON a.user_id = u.id
-        JOIN alerts al ON a.alert_id = al.id
-        ${where}
-        ORDER BY a.created_at DESC
-        LIMIT ? OFFSET ?
-      `, ...params, pageSize, offset);
+      const userMap = {};
+      users.forEach(u => { userMap[u.id] = u; });
 
-      const total = (await db.get(`SELECT COUNT(*) as count FROM alert_audit_logs a ${where}`, ...params)).count;
+      const alertMap = {};
+      alerts.forEach(a => { alertMap[a.id] = a; });
+
+      const start = startDate || startTime;
+      const end = endDate || endTime;
+
+      let filtered = logs.filter(log => {
+        if (!userAlertIds.has(log.alert_id)) return false;
+        if (alertId && log.alert_id !== +alertId && log.alert_id !== alertId) return false;
+        if (action && log.action !== action) return false;
+        if (start && log.created_at < start) return false;
+        if (end && log.created_at > end) return false;
+        return true;
+      });
+
+      filtered.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+      const total = filtered.length;
+      const pageNum = +page;
+      const pageSizeNum = +pageSize;
+      const startIdx = (pageNum - 1) * pageSizeNum;
+      const paged = filtered.slice(startIdx, startIdx + pageSizeNum);
+
+      const list = paged.map(log => {
+        const user = userMap[log.user_id];
+        const alert = alertMap[log.alert_id];
+        return {
+          ...log,
+          username: user ? user.username : null,
+          nickname: user ? user.nickname : null,
+          alert_title: alert ? alert.title : null
+        };
+      });
 
       res.json({
         code: 200,
-        data: { list: logs, total, page: +page, pageSize: +pageSize }
+        data: { list, total, page: pageNum, pageSize: pageSizeNum }
       });
     } catch (e) {
       res.status(500).json({ code: 500, message: '服务异常' });
@@ -513,41 +551,57 @@ class AlertController {
     try {
       const userId = req.user.id;
 
-      const deviceCount = (await db.get('SELECT COUNT(*) as count FROM devices WHERE owner_id = ?', userId)).count;
-      const onlineCount = (await db.get('SELECT COUNT(*) as count FROM devices WHERE owner_id = ? AND online_status = 1', userId)).count;
+      const devices = db.getTable('devices');
+      const shares = db.getTable('device_shares');
+      const events = db.getTable('ai_events');
+      const recordings = db.getTable('recordings');
+
+      const allowedDeviceIds = new Set();
+      devices.forEach(d => {
+        if (d.owner_id === userId) allowedDeviceIds.add(d.id);
+      });
+      shares.forEach(s => {
+        if (s.share_to_user_id === userId && s.status === 1) {
+          allowedDeviceIds.add(s.device_id);
+        }
+      });
+
+      const allowedDevices = devices.filter(d => allowedDeviceIds.has(d.id));
+      const deviceCount = allowedDevices.length;
+      const onlineCount = allowedDevices.filter(d => d.online_status === 1).length;
+
       const today = new Date().toISOString().split('T')[0];
+      const todayEvents = events.filter(e => {
+        if (!allowedDeviceIds.has(e.device_id)) return false;
+        return e.created_at && e.created_at.split('T')[0] === today;
+      });
+      const todayEventCount = todayEvents.length;
 
-      const todayEventCount = (await db.get(`
-        SELECT COUNT(*) as count FROM ai_events e
-        JOIN devices d ON e.device_id = d.id
-        WHERE d.owner_id = ? AND DATE(e.created_at) = ?
-      `, userId, today)).count;
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const recentEvents = events.filter(e => {
+        if (!allowedDeviceIds.has(e.device_id)) return false;
+        return e.created_at >= sevenDaysAgo;
+      });
 
-      const eventTypeStats = await db.all(`
-        SELECT e.event_type, COUNT(*) as count
-        FROM ai_events e
-        JOIN devices d ON e.device_id = d.id
-        WHERE d.owner_id = ? AND e.created_at >= DATE('now', '-7 days')
-        GROUP BY e.event_type
-      `, userId);
+      const eventTypeMap = {};
+      recentEvents.forEach(e => {
+        if (!eventTypeMap[e.event_type]) eventTypeMap[e.event_type] = 0;
+        eventTypeMap[e.event_type]++;
+      });
+      const eventTypeStats = Object.entries(eventTypeMap).map(([event_type, count]) => ({ event_type, count }));
 
-      const alertLevelStats = await db.get(`
-        SELECT 
-          SUM(CASE WHEN e.event_level = 'low' THEN 1 ELSE 0 END) as low,
-          SUM(CASE WHEN e.event_level = 'normal' THEN 1 ELSE 0 END) as normal,
-          SUM(CASE WHEN e.event_level = 'high' THEN 1 ELSE 0 END) as high,
-          SUM(CASE WHEN e.event_level = 'critical' THEN 1 ELSE 0 END) as critical
-        FROM ai_events e
-        JOIN devices d ON e.device_id = d.id
-        WHERE d.owner_id = ? AND e.created_at >= DATE('now', '-7 days')
-      `, userId);
+      const alertLevelStats = { low: 0, normal: 0, high: 0, critical: 0 };
+      recentEvents.forEach(e => {
+        if (alertLevelStats.hasOwnProperty(e.event_level)) {
+          alertLevelStats[e.event_level]++;
+        }
+      });
 
-      const recordingCount = await db.get(`
-        SELECT COUNT(*) as count, COALESCE(SUM(file_size), 0) as total_size
-        FROM recordings r
-        JOIN devices d ON r.device_id = d.id
-        WHERE d.owner_id = ?
-      `, userId);
+      const allowedRecordings = recordings.filter(r => allowedDeviceIds.has(r.device_id));
+      const recordingCount = {
+        count: allowedRecordings.length,
+        total_size: allowedRecordings.reduce((sum, r) => sum + (r.file_size || 0), 0)
+      };
 
       res.json({
         code: 200,

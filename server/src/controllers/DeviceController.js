@@ -207,52 +207,87 @@ class DeviceController {
   async listDevices(req, res) {
     try {
       const { groupId, status, keyword, page = 1, pageSize = 50 } = req.query;
-      const offset = (page - 1) * pageSize;
+      const userId = req.user.id;
 
-      const conditions = ['(d.owner_id = ? OR d.id IN (SELECT device_id FROM device_shares WHERE share_to_user_id = ? AND status = 1))'];
-      const params = [req.user.id, req.user.id];
+      const devices = db.getTable('devices');
+      const groups = db.getTable('device_groups');
+      const shares = db.getTable('device_shares');
+
+      const groupMap = {};
+      for (const g of groups) {
+        groupMap[g.id] = g.name;
+      }
+
+      const userShares = shares.filter(s => s.share_to_user_id === userId && s.status === 1);
+      const sharedDeviceIds = new Set(userShares.map(s => s.device_id));
+      const sharePermissionMap = {};
+      for (const s of userShares) {
+        if (!sharePermissionMap[s.device_id]) {
+          sharePermissionMap[s.device_id] = s.permission_level;
+        }
+      }
+
+      let filtered = devices.filter(d => {
+        if (d.owner_id === userId) return true;
+        if (sharedDeviceIds.has(d.id)) return true;
+        return false;
+      });
 
       if (groupId !== undefined) {
         if (groupId === 'null' || groupId === '') {
-          conditions.push('d.group_id IS NULL');
+          filtered = filtered.filter(d => d.group_id === null || d.group_id === undefined);
         } else {
-          conditions.push('d.group_id = ?');
-          params.push(groupId);
+          const gid = +groupId;
+          filtered = filtered.filter(d => d.group_id === gid);
         }
       }
+
       if (status !== undefined) {
-        conditions.push('d.status = ?');
-        params.push(+status);
+        const s = +status;
+        filtered = filtered.filter(d => d.status === s);
       }
+
       if (keyword) {
-        conditions.push('(d.name LIKE ? OR d.device_sn LIKE ? OR d.model LIKE ?)');
-        params.push(`%${keyword}%`, `%${keyword}%`, `%${keyword}%`);
+        const kw = String(keyword).toLowerCase();
+        filtered = filtered.filter(d => {
+          const name = String(d.name || '').toLowerCase();
+          const sn = String(d.device_sn || '').toLowerCase();
+          const model = String(d.model || '').toLowerCase();
+          return name.includes(kw) || sn.includes(kw) || model.includes(kw);
+        });
       }
 
-      const where = 'WHERE ' + conditions.join(' AND ');
-      const devices = await db.all(`
-        SELECT d.*, dg.name as group_name,
-          CASE WHEN d.owner_id = ? THEN 'owner' ELSE (
-            SELECT permission_level FROM device_shares WHERE device_id = d.id AND share_to_user_id = ? AND status = 1 LIMIT 1
-          ) END as my_permission
-        FROM devices d
-        LEFT JOIN device_groups dg ON d.group_id = dg.id
-        ${where}
-        ORDER BY d.created_at DESC LIMIT ? OFFSET ?
-      `, req.user.id, req.user.id, ...params, pageSize, offset);
+      filtered.sort((a, b) => {
+        if (a.created_at < b.created_at) return 1;
+        if (a.created_at > b.created_at) return -1;
+        return 0;
+      });
 
-      const total = (await db.get(`SELECT COUNT(*) as count FROM devices d ${where}`, ...params)).count;
+      const total = filtered.length;
+      const onlineCount = filtered.filter(d => d.online_status === 1).length;
 
-      const onlineCount = (await db.get(`SELECT COUNT(*) as count FROM devices d ${where} AND d.online_status = 1`, ...params)).count;
+      const pageNum = +page;
+      const pageSizeNum = +pageSize;
+      const offset = (pageNum - 1) * pageSizeNum;
+      const pagedList = filtered.slice(offset, offset + pageSizeNum);
+
+      const list = pagedList.map(d => {
+        const myPermission = d.owner_id === userId ? 'owner' : sharePermissionMap[d.id];
+        return {
+          ...d,
+          group_name: groupMap[d.group_id] || null,
+          my_permission: myPermission || null
+        };
+      });
 
       res.json({
         code: 200,
         data: {
-          list: devices,
+          list,
           total,
           onlineCount,
-          page: +page,
-          pageSize: +pageSize
+          page: pageNum,
+          pageSize: pageSizeNum
         }
       });
     } catch (e) {

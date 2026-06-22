@@ -25,38 +25,53 @@ function ensureTable(name) {
   if (!data.tables[name]) data.tables[name] = [];
 }
 
+function parseCondition(cond, params, paramIdx) {
+  cond = cond.trim();
+  const m = cond.match(/^(\w+)\s*(=|<>|!=|>|<|>=|<=|IS\s+NOT|IS|LIKE|IN)\s*(.+)$/i);
+  if (!m) return { pass: true };
+  const [, col, opStr, rawVal] = m;
+  const op = opStr.toUpperCase();
+  let val;
+  if (rawVal === '?') { val = params[paramIdx.idx++]; }
+  else if (rawVal.toUpperCase() === 'NULL') { val = null; }
+  else if (/^'[^']*'$/.test(rawVal)) { val = rawVal.slice(1, -1); }
+  else if (/^-?\d+(\.\d+)?$/.test(rawVal)) { val = parseFloat(rawVal); }
+  else { val = rawVal; }
+  return { col, op, val };
+}
+
+function evalCondition(row, col, op, val) {
+  const rowVal = row[col];
+  switch (op) {
+    case '=': return rowVal === val;
+    case '<>': case '!=': return rowVal !== val;
+    case '>': return rowVal > val;
+    case '>=': return rowVal >= val;
+    case '<': return rowVal < val;
+    case '<=': return rowVal <= val;
+    case 'IS': return rowVal === null || rowVal === undefined;
+    case 'IS NOT': return rowVal !== null && rowVal !== undefined;
+    case 'LIKE': {
+      const pattern = String(val).replace(/%/g, '.*').replace(/_/g, '.');
+      return new RegExp('^' + pattern + '$', 'i').test(String(rowVal || ''));
+    }
+    default: return true;
+  }
+}
+
 function parseWhere(where, params) {
+  const pi = { idx: 0 };
+  const orGroups = where.split(/\s+OR\s+/i);
+  const groupFilters = orGroups.map(group => {
+    const andConds = group.split(/\s+AND\s+/i);
+    return andConds.map(c => parseCondition(c.trim(), params, pi));
+  });
   return function (row) {
     if (!where) return true;
-    const clauses = where.split(/\s+AND\s+/i);
-    let paramIdx = 0;
-    for (const clause of clauses) {
-      const m = clause.trim().match(/^(\w+)\s*(=|<>|!=|>|<|>=|<=|IS|IS NOT|LIKE|IN)\s*(.+)$/i);
-      if (!m) continue;
-      const [, col, op, rawVal] = m;
-      let val;
-      if (rawVal === '?') { val = params[paramIdx++]; }
-      else if (rawVal.toUpperCase() === 'NULL') { val = null; }
-      else if (/^'[^']*'$/.test(rawVal)) { val = rawVal.slice(1, -1); }
-      else { val = rawVal; }
-      const rowVal = row[col];
-      switch (op.toUpperCase()) {
-        case '=': if (rowVal !== val) return false; break;
-        case '<>': case '!=': if (rowVal === val) return false; break;
-        case '>': if (!(rowVal > val)) return false; break;
-        case '<': if (!(rowVal < val)) return false; break;
-        case '>=': if (!(rowVal >= val)) return false; break;
-        case '<=': if (!(rowVal <= val)) return false; break;
-        case 'IS': if (rowVal !== null) return false; break;
-        case 'IS NOT': if (rowVal === null) return false; break;
-        case 'LIKE': {
-          const pattern = val.replace(/%/g, '.*').replace(/_/g, '.');
-          if (!new RegExp('^' + pattern + '$', 'i').test(String(rowVal || ''))) return false;
-          break;
-        }
-      }
-    }
-    return true;
+    return groupFilters.some(group => group.every(cond => {
+      if (cond.pass) return true;
+      return evalCondition(row, cond.col, cond.op, cond.val);
+    }));
   };
 }
 
@@ -284,4 +299,48 @@ async function initDatabase() {
 
 initDatabase().catch(err => console.error('❌ Database init failed:', err));
 
-module.exports = { run, get, all, exec };
+function getTable(name) {
+  ensureTable(name);
+  return data.tables[name] || [];
+}
+
+function saveTable(name, rows) {
+  ensureTable(name);
+  data.tables[name] = rows;
+  saveData(data);
+}
+
+function findById(table, id) {
+  return getTable(table).find(r => r.id === id);
+}
+
+function insert(table, row) {
+  ensureTable(table);
+  if (!data.sequences[table]) data.sequences[table] = 0;
+  data.sequences[table]++;
+  const newRow = { ...row, id: data.sequences[table] };
+  if (!newRow.created_at) newRow.created_at = new Date().toISOString();
+  data.tables[table].push(newRow);
+  saveData(data);
+  return newRow;
+}
+
+function update(table, id, updates) {
+  ensureTable(table);
+  const rows = data.tables[table];
+  const idx = rows.findIndex(r => r.id === id);
+  if (idx === -1) return null;
+  rows[idx] = { ...rows[idx], ...updates, updated_at: new Date().toISOString() };
+  saveData(data);
+  return rows[idx];
+}
+
+function remove(table, id) {
+  ensureTable(table);
+  const before = data.tables[table].length;
+  data.tables[table] = data.tables[table].filter(r => r.id !== id);
+  saveData(data);
+  return before - data.tables[table].length;
+}
+
+module.exports = { run, get, all, exec, getTable, saveTable, findById, insert, update, remove };
