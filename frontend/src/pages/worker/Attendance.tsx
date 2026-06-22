@@ -485,7 +485,7 @@ function Attendance() {
               border: 'none',
               color: '#fff',
             }}
-            bodyStyle={{ padding: 32 }}
+            styles={{ body: { padding: 32 } }}
           >
             <Space direction="vertical" size={24} style={{ width: '100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

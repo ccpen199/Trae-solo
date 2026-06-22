@@ -79,7 +79,6 @@ import adminApi from '../../api/admin'
 import dayjs from 'dayjs'
 
 const { Title, Text, Paragraph } = Typography
-const { TabPane } = Tabs
 const { Option } = Select
 const { RangePicker } = DatePicker
 const { TextArea } = Input

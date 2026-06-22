@@ -740,7 +740,7 @@ function Applications() {
     <div>
       <Card
         style={{ borderRadius: 12 }}
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
         tabBarExtraContent={
           <Text type="secondary" style={{ paddingRight: 16 }}>
             共 {applications.length} 条申请记录
@@ -802,7 +802,7 @@ function Applications() {
             <Card
               key={app.id}
               style={{ borderRadius: 12, marginBottom: 16 }}
-              bodyStyle={{ padding: 20 }}
+              styles={{ body: { padding: 20 } }}
             >
               <Row gutter={[24, 16]}>
                 <Col xs={24} lg={16}>

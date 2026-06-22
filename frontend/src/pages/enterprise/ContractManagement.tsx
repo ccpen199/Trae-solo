@@ -378,7 +378,7 @@ function ContractManagement() {
         </Space>
       </div>
 
-      <Card bordered={false} style={{ borderRadius: 12 }} bodyStyle={{ padding: 0 }}>
+      <Card bordered={false} style={{ borderRadius: 12 }} styles={{ body: { padding: 0 } }}>
         <Tabs
           activeKey={activeTab}
           onChange={setActiveTab}

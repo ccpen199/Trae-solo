@@ -177,7 +177,7 @@ function Settings() {
               color: '#fff',
               textAlign: 'center',
             }}
-            bodyStyle={{ padding: 28 }}
+            styles={{ body: { padding: 28 } }}
           >
             <Space direction="vertical" size={12} style={{ width: '100%' }}>
               <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -352,7 +352,7 @@ function Settings() {
         <Col xs={24} lg={16}>
           <Card
             style={{ borderRadius: 12 }}
-            bodyStyle={{ padding: 0 }}
+            styles={{ body: { padding: 0 } }}
           >
             <Tabs
               size="large"

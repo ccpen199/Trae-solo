@@ -239,7 +239,7 @@ function Dashboard() {
               borderRadius: 12,
               border: 'none',
             }}
-            bodyStyle={{ padding: 28 }}
+            styles={{ body: { padding: 28 } }}
           >
             <Space align="center" size={20}>
               <Avatar
@@ -415,7 +415,7 @@ function Dashboard() {
         <Col xs={24} lg={8}>
           <Row gutter={[16, 16]}>
             <Col span={12}>
-              <Card bordered={false} style={{ borderRadius: 12, background: '#e6f4ff' }} bodyStyle={{ padding: 20 }}>
+              <Card bordered={false} style={{ borderRadius: 12, background: '#e6f4ff' }} styles={{ body: { padding: 20 } }}>
                 <Statistic
                   title={<Text type="secondary" style={{ fontSize: 12 }}>当前项目</Text>}
                   value={activeProjects.length}
@@ -425,7 +425,7 @@ function Dashboard() {
               </Card>
             </Col>
             <Col span={12}>
-              <Card bordered={false} style={{ borderRadius: 12, background: '#f6ffed' }} bodyStyle={{ padding: 20 }}>
+              <Card bordered={false} style={{ borderRadius: 12, background: '#f6ffed' }} styles={{ body: { padding: 20 } }}>
                 <Statistic
                   title={<Text type="secondary" style={{ fontSize: 12 }}>累计出勤</Text>}
                   value={worker?.total_work_days || 328}
@@ -436,7 +436,7 @@ function Dashboard() {
               </Card>
             </Col>
             <Col span={12}>
-              <Card bordered={false} style={{ borderRadius: 12, background: '#fffbe6' }} bodyStyle={{ padding: 20 }}>
+              <Card bordered={false} style={{ borderRadius: 12, background: '#fffbe6' }} styles={{ body: { padding: 20 } }}>
                 <Statistic
                   title={<Text type="secondary" style={{ fontSize: 12 }}>匠级等级</Text>}
                   value={score?.craftsman_level || 1}
@@ -447,7 +447,7 @@ function Dashboard() {
               </Card>
             </Col>
             <Col span={12}>
-              <Card bordered={false} style={{ borderRadius: 12, background: '#fff1f0' }} bodyStyle={{ padding: 20 }}>
+              <Card bordered={false} style={{ borderRadius: 12, background: '#fff1f0' }} styles={{ body: { padding: 20 } }}>
                 <Statistic
                   title={<Text type="secondary" style={{ fontSize: 12 }}>累计收入</Text>}
                   value={wageStats?.total_income || 0}
@@ -485,7 +485,7 @@ function Dashboard() {
                   hoverable
                   bordered={true}
                   style={{ borderRadius: 8 }}
-                  bodyStyle={{ padding: 20 }}
+                  styles={{ body: { padding: 20 } }}
                 >
                   <Space direction="vertical" size={12} style={{ width: '100%' }}>
                     <div>

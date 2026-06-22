@@ -268,7 +268,7 @@ function Services() {
     <div>
       <Card
         style={{ borderRadius: 12, marginBottom: 24 }}
-        bodyStyle={{ padding: 20, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
+        styles={{ body: { padding: 20, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' } }}
       >
         <Space direction="vertical" size={8} style={{ width: '100%', color: '#fff' }}>
           <Title level={3} style={{ color: '#fff', margin: 0 }}>
@@ -289,7 +289,7 @@ function Services() {
             <Card
               hoverable
               style={{ borderRadius: 12, height: '100%' }}
-              bodyStyle={{ padding: 20 }}
+              styles={{ body: { padding: 20 } }}
             >
               <Space direction="vertical" size={14} style={{ width: '100%', height: '100%' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -398,7 +398,7 @@ function Services() {
                 <Card
                   key={app.id}
                   style={{ marginBottom: 16, borderRadius: 10 }}
-                  bodyStyle={{ padding: 16 }}
+                  styles={{ body: { padding: 16 } }}
                 >
                   <Row gutter={[16, 12]} align="middle">
                     <Col xs={24} sm={4} md={3}>

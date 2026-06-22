@@ -428,7 +428,7 @@ function JobList() {
     <div>
       <Card
         style={{ borderRadius: 12, marginBottom: 24 }}
-        bodyStyle={{ padding: 20 }}
+        styles={{ body: { padding: 20 } }}
       >
         <Space direction="vertical" size={16} style={{ width: '100%' }}>
           <Row gutter={[16, 16]} align="middle">
@@ -540,7 +540,7 @@ function JobList() {
               <Card
                 hoverable
                 style={{ borderRadius: 12, height: '100%' }}
-                bodyStyle={{ padding: 20 }}
+                styles={{ body: { padding: 20 } }}
                 onClick={() => openDetail(job)}
               >
                 <Space direction="vertical" size={14} style={{ width: '100%' }}>

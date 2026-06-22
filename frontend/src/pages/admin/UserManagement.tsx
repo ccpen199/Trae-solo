@@ -64,7 +64,6 @@ import dayjs from 'dayjs'
 const { Title, Text, Paragraph } = Typography
 const { Option } = Select
 const { TextArea } = Input
-const { TabPane } = Tabs
 
 const craftsmanLevelColors: Record<number, string> = {
   1: '#d9d9d9',

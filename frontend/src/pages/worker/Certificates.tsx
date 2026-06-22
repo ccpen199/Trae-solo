@@ -270,7 +270,7 @@ function Certificates() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col xs={12} sm={6}>
-          <Card bordered={false} style={{ borderRadius: 12, background: '#e6f4ff' }} bodyStyle={{ padding: 16 }}>
+          <Card bordered={false} style={{ borderRadius: 12, background: '#e6f4ff' }} styles={{ body: { padding: 16 } }}>
             <Statistic
               title={<Text type="secondary" style={{ fontSize: 12 }}>证书总数</Text>}
               value={stats.total}
@@ -281,7 +281,7 @@ function Certificates() {
           </Card>
         </Col>
         <Col xs={12} sm={6}>
-          <Card bordered={false} style={{ borderRadius: 12, background: '#f6ffed' }} bodyStyle={{ padding: 16 }}>
+          <Card bordered={false} style={{ borderRadius: 12, background: '#f6ffed' }} styles={{ body: { padding: 16 } }}>
             <Statistic
               title={<Text type="secondary" style={{ fontSize: 12 }}>已认证</Text>}
               value={stats.verified}
@@ -292,7 +292,7 @@ function Certificates() {
           </Card>
         </Col>
         <Col xs={12} sm={6}>
-          <Card bordered={false} style={{ borderRadius: 12, background: '#fffbe6' }} bodyStyle={{ padding: 16 }}>
+          <Card bordered={false} style={{ borderRadius: 12, background: '#fffbe6' }} styles={{ body: { padding: 16 } }}>
             <Statistic
               title={<Text type="secondary" style={{ fontSize: 12 }}>审核中</Text>}
               value={stats.pending}
@@ -303,7 +303,7 @@ function Certificates() {
           </Card>
         </Col>
         <Col xs={12} sm={6}>
-          <Card bordered={false} style={{ borderRadius: 12, background: '#fff7e6' }} bodyStyle={{ padding: 16 }}>
+          <Card bordered={false} style={{ borderRadius: 12, background: '#fff7e6' }} styles={{ body: { padding: 16 } }}>
             <Statistic
               title={<Text type="secondary" style={{ fontSize: 12 }}>3月内过期</Text>}
               value={stats.expiring}
@@ -371,7 +371,7 @@ function Certificates() {
               <Card
                 hoverable
                 style={{ borderRadius: 12, height: '100%' }}
-                bodyStyle={{ padding: 16 }}
+                styles={{ body: { padding: 16 } }}
                 cover={
                   <div
                     style={{

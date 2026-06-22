@@ -381,7 +381,7 @@ function Wages() {
           <Card
             bordered={false}
             style={{ borderRadius: 12, background: 'linear-gradient(135deg, #f5222d 0%, #ff7875 100%)' }}
-            bodyStyle={{ padding: 20 }}
+            styles={{ body: { padding: 20 } }}
           >
             <Statistic
               title={<Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: 12 }}>累计总收入</Text>}
@@ -397,7 +397,7 @@ function Wages() {
           <Card
             bordered={false}
             style={{ borderRadius: 12, background: 'linear-gradient(135deg, #faad14 0%, #ffd666 100%)' }}
-            bodyStyle={{ padding: 20 }}
+            styles={{ body: { padding: 20 } }}
           >
             <Statistic
               title={<Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: 12 }}>待发工资</Text>}
@@ -413,7 +413,7 @@ function Wages() {
           <Card
             bordered={false}
             style={{ borderRadius: 12, background: 'linear-gradient(135deg, #52c41a 0%, #95de64 100%)' }}
-            bodyStyle={{ padding: 20 }}
+            styles={{ body: { padding: 20 } }}
           >
             <Statistic
               title={<Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: 12 }}>已发工资</Text>}
@@ -429,7 +429,7 @@ function Wages() {
           <Card
             bordered={false}
             style={{ borderRadius: 12, background: 'linear-gradient(135deg, #1677ff 0%, #69b1ff 100%)' }}
-            bodyStyle={{ padding: 20 }}
+            styles={{ body: { padding: 20 } }}
           >
             <Statistic
               title={<Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: 12 }}>本月收入</Text>}
@@ -445,7 +445,7 @@ function Wages() {
 
       <Card
         style={{ marginTop: 24, borderRadius: 12 }}
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
       >
         <Tabs
           activeKey={activeTab}
@@ -505,7 +505,7 @@ function Wages() {
                   <Card
                     key={item.id}
                     style={{ marginBottom: 16, borderRadius: 10, border: `1px solid ${s.color}40` }}
-                    bodyStyle={{ padding: 20 }}
+                    styles={{ body: { padding: 20 } }}
                   >
                     <Row gutter={[24, 12]} align="middle">
                       <Col xs={24} sm={12} md={8}>
@@ -635,7 +635,7 @@ function Wages() {
             <Card
               size="small"
               style={{ borderRadius: 8, background: '#fafafa' }}
-              bodyStyle={{ padding: 16 }}
+              styles={{ body: { padding: 16 } }}
             >
               <Descriptions column={2} size="small" labelStyle={{ width: 100, color: '#8c8c8c' }}>
                 <Descriptions.Item label="发薪项目">
@@ -755,7 +755,7 @@ function Wages() {
             <Card
               size="small"
               style={{ borderRadius: 8, background: '#f6ffed', border: '1px solid #b7eb8f' }}
-              bodyStyle={{ padding: 16 }}
+              styles={{ body: { padding: 16 } }}
             >
               <Space direction="vertical" size={8} style={{ width: '100%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>

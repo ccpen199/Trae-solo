@@ -252,7 +252,7 @@ function Settings() {
       <Card
         bordered={false}
         style={{ borderRadius: 16, marginBottom: 16 }}
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: 0 } }}
       >
         <Tabs
           defaultActiveKey="profile"

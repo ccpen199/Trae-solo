@@ -439,7 +439,7 @@ function Craftsman() {
               color: '#fff',
               textAlign: 'center',
             }}
-            bodyStyle={{ padding: 32 }}
+            styles={{ body: { padding: 32 } }}
           >
             <div
               style={{
@@ -574,7 +574,7 @@ function Craftsman() {
                     size="small"
                     bordered
                     style={{ borderRadius: 10 }}
-                    bodyStyle={{ padding: 16 }}
+                    styles={{ body: { padding: 16 } }}
                   >
                     <Space direction="vertical" size={10} style={{ width: '100%' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
