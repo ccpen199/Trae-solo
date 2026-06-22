@@ -27,8 +27,17 @@ import {
   saveUser,
   getCurrentUser,
   addToOfflineQueue,
+  getOfflineQueue,
+  clearOfflineQueueItem,
 } from '../utils/storage'
 import { mockTechnicians } from '../data/mockData'
+
+interface OfflineQueueItem {
+  id: string
+  action: string
+  data: unknown
+  timestamp: number
+}
 
 interface AppState {
   currentUser: AppUser | null
@@ -40,6 +49,7 @@ interface AppState {
   payments: PaymentProof[]
   online: boolean
   isInitialized: boolean
+  offlineQueue: OfflineQueueItem[]
 
   initApp: () => Promise<void>
   switchRole: (role: UserRole, technicianId?: string) => Promise<void>
@@ -59,6 +69,9 @@ interface AppState {
   unfreezeTechnician: (techId: string) => Promise<void>
 
   setOnline: (online: boolean) => void
+  refreshOfflineQueue: () => Promise<void>
+  syncOfflineQueue: () => Promise<void>
+  removeOfflineItem: (id: string) => Promise<void>
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -71,6 +84,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   payments: [],
   online: true,
   isInitialized: false,
+  offlineQueue: [],
 
   initApp: async () => {
     const user = await getCurrentUser()
@@ -101,12 +115,14 @@ export const useAppStore = create<AppState>((set, get) => ({
     const reviews = await getAllReviews()
     const reports = await getAllReports()
     const payments = await getAllPayments()
+    const queue = await getOfflineQueue()
 
     set({
       tasks,
       reviews,
       reports,
       payments,
+      offlineQueue: queue as OfflineQueueItem[],
       isInitialized: true,
     })
   },
@@ -337,4 +353,38 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   setOnline: (online: boolean) => set({ online }),
+
+  refreshOfflineQueue: async () => {
+    const queue = await getOfflineQueue()
+    set({ offlineQueue: queue as OfflineQueueItem[] })
+  },
+
+  syncOfflineQueue: async () => {
+    const { offlineQueue } = get()
+    if (!get().online) return
+
+    for (const item of offlineQueue) {
+      try {
+        switch (item.action) {
+          case 'createTask':
+            await saveTask(item.data as RepairTask)
+            break
+          case 'updateTask':
+            await saveTask(item.data as RepairTask)
+            break
+        }
+        await clearOfflineQueueItem(item.id)
+      } catch (e) {
+        console.error('Sync failed for item', item.id, e)
+      }
+    }
+    const queue = await getOfflineQueue()
+    set({ offlineQueue: queue as OfflineQueueItem[] })
+  },
+
+  removeOfflineItem: async (id: string) => {
+    await clearOfflineQueueItem(id)
+    const queue = await getOfflineQueue()
+    set({ offlineQueue: queue as OfflineQueueItem[] })
+  },
 }))

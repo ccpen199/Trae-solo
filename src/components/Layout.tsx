@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   Wifi,
   WifiOff,
-  RefreshCw,
 } from 'lucide-react'
 import { useAppStore } from '../store'
 
@@ -44,17 +43,30 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-6 h-6 text-primary-600" />
             <h1 className="font-bold text-lg">修匠·去中心化</h1>
+            {isTechnician && (
+              <span className="text-[10px] px-2 py-0.5 rounded bg-primary-100 text-primary-700 font-medium">
+                师傅端
+              </span>
+            )}
+            {!isTechnician && (
+              <span className="text-[10px] px-2 py-0.5 rounded bg-warning-100 text-warning-700 font-medium">
+                用户端
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setOnline(!online)}
-              className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs ${
-                online ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-              }`}
-            >
-              {online ? <Wifi className="w-3.5 h-3.5" /> : <WifiOff className="w-3.5 h-3.5" />}
-              {online ? '在线' : '离线'}
-            </button>
+            {isTechnician && (
+              <button
+                onClick={() => setOnline(!online)}
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors ${
+                  online ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-red-700 hover:bg-red-200'
+                }`}
+                title={online ? '切换为离线模式（操作暂存本地队列）' : '切换为在线模式'}
+              >
+                {online ? <Wifi className="w-3.5 h-3.5" /> : <WifiOff className="w-3.5 h-3.5" />}
+                {online ? '在线接单' : '离线模式'}
+              </button>
+            )}
             <select
               value={isTechnician ? (currentUser?.id || '') : 'user'}
               onChange={async (e) => {
@@ -68,10 +80,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               }}
               className="text-sm border rounded-lg px-2 py-1 bg-white"
             >
-              <option value="user">用户模式</option>
-              {technicians.filter(t => !t.frozen).map(t => (
-                <option key={t.id} value={t.id}>{t.name}（师傅）</option>
-              ))}
+              <option value="user">👤 用户（发单方）</option>
+              <optgroup label="🔧 师傅（接单方）">
+                {technicians.map(t => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}{t.frozen ? '（已冻结）' : ''}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </div>
         </div>
