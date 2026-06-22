@@ -10,6 +10,8 @@ import {
   Camera,
   ArrowRight,
   Grid3X3,
+  ClipboardList,
+  Building2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import SectionTitle from '@/components/common/SectionTitle';
@@ -20,6 +22,7 @@ import { templates } from '@/mock/data/templates';
 import { communityWorks } from '@/mock/data/community';
 import { ProductCategory, CommunityWork } from '@/types';
 import { cn } from '@/lib/utils';
+import { useUserStore } from '@/store/userStore';
 
 const heroSlides = [
   {
@@ -62,6 +65,7 @@ const aiFeatures = [
 
 export default function Home() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useUserStore();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -184,7 +188,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
           >
-            <Link to="/products">
+            <Link to="/ai-enhance">
               <Button size="lg" className="bg-gradient-brand shadow-glow transition-transform hover:scale-105">
                 <Wand2 className="h-5 w-5" />
                 开始制作
@@ -448,12 +452,37 @@ export default function Home() {
               我们相信每一张照片都有故事，每一个瞬间都值得被珍藏。
               用专业的品质和贴心的服务，帮你把美好回忆变成触手可及的实物。
             </motion.p>
-            <motion.div variants={itemVariants} className="mt-10">
+            <motion.div variants={itemVariants} className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link to="/products">
                 <Button size="lg" className="bg-white text-brand-600 hover:bg-paper-100 transition-transform hover:scale-105">
-                  <Grid3X3 className="h-5 w-5" />
-                  开始制作
+                  <Wand2 className="h-5 w-5" />
+                  立即开始制作
                 </Button>
+              </Link>
+              <Link to="/products">
+                <Button size="lg" variant="outline" className="border-white/50 text-white hover:bg-white/10 transition-transform hover:scale-105">
+                  <Grid3X3 className="h-5 w-5" />
+                  查看所有产品
+                </Button>
+              </Link>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="mt-10 flex flex-wrap items-center justify-center gap-6">
+              {isLoggedIn && (
+                <Link
+                  to="/orders"
+                  className="flex items-center gap-2 text-white/80 transition-colors hover:text-white"
+                >
+                  <ClipboardList className="h-5 w-5" />
+                  <span>查看生产进度</span>
+                </Link>
+              )}
+              <Link
+                to="/user/enterprise"
+                className="flex items-center gap-2 text-white/80 transition-colors hover:text-white"
+              >
+                <Building2 className="h-5 w-5" />
+                <span>企业合作</span>
               </Link>
             </motion.div>
           </motion.div>

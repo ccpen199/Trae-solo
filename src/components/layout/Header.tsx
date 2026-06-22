@@ -12,6 +12,7 @@ import {
   Settings,
   LogOut,
   Package,
+  Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCartStore } from '@/store/cartStore';
@@ -191,11 +192,25 @@ export default function Header() {
                         我的订单
                       </Link>
                       <Link
+                        to="/cart"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 hover:text-brand-500"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                        购物车
+                      </Link>
+                      <Link
                         to="/favorites"
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 hover:text-brand-500"
                       >
                         <Heart className="w-4 h-4" />
                         我的收藏
+                      </Link>
+                      <Link
+                        to="/user/enterprise"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 hover:text-brand-500"
+                      >
+                        <Building2 className="w-4 h-4" />
+                        企业中心
                       </Link>
                       <Link
                         to="/settings"
@@ -301,6 +316,13 @@ export default function Header() {
                       {totalCount}
                     </span>
                   )}
+                </Link>
+                <Link
+                  to="/user/enterprise"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-paper-700 hover:bg-paper-50 rounded-lg"
+                >
+                  <Building2 className="w-4 h-4" />
+                  企业中心
                 </Link>
                 <button
                   onClick={logout}

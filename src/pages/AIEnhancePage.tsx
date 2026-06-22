@@ -96,8 +96,7 @@ export default function AIEnhancePage() {
   };
 
   const handleStartCreate = () => {
-    alert('请选择要制作的产品');
-    navigate('/products');
+    navigate(`/products?photoId=${selectedPhotoId}`);
   };
 
   const containerVariants = {
@@ -604,7 +603,7 @@ export default function AIEnhancePage() {
             <Button
               size="lg"
               className="bg-gradient-brand shadow-glow transition-transform hover:scale-105"
-              onClick={() => navigate('/products')}
+              onClick={() => navigate(`/products?photoId=${selectedPhotoId}`)}
             >
               <Grid3X3 className="h-5 w-5" />
               查看全部产品

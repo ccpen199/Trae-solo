@@ -10,6 +10,8 @@ import {
   Filter,
   Layers,
   Palette,
+  ClipboardList,
+  Building2,
 } from 'lucide-react';
 import SectionTitle from '@/components/common/SectionTitle';
 import ProductCard from '@/components/product/ProductCard';
@@ -95,39 +97,67 @@ export default function ProductsPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="w-full lg:w-64 lg:flex-shrink-0"
           >
-            <div className="sticky top-24 rounded-xl bg-white p-4 shadow-soft">
-              <h3 className="mb-4 px-2 font-display text-lg font-semibold text-paper-900">
-                产品分类
-              </h3>
-              <nav className="space-y-1">
-                {allCategories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={cn(
-                      'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-200',
-                      selectedCategory === category.id
-                        ? 'bg-gradient-brand text-white shadow-soft'
-                        : 'text-paper-700 hover:bg-paper-100'
-                    )}
-                  >
-                    <span className="text-xl">{category.icon}</span>
-                    <span className="font-medium">{category.name}</span>
-                    {selectedCategory !== 'all' &&
-                      category.id !== 'all' && (
-                        <span className={cn(
-                          'ml-auto text-xs',
-                          selectedCategory === category.id ? 'text-white/80' : 'text-paper-400'
-                        )}>
-                          {
-                            products.find((p) => p.id === category.id)
-                              ?.monthlySales
-                          }
-                        </span>
+            <div className="sticky top-24 space-y-4">
+              <div className="rounded-xl bg-white p-4 shadow-soft">
+                <h3 className="mb-4 px-2 font-display text-lg font-semibold text-paper-900">
+                  产品分类
+                </h3>
+                <nav className="space-y-1">
+                  {allCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={cn(
+                        'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-200',
+                        selectedCategory === category.id
+                          ? 'bg-gradient-brand text-white shadow-soft'
+                          : 'text-paper-700 hover:bg-paper-100'
                       )}
+                    >
+                      <span className="text-xl">{category.icon}</span>
+                      <span className="font-medium">{category.name}</span>
+                      {selectedCategory !== 'all' &&
+                        category.id !== 'all' && (
+                          <span className={cn(
+                            'ml-auto text-xs',
+                            selectedCategory === category.id ? 'text-white/80' : 'text-paper-400'
+                          )}>
+                            {
+                              products.find((p) => p.id === category.id)
+                                ?.monthlySales
+                            }
+                          </span>
+                        )}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="rounded-xl bg-white p-4 shadow-soft">
+                <h3 className="mb-3 px-2 font-display text-base font-semibold text-paper-900">
+                  快捷入口
+                </h3>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => navigate('/orders')}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-paper-700 transition-all duration-200 hover:bg-brand-50 hover:text-brand-600"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-100 text-brand-600">
+                      <ClipboardList className="h-4 w-4" />
+                    </div>
+                    <span className="font-medium text-sm">生产进度查询</span>
                   </button>
-                ))}
-              </nav>
+                  <button
+                    onClick={() => navigate('/user/enterprise')}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-paper-700 transition-all duration-200 hover:bg-gold-50 hover:text-gold-600"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-100 text-gold-600">
+                      <Building2 className="h-4 w-4" />
+                    </div>
+                    <span className="font-medium text-sm">企业定制</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </motion.aside>
 

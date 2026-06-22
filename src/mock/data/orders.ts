@@ -1,4 +1,4 @@
-import type { SplitAccountInfo } from '@/types';
+import type { SplitAccountInfo, WorkOrderInfo, EnterpriseInfo, OperationLog } from '@/types';
 
 export interface ProductionNode {
   status: string;
@@ -6,6 +6,8 @@ export interface ProductionNode {
   completedAt?: string;
   estimatedAt?: string;
   completed: boolean;
+  remark?: string;
+  operationLogs?: OperationLog[];
 }
 
 export interface LogisticsInfo {

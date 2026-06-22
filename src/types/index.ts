@@ -482,6 +482,8 @@ export interface Order {
   productionNodes: ProductionNode[];
   /** 物流信息 */
   logisticsInfo?: LogisticsInfo;
+  /** 生产工单信息 */
+  workOrderInfo?: WorkOrderInfo;
   /** 创建时间 */
   createdAt: string;
   /** 支付时间 */
@@ -494,6 +496,8 @@ export interface Order {
   completedAt?: string;
   /** 取消时间 */
   cancelledAt?: string;
+  /** 企业信息（企业订单） */
+  enterpriseInfo?: EnterpriseInfo;
 }
 
 /**
@@ -514,6 +518,60 @@ export interface ProductionNode {
   operator: string;
   /** 备注 */
   remark?: string;
+  /** 操作记录 */
+  operationLogs?: OperationLog[];
+}
+
+/**
+ * 节点操作记录
+ */
+export interface OperationLog {
+  /** 时间 */
+  time: string;
+  /** 操作人 */
+  operator: string;
+  /** 操作内容 */
+  action: string;
+  /** 设备编号 */
+  equipment?: string;
+}
+
+/**
+ * 生产工单信息
+ */
+export interface WorkOrderInfo {
+  /** 工单号 */
+  workOrderNo: string;
+  /** 工厂ID */
+  factoryId: string;
+  /** 生产线 */
+  productionLine: string;
+  /** 预计完成时间 */
+  estimatedCompletionTime?: string;
+  /** 实际完成时间 */
+  actualCompletionTime?: string;
+  /** 操作员 */
+  operator: string;
+  /** 质检记录 */
+  qualityRecord?: string;
+  /** 设备编号 */
+  equipment: string;
+}
+
+/**
+ * 企业信息表单
+ */
+export interface EnterpriseInfo {
+  /** 企业名称 */
+  companyName: string;
+  /** 税号 */
+  taxNumber: string;
+  /** 开户银行 */
+  bankName: string;
+  /** 银行账号 */
+  bankAccount: string;
+  /** 发票抬头 */
+  invoiceTitle: string;
 }
 
 /**

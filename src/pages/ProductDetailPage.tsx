@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
@@ -9,7 +9,6 @@ import {
   ShoppingCart,
   Sparkles,
   Clock,
-  Shield,
   Eye,
   Type,
   Image as ImageIcon,
@@ -38,7 +37,8 @@ import TemplateCard from '@/components/product/TemplateCard';
 import { products } from '@/mock/data/products';
 import { templates } from '@/mock/data/templates';
 import { materials } from '@/mock/data/materials';
-import type { ProductCategory, MaterialOption, ProductFeature } from '@/types';
+import { photos } from '@/mock/data/photos';
+import type { MaterialOption, ProductFeature } from '@/types';
 import { cn } from '@/lib/utils';
 import { useCartStore } from '@/store/cartStore';
 
@@ -662,10 +662,12 @@ export default function ProductDetailPage() {
           className="mt-12"
         >
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="w-full max-w-xl mx-auto">
+            <TabsList className="w-full max-w-3xl mx-auto">
               <TabsTrigger value="details">商品详情</TabsTrigger>
               <TabsTrigger value="templates">模板预览</TabsTrigger>
               <TabsTrigger value="materials">材质说明</TabsTrigger>
+              <TabsTrigger value="shipping">配送与运费</TabsTrigger>
+              <TabsTrigger value="privacy">版权与隐私</TabsTrigger>
               <TabsTrigger value="faq">常见问题</TabsTrigger>
             </TabsList>
 
@@ -801,6 +803,367 @@ export default function ProductDetailPage() {
                     </motion.div>
                   ))}
                 </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="shipping" className="mt-8">
+              <div className="space-y-8">
+                <SectionTitle
+                  title="配送与运费"
+                  subtitle="全国包邮，快速送达"
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {shippingMethods.map((method, index) => {
+                    const Icon = method.icon;
+                    return (
+                      <motion.div
+                        key={method.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 * index }}
+                      >
+                        <Card hoverable>
+                          <CardContent className="p-6">
+                            <div className="flex items-center gap-4 mb-4">
+                              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-500">
+                                <Icon className="h-6 w-6" />
+                              </div>
+                              <div>
+                                <h3 className="font-display text-lg font-semibold text-paper-900">
+                                  {method.name}
+                                </h3>
+                                <p className="text-sm text-paper-500">{method.description}</p>
+                              </div>
+                            </div>
+                            <div className="space-y-2 pt-2 border-t border-paper-100">
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-paper-600">配送时效</span>
+                                <span className="font-medium text-paper-900">{method.days}</span>
+                              </div>
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-paper-600">运费</span>
+                                <span className="font-medium text-brand-600">{method.price}</span>
+                              </div>
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-paper-600">包邮条件</span>
+                                <Badge variant="success" size="sm">{method.freeThreshold}</Badge>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  >
+                    <Card>
+                      <CardContent className="p-6">
+                        <h3 className="font-display text-lg font-semibold text-paper-900 mb-4">
+                          发货说明
+                        </h3>
+                        <div className="space-y-4">
+                          <div className="flex items-start gap-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-500 flex-shrink-0">
+                              <Clock className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-paper-900">生产周期</h4>
+                              <p className="text-sm text-paper-600 mt-1">
+                                预计3-5个工作日完成生产，具体时间根据产品类型和数量有所不同
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-forest-50 text-forest-500 flex-shrink-0">
+                              <MapPin className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-paper-900">发货地</h4>
+                              <p className="text-sm text-paper-600 mt-1">
+                                广东省深圳市，全国多仓发货，就近配送
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-50 text-gold-500 flex-shrink-0">
+                              <Truck className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-paper-900">全国包邮</h4>
+                              <p className="text-sm text-paper-600 mt-1">
+                                除偏远地区（新疆、西藏）外，全国大部分地区满99元包邮
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                  >
+                    <Card>
+                      <CardContent className="p-6">
+                        <h3 className="font-display text-lg font-semibold text-paper-900 mb-4">
+                          配送时效说明
+                        </h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-paper-50">
+                            <div className="flex items-center gap-3">
+                              <Package className="h-5 w-5 text-brand-500" />
+                              <span className="text-sm font-medium text-paper-900">普通快递</span>
+                            </div>
+                            <span className="text-sm text-paper-600">2-3个工作日</span>
+                          </div>
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-paper-50">
+                            <div className="flex items-center gap-3">
+                              <Truck className="h-5 w-5 text-gold-500" />
+                              <span className="text-sm font-medium text-paper-900">顺丰速运</span>
+                            </div>
+                            <span className="text-sm text-paper-600">1-2个工作日</span>
+                          </div>
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-paper-50">
+                            <div className="flex items-center gap-3">
+                              <MapPin className="h-5 w-5 text-forest-500" />
+                              <span className="text-sm font-medium text-paper-900">到店自取</span>
+                            </div>
+                            <span className="text-sm text-paper-600">生产完成即可</span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-paper-500 mt-4">
+                          * 配送时效仅供参考，实际送达时间可能因天气、交通等因素有所影响
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                >
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="font-display text-lg font-semibold text-paper-900 mb-4">
+                        区域运费规则
+                      </h3>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-paper-200">
+                              <th className="text-left py-3 px-4 font-medium text-paper-700">地区</th>
+                              <th className="text-left py-3 px-4 font-medium text-paper-700">涵盖省份</th>
+                              <th className="text-left py-3 px-4 font-medium text-paper-700">运费</th>
+                              <th className="text-left py-3 px-4 font-medium text-paper-700">备注</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {shippingRegionRules.map((rule, index) => (
+                              <tr
+                                key={rule.region}
+                                className={cn(
+                                  'border-b border-paper-100',
+                                  index % 2 === 0 ? 'bg-white' : 'bg-paper-50'
+                                )}
+                              >
+                                <td className="py-3 px-4 font-medium text-paper-900">{rule.region}</td>
+                                <td className="py-3 px-4 text-paper-600">{rule.provinces}</td>
+                                <td className="py-3 px-4">
+                                  <Badge
+                                    variant={rule.fee === '包邮' ? 'success' : 'default'}
+                                    size="sm"
+                                  >
+                                    {rule.fee}
+                                  </Badge>
+                                </td>
+                                <td className="py-3 px-4 text-paper-500">{rule.remark}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="privacy" className="mt-8">
+              <div className="space-y-8">
+                <SectionTitle
+                  title="版权与隐私"
+                  subtitle="尊重原创，保护隐私"
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                  >
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-3 mb-6">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-500">
+                            <ShieldCheck className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h3 className="font-display text-lg font-semibold text-paper-900">
+                              素材版权审核流程
+                            </h3>
+                            <p className="text-sm text-paper-500">严格审核，保障原创</p>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          {auditProcessSteps.map((step, index) => (
+                            <div key={step.step} className="flex gap-4">
+                              <div className="flex flex-col items-center">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-500 text-white text-sm font-medium">
+                                  {step.step}
+                                </div>
+                                {index < auditProcessSteps.length - 1 && (
+                                  <div className="w-0.5 flex-1 bg-paper-200 mt-1" />
+                                )}
+                              </div>
+                              <div className="flex-1 pb-4">
+                                <h4 className="text-sm font-medium text-paper-900">
+                                  {step.title}
+                                </h4>
+                                <p className="text-sm text-paper-600 mt-1">
+                                  {step.description}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-3 mb-6">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-forest-50 text-forest-500">
+                            <Lock className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <h3 className="font-display text-lg font-semibold text-paper-900">
+                              用户作品版权
+                            </h3>
+                            <p className="text-sm text-paper-500">您的作品您做主</p>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <div className="p-4 rounded-lg bg-forest-50 border border-forest-100">
+                            <h4 className="text-sm font-medium text-forest-900 mb-2">
+                              照片所有权
+                            </h4>
+                            <p className="text-sm text-forest-700">
+                              用户上传的照片和创建的作品，版权归用户本人所有
+                            </p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-brand-50 border border-brand-100">
+                            <h4 className="text-sm font-medium text-brand-900 mb-2">
+                              使用授权
+                            </h4>
+                            <p className="text-sm text-brand-700">
+                              仅授权平台用于产品生产制作，不作其他用途
+                            </p>
+                          </div>
+                          <div className="p-4 rounded-lg bg-gold-50 border border-gold-100">
+                            <h4 className="text-sm font-medium text-gold-900 mb-2">
+                              作品展示
+                            </h4>
+                            <p className="text-sm text-gold-700">
+                              仅在用户同意公开的情况下才会在社区展示
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="font-display text-lg font-semibold text-paper-900 mb-6">
+                        隐私设置说明
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {privacySettings.map((setting, index) => {
+                          const Icon = setting.icon;
+                          return (
+                            <motion.div
+                              key={setting.id}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
+                              className="p-5 rounded-xl border border-paper-200 bg-white hover:shadow-soft transition-shadow"
+                            >
+                              <div className={cn('flex h-12 w-12 items-center justify-center rounded-xl mb-4', setting.bgColor, setting.color)}>
+                                <Icon className="h-6 w-6" />
+                              </div>
+                              <h4 className="font-medium text-paper-900 mb-2">{setting.name}</h4>
+                              <p className="text-sm text-paper-600">{setting.description}</p>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                >
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="font-display text-lg font-semibold text-paper-900 mb-6">
+                        隐私保障承诺
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {privacyGuarantees.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <div
+                              key={item.title}
+                              className="text-center"
+                            >
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-forest-50 text-forest-500 mx-auto mb-4">
+                                <Icon className="h-7 w-7" />
+                              </div>
+                              <h4 className="font-medium text-paper-900 mb-2">{item.title}</h4>
+                              <p className="text-sm text-paper-600">{item.description}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </div>
             </TabsContent>
 

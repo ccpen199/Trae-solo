@@ -1,4 +1,4 @@
-import { Flame, Sparkles, TrendingUp, Layers } from 'lucide-react'
+import { Flame, Sparkles, TrendingUp, Layers, ShieldCheck, Eye, Package, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import PriceTag from '@/components/common/PriceTag'
 import { ProductCategory } from '@/types'
