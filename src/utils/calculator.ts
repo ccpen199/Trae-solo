@@ -140,9 +140,7 @@ export function calculateInsurance(req: CalculatorRequest): CalculatorResult {
 
   const personalTotal = roundAmount(items.reduce((sum, item) => sum + item.personalAmount, 0));
   const companyTotal = roundAmount(items.reduce((sum, item) => sum + item.companyAmount, 0));
-  const grandTotal = isCompanyPay
-    ? roundAmount(personalTotal + companyTotal)
-    : personalTotal;
+  const grandTotal = roundAmount(personalTotal + companyTotal);
 
   return {
     cityCode,

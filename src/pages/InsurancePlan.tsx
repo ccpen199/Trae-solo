@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Row,
@@ -52,6 +53,7 @@ const INSURANCE_ORDER: InsuranceType[] = [
 ];
 
 function InsurancePlan() {
+  const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState<CityCode>('BJ');
   const [policies, setPolicies] = useState<Record<CityCode, CityPolicy>>(cityPolicies);
   const [basePercent, setBasePercent] = useState<number>(100);
@@ -68,6 +70,8 @@ function InsurancePlan() {
   const [calcResult, setCalcResult] = useState<CalculatorResult | null>(null);
   const [compareModalOpen, setCompareModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedPlan, setSavedPlan] = useState<any>(null);
 
   const currentPolicy = policies[selectedCity];
   const currentRatePlan = cityRatePlans[selectedCity];
@@ -173,17 +177,36 @@ function InsurancePlan() {
     message.success('已重置为默认配置');
   };
 
-  const handleSave = () => {
-    const planData = {
-      cityCode: selectedCity,
-      baseAmount,
-      basePercent,
-      selectedItems,
-      housingFundPercent,
-      savedAt: new Date().toISOString(),
-    };
-    localStorage.setItem('insurance_plan', JSON.stringify(planData));
-    message.success('参保方案已保存');
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      const res = await post<any>('/calculator/save-plan', {
+        cityCode: selectedCity,
+        baseAmount,
+        basePercent,
+        selectedItems,
+        housingFundPercent,
+      });
+      if (res.code === 200) {
+        setSavedPlan(res.data);
+        message.success('参保方案已保存，已生成电子凭证');
+      }
+    } catch (err: any) {
+      message.error(err.message || '保存失败');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleViewCompare = () => {
+    const params = new URLSearchParams({
+      tab: 'compare',
+      city: selectedCity,
+      base: String(baseAmount),
+      items: selectedItems.join(','),
+      fund: String(housingFundPercent),
+    });
+    navigate(`/calculator?${params.toString()}`);
   };
 
   const resultColumns: ColumnsType<CalculatorResultItem> = [
@@ -482,6 +505,7 @@ function InsurancePlan() {
           size="large"
           icon={<SaveOutlined />}
           onClick={handleSave}
+          loading={saving}
         >
           保存方案
         </Button>
@@ -491,11 +515,37 @@ function InsurancePlan() {
         <Button
           size="large"
           icon={<BarChartOutlined />}
-          onClick={() => setCompareModalOpen(true)}
+          onClick={handleViewCompare}
+          type="default"
         >
-          查看对比
+          六地对比
         </Button>
       </div>
+
+      {savedPlan && (
+        <Card
+          size="small"
+          style={{ marginBottom: 24, borderColor: '#10B981', background: '#ECFDF5' }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-emerald-700 font-medium text-sm">
+                ✓ 方案已保存 · 凭证号：{savedPlan.certificateId || 'P' + Date.now()}
+              </span>
+              <span className="text-xs text-emerald-600 ml-3">
+                {savedPlan.savedAt || new Date().toLocaleString()}
+              </span>
+            </div>
+            <Button
+              size="small"
+              type="link"
+              onClick={() => navigate('/certificates')}
+            >
+              查看凭证
+            </Button>
+          </div>
+        </Card>
+      )}
 
       <div
         style={{

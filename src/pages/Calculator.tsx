@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Card,
   Row,
@@ -34,7 +35,7 @@ import {
   calculateCompare,
 } from '../utils/calculator';
 import { formatMoney, formatDateTime } from '../utils/format';
-import { cityPolicies } from '../../shared/mockData';
+import { cityPolicies, cityRatePlans } from '../../shared/mockData';
 import type {
   CityCode,
   InsuranceType,
@@ -72,6 +73,7 @@ const INSURANCE_OPTIONS = [
 ];
 
 function Calculator() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [cityCode, setCityCode] = useState<CityCode>('BJ');
   const [policies, setPolicies] = useState<Record<CityCode, CityPolicy>>(cityPolicies);
   const [baseAmount, setBaseAmount] = useState<number>(cityPolicies.BJ.socialAvgSalary);
@@ -94,6 +96,7 @@ function Calculator() {
   const [history, setHistory] = useState<HistoryRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [compareLoading, setCompareLoading] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   const currentPolicy = policies[cityCode];
   const basePercent = Math.round((baseAmount / currentPolicy.socialAvgSalary) * 100);
@@ -101,6 +104,39 @@ function Calculator() {
   useEffect(() => {
     fetchPolicies();
     loadHistory();
+    const tab = searchParams.get('tab');
+    const city = searchParams.get('city');
+    const base = searchParams.get('base');
+    const items = searchParams.get('items');
+    const fund = searchParams.get('fund');
+    if (tab === 'compare') {
+      setActiveTab('compare');
+    }
+    if (city && CITIES.includes(city as CityCode)) {
+      setCityCode(city as CityCode);
+    }
+    if (base && !isNaN(Number(base))) {
+      setBaseAmount(Number(base));
+    }
+    if (items) {
+      const itemList = items.split(',').filter((i) =>
+        [
+          'PENSION',
+          'MEDICAL',
+          'UNEMPLOYMENT',
+          'INJURY',
+          'MATERNITY',
+          'HOUSING_FUND',
+        ].includes(i)
+      ) as InsuranceType[];
+      if (itemList.length > 0) {
+        setSelectedItems(itemList);
+      }
+    }
+    if (fund && !isNaN(Number(fund))) {
+      setHousingFundPercent(Number(fund));
+    }
+    setInitialized(true);
   }, []);
 
   useEffect(() => {
@@ -510,6 +546,139 @@ function Calculator() {
     }).sort((a, b) => a.grandTotal - b.grandTotal);
   }, [compareResult]);
 
+  const policyCompareColumns: ColumnsType<any> = [
+    {
+      title: '城市',
+      dataIndex: 'cityName',
+      key: 'cityName',
+      fixed: 'left',
+      width: 80,
+      render: (v, record: any) => (
+        <div>
+          <Text strong>{v}</Text>
+          <div style={{ fontSize: 11, color: '#94A3B8' }}>
+            {record.effectiveDate}起
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: '社平工资',
+      dataIndex: 'socialAvgSalary',
+      key: 'socialAvgSalary',
+      width: 100,
+      render: (v) => formatMoney(v),
+    },
+    {
+      title: '基数下限',
+      dataIndex: 'minBase',
+      key: 'minBase',
+      width: 100,
+      render: (v) => formatMoney(v),
+    },
+    {
+      title: '基数上限',
+      dataIndex: 'maxBase',
+      key: 'maxBase',
+      width: 100,
+      render: (v) => formatMoney(v),
+    },
+    {
+      title: '养老个人%',
+      dataIndex: 'pensionPersonal',
+      key: 'pensionPersonal',
+      width: 100,
+      render: (v) => `${(v * 100).toFixed(1)}%`,
+    },
+    {
+      title: '养老企业%',
+      dataIndex: 'pensionCompany',
+      key: 'pensionCompany',
+      width: 100,
+      render: (v) => `${(v * 100).toFixed(1)}%`,
+    },
+    {
+      title: '医疗个人%',
+      dataIndex: 'medicalPersonal',
+      key: 'medicalPersonal',
+      width: 100,
+      render: (v) => `${(v * 100).toFixed(1)}%`,
+    },
+    {
+      title: '医疗企业%',
+      dataIndex: 'medicalCompany',
+      key: 'medicalCompany',
+      width: 100,
+      render: (v) => `${(v * 100).toFixed(1)}%`,
+    },
+    {
+      title: '失业个人%',
+      dataIndex: 'unemploymentPersonal',
+      key: 'unemploymentPersonal',
+      width: 100,
+      render: (v) => `${(v * 100).toFixed(1)}%`,
+    },
+    {
+      title: '失业企业%',
+      dataIndex: 'unemploymentCompany',
+      key: 'unemploymentCompany',
+      width: 100,
+      render: (v) => `${(v * 100).toFixed(1)}%`,
+    },
+    {
+      title: '公积金%',
+      dataIndex: 'housingFund',
+      key: 'housingFund',
+      width: 90,
+      render: (v) => `${(v * 100).toFixed(0)}%`,
+    },
+    {
+      title: '政策亮点',
+      dataIndex: 'highlights',
+      key: 'highlights',
+      width: 180,
+      render: (v: string[]) => (
+        <div style={{ fontSize: 12, lineHeight: 1.6 }}>
+          {v.slice(0, 2).map((h, i) => (
+            <Tag key={i} color="blue" style={{ marginBottom: 4 }}>
+              {h}
+            </Tag>
+          ))}
+        </div>
+      ),
+    },
+  ];
+
+  const policyCompareData = useMemo(() => {
+    return CITIES.map((code) => {
+      const policy = policies[code] || cityPolicies[code];
+      const ratePlan = cityRatePlans[code];
+      const findRate = (type: string) =>
+        ratePlan?.items?.find((i: any) => i.type === type) || {};
+      const pension = findRate('PENSION');
+      const medical = findRate('MEDICAL');
+      const unemployment = findRate('UNEMPLOYMENT');
+      const housingFund = findRate('HOUSING_FUND');
+      return {
+        key: code,
+        cityCode: code,
+        cityName: CITY_NAMES[code],
+        socialAvgSalary: policy?.socialAvgSalary || 0,
+        minBase: policy?.minBase || 0,
+        maxBase: policy?.maxBase || 0,
+        pensionPersonal: pension.personalRate || 0,
+        pensionCompany: pension.companyRate || 0,
+        medicalPersonal: medical.personalRate || 0,
+        medicalCompany: medical.companyRate || 0,
+        unemploymentPersonal: unemployment.personalRate || 0,
+        unemploymentCompany: unemployment.companyRate || 0,
+        housingFund: housingFund.personalRate || 0.12,
+        highlights: policy?.highlights || [],
+        effectiveDate: ratePlan?.effectiveDate || '',
+      };
+    });
+  }, [policies]);
+
   return (
     <div className="fade-in">
       <div style={{ marginBottom: 24 }}>
@@ -796,6 +965,30 @@ function Calculator() {
                                 size="middle"
                                 rowKey="key"
                               />
+                            </div>
+                            <Divider />
+                            <div>
+                              <Title level={5} style={{ marginBottom: 12 }}>
+                                城市政策参数对比（政策依据落点）
+                              </Title>
+                              <Table
+                                columns={policyCompareColumns}
+                                dataSource={policyCompareData}
+                                pagination={false}
+                                size="small"
+                                rowKey="key"
+                                scroll={{ x: 1200 }}
+                              />
+                              <div
+                                style={{
+                                  marginTop: 12,
+                                  fontSize: 12,
+                                  color: '#64748B',
+                                }}
+                              >
+                                <FileTextOutlined style={{ marginRight: 6 }} />
+                                以上政策参数均源自各地人社局、医保局、住房公积金管理中心官方文件，点击单城明细可查看各险种具体法规依据
+                              </div>
                             </div>
                           </>
                         )}

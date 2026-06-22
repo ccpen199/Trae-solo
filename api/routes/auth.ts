@@ -59,24 +59,24 @@ router.get('/auth-status', (_req: Request, res: Response) => {
   res.json(sendResponse(mockAuthProgress));
 });
 
-router.post('/ocr/submit', (req: Request, res: Response) => {
+router.post('/idcard-ocr', (req: Request, res: Response) => {
   const { idCardFront, idCardBack } = req.body;
-  if (!idCardFront) {
-    return res.json(sendResponse(null, '请上传身份证正面', 400));
+  if (!idCardFront && !idCardBack) {
+    return res.json(sendResponse(null, '请上传身份证照片', 400));
   }
   setTimeout(() => {
     res.json(
       sendResponse({
         ...mockAuthProgress.idCardInfo,
-        frontRecognized: true,
+        frontRecognized: !!idCardFront,
         backRecognized: !!idCardBack,
         confidence: 0.98,
       })
     );
-  }, 800);
+  }, 1200);
 });
 
-router.post('/face/verify', (req: Request, res: Response) => {
+router.post('/face-verify', (req: Request, res: Response) => {
   const { faceImage } = req.body;
   if (!faceImage) {
     return res.json(sendResponse(null, '请上传人脸照片', 400));
@@ -91,7 +91,28 @@ router.post('/face/verify', (req: Request, res: Response) => {
         reason: success ? undefined : '人脸不匹配，请重试',
       })
     );
-  }, 1200);
+  }, 1500);
+});
+
+router.post('/contract-ocr', (req: Request, res: Response) => {
+  const { fileName } = req.body;
+  if (!fileName) {
+    return res.json(sendResponse(null, '请上传劳动合同', 400));
+  }
+  setTimeout(() => {
+    res.json(
+      sendResponse([
+        {
+          contractNo: 'HT' + Date.now().toString().slice(-8) + 'BJ001',
+          salary: '¥15,000/月',
+          position: '技术专员',
+          termStart: '2024-01-01',
+          termEnd: '2027-01-01',
+          companyName: '北京某某科技有限公司',
+        },
+      ])
+    );
+  }, 1800);
 });
 
 export default router;

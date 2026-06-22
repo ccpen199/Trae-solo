@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response } from 'express';
-import { sendResponse, calcInsurance } from '../utils';
+import { sendResponse, calcInsurance, generateId } from '../utils';
 import { cityPolicies, cityRatePlans } from '../../shared/mockData';
 import { CITIES } from '../../shared/types';
 import type { CityCode, CompareResult, CalculatorResult } from '../../shared/types';
@@ -74,6 +74,34 @@ router.get('/rates/:cityCode', (req: Request, res: Response) => {
 
 router.get('/rates', (_req: Request, res: Response) => {
   res.json(sendResponse(cityRatePlans));
+});
+
+router.post('/save-plan', (req: Request, res: Response) => {
+  const { cityCode, baseAmount, selectedItems, housingFundPercent, basePercent } = req.body;
+  if (!cityCode || !baseAmount || !selectedItems?.length) {
+    return res.json(sendResponse(null, '参数不完整', 400));
+  }
+  const result = calcInsurance(cityCode, baseAmount, selectedItems, housingFundPercent);
+  const planId = generateId('PLAN');
+  const certificateId = generateId('CERT');
+  const savedAt = new Date().toISOString();
+  const ipAddress = req.ip || req.socket.remoteAddress || '127.0.0.1';
+
+  res.json(
+    sendResponse({
+      planId,
+      certificateId,
+      cityCode,
+      baseAmount,
+      basePercent: basePercent || 100,
+      selectedItems,
+      housingFundPercent: housingFundPercent || 12,
+      result,
+      savedAt,
+      ipAddress,
+      userAgent: req.headers['user-agent'] || '',
+    })
+  );
 });
 
 export default router;
