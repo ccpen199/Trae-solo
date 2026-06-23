@@ -179,7 +179,7 @@ export function CreateTaskDialog({ open, onOpenChange, onTaskCreated }: CreateTa
             </div>
 
             <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 mb-8">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-3">
                 <Shield className="w-5 h-5 text-primary" />
                 <span className="font-medium">质检配置已生效</span>
               </div>
@@ -196,6 +196,79 @@ export function CreateTaskDialog({ open, onOpenChange, onTaskCreated }: CreateTa
                   <p className="text-xs text-muted-foreground">对抗样本</p>
                   <p className="font-medium">{formData.adversarialEnabled ? "已开启" : "已关闭"}</p>
                 </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <FileText className="w-5 h-5 text-indigo-600" />
+                <span className="font-medium text-indigo-700 dark:text-indigo-400">交付格式配置</span>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                {taskType === "audio_transcription" && (
+                  <>
+                    <div>
+                      <p className="text-xs text-muted-foreground">时间戳精度</p>
+                      <p className="font-medium">
+                        {{ ms: "毫秒级", "10ms": "10毫秒级", "100ms": "100毫秒级", s: "秒级" }[formData.timestampPrecision] || formData.timestampPrecision}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">情感标注</p>
+                      <p className="font-medium">
+                        {{ "3-class": "三分类", "6-class": "六分类", valence: "效价-唤醒度", none: "无" }[formData.emotionLabeling] || formData.emotionLabeling}
+                      </p>
+                    </div>
+                  </>
+                )}
+                {taskType === "image_segmentation" && (
+                  <>
+                    <div>
+                      <p className="text-xs text-muted-foreground">标注类型</p>
+                      <p className="font-medium">
+                        {{ instance: "实例分割", semantic: "语义分割", bbox: "边界框", keypoints: "关键点" }[formData.segmentationType] || formData.segmentationType}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">导出格式</p>
+                      <p className="font-medium">
+                        {{ coco: "COCO", pascal: "Pascal VOC", yolo: "YOLO", mask: "Mask R-CNN" }[formData.exportFormat] || formData.exportFormat}
+                      </p>
+                    </div>
+                  </>
+                )}
+                {taskType === "medical_ct" && (
+                  <>
+                    <div>
+                      <p className="text-xs text-muted-foreground">影像类型</p>
+                      <p className="font-medium">
+                        {{ ct: "CT", mri: "MRI", xray: "X光片", ultrasound: "超声" }[formData.medicalType] || formData.medicalType}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">标注类型</p>
+                      <p className="font-medium">
+                        {{ lesion: "病灶框选", organ: "器官分割", measurement: "尺寸测量", report: "诊断报告" }[formData.medicalAnnotation] || formData.medicalAnnotation}
+                      </p>
+                    </div>
+                  </>
+                )}
+                {taskType === "video_action" && (
+                  <>
+                    <div>
+                      <p className="text-xs text-muted-foreground">采样帧率</p>
+                      <p className="font-medium">
+                        {{ "1": "1秒/帧", "5": "5秒/帧", "10": "10秒/帧", all: "全部帧" }[formData.frameRate] || formData.frameRate}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">动作类型</p>
+                      <p className="font-medium">
+                        {{ detection: "动作检测", classification: "动作分类", tracking: "目标跟踪", caption: "视频描述" }[formData.actionType] || formData.actionType}
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
