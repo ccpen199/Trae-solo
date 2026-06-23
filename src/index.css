@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #22c55e;
+    --primary-dark: #16a34a;
+    --primary-light: #86efac;
+    --secondary: #0ea5e9;
+    --accent: #f97316;
+    --danger: #ef4444;
+    --neutral: #6b7280;
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-slate-50 text-gray-800 min-h-screen;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full font-medium
+           hover:from-green-600 hover:to-emerald-600 transition-all duration-300
+           shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30
+           active:scale-95 transform;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 px-6 py-3 rounded-full font-medium border border-gray-200
+           hover:bg-gray-50 hover:border-gray-300 transition-all duration-300
+           shadow-sm hover:shadow-md active:scale-95 transform;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-500 to-rose-500 text-white px-6 py-3 rounded-full font-medium
+           hover:from-red-600 hover:to-rose-600 transition-all duration-300
+           shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/30
+           active:scale-95 transform;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-lg shadow-gray-200/50 p-6 transition-all duration-300
+           hover:shadow-xl hover:shadow-gray-200/70;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1 transition-transform duration-300;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500
+           focus:ring-4 focus:ring-green-500/10 transition-all duration-200
+           outline-none bg-gray-50 focus:bg-white;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounceSubtle 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-ring {
+    animation: pulseRing 2s ease-out infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes scanLine {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.scan-animation::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #22c55e, transparent);
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
