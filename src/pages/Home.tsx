@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Coins, Flame, Gift, BookOpen, Heart, Sparkles, Users, TrendingUp, ChevronRight, Clock, CheckCircle } from 'lucide-react';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Coins, Flame, Gift, BookOpen, Heart, Sparkles, Users, TrendingUp, ChevronRight, Clock, CheckCircle, Zap } from 'lucide-react';
 import { useUserStore } from '../stores/userStore';
 import { get } from '../utils/request';
 
@@ -20,55 +20,54 @@ interface Task {
 
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isLoggedIn, fetchProfile } = useUserStore();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
+  const [toast, setToast] = useState<{ show: boolean; message: string; reward?: number }>({ show: false, message: '' });
+  const loadingRef = useRef(false);
 
-  const enterAdmin = () => {
-    const admin = { id: 'admin-001', username: 'admin', role: 'super_admin' };
-    localStorage.setItem('adminToken', admin.id);
-    localStorage.setItem('adminInfo', JSON.stringify(admin));
-    navigate('/admin');
-  };
+  const loadData = useCallback(async () => {
+    if (loadingRef.current) return;
+    loadingRef.current = true;
+    try {
+      if (isLoggedIn) {
+        await fetchProfile();
+      }
+      const taskRes: any = await get('/tasks/daily/recommend');
+      if (taskRes.success) {
+        setTasks(taskRes.tasks.slice(0, 4));
+      }
+      if (isLoggedIn) {
+        const walletRes: any = await get('/wallet/statistics');
+        if (walletRes.success) {
+          setTodayEarnings(walletRes.statistics.todayIncome || 0);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => { loadingRef.current = false; }, 300);
+    }
+  }, [isLoggedIn, fetchProfile]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      loadData();
-    } else {
-      const userId = localStorage.getItem('userId');
-      if (userId) {
-        fetchProfile().then(() => loadData());
-      } else {
-        loadPublicData();
-      }
-    }
-  }, [isLoggedIn]);
+    loadData();
+  }, [loadData]);
 
-  const loadPublicData = async () => {
-    try {
-      const taskRes: any = await get('/tasks/daily/recommend');
-      if (taskRes.success) {
-        setTasks(taskRes.tasks.slice(0, 4));
+  useEffect(() => {
+    let mounted = true;
+    const handleVisible = () => {
+      if (document.visibilityState === 'visible' && mounted) {
+        loadData();
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const loadData = async () => {
-    try {
-      const taskRes: any = await get('/tasks/daily/recommend');
-      if (taskRes.success) {
-        setTasks(taskRes.tasks.slice(0, 4));
-      }
-      const walletRes: any = await get('/wallet/statistics');
-      if (walletRes.success) {
-        setTodayEarnings(walletRes.statistics.todayIncome);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    };
+    document.addEventListener('visibilitychange', handleVisible);
+    return () => {
+      mounted = false;
+      document.removeEventListener('visibilitychange', handleVisible);
+    };
+  }, [loadData]);
 
   const categories = [
     { icon: BookOpen, label: '内容消费', color: 'from-blue-400 to-blue-600', path: '/tasks?tab=content', desc: '笑话成语赚金币' },
@@ -91,7 +90,7 @@ const Home = () => {
   const getStatusText = (task: Task) => {
     if (!isLoggedIn) return '登录领取';
     if (task.userStatus === 'completed') return '已完成';
-    if (task.completions && task.completions > 0) return `${task.completions}/${task.dailyLimit}次`;
+    if (task.completions && task.completions > 0) return `${task.completions}/${task.dailyLimit}`;
     return '去完成';
   };
 
@@ -124,16 +123,16 @@ const Home = () => {
               <p className="text-sm text-white/80 mt-1">利用碎片时间，轻松赚金币</p>
             </div>
             <div
-              className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center cursor-pointer"
-              onClick={() => navigate(isLoggedIn ? '/profile' : '/login')}
+              className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
+              onClick={() => navigate(isLoggedIn ? '/profile' : '/login?from=' + encodeURIComponent('/profile'))}
             >
               <Coins size={20} className="text-white" />
             </div>
           </div>
 
           <div
-            className="bg-white/20 backdrop-blur-sm rounded-2xl p-5 border border-white/20 cursor-pointer"
-            onClick={() => navigate('/wallet')}
+            className="bg-white/20 backdrop-blur-sm rounded-2xl p-5 border border-white/20 cursor-pointer active:scale-[0.99] transition-transform"
+            onClick={() => navigate(isLoggedIn ? '/wallet' : '/login?from=' + encodeURIComponent('/wallet'))}
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm text-white/80">我的金币</span>
@@ -145,6 +144,11 @@ const Home = () => {
             <div className="flex items-baseline gap-2">
               <Coins size={28} className="text-yellow-300 animate-float" />
               <span className="text-4xl font-bold">{isLoggedIn ? (user?.coins || 0).toFixed(0) : '--'}</span>
+              {isLoggedIn && todayEarnings > 0 && (
+                <span className="text-sm text-yellow-200 flex items-center gap-0.5 ml-2">
+                  <Zap size={14} />+{todayEarnings.toFixed(0)}
+                </span>
+              )}
             </div>
             {isLoggedIn && (
               <div className="mt-4 pt-4 border-t border-white/20">
@@ -154,15 +158,19 @@ const Home = () => {
                 </div>
                 <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-full transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-full transition-all duration-700"
                     style={{ width: `${Math.min(((user?.exp || 0) % 100), 100)}%` }}
                   ></div>
+                </div>
+                <div className="flex justify-between text-xs text-white/60 mt-1.5">
+                  <span>距离 Lv.{(user?.level || 1) + 1} 还需 {100 - ((user?.exp || 0) % 100)} 经验</span>
                 </div>
               </div>
             )}
             {!isLoggedIn && (
-              <div className="mt-4 pt-4 border-t border-white/20">
+              <div className="mt-4 pt-4 border-t border-white/20 flex items-center justify-between">
                 <p className="text-sm text-white/70">登录后查看金币余额与流水详情</p>
+                <ChevronRight size={20} className="text-white/50" />
               </div>
             )}
           </div>
@@ -177,12 +185,13 @@ const Home = () => {
               <button
                 key={cat.label}
                 onClick={() => navigate(cat.path)}
-                className="flex flex-col items-center gap-1.5 group"
+                className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
               >
                 <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
                   <Icon size={22} className="text-white" />
                 </div>
                 <span className="text-xs font-medium text-dark-700">{cat.label}</span>
+                <span className="text-[10px] text-dark-400">{cat.desc}</span>
               </button>
             );
           })}
@@ -197,7 +206,7 @@ const Home = () => {
           </h2>
           <button
             onClick={() => navigate('/tasks')}
-            className="text-sm text-primary-500 font-medium flex items-center gap-1"
+            className="text-sm text-primary-500 font-medium flex items-center gap-1 active:opacity-70"
           >
             更多 <ChevronRight size={16} />
           </button>
@@ -208,7 +217,7 @@ const Home = () => {
             <div
               key={task.id}
               onClick={() => handleTaskClick(task)}
-              className="bg-white rounded-xl p-4 shadow-card hover:shadow-card-hover transition-all cursor-pointer"
+              className="bg-white rounded-xl p-4 shadow-card hover:shadow-card-hover active:scale-[0.99] transition-all cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${getTaskIconBg(task.category)}`}>
@@ -229,7 +238,7 @@ const Home = () => {
                     <span className="flex items-center gap-1 text-xs text-dark-400">
                       <Clock size={12} /> {getConditionText(task)}
                     </span>
-                    {isLoggedIn && task.dailyLimit > 1 && (
+                    {task.dailyLimit > 1 && (
                       <span className="text-xs text-dark-400">每日{task.dailyLimit}次</span>
                     )}
                   </div>
@@ -251,7 +260,7 @@ const Home = () => {
                   </div>
                   <div className="h-1.5 bg-dark-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-500"
+                      className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-700"
                       style={{ width: `${((task.progress || 0) / task.maxProgress) * 100}%` }}
                     ></div>
                   </div>
@@ -262,15 +271,19 @@ const Home = () => {
         </div>
 
         {tasks.length === 0 && (
-          <div className="text-center py-8 text-dark-400">
-            <p>暂无推荐任务</p>
+          <div className="text-center py-10 bg-white rounded-xl shadow-card">
+            <div className="w-16 h-16 mx-auto mb-3 bg-dark-100 rounded-full flex items-center justify-center">
+              <Gift size={28} className="text-dark-300" />
+            </div>
+            <p className="text-dark-400 font-medium">暂无推荐任务</p>
+            <p className="text-dark-300 text-sm mt-1">请稍后再来查看</p>
           </div>
         )}
       </div>
 
       <div
-        className="mt-6 mx-4 bg-gradient-to-r from-accent-500 to-primary-500 rounded-2xl p-5 text-white cursor-pointer hover:shadow-lg transition-shadow"
-        onClick={() => navigate(isLoggedIn ? '/invite' : '/login?from=/invite')}
+        className="mt-6 mx-4 bg-gradient-to-r from-accent-500 to-primary-500 rounded-2xl p-5 text-white cursor-pointer hover:shadow-lg active:scale-[0.99] transition-all"
+        onClick={() => navigate(isLoggedIn ? '/invite' : '/login?from=' + encodeURIComponent('/invite'))}
       >
         <div className="flex items-center justify-between">
           <div>
@@ -279,6 +292,13 @@ const Home = () => {
               <h3 className="text-lg font-bold">邀请好友赚更多</h3>
             </div>
             <p className="text-sm text-white/80">二级分佣，好友赚钱你也赚</p>
+            <div className="mt-2 flex items-center gap-3 text-xs">
+              <span className="bg-white/20 px-2 py-1 rounded-full flex items-center gap-1">
+                <Users size={12} />注册+50
+              </span>
+              <span className="bg-white/20 px-2 py-1 rounded-full">一级10%分佣</span>
+              <span className="bg-white/20 px-2 py-1 rounded-full">二级5%分佣</span>
+            </div>
           </div>
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
             <span className="text-2xl font-bold">50</span>
@@ -286,35 +306,31 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="mt-4 mx-4 bg-white rounded-2xl shadow-card p-5">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="text-lg font-bold text-dark-800">平台管理与详情</h3>
-            <p className="text-sm text-dark-500">任务审核、金币流水、提现风控和提交记录</p>
+      <div className="mt-6 mx-4 grid grid-cols-2 gap-3">
+        <div className="bg-white rounded-xl p-4 shadow-card">
+          <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2">
+            <BookOpen size={20} className="text-blue-500" />
           </div>
-          <TrendingUp size={22} className="text-primary-500" />
+          <p className="font-bold text-dark-800 text-sm">新手任务</p>
+          <p className="text-xs text-dark-400 mt-1">快速赚取首金币</p>
         </div>
-        <div className="grid grid-cols-3 gap-2">
-          <button
-            onClick={enterAdmin}
-            className="rounded-xl bg-dark-800 px-3 py-3 text-sm font-bold text-white"
-          >
-            后台管理
-          </button>
-          <button
-            onClick={() => navigate('/wallet')}
-            className="rounded-xl bg-primary-50 px-3 py-3 text-sm font-bold text-primary-600"
-          >
-            金币详情
-          </button>
-          <button
-            onClick={() => navigate('/withdraw')}
-            className="rounded-xl bg-accent-50 px-3 py-3 text-sm font-bold text-accent-600"
-          >
-            提交提现
-          </button>
+        <div className="bg-white rounded-xl p-4 shadow-card">
+          <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mb-2">
+            <TrendingUp size={20} className="text-orange-500" />
+          </div>
+          <p className="font-bold text-dark-800 text-sm">每日榜单</p>
+          <p className="text-xs text-dark-400 mt-1">看谁赚得最多</p>
         </div>
       </div>
+
+      {toast.show && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+          <div className="bg-dark-800 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2">
+            <Coins size={20} className="text-yellow-300" />
+            <span className="font-medium">{toast.message}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

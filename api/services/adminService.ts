@@ -79,7 +79,7 @@ export function getInviteFunnelData(): {
   firstWithdraw: number;
 } {
   const totalUsersRow = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
-  const completedTaskRow = db.prepare('SELECT COUNT(DISTINCT user_id) as count FROM user_tasks WHERE status = "completed"').get() as { count: number };
+  const completedTaskRow = db.prepare("SELECT COUNT(DISTINCT user_id) as count FROM user_tasks WHERE status = 'completed'").get() as { count: number };
   const withdrawRow = db.prepare("SELECT COUNT(DISTINCT user_id) as count FROM withdraw_records WHERE status != 'rejected'").get() as { count: number };
 
   return {
