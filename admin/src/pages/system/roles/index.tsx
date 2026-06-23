@@ -509,7 +509,7 @@ const Roles: React.FC = () => {
         <Col span={6}>
           <Card
             style={{ borderRadius: 8, height: 'calc(100vh - 140px)' }}
-            bodyStyle={{ padding: 0, height: '100%', display: 'flex', flexDirection: 'column' }}
+            styles={{ body: { padding: 0, height: '100%', display: 'flex', flexDirection: 'column' } }}
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 14 }}>角色列表</span>
@@ -593,7 +593,7 @@ const Roles: React.FC = () => {
           {selectedRole ? (
             <Card
               style={{ borderRadius: 8, height: 'calc(100vh - 140px)' }}
-              bodyStyle={{ padding: 0, height: '100%', display: 'flex', flexDirection: 'column' }}
+              styles={{ body: { padding: 0, height: '100%', display: 'flex', flexDirection: 'column' } }}
               title={
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Space>

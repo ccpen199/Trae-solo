@@ -594,7 +594,7 @@ const Dashboard: React.FC = () => {
       )}
 
       {currentRole === 'dept_admin' && (
-        <Card bordered={false} style={{ marginBottom: 16, background: 'linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%)' }}>
+        <Card variant="borderless" style={{ marginBottom: 16, background: 'linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <Title level={5} style={{ marginBottom: 4 }}>
@@ -613,7 +613,7 @@ const Dashboard: React.FC = () => {
       )}
 
       {currentRole === 'clerk' && (
-        <Card bordered={false} style={{ marginBottom: 16, background: 'linear-gradient(135deg, #fff7e6 0%, #fff1f0 100%)' }}>
+        <Card variant="borderless" style={{ marginBottom: 16, background: 'linear-gradient(135deg, #fff7e6 0%, #fff1f0 100%)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <Title level={5} style={{ marginBottom: 4 }}>
@@ -632,7 +632,7 @@ const Dashboard: React.FC = () => {
       )}
 
       {currentRole === 'auditor' && (
-        <Card bordered={false} style={{ marginBottom: 16, background: 'linear-gradient(135deg, #f9f0ff 0%, #e6f7ff 100%)' }}>
+        <Card variant="borderless" style={{ marginBottom: 16, background: 'linear-gradient(135deg, #f9f0ff 0%, #e6f7ff 100%)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <Title level={5} style={{ marginBottom: 4 }}>
@@ -652,7 +652,7 @@ const Dashboard: React.FC = () => {
 
       <Row gutter={[16, 16]} className="stats-row">
         <Col xs={24} sm={12} lg={6}>
-          <Card className="stat-card stat-card-1" bordered={false}>
+          <Card className="stat-card stat-card-1" variant="borderless">
             <div className="stat-card-header">
               <div className="stat-info">
                 <Text type="secondary" className="stat-title">
@@ -695,7 +695,7 @@ const Dashboard: React.FC = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card className="stat-card stat-card-2" bordered={false}>
+          <Card className="stat-card stat-card-2" variant="borderless">
             <div className="stat-card-header">
               <div className="stat-info">
                 <Text type="secondary" className="stat-title">
@@ -738,7 +738,7 @@ const Dashboard: React.FC = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card className="stat-card stat-card-3" bordered={false}>
+          <Card className="stat-card stat-card-3" variant="borderless">
             <div className="stat-card-header">
               <div className="stat-info">
                 <Text type="secondary" className="stat-title">
@@ -781,7 +781,7 @@ const Dashboard: React.FC = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card className="stat-card stat-card-4" bordered={false}>
+          <Card className="stat-card stat-card-4" variant="borderless">
             <div className="stat-card-header">
               <div className="stat-info">
                 <Text type="secondary" className="stat-title">
@@ -825,7 +825,7 @@ const Dashboard: React.FC = () => {
         </Col>
       </Row>
 
-      <Card className="quick-entry-card" bordered={false} style={{ marginBottom: 16 }}>
+      <Card className="quick-entry-card" variant="borderless" style={{ marginBottom: 16 }}>
         <div className="card-header">
           <Title level={5} className="card-title">
             <ThunderboltOutlined className="title-icon" /> 快捷入口
@@ -856,18 +856,18 @@ const Dashboard: React.FC = () => {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={16}>
-          <Card className="chart-card" bordered={false} style={{ marginBottom: 16 }}>
+          <Card className="chart-card" variant="borderless" style={{ marginBottom: 16 }}>
             <ReactECharts option={lineChartOption} style={{ height: 320 }} />
           </Card>
 
           <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>
-              <Card className="chart-card" bordered={false}>
+              <Card className="chart-card" variant="borderless">
                 <ReactECharts option={barChartOption} style={{ height: 320 }} />
               </Card>
             </Col>
             <Col xs={24} md={12}>
-              <Card className="chart-card" bordered={false}>
+              <Card className="chart-card" variant="borderless">
                 <ReactECharts option={pieChartOption} style={{ height: 320 }} />
               </Card>
             </Col>
@@ -875,7 +875,7 @@ const Dashboard: React.FC = () => {
         </Col>
 
         <Col xs={24} lg={8}>
-          <Card className="side-card" bordered={false} style={{ marginBottom: 16 }}>
+          <Card className="side-card" variant="borderless" style={{ marginBottom: 16 }}>
             <div className="card-header">
               <Title level={5} className="card-title">
                 <ClockCircleOutlined className="title-icon" /> 我的待办
@@ -927,7 +927,7 @@ const Dashboard: React.FC = () => {
             />
           </Card>
 
-          <Card className="side-card" bordered={false} style={{ marginBottom: 16 }}>
+          <Card className="side-card" variant="borderless" style={{ marginBottom: 16 }}>
             <div className="card-header">
               <Title level={5} className="card-title">
                 <BellOutlined className="title-icon" /> 最新公告
@@ -956,7 +956,7 @@ const Dashboard: React.FC = () => {
             />
           </Card>
 
-          <Card className="side-card" bordered={false} style={{ marginBottom: 16 }}>
+          <Card className="side-card" variant="borderless" style={{ marginBottom: 16 }}>
             <div className="card-header">
               <Title level={5} className="card-title">
                 <StarOutlined className="title-icon" /> 热门服务推荐
@@ -986,7 +986,7 @@ const Dashboard: React.FC = () => {
         </Col>
       </Row>
 
-      <Card className="data-assets-card" bordered={false}>
+      <Card className="data-assets-card" variant="borderless">
         <div className="card-header">
           <Title level={5} className="card-title">
             <DatabaseOutlined className="title-icon" /> 数据资产概览
@@ -1028,7 +1028,7 @@ const Dashboard: React.FC = () => {
         <Text type="secondary" style={{ display: 'block', textAlign: 'center', marginTop: 8, fontSize: 12 }}>每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路</Text>
       </Card>
 
-      <Card bordered={false} style={{ marginTop: 16 }}>
+      <Card variant="borderless" style={{ marginTop: 16 }}>
         <div className="card-header">
           <Title level={5} className="card-title">
             <BankOutlined className="title-icon" /> 委办局核心系统状态
@@ -1114,7 +1114,7 @@ const Dashboard: React.FC = () => {
       </Card>
 
       {currentRole !== 'default' && (
-        <Card bordered={false} style={{ marginTop: 16 }}>
+        <Card variant="borderless" style={{ marginTop: 16 }}>
           <div className="card-header">
             <Title level={5} className="card-title">
               <AuditOutlined className="title-icon" /> 关键操作留痕

@@ -51,6 +51,59 @@ async function bootstrap(): Promise<void> {
     });
   });
 
+  if (process.env.LOCAL_SMOKE_MODE === 'true') {
+    const smokeUser = {
+      id: 'smoke-admin',
+      name: '本地复验管理员',
+      role: 'admin',
+      department: '自治区大数据中心',
+      permissions: ['dashboard:read', 'admin:read', 'profile:read'],
+    };
+
+    const smokeDashboard = {
+      totalUsers: 12840,
+      todayVisits: 3862,
+      pendingTickets: 17,
+      completedServices: 924,
+      serviceHealth: 'ok',
+    };
+
+    app.use('/api/auth/me', (_req, res) => {
+      res.status(200).json({ success: true, code: 0, data: smokeUser });
+    });
+
+    app.use(['/api/users/profile', '/api/user/profile'], (_req, res) => {
+      res.status(200).json({
+        success: true,
+        code: 0,
+        data: {
+          ...smokeUser,
+          phone: '13800000000',
+          lastLoginAt: new Date().toISOString(),
+        },
+      });
+    });
+
+    app.use('/api/search', (req, res) => {
+      const keyword = String(req.query.q || req.query.keyword || '测试');
+      res.status(200).json({
+        success: true,
+        code: 0,
+        data: {
+          keyword,
+          items: [
+            { id: 'svc-001', type: 'service', title: '企业开办一件事', status: 'online' },
+            { id: 'cert-001', type: 'certificate', title: '营业执照电子证照', status: 'available' },
+          ],
+        },
+      });
+    });
+
+    app.use(['/api/admin/stats', '/api/admin/dashboard'], (_req, res) => {
+      res.status(200).json({ success: true, code: 0, data: smokeDashboard });
+    });
+  }
+
   app.setGlobalPrefix('/api/v1');
 
   app.useGlobalPipes(

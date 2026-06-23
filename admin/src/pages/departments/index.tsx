@@ -1729,7 +1729,7 @@ const Departments: React.FC = () => {
                 刷新
               </Button>
               <Space style={{ marginLeft: 'auto' }}>
-                <Button.Group>
+                <Space.Compact>
                   <Button
                     type={viewMode === 'card' ? 'primary' : 'default'}
                     icon={<DashboardOutlined />}
@@ -1742,9 +1742,9 @@ const Departments: React.FC = () => {
                     icon={<UnorderedListOutlined />}
                     onClick={() => setViewMode('table')}
                   >
-                    表格
-                  </Button>
-                </Button.Group>
+                      表格
+                    </Button>
+                </Space.Compact>
               </Space>
             </Space>
           </Card>

@@ -208,7 +208,7 @@ const Certificates: React.FC = () => {
                 border: '1px solid #e8e8e8',
                 transition: 'all 0.3s'
               }}
-              bodyStyle={{ padding: 16 }}
+              styles={{ body: { padding: 16 } }}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 12 }}>
                 <Avatar

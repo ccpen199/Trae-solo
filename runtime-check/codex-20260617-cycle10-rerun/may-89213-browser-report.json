@@ -1,0 +1,1150 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-17T01:30:01.388Z",
+  "order": "may-89213",
+  "roundIndex": 10,
+  "captureId": "may-89213-codex-cycle10-rerun",
+  "url": "http://127.0.0.1:49213/",
+  "initialUrl": "http://127.0.0.1:49213/",
+  "finalUrl": "http://127.0.0.1:49213/dashboard",
+  "status": 200,
+  "title": "宁夏自治区一网通办管理后台",
+  "initialTitle": "宁夏自治区一网通办管理后台",
+  "navigationError": "",
+  "screenshotPath": "runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；页面结构采集已读取到业务内容；'utf-8' codec can't decode byte 0xe6 in position 65535: unexpected end of data；输入框已有内容且发送按钮状态未确认，自动化不会覆盖或追加新提示词；输入框已有内容，但发送按钮仍未确认，切换下一个序号等待复查",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49213/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49213/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:进入城市数据秘书",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:快速办件",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:快速办件:关闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:委办局管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "凌晨好，管理员普通用户 · 服务查看"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心 5",
+          "快速办件",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员凌晨好，管理员普通用户 · 服务查看 2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看消息中心 5快速办件当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 我的办件个人办件进度证照查询电子证照查看 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2026年6月政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报二季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐数据推荐依据 身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览进入城市数据秘书 社保1,258万人力资源社会保障厅已授权不可用不可用无推荐公积金896万住房公积金管理中心已授权不可用不可用无推荐医保1,432万医疗保障局已授权不可用不可用无推荐税务768万税务局待续期不可用不可用无推荐证照3,256万公安厅/民政厅已授权不可用不可用无推荐教育520万教育厅已授权不可用不可用有推荐交通680万交通运输厅已授权不可用不可用无推荐每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路 委办局核心系统状态公安厅在线接口12个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:30人力资源社会保障厅在线接口15个接入状态：在线运行1项处理中SM4+SM2已启用最后同步：2026-06-16 09:00医疗保障局在线接口10个接入状态：在线运行异常处置：0项待处理SM4+SM3已启用最后同步：2026-06-16 07:30住建厅在线接口8个接入状态：在线运行2项待处理SM4已启用最后同步：2026-06-15 22:00民政厅在线接口7个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:0035/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过",
+        "layout": {
+          "viewportWidth": 1519,
+          "viewportHeight": 1600,
+          "scrollWidth": 1519,
+          "scrollHeight": 2540,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-cycle10-rerun-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.png",
+          "elementCount": 752,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心 5",
+            "快速办件",
+            "更多",
+            "全部",
+            "数据推荐依据",
+            "进入城市数据秘书"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "凌晨好，管理员普通用户 · 服务查看"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心 5",
+          "快速办件",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员凌晨好，管理员普通用户 · 服务查看 2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看消息中心 5快速办件当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 我的办件个人办件进度证照查询电子证照查看 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2026年6月政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报二季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐数据推荐依据 身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览进入城市数据秘书 社保1,258万人力资源社会保障厅已授权不可用不可用无推荐公积金896万住房公积金管理中心已授权不可用不可用无推荐医保1,432万医疗保障局已授权不可用不可用无推荐税务768万税务局待续期不可用不可用无推荐证照3,256万公安厅/民政厅已授权不可用不可用无推荐教育520万教育厅已授权不可用不可用有推荐交通680万交通运输厅已授权不可用不可用无推荐每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路 委办局核心系统状态公安厅在线接口12个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:30人力资源社会保障厅在线接口15个接入状态：在线运行1项处理中SM4+SM2已启用最后同步：2026-06-16 09:00医疗保障局在线接口10个接入状态：在线运行异常处置：0项待处理SM4+SM3已启用最后同步：2026-06-16 07:30住建厅在线接口8个接入状态：在线运行2项待处理SM4已启用最后同步：2026-06-15 22:00民政厅在线接口7个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:0035/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过",
+        "layout": {
+          "viewportWidth": 1551,
+          "viewportHeight": 1600,
+          "scrollWidth": 1551,
+          "scrollHeight": 2523,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-cycle10-rerun-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.png",
+          "elementCount": 752,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心 5",
+            "快速办件",
+            "更多",
+            "全部",
+            "数据推荐依据",
+            "进入城市数据秘书"
+          ]
+        }
+      },
+      {
+        "label": "操作:进入城市数据秘书",
+        "url": "http://127.0.0.1:49213/city-data-secretary",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理城市数据秘书5管理员我的数据秘书个人数据资产授权 · 智能服务推荐 · 数据共享追溯我的数据资产我的授权管理服务推荐数据足迹资产增长趋势资产类型与部门排行资产总览授权链路调用足迹跨部门共享服务推荐我的数据资产这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。我的数据资产128项已授权部门6个近7天被调用89次待处理事项2项我的数据资产清单社会保障类正常数据来源机构：人力资源社会保障厅更新频率：实时同步最近更新：2026-06-16 08:30住房公积金类正常数据来源机构：住房和城乡建设厅更新频率：每日同步最近更新：2026-06-16 02:00医疗保障类正常数据来源机构：医疗保障局更新频率：实时同步最近更新：2026-06-16 08:15税务类待更新数据来源机构：税务局更新频率：每日同步最近更新：2026-06-15 23:30证照类正常数据来源机构：公安厅更新频率：实时同步最近更新：2026-06-16 07:45教育类正常数据来源机构：教育厅更新频率：每周同步最近更新：2026-06-10 03:00交通出行类正常数据来源机构：交通运输厅更新频率：每小时同步最近更新：2026-06-16 08:00我的数据资产类型证照类12,580本调用次数：45,620次身份证、户口簿、结婚证等社会保障类28,960条调用次数：32,180次社保、养老、失业住房公积金类15,420户调用次数：28,950次缴存余额、提取次数医疗保障类35,680条调用次数：52,340次医保账户、就医记录税务类8,920条调用次数：12,560次纳税记录教育类12,360条调用次数：18,920次学历、证书交通出行类14,720条调用次数：24,680次驾照、车辆数据安全提示您的数据安全是我们的首要责任。所有数据访问均需您的明确授权，访问记录全程留痕可追溯。如发现异常调用，请立即联系客服。数据治理流程用户授权明确授权范围、用途和有效期跨部门共享按授权链路调用数据资产3推荐生成输出服务推荐和证照提醒4留痕审计调用、反馈、撤销全流程可追溯09:20 推荐模型完成离线评估09:05 用户标签批处理成功08:39 证照提醒队列正常投递",
+        "layout": {
+          "viewportWidth": 1583,
+          "viewportHeight": 1600,
+          "scrollWidth": 1583,
+          "scrollHeight": 2578,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书",
+          "label": "操作:进入城市数据秘书",
+          "finalUrl": "http://127.0.0.1:49213/city-data-secretary",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.png",
+          "elementCount": 680,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "我的数据资产",
+            "资产增长趋势 资产类型与部门排行 资产总览 授权链路 调用足迹 跨部门共享 服务推荐 我的数据资产 这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。 我的数据资产 128项 已授权部门 6个 近7天被调用 89次 待处理事项 2项 我的数据资产清单 社会保障类 正常 数据来源机构：人力资源社会保障厅 更新",
+            "资产总览",
+            "我的数据资产 这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。 我的数据资产 128项 已授权部门 6个 近7天被调用 89次 待处理事项 2项 我的数据资产清单 社会保障类 正常 数据来源机构：人力资源社会保障厅 更新频率：实时同步 最近更新：2026-06-16 08:30 住房公积金类 正常 数据来"
+          ]
+        }
+      },
+      {
+        "label": "操作:快速办件",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "凌晨好，管理员普通用户 · 服务查看"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心 5",
+          "快速办件",
+          "数据推荐依据",
+          "进入城市数据秘书",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索服务事项...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员凌晨好，管理员普通用户 · 服务查看 2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看消息中心 5快速办件当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 我的办件个人办件进度证照查询电子证照查看 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2026年6月政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报二季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐数据推荐依据 身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览进入城市数据秘书 社保1,258万人力资源社会保障厅已授权不可用不可用无推荐公积金896万住房公积金管理中心已授权不可用不可用无推荐医保1,432万医疗保障局已授权不可用不可用无推荐税务768万税务局待续期不可用不可用无推荐证照3,256万公安厅/民政厅已授权不可用不可用无推荐教育520万教育厅已授权不可用不可用有推荐交通680万交通运输厅已授权不可用不可用无推荐每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路 委办局核心系统状态公安厅在线接口12个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:30人力资源社会保障厅在线接口15个接入状态：在线运行1项处理中SM4+SM2已启用最后同步：2026-06-16 09:00医疗保障局在线接口10个接入状态：在线运行异常处置：0项待处理SM4+SM3已启用最后同步：2026-06-16 07:30住建厅在线接口8个接入状态：在线运行2项待处理SM4已启用最后同步：2026-06-15 22:00民政厅在线接口7个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:0035/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过 快速办件 · 一网通办1选择事项2情形引导3证照调取4受理确认5办结反馈热门服务身份证办理HOT补办、换领、首次申领7个工作日20元社保查询HOT养老保险、医疗保险查询即办免费公积金提取购房、租房、退休提取3个工作日免费营业执照办理个体工商户、公司注册5个工作日免费医保报销门诊、住院费用报销15个工作日免费不动产登记房产证办理、抵押登记5个工作日80元",
+        "layout": {
+          "viewportWidth": 1615,
+          "viewportHeight": 1600,
+          "scrollWidth": 1615,
+          "scrollHeight": 2523,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-cycle10-rerun-structure-04-操作-快速办件",
+          "label": "操作:快速办件",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.png",
+          "elementCount": 945,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心 5",
+            "快速办件",
+            "更多",
+            "全部",
+            "数据推荐依据",
+            "进入城市数据秘书",
+            "关闭",
+            "搜索服务事项..."
+          ]
+        }
+      },
+      {
+        "label": "二层操作:快速办件->关闭",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "凌晨好，管理员普通用户 · 服务查看"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心 5",
+          "快速办件",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员凌晨好，管理员普通用户 · 服务查看 2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看消息中心 5快速办件当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 我的办件个人办件进度证照查询电子证照查看 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2026年6月政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报二季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐数据推荐依据 身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览进入城市数据秘书 社保1,258万人力资源社会保障厅已授权不可用不可用无推荐公积金896万住房公积金管理中心已授权不可用不可用无推荐医保1,432万医疗保障局已授权不可用不可用无推荐税务768万税务局待续期不可用不可用无推荐证照3,256万公安厅/民政厅已授权不可用不可用无推荐教育520万教育厅已授权不可用不可用有推荐交通680万交通运输厅已授权不可用不可用无推荐每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路 委办局核心系统状态公安厅在线接口12个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:30人力资源社会保障厅在线接口15个接入状态：在线运行1项处理中SM4+SM2已启用最后同步：2026-06-16 09:00医疗保障局在线接口10个接入状态：在线运行异常处置：0项待处理SM4+SM3已启用最后同步：2026-06-16 07:30住建厅在线接口8个接入状态：在线运行2项待处理SM4已启用最后同步：2026-06-15 22:00民政厅在线接口7个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:0035/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过 快速办件 · 一网通办1选择事项2情形引导3证照调取4受理确认5办结反馈热门服务身份证办理HOT补办、换领、首次申领7个工作日20元社保查询HOT养老保险、医疗保险查询即办免费公积金提取购房、租房、退休提取3个工作日免费营业执照办理个体工商户、公司注册5个工作日免费医保报销门诊、住院费用报销15个工作日免费不动产登记房产证办理、抵押登记5个工作日80元",
+        "layout": {
+          "viewportWidth": 1647,
+          "viewportHeight": 1600,
+          "scrollWidth": 1647,
+          "scrollHeight": 2523,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭",
+          "label": "二层操作:快速办件->关闭",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.png",
+          "elementCount": 942,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心 5",
+            "快速办件",
+            "更多",
+            "全部",
+            "数据推荐依据",
+            "进入城市数据秘书",
+            "关闭",
+            "搜索服务事项..."
+          ]
+        }
+      },
+      {
+        "label": "导航:委办局管理",
+        "url": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理委办局管理5管理员凌晨好，管理员普通用户 · 服务查看 2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看消息中心 5快速办件当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 我的办件个人办件进度证照查询电子证照查看 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2026年6月政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报二季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐数据推荐依据 身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览进入城市数据秘书 社保1,258万人力资源社会保障厅已授权不可用不可用无推荐公积金896万住房公积金管理中心已授权不可用不可用无推荐医保1,432万医疗保障局已授权不可用不可用无推荐税务768万税务局待续期不可用不可用无推荐证照3,256万公安厅/民政厅已授权不可用不可用无推荐教育520万教育厅已授权不可用不可用有推荐交通680万交通运输厅已授权不可用不可用无推荐每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路 委办局核心系统状态公安厅在线接口12个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:30人力资源社会保障厅在线接口15个接入状态：在线运行1项处理中SM4+SM2已启用最后同步：2026-06-16 09:00医疗保障局在线接口10个接入状态：在线运行异常处置：0项待处理SM4+SM3已启用最后同步：2026-06-16 07:30住建厅在线接口8个接入状态：在线运行2项待处理SM4已启用最后同步：2026-06-15 22:00民政厅在线接口7个接入状态：在线运行异常处置：0项待处理SM4+SM2已启用最后同步：2026-06-16 08:0035/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过",
+        "layout": {
+          "viewportWidth": 1679,
+          "viewportHeight": 1600,
+          "scrollWidth": 1679,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理",
+          "label": "导航:委办局管理",
+          "finalUrl": "http://127.0.0.1:49213/departments",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.png",
+          "elementCount": 1200,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "for screen reader",
+            "搜索委办局名称或编码",
+            "刷新",
+            "卡片",
+            "表格"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "进入城市数据秘书",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "快速办件",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "快速办件->关闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.png",
+        "elementCount": 752,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.png",
+        "elementCount": 752,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书",
+        "label": "操作:进入城市数据秘书",
+        "finalUrl": "http://127.0.0.1:49213/city-data-secretary",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.png",
+        "elementCount": 680,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "我的数据资产",
+          "资产增长趋势 资产类型与部门排行 资产总览 授权链路 调用足迹 跨部门共享 服务推荐 我的数据资产 这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。 我的数据资产 128项 已授权部门 6个 近7天被调用 89次 待处理事项 2项 我的数据资产清单 社会保障类 正常 数据来源机构：人力资源社会保障厅 更新",
+          "资产总览",
+          "我的数据资产 这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。 我的数据资产 128项 已授权部门 6个 近7天被调用 89次 待处理事项 2项 我的数据资产清单 社会保障类 正常 数据来源机构：人力资源社会保障厅 更新频率：实时同步 最近更新：2026-06-16 08:30 住房公积金类 正常 数据来"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-04-操作-快速办件",
+        "label": "操作:快速办件",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.png",
+        "elementCount": 945,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书",
+          "关闭",
+          "搜索服务事项..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭",
+        "label": "二层操作:快速办件->关闭",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.png",
+        "elementCount": 942,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书",
+          "关闭",
+          "搜索服务事项..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理",
+        "label": "导航:委办局管理",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.png",
+        "elementCount": 1200,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49213/dashboard",
+    "representativeScreenshotLabel": "凌晨好，管理员普通用户 · 服务查看"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 6,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-01-首屏.png",
+        "elementCount": 752,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-02-导航-工作台.png",
+        "elementCount": 752,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书",
+        "label": "操作:进入城市数据秘书",
+        "finalUrl": "http://127.0.0.1:49213/city-data-secretary",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-03-操作-进入城市数据秘书.png",
+        "elementCount": 680,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "我的数据资产",
+          "资产增长趋势 资产类型与部门排行 资产总览 授权链路 调用足迹 跨部门共享 服务推荐 我的数据资产 这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。 我的数据资产 128项 已授权部门 6个 近7天被调用 89次 待处理事项 2项 我的数据资产清单 社会保障类 正常 数据来源机构：人力资源社会保障厅 更新",
+          "资产总览",
+          "我的数据资产 这里展示您名下的所有个人数据资产。所有数据均受《个人信息保护法》保护，您可以随时查看、授权或撤销授权。 我的数据资产 128项 已授权部门 6个 近7天被调用 89次 待处理事项 2项 我的数据资产清单 社会保障类 正常 数据来源机构：人力资源社会保障厅 更新频率：实时同步 最近更新：2026-06-16 08:30 住房公积金类 正常 数据来"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-04-操作-快速办件",
+        "label": "操作:快速办件",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-04-操作-快速办件.png",
+        "elementCount": 945,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书",
+          "关闭",
+          "搜索服务事项..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭",
+        "label": "二层操作:快速办件->关闭",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-05-二层操作-快速办件-关闭.png",
+        "elementCount": 942,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心 5",
+          "快速办件",
+          "更多",
+          "全部",
+          "数据推荐依据",
+          "进入城市数据秘书",
+          "关闭",
+          "搜索服务事项..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理",
+        "label": "导航:委办局管理",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260617-cycle10-rerun/may-89213-codex-cycle10-rerun-structure-06-导航-委办局管理.png",
+        "elementCount": 1200,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1711,
+    "height": 1600,
+    "scrollWidth": 1679,
+    "scrollHeight": 2501
+  },
+  "initialBodyTextPreview": "宁夏政务管理后台\n工作台\n委办局管理\n服务事项中枢\n电子证照库\n12345工单系统\n审计日志\n城市数据秘书\n系统管理\n工作台\n5\n管理员\n凌晨好，管理员普通用户 · 服务查看\n2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看\n消息中心\n5\n快速办件\n当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。\n今日办件量\n128\n件\n受理\n156\n办结\n105\n在办\n23\n较昨日 +12.5%\n电子证照调用量\n3,846\n次\n今日\n3,846\n累计\n125.8万\n证照类\n32类\n较上周 +8.3%\n12345工单满意度\n98.6\n%\n待办工单\n47\n已办工单\n1,256\n按时办结率\n99.2%\n较上月 +1.2%\n90天审计告警\n23\n条\n异常操作\n23\n总操作数\n45,860\n风险等级\n低风险\n较上周期 -15.3%\n快捷入口\n更多\n我的办件\n个人办件进度\n证照查询\n电子证照查看\n我的待办\n5\n全部\n关于优化营商环境的提案\n紧急\n投诉工单\n10分钟前\n身份证办理进度查询\n重要\n咨询工单\n30分钟前\n营业执照变更申请\n一般\n办件事项\n1小时前\n社保缴费证明打印\n一般\n办件事项\n2小时前\n社区便民服务中心建设建议\n普通\n建议工单\n3小时前\n最新公告\n更多\n通知\n关于2026年6月政务服务能力提升培训的通知\n今天 09:30\n公告\n系统升级维护公告（本周五晚）\n昨天 16:45\n通报\n二季度政务服务质量考核结果通报\n3天前\n通知\n新版电子证照系统上线试运行通知\n5天前\n热门服务推荐\n数据推荐依据\n身份证办理\nHOT\n12580人已办\n社保查询\nHOT\n9860人已办\n公积金提取\n7650人已办\n营业执照办理\n5420人已办\n医保报销\n4890人已办\n不动产登记\n3560人已办\n数据资产概览\n进入城市数据秘书\n社保\n1,258万\n人力资源社会保障厅\n已授权\n不可用\n不可用\n无推荐\n公积金\n896万\n住房公积金管理中心\n已授权\n不可用\n不可用\n无推荐\n医保\n1,432万\n医疗保障局\n已授权\n不可用\n不可用\n无推荐\n税务\n768万\n税务局\n待续期\n不可用\n不可用\n无推荐\n证照\n3,256万\n公安厅/民政厅\n已授权\n不可用\n不可用\n无推荐\n教育\n520万\n教育厅\n已授权\n不可用\n不可用\n有推荐\n交通\n680万\n交通运输厅\n已授权\n不可用\n不可用\n无推荐\n每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路\n委办局核心系统状态\n公安厅\n在线\n接口12个\n接入状态：在线运行\n异常处置：0项待处理\nSM4+SM2已启用\n最后同步：2026-06-16 08:30\n人力资源社会保障厅\n在线\n接口15个\n接入状态：在线运行\n1项处理中\nSM4+SM2已启用\n最后同步：2026-06-16 09:00\n医疗保障局\n在线\n接口10个\n接入状态：在线运行\n异常处置：0项待处理\nSM4+SM3已启用\n最后同步：2026-06-16 07:30\n住建厅\n在线\n接口8个\n接入状态：在线运行\n2项待处理\nSM4已启用\n最后同步：2026-06-15 22:00\n民政厅\n在线\n接口7个\n接入状态：在线运行\n异常处置：0项待处理\nSM4+SM2已启用\n最后同步：2026-06-16 08:00\n35/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过",
+  "bodyTextPreview": "宁夏政务管理后台\n工作台\n委办局管理\n服务事项中枢\n电子证照库\n12345工单系统\n审计日志\n城市数据秘书\n系统管理\n工作台\n5\n管理员\n凌晨好，管理员普通用户 · 服务查看\n2026年06月17日 Wednesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看\n消息中心\n5\n快速办件\n当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。\n今日办件量\n128\n件\n受理\n156\n办结\n105\n在办\n23\n较昨日 +12.5%\n电子证照调用量\n3,846\n次\n今日\n3,846\n累计\n125.8万\n证照类\n32类\n较上周 +8.3%\n12345工单满意度\n98.6\n%\n待办工单\n47\n已办工单\n1,256\n按时办结率\n99.2%\n较上月 +1.2%\n90天审计告警\n23\n条\n异常操作\n23\n总操作数\n45,860\n风险等级\n低风险\n较上周期 -15.3%\n快捷入口\n更多\n我的办件\n个人办件进度\n证照查询\n电子证照查看\n我的待办\n5\n全部\n关于优化营商环境的提案\n紧急\n投诉工单\n10分钟前\n身份证办理进度查询\n重要\n咨询工单\n30分钟前\n营业执照变更申请\n一般\n办件事项\n1小时前\n社保缴费证明打印\n一般\n办件事项\n2小时前\n社区便民服务中心建设建议\n普通\n建议工单\n3小时前\n最新公告\n更多\n通知\n关于2026年6月政务服务能力提升培训的通知\n今天 09:30\n公告\n系统升级维护公告（本周五晚）\n昨天 16:45\n通报\n二季度政务服务质量考核结果通报\n3天前\n通知\n新版电子证照系统上线试运行通知\n5天前\n热门服务推荐\n数据推荐依据\n身份证办理\nHOT\n12580人已办\n社保查询\nHOT\n9860人已办\n公积金提取\n7650人已办\n营业执照办理\n5420人已办\n医保报销\n4890人已办\n不动产登记\n3560人已办\n数据资产概览\n进入城市数据秘书\n社保\n1,258万\n人力资源社会保障厅\n已授权\n不可用\n不可用\n无推荐\n公积金\n896万\n住房公积金管理中心\n已授权\n不可用\n不可用\n无推荐\n医保\n1,432万\n医疗保障局\n已授权\n不可用\n不可用\n无推荐\n税务\n768万\n税务局\n待续期\n不可用\n不可用\n无推荐\n证照\n3,256万\n公安厅/民政厅\n已授权\n不可用\n不可用\n无推荐\n教育\n520万\n教育厅\n已授权\n不可用\n不可用\n有推荐\n交通\n680万\n交通运输厅\n已授权\n不可用\n不可用\n无推荐\n每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路\n委办局核心系统状态\n公安厅\n在线\n接口12个\n接入状态：在线运行\n异常处置：0项待处理\nSM4+SM2已启用\n最后同步：2026-06-16 08:30\n人力资源社会保障厅\n在线\n接口15个\n接入状态：在线运行\n1项处理中\nSM4+SM2已启用\n最后同步：2026-06-16 09:00\n医疗保障局\n在线\n接口10个\n接入状态：在线运行\n异常处置：0项待处理\nSM4+SM3已启用\n最后同步：2026-06-16 07:30\n住建厅\n在线\n接口8个\n接入状态：在线运行\n2项待处理\nSM4已启用\n最后同步：2026-06-15 22:00\n民政厅\n在线\n接口7个\n接入状态：在线运行\n异常处置：0项待处理\nSM4+SM2已启用\n最后同步：2026-06-16 08:00\n35/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过",
+  "apiBase": "http://127.0.0.1:59213",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"status\":\"ok\",\"service\":\"nx-city-service-gateway\",\"mode\":\"local-smoke\",\"timestamp\":\"2026-06-17T01:29:56.030Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"code\":0,\"data\":{\"id\":\"smoke-admin\",\"name\":\"本地复验管理员\",\"role\":\"admin\",\"department\":\"自治区大数据中心\",\"permissions\":[\"dashboard:read\",\"admin:read\",\"profile:read\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"code\":0,\"data\":{\"id\":\"smoke-admin\",\"name\":\"本地复验管理员\",\"role\":\"admin\",\"department\":\"自治区大数据中心\",\"permissions\":[\"dashboard:read\",\"admin:read\",\"profile:read\"],\"phone\":\"13800000000\",\"lastLoginAt\":\"2026-06-17T01:29:56.144Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"code\":0,\"data\":{\"id\":\"smoke-admin\",\"name\":\"本地复验管理员\",\"role\":\"admin\",\"department\":\"自治区大数据中心\",\"permissions\":[\"dashboard:read\",\"admin:read\",\"profile:read\"],\"phone\":\"13800000000\",\"lastLoginAt\":\"2026-06-17T01:29:56.161Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"code\":0,\"data\":{\"keyword\":\"测试\",\"items\":[{\"id\":\"svc-001\",\"type\":\"service\",\"title\":\"企业开办一件事\",\"status\":\"online\"},{\"id\":\"cert-001\",\"type\":\"certificate\",\"title\":\"营业执照电子证照\",\"status\":\"available\"}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"code\":0,\"data\":{\"totalUsers\":12840,\"todayVisits\":3862,\"pendingTickets\":17,\"completedServices\":924,\"serviceHealth\":\"ok\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59213/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"code\":0,\"data\":{\"totalUsers\":12840,\"todayVisits\":3862,\"pendingTickets\":17,\"completedServices\":924,\"serviceHealth\":\"ok\"}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2a68d1ca",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2a68d1ca",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2a68d1ca",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2a68d1ca",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=2a68d1ca",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

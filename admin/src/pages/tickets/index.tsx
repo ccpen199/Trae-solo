@@ -809,7 +809,7 @@ const Tickets: React.FC = () => {
       </Title>
       <div style={{ display: 'flex' }}>
         <div style={{ width: 200, flexShrink: 0, marginRight: 16 }}>
-          <Card bodyStyle={{ padding: 0 }}>
+          <Card styles={{ body: { padding: 0 } }}>
             <Menu
               mode="inline"
               selectedKeys={[activeMenu]}

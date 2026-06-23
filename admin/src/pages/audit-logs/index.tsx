@@ -861,7 +861,7 @@ const AuditLogs: React.FC = () => {
           <Button type="primary" icon={<ExportOutlined />}>导出Excel</Button>
         </Space>
       </div>
-      <Card style={{ borderRadius: 8 }} bodyStyle={{ padding: 0 }}>
+      <Card style={{ borderRadius: 8 }} styles={{ body: { padding: 0 } }}>
         <Tabs defaultActiveKey="operations" items={tabItems} size="large" style={{ padding: '0 24px' }} />
       </Card>
 
