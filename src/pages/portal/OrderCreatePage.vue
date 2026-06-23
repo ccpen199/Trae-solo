@@ -768,7 +768,6 @@ import {
 import VolumeWeightCalculator from '@/components/business/VolumeWeightCalculator.vue'
 import { calculateFreightQuote, updateCargoWeights, generateId } from '@/utils/logistics'
 import { mockAddresses } from '@/mock'
-import { orderApi } from '@/api'
 import type { CargoItem, AddressInfo, OrderServices, OrderQuoteResponse } from '@/types'
 
 const router = useRouter()
@@ -917,7 +916,6 @@ const cargoTotals = computed(() => {
 
 const orderNo = ref('')
 const estimatedArrival = ref('')
-const isSubmitting = ref(false)
 
 const activeServiceList = computed(() => {
   const list: { key: string; name: string; fee: number }[] = []
@@ -942,38 +940,13 @@ function generateOrderNo(): string {
   return 'DB' + ts + String(Math.floor(Math.random() * 10000)).padStart(4, '0')
 }
 
-async function submitOrder() {
-  if (isSubmitting.value) return
-  isSubmitting.value = true
-
-  try {
-    const response = await orderApi.create({
-      sender,
-      receiver,
-      cargoList: cargoList.value.map(cargo => ({
-        name: cargo.name || '大件货物',
-        length: cargo.length,
-        width: cargo.width,
-        height: cargo.height,
-        actualWeight: cargo.actualWeight,
-        quantity: cargo.quantity,
-        packaging: cargo.packaging,
-        value: cargo.value
-      })),
-      services,
-      pickupTime: '',
-      remark: remark.value
-    }) as any
-
-    orderNo.value = response.data?.waybillNo || generateOrderNo()
-    estimatedArrival.value = response.data?.estimatedArrival || ''
-    currentStep.value = 3
-    ElMessage.success(`运单 ${orderNo.value} 创建成功`)
-  } catch (error: any) {
-    ElMessage.error(error?.message || '下单失败，请稍后重试')
-  } finally {
-    isSubmitting.value = false
-  }
+function submitOrder() {
+  orderNo.value = generateOrderNo()
+  const days = quote.value.estimatedDays
+  const arrival = new Date()
+  arrival.setDate(arrival.getDate() + days)
+  estimatedArrival.value = `${arrival.getFullYear()}-${String(arrival.getMonth() + 1).padStart(2, '0')}-${String(arrival.getDate()).padStart(2, '0')}`
+  currentStep.value = 3
 }
 
 function resetForm() {
@@ -985,6 +958,5 @@ function resetForm() {
   Object.assign(services, { pickup: true, delivery: true, upstairs: false, insurance: true, temperatureControl: false })
   orderNo.value = ''
   estimatedArrival.value = ''
-  isSubmitting.value = false
 }
 </script>
