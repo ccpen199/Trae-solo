@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #C41D2E;
+  --color-primary-light: #E8474A;
+  --color-accent: #D4A843;
+  --color-accent-light: #E8C96A;
+  --color-bg: #F5F3EF;
+  --color-text: #2D2D2D;
+  --color-text-secondary: #8C8C8C;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
