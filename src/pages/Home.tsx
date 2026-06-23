@@ -343,6 +343,90 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-zinc-50 px-6 py-10 border-b border-zinc-100">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-6 flex items-center gap-2">
+            <div className="h-6 w-1 rounded-full bg-gradient-to-b from-sky-400 to-sky-600" />
+            <h2 className="font-serif text-xl font-bold text-zinc-900">任务全生命周期 · 状态追踪链</h2>
+            <span className="ml-2 text-xs text-zinc-500">从报名到到账，每一步可追踪可验证</span>
+          </div>
+
+          <div className="relative mb-6">
+            <div className="absolute left-0 right-0 top-[28px] h-1 rounded-full bg-zinc-200" />
+            <div className="absolute left-0 top-[28px] h-1 rounded-full bg-gradient-to-r from-sky-400 via-primary-400 via-emerald-400 to-gold-400" style={{ width: '100%' }} />
+            <div className="relative grid grid-cols-2 md:grid-cols-6 gap-3">
+              {[
+                { step: 1, title: '立即报名', desc: '选择任务一键报名', icon: <ListTodo size={18} />, color: 'text-sky-600', bg: 'bg-sky-100', ring: 'ring-sky-300' },
+                { step: 2, title: '上传交付证明', desc: '按标准提交截图', icon: <Camera size={18} />, color: 'text-primary-600', bg: 'bg-primary-100', ring: 'ring-primary-300' },
+                { step: 3, title: '验收倒计时', desc: '24h/72h/7天', icon: <Clock size={18} />, color: 'text-amber-600', bg: 'bg-amber-100', ring: 'ring-amber-300' },
+                { step: 4, title: '验收结果', desc: '通过/驳回+原因', icon: <CheckCircle2 size={18} />, color: 'text-emerald-600', bg: 'bg-emerald-100', ring: 'ring-emerald-300' },
+                { step: 5, title: '结算到账', desc: '佣金到银行卡', icon: <Wallet size={18} />, color: 'text-teal-600', bg: 'bg-teal-100', ring: 'ring-teal-300' },
+                { step: 6, title: '佣金上浮', desc: '10单后+15%', icon: <TrendingUp size={18} />, color: 'text-gold-600', bg: 'bg-gold-100', ring: 'ring-gold-300' },
+              ].map((s, i) => (
+                <motion.div key={s.step} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+                  className="flex flex-col items-center text-center">
+                  <div className={cn('relative z-10 flex h-14 w-14 items-center justify-center rounded-full ring-2 shadow-md', s.bg, s.ring)}>
+                    <span className={s.color}>{s.icon}</span>
+                  </div>
+                  <div className="mt-2 text-sm font-bold text-zinc-900">{s.title}</div>
+                  <div className="mt-0.5 text-[11px] text-zinc-500 leading-snug">{s.desc}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {[
+              { title: '交付证明标准', desc: '每级任务需按交付标准截图，L1需确认页面截图，L3需20字以上审核意见，L5需完整测试报告', icon: <FileCheck size={16} />, color: 'bg-primary-50 border-primary-200 text-primary-700' },
+              { title: '验收时效规则', desc: 'L1-L2任务24小时验收，L3任务72小时验收，L4-L5任务7天验收，超时自动通过', icon: <Clock size={16} />, color: 'bg-amber-50 border-amber-200 text-amber-700' },
+              { title: '驳回与结算', desc: '驳回附具体原因可修正重提，通过后佣金2小时内到账，超5000元人工复核1-2工作日', icon: <Wallet size={16} />, color: 'bg-emerald-50 border-emerald-200 text-emerald-700' },
+            ].map((c, i) => (
+              <div key={i} className={cn('rounded-xl border p-4', c.color)}>
+                <div className="mb-1.5 flex items-center gap-1.5 font-semibold text-sm">{c.icon} {c.title}</div>
+                <div className="text-xs leading-relaxed opacity-80">{c.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-6 py-10 border-b border-zinc-100">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-5 flex items-center gap-2">
+            <div className="h-6 w-1 rounded-full bg-gradient-to-b from-teal-400 to-teal-600" />
+            <h2 className="font-serif text-xl font-bold text-zinc-900">雇主服务 · 可办理业务</h2>
+            <span className="ml-2 text-xs text-zinc-500">企业认证、保证金、合规审核一站式办理</span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { title: '企业认证', desc: '营业执照+银行账户实名双重核验，4步审核流程', status: currentEmployer.certificationStatus === 'approved' ? '已通过' : '待认证', statusColor: currentEmployer.certificationStatus === 'approved' ? 'text-emerald-600 bg-emerald-50' : 'text-amber-600 bg-amber-50', path: '/employer/certify', icon: <Building2 size={22} /> },
+              { title: '银行实名核实', desc: '对公账户开户行核实，确保结算路径合规', status: currentEmployer.bankAccountVerified ? '已核实' : '待核实', statusColor: currentEmployer.bankAccountVerified ? 'text-emerald-600 bg-emerald-50' : 'text-amber-600 bg-amber-50', path: '/employer/certify', icon: <Landmark size={22} /> },
+              { title: '保证金托管', desc: `余额${formatPrice(currentEmployer.depositBalance)}，任务结算从保证金自动代扣`, status: currentEmployer.depositBalance >= 2000 ? '充足' : '不足', statusColor: currentEmployer.depositBalance >= 2000 ? 'text-emerald-600 bg-emerald-50' : 'text-danger-600 bg-danger-50', path: '/employer', icon: <Wallet size={22} /> },
+              { title: '任务合规审核', desc: '发布前平台自动预审，排除刷单/传销/非法集资', status: '平台保障', statusColor: 'text-sky-600 bg-sky-50', path: '/employer', icon: <ShieldCheck size={22} /> },
+            ].map((item, i) => (
+              <Link key={i} to={item.path}>
+                <motion.div whileHover={{ y: -3, boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}
+                  className="rounded-xl border border-zinc-100 bg-white p-5 h-full shadow-sm transition-all">
+                  <div className="mb-3 flex items-start justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
+                      {item.icon}
+                    </div>
+                    <span className={cn('rounded-full px-2 py-0.5 text-[11px] font-semibold', item.statusColor)}>
+                      {item.status}
+                    </span>
+                  </div>
+                  <div className="font-semibold text-zinc-900 mb-1">{item.title}</div>
+                  <div className="text-xs text-zinc-500 leading-relaxed">{item.desc}</div>
+                  <div className="mt-3 flex items-center gap-0.5 text-xs font-medium text-primary-500">
+                    立即办理 <ChevronRight size={12} />
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-gradient-to-br from-gold-50 to-amber-50 px-6 py-10">
         <div className="mx-auto max-w-5xl">
           <div className="mb-4 flex items-end justify-between flex-wrap gap-3">
@@ -514,6 +598,65 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-8 rounded-xl border border-gold-200/60 bg-white p-5">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-zinc-900 flex items-center gap-1.5">
+                  <Eye size={15} className="text-gold-600" /> 推荐池审计视图 · 未入池任务
+                </h3>
+                <div className="mt-0.5 text-[11px] text-zinc-500">以下任务未达到推荐入池门槛，淘汰原因可复查</div>
+              </div>
+              <div className="text-right">
+                <div className="text-[11px] text-zinc-400">缓存版本 v2026.06.19.0800</div>
+                <div className="text-[11px] text-zinc-400">上一版 v2026.06.18.2000</div>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-zinc-100 text-left text-zinc-500">
+                    <th className="pb-2 font-medium">任务</th>
+                    <th className="pb-2 font-medium">难度</th>
+                    <th className="pb-2 font-medium">综合评分</th>
+                    <th className="pb-2 font-medium">完成率</th>
+                    <th className="pb-2 font-medium">弃单率</th>
+                    <th className="pb-2 font-medium">可接</th>
+                    <th className="pb-2 font-medium">淘汰原因</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {heatPredictions.filter(p => !p.recommended).slice(0, 6).map(p => {
+                    const t = tasks.find(t => t.id === p.taskId)
+                    const available = t ? t.totalSlots - t.takenSlots : 0
+                    const reason = p.historicalCompletionRate < 0.7 ? '完成率<70%' :
+                                   p.predictedHeat < 75 ? '评分<75' :
+                                   p.abandonmentRate > 0.2 ? '弃单率>20%' : '供需比不足'
+                    return (
+                      <tr key={p.taskId} className="border-b border-zinc-50">
+                        <td className="py-2 font-medium text-zinc-800 max-w-[160px] truncate">{p.taskTitle}</td>
+                        <td className="py-2"><DifficultyBadge level={p.difficulty} /></td>
+                        <td className="py-2 font-bold text-zinc-600">{p.predictedHeat}</td>
+                        <td className="py-2 text-zinc-600">{(p.historicalCompletionRate * 100).toFixed(1)}%</td>
+                        <td className="py-2 text-zinc-600">{(p.abandonmentRate * 100).toFixed(1)}%</td>
+                        <td className="py-2">
+                          <span className={cn('rounded-full px-1.5 py-0.5 text-[10px] font-semibold',
+                            available > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-zinc-100 text-zinc-500')}>
+                            {available > 0 ? `${available}名` : '已满'}
+                          </span>
+                        </td>
+                        <td className="py-2 text-rose-600 font-medium">{reason}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-3 flex items-center justify-between text-[11px] text-zinc-400">
+              <span>入池标准：综合评分≥75 且 完成率≥70% 且 弃单率≤20%</span>
+              <span>数据来源：近30天历史行为 · 更新周期：每日08:00/20:00</span>
+            </div>
           </div>
         </div>
       </section>

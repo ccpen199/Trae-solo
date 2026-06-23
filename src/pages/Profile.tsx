@@ -757,6 +757,120 @@ export default function Profile() {
         </div>
       </div>
 
+      <div className="mb-6 rounded-xl bg-white p-6 shadow-sm">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-serif text-lg font-bold text-zinc-900">
+            <ShieldCheck size={18} className="mr-2 inline text-teal-500" />
+            风控审计与资金安全
+          </h2>
+          <span className="text-xs text-zinc-400">保护您的账户与资金安全</span>
+        </div>
+
+        <div className="mb-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="rounded-lg bg-emerald-50 p-3 text-center">
+            <div className="text-xl font-bold text-emerald-600">0</div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">设备异常拦截</div>
+          </div>
+          <div className="rounded-lg bg-sky-50 p-3 text-center">
+            <div className="text-xl font-bold text-sky-600">0</div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">IP异常告警</div>
+          </div>
+          <div className="rounded-lg bg-amber-50 p-3 text-center">
+            <div className="text-xl font-bold text-amber-600">{myWithdrawals.filter(w => w.exceedLimit).length}</div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">超5000元复核</div>
+          </div>
+          <div className="rounded-lg bg-teal-50 p-3 text-center">
+            <div className="text-xl font-bold text-teal-600">{myWithdrawals.filter(w => w.status === 'completed').length}</div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">已安全到账</div>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-100">
+                <CheckCircle2 size={18} className="text-emerald-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-semibold text-emerald-800">您的账户安全状态良好</div>
+                <div className="mt-1 text-xs text-zinc-600 leading-relaxed">
+                  未检测到同设备多账号登录、IP异常切换等风险行为。平台持续监控账户安全，如发现异常将第一时间通知您。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {myWithdrawals.filter(w => w.exceedLimit).length > 0 && (
+            <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-100">
+                  <Landmark size={18} className="text-amber-600" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-semibold text-amber-800">大额提现人工复核记录</div>
+                  <div className="mt-2 space-y-2">
+                    {myWithdrawals.filter(w => w.exceedLimit).map(w => (
+                      <div key={w.id} className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-zinc-900">{formatPrice(w.amount)}</span>
+                          <span className="text-zinc-400">{formatDateTime(w.submittedAt)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className={cn(
+                            'rounded-full px-2 py-0.5 text-[11px] font-semibold',
+                            w.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
+                            w.status === 'rejected' ? 'bg-rose-100 text-rose-700' :
+                            w.status === 'manual_review' ? 'bg-amber-100 text-amber-700' :
+                            'bg-sky-100 text-sky-700'
+                          )}>
+                            {w.status === 'completed' ? '复核通过·已到账' :
+                             w.status === 'rejected' ? '已驳回' :
+                             w.status === 'manual_review' ? '人工复核中' :
+                             w.status === 'review_passed' ? '复核通过·到账中' : '处理中'}
+                          </span>
+                          <button onClick={() => setShowDetailModal(w)}
+                            className="inline-flex items-center gap-0.5 text-primary-500 hover:text-primary-600 font-medium">
+                            <Eye size={11} /> 详情
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2 text-xs text-zinc-500">
+                    单日提现超¥5,000触发双人人工复核，确保资金安全。复核通过后1-2工作日到账。
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="rounded-xl border border-sky-200 bg-sky-50/50 p-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-100">
+                <UserCheck size={18} className="text-sky-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-semibold text-sky-800">平台资金流监控保障</div>
+                <div className="mt-1 text-xs text-zinc-600 leading-relaxed">
+                  所有雇主均已通过企业认证并缴纳保证金，任务佣金从保证金预托管池自动结算。平台7×24小时监控异常资金流，单日提现超5000元自动触发人工复核。
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-teal-700 border border-teal-200">
+                    <CheckCircle2 size={10} /> 雇主100%企业认证
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-teal-700 border border-teal-200">
+                    <CheckCircle2 size={10} /> 保证金预托管
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-teal-700 border border-teal-200">
+                    <CheckCircle2 size={10} /> 大额双人复核
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <AnimatePresence>
         {showLimitModal && (
           <motion.div
