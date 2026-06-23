@@ -15,15 +15,37 @@ const Login: React.FC = () => {
   const [registerForm] = Form.useForm();
 
   const handleLogin = async (values: any) => {
+    if (!values.phone) {
+      message.warning('请输入手机号');
+      return;
+    }
+    if (!/^1[3-9]\d{9}$/.test(values.phone)) {
+      message.warning('请输入正确的11位手机号');
+      return;
+    }
+    if (!values.password) {
+      message.warning('请输入密码');
+      return;
+    }
+    if (values.password.length < 6) {
+      message.warning('密码至少6位');
+      return;
+    }
+    if (!values.captcha) {
+      message.warning('请输入验证码');
+      return;
+    }
     if (values.captcha?.toUpperCase() !== captchaCode) {
-      message.error('验证码错误，请输入：8527');
+      message.error('验证码错误，请输入：' + captchaCode);
       return;
     }
     setLoading(true);
     try {
       await storeLogin(values.phone, values.password, values.captcha);
-      message.success('登录成功');
-      navigate('/');
+      message.success('登录成功，正在进入个人工作台...');
+      setTimeout(() => {
+        navigate('/payment/bills');
+      }, 500);
     } catch (error: any) {
       message.error(error.message || '登录失败，请检查手机号和密码');
     } finally {
