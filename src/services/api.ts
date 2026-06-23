@@ -1,6 +1,0 @@
-export { getScenicAreas, getScenicArea, createScenicArea, updateScenicArea, deleteScenicArea } from './mock/scenic'
-export { getPOIs, createPOI, updatePOI, deletePOI } from './mock/poi'
-export { getARContents, getARContent, getARContentByPOI, getARContentsByScenic, updateARContent } from './mock/arContent'
-export { getOverviewMetrics, getHeatmapData, getVisitorBehaviors } from './mock/analytics'
-export { getABTests, createABTest, completeABTest } from './mock/abTest'
-export { getTourRoutes, updateTourRoute } from './mock/tourRoute'
