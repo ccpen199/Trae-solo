@@ -228,3 +228,23 @@ export const exportAllData = async (): Promise<string> => {
 
   return JSON.stringify(exportObj, null, 2)
 }
+
+export const saveTechnicians = async (items: Technician[]): Promise<void> => {
+  for (const item of items) await saveData<Technician>('technicians', item)
+}
+
+export const saveTasks = async (items: RepairTask[]): Promise<void> => {
+  for (const item of items) await saveData<RepairTask>('tasks', item)
+}
+
+export const saveReviews = async (items: Review[]): Promise<void> => {
+  for (const item of items) await saveData<Review>('reviews', item)
+}
+
+export const saveReports = async (items: ServiceReport[]): Promise<void> => {
+  for (const item of items) await saveData<ServiceReport>('reports', item)
+}
+
+export const savePayments = async (items: PaymentProof[]): Promise<void> => {
+  for (const item of items) await saveData<PaymentProof>('payments', item)
+}

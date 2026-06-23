@@ -52,9 +52,10 @@ export const TechTasks: React.FC = () => {
   }
 
   const handleSubmitReport = async () => {
-    if (!selectedTask) return
+    if (!selectedTask || !currentTechnician) return
     await createServiceReport({
       taskId: selectedTask.id,
+      technicianId: currentTechnician.id,
       diagnosis,
       parts: parts.filter(p => p.name),
       warrantyMonths,

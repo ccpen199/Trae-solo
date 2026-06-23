@@ -63,6 +63,7 @@ export interface ServicePart {
 export interface ServiceReport {
   id: string
   taskId: string
+  technicianId: string
   diagnosis: string
   parts: ServicePart[]
   warrantyMonths: number

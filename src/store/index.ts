@@ -29,8 +29,13 @@ import {
   addToOfflineQueue,
   getOfflineQueue,
   clearOfflineQueueItem,
+  saveTasks,
+  saveReviews,
+  saveReports,
+  savePayments,
+  saveTechnicians,
 } from '../utils/storage'
-import { mockTechnicians } from '../data/mockData'
+import { mockTechnicians, generateDemoData } from '../data/mockData'
 
 interface OfflineQueueItem {
   id: string
@@ -87,6 +92,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   offlineQueue: [],
 
   initApp: async () => {
+    let needsSeedDemo = false
+
     const user = await getCurrentUser()
     if (!user) {
       const defaultUser: AppUser = {
@@ -103,18 +110,30 @@ export const useAppStore = create<AppState>((set, get) => ({
 
     const storedTechs = await getAllTechnicians()
     if (storedTechs.length === 0) {
-      for (const tech of mockTechnicians) {
-        await saveTechnician(tech)
-      }
+      await saveTechnicians(mockTechnicians)
       set({ technicians: mockTechnicians })
+      needsSeedDemo = true
     } else {
       set({ technicians: storedTechs })
     }
 
-    const tasks = await getAllTasks()
-    const reviews = await getAllReviews()
-    const reports = await getAllReports()
-    const payments = await getAllPayments()
+    let tasks = await getAllTasks()
+    let reviews = await getAllReviews()
+    let reports = await getAllReports()
+    let payments = await getAllPayments()
+
+    if (needsSeedDemo && tasks.length === 0) {
+      const demo = generateDemoData()
+      await saveTasks(demo.tasks)
+      await saveReviews(demo.reviews)
+      await saveReports(demo.reports)
+      await savePayments(demo.payments)
+      tasks = demo.tasks
+      reviews = demo.reviews
+      reports = demo.reports
+      payments = demo.payments
+    }
+
     const queue = await getOfflineQueue()
 
     set({
