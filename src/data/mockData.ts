@@ -726,16 +726,16 @@ export const reviewItems: ReviewItem[] = [
 ];
 
 export const heatmapData: HeatmapData[] = [
-  { lat: 31.2304, lng: 121.4737, intensity: 0.95, jobCount: 156, seekerCount: 2340 },
-  { lat: 31.2397, lng: 121.4998, intensity: 0.82, jobCount: 124, seekerCount: 1890 },
-  { lat: 31.1823, lng: 121.3997, intensity: 0.88, jobCount: 178, seekerCount: 2560 },
-  { lat: 31.2215, lng: 121.4365, intensity: 0.72, jobCount: 89, seekerCount: 1450 },
-  { lat: 31.2325, lng: 121.4801, intensity: 0.65, jobCount: 67, seekerCount: 1120 },
-  { lat: 31.2500, lng: 121.4800, intensity: 0.55, jobCount: 45, seekerCount: 890 },
-  { lat: 31.2200, lng: 121.5200, intensity: 0.48, jobCount: 38, seekerCount: 720 },
-  { lat: 31.2000, lng: 121.4400, intensity: 0.62, jobCount: 78, seekerCount: 1230 },
-  { lat: 31.2600, lng: 121.4600, intensity: 0.42, jobCount: 32, seekerCount: 560 },
-  { lat: 31.1700, lng: 121.4200, intensity: 0.58, jobCount: 56, seekerCount: 980 },
+  { lat: 31.2304, lng: 121.4737, intensity: 0.95, jobCount: 156, seekerCount: 2340, region: '静安区' },
+  { lat: 31.2397, lng: 121.4998, intensity: 0.82, jobCount: 124, seekerCount: 1890, region: '浦东新区' },
+  { lat: 31.1823, lng: 121.3997, intensity: 0.88, jobCount: 178, seekerCount: 2560, region: '徐汇区' },
+  { lat: 31.2215, lng: 121.4365, intensity: 0.72, jobCount: 89, seekerCount: 1450, region: '长宁区' },
+  { lat: 31.2325, lng: 121.4801, intensity: 0.65, jobCount: 67, seekerCount: 1120, region: '黄浦区' },
+  { lat: 31.2500, lng: 121.4800, intensity: 0.55, jobCount: 45, seekerCount: 890, region: '虹口区' },
+  { lat: 31.2200, lng: 121.5200, intensity: 0.48, jobCount: 38, seekerCount: 720, region: '杨浦区' },
+  { lat: 31.2000, lng: 121.4400, intensity: 0.62, jobCount: 78, seekerCount: 1230, region: '普陀区' },
+  { lat: 31.2600, lng: 121.4600, intensity: 0.42, jobCount: 32, seekerCount: 560, region: '宝山区' },
+  { lat: 31.1700, lng: 121.4200, intensity: 0.58, jobCount: 56, seekerCount: 980, region: '闵行区' },
 ];
 
 export const activityData: ActivityData[] = [

@@ -118,6 +118,7 @@ export interface HeatmapData {
   intensity: number;
   jobCount: number;
   seekerCount: number;
+  region: string;
 }
 
 export interface ActivityData {

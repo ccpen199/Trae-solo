@@ -37,6 +37,11 @@ interface VideoWithCompany extends Video {
   companySalaryMax?: number;
 }
 
+interface MatchedJob extends Job {
+  matchScore: number;
+  matchedKeywords: string[];
+}
+
 interface AppState {
   preferences: UserPreferences;
   interactions: InteractionState;
@@ -55,6 +60,7 @@ interface AppState {
   getRecommendedVideos: () => Array<Video & { companyId: string; companyName: string; companyLogo: string; score: number; scoreBreakdown: ScoreBreakdown }>;
   getRecommendedJobs: () => Array<Job & { score: number }>;
   getDiscoveryVideos: () => Array<Video & { companyId: string; companyName: string; companyLogo: string }>;
+  getMatchedJobsForSeeker: (seekerSkills: string[], seekerKeywords: string[]) => MatchedJob[];
   isVideoLiked: (videoId: string) => boolean;
   isVideoBookmarked: (videoId: string) => boolean;
   isCompanyFollowed: (companyId: string) => boolean;
@@ -418,6 +424,38 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     return interactions.followedCompanies.includes(companyId);
   }, [interactions.followedCompanies]);
 
+  const getMatchedJobsForSeeker = useCallback((seekerSkills: string[], seekerKeywords: string[]): MatchedJob[] => {
+    const allKeywords = [...new Set([...seekerSkills, ...seekerKeywords])];
+
+    const matched = jobs.map(job => {
+      const jobKeywords = [...job.tags, job.title, ...job.requirements];
+      const matchedKeywords: string[] = [];
+
+      allKeywords.forEach(kw => {
+        const kwLower = kw.toLowerCase();
+        const isMatch = jobKeywords.some(jk =>
+          jk.toLowerCase().includes(kwLower) || kwLower.includes(jk.toLowerCase())
+        );
+        if (isMatch && !matchedKeywords.includes(kw)) {
+          matchedKeywords.push(kw);
+        }
+      });
+
+      const totalKeywords = allKeywords.length;
+      const matchScore = totalKeywords > 0 ? matchedKeywords.length / totalKeywords : 0;
+
+      return {
+        ...job,
+        matchScore,
+        matchedKeywords,
+      };
+    });
+
+    matched.sort((a, b) => b.matchScore - a.matchScore);
+
+    return matched.slice(0, 5);
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -438,6 +476,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         getRecommendedVideos,
         getRecommendedJobs,
         getDiscoveryVideos,
+        getMatchedJobsForSeeker,
         isVideoLiked,
         isVideoBookmarked,
         isCompanyFollowed,
