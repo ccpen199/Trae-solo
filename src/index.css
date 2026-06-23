@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+:root {
+  font-family: "Noto Sans SC", system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --color-honghe-red: #C4533A;
+  --color-honghe-blue: #2D5A7B;
+  --color-honghe-gold: #E8B44D;
+  --color-honghe-green: #5A8F5A;
+  --color-warm-bg: #F5F0EB;
+  --color-warm-text: #3D3532;
+}
+
+body {
+  background-color: var(--color-warm-bg);
+  color: var(--color-warm-text);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-honghe-red text-white px-6 py-2.5 rounded-lg font-medium
+           hover:bg-honghe-red-dark active:scale-[0.98] transition-all duration-200;
+  }
+  .btn-secondary {
+    @apply border-2 border-honghe-red text-honghe-red px-6 py-2 rounded-lg font-medium
+           hover:bg-honghe-red hover:text-white active:scale-[0.98] transition-all duration-200;
+  }
+  .btn-gold {
+    @apply bg-honghe-gold text-warm-800 px-6 py-2.5 rounded-lg font-medium
+           hover:bg-honghe-gold-light active:scale-[0.98] transition-all duration-200;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-warm-100
+           hover:shadow-md hover:-translate-y-0.5 transition-all duration-300;
+  }
+  .card-static {
+    @apply bg-white rounded-xl shadow-sm border border-warm-100;
+  }
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  .tag-red {
+    @apply tag bg-honghe-red/10 text-honghe-red;
+  }
+  .tag-blue {
+    @apply tag bg-honghe-blue/10 text-honghe-blue;
+  }
+  .tag-gold {
+    @apply tag bg-honghe-gold/10 text-honghe-gold;
+  }
+  .tag-green {
+    @apply tag bg-honghe-green/10 text-honghe-green;
+  }
+  .input-field {
+    @apply w-full px-4 py-2.5 border border-warm-200 rounded-lg bg-white
+           focus:outline-none focus:ring-2 focus:ring-honghe-red/30 focus:border-honghe-red
+           transition-all duration-200;
+  }
+  .section-title {
+    @apply font-serif text-2xl font-semibold text-warm-800;
+  }
+}
+
+.terrace-pattern {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(196, 83, 58, 0.03) 40px,
+      rgba(196, 83, 58, 0.03) 41px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(196, 83, 58, 0.02) 60px,
+      rgba(196, 83, 58, 0.02) 61px
+    );
+}
+
+.ethnic-border {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-honghe-red) 0px,
+    var(--color-honghe-red) 8px,
+    transparent 8px,
+    transparent 12px,
+    var(--color-honghe-gold) 12px,
+    var(--color-honghe-gold) 18px,
+    transparent 18px,
+    transparent 24px
+  );
+  height: 4px;
+}
