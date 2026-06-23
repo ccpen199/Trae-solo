@@ -1,9 +1,0 @@
-{
-  "name": "may-89102-frontend",
-  "version": "1.0.0",
-  "type": "commonjs",
-  "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
-  }
-}
