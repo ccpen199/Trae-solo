@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import {
   Search,
@@ -12,6 +12,12 @@ import {
   Shield,
   ChevronDown,
   X,
+  FileCheck,
+  Landmark,
+  XCircle,
+  CheckCircle,
+  Clock,
+  Info,
 } from "lucide-react"
 import { storefronts, districts } from "@/data/mockData"
 
@@ -31,6 +37,8 @@ function formatMoney(value: number): string {
 }
 
 export default function StoreHall() {
+  const [searchParams] = useSearchParams()
+  const q = searchParams.get("q") || ""
   const [selectedDistrict, setSelectedDistrict] = useState("")
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([])
   const [budgetMin, setBudgetMin] = useState("")
@@ -41,6 +49,7 @@ export default function StoreHall() {
   const [viewMode, setViewMode] = useState<"list" | "map">("list")
   const [sortBy, setSortBy] = useState("newest")
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
+  const [infoModalStoreId, setInfoModalStoreId] = useState<string | null>(null)
 
   const toggleIndustry = (industry: string) => {
     setSelectedIndustries((prev) =>
@@ -68,6 +77,14 @@ export default function StoreHall() {
     propertyType !== "全部"
 
   const filteredStorefronts = storefronts.filter((s) => {
+    if (q) {
+      const lowerQ = q.toLowerCase()
+      const matchTitle = s.title.toLowerCase().includes(lowerQ)
+      const matchDistrict = s.district.toLowerCase().includes(lowerQ)
+      const matchIndustry = s.industry.some((ind) => ind.toLowerCase().includes(lowerQ))
+      const matchAddress = s.address.toLowerCase().includes(lowerQ)
+      if (!matchTitle && !matchDistrict && !matchIndustry && !matchAddress) return false
+    }
     if (selectedDistrict && s.district !== selectedDistrict) return false
     if (selectedIndustries.length > 0 && !selectedIndustries.some((ind) => s.industry.includes(ind)))
       return false
@@ -112,6 +129,30 @@ export default function StoreHall() {
     if (level === "low") return "低风险"
     if (level === "medium") return "中风险"
     return "高风险"
+  }
+
+  const propertyBadgeClass = (type: "自有" | "租赁" | "合作") => {
+    if (type === "自有") return "bg-jade-100 text-jade-700"
+    if (type === "租赁") return "bg-navy-100 text-navy-700"
+    return "bg-amber-100 text-amber-700"
+  }
+
+  const verificationIcon = (status: "passed" | "failed" | "pending") => {
+    if (status === "passed") return <CheckCircle className="w-3.5 h-3.5 text-jade-600" />
+    if (status === "failed") return <XCircle className="w-3.5 h-3.5 text-coral-600" />
+    return <Clock className="w-3.5 h-3.5 text-amber-600" />
+  }
+
+  const verificationLabel = (status: "passed" | "failed" | "pending") => {
+    if (status === "passed") return "已通过"
+    if (status === "failed") return "未通过"
+    return "审核中"
+  }
+
+  const verificationTextClass = (status: "passed" | "failed" | "pending") => {
+    if (status === "passed") return "text-jade-600"
+    if (status === "failed") return "text-coral-600"
+    return "text-amber-600"
   }
 
   const FilterPanel = () => (
@@ -292,6 +333,27 @@ export default function StoreHall() {
           )}
 
           <main className="flex-1 min-w-0">
+            {q && (
+              <div className="card p-4 mb-5 bg-navy-50/50 border-navy-100">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Search className="w-4 h-4 text-navy-600" />
+                    <p className="text-sm text-slate-600">
+                      搜索关键词：<span className="font-semibold text-navy-900">"{q}"</span>，
+                      为您找到 <span className="font-semibold text-navy-900">{sortedStorefronts.length}</span> 个匹配结果
+                    </p>
+                  </div>
+                  <Link
+                    to="/storehall"
+                    className="text-xs text-slate-500 hover:text-coral-600 flex items-center gap-1 transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                    清除搜索
+                  </Link>
+                </div>
+              </div>
+            )}
+
             <div className="flex items-center justify-between mb-5">
               <p className="text-sm text-slate-500">
                 共 <span className="font-semibold text-navy-900">{sortedStorefronts.length}</span> 个铺位
@@ -362,14 +424,19 @@ export default function StoreHall() {
                           )}
                         </div>
                       </div>
-                      <div className="p-4">
+                      <div className="p-4 relative">
                         <h3 className="font-semibold text-navy-900 mb-1.5 line-clamp-1 group-hover:text-amber-600 transition-colors">
                           {store.title}
                         </h3>
-                        <p className="text-xs text-slate-400 mb-3 flex items-center gap-1">
+                        <p className="text-xs text-slate-400 mb-2 flex items-center gap-1">
                           <MapPin className="w-3 h-3" />
                           {store.district} · {store.address}
                         </p>
+                        <div className="mb-3">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${propertyBadgeClass(store.propertyType)}`}>
+                            产权：{store.propertyType}
+                          </span>
+                        </div>
                         <div className="flex flex-wrap gap-1.5 mb-3">
                           {store.industry.slice(0, 3).map((ind) => (
                             <span
@@ -380,6 +447,35 @@ export default function StoreHall() {
                             </span>
                           ))}
                         </div>
+                        {store.verified ? (
+                          <div className="flex items-center gap-2 mb-3 px-2.5 py-1.5 bg-jade-50 rounded-lg">
+                            <div className="flex -space-x-1">
+                              <CheckCircle className="w-4 h-4 text-jade-600" />
+                              <CheckCircle className="w-4 h-4 text-jade-600" />
+                            </div>
+                            <span className="text-xs font-medium text-jade-700">双验证通过</span>
+                            <span className="text-xs text-jade-600">工商验证 · 住建验证</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-4 mb-3 px-2.5 py-1.5 bg-slate-50 rounded-lg">
+                            <div className="flex items-center gap-1">
+                              <Landmark className="w-3.5 h-3.5 text-slate-500" />
+                              <span className="text-xs text-slate-500">工商验证</span>
+                              {verificationIcon(store.verificationDetails.commerce)}
+                              <span className={`text-xs font-medium ${verificationTextClass(store.verificationDetails.commerce)}`}>
+                                {verificationLabel(store.verificationDetails.commerce)}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <FileCheck className="w-3.5 h-3.5 text-slate-500" />
+                              <span className="text-xs text-slate-500">住建验证</span>
+                              {verificationIcon(store.verificationDetails.housing)}
+                              <span className={`text-xs font-medium ${verificationTextClass(store.verificationDetails.housing)}`}>
+                                {verificationLabel(store.verificationDetails.housing)}
+                              </span>
+                            </div>
+                          </div>
+                        )}
                         <div className="grid grid-cols-3 gap-2 text-center py-2.5 border-t border-slate-50">
                           <div>
                             <p className="text-xs text-slate-400">面积</p>
@@ -398,12 +494,23 @@ export default function StoreHall() {
                             </p>
                           </div>
                         </div>
-                        <Link
-                          to={`/store/${store.id}`}
-                          className="mt-3 block w-full text-center btn-primary text-sm py-2"
-                        >
-                          查看详情
-                        </Link>
+                        <div className="flex items-center gap-2 mt-3">
+                          <Link
+                            to={`/store/${store.id}`}
+                            className="flex-1 text-center btn-primary text-sm py-2"
+                          >
+                            查看详情
+                          </Link>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault()
+                              setInfoModalStoreId(store.id)
+                            }}
+                            className="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 text-slate-400 hover:text-navy-600 hover:border-navy-200 hover:bg-slate-50 transition-all duration-200"
+                          >
+                            <Info className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
@@ -471,6 +578,118 @@ export default function StoreHall() {
           </main>
         </div>
       </div>
+      {infoModalStoreId && (() => {
+        const store = storefronts.find((s) => s.id === infoModalStoreId)
+        if (!store) return null
+        const mockLicense = {
+          companyName: `上海${store.title.replace(/转让|底商|精品店|急转|机构|配件店/g, "").trim()}有限公司`,
+          unifiedCode: "91310" + Math.random().toString().slice(2, 16),
+          legalPerson: "张" + ["伟", "芳", "强", "敏", "磊", "静"][Math.floor(Math.random() * 6)],
+        }
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/50" onClick={() => setInfoModalStoreId(null)} />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+            >
+              <div className="bg-navy-gradient px-5 py-4 flex items-center justify-between">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <FileCheck className="w-4 h-4 text-amber-400" />
+                  资质与验证详情
+                </h3>
+                <button
+                  onClick={() => setInfoModalStoreId(null)}
+                  className="text-navy-200 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-5 space-y-5 max-h-[70vh] overflow-y-auto">
+                <div>
+                  <h4 className="text-sm font-semibold text-navy-900 mb-3 flex items-center gap-1.5">
+                    <Landmark className="w-4 h-4 text-navy-500" />
+                    商户营业执照OCR识别结果
+                  </h4>
+                  <div className="bg-slate-50 rounded-xl p-4 space-y-3 border border-slate-100">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs text-slate-500 w-24 shrink-0">公司名称</span>
+                      <span className="text-sm text-navy-800 font-medium text-right">{mockLicense.companyName}</span>
+                    </div>
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs text-slate-500 w-24 shrink-0">统一社会信用代码</span>
+                      <span className="text-sm text-navy-800 font-medium font-mono text-right">{mockLicense.unifiedCode}</span>
+                    </div>
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs text-slate-500 w-24 shrink-0">法定代表人</span>
+                      <span className="text-sm text-navy-800 font-medium text-right">{mockLicense.legalPerson}</span>
+                    </div>
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs text-slate-500 w-24 shrink-0">注册资本</span>
+                      <span className="text-sm text-navy-800 font-medium text-right">50万元人民币</span>
+                    </div>
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs text-slate-500 w-24 shrink-0">成立日期</span>
+                      <span className="text-sm text-navy-800 font-medium text-right">2022-03-15</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-navy-900 mb-3 flex items-center gap-1.5">
+                    <Shield className="w-4 h-4 text-navy-500" />
+                    验证详情
+                  </h4>
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Landmark className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">工商验证</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        {verificationIcon(store.verificationDetails.commerce)}
+                        <span className={`text-xs font-medium ${verificationTextClass(store.verificationDetails.commerce)}`}>
+                          {verificationLabel(store.verificationDetails.commerce)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <FileCheck className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">住建验证</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        {verificationIcon(store.verificationDetails.housing)}
+                        <span className={`text-xs font-medium ${verificationTextClass(store.verificationDetails.housing)}`}>
+                          {verificationLabel(store.verificationDetails.housing)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="pt-2 mt-2 border-t border-slate-100 grid grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <p className="text-slate-400">提交验证</p>
+                        <p className="text-navy-800 font-medium mt-0.5">{store.createdAt}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-400">最后更新</p>
+                        <p className="text-navy-800 font-medium mt-0.5">{store.updatedAt}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="px-5 py-3 bg-slate-50 border-t border-slate-100">
+                <button
+                  onClick={() => setInfoModalStoreId(null)}
+                  className="w-full btn-secondary text-sm py-2"
+                >
+                  关闭
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )
+      })()}
     </div>
   )
 }

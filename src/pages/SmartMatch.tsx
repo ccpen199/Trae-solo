@@ -8,7 +8,7 @@ import {
   Radar,
   ResponsiveContainer,
 } from "recharts"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Search,
   Filter,
@@ -18,8 +18,17 @@ import {
   TrendingUp,
   ChevronRight,
   SlidersHorizontal,
+  AlertCircle,
+  Calendar,
+  Heart,
+  Phone,
+  FileCheck,
+  ThumbsUp,
+  Minus,
+  Star,
+  X,
 } from "lucide-react"
-import { storefronts, districts } from "@/data/mockData"
+import { storefronts, districts, broker } from "@/data/mockData"
 
 const INDUSTRY_OPTIONS = ["餐饮", "零售", "美业", "服装", "数码", "教育", "金融服务"]
 
@@ -34,6 +43,17 @@ interface MatchResultItem {
   storeId: string
   score: number
   dimensions: MatchDimensions
+}
+
+interface MatchReason {
+  icon: "thumbsup" | "minus"
+  text: string
+}
+
+interface FormErrors {
+  industry?: string
+  budgetMin?: string
+  budgetMax?: string
 }
 
 function calculateMatch(
@@ -83,6 +103,66 @@ function formatMoney(value: number): string {
   return value.toLocaleString()
 }
 
+function getMatchReasons(
+  dimensions: MatchDimensions,
+  store: typeof storefronts[0],
+  industry: string
+): MatchReason[] {
+  const reasons: MatchReason[] = []
+
+  if (dimensions.industry > 80) {
+    reasons.push({
+      icon: "thumbsup",
+      text: `行业匹配度高：该门店经营行业与您选择的${industry}高度契合`,
+    })
+  } else if (dimensions.industry > 50) {
+    reasons.push({
+      icon: "minus",
+      text: `行业部分匹配：该门店经营行业与您选择的${industry}有一定关联`,
+    })
+  }
+
+  if (dimensions.budget > 80) {
+    reasons.push({
+      icon: "thumbsup",
+      text: `预算匹配：转让费${formatMoney(store.transferFee)}在您的预算区间内`,
+    })
+  } else if (dimensions.budget > 50) {
+    reasons.push({
+      icon: "minus",
+      text: `预算接近：转让费${formatMoney(store.transferFee)}与您的预算区间略有偏差`,
+    })
+  }
+
+  if (dimensions.location > 80) {
+    reasons.push({
+      icon: "thumbsup",
+      text: `区位匹配：位于您偏好的${store.district}`,
+    })
+  } else if (dimensions.location > 50) {
+    reasons.push({
+      icon: "minus",
+      text: `区位一般：位于${store.district}，非您首选商圈`,
+    })
+  }
+
+  if (reasons.length === 0) {
+    reasons.push({
+      icon: "minus",
+      text: "综合评分：各维度匹配度处于平均水平",
+    })
+  }
+
+  return reasons.slice(0, 3)
+}
+
+const shakeVariants = {
+  shake: {
+    x: [0, -8, 8, -6, 6, -3, 3, 0],
+    transition: { duration: 0.5 },
+  },
+}
+
 export default function SmartMatch() {
   const [industry, setIndustry] = useState("")
   const [budgetMin, setBudgetMin] = useState("")
@@ -93,6 +173,11 @@ export default function SmartMatch() {
   const [areaMax, setAreaMax] = useState("")
   const [results, setResults] = useState<MatchResultItem[] | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [shakeKeys, setShakeKeys] = useState<{ [key: string]: number }>({})
+  const [favorites, setFavorites] = useState<Set<string>>(new Set())
+  const [showBrokerModal, setShowBrokerModal] = useState(false)
+  const [bookingMessage, setBookingMessage] = useState<string | null>(null)
 
   const toggleDistrict = (name: string) => {
     setPreferredDistricts((prev) =>
@@ -100,8 +185,41 @@ export default function SmartMatch() {
     )
   }
 
+  const triggerShake = (field: string) => {
+    setShakeKeys((prev) => ({ ...prev, [field]: (prev[field] || 0) + 1 }))
+  }
+
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {}
+    let hasError = false
+
+    if (!industry) {
+      newErrors.industry = "请选择行业属性"
+      triggerShake("industry")
+      hasError = true
+    }
+    if (!budgetMin) {
+      newErrors.budgetMin = "请输入预算最低值"
+      triggerShake("budgetMin")
+      hasError = true
+    }
+    if (!budgetMax) {
+      newErrors.budgetMax = "请输入预算最高值"
+      triggerShake("budgetMax")
+      hasError = true
+    }
+    if (budgetMin && budgetMax && Number(budgetMax) <= Number(budgetMin)) {
+      newErrors.budgetMax = "预算上限必须大于下限"
+      triggerShake("budgetMax")
+      hasError = true
+    }
+
+    setErrors(newErrors)
+    return !hasError
+  }
+
   const handleMatch = () => {
-    if (!industry || !budgetMin || !budgetMax) return
+    if (!validate()) return
     const matched = calculateMatch(industry, Number(budgetMin), Number(budgetMax), preferredDistricts)
     setResults(matched)
     if (matched.length > 0) setSelectedId(matched[0].storeId)
@@ -117,6 +235,25 @@ export default function SmartMatch() {
     setPreferredDistricts([])
     setAreaMin("")
     setAreaMax("")
+    setErrors({})
+    setBookingMessage(null)
+  }
+
+  const toggleFavorite = (storeId: string) => {
+    setFavorites((prev) => {
+      const next = new Set(prev)
+      if (next.has(storeId)) {
+        next.delete(storeId)
+      } else {
+        next.add(storeId)
+      }
+      return next
+    })
+  }
+
+  const handleBooking = () => {
+    setBookingMessage("预约成功！经纪人将在24小时内联系您确认带看时间。")
+    setTimeout(() => setBookingMessage(null), 4000)
   }
 
   const selectedStore = results
@@ -132,6 +269,13 @@ export default function SmartMatch() {
         { dimension: "区位匹配", value: selectedMatch.dimensions.location },
       ]
     : []
+
+  const renderReasonIcon = (icon: "thumbsup" | "minus") => {
+    if (icon === "thumbsup") {
+      return <ThumbsUp className="w-3.5 h-3.5 text-jade-500 shrink-0" />
+    }
+    return <Minus className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -149,6 +293,20 @@ export default function SmartMatch() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
+        <AnimatePresence>
+          {bookingMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-jade-50 border border-jade-200 text-jade-700 px-6 py-3 rounded-lg shadow-lg flex items-center gap-2"
+            >
+              <ThumbsUp className="w-4 h-4" />
+              {bookingMessage}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {!results ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -170,18 +328,33 @@ export default function SmartMatch() {
                     <Building2 className="w-3.5 h-3.5 inline mr-1" />
                     行业属性
                   </label>
-                  <select
-                    value={industry}
-                    onChange={(e) => setIndustry(e.target.value)}
-                    className="select-field"
+                  <motion.div
+                    key={shakeKeys.industry || 0}
+                    animate={errors.industry ? "shake" : undefined}
+                    variants={shakeVariants}
                   >
-                    <option value="">请选择行业</option>
-                    {INDUSTRY_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      value={industry}
+                      onChange={(e) => {
+                        setIndustry(e.target.value)
+                        if (errors.industry) setErrors((prev) => ({ ...prev, industry: undefined }))
+                      }}
+                      className={`select-field ${errors.industry ? "border-coral-400 focus:ring-coral-400/50 focus:border-coral-400" : ""}`}
+                    >
+                      <option value="">请选择行业</option>
+                      {INDUSTRY_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </motion.div>
+                  {errors.industry && (
+                    <p className="mt-1.5 flex items-center gap-1 text-xs text-coral-600">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.industry}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -189,22 +362,58 @@ export default function SmartMatch() {
                     预算区间（转让费/万元）
                   </label>
                   <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      placeholder="最低"
-                      value={budgetMin}
-                      onChange={(e) => setBudgetMin(e.target.value)}
-                      className="input-field text-center"
-                    />
+                    <motion.div
+                      key={shakeKeys.budgetMin || 0}
+                      animate={errors.budgetMin ? "shake" : undefined}
+                      variants={shakeVariants}
+                      className="flex-1"
+                    >
+                      <input
+                        type="number"
+                        placeholder="最低"
+                        value={budgetMin}
+                        onChange={(e) => {
+                          setBudgetMin(e.target.value)
+                          if (errors.budgetMin) setErrors((prev) => ({ ...prev, budgetMin: undefined }))
+                        }}
+                        className={`input-field text-center ${errors.budgetMin ? "border-coral-400 focus:ring-coral-400/50 focus:border-coral-400" : ""}`}
+                      />
+                    </motion.div>
                     <span className="text-slate-400 text-sm">—</span>
-                    <input
-                      type="number"
-                      placeholder="最高"
-                      value={budgetMax}
-                      onChange={(e) => setBudgetMax(e.target.value)}
-                      className="input-field text-center"
-                    />
+                    <motion.div
+                      key={shakeKeys.budgetMax || 0}
+                      animate={errors.budgetMax ? "shake" : undefined}
+                      variants={shakeVariants}
+                      className="flex-1"
+                    >
+                      <input
+                        type="number"
+                        placeholder="最高"
+                        value={budgetMax}
+                        onChange={(e) => {
+                          setBudgetMax(e.target.value)
+                          if (errors.budgetMax) setErrors((prev) => ({ ...prev, budgetMax: undefined }))
+                        }}
+                        className={`input-field text-center ${errors.budgetMax ? "border-coral-400 focus:ring-coral-400/50 focus:border-coral-400" : ""}`}
+                      />
+                    </motion.div>
                   </div>
+                  {(errors.budgetMin || errors.budgetMax) && (
+                    <div className="mt-1.5 flex flex-col gap-1">
+                      {errors.budgetMin && (
+                        <p className="flex items-center gap-1 text-xs text-coral-600">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.budgetMin}
+                        </p>
+                      )}
+                      {errors.budgetMax && (
+                        <p className="flex items-center gap-1 text-xs text-coral-600">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.budgetMax}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -270,8 +479,7 @@ export default function SmartMatch() {
 
                 <button
                   onClick={handleMatch}
-                  disabled={!industry || !budgetMin || !budgetMax}
-                  className="btn-primary w-full py-3 text-base flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full py-3 text-base flex items-center justify-center gap-2"
                 >
                   <SlidersHorizontal className="w-4 h-4" />
                   开始匹配
@@ -305,6 +513,7 @@ export default function SmartMatch() {
               <div className="w-[420px] shrink-0 space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
                 {results.map((item, index) => {
                   const store = storefronts.find((s) => s.id === item.storeId)!
+                  const reasons = getMatchReasons(item.dimensions, store, industry)
                   return (
                     <motion.div
                       key={item.storeId}
@@ -312,72 +521,86 @@ export default function SmartMatch() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.06 }}
                     >
-                      <Link
-                        to={`/store/${store.id}`}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          setSelectedId(store.id)
-                        }}
-                        className={`card flex overflow-hidden group cursor-pointer transition-all duration-200 ${
+                      <div
+                        onClick={() => setSelectedId(store.id)}
+                        className={`card flex flex-col overflow-hidden group cursor-pointer transition-all duration-200 ${
                           selectedId === store.id
                             ? "ring-2 ring-amber-400 shadow-amber-glow"
                             : "hover:shadow-md"
                         }`}
                       >
-                        <div className="relative w-32 shrink-0">
-                          <img
-                            src={store.imageUrl}
-                            alt={store.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
+                        <div className="flex">
+                          <div className="relative w-32 shrink-0">
+                            <img
+                              src={store.imageUrl}
+                              alt={store.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                          <div className="flex-1 p-3 flex flex-col justify-between min-w-0">
+                            <div>
+                              <h3 className="font-semibold text-navy-900 text-sm line-clamp-1 group-hover:text-amber-600 transition-colors">
+                                {store.title}
+                              </h3>
+                              <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                                <MapPin className="w-3 h-3" />
+                                {store.district}
+                              </p>
+                              <div className="flex flex-wrap gap-1 mt-1.5">
+                                {store.industry.slice(0, 2).map((ind) => (
+                                  <span
+                                    key={ind}
+                                    className="px-1.5 py-0.5 bg-slate-50 text-slate-500 text-[10px] rounded"
+                                  >
+                                    {ind}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-1 text-center pt-2 border-t border-slate-50">
+                              <div>
+                                <p className="text-[10px] text-slate-400">面积</p>
+                                <p className="text-xs font-semibold text-navy-800">{store.area}㎡</p>
+                              </div>
+                              <div>
+                                <p className="text-[10px] text-slate-400">月租</p>
+                                <p className="text-xs font-semibold text-navy-800">
+                                  {formatMoney(store.rent)}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-[10px] text-slate-400">转让费</p>
+                                <p className="text-xs font-semibold text-amber-600">
+                                  {formatMoney(store.transferFee)}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center pr-3">
+                            <div
+                              className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${getScoreBg(item.score)} ${getScoreColor(item.score)}`}
+                            >
+                              <span className="text-sm font-bold">{item.score}</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex-1 p-3 flex flex-col justify-between min-w-0">
-                          <div>
-                            <h3 className="font-semibold text-navy-900 text-sm line-clamp-1 group-hover:text-amber-600 transition-colors">
-                              {store.title}
-                            </h3>
-                            <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
-                              <MapPin className="w-3 h-3" />
-                              {store.district}
-                            </p>
-                            <div className="flex flex-wrap gap-1 mt-1.5">
-                              {store.industry.slice(0, 2).map((ind) => (
-                                <span
-                                  key={ind}
-                                  className="px-1.5 py-0.5 bg-slate-50 text-slate-500 text-[10px] rounded"
-                                >
-                                  {ind}
+                        <div className="px-3 pb-3 pt-2 border-t border-slate-50">
+                          <p className="text-[11px] font-semibold text-slate-600 mb-1.5 flex items-center gap-1">
+                            <Target className="w-3 h-3 text-amber-500" />
+                            命中理由
+                          </p>
+                          <div className="space-y-1">
+                            {reasons.map((reason, idx) => (
+                              <div key={idx} className="flex items-start gap-1.5">
+                                {renderReasonIcon(reason.icon)}
+                                <span className="text-[11px] text-slate-500 leading-relaxed">
+                                  {reason.text}
                                 </span>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-3 gap-1 text-center pt-2 border-t border-slate-50">
-                            <div>
-                              <p className="text-[10px] text-slate-400">面积</p>
-                              <p className="text-xs font-semibold text-navy-800">{store.area}㎡</p>
-                            </div>
-                            <div>
-                              <p className="text-[10px] text-slate-400">月租</p>
-                              <p className="text-xs font-semibold text-navy-800">
-                                {formatMoney(store.rent)}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-[10px] text-slate-400">转让费</p>
-                              <p className="text-xs font-semibold text-amber-600">
-                                {formatMoney(store.transferFee)}
-                              </p>
-                            </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                        <div className="flex items-center pr-3">
-                          <div
-                            className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${getScoreBg(item.score)} ${getScoreColor(item.score)}`}
-                          >
-                            <span className="text-sm font-bold">{item.score}</span>
-                          </div>
-                        </div>
-                      </Link>
+                      </div>
                     </motion.div>
                   )
                 })}
@@ -398,13 +621,25 @@ export default function SmartMatch() {
                       >
                         <span className="text-xl font-bold">{selectedMatch.score}</span>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h3 className="font-bold text-navy-900 text-lg">{selectedStore.title}</h3>
                         <p className="text-sm text-slate-500 flex items-center gap-1">
                           <MapPin className="w-3.5 h-3.5" />
                           {selectedStore.district} · {selectedStore.address}
                         </p>
                       </div>
+                      <button
+                        onClick={() => toggleFavorite(selectedStore.id)}
+                        className="p-2 rounded-lg hover:bg-slate-50 transition-colors"
+                      >
+                        <Heart
+                          className={`w-5 h-5 transition-colors ${
+                            favorites.has(selectedStore.id)
+                              ? "text-coral-500 fill-coral-500"
+                              : "text-slate-400"
+                          }`}
+                        />
+                      </button>
                     </div>
 
                     <div className="mb-6">
@@ -452,6 +687,29 @@ export default function SmartMatch() {
                       ))}
                     </div>
 
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-navy-900 mb-3 flex items-center gap-1.5">
+                        <Target className="w-4 h-4 text-amber-500" />
+                        命中理由
+                      </h4>
+                      <div className="bg-slate-50 rounded-xl p-4 space-y-2.5">
+                        {getMatchReasons(selectedMatch.dimensions, selectedStore, industry).map((reason, idx) => (
+                          <div key={idx} className="flex items-start gap-2">
+                            <div
+                              className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
+                                reason.icon === "thumbsup" ? "bg-jade-100" : "bg-amber-100"
+                              }`}
+                            >
+                              {renderReasonIcon(reason.icon)}
+                            </div>
+                            <span className="text-sm text-slate-600 leading-relaxed pt-0.5">
+                              {reason.text}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
                     <div className="grid grid-cols-3 gap-4 py-4 border-t border-slate-100 mb-5">
                       <div className="text-center">
                         <div className="text-xs text-slate-400">面积</div>
@@ -475,10 +733,47 @@ export default function SmartMatch() {
 
                     <Link
                       to={`/store/${selectedStore.id}`}
-                      className="btn-primary w-full py-2.5 text-sm flex items-center justify-center gap-2"
+                      className="btn-primary w-full py-2.5 text-sm flex items-center justify-center gap-2 mb-3"
                     >
                       查看详情
                       <ChevronRight className="w-4 h-4" />
+                    </Link>
+
+                    <div className="grid grid-cols-2 gap-3 mb-3">
+                      <button
+                        onClick={handleBooking}
+                        className="py-2.5 text-sm font-medium rounded-lg border-2 border-amber-500 text-amber-600 hover:bg-amber-50 transition-all duration-200 flex items-center justify-center gap-2"
+                      >
+                        <Calendar className="w-4 h-4" />
+                        预约带看
+                      </button>
+                      <button
+                        onClick={() => toggleFavorite(selectedStore.id)}
+                        className="btn-ghost border border-slate-200 flex items-center justify-center gap-2"
+                      >
+                        <Heart
+                          className={`w-4 h-4 ${
+                            favorites.has(selectedStore.id) ? "fill-coral-500 text-coral-500" : ""
+                          }`}
+                        />
+                        收藏门店
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => setShowBrokerModal(true)}
+                      className="w-full py-2.5 text-sm font-medium rounded-lg bg-navy-900 text-white hover:bg-navy-800 transition-all duration-200 flex items-center justify-center gap-2 mb-3"
+                    >
+                      <Phone className="w-4 h-4" />
+                      联系经纪人
+                    </button>
+
+                    <Link
+                      to="/risk"
+                      className="w-full py-2 text-sm text-navy-600 hover:text-navy-800 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <FileCheck className="w-4 h-4" />
+                      合同合规检查
                     </Link>
                   </motion.div>
                 ) : (
@@ -492,6 +787,72 @@ export default function SmartMatch() {
           </motion.div>
         )}
       </div>
+
+      <AnimatePresence>
+        {showBrokerModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm"
+            onClick={() => setShowBrokerModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="card w-[400px] p-6 mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-lg font-bold text-navy-900">经纪人信息</h3>
+                <button
+                  onClick={() => setShowBrokerModal(false)}
+                  className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                >
+                  <X className="w-5 h-5 text-slate-400" />
+                </button>
+              </div>
+              <div className="flex items-center gap-4 mb-5">
+                <img
+                  src={broker.avatar}
+                  alt={broker.name}
+                  className="w-16 h-16 rounded-full object-cover border-2 border-amber-400"
+                />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-navy-900 text-lg">{broker.name}</span>
+                    {broker.certified && (
+                      <span className="px-2 py-0.5 bg-jade-50 text-jade-600 text-xs font-medium rounded-full">
+                        认证经纪人
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1 mt-1">
+                    <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                    <span className="text-sm text-slate-600 font-medium">{broker.rating}</span>
+                    <span className="text-sm text-slate-400">· 成交{broker.dealCount}单</span>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-slate-50 rounded-xl p-4 mb-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-500">联系电话</span>
+                  <span className="text-sm font-semibold text-navy-900">138****8888</span>
+                </div>
+              </div>
+              <a
+                href="tel:13888888888"
+                className="btn-primary w-full py-2.5 text-sm flex items-center justify-center gap-2"
+              >
+                <Phone className="w-4 h-4" />
+                立即拨打
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
