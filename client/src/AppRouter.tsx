@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate, Link } from 'react-router-dom';
-import { Layout, Menu, Dropdown, Avatar, Badge, Button, notification, theme } from 'antd';
+import { Layout, Menu, Dropdown, Avatar, Badge, Button, notification } from 'antd';
 import {
   VideoCameraOutlined, DashboardOutlined, BellOutlined,
   SettingOutlined, UserOutlined, TeamOutlined,
@@ -26,39 +26,23 @@ const { Header, Sider, Content } = Layout;
 const WS_PORT = import.meta.env.VITE_WS_PORT;
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = observer(({ children }) => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!appStore.isLoggedIn) {
-      navigate('/login', { replace: true });
-    }
-  }, [appStore.isLoggedIn, navigate]);
   if (!appStore.isLoggedIn) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <span>正在跳转登录页...</span>
-      </div>
-    );
+    return <Navigate to="/login" replace />;
   }
   return <>{children}</>;
 });
 
 const LoginRedirect: React.FC = observer(() => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (appStore.isLoggedIn) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [appStore.isLoggedIn, navigate]);
+  if (appStore.isLoggedIn) {
+    return <Navigate to="/dashboard" replace />;
+  }
   return <Login />;
 });
 
 const RegisterRedirect: React.FC = observer(() => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (appStore.isLoggedIn) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [appStore.isLoggedIn, navigate]);
+  if (appStore.isLoggedIn) {
+    return <Navigate to="/dashboard" replace />;
+  }
   return <Register />;
 });
 
@@ -68,6 +52,10 @@ const MainLayout: React.FC = observer(() => {
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
   const wsRef = useRef<WebSocket | null>(null);
+
+  if (!appStore.isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
 
   const menuItems = [
     {
@@ -252,14 +240,15 @@ const MainLayout: React.FC = observer(() => {
         </Header>
         <Content className="p-6 bg-gray-50 overflow-auto">
           <Routes>
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/devices" element={<ProtectedRoute><DeviceList /></ProtectedRoute>} />
-            <Route path="/live" element={<ProtectedRoute><LivePreview /></ProtectedRoute>} />
-            <Route path="/playback" element={<ProtectedRoute><Playback /></ProtectedRoute>} />
-            <Route path="/alerts" element={<ProtectedRoute><Alerts /></ProtectedRoute>} />
-            <Route path="/members" element={<ProtectedRoute><Members /></ProtectedRoute>} />
-            <Route path="/audit" element={<ProtectedRoute><AuditLogs /></ProtectedRoute>} />
-            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/devices" element={<DeviceList />} />
+            <Route path="/live" element={<LivePreview />} />
+            <Route path="/playback" element={<Playback />} />
+            <Route path="/alerts" element={<Alerts />} />
+            <Route path="/members" element={<Members />} />
+            <Route path="/audit" element={<AuditLogs />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Content>
@@ -275,7 +264,14 @@ const AppRouter: React.FC = () => {
         <Route path="/login" element={<LoginRedirect />} />
         <Route path="/register" element={<RegisterRedirect />} />
         <Route path="/temp-view" element={<TemporaryView />} />
-        <Route path="/*" element={<MainLayout />} />
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

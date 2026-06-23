@@ -240,6 +240,47 @@
         "risk_level": "用户不存在",
         "id": 22,
         "created_at": "2026-06-22T07:56:51.739Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "axios/1.18.0",
+        "location": "",
+        "status": "low",
+        "id": 23,
+        "created_at": "2026-06-22T08:07:27.298Z"
+      },
+      {
+        "username": "H.264",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 24,
+        "created_at": "2026-06-22T08:21:56.653Z"
+      },
+      {
+        "user_id": 1,
+        "username": "admin",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "密码错误",
+        "id": 25,
+        "created_at": "2026-06-22T08:22:03.642Z"
+      },
+      {
+        "username": "platform",
+        "ip": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+        "location": "",
+        "status": "medium",
+        "risk_level": "用户不存在",
+        "id": 26,
+        "created_at": "2026-06-22T08:22:10.262Z"
       }
     ],
     "device_groups": [],
@@ -254,7 +295,7 @@
   },
   "sequences": {
     "users": 1,
-    "login_logs": 22,
+    "login_logs": 26,
     "device_groups": 0,
     "devices": 0,
     "device_shares": 0,
