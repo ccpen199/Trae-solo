@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  body {
+    @apply bg-logistics-bg text-logistics-text antialiased;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-logistics-panel border border-logistics-border rounded-xl;
+  }
+  .panel-header {
+    @apply px-5 py-4 border-b border-logistics-border flex items-center justify-between;
+  }
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors;
+  }
+  .btn-ghost {
+    @apply px-3 py-1.5 text-logistics-muted hover:text-logistics-text text-sm rounded-lg transition-colors;
+  }
+  .chip {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium;
+  }
+  .input {
+    @apply w-full px-3 py-2 bg-logistics-bg border border-logistics-border rounded-lg text-sm
+           placeholder-logistics-muted focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2d4a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2d4270;
+}
