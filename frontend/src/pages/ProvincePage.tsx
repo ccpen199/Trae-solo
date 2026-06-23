@@ -31,61 +31,54 @@ const ProvincePage: React.FC = () => {
   const [cities, setCities] = useState<any[]>([]);
   const requestIdRef = useRef(0);
 
-  useEffect(() => {
-    if (currentDivision?.id) {
-      loadData();
-    }
-  }, [currentDivision?.id, showAllJobs, showAllCompanies, jobsPage, companiesPage]);
-
   const loadData = async () => {
-    if (!currentDivision?.id) return;
+    const divisionId = currentDivision?.id;
+    if (!divisionId) return;
     
     const currentRequestId = ++requestIdRef.current;
     setLoading(true);
     
-    try {
-      const jobsPageSize = showAllJobs ? 10 : 8;
-      const companiesPageSize = showAllCompanies ? 10 : 6;
-      const [statsRes, jobsRes, companiesRes, fairsRes, policiesRes, zonesRes, prosperityRes, divisionsRes] = await Promise.all([
-        apiEndpoints.stats.getSummary({ admin_division_id: currentDivision.id }) as Promise<ApiResponse>,
-        apiEndpoints.jobs.getList({ admin_division_id: currentDivision.id, pageSize: jobsPageSize, page: jobsPage }) as Promise<ApiResponse>,
-        apiEndpoints.companies.getList({ admin_division_id: currentDivision.id, pageSize: companiesPageSize, page: companiesPage }) as Promise<ApiResponse>,
-        apiEndpoints.fairs.getList({ admin_division_id: currentDivision.id, pageSize: 5, is_live: false }) as Promise<ApiResponse>,
-        apiEndpoints.policies.getList({ admin_division_id: currentDivision.id, pageSize: 5 }) as Promise<ApiResponse>,
-        apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
-        apiEndpoints.prosperity.getCurrent({ admin_division_id: currentDivision.id, period_type: 'monthly' }) as Promise<ApiResponse>,
-        apiEndpoints.divisions.getTree() as Promise<ApiResponse>,
-      ]);
+    const jobsPageSize = showAllJobs ? 20 : 8;
+    const companiesPageSize = showAllCompanies ? 20 : 6;
+    
+    const results = await Promise.allSettled([
+      apiEndpoints.stats.getSummary({ admin_division_id: divisionId }) as Promise<ApiResponse>,
+      apiEndpoints.jobs.getList({ admin_division_id: divisionId, pageSize: jobsPageSize, page: jobsPage }) as Promise<ApiResponse>,
+      apiEndpoints.companies.getList({ admin_division_id: divisionId, pageSize: companiesPageSize, page: companiesPage }) as Promise<ApiResponse>,
+      apiEndpoints.fairs.getList({ admin_division_id: divisionId, pageSize: 5 }) as Promise<ApiResponse>,
+      apiEndpoints.policies.getList({ admin_division_id: divisionId, pageSize: 5 }) as Promise<ApiResponse>,
+      apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
+      apiEndpoints.prosperity.getCurrent({ admin_division_id: divisionId, period_type: 'monthly' }) as Promise<ApiResponse>,
+      apiEndpoints.divisions.getTree() as Promise<ApiResponse>,
+    ]);
 
-      if (currentRequestId !== requestIdRef.current) return;
+    if (currentRequestId !== requestIdRef.current) return;
 
-      setStats(statsRes.data || {});
+    const [statsRes, jobsRes, companiesRes, fairsRes, policiesRes, zonesRes, prosperityRes, divisionsRes] = 
+      results.map(r => r.status === 'fulfilled' ? r.value : null);
+
+    if (statsRes?.data) setStats(statsRes.data);
+    if (jobsRes) {
       setJobs(Array.isArray(jobsRes.data) ? jobsRes.data : []);
       setJobsTotal(jobsRes.total || 0);
+    }
+    if (companiesRes) {
       setCompanies(Array.isArray(companiesRes.data) ? companiesRes.data : []);
       setCompaniesTotal(companiesRes.total || 0);
-      setFairs(Array.isArray(fairsRes.data) ? fairsRes.data : []);
-      setPolicies(Array.isArray(policiesRes.data) ? policiesRes.data : []);
-      setIndustryZones(Array.isArray(zonesRes.data) ? zonesRes.data : []);
-      setProsperity(prosperityRes.data);
-      if (divisionsRes.success && divisionsRes.data?.[0]?.children) {
-        setCities(divisionsRes.data[0].children);
-      }
-    } catch (error) {
-      console.error('加载数据失败:', error);
-      if (currentRequestId === requestIdRef.current) {
-        setStats({});
-        setJobs([]);
-        setCompanies([]);
-        setFairs([]);
-        setPolicies([]);
-      }
-    } finally {
-      if (currentRequestId === requestIdRef.current) {
-        setLoading(false);
-      }
     }
+    if (fairsRes) setFairs(Array.isArray(fairsRes.data) ? fairsRes.data : []);
+    if (policiesRes) setPolicies(Array.isArray(policiesRes.data) ? policiesRes.data : []);
+    if (zonesRes) setIndustryZones(Array.isArray(zonesRes.data) ? zonesRes.data : []);
+    if (prosperityRes?.data) setProsperity(prosperityRes.data);
+    if (divisionsRes?.success && divisionsRes.data?.[0]?.children) {
+      setCities(divisionsRes.data[0].children);
+    }
+    setLoading(false);
   };
+
+  useEffect(() => {
+    loadData();
+  }, [currentDivision?.id, showAllJobs, showAllCompanies, jobsPage, companiesPage]);
 
   const handleSearch = async (value: string) => {
     setKeyword(value);

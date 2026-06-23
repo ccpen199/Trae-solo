@@ -65,31 +65,28 @@ const CityPage: React.FC = () => {
   const loadData = async (abortController?: AbortController) => {
     if (!id) return;
     setLoading(true);
-    try {
-      const [statsRes, jobsRes, fairsRes, liveFairsRes, prosperityRes, zonesRes] = await Promise.all([
-        apiEndpoints.stats.getSummary({ admin_division_id: id }) as Promise<ApiResponse>,
-        apiEndpoints.jobs.getList({ admin_division_id: id, pageSize: 10 }) as Promise<ApiResponse>,
-        apiEndpoints.fairs.getList({ admin_division_id: id, pageSize: 5 }) as Promise<ApiResponse>,
-        apiEndpoints.fairs.getList({ admin_division_id: id, is_live: true }) as Promise<ApiResponse>,
-        apiEndpoints.prosperity.getCurrent({ admin_division_id: id, period_type: 'monthly' }) as Promise<ApiResponse>,
-        apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
-      ]);
+    
+    const results = await Promise.allSettled([
+      apiEndpoints.stats.getSummary({ admin_division_id: id }) as Promise<ApiResponse>,
+      apiEndpoints.jobs.getList({ admin_division_id: id, pageSize: 10 }) as Promise<ApiResponse>,
+      apiEndpoints.fairs.getList({ admin_division_id: id, pageSize: 5 }) as Promise<ApiResponse>,
+      apiEndpoints.fairs.getList({ admin_division_id: id, is_live: true }) as Promise<ApiResponse>,
+      apiEndpoints.prosperity.getCurrent({ admin_division_id: id, period_type: 'monthly' }) as Promise<ApiResponse>,
+      apiEndpoints.industryZones.getList() as Promise<ApiResponse>,
+    ]);
 
-      if (abortController?.signal.aborted) return;
+    if (abortController?.signal.aborted) return;
 
-      setStats(statsRes.data);
-      setJobs(jobsRes.data || []);
-      setFairs(fairsRes.data || []);
-      setLiveFairs(liveFairsRes.data || []);
-      setProsperity(prosperityRes.data);
-      setIndustryZones(zonesRes.data || []);
-    } catch (error) {
-      console.error('加载数据失败:', error);
-    } finally {
-      if (!abortController?.signal.aborted) {
-        setLoading(false);
-      }
-    }
+    const [statsRes, jobsRes, fairsRes, liveFairsRes, prosperityRes, zonesRes] = 
+      results.map(r => r.status === 'fulfilled' ? r.value : null);
+
+    if (statsRes?.data) setStats(statsRes.data);
+    if (jobsRes) setJobs(Array.isArray(jobsRes.data) ? jobsRes.data : []);
+    if (fairsRes) setFairs(Array.isArray(fairsRes.data) ? fairsRes.data : []);
+    if (liveFairsRes) setLiveFairs(Array.isArray(liveFairsRes.data) ? liveFairsRes.data : []);
+    if (prosperityRes?.data) setProsperity(prosperityRes.data);
+    if (zonesRes) setIndustryZones(Array.isArray(zonesRes.data) ? zonesRes.data : []);
+    setLoading(false);
   };
 
   const handleSearch = async (value: string) => {
