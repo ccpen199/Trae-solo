@@ -1,417 +1,229 @@
 import { Router, type Request, type Response } from 'express'
-import { ApiResponse, FamilyBinding, Alert, Anniversary } from '../../shared/types'
-import { familyBindingDB, alertDB, anniversaryDB, userDB } from '../db/index'
-import {
-  getAlerts,
-  getUnreadCount,
-  markAlertAsRead,
-  markAllAlertsAsRead,
-  deleteAlert,
-  createHealthAlert
-} from '../services/alertService'
 
 const router = Router()
 
-router.get('/bindings/:familyId', async (req: Request, res: Response<ApiResponse<FamilyBinding[]>>): Promise<void> => {
-  try {
-    const { familyId } = req.params
-    const bindings = familyBindingDB.findByFamilyId(familyId)
+const familyBinds = [
+  {
+    id: 'f001',
+    elderId: 'e001',
+    elderName: '王大爷',
+    elderAge: 72,
+    familyId: 'fm001',
+    relation: '儿子',
+    receiveAlerts: true,
+    createdAt: '2026-01-15 10:30:00',
+  },
+  {
+    id: 'f002',
+    elderId: 'e001',
+    elderName: '王大爷',
+    elderAge: 72,
+    familyId: 'fm002',
+    relation: '女儿',
+    receiveAlerts: true,
+    createdAt: '2026-01-16 14:20:00',
+  },
+  {
+    id: 'f003',
+    elderId: 'e002',
+    elderName: '李奶奶',
+    elderAge: 68,
+    familyId: 'fm003',
+    relation: '孙子',
+    receiveAlerts: false,
+    createdAt: '2026-02-10 09:00:00',
+  },
+]
 
-    res.json({
-      success: true,
-      data: bindings
-    })
-  } catch (error) {
-    res.status(500).json({
+const activityLogs = [
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-19',
+    durationMinutes: 120,
+    featuresUsed: ['查看天气', '日历黄历', '健康食谱', '八段锦视频', '用药提醒'],
+    hasActivity: true,
+  },
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-18',
+    durationMinutes: 95,
+    featuresUsed: ['查看天气', '健康食谱', '太极拳视频'],
+    hasActivity: true,
+  },
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-17',
+    durationMinutes: 60,
+    featuresUsed: ['查看天气', '用药提醒'],
+    hasActivity: true,
+  },
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-16',
+    durationMinutes: 0,
+    featuresUsed: [],
+    hasActivity: false,
+  },
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-15',
+    durationMinutes: 80,
+    featuresUsed: ['查看天气', '日历黄历', '五禽戏视频'],
+    hasActivity: true,
+  },
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-14',
+    durationMinutes: 110,
+    featuresUsed: ['查看天气', '健康食谱', '用药提醒', '散步健身法'],
+    hasActivity: true,
+  },
+  {
+    elderId: 'e001',
+    elderName: '王大爷',
+    date: '2026-06-13',
+    durationMinutes: 45,
+    featuresUsed: ['查看天气', '日历黄历'],
+    hasActivity: true,
+  },
+]
+
+const alerts = [
+  {
+    id: 'a001',
+    bindId: 'f001',
+    type: 'inactivity',
+    message: '王大爷已超过24小时未使用应用，建议电话联系确认情况。',
+    triggeredAt: '2026-06-17 08:00:00',
+    acknowledged: true,
+    elderName: '王大爷',
+  },
+  {
+    id: 'a002',
+    bindId: 'f001',
+    type: 'medicine',
+    message: '王大爷今日上午的降压药还未服用，请提醒老人按时吃药。',
+    triggeredAt: '2026-06-19 10:30:00',
+    acknowledged: false,
+    elderName: '王大爷',
+  },
+  {
+    id: 'a003',
+    bindId: 'f001',
+    type: 'health',
+    message: '检测到王大爷近期用药依从性下降，建议关注老人健康状况。',
+    triggeredAt: '2026-06-18 20:00:00',
+    acknowledged: false,
+    elderName: '王大爷',
+  },
+  {
+    id: 'a004',
+    bindId: 'f002',
+    type: 'medicine',
+    message: '王大爷今日晚上的他汀类药物还未服用，请提醒老人按时吃药。',
+    triggeredAt: '2026-06-19 21:15:00',
+    acknowledged: false,
+    elderName: '王大爷',
+  },
+  {
+    id: 'a005',
+    bindId: 'f003',
+    type: 'inactivity',
+    message: '李奶奶已超过48小时未使用应用，建议电话联系确认情况。',
+    triggeredAt: '2026-06-19 09:00:00',
+    acknowledged: false,
+    elderName: '李奶奶',
+  },
+]
+
+router.post('/bind', (req: Request, res: Response): void => {
+  const { elderPhone, familyPhone, relation } = req.body
+
+  if (!elderPhone || !familyPhone || !relation) {
+    res.status(400).json({
       success: false,
-      error: '获取家庭绑定失败'
+      message: '请填写完整的绑定信息',
+      data: null,
     })
+    return
   }
+
+  const newBind = {
+    id: `f${Date.now()}`,
+    elderId: `e${Date.now()}`,
+    elderName: '新绑定老人',
+    elderAge: 65,
+    familyId: `fm${Date.now()}`,
+    relation,
+    receiveAlerts: true,
+    createdAt: new Date().toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '-'),
+  }
+
+  familyBinds.unshift(newBind)
+
+  res.json({
+    success: true,
+    message: '绑定成功',
+    data: newBind,
+  })
 })
 
-router.post('/bindings', async (req: Request, res: Response<ApiResponse<FamilyBinding>>): Promise<void> => {
-  try {
-    const { elderPhone, familyId, relation } = req.body
+router.get('/activity', (req: Request, res: Response): void => {
+  const { elderId } = req.query
 
-    if (!elderPhone || !familyId || !relation) {
-      res.status(400).json({
-        success: false,
-        error: '缺少必要信息'
-      })
-      return
-    }
+  let filteredActivity = activityLogs
 
-    const elder = userDB.findByPhone(elderPhone)
-    if (!elder) {
-      res.status(404).json({
-        success: false,
-        error: '未找到该手机号对应的老人用户'
-      })
-      return
-    }
-
-    if (elder.role !== 'elder') {
-      res.status(400).json({
-        success: false,
-        error: '该用户不是老人角色'
-      })
-      return
-    }
-
-    const existingBindings = familyBindingDB.findByFamilyId(familyId)
-    const alreadyBound = existingBindings.some(b => b.elderId === elder.id && b.status === 'active')
-    if (alreadyBound) {
-      res.status(400).json({
-        success: false,
-        error: '已经绑定过该老人'
-      })
-      return
-    }
-
-    const binding = familyBindingDB.create({
-      elderId: elder.id,
-      familyId,
-      relation,
-      status: 'pending',
-      notificationEnabled: true
-    })
-
-    res.status(201).json({
-      success: true,
-      data: binding,
-      message: '绑定请求已发送，等待老人确认'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '创建家庭绑定失败'
-    })
+  if (elderId) {
+    filteredActivity = activityLogs.filter((a) => a.elderId === elderId)
   }
+
+  const stats = {
+    totalActiveDays: filteredActivity.filter((a) => a.hasActivity).length,
+    averageDuration: Math.round(
+      filteredActivity.reduce((sum, a) => sum + a.durationMinutes, 0) / filteredActivity.length
+    ),
+    mostUsedFeatures: ['查看天气', '健康食谱', '用药提醒'],
+    lastActiveDate: filteredActivity.find((a) => a.hasActivity)?.date || null,
+  }
+
+  res.json({
+    success: true,
+    message: '获取活跃度数据成功',
+    data: {
+      logs: filteredActivity,
+      stats,
+    },
+  })
 })
 
-router.put('/bindings/:bindingId', async (req: Request, res: Response<ApiResponse<FamilyBinding>>): Promise<void> => {
-  try {
-    const { bindingId } = req.params
-    const { status, notificationEnabled, relation } = req.body
+router.get('/alerts', (req: Request, res: Response): void => {
+  const { bindId, acknowledged } = req.query
 
-    const existingBinding = familyBindingDB.findById(bindingId)
-    if (!existingBinding) {
-      res.status(404).json({
-        success: false,
-        error: '绑定记录不存在'
-      })
-      return
-    }
+  let filteredAlerts = alerts
 
-    const updates: Partial<FamilyBinding> = {}
-    if (status !== undefined) updates.status = status
-    if (notificationEnabled !== undefined) updates.notificationEnabled = notificationEnabled
-    if (relation !== undefined) updates.relation = relation
-
-    const updated = familyBindingDB.update(bindingId, updates)
-
-    if (!updated) {
-      res.status(404).json({
-        success: false,
-        error: '更新失败'
-      })
-      return
-    }
-
-    res.json({
-      success: true,
-      data: updated,
-      message: '更新成功'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '更新家庭绑定失败'
-    })
+  if (bindId) {
+    filteredAlerts = filteredAlerts.filter((a) => a.bindId === bindId)
   }
-})
 
-router.delete('/bindings/:bindingId', async (req: Request, res: Response<ApiResponse>): Promise<void> => {
-  try {
-    const { bindingId } = req.params
-
-    const existingBinding = familyBindingDB.findById(bindingId)
-    if (!existingBinding) {
-      res.status(404).json({
-        success: false,
-        error: '绑定记录不存在'
-      })
-      return
-    }
-
-    const deleted = familyBindingDB.delete(bindingId)
-    if (!deleted) {
-      res.status(500).json({
-        success: false,
-        error: '删除失败'
-      })
-      return
-    }
-
-    res.json({
-      success: true,
-      message: '解绑成功'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '解绑失败'
-    })
+  if (acknowledged !== undefined) {
+    const isAcknowledged = acknowledged === 'true'
+    filteredAlerts = filteredAlerts.filter((a) => a.acknowledged === isAcknowledged)
   }
-})
 
-router.get('/alerts/:familyId', async (req: Request, res: Response<ApiResponse<Alert[]>>): Promise<void> => {
-  try {
-    const { familyId } = req.params
-    const { read, type, level, limit } = req.query
-
-    const options = {
-      read: read !== undefined ? read === 'true' : undefined,
-      type: type as Alert['type'] | undefined,
-      level: level as Alert['level'] | undefined,
-      limit: limit ? parseInt(limit as string) : undefined
-    }
-
-    const alerts = getAlerts(familyId, options)
-
-    res.json({
-      success: true,
-      data: alerts
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '获取预警列表失败'
-    })
-  }
-})
-
-router.get('/alerts/:familyId/unread-count', async (req: Request, res: Response<ApiResponse<{ count: number }>>): Promise<void> => {
-  try {
-    const { familyId } = req.params
-    const count = getUnreadCount(familyId)
-
-    res.json({
-      success: true,
-      data: { count }
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '获取未读预警数量失败'
-    })
-  }
-})
-
-router.put('/alerts/:alertId/read', async (req: Request, res: Response<ApiResponse<Alert>>): Promise<void> => {
-  try {
-    const { alertId } = req.params
-    const alert = markAlertAsRead(alertId)
-
-    if (!alert) {
-      res.status(404).json({
-        success: false,
-        error: '预警不存在'
-      })
-      return
-    }
-
-    res.json({
-      success: true,
-      data: alert,
-      message: '已标记为已读'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '标记失败'
-    })
-  }
-})
-
-router.put('/alerts/:familyId/read-all', async (req: Request, res: Response<ApiResponse<{ count: number }>>): Promise<void> => {
-  try {
-    const { familyId } = req.params
-    const count = markAllAlertsAsRead(familyId)
-
-    res.json({
-      success: true,
-      data: { count },
-      message: `已标记${count}条预警为已读`
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '批量标记失败'
-    })
-  }
-})
-
-router.delete('/alerts/:alertId', async (req: Request, res: Response<ApiResponse>): Promise<void> => {
-  try {
-    const { alertId } = req.params
-
-    const existingAlert = alertDB.findById(alertId)
-    if (!existingAlert) {
-      res.status(404).json({
-        success: false,
-        error: '预警不存在'
-      })
-      return
-    }
-
-    const deleted = deleteAlert(alertId)
-    if (!deleted) {
-      res.status(500).json({
-        success: false,
-        error: '删除失败'
-      })
-      return
-    }
-
-    res.json({
-      success: true,
-      message: '删除成功'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '删除预警失败'
-    })
-  }
-})
-
-router.post('/health-alert', async (req: Request, res: Response<ApiResponse<Alert[]>>): Promise<void> => {
-  try {
-    const { elderId, message, level } = req.body
-
-    if (!elderId || !message) {
-      res.status(400).json({
-        success: false,
-        error: '缺少必要信息'
-      })
-      return
-    }
-
-    const alerts = createHealthAlert(elderId, message, level || 'warning')
-
-    res.status(201).json({
-      success: true,
-      data: alerts,
-      message: '健康预警已发送'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '发送健康预警失败'
-    })
-  }
-})
-
-router.get('/anniversaries/:elderId', async (req: Request, res: Response<ApiResponse<Anniversary[]>>): Promise<void> => {
-  try {
-    const { elderId } = req.params
-    const anniversaries = anniversaryDB.findByUserId(elderId)
-
-    res.json({
-      success: true,
-      data: anniversaries
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '获取纪念日失败'
-    })
-  }
-})
-
-router.post('/anniversaries', async (req: Request, res: Response<ApiResponse<Anniversary>>): Promise<void> => {
-  try {
-    const { userId, date, title, type, remindDays } = req.body
-
-    if (!userId || !date || !title || !type) {
-      res.status(400).json({
-        success: false,
-        error: '缺少必要信息'
-      })
-      return
-    }
-
-    const anniversary = anniversaryDB.create({
-      userId,
-      date,
-      title,
-      type,
-      remindDays: remindDays || 7
-    })
-
-    res.status(201).json({
-      success: true,
-      data: anniversary,
-      message: '纪念日创建成功'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '创建纪念日失败'
-    })
-  }
-})
-
-router.put('/anniversaries/:anniversaryId', async (req: Request, res: Response<ApiResponse>): Promise<void> => {
-  try {
-    const { anniversaryId } = req.params
-    const updates = req.body
-
-    const updated = anniversaryDB.update(anniversaryId, updates)
-    if (!updated) {
-      res.status(404).json({
-        success: false,
-        error: '纪念日不存在'
-      })
-      return
-    }
-
-    res.json({
-      success: true,
-      message: '更新成功'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '更新纪念日失败'
-    })
-  }
-})
-
-router.delete('/anniversaries/:anniversaryId', async (req: Request, res: Response<ApiResponse>): Promise<void> => {
-  try {
-    const { anniversaryId } = req.params
-
-    const deleted = anniversaryDB.delete(anniversaryId)
-    if (!deleted) {
-      res.status(404).json({
-        success: false,
-        error: '纪念日不存在'
-      })
-      return
-    }
-
-    res.json({
-      success: true,
-      message: '删除成功'
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: '删除纪念日失败'
-    })
-  }
+  res.json({
+    success: true,
+    message: '获取预警信息成功',
+    data: {
+      list: filteredAlerts,
+      unreadCount: filteredAlerts.filter((a) => !a.acknowledged).length,
+    },
+  })
 })
 
 export default router

@@ -11,13 +11,12 @@ import cors from 'cors'
 import path from 'path'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
-import authRoutes from './routes/auth'
-import userRoutes from './routes/user'
-import weatherRoutes from './routes/weather'
-import calendarRoutes from './routes/calendar'
-import healthRoutes from './routes/health'
-import familyRoutes from './routes/family'
-import adminRoutes from './routes/admin'
+import authRoutes from './routes/auth.js'
+import weatherRoutes from './routes/weather.js'
+import calendarRoutes from './routes/calendar.js'
+import healthRoutes from './routes/health.js'
+import familyRoutes from './routes/family.js'
+import adminRoutes from './routes/admin.js'
 
 // for esm mode
 const __filename = fileURLToPath(import.meta.url)
@@ -32,16 +31,10 @@ app.use(cors())
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`)
-  next()
-})
-
 /**
  * API Routes
  */
 app.use('/api/auth', authRoutes)
-app.use('/api/user', userRoutes)
 app.use('/api/weather', weatherRoutes)
 app.use('/api/calendar', calendarRoutes)
 app.use('/api/health', healthRoutes)
@@ -49,7 +42,7 @@ app.use('/api/family', familyRoutes)
 app.use('/api/admin', adminRoutes)
 
 /**
- * health check
+ * health
  */
 app.use(
   '/api/health',
@@ -57,7 +50,6 @@ app.use(
     res.status(200).json({
       success: true,
       message: 'ok',
-      timestamp: new Date().toISOString()
     })
   },
 )

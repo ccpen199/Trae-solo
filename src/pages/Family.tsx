@@ -1,418 +1,470 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
-  UserPlus,
-  Phone,
+  User,
+  Users,
   AlertTriangle,
+  CheckCircle,
+  Phone,
+  Unlink,
+  Link2,
+  Bell,
   Activity,
   Calendar,
-  Users,
-  CheckCircle,
   Clock,
-  MoreVertical,
-  X,
-  QrCode,
+  TrendingUp,
+  ChefHat,
+  Dumbbell,
+  Pill,
+  BookOpen,
+  Heart,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useDataStore } from "@/store/dataStore";
+import LargeButton from "@/components/LargeButton";
+import { cn } from "@/lib/utils";
+import type { FamilyBind, Alert, ActivityLog } from "@/types";
 
-interface Elderly {
-  id: number;
-  name: string;
-  age: number;
-  relation: string;
-  phone: string;
-  avatar: string;
-  lastActive: string;
-  activeToday: boolean;
-  healthScore: number;
-  medicationCompliance: number;
+const mockFamilyBinds: FamilyBind[] = [
+  {
+    id: "fb001",
+    elderId: "user-001",
+    elderName: "王大爷",
+    elderAge: 68,
+    familyId: "family-001",
+    relation: "儿子",
+    receiveAlerts: true,
+    createdAt: "2025-12-01T08:00:00Z",
+  },
+];
+
+const mockAlerts: Alert[] = [
+  {
+    id: "a001",
+    bindId: "fb001",
+    type: "medicine",
+    message: "降压药已超过2小时未服用，请提醒老人服药",
+    triggeredAt: "2026-06-19T09:30:00Z",
+    acknowledged: false,
+    elderName: "王大爷",
+  },
+  {
+    id: "a002",
+    bindId: "fb001",
+    type: "inactivity",
+    message: "老人已连续2天未使用APP，建议电话联系确认情况",
+    triggeredAt: "2026-06-18T20:00:00Z",
+    acknowledged: false,
+    elderName: "王大爷",
+  },
+  {
+    id: "a003",
+    bindId: "fb001",
+    type: "health",
+    message: "老人上周血压数据偏高，建议陪同就医检查",
+    triggeredAt: "2026-06-15T14:20:00Z",
+    acknowledged: true,
+    elderName: "王大爷",
+  },
+];
+
+const mockActivityLogs: ActivityLog[] = [
+  { date: "2026-06-13", durationMinutes: 45, featuresUsed: ["食谱", "用药提醒"], hasActivity: true },
+  { date: "2026-06-14", durationMinutes: 30, featuresUsed: ["八段锦"], hasActivity: true },
+  { date: "2026-06-15", durationMinutes: 60, featuresUsed: ["食谱", "用药提醒", "八段锦"], hasActivity: true },
+  { date: "2026-06-16", durationMinutes: 20, featuresUsed: ["用药提醒"], hasActivity: true },
+  { date: "2026-06-17", durationMinutes: 0, featuresUsed: [], hasActivity: false },
+  { date: "2026-06-18", durationMinutes: 0, featuresUsed: [], hasActivity: false },
+  { date: "2026-06-19", durationMinutes: 15, featuresUsed: ["食谱"], hasActivity: true },
+];
+
+const mockRecentFeatures = [
+  { name: "食谱推荐", icon: ChefHat, time: "今天 08:30", color: "#FF7A45" },
+  { name: "用药提醒", icon: Pill, time: "昨天 19:00", color: "#3182CE" },
+  { name: "八段锦教学", icon: Dumbbell, time: "6月16日 07:15", color: "#38A169" },
+  { name: "养生文章", icon: BookOpen, time: "6月15日 20:30", color: "#805AD5" },
+  { name: "健康中心", icon: Heart, time: "6月15日 10:00", color: "#E53E3E" },
+];
+
+const alertTypeLabels: Record<Alert["type"], { label: string; color: string }> = {
+  inactivity: { label: "活跃度异常", color: "#E53E3E" },
+  health: { label: "健康预警", color: "#D69E2E" },
+  medicine: { label: "用药提醒", color: "#3182CE" },
+};
+
+function formatTime(iso: string): string {
+  const date = new Date(iso);
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const days = Math.floor(hours / 24);
+  if (hours < 1) return "刚刚";
+  if (hours < 24) return `${hours}小时前`;
+  if (days < 7) return `${days}天前`;
+  return `${date.getMonth() + 1}月${date.getDate()}日`;
 }
 
-interface Alert {
-  id: number;
-  elderlyId: number;
-  elderlyName: string;
-  type: string;
-  message: string;
-  time: string;
-  handled: boolean;
+function getWeekDayLabel(dateStr: string): string {
+  const date = new Date(dateStr);
+  const days = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  return days[date.getDay()];
 }
 
 export default function Family() {
   const navigate = useNavigate();
-  const [showBindModal, setShowBindModal] = useState(false);
-  const [bindPhone, setBindPhone] = useState("");
-  const [bindCode, setBindCode] = useState("");
+  const { familyBinds, alerts, setFamilyBinds, setAlerts, acknowledgeAlert, toggleFamilyAlert } =
+    useDataStore();
 
-  const elderlyList: Elderly[] = [
-    {
-      id: 1,
-      name: "张爷爷",
-      age: 78,
-      relation: "父亲",
-      phone: "138****5678",
-      avatar: "👴",
-      lastActive: "10分钟前",
-      activeToday: true,
-      healthScore: 85,
-      medicationCompliance: 90,
-    },
-    {
-      id: 2,
-      name: "李奶奶",
-      age: 75,
-      relation: "母亲",
-      phone: "139****1234",
-      avatar: "👵",
-      lastActive: "2小时前",
-      activeToday: true,
-      healthScore: 78,
-      medicationCompliance: 75,
-    },
-  ];
+  const [activityLogs] = useState<ActivityLog[]>(mockActivityLogs);
+  const [recentFeatures] = useState(mockRecentFeatures);
 
-  const alerts: Alert[] = [
-    {
-      id: 1,
-      elderlyId: 1,
-      elderlyName: "张爷爷",
-      type: "用药异常",
-      message: "降压药已逾期2小时未服用",
-      time: "10:30",
-      handled: false,
-    },
-    {
-      id: 2,
-      elderlyId: 2,
-      elderlyName: "李奶奶",
-      type: "活动异常",
-      message: "今日活动量低于日常50%",
-      time: "09:00",
-      handled: false,
-    },
-    {
-      id: 3,
-      elderlyId: 1,
-      elderlyName: "张爷爷",
-      type: "健康提醒",
-      message: "本周血压波动较大，建议就医",
-      time: "昨天",
-      handled: true,
-    },
-  ];
+  useEffect(() => {
+    if (familyBinds.length === 0) setFamilyBinds(mockFamilyBinds);
+    if (alerts.length === 0) setAlerts(mockAlerts);
+  }, [familyBinds.length, alerts.length, setFamilyBinds, setAlerts]);
 
-  const usageStats = [
-    { label: "今日使用次数", value: "12次", icon: Activity, color: "text-blue-500" },
-    { label: "本周使用天数", value: "7天", icon: Calendar, color: "text-green-500" },
-    { label: "用药完成率", value: "88%", icon: CheckCircle, color: "text-orange-500" },
-    { label: "平均使用时长", value: "45分钟", icon: Clock, color: "text-purple-500" },
-  ];
-
-  const handleCall = (phone: string) => {
-    alert(`正在拨打: ${phone.replace(/\*/g, "0")}`);
-  };
-
-  const handleBind = () => {
-    if (bindPhone && bindCode) {
-      alert("绑定成功！");
-      setShowBindModal(false);
-      setBindPhone("");
-      setBindCode("");
+  const unreadCount = alerts.filter((a) => !a.acknowledged).length;
+  const consecutiveInactiveDays = (() => {
+    let count = 0;
+    for (let i = activityLogs.length - 1; i >= 0; i--) {
+      if (!activityLogs[i].hasActivity) count++;
+      else break;
     }
-  };
+    return count;
+  })();
+  const maxDuration = Math.max(...activityLogs.map((l) => l.durationMinutes), 1);
 
-  const handleAlert = (alertId: number) => {
-    alert("已处理该预警");
+  const handleEmergencyCall = () => {
+    alert("正在拨打紧急联系电话：120");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center mb-8">
+    <div className="min-h-screen pb-8" style={{ backgroundColor: "var(--color-bg)" }}>
+      <header className="sticky top-0 z-10 a11y-card rounded-none border-x-0 border-t-0">
+        <div className="flex items-center justify-between gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md active:scale-95 transition-transform"
+            className="a11y-btn a11y-btn-ghost px-3 py-3"
+            aria-label="返回"
           >
-            <ArrowLeft size={36} className="text-gray-700" />
+            <ArrowLeft className="w-7 h-7" />
           </button>
-          <h1 className="flex-1 text-center text-[32px] font-bold text-gray-800">
-            家属关怀后台
+          <h1 className="text-a11y-xl font-bold a11y-text flex-1 text-center">
+            家属中心
           </h1>
           <div className="w-14" />
         </div>
+      </header>
 
-        <div className="bg-white rounded-2xl p-6 mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-purple-500 w-12 h-12 rounded-xl flex items-center justify-center">
-                <Users size={32} className="text-white" />
-              </div>
-              <h2 className="text-[28px] font-bold text-gray-800">
-                绑定的老人
-              </h2>
-            </div>
-            <button
-              onClick={() => setShowBindModal(true)}
-              className="bg-purple-500 text-white text-[22px] font-bold px-6 py-3 rounded-xl flex items-center gap-2 active:scale-95 transition-transform"
-            >
-              <UserPlus size={28} />
-              添加绑定
-            </button>
-          </div>
-
-          <div className="space-y-4">
-            {elderlyList.map((elderly) => (
-              <div
-                key={elderly.id}
-                className="bg-gray-50 rounded-2xl p-6"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className="text-[64px]">{elderly.avatar}</div>
-                    <div>
-                      <h3 className="text-[28px] font-bold text-gray-900">
-                        {elderly.name}
-                        <span className="text-[20px] text-gray-500 ml-2">
-                          {elderly.age}岁 · {elderly.relation}
-                        </span>
-                      </h3>
-                      <p className="text-[20px] text-gray-600 mt-1">
-                        {elderly.phone}
-                      </p>
-                      <p
-                        className={`text-[18px] mt-1 ${
-                          elderly.activeToday
-                            ? "text-green-600"
-                            : "text-gray-500"
-                        }`}
-                      >
-                        {elderly.activeToday ? "● 今日活跃" : "○ 今日未活跃"}
-                        · 最近活跃 {elderly.lastActive}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => handleCall(elderly.phone)}
-                      className="bg-green-500 text-white w-16 h-16 rounded-2xl flex items-center justify-center active:scale-95 transition-transform"
-                    >
-                      <Phone size={36} />
-                    </button>
-                    <button className="bg-gray-200 text-gray-600 w-12 h-12 rounded-xl flex items-center justify-center">
-                      <MoreVertical size={28} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white rounded-xl p-4">
-                    <p className="text-[18px] text-gray-500 mb-1">健康评分</p>
-                    <div className="flex items-end gap-2">
-                      <p className="text-[36px] font-bold text-green-500">
-                        {elderly.healthScore}
-                      </p>
-                      <p className="text-[18px] text-gray-500 pb-1">/100</p>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
-                      <div
-                        className="bg-green-500 h-3 rounded-full"
-                        style={{ width: `${elderly.healthScore}%` }}
-                      />
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-xl p-4">
-                    <p className="text-[18px] text-gray-500 mb-1">
-                      用药依从率
-                    </p>
-                    <div className="flex items-end gap-2">
-                      <p className="text-[36px] font-bold text-blue-500">
-                        {elderly.medicationCompliance}
-                      </p>
-                      <p className="text-[18px] text-gray-500 pb-1">%</p>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
-                      <div
-                        className="bg-blue-500 h-3 rounded-full"
-                        style={{
-                          width: `${elderly.medicationCompliance}%`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 mb-8">
-          <h2 className="text-[28px] font-bold text-gray-800 mb-6">
-            使用记录统计
+      <main className="container pt-6 space-y-6">
+        <section className="a11y-card animate-slide-up">
+          <h2 className="text-a11y-lg font-bold a11y-text mb-4 flex items-center gap-2">
+            <Users className="w-7 h-7" style={{ color: "var(--color-primary)" }} />
+            家属绑定
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {usageStats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
+          {familyBinds.length === 0 ? (
+            <div className="text-center py-10 space-y-4">
+              <User className="w-16 h-16 mx-auto a11y-text-secondary" />
+              <p className="text-a11y-lg a11y-text-secondary">暂无绑定的老人</p>
+              <LargeButton variant="primary" size="large" icon={<Link2 className="w-6 h-6" />}>
+                立即绑定
+              </LargeButton>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {familyBinds.map((bind) => (
                 <div
-                  key={index}
-                  className="bg-gray-50 rounded-xl p-6 text-center"
+                  key={bind.id}
+                  className="p-5 rounded-a11y space-y-4"
+                  style={{ backgroundColor: "rgba(255, 122, 69, 0.06)" }}
                 >
-                  <Icon size={40} className={`mx-auto mb-3 ${stat.color}`} />
-                  <p className="text-[32px] font-bold text-gray-900">
-                    {stat.value}
-                  </p>
-                  <p className="text-[18px] text-gray-500 mt-1">
-                    {stat.label}
-                  </p>
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="w-16 h-16 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: "var(--color-primary)" }}
+                    >
+                      <User className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="flex-1 space-y-1">
+                      <h3 className="text-a11y-xl font-bold a11y-text">
+                        {bind.elderName}
+                      </h3>
+                      <p className="text-a11y-base a11y-text-secondary">
+                        {bind.elderAge}岁 · {bind.relation}
+                      </p>
+                      <label className="flex items-center gap-2 cursor-pointer pt-1">
+                        <Bell className="w-5 h-5 a11y-text-secondary" />
+                        <span className="text-a11y-base a11y-text">接收预警通知</span>
+                        <button
+                          onClick={() => toggleFamilyAlert(bind.id)}
+                          className={cn(
+                            "relative w-14 h-8 rounded-full transition-colors",
+                            bind.receiveAlerts ? "bg-green-500" : "bg-gray-300"
+                          )}
+                          role="switch"
+                          aria-checked={bind.receiveAlerts}
+                          aria-label="接收预警通知开关"
+                        >
+                          <span
+                            className={cn(
+                              "absolute top-0.5 w-7 h-7 rounded-full bg-white shadow transition-transform",
+                              bind.receiveAlerts ? "translate-x-6" : "translate-x-0.5"
+                            )}
+                          />
+                        </button>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <LargeButton
+                      variant="outline"
+                      size="large"
+                      fullWidth
+                      icon={<Phone className="w-6 h-6" />}
+                    >
+                      拨打电话
+                    </LargeButton>
+                    <LargeButton
+                      variant="ghost"
+                      size="large"
+                      fullWidth
+                      icon={<Unlink className="w-6 h-6" />}
+                    >
+                      解绑
+                    </LargeButton>
+                  </div>
+                </div>
+              ))}
+              <LargeButton
+                variant="outline"
+                size="large"
+                fullWidth
+                icon={<Link2 className="w-6 h-6" />}
+              >
+                添加绑定老人
+              </LargeButton>
+            </div>
+          )}
+        </section>
+
+        <section className="a11y-card animate-slide-up border-2" style={{ borderColor: "var(--color-danger)" }}>
+          <div className="flex items-center justify-between mb-5 pb-4 border-b" style={{ borderColor: "var(--color-border)" }}>
+            <h2 className="text-a11y-xl font-bold flex items-center gap-2" style={{ color: "var(--color-danger)" }}>
+              <AlertTriangle className="w-8 h-8" />
+              异常预警
+            </h2>
+            {unreadCount > 0 && (
+              <span
+                className="a11y-tag px-4 py-2 text-a11y-base font-bold"
+                style={{ backgroundColor: "var(--color-danger)", color: "white" }}
+              >
+                {unreadCount} 条未读
+              </span>
+            )}
+          </div>
+          {alerts.length === 0 ? (
+            <div className="text-center py-8">
+              <CheckCircle className="w-14 h-14 mx-auto text-green-500 mb-3" />
+              <p className="text-a11y-lg a11y-text-secondary">暂无预警信息</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {alerts.map((alert) => {
+                const typeInfo = alertTypeLabels[alert.type];
+                return (
+                  <div
+                    key={alert.id}
+                    className={cn(
+                      "p-4 rounded-a11y space-y-3 transition-all border-2",
+                      !alert.acknowledged && "animate-pulse-soft"
+                    )}
+                    style={{
+                      backgroundColor: alert.acknowledged
+                        ? "rgba(0,0,0,0.02)"
+                        : "rgba(229, 62, 62, 0.08)",
+                      borderColor: alert.acknowledged
+                        ? "var(--color-border)"
+                        : "var(--color-danger)",
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3 flex-1">
+                        <span
+                          className="a11y-tag py-1.5 px-3 text-a11y-sm font-bold flex-shrink-0"
+                          style={{
+                            backgroundColor: `${typeInfo.color}20`,
+                            color: typeInfo.color,
+                          }}
+                        >
+                          {typeInfo.label}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-a11y-base font-bold a11y-text">
+                            {alert.elderName}
+                          </p>
+                          <p className="text-a11y-base a11y-text leading-relaxed mt-1">
+                            {alert.message}
+                          </p>
+                          <p className="text-a11y-sm a11y-text-secondary mt-2 flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {formatTime(alert.triggeredAt)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    {!alert.acknowledged && (
+                      <LargeButton
+                        variant="primary"
+                        size="large"
+                        fullWidth
+                        icon={<CheckCircle className="w-6 h-6" />}
+                        onClick={() => acknowledgeAlert(alert.id)}
+                      >
+                        一键确认
+                      </LargeButton>
+                    )}
+                    {alert.acknowledged && (
+                      <div className="flex items-center gap-2 text-green-600">
+                        <CheckCircle className="w-5 h-5" />
+                        <span className="text-a11y-base font-medium">已确认处理</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        <section className="a11y-card animate-slide-up">
+          <h2 className="text-a11y-lg font-bold a11y-text mb-5 flex items-center gap-2">
+            <TrendingUp className="w-7 h-7 text-green-600" />
+            活跃度统计
+            <span className="text-a11y-sm font-normal a11y-text-secondary">
+              最近7天
+            </span>
+          </h2>
+
+          {consecutiveInactiveDays > 0 && (
+            <div
+              className="p-4 rounded-a11y mb-5 flex items-center gap-3"
+              style={{ backgroundColor: "rgba(229, 62, 62, 0.08)" }}
+            >
+              <AlertTriangle className="w-7 h-7 flex-shrink-0" style={{ color: "var(--color-danger)" }} />
+              <p className="text-a11y-base font-bold" style={{ color: "var(--color-danger)" }}>
+                连续 {consecutiveInactiveDays} 天未使用，请多关注老人
+              </p>
+            </div>
+          )}
+
+          <div className="flex items-end justify-between gap-2 h-48 mb-4">
+            {activityLogs.map((log, idx) => {
+              const heightPercent = log.hasActivity
+                ? Math.max((log.durationMinutes / maxDuration) * 100, 15)
+                : 5;
+              return (
+                <div key={idx} className="flex-1 flex flex-col items-center gap-2">
+                  <span className="text-a11y-sm font-bold a11y-text">
+                    {log.durationMinutes > 0 ? `${log.durationMinutes}分` : "-"}
+                  </span>
+                  <div
+                    className="w-full rounded-t-lg transition-all min-h-[12px]"
+                    style={{
+                      height: `${heightPercent}%`,
+                      backgroundColor: log.hasActivity
+                        ? "var(--color-secondary)"
+                        : "var(--color-border)",
+                      opacity: log.hasActivity ? 0.9 : 0.5,
+                    }}
+                  />
                 </div>
               );
             })}
           </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-red-500 w-12 h-12 rounded-xl flex items-center justify-center">
-                <AlertTriangle size={32} className="text-white" />
-              </div>
-              <h2 className="text-[28px] font-bold text-gray-800">
-                异常预警
-              </h2>
-            </div>
-            <span className="bg-red-500 text-white px-4 py-2 rounded-xl text-[20px] font-bold">
-              {alerts.filter((a) => !a.handled).length} 条未处理
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            {alerts.map((alert) => (
-              <div
-                key={alert.id}
-                className={`rounded-2xl p-6 border-4 ${
-                  alert.handled
-                    ? "bg-gray-50 border-gray-300 opacity-60"
-                    : "bg-red-50 border-red-500"
-                }`}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span
-                        className={`px-4 py-1 rounded-xl text-[18px] font-bold ${
-                          alert.handled
-                            ? "bg-gray-200 text-gray-600"
-                            : "bg-red-500 text-white"
-                        }`}
-                      >
-                        {alert.type}
-                      </span>
-                      <span className="text-[20px] text-gray-500">
-                        {alert.time}
-                      </span>
-                    </div>
-                    <p className="text-[24px] font-bold text-gray-900 mb-1">
-                      {alert.elderlyName}
-                    </p>
-                    <p className="text-[22px] text-gray-700">
-                      {alert.message}
-                    </p>
-                  </div>
-                  {!alert.handled && (
-                    <button
-                      onClick={() => handleAlert(alert.id)}
-                      className="bg-red-500 text-white text-[22px] font-bold px-6 py-4 rounded-xl flex items-center gap-2 active:scale-95 transition-transform ml-4"
-                    >
-                      <Phone size={28} />
-                      一键拨打
-                    </button>
-                  )}
-                </div>
-                {alert.handled && (
-                  <div className="mt-4 pt-4 border-t border-gray-300">
-                    <span className="text-[20px] text-green-600 font-bold">
-                      ✓ 已处理
-                    </span>
-                  </div>
-                )}
+          <div className="flex justify-between gap-2">
+            {activityLogs.map((log, idx) => (
+              <div key={idx} className="flex-1 text-center">
+                <p className="text-a11y-sm a11y-text-secondary">
+                  {getWeekDayLabel(log.date)}
+                </p>
+                <p className="text-a11y-sm a11y-text font-medium">
+                  {new Date(log.date).getDate()}日
+                </p>
               </div>
             ))}
           </div>
-        </div>
 
-        {showBindModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-6 z-50">
-            <div className="bg-white rounded-3xl p-8 w-full max-w-lg">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[32px] font-bold text-gray-900">
-                  绑定老人账号
-                </h2>
-                <button
-                  onClick={() => setShowBindModal(false)}
-                  className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"
-                >
-                  <X size={32} className="text-gray-600" />
-                </button>
-              </div>
-
-              <div className="bg-purple-50 rounded-2xl p-6 mb-6 text-center">
-                <QrCode size={80} className="mx-auto mb-4 text-purple-500" />
-                <p className="text-[22px] text-gray-700">
-                  请让老人在App中打开二维码，或输入老人手机号进行绑定
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                <div>
-                  <label className="text-[22px] font-bold text-gray-700 mb-2 block">
-                    老人手机号
-                  </label>
-                  <input
-                    type="tel"
-                    value={bindPhone}
-                    onChange={(e) => setBindPhone(e.target.value)}
-                    placeholder="请输入老人手机号"
-                    className="w-full px-6 py-4 text-[22px] border-2 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[22px] font-bold text-gray-700 mb-2 block">
-                    验证码
-                  </label>
-                  <div className="flex gap-4">
-                    <input
-                      type="text"
-                      value={bindCode}
-                      onChange={(e) => setBindCode(e.target.value)}
-                      placeholder="请输入验证码"
-                      className="flex-1 px-6 py-4 text-[22px] border-2 border-gray-300 rounded-xl focus:border-purple-500 focus:outline-none"
-                    />
-                    <button className="bg-purple-100 text-purple-700 px-6 py-4 rounded-xl text-[20px] font-bold whitespace-nowrap">
-                      获取验证码
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-8">
-                <button
-                  onClick={() => setShowBindModal(false)}
-                  className="flex-1 bg-gray-200 text-gray-700 text-[24px] font-bold py-5 rounded-xl active:scale-98 transition-transform"
-                >
-                  取消
-                </button>
-                <button
-                  onClick={handleBind}
-                  className="flex-1 bg-purple-500 text-white text-[24px] font-bold py-5 rounded-xl active:scale-98 transition-transform"
-                >
-                  确认绑定
-                </button>
-              </div>
+          <div className="grid grid-cols-3 gap-4 mt-6 pt-5 border-t" style={{ borderColor: "var(--color-border)" }}>
+            <div className="text-center p-3 rounded-a11y" style={{ backgroundColor: "rgba(44, 122, 123, 0.08)" }}>
+              <p className="text-a11y-2xl font-bold a11y-text">
+                {activityLogs.filter((l) => l.hasActivity).length}
+              </p>
+              <p className="text-a11y-sm a11y-text-secondary">活跃天数</p>
+            </div>
+            <div className="text-center p-3 rounded-a11y" style={{ backgroundColor: "rgba(255, 122, 69, 0.08)" }}>
+              <p className="text-a11y-2xl font-bold a11y-text">
+                {activityLogs.reduce((sum, l) => sum + l.durationMinutes, 0)}
+              </p>
+              <p className="text-a11y-sm a11y-text-secondary">总使用(分钟)</p>
+            </div>
+            <div className="text-center p-3 rounded-a11y" style={{ backgroundColor: "rgba(49, 130, 206, 0.08)" }}>
+              <p className="text-a11y-2xl font-bold a11y-text">
+                {Math.round(activityLogs.reduce((sum, l) => sum + l.durationMinutes, 0) / Math.max(activityLogs.filter((l) => l.hasActivity).length, 1))}
+              </p>
+              <p className="text-a11y-sm a11y-text-secondary">日均(分钟)</p>
             </div>
           </div>
-        )}
-      </div>
+        </section>
+
+        <section className="a11y-card animate-slide-up">
+          <h2 className="text-a11y-lg font-bold a11y-text mb-4 flex items-center gap-2">
+            <Activity className="w-7 h-7" style={{ color: "var(--color-secondary)" }} />
+            使用功能记录
+          </h2>
+          <div className="space-y-2">
+            {recentFeatures.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={idx}
+                  className="flex items-center gap-4 p-4 rounded-a11y"
+                  style={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: `${feature.color}20` }}
+                  >
+                    <Icon className="w-6 h-6" style={{ color: feature.color }} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-a11y-base font-bold a11y-text">{feature.name}</p>
+                    <p className="text-a11y-sm a11y-text-secondary flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      {feature.time}
+                    </p>
+                  </div>
+                  <div
+                    className="w-3 h-3 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: feature.color }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="animate-slide-up">
+          <button
+            onClick={handleEmergencyCall}
+            className="w-full a11y-btn py-8 text-a11y-xl font-bold text-white shadow-a11y-hover transition-transform active:scale-98 flex items-center justify-center gap-3"
+            style={{ backgroundColor: "var(--color-danger)" }}
+            aria-label="紧急联系"
+          >
+            <Phone className="w-10 h-10" />
+            紧急联系（一键拨号）
+          </button>
+        </section>
+      </main>
     </div>
   );
 }

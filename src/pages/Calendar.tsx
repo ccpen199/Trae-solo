@@ -1,233 +1,363 @@
-import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import {
   ArrowLeft,
-  Check,
-  X,
-  Scissors,
-  UtensilsCrossed,
-  Bed,
-  Briefcase,
-  ShoppingBag,
-  Heart,
-  Home,
   Leaf,
-  CalendarHeart,
-  PartyPopper,
+  Apple,
+  Heart,
+  CalendarDays,
   Cake,
+  PartyPopper,
+  Star,
+  Plus,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useDataStore } from "@/store/dataStore";
+import VoiceButton from "@/components/VoiceButton";
+import LargeButton from "@/components/LargeButton";
+
+const getMemorialDayIcon = (type: string) => {
+  switch (type) {
+    case "birthday":
+      return <Cake className="w-7 h-7 text-red-500" />;
+    case "festival":
+      return <PartyPopper className="w-7 h-7 text-orange-500" />;
+    case "anniversary":
+      return <Heart className="w-7 h-7 text-pink-500" />;
+    default:
+      return <Star className="w-7 h-7 text-blue-500" />;
+  }
+};
+
+const getDaysUntilColor = (type: string) => {
+  switch (type) {
+    case "birthday":
+      return "var(--color-danger)";
+    case "festival":
+      return "var(--color-primary)";
+    case "anniversary":
+      return "#ec4899";
+    default:
+      return "var(--color-secondary)";
+  }
+};
 
 export default function Calendar() {
   const navigate = useNavigate();
+  const calendarData = useDataStore((state) => state.calendarData);
 
-  const today = {
-    solarDate: "2026年6月11日",
-    weekDay: "星期四",
-    lunarDate: "农历四月廿六",
-    lunarYear: "丙午年",
-    lunarMonth: "甲午月",
-    lunarDay: "丁酉日",
-    zodiac: "马",
-    solarTerm: "芒种",
-    festival: "",
-  };
+  const summaryText = useMemo(() => {
+    if (!calendarData) return "";
+    const { lunar, solarDate, weekDay, yi, ji, currentSolarTerm } = calendarData;
+    const yiNames = yi.map((i) => i.name).join("、");
+    const jiNames = ji.map((i) => i.name).join("、");
+    const solarTermText = currentSolarTerm
+      ? `当前节气${currentSolarTerm.name}，${currentSolarTerm.healthTips[0]}。饮食建议${currentSolarTerm.dietTips[0]}。`
+      : "";
+    return `今天是${solarDate}，${weekDay}，农历${lunar.lunarMonthName}${lunar.lunarDayName}，${lunar.yearGanZhi}年，生肖${lunar.yearAnimal}。宜${yiNames}。忌${jiNames}。${solarTermText}`;
+  }, [calendarData]);
 
-  const yiItems = [
-    { text: "祭祀", icon: Heart },
-    { text: "嫁娶", icon: Cake },
-    { text: "安床", icon: Bed },
-    { text: "出行", icon: Briefcase },
-    { text: "开市", icon: ShoppingBag },
-    { text: "立券", icon: Home },
-  ];
-
-  const jiItems = [
-    { text: "动土", icon: Scissors },
-    { text: "破土", icon: X },
-    { text: "修造", icon: Home },
-    { text: "入宅", icon: Home },
-    { text: "安门", icon: Scissors },
-  ];
-
-  const healthTips = [
-    "芒种时节气温升高，注意防暑降温",
-    "多吃清热利湿的食物，如绿豆、冬瓜",
-    "午间适当休息，保证充足睡眠",
-    "适当锻炼，避免大汗淋漓",
-  ];
-
-  const anniversaries = [
-    { date: "6月15日", event: "老伴儿生日", type: "birthday", daysLeft: 4 },
-    { date: "6月20日", event: "结婚45周年", type: "anniversary", daysLeft: 9 },
-    { date: "7月1日", event: "孙子放暑假", type: "event", daysLeft: 20 },
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center mb-8">
+  if (!calendarData) {
+    return (
+      <div
+        className="min-h-screen"
+        style={{ backgroundColor: "var(--color-bg)" }}
+      >
+        <div
+          className="flex items-center justify-between px-4 py-4"
+          style={{
+            backgroundColor: "var(--color-card-bg)",
+            borderBottom: "1px solid var(--color-border)",
+          }}
+        >
           <button
             onClick={() => navigate(-1)}
-            className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md active:scale-95 transition-transform"
+            className="a11y-btn a11y-btn-ghost"
+            aria-label="返回"
           >
-            <ArrowLeft size={36} className="text-gray-700" />
+            <ArrowLeft className="w-7 h-7" />
           </button>
-          <h1 className="flex-1 text-center text-[32px] font-bold text-gray-800">
-            今日黄历
-          </h1>
-          <div className="w-14" />
+          <h1 className="text-a11y-xl font-bold a11y-text">农历黄历</h1>
+          <div className="w-24" />
         </div>
+        <div className="p-6">
+          <div className="a11y-card text-center py-10">
+            <p className="text-a11y-xl a11y-text-secondary">暂无黄历数据</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-        <div className="bg-white rounded-3xl p-8 shadow-lg mb-8 text-center">
-          <p className="text-[24px] text-gray-600 mb-4">{today.weekDay}</p>
-          <p className="text-[48px] font-bold text-gray-900 mb-4">
-            {today.solarDate}
+  const { lunar, solarDate, weekDay, yi, ji, currentSolarTerm, memorialDays } =
+    calendarData;
+
+  const sortedMemorialDays = [...memorialDays].sort(
+    (a, b) => (a.daysUntil || 0) - (b.daysUntil || 0)
+  );
+
+  return (
+    <div
+      className="min-h-screen pb-8 animate-fade-in"
+      style={{ backgroundColor: "var(--color-bg)" }}
+    >
+      <div
+        className="sticky top-0 z-10 flex items-center justify-between px-4 py-4"
+        style={{
+          backgroundColor: "var(--color-card-bg)",
+          borderBottom: "1px solid var(--color-border)",
+        }}
+      >
+        <button
+          onClick={() => navigate(-1)}
+          className="a11y-btn a11y-btn-ghost"
+          aria-label="返回"
+        >
+          <ArrowLeft className="w-7 h-7" />
+        </button>
+        <h1 className="text-a11y-xl font-bold a11y-text">农历黄历</h1>
+        <VoiceButton text={summaryText} label="播报" />
+      </div>
+
+      <div className="px-4 py-6 space-y-6">
+        <div
+          className="a11y-card text-center animate-slide-up"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(44, 122, 123, 0.15), rgba(255, 122, 69, 0.1))",
+          }}
+        >
+          <p
+            className="font-bold a11y-text mb-2 leading-tight"
+            style={{ fontSize: "calc(var(--font-size-current) + 40px)" }}
+          >
+            {solarDate.replace(/年\d+月/, "").replace("日", "")}
           </p>
-          <div className="bg-red-500 text-white rounded-2xl p-4 inline-block mb-6">
-            <p className="text-[28px] font-bold">{today.lunarDate}</p>
-          </div>
-          <div className="grid grid-cols-3 gap-4 text-[20px]">
-            <div className="bg-gray-50 rounded-xl p-3">
-              <p className="text-gray-500">干支</p>
-              <p className="font-bold text-gray-800">{today.lunarYear}</p>
-              <p className="font-bold text-gray-800">{today.lunarMonth}</p>
-              <p className="font-bold text-gray-800">{today.lunarDay}</p>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-3">
-              <p className="text-gray-500">生肖</p>
-              <p className="text-[40px]">{today.zodiac}</p>
-            </div>
-            <div className="bg-green-50 rounded-xl p-3">
-              <p className="text-gray-500">节气</p>
-              <p className="text-[24px] font-bold text-green-600">
-                {today.solarTerm}
-              </p>
-            </div>
+          <p className="text-a11y-xl a11y-text-secondary mb-5">{weekDay}</p>
+          <div className="a11y-divider mb-5" />
+          <div className="space-y-2">
+            <p className="text-a11y-xl font-bold a11y-text">
+              农历 {lunar.lunarMonthName}
+              {lunar.lunarDayName}
+            </p>
+            <p className="text-a11y-lg a11y-text-secondary">
+              {lunar.yearGanZhi}年 · 生肖{lunar.yearAnimal}
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="bg-white rounded-2xl p-6">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center">
-                <Check size={32} className="text-white" />
-              </div>
-              <h2 className="text-[32px] font-bold text-green-600">宜</h2>
-            </div>
-            <div className="space-y-4">
-              {yiItems.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={index}
-                    className="flex items-center gap-4 bg-green-50 rounded-xl p-4"
-                  >
-                    <div className="bg-green-200 w-12 h-12 rounded-xl flex items-center justify-center">
-                      <Icon size={28} className="text-green-700" />
-                    </div>
-                    <p className="text-[24px] font-bold text-green-800">
-                      {item.text}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="bg-red-500 w-12 h-12 rounded-full flex items-center justify-center">
-                <X size={32} className="text-white" />
-              </div>
-              <h2 className="text-[32px] font-bold text-red-600">忌</h2>
-            </div>
-            <div className="space-y-4">
-              {jiItems.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={index}
-                    className="flex items-center gap-4 bg-red-50 rounded-xl p-4"
-                  >
-                    <div className="bg-red-200 w-12 h-12 rounded-xl flex items-center justify-center">
-                      <Icon size={28} className="text-red-700" />
-                    </div>
-                    <p className="text-[24px] font-bold text-red-800">
-                      {item.text}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl p-6 mb-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="bg-green-500 w-12 h-12 rounded-xl flex items-center justify-center">
-              <Leaf size={32} className="text-white" />
-            </div>
-            <h2 className="text-[28px] font-bold text-gray-800">节气养生</h2>
-          </div>
-          <div className="space-y-4">
-            {healthTips.map((tip, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-4 bg-green-50 rounded-xl p-4"
+        <div className="animate-slide-up">
+          <h3 className="text-a11y-xl font-bold a11y-text mb-4">今日宜忌</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div
+              className="a11y-card"
+              style={{ backgroundColor: "rgba(56, 161, 105, 0.06)" }}
+            >
+              <h3
+                className="text-a11y-xl font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--color-success)" }}
               >
-                <span className="bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center text-[20px] font-bold flex-shrink-0">
-                  {index + 1}
-                </span>
-                <p className="text-[22px] text-gray-700">{tip}</p>
+                ✓ 宜
+              </h3>
+              <div className="space-y-3">
+                {yi.map((item) => (
+                  <div
+                    key={item.name}
+                    className="p-3 rounded-a11y"
+                    style={{ backgroundColor: "rgba(56, 161, 105, 0.1)" }}
+                  >
+                    <p className="text-a11y-lg font-bold text-green-700 mb-1">
+                      {item.name}
+                    </p>
+                    <p className="text-a11y text-green-600">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div
+              className="a11y-card"
+              style={{ backgroundColor: "rgba(229, 62, 62, 0.06)" }}
+            >
+              <h3
+                className="text-a11y-xl font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--color-danger)" }}
+              >
+                ✗ 忌
+              </h3>
+              <div className="space-y-3">
+                {ji.map((item) => (
+                  <div
+                    key={item.name}
+                    className="p-3 rounded-a11y"
+                    style={{ backgroundColor: "rgba(229, 62, 62, 0.1)" }}
+                  >
+                    <p className="text-a11y-lg font-bold text-red-700 mb-1">
+                      {item.name}
+                    </p>
+                    <p className="text-a11y text-red-600">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <button
-            onClick={() => navigate("/health")}
-            className="w-full mt-6 bg-green-500 text-white text-[24px] font-bold py-5 rounded-2xl active:scale-98 transition-transform"
-          >
-            查看更多养生食谱
-          </button>
         </div>
 
-        <div className="bg-white rounded-2xl p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="bg-pink-500 w-12 h-12 rounded-xl flex items-center justify-center">
-              <CalendarHeart size={32} className="text-white" />
-            </div>
-            <h2 className="text-[28px] font-bold text-gray-800">重要纪念日</h2>
-          </div>
-          <div className="space-y-4">
-            {anniversaries.map((item, index) => (
+        {currentSolarTerm && (
+          <div className="a11y-card animate-slide-up">
+            <h3 className="text-a11y-xl font-bold a11y-text mb-5 flex items-center gap-2">
+              <Leaf className="w-8 h-8 text-green-600" />
+              节气养生 · {currentSolarTerm.name}
+            </h3>
+
+            <div className="space-y-5">
               <div
-                key={index}
-                className="flex items-center justify-between bg-pink-50 rounded-xl p-4"
+                className="p-4 rounded-a11y"
+                style={{ backgroundColor: "rgba(56, 161, 105, 0.08)" }}
+              >
+                <h4 className="text-a11y-lg font-bold text-green-700 mb-3 flex items-center gap-2">
+                  <Leaf className="w-6 h-6" />
+                  养生建议
+                </h4>
+                <ol className="space-y-2 pl-2">
+                  {currentSolarTerm.healthTips.map((tip, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span
+                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-a11y-sm"
+                        style={{
+                          backgroundColor: "var(--color-success)",
+                          color: "white",
+                        }}
+                      >
+                        {idx + 1}
+                      </span>
+                      <span className="text-a11y a11y-text pt-1">{tip}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div
+                className="p-4 rounded-a11y"
+                style={{ backgroundColor: "rgba(255, 122, 69, 0.08)" }}
+              >
+                <h4 className="text-a11y-lg font-bold text-primary-600 mb-3 flex items-center gap-2">
+                  <Apple className="w-6 h-6" />
+                  饮食建议
+                </h4>
+                <ol className="space-y-2 pl-2">
+                  {currentSolarTerm.dietTips.map((tip, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span
+                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-a11y-sm"
+                        style={{
+                          backgroundColor: "var(--color-primary)",
+                          color: "white",
+                        }}
+                      >
+                        {idx + 1}
+                      </span>
+                      <span className="text-a11y a11y-text pt-1">{tip}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div
+                className="p-4 rounded-a11y"
+                style={{ backgroundColor: "rgba(44, 122, 123, 0.08)" }}
+              >
+                <h4 className="text-a11y-lg font-bold text-secondary-600 mb-3 flex items-center gap-2">
+                  <Heart className="w-6 h-6" />
+                  穴位按摩
+                </h4>
+                <ol className="space-y-2 pl-2">
+                  {currentSolarTerm.acupressureTips.map((tip, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span
+                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-a11y-sm"
+                        style={{
+                          backgroundColor: "var(--color-secondary)",
+                          color: "white",
+                        }}
+                      >
+                        {idx + 1}
+                      </span>
+                      <span className="text-a11y a11y-text pt-1">{tip}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="animate-slide-up">
+          <h3 className="text-a11y-xl font-bold a11y-text mb-4 flex items-center gap-2">
+            <CalendarDays className="w-8 h-8 text-primary-500" />
+            近期纪念日
+          </h3>
+          <div className="a11y-card divide-y" style={{ borderColor: "var(--color-border)" }}>
+            {sortedMemorialDays.map((day) => (
+              <div
+                key={day.id}
+                className="flex items-center justify-between py-4 first:pt-0 last:pb-0"
+                style={{ borderColor: "var(--color-border)" }}
               >
                 <div className="flex items-center gap-4">
-                  <div className="bg-pink-200 w-12 h-12 rounded-xl flex items-center justify-center">
-                    {item.type === "birthday" ? (
-                      <Cake size={28} className="text-pink-700" />
-                    ) : item.type === "anniversary" ? (
-                      <Heart size={28} className="text-pink-700" />
-                    ) : (
-                      <PartyPopper size={28} className="text-pink-700" />
-                    )}
+                  <div
+                    className="p-3 rounded-a11y flex-shrink-0"
+                    style={{
+                      backgroundColor:
+                        day.type === "birthday"
+                          ? "rgba(229, 62, 62, 0.1)"
+                          : day.type === "festival"
+                          ? "rgba(255, 122, 69, 0.1)"
+                          : day.type === "anniversary"
+                          ? "rgba(236, 72, 153, 0.1)"
+                          : "rgba(44, 122, 123, 0.1)",
+                    }}
+                  >
+                    {getMemorialDayIcon(day.type)}
                   </div>
                   <div>
-                    <p className="text-[22px] font-bold text-gray-800">
-                      {item.event}
+                    <p className="text-a11y-lg font-bold a11y-text">
+                      {day.name}
                     </p>
-                    <p className="text-[18px] text-gray-500">{item.date}</p>
+                    <p className="text-a11y a11y-text-secondary">
+                      {day.date}
+                      {day.isLunar && "（农历）"}
+                    </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[24px] font-bold text-pink-600">
-                    {item.daysLeft}天
+                  <p
+                    className="text-a11y-2xl font-bold"
+                    style={{ color: getDaysUntilColor(day.type) }}
+                  >
+                    {day.daysUntil === 0 ? "今天" : `${day.daysUntil}天`}
                   </p>
-                  <p className="text-[18px] text-gray-500">后</p>
+                  <p className="text-a11y-sm a11y-text-secondary">
+                    {day.daysUntil === 0 ? "就是今天" : "后到来"}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="pt-2">
+          <LargeButton
+            size="xlarge"
+            fullWidth
+            icon={<Plus className="w-7 h-7" />}
+            onClick={() => {}}
+          >
+            添加纪念日
+          </LargeButton>
         </div>
       </div>
     </div>
