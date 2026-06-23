@@ -99,12 +99,26 @@ export interface OrderRiderScore {
 export interface FinanceLedger {
   id: string;
   orderId?: string;
-  accountType: string;
+  relatedLedgerId?: string;
+  userId?: string;
+  riderId?: string;
+  accountType: 'user_wallet' | 'rider_wallet' | 'platform' | 'channel';
   direction: 'debit' | 'credit';
   amount: number;
-  type: 'pay' | 'refund' | 'payout' | 'commission' | 'fee';
+  balanceAfter?: number;
+  type: 'pay' | 'refund' | 'payout' | 'commission' | 'fee' | 'recharge' | 'compensation' | 'retry';
   channel: 'wechat' | 'alipay' | 'unionpay' | 'balance';
-  status: 'pending' | 'success' | 'failed';
+  channelTxnId?: string;
+  status: 'pending' | 'success' | 'failed' | 'retrying' | 'reviewing' | 'compensated' | 'reversed' | 'manual_closed';
+  failureReason?: string;
+  failReason?: string;
+  reviewNote?: string;
+  retryCount?: number;
+  handlerName?: string;
+  handledAt?: Date;
+  remark?: string;
   createdAt: Date;
   settledAt?: Date;
+  reviewedBy?: string;
+  reviewedAt?: Date;
 }

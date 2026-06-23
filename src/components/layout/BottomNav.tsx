@@ -11,15 +11,15 @@ interface NavItem {
 }
 
 const userNavItems: NavItem[] = [
-  { to: '/user/home', label: '首页', icon: Home },
-  { to: '/user/publish', label: '发布', icon: Plus },
-  { to: '/user/orders', label: '订单', icon: ClipboardList },
-  { to: '/user/profile', label: '我的', icon: User },
+  { to: '/', label: '首页', icon: Home },
+  { to: '/publish', label: '发布', icon: Plus },
+  { to: '/orders', label: '订单', icon: ClipboardList },
+  { to: '/profile', label: '我的', icon: User },
 ];
 
 const riderNavItems: NavItem[] = [
-  { to: '/rider/workbench', label: '工作台', icon: Briefcase },
-  { to: '/rider/current', label: '当前单', icon: ClipboardList },
+  { to: '/rider', label: '工作台', icon: Briefcase },
+  { to: '/rider/order/demo', label: '当前单', icon: ClipboardList },
   { to: '/rider/wallet', label: '钱包', icon: Wallet },
   { to: '/rider/profile', label: '我的', icon: User },
 ];

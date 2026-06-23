@@ -53,8 +53,8 @@ const serviceCards: {
 ];
 
 const quickEntries = [
-  { icon: <Home size={22} />, label: '常用地址', path: '/user/profile' },
-  { icon: <History size={22} />, label: '历史订单', path: '/user/orders' },
+  { icon: <Home size={22} />, label: '常用地址', path: '/profile' },
+  { icon: <History size={22} />, label: '历史订单', path: '/orders' },
 ];
 
 export default function HomePage() {
@@ -96,7 +96,7 @@ export default function HomePage() {
   };
 
   const handleServiceClick = (type: OrderType) => {
-    navigate(`/user/publish?type=${type}`);
+    navigate(`/publish?type=${type}`);
   };
 
   return (
@@ -260,7 +260,7 @@ export default function HomePage() {
                 >
                   <OrderCard
                     order={order}
-                    onClick={() => navigate(`/user/order/${order.id}`)}
+                    onClick={() => navigate(`/order/${order.id}`)}
                   />
                 </motion.div>
               ))}

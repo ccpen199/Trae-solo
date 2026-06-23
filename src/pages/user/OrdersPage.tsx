@@ -185,7 +185,7 @@ export default function OrdersPage() {
                   return true;
                 })}
                 getRiderForOrder={getRiderForOrder}
-                onOrderClick={(id) => navigate(`/user/order/${id}`)}
+                onOrderClick={(id) => navigate(`/order/${id}`)}
                 tabKey={key}
                 activeTab={activeTab}
               />
@@ -226,7 +226,7 @@ function OrderListContent({ orders, getRiderForOrder, onOrderClick }: OrderListC
             试试发布一个跑腿需求，体验极速同城服务
           </div>
           <NavLink
-            to="/user/publish"
+            to="/publish"
             className="inline-flex items-center gap-2 px-5 h-11 rounded-xl bg-accent hover:bg-accent/90 text-white font-medium shadow-lg shadow-accent/25 transition-all"
           >
             <Plus size={18} />

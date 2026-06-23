@@ -264,42 +264,93 @@ export function generateMockEvidences(orders?: Order[]): OrderEvidence[] {
   return evidences;
 }
 
-export function generateMockFinanceLedgers(orders?: Order[]): FinanceLedger[] {
+export function generateMockFinanceLedgers(orders?: Order[], users?: User[], riders?: RiderProfile[]): FinanceLedger[] {
   const ledgers: FinanceLedger[] = [];
-  const types: Array<'pay' | 'refund' | 'payout' | 'commission' | 'fee'> = [
-    'pay', 'pay', 'pay', 'payout', 'commission', 'fee', 'refund',
+  const types: Array<'pay' | 'refund' | 'payout' | 'commission' | 'fee' | 'recharge' | 'compensation'> = [
+    'pay', 'pay', 'pay', 'payout', 'commission', 'fee', 'refund', 'recharge', 'compensation',
   ];
   const channels: Array<'wechat' | 'alipay' | 'unionpay' | 'balance'> = [
     'wechat', 'alipay', 'wechat', 'balance', 'alipay', 'unionpay',
   ];
-  const statuses: Array<'pending' | 'success' | 'failed'> = [
-    'success', 'success', 'success', 'success', 'pending', 'failed',
+  const statuses: Array<'pending' | 'success' | 'failed' | 'retrying' | 'reviewing' | 'compensated' | 'reversed'> = [
+    'success', 'success', 'success', 'success', 'pending', 'failed', 'retrying', 'reviewing', 'compensated', 'reversed',
   ];
-  const count = orders && orders.length > 0 ? orders.length * 2 : 20;
+  const accountTypes: Array<'user_wallet' | 'rider_wallet' | 'platform' | 'channel'> = [
+    'user_wallet', 'rider_wallet', 'platform', 'channel',
+  ];
+  const failureReasons = [
+    '通道超时', '余额不足', '账户冻结', '风控拦截', '签名错误', '系统异常',
+  ];
+  const count = orders && orders.length > 0 ? orders.length * 4 : 40;
+
+  let runningUserBalance: Record<string, number> = {};
+  let runningRiderBalance: Record<string, number> = {};
 
   for (let i = 0; i < count; i++) {
     const type = types[i % types.length];
-    const isDebit = type === 'pay' || type === 'fee' || type === 'commission';
+    const isDebit = type === 'pay' || type === 'fee' || type === 'commission' || type === 'recharge';
     const amount = Math.round(
-      (type === 'refund' || type === 'payout' ? rng.range(10, 100) : rng.range(5, 80)) * 100
+      (type === 'refund' || type === 'payout' || type === 'compensation' ? rng.range(10, 200) : rng.range(5, 150)) * 100
     ) / 100;
-    const createdAt = randomDate(7, 0);
+    const createdAt = randomDate(3, 0);
     const status = statuses[i % statuses.length];
-    const orderId = orders && orders.length > 0
-      ? orders[i % orders.length].id
-      : undefined;
+    const order = orders && orders.length > 0 ? orders[i % orders.length] : undefined;
+    const orderId = order?.id;
+    const user = users && users.length > 0 ? users[i % users.length] : undefined;
+    const rider = riders && riders.length > 0 ? riders[i % riders.length] : undefined;
+
+    let accountType: FinanceLedger['accountType'];
+    let userId: string | undefined;
+    let riderId: string | undefined;
+
+    if (type === 'pay' || type === 'refund' || type === 'recharge' || type === 'compensation') {
+      accountType = 'user_wallet';
+      userId = user?.id;
+    } else if (type === 'payout') {
+      accountType = 'rider_wallet';
+      riderId = rider?.userId;
+    } else if (type === 'commission' || type === 'fee') {
+      accountType = i % 2 === 0 ? 'platform' : 'channel';
+      userId = user?.id;
+      riderId = rider?.userId;
+    } else {
+      accountType = accountTypes[i % accountTypes.length];
+    }
+
+    let balanceAfter: number | undefined;
+    if (accountType === 'user_wallet' && userId) {
+      const prev = runningUserBalance[userId] ?? 1000;
+      runningUserBalance[userId] = isDebit ? prev + amount : prev - amount;
+      balanceAfter = runningUserBalance[userId];
+    } else if (accountType === 'rider_wallet' && riderId) {
+      const prev = runningRiderBalance[riderId] ?? 500;
+      runningRiderBalance[riderId] = isDebit ? prev + amount : prev - amount;
+      balanceAfter = runningRiderBalance[riderId];
+    }
+
+    const relatedLedgerId = i > 3 && i % 4 === 0 ? ledgers[i - 4]?.id : undefined;
 
     ledgers.push({
       id: generateId('fnc'),
       orderId,
-      accountType: isDebit ? 'user' : 'platform',
+      relatedLedgerId,
+      userId,
+      riderId,
+      accountType,
       direction: isDebit ? 'debit' : 'credit',
       amount,
+      balanceAfter,
       type,
       channel: channels[i % channels.length],
+      channelTxnId: status === 'success' || status === 'processing' ? `ch_${Date.now().toString(36)}${rng.int(1000, 9999)}` : undefined,
       status,
+      failureReason: status === 'failed' || status === 'reversed' ? failureReasons[i % failureReasons.length] : undefined,
+      reviewNote: status === 'compensated' ? '已补偿' : status === 'reviewing' ? '复核中' : status === 'reversed' ? '已冲正' : undefined,
+      retryCount: status === 'retrying' ? rng.int(1, 3) : status === 'failed' ? rng.int(0, 2) : 0,
       createdAt,
-      settledAt: status === 'success' ? new Date(createdAt.getTime() + rng.int(1, 3600) * 1000) : undefined,
+      settledAt: status === 'success' || status === 'compensated' ? new Date(createdAt.getTime() + rng.int(1, 3600) * 1000) : undefined,
+      reviewedBy: (status === 'compensated' || status === 'reversed' || status === 'reviewing') ? '财务管理员' : undefined,
+      reviewedAt: (status === 'compensated' || status === 'reversed') ? new Date(createdAt.getTime() + rng.int(3600, 7200) * 1000) : undefined,
     });
   }
   return ledgers;

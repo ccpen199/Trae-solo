@@ -14,6 +14,7 @@ import {
   TrendingUp,
   User as UserIcon,
   Wallet,
+  Clock,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '@/stores/appStore';
@@ -31,6 +32,14 @@ interface BalanceRow {
   todayRecharge: number;
   todaySpend: number;
   trendData: number[];
+  ledgers: Array<{
+    id: string;
+    type: 'recharge' | 'consume' | 'refund' | 'freeze';
+    amount: number;
+    status: 'success' | 'pending' | 'failed';
+    time: Date;
+    desc: string;
+  }>;
 }
 
 type ActionType = 'recharge' | 'refund' | 'freeze';
@@ -47,6 +56,9 @@ export default function UserBalancesPage() {
   } | null>(null);
   const [actionAmount, setActionAmount] = useState('');
   const [actionReason, setActionReason] = useState('');
+  const [actionRemark, setActionRemark] = useState('');
+  const [actionOperator, setActionOperator] = useState('财务管理员');
+  const [showAllLedgers, setShowAllLedgers] = useState<string | null>(null);
 
   const balanceRows = useMemo<BalanceRow[]>(() => {
     return mockUsers.map((user) => {
@@ -59,15 +71,36 @@ export default function UserBalancesPage() {
       };
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
-      const userLedgers = mockLedgers.filter((l) => l.orderId === user.id || l.accountType === 'user');
+      const userLedgers = mockLedgers.filter((l) => l.userId === user.id || l.orderId === user.id);
       const todayRecharge = userLedgers
-        .filter((l) => l.createdAt >= todayStart && l.type === 'pay' && l.direction === 'debit')
+        .filter((l) => l.createdAt >= todayStart && l.type === 'recharge' && l.direction === 'debit')
         .reduce((s, l) => s + l.amount, 0) + Math.floor(Math.random() * 500) + 50;
       const todaySpend = userLedgers
         .filter((l) => l.createdAt >= todayStart && l.direction === 'credit')
         .reduce((s, l) => s + l.amount, 0) + Math.floor(Math.random() * 300) + 20;
       const trendData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 500) + 100);
-      return { user, wallet, todayRecharge, todaySpend, trendData };
+
+      const ledgerTypes: Array<'recharge' | 'consume' | 'refund' | 'freeze'> = ['recharge', 'consume', 'consume', 'refund', 'consume', 'recharge', 'freeze', 'consume', 'consume', 'recharge'];
+      const statuses: Array<'success' | 'pending' | 'failed'> = ['success', 'success', 'success', 'success', 'pending', 'failed', 'success', 'success', 'success', 'success'];
+      const ledgers = Array.from({ length: 10 }, (_, i) => {
+        const type = ledgerTypes[i % ledgerTypes.length];
+        const amt = type === 'recharge' ? Math.floor(Math.random() * 500) + 50 :
+                    type === 'refund' ? Math.floor(Math.random() * 100) + 20 :
+                    type === 'freeze' ? Math.floor(Math.random() * 200) + 50 :
+                    Math.floor(Math.random() * 150) + 20;
+        return {
+          id: generateId('led'),
+          type,
+          amount: amt,
+          status: statuses[i % statuses.length],
+          time: new Date(Date.now() - i * 3600000 * (Math.random() * 3 + 1)),
+          desc: type === 'recharge' ? '余额充值' :
+                type === 'consume' ? '订单支付' :
+                type === 'refund' ? '订单退款' : '余额冻结',
+        };
+      }).sort((a, b) => b.time.getTime() - a.time.getTime());
+
+      return { user, wallet, todayRecharge, todaySpend, trendData, ledgers };
     });
   }, [mockUsers, mockWallets, mockLedgers]);
 
@@ -442,26 +475,61 @@ export default function UserBalancesPage() {
                                   </div>
                                   <ReactECharts option={getTrendOption(row.trendData)} style={{ height: 180 }} />
                                 </div>
-                                <div className="w-64 shrink-0 p-4 rounded-xl bg-white border border-gray-100">
-                                  <div className="text-xs font-semibold text-gray-900 mb-3">最近5笔交易</div>
-                                  <div className="space-y-2">
-                                    {['支付订单', '余额充值', '订单退款', '支付订单', '活动奖励'].map((text, i) => {
-                                      const isIn = i === 1 || i === 2 || i === 4;
-                                      const amt = Math.floor(Math.random() * 200) + 10;
-                                      return (
-                                        <div key={i} className="flex items-center justify-between py-1.5 border-b border-gray-50 last:border-0">
-                                          <div>
-                                            <div className="text-xs text-gray-700">{text}</div>
-                                            <div className="text-[10px] text-gray-400 font-mono">
-                                              {new Date(Date.now() - i * 3600000 * 3).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                                <div className="w-72 shrink-0 p-4 rounded-xl bg-white border border-gray-100">
+                                  <div className="flex items-center justify-between mb-3">
+                                    <div className="text-xs font-semibold text-gray-900 flex items-center gap-1.5">
+                                      <Clock className="w-3.5 h-3.5 text-primary" />
+                                      资金流水时间线
+                                    </div>
+                                    <button
+                                      onClick={() => setShowAllLedgers(showAllLedgers === row.user.id ? null : row.user.id)}
+                                      className="text-[11px] text-primary hover:text-primary/80 font-medium"
+                                    >
+                                      {showAllLedgers === row.user.id ? '收起' : '查看全部'}
+                                    </button>
+                                  </div>
+                                  <div className="relative">
+                                    <div className="absolute left-[7px] top-1 bottom-1 w-0.5 bg-gray-100"></div>
+                                    <div className="space-y-3 max-h-[240px] overflow-y-auto pr-1">
+                                      {(showAllLedgers === row.user.id ? row.ledgers : row.ledgers.slice(0, 5)).map((ledger, i) => {
+                                        const isIncome = ledger.type === 'recharge' || ledger.type === 'refund';
+                                        const typeConfig = {
+                                          recharge: { icon: Plus, color: 'text-success', bg: 'bg-green-500' },
+                                          consume: { icon: TrendingUp, color: 'text-danger', bg: 'bg-red-500' },
+                                          refund: { icon: Undo2, color: 'text-success', bg: 'bg-emerald-500' },
+                                          freeze: { icon: Ban, color: 'text-warning', bg: 'bg-amber-500' },
+                                        };
+                                        const config = typeConfig[ledger.type];
+                                        return (
+                                          <div key={ledger.id} className="relative pl-5">
+                                            <div className={cn(
+                                              'absolute left-0 top-0.5 w-3.5 h-3.5 rounded-full border-2 border-white',
+                                              config.bg
+                                            )}></div>
+                                            <div className="flex items-start justify-between gap-2">
+                                              <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-1.5 mb-0.5">
+                                                  <span className="text-xs font-medium text-gray-900">{ledger.desc}</span>
+                                                  <Badge variant={
+                                                    ledger.status === 'success' ? 'success' :
+                                                    ledger.status === 'failed' ? 'danger' : 'warning'
+                                                  } className="!text-[9px] !py-0 !px-1.5">
+                                                    {ledger.status === 'success' ? '成功' :
+                                                     ledger.status === 'failed' ? '失败' : '处理中'}
+                                                  </Badge>
+                                                </div>
+                                                <div className="text-[10px] text-gray-400 font-mono">
+                                                  {ledger.time.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                                                </div>
+                                              </div>
+                                              <span className={cn('text-xs font-bold shrink-0', isIncome ? 'text-success' : 'text-danger')}>
+                                                {isIncome ? '+' : '-'}¥{ledger.amount.toFixed(2)}
+                                              </span>
                                             </div>
                                           </div>
-                                          <span className={cn('text-xs font-bold', isIn ? 'text-success' : 'text-danger')}>
-                                            {isIn ? '+' : '-'}¥{amt}
-                                          </span>
-                                        </div>
-                                      );
-                                    })}
+                                        );
+                                      })}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -509,7 +577,7 @@ export default function UserBalancesPage() {
 
       <Modal
         isOpen={!!actionModal}
-        onClose={() => { setActionModal(null); setActionAmount(''); setActionReason(''); }}
+        onClose={() => { setActionModal(null); setActionAmount(''); setActionReason(''); setActionRemark(''); setActionOperator('财务管理员'); }}
         title={actionModal ? actionConfig[actionModal.type].title : ''}
         size="sm"
       >
@@ -579,11 +647,36 @@ export default function UserBalancesPage() {
               />
             </div>
 
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1.5">操作备注</label>
+              <textarea
+                value={actionRemark}
+                onChange={(e) => setActionRemark(e.target.value)}
+                rows={2}
+                placeholder="请输入操作备注(选填)"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 resize-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1.5">操作人</label>
+              <div className="relative">
+                <UserIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={actionOperator}
+                  onChange={(e) => setActionOperator(e.target.value)}
+                  placeholder="请输入操作人姓名"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10"
+                />
+              </div>
+            </div>
+
             <div className="flex gap-3 pt-1">
               <Button
                 variant="outline"
                 className="flex-1 !text-gray-700 !border-gray-300 hover:!bg-gray-100"
-                onClick={() => { setActionModal(null); setActionAmount(''); setActionReason(''); }}
+                onClick={() => { setActionModal(null); setActionAmount(''); setActionReason(''); setActionRemark(''); setActionOperator('财务管理员'); }}
               >
                 取消
               </Button>
