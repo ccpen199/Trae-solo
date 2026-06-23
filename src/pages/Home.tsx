@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
 import { GAMES, SERVICE_TYPES, TIER_LABEL_MAP } from '@/data/games';
@@ -31,8 +31,16 @@ export default function Home() {
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const providers = useAppStore(s => s.getBoosterProviders()).slice(0, 4);
+  const providers = useAppStore(s => s.providers);
+  const users = useAppStore(s => s.users);
   const recentTrades = useAppStore(s => s.recentTrades);
+  const featuredProviders = useMemo(
+    () => providers.flatMap(provider => {
+      const user = users.find(candidate => candidate.id === provider.userId && candidate.role === 'booster');
+      return user ? [{ ...provider, user }] : [];
+    }).slice(0, 4),
+    [providers, users],
+  );
 
   return (
     <div className="relative">
@@ -255,7 +263,7 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {providers.map((p, i) => (
+            {featuredProviders.map((p, i) => (
               <div key={p.userId} style={{ animationDelay: `${i * 80}ms` }}>
                 <ProviderCard provider={p} featured={i === 0} />
               </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '@/stores/appStore';
 import { formatCurrency } from '@/utils';
@@ -12,11 +12,20 @@ import { TierBadge3D } from '@/components/Badge3D';
 import { TIER_LABEL_MAP } from '@/data/games';
 
 export default function GameAccountsPage() {
-  const currentUser = useAppStore(s => s.getCurrentUser());
-  const accounts = useAppStore(s => s.gameAccounts.filter(a => a.userId === currentUser?.id));
+  const currentUserId = useAppStore(s => s.currentUserId);
+  const users = useAppStore(s => s.users);
+  const gameAccounts = useAppStore(s => s.gameAccounts);
   const [showAdd, setShowAdd] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState<string | null>(null);
   const [newAccount, setNewAccount] = useState({ game: 'LOL' as GameCode, uid: '' });
+  const currentUser = useMemo(
+    () => users.find(user => user.id === currentUserId),
+    [currentUserId, users],
+  );
+  const accounts = useMemo(
+    () => gameAccounts.filter(account => account.userId === currentUser?.id),
+    [currentUser?.id, gameAccounts],
+  );
 
   const triggerVerify = (id: string) => {
     setVerifyLoading(id);

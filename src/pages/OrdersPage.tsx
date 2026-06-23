@@ -21,11 +21,20 @@ const tabs: { key: 'all' | OrderStatus; label: string; icon: any; }[] = [
 ];
 
 export default function OrdersPage() {
-  const currentUser = useAppStore(s => s.getCurrentUser());
-  const allOrders = useAppStore(s => s.getOrdersByUser(currentUser?.id || ''));
+  const currentUserId = useAppStore(s => s.currentUserId);
+  const users = useAppStore(s => s.users);
+  const orders = useAppStore(s => s.orders);
   const [tab, setTab] = useState<typeof tabs[number]['key']>('all');
   const [role, setRole] = useState<'all' | 'player' | 'provider'>('all');
   const [keyword, setKeyword] = useState('');
+  const currentUser = useMemo(
+    () => users.find(user => user.id === currentUserId),
+    [currentUserId, users],
+  );
+  const allOrders = useMemo(
+    () => orders.filter(order => order.playerId === currentUserId || order.providerId === currentUserId),
+    [currentUserId, orders],
+  );
 
   const filtered = useMemo(() => {
     return allOrders.filter(o => {

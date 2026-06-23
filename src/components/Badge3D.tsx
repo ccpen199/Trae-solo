@@ -1,7 +1,7 @@
+import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, Float, RoundedBox, Text, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls, Environment, Float, Text, MeshDistortMaterial } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
-import { Suspense, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import type { CertLevel, TierRank } from '@/types';
 import { getTierColor } from '@/data/games';
@@ -12,6 +12,117 @@ const CERT_COLORS: Record<CertLevel, string> = {
   Silver: '#94A3B8',
   None: '#64748B',
 };
+
+const CERT_ICON_MAP: Record<CertLevel, string> = {
+  Diamond: '💎',
+  Gold: '🏆',
+  Silver: '🥈',
+  None: '✦',
+};
+
+const CERT_LABEL_MAP: Record<CertLevel, string> = {
+  Diamond: 'DIAMOND',
+  Gold: 'GOLD',
+  Silver: 'SILVER',
+  None: 'NONE',
+};
+
+function supportsWebGL() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return false;
+  }
+
+  try {
+    const canvas = document.createElement('canvas');
+    return Boolean(
+      window.WebGLRenderingContext &&
+      (canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl' as 'webgl')),
+    );
+  } catch {
+    return false;
+  }
+}
+
+function useWebGLSupport() {
+  const [isSupported, setIsSupported] = useState(() => supportsWebGL());
+
+  useEffect(() => {
+    setIsSupported(supportsWebGL());
+  }, []);
+
+  return isSupported;
+}
+
+class CanvasErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
+
+function BadgeFallback({
+  color,
+  label,
+  icon,
+  size,
+}: {
+  color: string;
+  label: string;
+  icon?: string;
+  size: number;
+}) {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        borderColor: `${color}66`,
+        boxShadow: `0 0 ${Math.max(18, size / 4)}px ${color}33`,
+      }}
+      className="select-none rounded-[28%] border bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.22),transparent_42%),linear-gradient(160deg,rgba(15,23,42,0.98),rgba(30,41,59,0.92))] flex flex-col items-center justify-center text-center backdrop-blur-sm"
+    >
+      {icon && <div className="text-[clamp(18px,2vw,30px)] leading-none mb-1">{icon}</div>}
+      <div className="px-2 text-[10px] font-black tracking-[0.24em] text-white/95">{label}</div>
+    </div>
+  );
+}
+
+function SafeCanvas({
+  size,
+  fallback,
+  children,
+}: {
+  size: number;
+  fallback: ReactNode;
+  children: ReactNode;
+}) {
+  const canUseWebGL = useWebGLSupport();
+
+  if (!canUseWebGL) {
+    return <>{fallback}</>;
+  }
+
+  return (
+    <CanvasErrorBoundary fallback={fallback}>
+      <div style={{ width: size, height: size }} className="select-none">
+        <Canvas camera={{ position: [0, 0, 3.2], fov: 40 }} gl={{ antialias: true, alpha: true }} dpr={[1, 2]}>
+          <Suspense fallback={null}>
+            {children}
+          </Suspense>
+        </Canvas>
+      </div>
+    </CanvasErrorBoundary>
+  );
+}
 
 function BadgeMesh({ color, label, icon }: { color: string; label: string; icon?: string }) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -58,7 +169,6 @@ function BadgeMesh({ color, label, icon }: { color: string; label: string; icon?
       <Text
         position={[0, 0.15, 0.17]}
         fontSize={0.22}
-        font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dys.woff2"
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
@@ -106,27 +216,23 @@ function Scene({ color, label, icon }: { color: string; label: string; icon?: st
 export function TierBadge3D({ tier, size = 120 }: { tier: TierRank; size?: number }) {
   const color = getTierColor(tier);
   return (
-    <div style={{ width: size, height: size }} className="select-none">
-      <Canvas camera={{ position: [0, 0, 3.2], fov: 40 }} gl={{ antialias: true, alpha: true }} dpr={[1, 2]}>
-        <Suspense fallback={null}>
-          <Scene color={color} label={tier.slice(0, 4)} />
-        </Suspense>
-      </Canvas>
-    </div>
+    <SafeCanvas
+      size={size}
+      fallback={<BadgeFallback color={color} label={tier.slice(0, 4).toUpperCase()} size={size} />}
+    >
+      <Scene color={color} label={tier.slice(0, 4)} />
+    </SafeCanvas>
   );
 }
 
 export function CertBadge3D({ level, size = 100 }: { level: CertLevel; size?: number }) {
   const color = CERT_COLORS[level];
-  const iconMap: Record<CertLevel, string> = { Diamond: '💎', Gold: '🏆', Silver: '🥈', None: '✦' };
-  const labelMap: Record<CertLevel, string> = { Diamond: 'DIAMOND', Gold: 'GOLD', Silver: 'SILVER', None: 'NONE' };
   return (
-    <div style={{ width: size, height: size }} className="select-none">
-      <Canvas camera={{ position: [0, 0, 3.2], fov: 40 }} gl={{ antialias: true, alpha: true }} dpr={[1, 2]}>
-        <Suspense fallback={null}>
-          <Scene color={color} label={labelMap[level]} icon={iconMap[level]} />
-        </Suspense>
-      </Canvas>
-    </div>
+    <SafeCanvas
+      size={size}
+      fallback={<BadgeFallback color={color} label={CERT_LABEL_MAP[level]} icon={CERT_ICON_MAP[level]} size={size} />}
+    >
+      <Scene color={color} label={CERT_LABEL_MAP[level]} icon={CERT_ICON_MAP[level]} />
+    </SafeCanvas>
   );
 }

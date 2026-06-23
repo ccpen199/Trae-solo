@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Crown, Star, Clock, Award, ChevronRight, TrendingUp } from 'lucide-react';
 import { CertBadge3D } from '@/components/Badge3D';
 import { getCertLabel, formatCurrency } from '@/utils';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { ProviderProfile, User } from '@/types';
 
 interface Props {
@@ -14,8 +14,14 @@ interface Props {
 
 export default function ProviderCard({ provider, featured = false }: Props) {
   const [hover, setHover] = useState(false);
-  const reviews = useAppStore(s => s.getReviewsByUser(provider.userId));
-  const avgRating = reviews.length ? (reviews.reduce((a, r) => a + r.rating, 0) / reviews.length) : provider.reputationScore;
+  const reviews = useAppStore(s => s.reviews);
+  const providerReviews = useMemo(
+    () => reviews.filter(review => review.toUserId === provider.userId),
+    [provider.userId, reviews],
+  );
+  const avgRating = providerReviews.length
+    ? (providerReviews.reduce((total, review) => total + review.rating, 0) / providerReviews.length)
+    : provider.reputationScore;
 
   const certClass = {
     Diamond: 'cert-diamond', Gold: 'cert-gold', Silver: 'cert-silver', None: 'badge-base bg-night-600 text-night-300'

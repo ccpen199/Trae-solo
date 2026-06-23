@@ -113,6 +113,9 @@ export function shortenHash(hash: string, start = 8, end = 6): string {
 
 export function timeAgo(date: string | Date): string {
   const d = typeof date === 'string' ? new Date(date) : date;
+  if (Number.isNaN(d.getTime())) {
+    return typeof date === 'string' ? date : '刚刚';
+  }
   const now = new Date();
   const diff = (now.getTime() - d.getTime()) / 1000;
   if (diff < 60) return '刚刚';

@@ -55,9 +55,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Orbitron", "sans-serif"],
-        sans: ["Noto Sans SC", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        display: ["Avenir Next Condensed", "Arial Narrow Bold", "Impact", "sans-serif"],
+        sans: ["PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "system-ui", "sans-serif"],
+        mono: ["SFMono-Regular", "Menlo", "Monaco", "Consolas", "ui-monospace", "monospace"],
       },
       backgroundImage: {
         "gradient-esports": "linear-gradient(135deg, #6B21A8 0%, #A855F7 50%, #C4B5FD 100%)",

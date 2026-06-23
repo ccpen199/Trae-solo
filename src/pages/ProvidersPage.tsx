@@ -7,7 +7,9 @@ import ProviderCard from '@/components/ProviderCard';
 import { Search, Filter, Crown, Star, Zap, Grid3X3, List, Users } from 'lucide-react';
 
 export default function ProvidersPage() {
-  const allProviders = useAppStore(s => s.getBoosterProviders());
+  const providers = useAppStore(s => s.providers);
+  const users = useAppStore(s => s.users);
+  const gameAccounts = useAppStore(s => s.gameAccounts);
   const [keyword, setKeyword] = useState('');
   const [gameFilter, setGameFilter] = useState<GameCode | 'ALL'>('ALL');
   const [certFilter, setCertFilter] = useState<CertLevel | 'ALL'>('ALL');
@@ -15,9 +17,18 @@ export default function ProvidersPage() {
   const [sortBy, setSortBy] = useState<'reputation' | 'orders' | 'completion'>('reputation');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+  const allProviders = useMemo(
+    () => providers.flatMap(provider => {
+      const user = users.find(candidate => candidate.id === provider.userId && candidate.role === 'booster');
+      return user ? [{ ...provider, user }] : [];
+    }),
+    [providers, users],
+  );
+
   const filtered = useMemo(() => {
     let list = [...allProviders];
     if (keyword) list = list.filter(p => p.user.nickname.toLowerCase().includes(keyword.toLowerCase()));
+    if (gameFilter !== 'ALL') list = list.filter(p => gameAccounts.some(account => account.userId === p.userId && account.gameCode === gameFilter));
     if (certFilter !== 'ALL') list = list.filter(p => p.certLevel === certFilter);
     if (minScore) list = list.filter(p => p.reputationScore >= minScore);
     list.sort((a, b) => {
@@ -26,7 +37,7 @@ export default function ProvidersPage() {
       return b.completionRate - a.completionRate;
     });
     return list;
-  }, [allProviders, keyword, certFilter, minScore, sortBy, gameFilter]);
+  }, [allProviders, gameAccounts, keyword, gameFilter, certFilter, minScore, sortBy]);
 
   return (
     <div className="pt-28 pb-24">

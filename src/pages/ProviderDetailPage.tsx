@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
@@ -17,12 +17,32 @@ import { REVIEW_TAGS } from '@/data/games';
 
 export default function ProviderDetailPage() {
   const { id } = useParams();
-  const profile = useAppStore(s => s.getProviderById(id || ''));
-  const user = useAppStore(s => s.getUserById(id || ''));
-  const gameAccounts = useAppStore(s => s.gameAccounts.filter(a => a.userId === id));
-  const reviews = useAppStore(s => s.getReviewsByUser(id || ''));
-  const allOrders = useAppStore(s => s.orders.filter(o => o.providerId === id || o.playerId === id));
+  const providers = useAppStore(s => s.providers);
+  const users = useAppStore(s => s.users);
+  const allGameAccounts = useAppStore(s => s.gameAccounts);
+  const allReviews = useAppStore(s => s.reviews);
+  const orders = useAppStore(s => s.orders);
   const [tab, setTab] = useState<'overview' | 'services' | 'reviews' | 'orders'>('overview');
+  const profile = useMemo(
+    () => providers.find(provider => provider.userId === (id || '')),
+    [id, providers],
+  );
+  const user = useMemo(
+    () => users.find(candidate => candidate.id === (id || '')),
+    [id, users],
+  );
+  const gameAccounts = useMemo(
+    () => allGameAccounts.filter(account => account.userId === id),
+    [allGameAccounts, id],
+  );
+  const reviews = useMemo(
+    () => allReviews.filter(review => review.toUserId === (id || '')),
+    [allReviews, id],
+  );
+  const allOrders = useMemo(
+    () => orders.filter(order => order.providerId === id || order.playerId === id),
+    [id, orders],
+  );
 
   if (!profile || !user) {
     return (
@@ -56,10 +76,13 @@ export default function ProviderDetailPage() {
     { m: '6月', score: profile.reputationScore, orders: Math.round(profile.totalOrders / 6) },
   ];
 
-  const tagCounts = REVIEW_TAGS.map(t => ({
-    tag: t,
-    count: reviews.filter(r => r.tags.includes(t)).length + Math.floor(Math.random() * 30) + 10,
-  })).sort((a, b) => b.count - a.count);
+  const tagCounts = useMemo(
+    () => REVIEW_TAGS.map(tag => ({
+      tag,
+      count: reviews.filter(review => review.tags.includes(tag)).length + Math.floor(Math.random() * 30) + 10,
+    })).sort((a, b) => b.count - a.count),
+    [reviews],
+  );
 
   const maxTagCount = Math.max(...tagCounts.map(t => t.count));
 
