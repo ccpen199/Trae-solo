@@ -22,19 +22,18 @@
           <template #default="{ row }">
             <div class="params-box">
               <template v-if="activeTab === 'social'">
-                <span class="param-tag">缴费基数: {{ row.input_params?.base || '-' }}</span>
+                <span class="param-tag">缴费基数: ¥{{ row.input_params?.base_salary || '-' }}</span>
                 <span class="param-tag">补缴月数: {{ row.input_params?.months || '-' }}</span>
-                <span class="param-tag">类型: {{ row.input_params?.type || '-' }}</span>
               </template>
               <template v-else>
-                <span class="param-tag">贷款金额: {{ row.input_params?.amount || '-' }}</span>
-                <span class="param-tag">期限: {{ row.input_params?.term || '-' }}</span>
-                <span class="param-tag">利率: {{ row.input_params?.rate || '-' }}</span>
+                <span class="param-tag">项目类型: {{ projectTypeLabel(row.input_params?.project_type) }}</span>
+                <span class="param-tag">年营收: {{ row.input_params?.annual_revenue || '-' }}万</span>
+                <span class="param-tag">员工数: {{ row.input_params?.employee_count || '-' }}</span>
               </template>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="输出结果" min-width="240">
+        <el-table-column label="输出结果" min-width="300">
           <template #default="{ row }">
             <template v-if="activeTab === 'social'">
               <div class="result-box">
@@ -44,27 +43,27 @@
                 </div>
                 <div class="result-item">
                   <span class="result-label">个人部分:</span>
-                  <span class="result-value">¥ {{ Number(row.output_result?.personal || 0).toLocaleString() }}</span>
+                  <span class="result-value">¥ {{ Number(row.output_result?.total_personal || 0).toLocaleString() }}</span>
                 </div>
                 <div class="result-item">
                   <span class="result-label">单位部分:</span>
-                  <span class="result-value">¥ {{ Number(row.output_result?.enterprise || 0).toLocaleString() }}</span>
+                  <span class="result-value">¥ {{ Number(row.output_result?.total_company || 0).toLocaleString() }}</span>
                 </div>
               </div>
             </template>
             <template v-else>
               <div class="result-box">
                 <div class="result-item">
-                  <span class="result-label">月供:</span>
-                  <span class="result-value">¥ {{ Number(row.output_result?.monthly || 0).toLocaleString() }}</span>
+                  <span class="result-label">核定额度:</span>
+                  <span class="result-value">{{ row.output_result?.estimated_limit || '-' }}万</span>
                 </div>
                 <div class="result-item">
-                  <span class="result-label">总利息:</span>
-                  <span class="result-value">¥ {{ Number(row.output_result?.interest || 0).toLocaleString() }}</span>
+                  <span class="result-label">年利率:</span>
+                  <span class="result-value">{{ row.output_result?.annual_interest_rate || '-' }}%</span>
                 </div>
                 <div class="result-item">
-                  <span class="result-label">还款总额:</span>
-                  <span class="result-value">¥ {{ Number(row.output_result?.total || 0).toLocaleString() }}</span>
+                  <span class="result-label">年利息:</span>
+                  <span class="result-value">¥ {{ Number(row.output_result?.interest_year || 0).toLocaleString() }}</span>
                 </div>
               </div>
             </template>
@@ -72,7 +71,7 @@
         </el-table-column>
         <el-table-column prop="created_at" label="计算时间" width="180" />
       </el-table>
-      <el-empty v-if="!loading && records.length === 0" description="暂无计算记录" />
+      <el-empty v-if="!loading && records.length === 0" description="暂无计算记录，请先在个人端使用政策计算器" />
     </div>
   </div>
 </template>
@@ -88,11 +87,9 @@ const loading = ref(false)
 const activeTab = ref('social')
 const records = ref([])
 
-function parseParams(p) {
-  try { return typeof p === 'string' ? JSON.parse(p) : (p || {}) } catch { return {} }
-}
-function parseResult(r) {
-  try { return typeof r === 'string' ? JSON.parse(r) : (r || {}) } catch { return {} }
+function projectTypeLabel(t) {
+  const map = { individual: '个人', micro: '微型企业', small: '小型企业', medium: '中型企业' }
+  return map[t] || t || '-'
 }
 
 async function loadData() {
@@ -101,12 +98,7 @@ async function loadData() {
     const res = await api.get('/admin/policy-calculations', {
       params: { type: activeTab.value }
     })
-    const list = res.data.data || []
-    records.value = list.map(item => ({
-      ...item,
-      input_params: parseParams(item.input_params),
-      output_result: parseResult(item.output_result)
-    }))
+    records.value = res.data.data || []
   } catch (e) {
     ElMessage.error(e.response?.data?.message || '加载失败')
   } finally {

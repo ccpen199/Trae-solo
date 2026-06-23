@@ -30,8 +30,8 @@
       <div class="warn-card low">
         <div class="warn-icon"><el-icon :size="28"><InfoFilled /></el-icon></div>
         <div class="warn-info">
-          <div class="warn-num">{{ summary.low || 0 }}</div>
-          <div class="warn-label">一般预警</div>
+          <div class="warn-num">{{ summary.normal || 0 }}</div>
+          <div class="warn-label">一般</div>
         </div>
       </div>
       <div class="warn-card total">
@@ -57,19 +57,19 @@
     <div class="card">
       <div class="filter-row">
         <el-tabs v-model="filterPlatform" @tab-change="loadData" class="filter-tabs">
-          <el-tab-pane label="全部平台" name="all" />
-          <el-tab-pane label="微博" name="weibo" />
-          <el-tab-pane label="微信" name="wechat" />
-          <el-tab-pane label="抖音" name="douyin" />
-          <el-tab-pane label="知乎" name="zhihu" />
-          <el-tab-pane label="小红书" name="xiaohongshu" />
-          <el-tab-pane label="今日头条" name="toutiao" />
+          <el-tab-pane label="全部平台" name="" />
+          <el-tab-pane label="微博" name="微博" />
+          <el-tab-pane label="微信" name="微信公众号" />
+          <el-tab-pane label="抖音" name="抖音" />
+          <el-tab-pane label="知乎" name="知乎" />
+          <el-tab-pane label="小红书" name="小红书" />
+          <el-tab-pane label="今日头条" name="今日头条" />
         </el-tabs>
         <div class="filter-right">
           <el-select v-model="filterLevel" placeholder="预警等级" style="width: 140px;" clearable @change="loadData">
             <el-option label="高等级" value="high" />
             <el-option label="中等级" value="medium" />
-            <el-option label="一般" value="low" />
+            <el-option label="一般" value="normal" />
           </el-select>
           <el-select v-model="filterHandled" placeholder="处置状态" style="width: 140px;" clearable @change="loadData">
             <el-option label="已处置" value="1" />
@@ -86,15 +86,15 @@
         </el-table-column>
         <el-table-column prop="author" label="作者" width="120" />
         <el-table-column prop="title" label="标题" min-width="220" show-overflow-tooltip />
-        <el-table-column prop="summary" label="摘要" min-width="260" show-overflow-tooltip />
-        <el-table-column prop="sentiment" label="情感倾向" width="100">
+        <el-table-column prop="content" label="摘要" min-width="260" show-overflow-tooltip />
+        <el-table-column prop="sentiment_label" label="情感倾向" width="100">
           <template #default="{ row }">
-            <span :class="['tag-badge', sentimentClass(row.sentiment)]">{{ row.sentiment || '-' }}</span>
+            <span :class="['tag-badge', sentimentClass(row.sentiment)]">{{ row.sentiment_label || '-' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="warning_level" label="预警等级" width="100">
+        <el-table-column prop="warning_level_label" label="预警等级" width="100">
           <template #default="{ row }">
-            <span :class="['tag-badge', levelClass(row.warning_level)]">{{ levelText(row.warning_level) }}</span>
+            <span :class="['tag-badge', levelClass(row.warning_level)]">{{ row.warning_level_label || '-' }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="published_at" label="发布时间" width="170" />
@@ -106,13 +106,13 @@
         </el-table-column>
         <el-table-column label="操作" width="100" fixed="right">
           <template #default="{ row }">
-            <el-button size="small" type="primary" link @click="openHandle(row)">
-              <el-icon><EditPen /></el-icon> 处置
+            <el-button size="small" type="primary" link @click="openHandle(row)" :disabled="row.handled">
+              <el-icon><EditPen /></el-icon> {{ row.handled ? '已处置' : '处置' }}
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-empty v-if="!loading && opinions.length === 0" description="暂无舆情数据" />
+      <el-empty v-if="!loading && opinions.length === 0" description="暂无舆情数据，请先点击一键抓取" />
     </div>
 
     <el-dialog v-model="showHandle" title="舆情处置" width="560px">
@@ -120,13 +120,13 @@
         <el-descriptions :column="1" border style="margin-bottom: 16px;" size="small">
           <el-descriptions-item label="标题">{{ current.title || '-' }}</el-descriptions-item>
           <el-descriptions-item label="平台">{{ current.platform || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="内容">{{ current.content || '-' }}</el-descriptions-item>
           <el-descriptions-item label="预警等级">
-            <span :class="['tag-badge', levelClass(current.warning_level)]">{{ levelText(current.warning_level) }}</span>
+            <span :class="['tag-badge', levelClass(current.warning_level)]">{{ current.warning_level_label || '-' }}</span>
           </el-descriptions-item>
-          <el-descriptions-item label="处置备注">
-            <el-input v-model="handleForm.comment" type="textarea" :rows="4" placeholder="请填写处置备注、处理方式等信息" />
-          </el-descriptions-item>
+          <el-descriptions-item label="关键词">{{ current.keywords || '-' }}</el-descriptions-item>
         </el-descriptions>
+        <el-input v-model="handleForm.comment" type="textarea" :rows="4" placeholder="请填写处置备注、处理方式等信息" />
       </div>
       <template #footer>
         <el-button @click="showHandle = false">取消</el-button>
@@ -148,8 +148,8 @@ const loading = ref(false)
 const crawling = ref(false)
 const submitting = ref(false)
 const opinions = ref([])
-const summary = ref({ high: 0, medium: 0, low: 0, total: 0 })
-const filterPlatform = ref('all')
+const summary = ref({ high: 0, medium: 0, normal: 0, total: 0 })
+const filterPlatform = ref('')
 const filterLevel = ref('')
 const filterHandled = ref('')
 const showHandle = ref(false)
@@ -161,23 +161,18 @@ const levelChartRef = ref(null)
 let platformChart = null
 let levelChart = null
 
-function levelText(l) {
-  const map = { high: '高', medium: '中', low: '一般' }
-  return map[l] || (l || '-')
-}
 function levelClass(l) {
-  const map = { high: 'danger', medium: 'warning', low: 'info' }
+  const map = { high: 'danger', medium: 'warning', normal: 'info' }
   return map[l] || 'gray'
 }
 function sentimentClass(s) {
-  if (s === '正面') return 'success'
-  if (s === '负面') return 'danger'
-  if (s === '中性') return 'info'
-  return 'gray'
+  if (s === 'positive') return 'success'
+  if (s === 'negative') return 'danger'
+  return 'info'
 }
 function platformClass(p) {
   const map = {
-    '微博': 'weibo', '微信': 'wechat', '抖音': 'douyin',
+    '微博': 'weibo', '微信公众号': 'wechat', '抖音': 'douyin',
     '知乎': 'zhihu', '小红书': 'xiaohongshu', '今日头条': 'toutiao'
   }
   return map[p] || ''
@@ -187,9 +182,9 @@ async function loadData() {
   loading.value = true
   try {
     const params = {}
-    if (filterPlatform.value !== 'all') params.platform = filterPlatform.value
+    if (filterPlatform.value) params.platform = filterPlatform.value
     if (filterLevel.value) params.level = filterLevel.value
-    if (filterHandled.value !== '') params.handled = filterHandled.value
+    if (filterHandled.value !== '') params.is_handled = filterHandled.value
     const [listRes, summaryRes] = await Promise.all([
       api.get('/admin/public-opinions', { params }),
       api.get('/admin/public-opinions/summary')
@@ -199,11 +194,11 @@ async function loadData() {
     summary.value = {
       high: s.high || 0,
       medium: s.medium || 0,
-      low: s.low || 0,
-      total: s.total || opinions.value.length
+      normal: s.normal || 0,
+      total: s.total || 0
     }
     initPlatformChart(s.platformData)
-    initLevelChart({ high: summary.value.high, medium: summary.value.medium, low: summary.value.low })
+    initLevelChart(summary.value)
   } catch (e) {
     ElMessage.error(e.response?.data?.message || '加载失败')
   } finally {
@@ -214,8 +209,8 @@ async function loadData() {
 async function handleCrawl() {
   crawling.value = true
   try {
-    await api.post('/admin/public-opinions/crawl')
-    ElMessage.success('舆情抓取任务已启动')
+    const res = await api.post('/admin/public-opinions/crawl')
+    ElMessage.success(res.data.message || '舆情抓取任务已启动')
     loadData()
   } catch (e) {
     ElMessage.error(e.response?.data?.message || '抓取失败')
@@ -249,14 +244,10 @@ async function submitHandle() {
 
 function initPlatformChart(platformData) {
   if (!platformChartRef.value) return
+  if (platformChart) platformChart.dispose()
   platformChart = echarts.init(platformChartRef.value)
   const data = platformData && platformData.length ? platformData : [
-    { value: 120, name: '微博' },
-    { value: 80, name: '微信' },
-    { value: 60, name: '抖音' },
-    { value: 45, name: '知乎' },
-    { value: 35, name: '小红书' },
-    { value: 50, name: '今日头条' }
+    { value: 0, name: '暂无数据' }
   ]
   platformChart.setOption({
     tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
@@ -277,6 +268,7 @@ function initPlatformChart(platformData) {
 
 function initLevelChart(levelData) {
   if (!levelChartRef.value) return
+  if (levelChart) levelChart.dispose()
   levelChart = echarts.init(levelChartRef.value)
   levelChart.setOption({
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
@@ -288,7 +280,7 @@ function initLevelChart(levelData) {
       data: [
         { value: levelData.high || 0, itemStyle: { color: '#ef4444', borderRadius: [6, 6, 0, 0] } },
         { value: levelData.medium || 0, itemStyle: { color: '#f59e0b', borderRadius: [6, 6, 0, 0] } },
-        { value: levelData.low || 0, itemStyle: { color: '#3b82f6', borderRadius: [6, 6, 0, 0] } }
+        { value: levelData.normal || 0, itemStyle: { color: '#3b82f6', borderRadius: [6, 6, 0, 0] } }
       ],
       barWidth: '45%',
       label: { show: true, position: 'top', fontSize: 12, color: '#1f2937', fontWeight: 600 }

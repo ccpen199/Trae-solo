@@ -5,18 +5,54 @@ const { adminRequired } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/dashboard/stats', adminRequired, (req, res) => {
+  const total_users = db.prepare('SELECT COUNT(*) as cnt FROM users').get().cnt;
+  const total_enterprises = db.prepare('SELECT COUNT(*) as cnt FROM enterprises').get().cnt;
+  const total_contracts = db.prepare('SELECT COUNT(*) as cnt FROM labor_contracts').get().cnt;
+  const completed_contracts = db.prepare('SELECT COUNT(*) as cnt FROM labor_contracts WHERE status = ?').get('completed').cnt;
+  const unemployment_count = db.prepare('SELECT COUNT(*) as cnt FROM unemployment_registrations').get().cnt;
+  const title_applications = db.prepare('SELECT COUNT(*) as cnt FROM title_applications').get().cnt;
+  const pending_title = db.prepare('SELECT COUNT(*) as cnt FROM title_applications WHERE review_status = ?').get('pending').cnt;
+  const wage_accounts = db.prepare('SELECT COUNT(*) as cnt FROM wage_special_accounts').get().cnt;
+  const training_subsidies = db.prepare('SELECT COUNT(*) as cnt FROM training_subsidies').get().cnt;
+  const opinion_count = db.prepare('SELECT COUNT(*) as cnt FROM public_opinions').get().cnt;
+  const byLevel = db.prepare('SELECT warning_level, COUNT(*) as cnt FROM public_opinions GROUP BY warning_level').all();
+  const byPlatform = db.prepare('SELECT platform, COUNT(*) as cnt FROM public_opinions GROUP BY platform').all();
+
+  let high_count = 0, medium_count = 0, normal_count = 0;
+  byLevel.forEach(r => {
+    if (r.warning_level === 'high') high_count = r.cnt;
+    else if (r.warning_level === 'medium') medium_count = r.cnt;
+    else normal_count += r.cnt;
+  });
+
+  const warning_opinions = high_count + medium_count;
+
+  const platformPie = byPlatform.map(r => ({ value: r.cnt, name: r.platform }));
+
   const stats = {
-    total_users: db.prepare('SELECT COUNT(*) as cnt FROM users').get().cnt,
-    total_enterprises: db.prepare('SELECT COUNT(*) as cnt FROM enterprises').get().cnt,
-    total_contracts: db.prepare('SELECT COUNT(*) as cnt FROM labor_contracts').get().cnt,
-    completed_contracts: db.prepare('SELECT COUNT(*) as cnt FROM labor_contracts WHERE status = ?').get('completed').cnt,
-    unemployment_count: db.prepare('SELECT COUNT(*) as cnt FROM unemployment_registrations').get().cnt,
-    title_applications: db.prepare('SELECT COUNT(*) as cnt FROM title_applications').get().cnt,
-    pending_title: db.prepare('SELECT COUNT(*) as cnt FROM title_applications WHERE review_status = ?').get('pending').cnt,
-    wage_accounts: db.prepare('SELECT COUNT(*) as cnt FROM wage_special_accounts').get().cnt,
-    training_subsidies: db.prepare('SELECT COUNT(*) as cnt FROM training_subsidies').get().cnt,
-    opinion_count: db.prepare('SELECT COUNT(*) as cnt FROM public_opinions').get().cnt,
-    warning_opinions: db.prepare('SELECT COUNT(*) as cnt FROM public_opinions WHERE warning_level IN (?, ?)').all('high', 'medium').reduce((s, r) => s + Object.values(r)[0], 0)
+    total_users,
+    total_enterprises,
+    total_contracts,
+    completed_contracts,
+    unemployment_count,
+    title_applications,
+    pending_title,
+    wage_accounts,
+    training_subsidies,
+    opinion_count,
+    warning_opinions,
+    social_insurance: total_contracts + unemployment_count,
+    employment: unemployment_count + training_subsidies,
+    talent: title_applications + pending_title,
+    labor_supervision: wage_accounts + high_count,
+    opinion_summary: {
+      high: high_count,
+      medium: medium_count,
+      normal: normal_count,
+      total: opinion_count,
+      unhandled: db.prepare('SELECT COUNT(*) as cnt FROM public_opinions WHERE is_handled = 0').get().cnt
+    },
+    platform_distribution: platformPie
   };
   res.json({ code: 0, data: stats });
 });
@@ -31,7 +67,23 @@ router.get('/cross-system/data', adminRequired, (req, res) => {
   sql += ' ORDER BY sync_time DESC LIMIT ? OFFSET ?';
   params.push(parseInt(pageSize), (page - 1) * parseInt(pageSize));
   const list = db.prepare(sql).all(...params);
-  res.json({ code: 0, data: list.map(r => ({ ...r, data_content: JSON.parse(r.data_content || '{}') })) });
+  const flat = list.map(r => {
+    const content = JSON.parse(r.data_content || '{}');
+    return {
+      id: r.id,
+      data_source: r.data_source,
+      data_type: r.data_type,
+      id_card: r.id_card,
+      sync_status: r.sync_status,
+      sync_time: r.sync_time,
+      name: content.name || '',
+      amount: content.amount || 0,
+      period: content.period || '',
+      status: content.status || '',
+      source_detail: content.source_detail || ''
+    };
+  });
+  res.json({ code: 0, data: flat });
 });
 
 router.post('/cross-system/sync', adminRequired, (req, res) => {
@@ -74,13 +126,25 @@ router.get('/cross-system/query-person', adminRequired, (req, res) => {
   const records = db.prepare('SELECT * FROM cross_system_data WHERE id_card = ? ORDER BY sync_time DESC').all(id_card);
   const contracts = db.prepare('SELECT * FROM labor_contracts WHERE user_id = (SELECT id FROM users WHERE id_card = ? LIMIT 1)').all(id_card);
   const unemployment = db.prepare('SELECT * FROM unemployment_registrations WHERE id_card = ?').all(id_card);
+  const medical = records.filter(r => r.data_source === 'medical_insurance').map(r => {
+    const c = JSON.parse(r.data_content || '{}');
+    return { data_type: c.type || r.data_type, amount: c.amount, period: c.period, status: c.status };
+  });
+  const tax = records.filter(r => r.data_source === 'tax_bureau').map(r => {
+    const c = JSON.parse(r.data_content || '{}');
+    return { data_type: c.type || r.data_type, amount: c.amount, period: c.period, status: c.status };
+  });
+  const education = records.filter(r => r.data_source === 'education_department').map(r => {
+    const c = JSON.parse(r.data_content || '{}');
+    return { data_type: c.type || r.data_type, amount: c.amount, period: c.period, status: c.status };
+  });
   res.json({
     code: 0,
     data: {
-      user,
-      medical: records.filter(r => r.data_source === 'medical_insurance').map(r => JSON.parse(r.data_content || '{}')),
-      tax: records.filter(r => r.data_source === 'tax_bureau').map(r => JSON.parse(r.data_content || '{}')),
-      education: records.filter(r => r.data_source === 'education_department').map(r => JSON.parse(r.data_content || '{}')),
+      profile: user ? { name: user.name, id_card: user.id_card, phone: user.phone, user_type: user.user_type } : null,
+      medical,
+      tax,
+      education,
       contracts,
       unemployment
     }
@@ -130,11 +194,19 @@ router.get('/public-opinions', adminRequired, (req, res) => {
   const params = [];
   if (level) { sql += ' AND warning_level = ?'; params.push(level); }
   if (platform) { sql += ' AND platform = ?'; params.push(platform); }
-  if (is_handled !== undefined) { sql += ' AND is_handled = ?'; params.push(is_handled === '1' ? 1 : 0); }
+  if (is_handled !== undefined && is_handled !== '') { sql += ' AND is_handled = ?'; params.push(is_handled === '1' ? 1 : 0); }
   sql += ' ORDER BY crawled_at DESC LIMIT ? OFFSET ?';
   params.push(parseInt(pageSize), (page - 1) * parseInt(pageSize));
   const list = db.prepare(sql).all(...params);
-  res.json({ code: 0, data: list });
+  const sentimentMap = { positive: '正面', negative: '负面', neutral: '中性' };
+  const levelMap = { high: '高', medium: '中', normal: '一般', low: '一般' };
+  res.json({ code: 0, data: list.map(r => ({
+    ...r,
+    sentiment_label: sentimentMap[r.sentiment] || r.sentiment,
+    warning_level_label: levelMap[r.warning_level] || r.warning_level,
+    handled: r.is_handled === 1,
+    handle_comment: r.handled_note || ''
+  }))});
 });
 
 router.post('/public-opinions/crawl', adminRequired, (req, res) => {
@@ -161,9 +233,10 @@ router.post('/public-opinions/crawl', adminRequired, (req, res) => {
 });
 
 router.post('/public-opinions/handle/:id', adminRequired, (req, res) => {
-  const { handled_note } = req.body;
+  const { comment, handled_note } = req.body;
+  const note = handled_note || comment || '';
   db.prepare('UPDATE public_opinions SET is_handled = 1, handler_id = ?, handled_note = ? WHERE id = ?').run(
-    req.admin.id, handled_note || '', req.params.id
+    req.admin.id, note, req.params.id
   );
   res.json({ code: 0, message: '舆情已处置' });
 });
@@ -174,7 +247,25 @@ router.get('/public-opinions/summary', adminRequired, (req, res) => {
   const byPlatform = db.prepare('SELECT platform, COUNT(*) as cnt FROM public_opinions GROUP BY platform').all();
   const bySentiment = db.prepare('SELECT sentiment, COUNT(*) as cnt FROM public_opinions GROUP BY sentiment').all();
   const unhandled = db.prepare('SELECT COUNT(*) as cnt FROM public_opinions WHERE is_handled = 0').get().cnt;
-  res.json({ code: 0, data: { total, byLevel, byPlatform, bySentiment, unhandled } });
+
+  let high = 0, medium = 0, normal = 0;
+  byLevel.forEach(r => {
+    if (r.warning_level === 'high') high = r.cnt;
+    else if (r.warning_level === 'medium') medium = r.cnt;
+    else normal += r.cnt;
+  });
+
+  res.json({ code: 0, data: {
+    total,
+    high,
+    medium,
+    normal,
+    unhandled,
+    platformData: byPlatform.map(r => ({ value: r.cnt, name: r.platform })),
+    byLevel,
+    byPlatform,
+    bySentiment
+  }});
 });
 
 router.get('/labor-disputes', adminRequired, (req, res) => {
@@ -197,12 +288,18 @@ router.post('/labor-disputes/mediate/:id', adminRequired, (req, res) => {
 
 router.get('/policy-calculations', adminRequired, (req, res) => {
   const { type } = req.query;
-  let sql = 'SELECT pc.*, u.name, u.id_card FROM policy_calculations pc LEFT JOIN users u ON pc.user_id = u.id WHERE 1=1';
+  const typeMap = { social: 'social_insurance', loan: 'venture_loan' };
+  const effectiveType = typeMap[type] || type;
+  let sql = 'SELECT pc.*, u.name as user_name, u.id_card FROM policy_calculations pc LEFT JOIN users u ON pc.user_id = u.id WHERE 1=1';
   const params = [];
-  if (type) { sql += ' AND pc.calc_type = ?'; params.push(type); }
+  if (effectiveType) { sql += ' AND pc.calc_type = ?'; params.push(effectiveType); }
   sql += ' ORDER BY pc.created_at DESC LIMIT 100';
   const list = db.prepare(sql).all(...params);
-  res.json({ code: 0, data: list });
+  res.json({ code: 0, data: list.map(r => ({
+    ...r,
+    input_params: JSON.parse(r.input_params || '{}'),
+    output_result: JSON.parse(r.result || '{}')
+  }))});
 });
 
 module.exports = router;

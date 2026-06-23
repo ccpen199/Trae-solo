@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => {
   const port = parseInt(env.FRONTEND_PORT || '49152')
   const apiBase = env.VITE_API_URL || 'http://127.0.0.1:59152/api'
   return {
+    envDir: '../',
     plugins: [vue()],
     server: {
       host: '127.0.0.1',
