@@ -7,11 +7,14 @@ interface AuthState {
   token: string | null;
   user: Rider | null;
   loading: boolean;
+  _hasHydrated: boolean;
   login: (phone: string, password: string, code?: string) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => Promise<void>;
   fetchProfile: () => Promise<void>;
   updateUser: (user: Partial<Rider>) => void;
+  _setHasHydrated: (v: boolean) => void;
+  _forceSetAuth: (token: string, user: Rider) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -20,6 +23,13 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       user: null,
       loading: false,
+      _hasHydrated: false,
+
+      _setHasHydrated: (v: boolean) => set({ _hasHydrated: v }),
+
+      _forceSetAuth: (token: string, user: Rider) => {
+        set({ token, user, loading: false, _hasHydrated: true });
+      },
 
       login: async (phone: string, password: string, code?: string) => {
         set({ loading: true });
@@ -27,21 +37,25 @@ export const useAuthStore = create<AuthState>()(
           const result = await authService.login({ phone, password, code });
           const riderWithDefaults = {
             ...result.rider,
-            role: result.rider.role ?? 'rider',
+            role: (result.rider as any).role ?? 'rider',
             realNameAuditStatus: result.rider.realNameAuditStatus ?? 'pending',
-            qualificationAuditStatus: result.rider.qualificationAuditStatus ?? result.rider.auditStatus ?? 'pending',
+            qualificationAuditStatus: (result.rider as any).qualificationAuditStatus ?? (result.rider as any).auditStatus ?? 'pending',
           };
           set({
             token: result.token,
             user: riderWithDefaults,
             loading: false,
+            _hasHydrated: true,
           });
-          setTimeout(() => {
-            set((state) => ({ ...state }));
-          }, 0);
+          try {
+            localStorage.setItem('auth-storage', JSON.stringify({
+              state: { token: result.token, user: riderWithDefaults, _hasHydrated: true },
+              version: 0,
+            }));
+          } catch {}
         } catch (error: any) {
           set({ loading: false });
-          const errorMessage = error?.message || '登录失败，请重试';
+          const errorMessage = error?.message || error?.msg || '登录失败，请重试';
           throw new Error(errorMessage);
         }
       },
@@ -86,7 +100,13 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         token: state.token,
         user: state.user,
+        _hasHydrated: state._hasHydrated,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state._hasHydrated = true;
+        }
+      },
     }
   )
 );
