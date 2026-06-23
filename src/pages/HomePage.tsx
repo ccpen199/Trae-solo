@@ -20,7 +20,7 @@ import {
   Camera as CameraIcon, Mic, Volume2, Fingerprint,
   MonitorSpeaker, Layers, Boxes, CircleDollarSign,
   Calculator, Database, ClipboardCheck, Info,
-  XCircle, Share2, Lock as LockIcon,
+  XCircle, Share2, Lock as LockIcon, UploadCloud,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
@@ -32,7 +32,8 @@ import { StatusTimeline } from '@/components/ui/StatusTimeline';
 import { Tabs } from '@/components/ui/Tabs';
 import { Modal } from '@/components/ui/Modal';
 import { cn } from '@/lib/utils';
-import type { MarketTicker, LatestDeal, TimelineItem, GradeLevel } from '@/types';
+import type { MarketTicker, LatestDeal, TimelineItem, GradeLevel, UploadedImage, AIAnalyzeResult } from '@/types';
+import { ImageUploader } from '@/components/ui/ImageUploader';
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -322,6 +323,10 @@ const HomePage: React.FC = () => {
   const [quoteLoading, setQuoteLoading] = React.useState(false);
   const [showQuote, setShowQuote] = React.useState(false);
   const [quoteResult, setQuoteResult] = React.useState<{ instant: number; standard: number; consignment: number; xianyuDiff: number } | null>(null);
+  const [evalImages, setEvalImages] = React.useState<UploadedImage[]>([]);
+  const [aiScanning, setAiScanning] = React.useState(false);
+  const [aiResult, setAiResult] = React.useState<AIAnalyzeResult | null>(null);
+  const [evalStep, setEvalStep] = React.useState(1);
 
   // ============ Section 2: 验真 Tab 状态 ============
   const [authTab, setAuthTab] = React.useState('phone');
@@ -330,6 +335,10 @@ const HomePage: React.FC = () => {
 
   // ============ Section 3: 品类展开状态 ============
   const [expandedCat, setExpandedCat] = React.useState<CategoryId | null>(null);
+
+  // ============ Section 4: 检测师 Modal 状态 ============
+  const [certModal, setCertModal] = React.useState<{open: boolean; inspector: InspectorProfile | null; certIndex: number}>({open: false, inspector: null, certIndex: 0});
+  const [deviationModal, setDeviationModal] = React.useState<{open: boolean; inspector: InspectorProfile | null}>({open: false, inspector: null});
 
   // ============ Section 5: 即时打款案例 ============
   const [showPayDemo, setShowPayDemo] = React.useState(false);
@@ -347,6 +356,8 @@ const HomePage: React.FC = () => {
   const [ecoCategory, setEcoCategory] = React.useState<CategoryId>('phone');
   const [ecoBrand, setEcoBrand] = React.useState('apple');
   const [ecoCalcStage, setEcoCalcStage] = React.useState(0);
+  const [ecoCertModal, setEcoCertModal] = React.useState<{open:boolean; data:null | {certNo:string; carbon:number; trees:number; kwh:number; ore:number; brandName:string; categoryName:string; timestamp:number; hash:string}}>({open:false, data:null});
+  const [certGenerating, setCertGenerating] = React.useState(false);
 
   // ============ Section 12: 客服弹窗 ============
   const [showSupport, setShowSupport] = React.useState(false);
@@ -355,20 +366,54 @@ const HomePage: React.FC = () => {
   const generateQuote = () => {
     setQuoteLoading(true);
     setShowQuote(false);
+    setAiScanning(true);
+    setEvalStep(3);
     setTimeout(() => {
       const brand = categoryBrands[evalCategory].find(b => b.id === evalBrand);
       const basePrice = brand?.avgPrice || 10000;
       const mult = gradeMultipliers[evalGrade].multiplier;
       const core = Math.round(basePrice * mult);
+      const wearOptions = ['表圈', '表耳', '底盖', '表扣', '表冠', '后盖', '中框', '边框', '镜头圈', '按键', '屏幕边缘', '充电口'];
+      const wearCount = 1 + Math.floor(Math.random() * 4);
+      const wearAreas: string[] = [];
+      for (let i = 0; i < wearCount; i++) {
+        const idx = Math.floor(Math.random() * wearOptions.length);
+        if (!wearAreas.includes(wearOptions[idx])) wearAreas.push(wearOptions[idx]);
+      }
+      const suggestedMultiplier = +(0.7 + Math.random() * 0.25).toFixed(2);
+      const authenticityScore = 88 + Math.floor(Math.random() * 12);
+      const scratchCount = 1 + Math.floor(Math.random() * 5);
+      const jdPrice = Math.round(core * (0.92 + Math.random() * 0.06));
+      const xianyuPrice = Math.round(core * (0.78 + Math.random() * 0.08));
+      const fengniaoPrice = Math.round(core * (0.85 + Math.random() * 0.07));
+      const mockAiResult: AIAnalyzeResult = {
+        detectedGrade: evalGrade,
+        scratchCount,
+        wearAreas,
+        suggestedMultiplier,
+        authenticityScore,
+        platformPrices: { jd: jdPrice, xianyu: xianyuPrice, fengniao: fengniaoPrice },
+        confidence: 0.92,
+        scratchLevel: Math.min(5, Math.max(1, scratchCount)) as any,
+        wearLevel: Math.min(5, wearCount + 1) as any,
+        oxidationLevel: 1 + Math.floor(Math.random() * 2) as any,
+        functionScore: 90 + Math.floor(Math.random() * 10),
+        overallGrade: evalGrade,
+        aiConfidence: 0.92,
+        defectDetails: wearAreas.map(area => ({ area, type: '磨损', severity: '轻微' })),
+      };
+      setAiResult(mockAiResult);
       setQuoteResult({
         instant: Math.round(core * 0.88),
         standard: core,
         consignment: Math.round(core * 1.12),
         xianyuDiff: 15 + Math.floor(Math.random() * 8),
       });
+      setAiScanning(false);
+      setEvalStep(4);
       setQuoteLoading(false);
       setShowQuote(true);
-    }, 1500);
+    }, 3000);
   };
 
   // ============ Section 2: 序列号解析 ============
@@ -596,33 +641,78 @@ const HomePage: React.FC = () => {
                   <span className="text-ink-500">· 无需跳转，即刻出结果</span>
                 </div>
 
-                <div className="space-y-3 p-4 rounded-3xl bg-ink-850/70 border border-white/[0.08] backdrop-blur-xl shadow-2xl">
+                <div className="space-y-4 p-4 rounded-3xl bg-ink-850/70 border border-white/[0.08] backdrop-blur-xl shadow-2xl">
+
+                  {/* 4步进度视觉提示 */}
+                  <div className="flex items-center justify-between mb-1 px-1">
+                    {[
+                      { step: 1, label: '选品', icon: Package },
+                      { step: 2, label: '上传', icon: UploadCloud },
+                      { step: 3, label: '扫描', icon: ScanEye },
+                      { step: 4, label: '报价', icon: CircleDollarSign },
+                    ].map((item, idx) => {
+                      const Icon = item.icon;
+                      const isActive = evalStep >= item.step;
+                      const isCurrent = evalStep === item.step;
+                      return (
+                        <React.Fragment key={item.step}>
+                          <div className="flex flex-col items-center gap-1.5">
+                            <div className={cn(
+                              'w-9 h-9 rounded-2xl flex items-center justify-center border-2 transition-all duration-500',
+                              isActive
+                                ? 'bg-gold-gradient border-gold-400 text-ink-950 shadow-[0_0_16px_rgba(201,169,98,0.4)]'
+                                : 'bg-ink-800/60 border-white/10 text-ink-500',
+                              isCurrent && 'ring-2 ring-gold-400/50 ring-offset-2 ring-offset-ink-850 scale-110'
+                            )}>
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <span className={cn(
+                              'text-[10px] font-semibold uppercase tracking-wider transition-colors',
+                              isActive ? 'text-gold-400' : 'text-ink-500'
+                            )}>STEP {item.step} · {item.label}</span>
+                          </div>
+                          {idx < 3 && (
+                            <div className="flex-1 mx-1 relative h-0.5">
+                              <div className="absolute inset-0 bg-white/[0.06] rounded-full" />
+                              <motion.div
+                                className="absolute left-0 top-0 h-full bg-gradient-to-r from-gold-500 to-gold-400 rounded-full"
+                                initial={{ width: '0%' }}
+                                animate={{ width: evalStep > item.step ? '100%' : '0%' }}
+                                transition={{ duration: 0.6, ease: 'easeOut' }}
+                              />
+                            </div>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                      <label className="text-[10px] uppercase tracking-wider text-ink-400 mb-1.5 block font-semibold">STEP 1 · 选择品类</label>
+                      <label className="text-[10px] uppercase tracking-wider text-ink-400 mb-1.5 block font-semibold">品类</label>
                       <select
                         value={evalCategory}
-                        onChange={(e) => { setEvalCategory(e.target.value as CategoryId); setEvalBrand(categoryBrands[e.target.value as CategoryId][0].id); setShowQuote(false); }}
+                        onChange={(e) => { setEvalCategory(e.target.value as CategoryId); setEvalBrand(categoryBrands[e.target.value as CategoryId][0].id); setShowQuote(false); setEvalStep(1); }}
                         className="w-full h-12 px-4 rounded-2xl bg-ink-800/80 border border-white/[0.06] text-ink-100 text-sm font-medium focus:outline-none focus:border-gold-500/50 appearance-none cursor-pointer"
                       >
                         {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase tracking-wider text-ink-400 mb-1.5 block font-semibold">STEP 2 · 品牌型号</label>
+                      <label className="text-[10px] uppercase tracking-wider text-ink-400 mb-1.5 block font-semibold">品牌型号</label>
                       <select
                         value={evalBrand}
-                        onChange={(e) => { setEvalBrand(e.target.value); setShowQuote(false); }}
+                        onChange={(e) => { setEvalBrand(e.target.value); setShowQuote(false); setEvalStep(1); }}
                         className="w-full h-12 px-4 rounded-2xl bg-ink-800/80 border border-white/[0.06] text-ink-100 text-sm font-medium focus:outline-none focus:border-gold-500/50 appearance-none cursor-pointer"
                       >
                         {currentBrands.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase tracking-wider text-ink-400 mb-1.5 block font-semibold">STEP 3 · 成色评估</label>
+                      <label className="text-[10px] uppercase tracking-wider text-ink-400 mb-1.5 block font-semibold">成色评估</label>
                       <select
                         value={evalGrade}
-                        onChange={(e) => { setEvalGrade(e.target.value as GradeId); setShowQuote(false); }}
+                        onChange={(e) => { setEvalGrade(e.target.value as GradeId); setShowQuote(false); setEvalStep(1); }}
                         className={cn('w-full h-12 px-4 rounded-2xl border text-sm font-medium focus:outline-none appearance-none cursor-pointer', gradeMultipliers[evalGrade].bg, gradeMultipliers[evalGrade].color)}
                       >
                         {(Object.keys(gradeMultipliers) as GradeId[]).map(g => (
@@ -631,6 +721,177 @@ const HomePage: React.FC = () => {
                       </select>
                     </div>
                   </div>
+
+                  {/* ImageUploader 上传区 */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between px-1">
+                      <label className="text-[10px] uppercase tracking-wider text-ink-400 font-semibold flex items-center gap-1.5">
+                        <CameraIcon className="w-3 h-3 text-gold-400" />
+                        STEP 2 · 实物照片上传（可选·提升估价精度）
+                      </label>
+                      {evalImages.length > 0 && (
+                        <button
+                          onClick={() => setEvalImages([])}
+                          className="text-[10px] text-ink-500 hover:text-coral-400 transition-colors flex items-center gap-1"
+                        >
+                          <Trash2 className="w-3 h-3" /> 清空
+                        </button>
+                      )}
+                    </div>
+                    <ImageUploader
+                      images={evalImages}
+                      onChange={(imgs) => { setEvalImages(imgs); setEvalStep(imgs.length > 0 ? 2 : 1); setShowQuote(false); }}
+                      maxImages={6}
+                      labels={['正面', '背面', '左侧', '右侧', '顶部', '配件']}
+                      showScanAnimation={aiScanning}
+                    />
+                  </div>
+
+                  {/* AI 扫描动画区 */}
+                  <AnimatePresence mode="wait">
+                    {aiScanning && (
+                      <motion.div
+                        key="ai-scanning"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-4 rounded-2xl bg-gradient-to-r from-ink-800/80 via-forest-900/30 to-ink-800/80 border border-gold-500/30 relative overflow-hidden">
+                          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                            <motion.div
+                              className="absolute inset-x-0 h-16 bg-gradient-to-b from-transparent via-gold-400/25 to-transparent"
+                              style={{ top: 0 }}
+                              animate={{ top: ['0%', '100%'] }}
+                              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                            />
+                          </div>
+                          <div className="relative space-y-3">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-2xl bg-gold-gradient flex items-center justify-center animate-pulse">
+                                <ScanEye className="w-5 h-5 text-ink-950" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between mb-1.5">
+                                  <p className="text-sm font-semibold text-ink-100">AI 视觉引擎扫描中...</p>
+                                  <p className="text-xs font-mono text-gold-400">
+                                    <motion.span
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: [0.3, 1, 0.3] }}
+                                      transition={{ duration: 0.8, repeat: Infinity }}
+                                    >
+                                      ● ● ●
+                                    </motion.span>
+                                  </p>
+                                </div>
+                                <div className="h-2 bg-ink-900/60 rounded-full overflow-hidden">
+                                  <motion.div
+                                    className="h-full bg-gradient-to-r from-gold-500 via-forest-400 to-gold-500 rounded-full"
+                                    initial={{ width: '0%' }}
+                                    animate={{ width: '100%' }}
+                                    transition={{ duration: 3, ease: 'easeInOut' }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-4 gap-2 text-[10px]">
+                              {['图像特征提取', '瑕疵区域识别', '成色等级判定', '多平台比价'].map((t, i) => (
+                                <div key={t} className="text-center">
+                                  <motion.div
+                                    initial={{ opacity: 0.3, scale: 0.9 }}
+                                    animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.05, 0.9] }}
+                                    transition={{ duration: 0.8, delay: i * 0.3, repeat: Infinity }}
+                                    className="w-6 h-6 mx-auto mb-1 rounded-lg bg-forest-500/20 border border-forest-500/40 flex items-center justify-center"
+                                  >
+                                    <CheckCircle2 className="w-3 h-3 text-forest-400" />
+                                  </motion.div>
+                                  <p className="text-ink-400">{t}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* AI 识别结果 6 宫格 */}
+                  <AnimatePresence mode="wait">
+                    {showQuote && aiResult && (
+                      <motion.div
+                        key="ai-result"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="space-y-2"
+                      >
+                        <div className="flex items-center gap-2 px-1">
+                          <BadgeCheck className="w-4 h-4 text-jade-400" />
+                          <label className="text-[10px] uppercase tracking-wider text-jade-400 font-semibold">AI 成色识别报告</label>
+                          <span className="text-[10px] text-ink-500 ml-auto">置信度 {Math.round((((aiResult as any).confidence) || 0.92) * 100)}%</span>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                          <div className="p-3 rounded-2xl bg-ink-800/60 border border-white/[0.06]">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Gauge className="w-3 h-3 text-gold-400" />
+                              <p className="text-[9px] uppercase tracking-wider text-ink-500 font-semibold">检测成色</p>
+                            </div>
+                            <p className={cn('text-lg font-bold font-display', gradeMultipliers[(aiResult as any).detectedGrade || evalGrade]?.color)}>
+                              {(aiResult as any).detectedGrade || evalGrade} <span className="text-xs font-normal text-ink-400">级</span>
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-2xl bg-ink-800/60 border border-white/[0.06]">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <AlertTriangle className="w-3 h-3 text-coral-400" />
+                              <p className="text-[9px] uppercase tracking-wider text-ink-500 font-semibold">划痕数</p>
+                            </div>
+                            <p className="text-lg font-bold font-display text-ink-100">
+                              {(aiResult as any).scratchCount || 0} <span className="text-xs font-normal text-ink-400">处</span>
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-2xl bg-ink-800/60 border border-white/[0.06]">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Activity className="w-3 h-3 text-amberLux-400" />
+                              <p className="text-[9px] uppercase tracking-wider text-ink-500 font-semibold">磨损区域</p>
+                            </div>
+                            <p className="text-xs font-medium text-ink-200 leading-tight">
+                              {((aiResult as any).wearAreas || []).slice(0, 3).join(' / ') || '无明显磨损'}
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-2xl bg-ink-800/60 border border-white/[0.06]">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <ShieldCheck className="w-3 h-3 text-jade-400" />
+                              <p className="text-[9px] uppercase tracking-wider text-ink-500 font-semibold">真伪得分</p>
+                            </div>
+                            <p className="text-lg font-bold font-display text-jade-400">
+                              {(aiResult as any).authenticityScore || 95} <span className="text-xs font-normal text-ink-400">/ 100</span>
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-2xl bg-ink-800/60 border border-white/[0.06]">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Target className="w-3 h-3 text-forest-300" />
+                              <p className="text-[9px] uppercase tracking-wider text-ink-500 font-semibold">置信度</p>
+                            </div>
+                            <p className="text-lg font-bold font-display text-forest-300">
+                              {Math.round(((aiResult as any).confidence || 0.92) * 100)}<span className="text-xs font-normal text-ink-400">%</span>
+                            </p>
+                          </div>
+                          <div className="p-3 rounded-2xl bg-ink-800/60 border border-white/[0.06]">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Calculator className="w-3 h-3 text-gold-400" />
+                              <p className="text-[9px] uppercase tracking-wider text-ink-500 font-semibold">建议系数</p>
+                            </div>
+                            <p className="text-lg font-bold font-display gold-text">
+                              × {((aiResult as any).suggestedMultiplier || 0.85).toFixed(2)}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   <Button
                     onClick={generateQuote}
                     loading={quoteLoading}
@@ -638,7 +899,7 @@ const HomePage: React.FC = () => {
                     className="w-full h-14 text-base animate-glow-pulse"
                   >
                     <Zap className="w-5 h-5" />
-                    {quoteLoading ? 'AI 分析价格行情中...' : '⚡ 生成报价'}
+                    {quoteLoading ? 'AI 成色扫描 + 多平台比价中...' : '⚡ AI 智能识别 + 生成报价'}
                   </Button>
                 </div>
 
@@ -673,6 +934,7 @@ const HomePage: React.FC = () => {
                           </Badge>
                         </div>
 
+                        {/* 三档报价 */}
                         <div className="grid grid-cols-3 gap-3">
                           <div className="p-4 rounded-2xl bg-coral-500/10 border border-coral-500/20">
                             <p className="text-[10px] uppercase tracking-wider text-coral-400 font-bold">即时变现</p>
@@ -693,6 +955,58 @@ const HomePage: React.FC = () => {
                             <p className="text-2xl font-bold text-ink-50 font-display mt-2">¥{quoteResult.consignment.toLocaleString()}</p>
                           </div>
                         </div>
+
+                        {/* 平台对比小表格 */}
+                        {aiResult && (aiResult as any).platformPrices && (
+                          <div className="rounded-2xl bg-ink-900/50 border border-white/[0.06] overflow-hidden">
+                            <div className="px-4 py-2.5 border-b border-white/[0.04] flex items-center gap-2">
+                              <BarChart3 className="w-3.5 h-3.5 text-gold-400" />
+                              <p className="text-[11px] font-semibold uppercase tracking-wider text-ink-300">多平台同款行情对比</p>
+                            </div>
+                            <div className="divide-y divide-white/[0.04]">
+                              {[
+                                { key: 'jd', name: '京东拍拍', icon: Building2, color: 'text-coral-400' },
+                                { key: 'xianyu', name: '闲鱼二手', icon: Users, color: 'text-amberLux-400' },
+                                { key: 'fengniao', name: '蜂鸟二手', icon: Layers, color: 'text-forest-300' },
+                              ].map((p) => {
+                                const Icon = p.icon;
+                                const price = (aiResult as any).platformPrices[p.key];
+                                const diff = price ? Math.round(((quoteResult.standard - price) / price) * 100) : 0;
+                                return (
+                                  <div key={p.key} className="px-4 py-2.5 flex items-center justify-between">
+                                    <div className="flex items-center gap-2.5">
+                                      <div className={cn('w-7 h-7 rounded-lg bg-white/[0.04] flex items-center justify-center', p.color)}>
+                                        <Icon className="w-3.5 h-3.5" />
+                                      </div>
+                                      <span className="text-sm text-ink-200 font-medium">{p.name}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-sm font-semibold text-ink-100 font-mono">¥{price?.toLocaleString()}</span>
+                                      <span className={cn(
+                                        'text-[10px] px-2 py-0.5 rounded-lg font-semibold',
+                                        diff >= 0
+                                          ? 'bg-jade-500/15 text-jade-400 border border-jade-500/25'
+                                          : 'bg-coral-500/15 text-coral-400 border border-coral-500/25'
+                                      )}>
+                                        {diff >= 0 ? '+' : ''}{diff}%
+                                      </span>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              <div className="px-4 py-2.5 flex items-center justify-between bg-gold-500/5">
+                                <div className="flex items-center gap-2.5">
+                                  <div className="w-7 h-7 rounded-lg bg-gold-gradient flex items-center justify-center">
+                                    <Trophy className="w-3.5 h-3.5 text-ink-950" />
+                                  </div>
+                                  <span className="text-sm gold-text font-semibold">臻回收 · 标准价</span>
+                                  <Badge variant="gold" className="text-[9px]">最优</Badge>
+                                </div>
+                                <span className="text-base font-bold gold-text font-display font-mono">¥{quoteResult.standard.toLocaleString()}</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
                         <div className="flex gap-3">
                           <Button variant="ghost" size="md" className="flex-1" onClick={() => navigate('/evaluate')}>
@@ -786,6 +1100,82 @@ const HomePage: React.FC = () => {
               </motion.div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8"><div className="divider-gold" /></div>
+
+      {/* ============================================================= */}
+      {/* Section QuickNav: 业务快速入口 */}
+      {/* ============================================================= */}
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <Badge variant="gold" className="mb-3">
+              <Zap className="w-3 h-3 mr-1" />
+              一站式服务
+            </Badge>
+            <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink-50 tracking-tight">
+              常用业务<span className="gold-text">快速入口</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: '-80px' }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
+          >
+            {[
+              { icon: '📦', title: '我的订单', badge: '3单进行中', badgeColor: 'bg-forest-500/20 text-forest-300 border-forest-500/30', onClick: () => navigate('/user/orders'), Icon: Package },
+              { icon: '🧾', title: '估价记录', badge: '¥89,500', badgeColor: 'bg-gold-500/20 text-gold-300 border-gold-500/30', onClick: () => navigate('/evaluate'), Icon: FileCheck },
+              { icon: '🔄', title: '申请退货', badge: '30天无忧', badgeColor: 'bg-jade-500/20 text-jade-300 border-jade-500/30', onClick: () => navigate('/user/returns/apply/demo'), Icon: RefreshCcw },
+              { icon: '🌱', title: '环保证书', badge: '已获得3张', badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', onClick: () => setEcoCertModal({ open: true, data: null }), Icon: Award },
+              { icon: '👨‍🔬', title: '检测师排班', badge: '38城', badgeColor: 'bg-amberLux-500/20 text-amberLux-300 border-amberLux-500/30', onClick: () => navigate('/admin/city-network'), Icon: Users },
+              { icon: '📊', title: '库存周转', badge: '平均6.8天', badgeColor: 'bg-coral-500/20 text-coral-300 border-coral-500/30', onClick: () => navigate('/admin/inventory'), Icon: BarChart3 },
+            ].map((item, idx) => {
+              const IconComp = item.Icon;
+              return (
+                <motion.button
+                  key={item.title}
+                  variants={fadeUp}
+                  onClick={item.onClick}
+                  className="group relative text-left"
+                >
+                  <div className="relative rounded-3xl p-5 overflow-hidden bg-gradient-to-br from-ink-850/80 via-ink-800/60 to-ink-900/80 border border-white/[0.06] backdrop-blur-xl transition-all duration-500 h-full hover:border-gold-500/50 hover:shadow-[0_0_30px_rgba(201,169,98,0.15)] group-hover:-translate-y-1">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div className="absolute inset-0 rounded-3xl ring-2 ring-gold-400/30 ring-offset-2 ring-offset-ink-900 animate-pulse" />
+                    </div>
+                    <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gold-500/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative z-10 space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-ink-800 to-ink-900 border border-white/[0.08] flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                          {item.icon}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-ink-50 text-base mb-2 group-hover:text-gold-300 transition-colors duration-300 flex items-center gap-1.5">
+                          {item.title}
+                          <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300 text-gold-400" />
+                        </h4>
+                        <span className={`inline-block text-[11px] px-2.5 py-1 rounded-xl border font-medium ${item.badgeColor}`}>
+                          {item.badge}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
@@ -1283,8 +1673,9 @@ const HomePage: React.FC = () => {
                           {ins.certs.map((cert, i) => (
                             <button
                               key={i}
+                              onClick={() => setCertModal({ open: true, inspector: ins, certIndex: i })}
                               className={cn(
-                                'w-full p-3 rounded-xl text-left text-xs transition-all hover:shadow-gold-sm border',
+                                'w-full p-3 rounded-xl text-left text-xs transition-all hover:shadow-gold-sm border cursor-pointer',
                                 cert.type === 'brand'
                                   ? 'bg-coral-500/10 border-coral-500/30 hover:border-coral-500/60'
                                   : 'bg-ink-800/60 border-white/[0.06] hover:border-gold-500/40'
@@ -1306,7 +1697,10 @@ const HomePage: React.FC = () => {
                             <Activity className="w-3.5 h-3.5 text-jade-400" />
                             近 30 天偏差率走势
                           </h5>
-                          <div className="h-32 rounded-xl bg-ink-800/40 p-2">
+                          <div
+                            onClick={() => setDeviationModal({ open: true, inspector: ins })}
+                            className="h-32 rounded-xl bg-ink-800/40 p-2 cursor-pointer hover:shadow-gold-sm transition-all duration-300 border border-transparent hover:border-gold-500/30"
+                          >
                             <ReactECharts option={inspectorChartOption(ins.deviation30d)} style={{ height: '100%', width: '100%' }} opts={{ renderer: 'svg' }} />
                           </div>
                           <div className="flex items-center gap-3 mt-2 text-[10px]">
@@ -1432,6 +1826,334 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* ============ 证书详情 Modal ============ */}
+        <Modal
+          open={certModal.open}
+          onClose={() => setCertModal(m => ({ ...m, open: false }))}
+          title="资质证书 · 在线验真"
+          size="lg"
+        >
+          {certModal.inspector && (() => {
+            const cert = certModal.inspector.certs[certModal.certIndex];
+            const verifySteps = [
+              { label: '格式校验', status: 'pass', desc: '证书编号格式合规' },
+              { label: '发证机关', status: 'pass', desc: `与${cert.type === 'brand' ? '品牌官方' : '中检集团'}数据库匹配` },
+              { label: '区块链存证', status: 'pass', desc: '链上哈希 0x8f3a...e21b 已确认' },
+              { label: '有效期内', status: 'pass', desc: '有效期至 2027-12-31' },
+            ];
+            return (
+              <div className="space-y-6">
+                <div className="relative">
+                  <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-gold-400 via-gold-500 to-amberLux-600 overflow-hidden shadow-gold">
+                    <div className="absolute inset-0 pointer-events-none z-10" style={{
+                      background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.1) 45%, rgba(212,186,122,0.25) 50%, rgba(255,255,255,0.1) 55%, transparent 70%)',
+                      backgroundSize: '200% 200%',
+                      animation: 'shimmer 3s ease-in-out infinite',
+                    }} />
+                    <div className="relative rounded-[14px] bg-gradient-to-br from-ink-900 via-forest-950/60 to-ink-900 p-8">
+                      <div className="absolute top-4 right-4 w-16 h-16 rounded-full border-2 border-gold-500/40 flex items-center justify-center opacity-60">
+                        <ShieldCheck className="w-8 h-8 text-gold-500/60" />
+                      </div>
+                      <div className="text-center space-y-4 py-4">
+                        <div className="flex justify-center gap-2 mb-2">
+                          <BadgeCheck className="w-6 h-6 text-gold-500" />
+                          <span className="text-[10px] tracking-[0.3em] text-gold-500/80 font-semibold">CERTIFIED AUTHENTIC</span>
+                          <BadgeCheck className="w-6 h-6 text-gold-500" />
+                        </div>
+                        <h3 className={cn(
+                          'font-display text-3xl font-bold tracking-wide',
+                          cert.type === 'brand' ? 'text-coral-300' : 'gold-text'
+                        )}>
+                          {cert.name}
+                        </h3>
+                        <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold-500/60 to-transparent mx-auto" />
+                        <p className="font-mono text-ink-300 text-sm tracking-wider">{cert.no}</p>
+                        <div className="flex items-center justify-center gap-4 pt-4">
+                          <div className="text-left">
+                            <p className="text-[10px] text-ink-500 uppercase tracking-wider">持证人</p>
+                            <p className="text-ink-100 font-semibold">{certModal.inspector.name}</p>
+                          </div>
+                          <div className="w-px h-10 bg-white/10" />
+                          <div className="text-left">
+                            <p className="text-[10px] text-ink-500 uppercase tracking-wider">认证类型</p>
+                            <p className={cn('font-semibold', cert.type === 'brand' ? 'text-coral-400' : 'text-jade-400')}>
+                              {cert.type === 'brand' ? '品牌专项' : '国家级资质'}
+                            </p>
+                          </div>
+                          <div className="w-px h-10 bg-white/10" />
+                          <div className="text-left">
+                            <p className="text-[10px] text-ink-500 uppercase tracking-wider">从业编号</p>
+                            <p className="text-ink-100 font-mono text-sm">{certModal.inspector.id}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-30 pointer-events-none">
+                        <div className="text-[9px] text-gold-500 font-mono">● HOLOGRAM ● ANTI-FORGERY ● BLOCKCHAIN VERIFIED ●</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 gap-6">
+                  <div className="md:col-span-3 space-y-3">
+                    <h5 className="text-xs uppercase tracking-wider text-ink-400 font-semibold flex items-center gap-2">
+                      <ShieldCheck className="w-3.5 h-3.5 text-jade-400" />
+                      在线校验流程
+                    </h5>
+                    <div className="space-y-2">
+                      {verifySteps.map((step, i) => (
+                        <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-ink-800/40 border border-white/[0.04]">
+                          <div className="w-7 h-7 rounded-lg bg-jade-500/15 border border-jade-500/30 flex items-center justify-center shrink-0">
+                            <CheckCircle2 className="w-4 h-4 text-jade-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <p className="text-sm font-semibold text-ink-50">{step.label}</p>
+                              <Badge variant="success" className="text-[10px] px-1.5 py-0">通过 ✓</Badge>
+                            </div>
+                            <p className="text-xs text-ink-400 mt-0.5">{step.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <h5 className="text-xs uppercase tracking-wider text-ink-400 font-semibold mb-3 flex items-center gap-2">
+                      <QrCode className="w-3.5 h-3.5 text-gold-400" />
+                      官网查询
+                    </h5>
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-ink-800/80 to-ink-900/80 border border-gold-500/20 space-y-3">
+                      <div className="aspect-square rounded-xl bg-white p-3 relative overflow-hidden">
+                        <div className="w-full h-full grid grid-cols-8 gap-[2px]">
+                          {Array.from({ length: 64 }).map((_, idx) => {
+                            const seed = (idx * 7 + parseInt(cert.no.replace(/\D/g, '').slice(-6) || '123456') + certModal.certIndex * 13) % 10;
+                            const filled = seed < 5;
+                            const corner = (idx < 3 || (idx >= 5 && idx < 8) || (idx >= 56 && idx < 59) || (idx % 8 < 3 && idx < 24) || (idx % 8 >= 5 && idx < 24));
+                            return (
+                              <div
+                                key={idx}
+                                className={cn(
+                                  'rounded-[1px]',
+                                  (filled || corner) ? 'bg-ink-900' : 'bg-transparent'
+                                )}
+                              />
+                            );
+                          })}
+                        </div>
+                        <div className="absolute top-2 left-2 w-8 h-8 border-4 border-ink-900 rounded-sm bg-white flex items-center justify-center">
+                          <div className="w-3 h-3 bg-ink-900 rounded-full" />
+                        </div>
+                        <div className="absolute top-2 right-2 w-8 h-8 border-4 border-ink-900 rounded-sm bg-white flex items-center justify-center">
+                          <div className="w-3 h-3 bg-ink-900 rounded-full" />
+                        </div>
+                        <div className="absolute bottom-2 left-2 w-8 h-8 border-4 border-ink-900 rounded-sm bg-white flex items-center justify-center">
+                          <div className="w-3 h-3 bg-ink-900 rounded-full" />
+                        </div>
+                      </div>
+                      <div className="text-center space-y-1">
+                        <p className="text-[10px] text-ink-500">扫码访问 {cert.type === 'brand' ? cert.name.split(' ')[0] : '中检'} 官网</p>
+                        <p className="text-[10px] font-mono text-gold-500/70">verify.cicgroup.cn/{cert.no.slice(-8)}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </Modal>
+
+        {/* ============ 偏差率详情 Modal ============ */}
+        <Modal
+          open={deviationModal.open}
+          onClose={() => setDeviationModal(m => ({ ...m, open: false }))}
+          title="偏差率追溯档案"
+          size="lg"
+          className="max-w-5xl"
+        >
+          {deviationModal.inspector && (() => {
+            const ins = deviationModal.inspector;
+            const largeChartOption = {
+              ...inspectorChartOption(ins.deviation30d),
+              grid: { left: 45, right: 25, top: 30, bottom: 40 },
+              tooltip: { trigger: 'axis', backgroundColor: '#15151F', borderColor: 'rgba(201,169,98,0.3)', textStyle: { color: '#D7D7E0', fontSize: 12 } },
+              xAxis: {
+                type: 'category',
+                data: Array.from({ length: 30 }, (_, i) => `${i + 1}日`),
+                axisLabel: { color: '#86869B', fontSize: 10, interval: 2 },
+                axisLine: { lineStyle: { color: '#2E2E3D' } },
+              },
+              yAxis: {
+                type: 'value',
+                max: 6,
+                axisLabel: { color: '#86869B', fontSize: 11, formatter: '{value}%' },
+                splitLine: { lineStyle: { color: '#22222F', type: 'dashed' } },
+              },
+              series: [{
+                ...inspectorChartOption(ins.deviation30d).series[0],
+                symbolSize: 6,
+                lineStyle: { color: '#2BA179', width: 2.5 },
+                markLine: {
+                  silent: true,
+                  symbol: 'none',
+                  lineStyle: { type: 'dashed', width: 1.5 },
+                  data: [
+                    { yAxis: 3, lineStyle: { color: '#F39C12' }, label: { formatter: '3% 黄色预警', color: '#F39C12', fontSize: 11, position: 'insideEndTop' } },
+                    { yAxis: 5, lineStyle: { color: '#E74C3C' }, label: { formatter: '5% 红色停训', color: '#E74C3C', fontSize: 11, position: 'insideEndTop' } },
+                    { yAxis: 3.5, lineStyle: { color: 'rgba(231,76,60,0.5)' }, label: { formatter: '行业均值 3.5%', color: '#86869B', fontSize: 10 } },
+                  ],
+                },
+              }],
+            };
+            const recheckHistory = Array.from({ length: 10 }).map((_, i) => {
+              const day = 30 - i * 2 - Math.floor(Math.random() * 2);
+              const orig = 5000 + Math.floor(Math.random() * 95000);
+              const dev = (Math.random() * 2.5 + 0.3).toFixed(2);
+              const diff = Math.round(orig * parseFloat(dev) / 100 * (Math.random() > 0.5 ? 1 : -1));
+              return {
+                date: `2026-05-${String(day).padStart(2, '0')}`,
+                order: `RC${2026050000 + day * 137 + i * 83}`,
+                orig: orig,
+                recheck: orig + diff,
+                deviation: parseFloat(dev),
+                result: parseFloat(dev) < 1.5 ? { label: '正常', color: 'text-jade-400', variant: 'success' as const } :
+                        parseFloat(dev) < 3 ? { label: '关注', color: 'text-amberLux-400', variant: 'warning' as const } :
+                        { label: '优秀', color: 'text-gold-500', variant: 'gold' as const }
+              };
+            });
+            const hasWarning = ins.avgDeviation >= 2.5;
+            return (
+              <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-1">
+                <div className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-forest-900/30 via-ink-800/50 to-ink-800/50 border border-white/[0.06]">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-forest-700 to-ink-900 border-2 border-gold-500/40 flex items-center justify-center font-display text-2xl gold-text font-bold">
+                    {ins.avatar}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-lg font-bold text-ink-50">{ins.name}</h4>
+                      <Badge variant={ins.level === 'S' ? 'gold' : 'info'}>{ins.level}级</Badge>
+                      <Badge variant="info">{ins.region}</Badge>
+                    </div>
+                    <p className="text-xs text-ink-400 mt-1">从业 {ins.years} 年 · {ins.totalOrders.toLocaleString()}单 · 飞检通过率 {ins.flyCheckPass}% · 平均偏差 <span className="gold-text font-semibold">{ins.avgDeviation}%</span></p>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-ink-800/40 border border-white/[0.04] p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h5 className="text-sm font-semibold text-ink-100 flex items-center gap-2">
+                      <Activity className="w-4 h-4 text-jade-400" />
+                      近 30 天偏差率完整走势
+                    </h5>
+                    <div className="flex items-center gap-4 text-[11px]">
+                      <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-jade-500" />本检测师</span>
+                      <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-coral-400" />行业均值 3.5%</span>
+                    </div>
+                  </div>
+                  <div className="h-64">
+                    <ReactECharts option={largeChartOption} style={{ height: '100%', width: '100%' }} opts={{ renderer: 'svg' }} />
+                  </div>
+                </div>
+
+                <div className="grid lg:grid-cols-5 gap-5">
+                  <div className="lg:col-span-3 rounded-2xl bg-ink-800/40 border border-white/[0.04] p-4">
+                    <h5 className="text-sm font-semibold text-ink-100 mb-3 flex items-center gap-2">
+                      <ClipboardCheck className="w-4 h-4 text-gold-400" />
+                      随机复检历史 · 近 60 天 10 条
+                    </h5>
+                    <div className="overflow-x-auto -mx-2">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="text-ink-500 border-b border-white/[0.06]">
+                            <th className="text-left font-medium py-2 px-2 whitespace-nowrap">日期</th>
+                            <th className="text-left font-medium py-2 px-2 whitespace-nowrap">订单编号</th>
+                            <th className="text-right font-medium py-2 px-2 whitespace-nowrap">原估价</th>
+                            <th className="text-right font-medium py-2 px-2 whitespace-nowrap">复检价</th>
+                            <th className="text-right font-medium py-2 px-2 whitespace-nowrap">偏差率</th>
+                            <th className="text-center font-medium py-2 px-2 whitespace-nowrap">处理</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {recheckHistory.map((r, i) => (
+                            <tr key={i} className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors">
+                              <td className="py-2 px-2 text-ink-400 font-mono whitespace-nowrap">{r.date}</td>
+                              <td className="py-2 px-2 text-ink-200 font-mono whitespace-nowrap">{r.order}</td>
+                              <td className="py-2 px-2 text-right text-ink-300 font-mono whitespace-nowrap">¥{r.orig.toLocaleString()}</td>
+                              <td className="py-2 px-2 text-right text-ink-300 font-mono whitespace-nowrap">¥{r.recheck.toLocaleString()}</td>
+                              <td className={cn('py-2 px-2 text-right font-mono font-semibold whitespace-nowrap',
+                                r.deviation < 1.5 ? 'text-jade-400' : r.deviation < 3 ? 'text-amberLux-400' : 'text-coral-400'
+                              )}>
+                                {r.deviation}%
+                              </td>
+                              <td className="py-2 px-2 text-center whitespace-nowrap">
+                                <Badge variant={r.result.variant} className="text-[10px]">{r.result.label}</Badge>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-2 space-y-4">
+                    <div className="rounded-2xl bg-ink-800/40 border border-white/[0.04] p-4">
+                      <h5 className="text-sm font-semibold text-ink-100 mb-3 flex items-center gap-2">
+                        <Bell className="w-4 h-4 text-amberLux-400" />
+                        预警记录
+                      </h5>
+                      {hasWarning ? (
+                        <div className="space-y-2">
+                          <div className="p-3 rounded-xl bg-amberLux-500/10 border border-amberLux-500/25">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge variant="warning" className="text-[10px]">黄色预警</Badge>
+                              <span className="text-xs text-ink-400 font-mono">2026-05-12</span>
+                            </div>
+                            <p className="text-xs text-ink-200">连续 3 天偏差率 ≥2.8%，进入重点关注名单</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-6 rounded-xl bg-jade-500/8 border border-jade-500/20 text-center space-y-2">
+                          <ShieldCheck className="w-10 h-10 text-jade-400/70 mx-auto" />
+                          <p className="text-sm font-semibold text-jade-400">无预警记录，保持优秀</p>
+                          <p className="text-[11px] text-ink-400">该检测师偏差率长期低于行业均值，飞检全通过</p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="rounded-2xl bg-gradient-to-br from-gold-500/8 via-ink-800/40 to-ink-800/40 border border-gold-500/20 p-4">
+                      <h5 className="text-sm font-semibold text-ink-100 mb-3 flex items-center gap-2">
+                        <Info className="w-4 h-4 text-gold-400" />
+                        SOP · 飞检抽样规则
+                      </h5>
+                      <div className="space-y-2.5 text-xs text-ink-300">
+                        <div className="flex gap-2.5">
+                          <span className="w-5 h-5 rounded-md bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-[10px] font-bold gold-text shrink-0 mt-0.5">1</span>
+                          <p>系统每日按 <b className="gold-text">15% 比例</b>随机抽取已完成订单进行盲检</p>
+                        </div>
+                        <div className="flex gap-2.5">
+                          <span className="w-5 h-5 rounded-md bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-[10px] font-bold gold-text shrink-0 mt-0.5">2</span>
+                          <p>派送至 <b className="text-ink-100">独立复检中心</b>，检测师与原单信息全程隔离</p>
+                        </div>
+                        <div className="flex gap-2.5">
+                          <span className="w-5 h-5 rounded-md bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-[10px] font-bold gold-text shrink-0 mt-0.5">3</span>
+                          <p>偏差率 ≥<b className="text-amberLux-400">3%</b> 触发黄警，纳入下月重点抽查池</p>
+                        </div>
+                        <div className="flex gap-2.5">
+                          <span className="w-5 h-5 rounded-md bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-[10px] font-bold gold-text shrink-0 mt-0.5">4</span>
+                          <p>偏差率 ≥<b className="text-coral-400">5%</b> 触发红警，<b className="text-coral-400">立即停单培训 3 天</b></p>
+                        </div>
+                        <div className="flex gap-2.5">
+                          <span className="w-5 h-5 rounded-md bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-[10px] font-bold gold-text shrink-0 mt-0.5">5</span>
+                          <p>连续 3 个月偏差 &lt;1%，<b className="text-jade-400">晋升 S 级 + 季度奖金</b></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </Modal>
       </section>
 
       {/* Divider */}
@@ -2019,12 +2741,24 @@ const HomePage: React.FC = () => {
       {/* ============================================================ */}
       <section className="py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.6 }} className="mb-14 text-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.6 }} className="mb-10 text-center">
             <Badge variant="default" className="mb-4"><MapPin className="w-3 h-3 mr-1.5 text-gold-500" />38 城上门 · 实时排班</Badge>
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 leading-tight">
               🚗 全国 <span className="gold-text">38 城</span> 上门服务
             </h2>
-            <p className="text-ink-400 text-lg max-w-2xl mx-auto">检测师实时排班可查 · 最快 2 小时上门 · 当面检测当面打款</p>
+            <p className="text-ink-400 text-lg max-w-2xl mx-auto mb-6">检测师实时排班可查 · 最快 2 小时上门 · 当面检测当面打款</p>
+            <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+              <Button
+                variant="gold"
+                size="lg"
+                className="group shadow-[0_0_25px_rgba(201,169,98,0.25)] hover:shadow-[0_0_35px_rgba(201,169,98,0.4)] transition-shadow"
+                onClick={() => navigate('/admin/city-network')}
+              >
+                <MapPin className="w-5 h-5 mr-2" />
+                查看全国排班与上门路线
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </motion.div>
           </motion.div>
 
           <div className="grid lg:grid-cols-5 gap-6">
@@ -2140,10 +2874,16 @@ const HomePage: React.FC = () => {
                           <td className="text-center py-3 px-2"><span className="text-ink-300 text-xs">{c.arrivalTime}</span></td>
                           <td className="text-center py-3 px-2"><Badge variant="gold">+{c.premium}%</Badge></td>
                           <td className="text-right py-3 px-2">
-                            <Button variant="outline" size="xs" onClick={() => navigate('/evaluate')}>
-                              <Calendar className="w-3 h-3 mr-1" />
-                              预约
-                            </Button>
+                            <div className="flex items-center justify-end gap-1.5">
+                              <Button variant="ghost" size="xs" onClick={() => navigate(`/admin/city-network?city=${encodeURIComponent(c.name)}`)}>
+                                <Clock className="w-3 h-3 mr-1" />
+                                排班
+                              </Button>
+                              <Button variant="outline" size="xs" onClick={() => navigate('/evaluate')}>
+                                <Calendar className="w-3 h-3 mr-1" />
+                                预约
+                              </Button>
+                            </div>
                           </td>
                         </motion.tr>
                       ))}
@@ -2280,6 +3020,43 @@ const HomePage: React.FC = () => {
                         <Button variant="gold" size="md" className="w-full" onClick={() => navigate('/evaluate')}>
                           <Award className="w-4 h-4 mr-2" />
                           回收它，获得专属环保证书 →
+                        </Button>
+                      </motion.div>
+
+                      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                        <Button
+                          variant="gold"
+                          size="md"
+                          className="w-full !bg-gradient-to-r !from-gold-500 !via-amber-400 !to-gold-500 text-ink-950 hover:!from-gold-400 hover:!via-amber-300 hover:!to-gold-400 shadow-[0_0_20px_rgba(201,169,98,0.35)]"
+                          loading={certGenerating}
+                          disabled={certGenerating}
+                          onClick={() => {
+                            setCertGenerating(true);
+                            const timestamp = Date.now();
+                            setTimeout(() => {
+                              const brandName = categoryBrands[ecoCategory].find(b => b.id === ecoBrand)?.name || '臻选品牌';
+                              const categoryName = categories.find(c => c.id === ecoCategory)?.name || '';
+                              const hash = '0x' + Array.from({length: 16}, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase() + '...' + Array.from({length: 6}, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase();
+                              setEcoCertModal({
+                                open: true,
+                                data: {
+                                  certNo: `CERT-${timestamp}`,
+                                  carbon: ecoComputed.carbon,
+                                  trees: ecoComputed.trees,
+                                  kwh: ecoComputed.kwh,
+                                  ore: ecoComputed.ore,
+                                  brandName,
+                                  categoryName,
+                                  timestamp,
+                                  hash,
+                                }
+                              });
+                              setCertGenerating(false);
+                            }, 2000);
+                          }}
+                        >
+                          <Sparkles className="w-4 h-4 mr-2" />
+                          {certGenerating ? '正在生成区块链存证证书...' : '✨ 生成我的环保贡献证书'}
                         </Button>
                       </motion.div>
                     </motion.div>
@@ -3030,6 +3807,327 @@ const HomePage: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* 环保证书 Modal */}
+      <Modal
+        open={ecoCertModal.open}
+        onClose={() => setEcoCertModal({ open: false, data: null })}
+        size="lg"
+        title=""
+      >
+        {(() => {
+          const certData = ecoCertModal.data || {
+            certNo: `CERT-${Date.now()}`,
+            carbon: ecoComputed.carbon,
+            trees: ecoComputed.trees,
+            kwh: ecoComputed.kwh,
+            ore: ecoComputed.ore,
+            brandName: categoryBrands[ecoCategory].find(b => b.id === ecoBrand)?.name || 'Apple iPhone',
+            categoryName: categories.find(c => c.id === ecoCategory)?.name || '手机',
+            timestamp: Date.now(),
+            hash: '0x' + Array.from({length: 16}, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase() + '...' + Array.from({length: 6}, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase(),
+          };
+          const certDate = new Date(certData.timestamp);
+          const dateStr = `${certDate.getFullYear()}-${String(certDate.getMonth() + 1).padStart(2, '0')}-${String(certDate.getDate()).padStart(2, '0')}`;
+          const oil = Math.floor(certData.carbon * 0.45);
+          const waste = Math.floor(certData.carbon * 0.3);
+          const qrPattern = React.useMemo(() => Array.from({ length: 100 }, () => Math.random() > 0.45), []);
+          const certRef = React.useRef<HTMLDivElement>(null);
+
+          const handleDownload = () => {
+            if (!certRef.current) return;
+            const svgNS = 'http://www.w3.org/2000/svg';
+            const w = 800, h = 560;
+            const svg = document.createElementNS(svgNS, 'svg');
+            svg.setAttribute('width', String(w));
+            svg.setAttribute('height', String(h));
+            svg.setAttribute('xmlns', svgNS);
+
+            const defs = document.createElementNS(svgNS, 'defs');
+            const grad = document.createElementNS(svgNS, 'linearGradient');
+            grad.setAttribute('id', 'goldGrad');
+            grad.setAttribute('x1', '0%'); grad.setAttribute('y1', '0%');
+            grad.setAttribute('x2', '100%'); grad.setAttribute('y2', '100%');
+            const s1 = document.createElementNS(svgNS, 'stop'); s1.setAttribute('offset', '0%'); s1.setAttribute('stop-color', '#0D1F17');
+            const s2 = document.createElementNS(svgNS, 'stop'); s2.setAttribute('offset', '50%'); s2.setAttribute('stop-color', '#143023');
+            const s3 = document.createElementNS(svgNS, 'stop'); s3.setAttribute('offset', '100%'); s3.setAttribute('stop-color', '#0D1F17');
+            grad.appendChild(s1); grad.appendChild(s2); grad.appendChild(s3);
+
+            const goldG = document.createElementNS(svgNS, 'linearGradient');
+            goldG.setAttribute('id', 'goldText');
+            goldG.setAttribute('x1', '0%'); goldG.setAttribute('y1', '0%');
+            goldG.setAttribute('x2', '100%'); goldG.setAttribute('y2', '100%');
+            const gs1 = document.createElementNS(svgNS, 'stop'); gs1.setAttribute('offset', '0%'); gs1.setAttribute('stop-color', '#F4D48C');
+            const gs2 = document.createElementNS(svgNS, 'stop'); gs2.setAttribute('offset', '50%'); gs2.setAttribute('stop-color', '#C9A962');
+            const gs3 = document.createElementNS(svgNS, 'stop'); gs3.setAttribute('offset', '100%'); gs3.setAttribute('stop-color', '#8B6914');
+            goldG.appendChild(gs1); goldG.appendChild(gs2); goldG.appendChild(gs3);
+            defs.appendChild(grad); defs.appendChild(goldG);
+            svg.appendChild(defs);
+
+            const bg = document.createElementNS(svgNS, 'rect');
+            bg.setAttribute('width', String(w)); bg.setAttribute('height', String(h));
+            bg.setAttribute('fill', 'url(#goldGrad)');
+            svg.appendChild(bg);
+
+            const border = document.createElementNS(svgNS, 'rect');
+            border.setAttribute('x', '12'); border.setAttribute('y', '12');
+            border.setAttribute('width', String(w - 24)); border.setAttribute('height', String(h - 24));
+            border.setAttribute('fill', 'none'); border.setAttribute('stroke', '#C9A962');
+            border.setAttribute('stroke-width', '2');
+            svg.appendChild(border);
+
+            const inner = document.createElementNS(svgNS, 'rect');
+            inner.setAttribute('x', '20'); inner.setAttribute('y', '20');
+            inner.setAttribute('width', String(w - 40)); inner.setAttribute('height', String(h - 40));
+            inner.setAttribute('fill', 'none'); inner.setAttribute('stroke', '#C9A962');
+            inner.setAttribute('stroke-width', '1'); inner.setAttribute('stroke-dasharray', '4,2');
+            inner.setAttribute('opacity', '0.5');
+            svg.appendChild(inner);
+
+            const addText = (x:number, y:number, txt:string, size:number, color:string, weight='normal', anchor='start') => {
+              const t = document.createElementNS(svgNS, 'text');
+              t.setAttribute('x', String(x)); t.setAttribute('y', String(y));
+              t.setAttribute('font-size', String(size)); t.setAttribute('fill', color);
+              t.setAttribute('font-weight', weight); t.setAttribute('text-anchor', anchor);
+              t.setAttribute('font-family', '-apple-system, BlinkMacSystemFont, sans-serif');
+              t.textContent = txt;
+              svg.appendChild(t);
+            };
+
+            addText(w / 2, 60, '环保电子证书', 32, 'url(#goldText)', 'bold', 'middle');
+            addText(w / 2, 88, 'ELECTRONIC ENVIRONMENTAL CERTIFICATE', 10, '#86869B', 'normal', 'middle');
+            addText(w / 2, 115, certData.certNo, 14, '#C9A962', 'bold', 'middle');
+            addText(40, 150, `颁发日期：${dateStr}`, 12, '#86869B');
+            addText(w - 40, 150, '证书编号查询：scan.zhenrecycle.com', 12, '#86869B', 'normal', 'end');
+
+            const userY = 200;
+            addText(40, userY, '持证人信息', 14, '#C9A962', 'bold');
+            addText(40, userY + 28, '用户昵称：臻回收用户', 13, '#D7D7E0');
+            addText(40, userY + 52, `回收品类：${certData.categoryName} · ${certData.brandName}`, 13, '#D7D7E0');
+
+            const carbonY = 300;
+            addText(w / 2, carbonY, '碳减排贡献量', 16, 'url(#goldText)', 'bold', 'middle');
+            addText(w / 2, carbonY + 50, `${certData.carbon}`, 56, 'url(#goldText)', 'bold', 'middle');
+            addText(w / 2, carbonY + 75, 'kg CO₂ 减排量', 14, '#2BA179', 'normal', 'middle');
+
+            const statsY = 410;
+            const stats = [
+              { label: '等效植树', val: `${certData.trees} 棵`, icon: '🌲' },
+              { label: '节省电力', val: `${certData.kwh} 度`, icon: '⚡' },
+              { label: '节省矿石', val: `${certData.ore} kg`, icon: '⛏️' },
+              { label: '减少垃圾', val: `${waste} kg`, icon: '♻️' },
+            ];
+            stats.forEach((s, i) => {
+              const cx = 100 + i * 175;
+              addText(cx, statsY, s.icon, 24, '#D7D7E0', 'normal', 'middle');
+              addText(cx, statsY + 26, s.val, 15, '#D7D7E0', 'bold', 'middle');
+              addText(cx, statsY + 46, s.label, 11, '#86869B', 'normal', 'middle');
+            });
+
+            addText(40, h - 40, `区块链哈希：${certData.hash}`, 10, '#666');
+            addText(w - 40, h - 40, '中检认证 · 杭州互联网公证处 联合存证', 10, '#C9A962', 'normal', 'end');
+
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${certData.certNo}.svg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            setTimeout(() => {
+              const canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              if (!ctx) return;
+              const img = new Image();
+              img.onload = () => {
+                ctx.drawImage(img, 0, 0);
+                canvas.toBlob((pngBlob) => {
+                  if (!pngBlob) return;
+                  const pngUrl = URL.createObjectURL(pngBlob);
+                  const a = document.createElement('a');
+                  a.href = pngUrl;
+                  a.download = `${certData.certNo}.png`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(pngUrl);
+                });
+              };
+              img.src = url;
+            }, 100);
+          };
+
+          return (
+            <div className="space-y-5">
+              <style>{`
+                @keyframes shimmer-cert {
+                  0% { transform: translateX(-100%) skewX(-15deg); }
+                  100% { transform: translateX(300%) skewX(-15deg); }
+                }
+                @keyframes float-slow {
+                  0%, 100% { transform: translateY(0) rotate(0deg); }
+                  50% { transform: translateY(-4px) rotate(1deg); }
+                }
+                .cert-shimmer::after {
+                  content: '';
+                  position: absolute;
+                  top: 0; left: 0;
+                  width: 30%; height: 100%;
+                  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.18), transparent);
+                  animation: shimmer-cert 3.2s ease-in-out infinite;
+                }
+                .cert-stamp { animation: float-slow 4s ease-in-out infinite; }
+              `}</style>
+
+              <div ref={certRef} className="relative rounded-3xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-ink-950 via-forest-950/40 to-ink-950" />
+                <div className="absolute inset-[3px] rounded-[22px] border-2 border-transparent bg-gradient-to-br from-gold-300 via-gold-500 to-gold-700 [border-image:linear-gradient(135deg,#F4D48C,#C9A962,#8B6914,#C9A962,#F4D48C)_1]" />
+                <div className="absolute inset-[7px] rounded-[18px] border border-gold-500/30" />
+                <div className="absolute inset-[7px] rounded-[18px] border border-dashed border-gold-500/20 m-[5px]" />
+                <div className="absolute inset-0 opacity-10 pointer-events-none cert-shimmer overflow-hidden rounded-3xl" />
+
+                <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gold-500/10 to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-forest-500/10 to-transparent pointer-events-none" />
+
+                <div className="absolute left-[18px] top-[18px] right-[18px] bottom-[18px] rounded-2xl p-6 lg:p-8 space-y-5 overflow-hidden">
+                  <div className="text-center relative z-10">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <div className="h-px w-16 bg-gradient-to-r from-transparent via-gold-500/60 to-gold-500/60" />
+                      <p className="text-[10px] tracking-[0.35em] text-ink-500 font-mono">ZHEN · RECYCLE</p>
+                      <div className="h-px w-16 bg-gradient-to-l from-transparent via-gold-500/60 to-gold-500/60" />
+                    </div>
+                    <h3 className="font-display text-3xl lg:text-4xl font-bold mb-1 bg-gradient-to-r from-gold-200 via-gold-400 to-gold-200 bg-clip-text text-transparent">
+                      环保电子证书
+                    </h3>
+                    <p className="text-[11px] text-ink-500 tracking-[0.2em] font-mono mb-2">ELECTRONIC · ENVIRONMENTAL · CERTIFICATE</p>
+                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gold-500/10 border border-gold-500/30">
+                      <FileCheck className="w-3.5 h-3.5 text-gold-400" />
+                      <span className="font-mono text-sm gold-text font-bold">{certData.certNo}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-ink-500 px-2">
+                    <span>📅 颁发日期：{dateStr}</span>
+                    <div className="flex items-center gap-1">
+                      <QrCode className="w-3 h-3 text-gold-500" />
+                      <span>scan.zhenrecycle.com 验证</span>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-ink-900/60 border border-white/[0.06] p-4 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-ink-950 font-display font-bold text-xl shrink-0 shadow-lg shadow-gold-500/20">
+                        臻
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-ink-50 text-base">臻回收用户</p>
+                        <p className="text-xs text-ink-400">感谢您为地球做出的绿色贡献 🌍</p>
+                      </div>
+                      <BadgeCheck className="w-7 h-7 text-jade-400 shrink-0" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm border-t border-ink-700/50 pt-3">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-ink-500 mb-0.5">回收品类</p>
+                        <p className="text-ink-200 font-medium">{certData.categoryName}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-ink-500 mb-0.5">品牌型号</p>
+                        <p className="text-ink-200 font-medium truncate">{certData.brandName}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-jade-500/20 via-forest-500/10 to-jade-500/20 rounded-2xl" />
+                    <div className="absolute inset-0 cert-shimmer overflow-hidden rounded-2xl" />
+                    <div className="relative p-5 rounded-2xl border border-jade-500/30">
+                      <p className="text-center text-xs text-jade-300 mb-1 tracking-widest">★ 累计碳减排贡献量 ★</p>
+                      <div className="text-center">
+                        <span className="font-display text-6xl lg:text-7xl font-bold bg-gradient-to-br from-gold-200 via-gold-400 to-amber-600 bg-clip-text text-transparent">
+                          {certData.carbon}
+                        </span>
+                        <span className="text-ink-200 ml-2 text-xl">kg CO₂</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-ink-800/60 rounded-full mt-3 overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-jade-400 via-gold-400 to-jade-400 rounded-full" style={{ width: `${Math.min(100, certData.carbon)}%` }} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-4 gap-2.5">
+                    {[
+                      { label: '等效植树', val: `${certData.trees} 棵`, sub: '冷杉/年', icon: '🌲', color: 'from-emerald-500/15 to-emerald-500/5 text-emerald-300 border-emerald-500/25' },
+                      { label: '节省电力', val: `${certData.kwh} 度`, sub: `家用${Math.ceil(certData.kwh/8)}天`, icon: '⚡', color: 'from-amber-500/15 to-amber-500/5 text-amber-300 border-amber-500/25' },
+                      { label: '减少矿石', val: `${certData.ore} kg`, sub: '原生矿产', icon: '⛏️', color: 'from-forest-500/15 to-forest-500/5 text-forest-300 border-forest-500/25' },
+                      { label: '减少垃圾', val: `${waste} kg`, sub: '固废填埋', icon: '♻️', color: 'from-cyan-500/15 to-cyan-500/5 text-cyan-300 border-cyan-500/25' },
+                    ].map((x) => (
+                      <div key={x.label} className={`rounded-xl p-3 bg-gradient-to-br ${x.color} border text-center`}>
+                        <div className="text-2xl mb-1">{x.icon}</div>
+                        <p className="font-bold text-ink-100 text-sm">{x.val}</p>
+                        <p className="text-[10px] text-ink-400 mt-0.5">{x.label}</p>
+                        <p className="text-[9px] text-ink-500">{x.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex items-end justify-between gap-4 pt-1">
+                    <div className="flex-1 space-y-1.5 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <Shield className="w-3.5 h-3.5 text-jade-400 shrink-0" />
+                        <span className="text-[10px] text-ink-400 font-semibold uppercase tracking-wider">区块链存证</span>
+                      </div>
+                      <p className="font-mono text-[10px] text-ink-500 break-all leading-relaxed">
+                        <span className="text-gold-500">HASH</span>: {certData.hash}<br />
+                        <span className="text-jade-400">NET</span>: BSC GreenChain v2.1 · 区块高度 #{Math.floor(certData.timestamp / 10000)}
+                      </p>
+                    </div>
+
+                    <div className="flex items-end gap-3 shrink-0">
+                      <div className="relative cert-stamp opacity-90">
+                        <div className="w-20 h-20 rounded-full border-2 border-dashed border-red-500/70 flex items-center justify-center relative"
+                             style={{ transform: 'rotate(-12deg)' }}>
+                          <div className="absolute inset-1 rounded-full border border-red-500/50" />
+                          <div className="text-center leading-tight">
+                            <p className="text-[8px] text-red-500 font-bold tracking-wider">★ 中检认证 ★</p>
+                            <p className="text-[7px] text-red-500 mt-0.5">CIC CERTIFIED</p>
+                            <div className="h-px bg-red-500/50 my-0.5 mx-1" />
+                            <p className="text-[6px] text-red-500">杭州互联网公证处</p>
+                            <p className="text-[6px] text-red-500 mt-0.5">{dateStr.slice(2).replace(/-/g,'.')}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-20 h-20 bg-white rounded-xl p-1.5 border-2 border-gold-500/30 shadow-lg shadow-gold-500/10 shrink-0">
+                        <div className="w-full h-full rounded grid grid-cols-10 grid-rows-10 gap-px p-0.5 bg-ink-50">
+                          {qrPattern.map((on, i) => (
+                            <div key={i} className={on ? 'bg-ink-900 rounded-sm' : 'bg-white'} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <Button variant="outline" size="lg" className="flex-1" onClick={() => setEcoCertModal({ open: false, data: null })}>
+                  <X className="w-4 h-4 mr-1.5" />
+                  关闭
+                </Button>
+                <Button variant="gold" size="lg" className="flex-1 shadow-[0_0_20px_rgba(201,169,98,0.3)]" onClick={handleDownload}>
+                  <Download className="w-4 h-4 mr-1.5" />
+                  下载证书 (SVG + PNG)
+                </Button>
+              </div>
+            </div>
+          );
+        })()}
+      </Modal>
 
       {/* 客服 Modal */}
       <Modal open={showSupport} onClose={() => setShowSupport(false)} size="sm">
