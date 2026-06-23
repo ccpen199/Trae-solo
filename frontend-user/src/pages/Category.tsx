@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { productApi } from '../api/modules';
 import { useToast } from '../App';
@@ -26,8 +26,10 @@ interface Product {
   region_list?: string[];
   supplier_count?: number;
   supplier_stock?: number;
-  stock_sync_history?: Array<{ batch: string; time: number; stock: number }>;
+  stock_sync_history?: Array<{ batch: string; time: number; stock: number; delta?: number }>;
   sku_type?: string;
+  card_available?: number;
+  card_total?: number;
 }
 
 interface CategoryDef {
@@ -109,8 +111,20 @@ function generateMockProducts(categoryId: string, categoryName: string, count: n
       category_name: categoryName,
       hasFallback: i % 3 !== 0,
       lastSync: Math.floor(Date.now() / 1000) - (i % 48) * 3600,
-      channelCount: 1 + (i % 5)
+      channelCount: 1 + (i % 5),
+      card_available: categoryId === 'card' ? Math.floor(Math.random() * 96) + 5 : Math.floor(Math.random() * 51),
+      card_total: 0,
+      stock_sync_history: Array.from({ length: 2 + Math.floor(Math.random() * 2) }, (_, hi) => {
+        const batchStock = [0, 3, 5, 20, 50, 100, 200, 500, 30, 80, 15, 25, 60, 90, 120][i % 15];
+        return {
+          batch: `BATCH-${String(1000 + i * 10 + hi).padStart(4, '0')}`,
+          time: Math.floor(Date.now() / 1000) - (hi + 1) * 3600 - i * 600,
+          stock: batchStock + (2 - hi) * 10,
+          delta: (2 - hi) * 10
+        };
+      })
     });
+    products[products.length - 1].card_total = Math.round((products[products.length - 1].card_available || 0) * (1.5 + Math.random() * 1.5));
   }
   return products;
 }
@@ -136,6 +150,8 @@ export default function Category() {
   const [guaranteeFilter, setGuaranteeFilter] = useState<GuaranteeFilter>('all');
   const [selectedSupplier, setSelectedSupplier] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
+  const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
+  const [expandedSku, setExpandedSku] = useState<string | null>(null);
 
   useEffect(() => {
     loadData();
@@ -358,6 +374,122 @@ export default function Category() {
     );
   };
 
+  const renderListMode = (products: Product[]) => {
+    const cardAvail = (p: Product) => p.card_available ?? 0;
+    const cardTotal = (p: Product) => p.card_total ?? 0;
+    return (
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
+          <thead>
+            <tr style={{ background: '#fafafa', borderBottom: '1px solid #f0f0f0' }}>
+              <th style={{ padding: '6px 8px', textAlign: 'left', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>SKU编号</th>
+              <th style={{ padding: '6px 8px', textAlign: 'left', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>商品名</th>
+              <th style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>面值</th>
+              <th style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>售价</th>
+              <th style={{ padding: '6px 8px', textAlign: 'left', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>供应商</th>
+              <th style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>库存</th>
+              <th style={{ padding: '6px 8px', textAlign: 'center', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>区域限售</th>
+              <th style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>卡密可用</th>
+              <th style={{ padding: '6px 8px', textAlign: 'left', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>同步批次</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((p, idx) => {
+              const isExpanded = expandedSku === p.id;
+              const ratio = cardTotal(p) > 0 ? cardAvail(p) / cardTotal(p) : 0;
+              return (
+                <Fragment key={p.id}>
+                  <tr
+                    onClick={() => setExpandedSku(isExpanded ? null : p.id)}
+                    style={{
+                      background: idx % 2 === 0 ? 'white' : '#fafafa',
+                      cursor: 'pointer',
+                      borderBottom: isExpanded ? 'none' : '1px solid #f5f5f5'
+                    }}
+                  >
+                    <td style={{ padding: '6px 8px', color: '#999', fontSize: 10 }}>{p.id}</td>
+                    <td style={{ padding: '6px 8px', fontWeight: 500, color: '#333' }}>{p.name}</td>
+                    <td style={{ padding: '6px 8px', textAlign: 'right', color: '#666' }}>{p.face_value ? `¥${p.face_value}` : '-'}</td>
+                    <td style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600, color: '#667eea' }}>¥{p.price.toFixed(2)}</td>
+                    <td style={{ padding: '6px 8px', color: '#666' }}>{p.supplier_name || '-'}</td>
+                    <td style={{ padding: '6px 8px', textAlign: 'right' }}>
+                      <span style={{ color: p.stock === 0 ? '#ff4d4f' : p.stock <= 10 ? '#fa8c16' : '#52c41a', fontWeight: 500 }}>
+                        {p.stock}
+                      </span>
+                    </td>
+                    <td style={{ padding: '6px 8px', textAlign: 'center' }}>
+                      {p.region_limited === 1 ? (
+                        <span style={{ fontSize: 10, padding: '1px 5px', background: '#fff7e6', color: '#d48806', borderRadius: 3 }}>限售</span>
+                      ) : (
+                        <span style={{ color: '#ccc' }}>-</span>
+                      )}
+                    </td>
+                    <td style={{ padding: '6px 8px', textAlign: 'right' }}>
+                      <span style={{ color: cardAvail(p) > 0 ? '#52c41a' : '#999', fontWeight: 500 }}>
+                        {cardAvail(p)}
+                      </span>
+                    </td>
+                    <td style={{ padding: '6px 8px', color: '#999', fontSize: 10 }}>
+                      {p.sync_batch || (p.stock_sync_history?.[0]?.batch) || '-'}
+                    </td>
+                  </tr>
+                  {isExpanded && (
+                    <tr>
+                      <td colSpan={9} style={{ padding: '10px 12px', background: '#f9f9ff', borderBottom: '1px solid #f0f0f0' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+                          <div>
+                            <div style={{ fontSize: 11, fontWeight: 600, color: '#667eea', marginBottom: 6 }}>供应商库存流水</div>
+                            {p.stock_sync_history && p.stock_sync_history.length > 0 ? (
+                              <div style={{ fontSize: 10, color: '#666' }}>
+                                {p.stock_sync_history.map((h, hi) => (
+                                  <div key={hi} style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0', borderBottom: '1px dashed #f0f0f0' }}>
+                                    <span>{h.batch}</span>
+                                    <span style={{ color: '#999' }}>{new Date(h.time * 1000).toLocaleString()}</span>
+                                    <span>库存{h.stock}</span>
+                                    <span style={{ color: h.delta >= 0 ? '#52c41a' : '#ff4d4f' }}>{h.delta >= 0 ? '+' : ''}{h.delta}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div style={{ fontSize: 10, color: '#ccc' }}>暂无流水</div>
+                            )}
+                          </div>
+                          <div>
+                            <div style={{ fontSize: 11, fontWeight: 600, color: '#fa8c16', marginBottom: 6 }}>可售区域</div>
+                            {p.region_list && p.region_list.length > 0 ? (
+                              <div style={{ fontSize: 10, color: '#666', display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                                {p.region_list.map((r, ri) => (
+                                  <span key={ri} style={{ padding: '2px 6px', background: '#fff7e6', borderRadius: 3, color: '#d48806' }}>{r}</span>
+                                ))}
+                              </div>
+                            ) : (
+                              <div style={{ fontSize: 10, color: '#ccc' }}>全国可售</div>
+                            )}
+                          </div>
+                          <div>
+                            <div style={{ fontSize: 11, fontWeight: 600, color: '#52c41a', marginBottom: 6 }}>卡密使用率</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <div style={{ flex: 1, height: 8, borderRadius: 4, background: '#f0f0f0', overflow: 'hidden' }}>
+                                <div style={{ width: `${Math.min(100, ratio * 100)}%`, height: '100%', borderRadius: 4, background: ratio > 0.5 ? '#52c41a' : ratio > 0.2 ? '#fa8c16' : '#ff4d4f', transition: 'width 0.3s' }} />
+                              </div>
+                              <span style={{ fontSize: 10, color: '#666', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                                {cardAvail(p)}/{cardTotal(p)} ({(ratio * 100).toFixed(1)}%)
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   const filteredCount = Object.values(filteredProductsByCat).reduce((s, arr) => s + arr.length, 0);
   const totalCount = allProducts.length;
 
@@ -385,7 +517,7 @@ export default function Category() {
               共 {categories.length} 个分类
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 18, fontWeight: 700, color: '#667eea' }}>{totalCount}</div>
               <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>SKU总数</div>
@@ -407,6 +539,12 @@ export default function Category() {
                 {allProducts.filter(p => (p.supplier_count || 0) > 1).length}
               </div>
               <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>多供应商</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#13c2c2' }}>
+                {allProducts.filter(p => (p.card_available ?? 0) > 0).length}
+              </div>
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>卡密可用</div>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10, paddingTop: 10, borderTop: '1px dashed #667eea20' }}>
@@ -434,6 +572,11 @@ export default function Category() {
               ✕
             </button>
           )}
+        </div>
+
+        <div style={{ display: 'flex', gap: 4, marginTop: 10 }}>
+          <button onClick={() => setViewMode('card')} style={{ padding: '5px 12px', borderRadius: 6, background: viewMode === 'card' ? '#667eea' : '#f5f5f5', color: viewMode === 'card' ? 'white' : '#666', fontSize: 11, border: 'none', cursor: 'pointer', fontWeight: 600 }}>▢ 卡片</button>
+          <button onClick={() => setViewMode('list')} style={{ padding: '5px 12px', borderRadius: 6, background: viewMode === 'list' ? '#667eea' : '#f5f5f5', color: viewMode === 'list' ? 'white' : '#666', fontSize: 11, border: 'none', cursor: 'pointer', fontWeight: 600 }}>☰ 明细</button>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
@@ -790,6 +933,8 @@ export default function Category() {
                           前往管理后台添加商品 →
                         </div>
                       </div>
+                    ) : viewMode === 'list' ? (
+                      renderListMode(products)
                     ) : (
                       <div style={{
                         display: 'grid',

@@ -51,6 +51,57 @@ interface ChannelPriceAdjust {
   percentAdjust: number;
 }
 
+interface CombinedDiscountItem {
+  type: 'base' | 'full_reduction' | 'new_user' | 'member';
+  label: string;
+  amount: number;
+  description: string;
+}
+
+interface CombinedDiscount {
+  totalAmount: number;
+  items: CombinedDiscountItem[];
+}
+
+interface ChannelSwitchHistoryItem {
+  id: string;
+  fromChannel: string;
+  toChannel: string;
+  switchTime: number;
+  reason: string;
+  fromChannelType: 'main' | 'backup' | 'fallback';
+  toChannelType: 'main' | 'backup' | 'fallback';
+}
+
+interface ChannelSwitchResult {
+  currentCarrier: string;
+  carrierType: 'mobile' | 'unicom' | 'telecom' | 'unknown';
+  totalChannels: number;
+  availableChannels: number;
+  recommendedChannel: number;
+  recommendedChannelName: string;
+  recommendedChannelType: 'main' | 'backup' | 'fallback';
+  switchHistory: ChannelSwitchHistoryItem[];
+}
+
+interface AppealRecord {
+  id: number;
+  type: string;
+  reason: string;
+  status: 'pending' | 'processing' | 'resolved' | 'rejected';
+  status_text: string;
+  created_at: number;
+  operator: string;
+  reply?: string;
+  replyTime?: number;
+}
+
+interface PreCheckError {
+  errorCode: string;
+  errorMessage: string;
+  errorDetail: ErrorCodeDetail | null;
+}
+
 const ERROR_CODE_TABLE: Array<{ code: string; reason: string; solution: string; retryable: boolean }> = [
   { code: 'SUPPLIER_TIMEOUT', reason: '供应商响应超时', solution: '请稍后重试，或切换其他通道', retryable: true },
   { code: 'SUPPLIER_ERROR', reason: '供应商接口异常', solution: '请稍后重试，或联系客服', retryable: true },
@@ -112,6 +163,30 @@ const PRODUCT_ERROR_CODES: Record<string, ErrorCodeDetail> = {
     label: '风控异常',
     reasons: ['短时间内频繁下单被系统拦截', 'IP地址异常', '账号行为可疑'],
     solutions: ['等待24小时后再试', '更换网络环境后重试', '联系客服解除限制']
+  },
+  'INVALID_ACCOUNT': {
+    code: 'INVALID_ACCOUNT',
+    label: '账号格式错误',
+    reasons: ['充值账号包含非数字字符', '账号长度不符合要求', '账号前缀不合法', '账号输入时手误'],
+    solutions: ['重新输入正确格式的充值账号', '删除账号中的空格和特殊字符', '对照账单确认账号信息']
+  },
+  'WRONG_CARRIER': {
+    code: 'WRONG_CARRIER',
+    label: '运营商不匹配',
+    reasons: ['当前商品仅支持指定运营商充值', '手机号归属运营商与商品不符', '运营商识别错误'],
+    solutions: ['选择对应运营商的充值商品', '确认手机号归属运营商后重试', '联系客服确认号段支持情况']
+  },
+  'REGION_NOT_SUPPORTED': {
+    code: 'REGION_NOT_SUPPORTED',
+    label: '该地区暂不支持',
+    reasons: ['该商品仅支持特定省份充值', '手机号归属地不在服务范围', '运营商跨省充值限制'],
+    solutions: ['选择支持您所在地区的商品', '查看同类全国通用商品', '联系客服确认支持地区列表']
+  },
+  'CHANNEL_MAINTENANCE': {
+    code: 'CHANNEL_MAINTENANCE',
+    label: '通道维护中',
+    reasons: ['当前充值通道正在升级维护', '备用通道也在维护中', '供应商系统例行维护'],
+    solutions: ['等待维护完成后重试（通常30分钟-2小时）', '切换其他同类商品', '联系客服获取维护进度']
   }
 };
 
@@ -136,6 +211,20 @@ const MOBILE_PREFIXES = ['139', '138', '137', '136', '135', '134', '150', '151',
 const UNICOM_PREFIXES = ['130', '131', '132', '155', '156', '185', '186', '176', '145', '146', '166', '175', '1704', '1707', '1708', '1709'];
 const TELECOM_PREFIXES = ['133', '153', '177', '173', '180', '181', '189', '199', '1700', '1701', '1702', '162', '141', '149'];
 
+const APPEAL_TYPES = [
+  { key: 'unreceived', label: '未到账', icon: '⏳' },
+  { key: 'wrong_amount', label: '金额不符', icon: '💰' },
+  { key: 'wrong_account', label: '账号错误', icon: '📱' },
+  { key: 'quality_issue', label: '商品质量问题', icon: '⚠️' },
+  { key: 'other', label: '其他问题', icon: '📝' }
+];
+
+const CHANNEL_TYPE_CONFIG: Record<string, { label: string; color: string; bgColor: string; borderColor: string }> = {
+  main: { label: '主通道', color: '#1890ff', bgColor: '#e6f7ff', borderColor: '#91d5ff' },
+  backup: { label: '备用通道', color: '#52c41a', bgColor: '#f6ffed', borderColor: '#b7eb8f' },
+  fallback: { label: '降级通道', color: '#faad14', bgColor: '#fffbe6', borderColor: '#ffe58f' }
+};
+
 function formatSyncTime(timestamp: number): string {
   if (!timestamp) return '-';
   const now = Date.now();
@@ -153,6 +242,28 @@ function getStockStatus(stock: number, stockWarning: number = 10) {
   if (stock === 0) return { text: '缺货', cls: 'none' };
   if (stock <= stockWarning) return { text: `仅剩${stock}件`, cls: 'less' };
   return { text: '库存充足', cls: '' };
+}
+
+function formatTime(timestamp: number): string {
+  if (!timestamp) return '-';
+  const d = new Date(timestamp * 1000);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+function formatTimeShort(timestamp: number): string {
+  if (!timestamp) return '-';
+  const d = new Date(timestamp * 1000);
+  return `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+function getAppealStatusStyle(status: string) {
+  switch (status) {
+    case 'pending': return { bg: '#fffbe6', color: '#d46b08', border: '#ffe58f', text: '待处理' };
+    case 'processing': return { bg: '#e6f7ff', color: '#096dd9', border: '#91d5ff', text: '处理中' };
+    case 'resolved': return { bg: '#f6ffed', color: '#389e0d', border: '#b7eb8f', text: '已解决' };
+    case 'rejected': return { bg: '#fff1f0', color: '#cf1322', border: '#ffa39e', text: '已驳回' };
+    default: return { bg: '#f5f5f5', color: '#595959', border: '#d9d9d9', text: status };
+  }
 }
 
 function validatePhone(phone: string): AccountValidation {
@@ -243,6 +354,18 @@ export default function ProductDetail() {
   const pollingTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pollingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [calculateLoading, setCalculateLoading] = useState(false);
+  const [combinedDiscount, setCombinedDiscount] = useState<CombinedDiscount | null>(null);
+  const [expandedCombinedDiscount, setExpandedCombinedDiscount] = useState(false);
+  const [channelSwitchResult, setChannelSwitchResult] = useState<ChannelSwitchResult | null>(null);
+  const [expandedChannelSwitch, setExpandedChannelSwitch] = useState(false);
+  const [showAppealModal, setShowAppealModal] = useState(false);
+  const [appealing, setAppealing] = useState(false);
+  const [appealReason, setAppealReason] = useState('');
+  const [appealType, setAppealType] = useState('unreceived');
+  const [appealRecords, setAppealRecords] = useState<AppealRecord[]>([]);
+  const [contacting, setContacting] = useState(false);
+  const [switchingChannel, setSwitchingChannel] = useState(false);
+  const [preCheckError, setPreCheckError] = useState<PreCheckError | null>(null);
 
   useEffect(() => {
     loadData();
@@ -268,7 +391,12 @@ export default function ProductDetail() {
       if (cleaned !== form.account) {
         setForm(prev => ({ ...prev, account: cleaned }));
       } else {
-        setAccountValidation(validatePhone(form.account));
+        const validation = validatePhone(form.account);
+        setAccountValidation(validation);
+        if (validation.isValid && form.account.length === 11) {
+          calculate();
+          generateChannelSwitchResult(validation);
+        }
       }
     } else {
       setAccountValidation({ isValid: true, isVirtual: false, carrier: '', carrierType: 'unknown', message: '' });
@@ -368,11 +496,130 @@ export default function ProductDetail() {
           }
         }
         setPriceResult(data);
+        generateCombinedDiscount(data);
       }
     } catch {
     } finally {
       setCalculateLoading(false);
     }
+  };
+
+  const generateCombinedDiscount = (priceData: any) => {
+    if (!priceData) return;
+    const originalPrice = priceData.originalAmount ?? priceData.originalPrice ?? (product.price * form.quantity);
+    const finalPrice = priceData.finalAmount ?? priceData.finalPrice ?? (product.price * form.quantity);
+    const discountDetails = getDiscountDetails();
+    
+    const items: CombinedDiscountItem[] = [];
+    let totalDiscount = 0;
+
+    const baseDiscountItem = discountDetails.find((d: any) => d.type === 'percentage');
+    if (baseDiscountItem) {
+      const amt = baseDiscountItem.discountAmount ?? baseDiscountItem.discount ?? 0;
+      if (amt > 0) {
+        items.push({
+          type: 'base',
+          label: '基础优惠',
+          amount: amt,
+          description: baseDiscountItem.description || baseDiscountItem.name || '商品折扣'
+        });
+        totalDiscount += amt;
+      }
+    }
+
+    const fullReductionItem = discountDetails.find((d: any) => d.type === 'full_reduction');
+    if (fullReductionItem) {
+      const amt = fullReductionItem.discountAmount ?? fullReductionItem.discount ?? 0;
+      if (amt > 0) {
+        items.push({
+          type: 'full_reduction',
+          label: '满减优惠',
+          amount: amt,
+          description: fullReductionItem.description || fullReductionItem.name || '满50减2'
+        });
+        totalDiscount += amt;
+      }
+    }
+
+    const newUserItem = discountDetails.find((d: any) => d.type === 'new_user');
+    if (newUserItem) {
+      const amt = newUserItem.discountAmount ?? newUserItem.discount ?? 0;
+      if (amt > 0) {
+        items.push({
+          type: 'new_user',
+          label: '新用户立减',
+          amount: amt,
+          description: newUserItem.description || newUserItem.name || '新用户专享'
+        });
+        totalDiscount += amt;
+      }
+    }
+
+    const memberDiscount = Math.round((originalPrice * 0.02) * 100) / 100;
+    if (user && memberDiscount > 0) {
+      items.push({
+        type: 'member',
+        label: '会员折扣',
+        amount: memberDiscount,
+        description: '会员专享98折'
+      });
+      totalDiscount += memberDiscount;
+    }
+
+    const totalAmount = Math.max(0, originalPrice - finalPrice);
+    setCombinedDiscount({
+      totalAmount,
+      items
+    });
+  };
+
+  const generateChannelSwitchResult = (validation: AccountValidation) => {
+    if (!product?.channels) return;
+    
+    const activeChannels = product.channels.filter((c: any) => c.status === 1);
+    const totalChannels = product.channels.length;
+    const availableChannels = activeChannels.length;
+    
+    let recommendedChannel = 0;
+    let recommendedChannelName = '主通道';
+    let recommendedChannelType: 'main' | 'backup' | 'fallback' = 'main';
+    
+    if (availableChannels > 0) {
+      const bestChannel = activeChannels.reduce((best: any, curr: any, idx: number) => {
+        const bestRate = best.success_rate ?? best.successRate ?? 0;
+        const currRate = curr.success_rate ?? curr.successRate ?? 0;
+        return currRate > bestRate ? { ...curr, idx } : { ...best, idx };
+      }, { ...activeChannels[0], idx: 0 });
+      
+      recommendedChannel = product.channels.findIndex((c: any) => c.id === bestChannel.id) ?? 0;
+      recommendedChannelName = bestChannel.name || (recommendedChannel === 0 ? '主通道' : `备用${recommendedChannel}`);
+      recommendedChannelType = recommendedChannel === 0 ? 'main' : recommendedChannel <= 2 ? 'backup' : 'fallback';
+    }
+
+    const switchHistory: ChannelSwitchHistoryItem[] = [];
+    if (availableChannels > 1) {
+      const now = Date.now() / 1000;
+      switchHistory.push({
+        id: '1',
+        fromChannel: '主通道',
+        toChannel: '备用通道1',
+        switchTime: now - 3600,
+        reason: '主通道超时，自动切换',
+        fromChannelType: 'main',
+        toChannelType: 'backup'
+      });
+    }
+
+    setChannelSwitchResult({
+      currentCarrier: validation.carrier || '未知运营商',
+      carrierType: validation.carrierType,
+      totalChannels,
+      availableChannels,
+      recommendedChannel,
+      recommendedChannelName,
+      recommendedChannelType,
+      switchHistory
+    });
   };
 
   const getPlaceholder = () => {
@@ -492,6 +739,10 @@ export default function ProductDetail() {
   };
 
   const preCheck = getPreCheckResult();
+
+  useEffect(() => {
+    updatePreCheckError();
+  }, [preCheck.passed, preCheck.failReason, accountValidation, selectedChannel]);
 
   const openConfirmModal = async () => {
     if (!user) {
@@ -707,6 +958,110 @@ export default function ProductDetail() {
 
   const handleSwitchSupplier = (altId: string) => {
     navigate(`/product/${altId}`);
+  };
+
+  const doContact = async () => {
+    setContacting(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      toast.show('📞 客服通道接入中... 请稍候', 'info');
+    } finally {
+      setContacting(false);
+    }
+  };
+
+  const doAppeal = async () => {
+    if (!appealReason.trim()) {
+      toast.show('请填写申诉原因', 'warning');
+      return;
+    }
+    setAppealing(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const newRecord: AppealRecord = {
+        id: Date.now(),
+        type: appealType,
+        reason: appealReason,
+        status: 'pending',
+        status_text: '待处理',
+        created_at: Date.now() / 1000,
+        operator: '用户'
+      };
+      setAppealRecords([newRecord, ...appealRecords]);
+      setShowAppealModal(false);
+      setAppealReason('');
+      toast.show('✅ 申诉已提交，客服将在24小时内处理', 'success');
+    } finally {
+      setAppealing(false);
+    }
+  };
+
+  const doSwitchChannelRetry = async () => {
+    if (!product?.channels) return;
+    setSwitchingChannel(true);
+    try {
+      const activeChannels = product.channels
+        .map((c: any, i: number) => ({ ...c, idx: i }))
+        .filter((c: any) => c.status === 1 && c.idx !== selectedChannel);
+      
+      if (activeChannels.length > 0) {
+        const nextChannel = activeChannels[0];
+        setSelectedChannel(nextChannel.idx);
+        const newHistoryItem: ChannelSwitchHistoryItem = {
+          id: Date.now().toString(),
+          fromChannel: product.channels[selectedChannel]?.name || `通道${selectedChannel + 1}`,
+          toChannel: nextChannel.name || `通道${nextChannel.idx + 1}`,
+          switchTime: Date.now() / 1000,
+          reason: '手动切换通道重试',
+          fromChannelType: selectedChannel === 0 ? 'main' : selectedChannel <= 2 ? 'backup' : 'fallback',
+          toChannelType: nextChannel.idx === 0 ? 'main' : nextChannel.idx <= 2 ? 'backup' : 'fallback'
+        };
+        setChannelSwitchResult((prev: any) => prev ? {
+          ...prev,
+          recommendedChannel: nextChannel.idx,
+          recommendedChannelName: nextChannel.name || `通道${nextChannel.idx + 1}`,
+          recommendedChannelType: nextChannel.idx === 0 ? 'main' : nextChannel.idx <= 2 ? 'backup' : 'fallback',
+          switchHistory: [newHistoryItem, ...prev.switchHistory]
+        } : null);
+        setTimeout(() => {
+          calculate();
+          toast.show(`🔄 已切换到${nextChannel.name || '备用通道'}，正在重新预检...`, 'success');
+        }, 500);
+      } else {
+        toast.show('⚠️ 没有其他可用通道', 'warning');
+      }
+    } finally {
+      setSwitchingChannel(false);
+    }
+  };
+
+  const updatePreCheckError = () => {
+    if (!preCheck.passed) {
+      let errorCode = 'UNKNOWN_ERROR';
+      if (!preCheck.accountOk) {
+        if (!accountValidation.isValid) {
+          errorCode = 'INVALID_ACCOUNT';
+        } else if (accountValidation.carrier && product?.supported_carriers?.length) {
+          const carrierMatch = product.supported_carriers.some((c: string) => 
+            accountValidation.carrier?.includes(c)
+          );
+          if (!carrierMatch) {
+            errorCode = 'WRONG_CARRIER';
+          }
+        }
+      } else if (product?.region_limited && form.account) {
+        errorCode = 'REGION_NOT_SUPPORTED';
+      } else if (preCheck.channelActive === 0) {
+        errorCode = 'CHANNEL_MAINTENANCE';
+      }
+      setPreCheckError({
+        errorCode,
+        errorMessage: preCheck.failReason || '预检未通过',
+        errorDetail: PRODUCT_ERROR_CODES[errorCode] || null
+      });
+    } else {
+      setPreCheckError(null);
+    }
   };
 
   const commissionFaqList = [
@@ -971,6 +1326,311 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {combinedDiscount && combinedDiscount.items.length > 0 && (
+        <div className="card" style={{ marginTop: 0 }}>
+          <div
+            className="flex-between"
+            style={{ cursor: 'pointer', marginBottom: expandedCombinedDiscount ? 12 : 0 }}
+            onClick={() => setExpandedCombinedDiscount(!expandedCombinedDiscount)}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="text-bold" style={{ fontSize: 15 }}>🎁 组合优惠详情</span>
+              <span className="tag tag-orange" style={{ fontSize: 10 }}>
+                已叠加{combinedDiscount.items.length}项
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="text-sm text-green" style={{ fontWeight: 700 }}>
+                共省¥{combinedDiscount.totalAmount.toFixed(2)}
+              </span>
+              <span style={{
+                fontSize: 12, color: '#999',
+                transition: 'transform 0.2s',
+                transform: expandedCombinedDiscount ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}>▼</span>
+            </div>
+          </div>
+          {expandedCombinedDiscount && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {combinedDiscount.items.map((item, idx) => {
+                const iconConfig: Record<string, { icon: string; color: string; bg: string }> = {
+                  base: { icon: '📉', color: '#1890ff', bg: '#e6f7ff' },
+                  full_reduction: { icon: '💰', color: '#52c41a', bg: '#f6ffed' },
+                  new_user: { icon: '🎁', color: '#722ed1', bg: '#f9f0ff' },
+                  member: { icon: '👑', color: '#fa8c16', bg: '#fff7e6' }
+                };
+                const config = iconConfig[item.type] || iconConfig.base;
+                return (
+                  <div key={idx} style={{
+                    padding: '12px',
+                    borderRadius: 12,
+                    background: '#fafafa',
+                    border: `1px solid ${config.bg}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10
+                  }}>
+                    <span style={{
+                      minWidth: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      background: config.bg,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 18,
+                      flexShrink: 0,
+                      color: config.color,
+                      fontWeight: 700
+                    }}>
+                      {config.icon}
+                    </span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{
+                        fontSize: 13,
+                        color: '#333',
+                        fontWeight: 600,
+                        marginBottom: 2
+                      }}>
+                        {item.label}
+                      </div>
+                      <div style={{ fontSize: 11, color: '#999', lineHeight: 1.4 }}>
+                        {item.description}
+                      </div>
+                    </div>
+                    <span style={{
+                      color: '#52c41a',
+                      fontWeight: 700,
+                      fontSize: 15,
+                      flexShrink: 0
+                    }}>
+                      -¥{item.amount.toFixed(2)}
+                    </span>
+                  </div>
+                );
+              })}
+              <div style={{
+                marginTop: 4,
+                paddingTop: 12,
+                borderTop: '2px dashed #e8e8e8',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: '#333' }}>
+                  📊 优惠合计
+                </span>
+                <span style={{ fontSize: 16, fontWeight: 800, color: '#52c41a' }}>
+                  -¥{combinedDiscount.totalAmount.toFixed(2)}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {channelSwitchResult && (
+        <div className="card" style={{ marginTop: 0 }}>
+          <div
+            className="flex-between"
+            style={{ cursor: 'pointer', marginBottom: expandedChannelSwitch ? 12 : 0 }}
+            onClick={() => setExpandedChannelSwitch(!expandedChannelSwitch)}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="text-bold" style={{ fontSize: 15 }}>📡 运营商通道信息</span>
+              {channelSwitchResult.switchHistory.length > 0 && (
+                <span className="tag tag-blue" style={{ fontSize: 10 }}>
+                  切换{channelSwitchResult.switchHistory.length}次
+                </span>
+              )}
+            </div>
+            <span style={{
+              fontSize: 12, color: '#999',
+              transition: 'transform 0.2s',
+              transform: expandedChannelSwitch ? 'rotate(180deg)' : 'rotate(0deg)'
+            }}>▼</span>
+          </div>
+          {expandedChannelSwitch && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 10
+              }}>
+                <div style={{
+                  padding: '12px',
+                  borderRadius: 12,
+                  background: CARRIER_CONFIG[channelSwitchResult.carrierType]?.bgColor || '#f5f5f5',
+                  border: `1px solid ${CARRIER_CONFIG[channelSwitchResult.carrierType]?.borderColor || '#d9d9d9'}`,
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>当前运营商</div>
+                  <div style={{
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: CARRIER_CONFIG[channelSwitchResult.carrierType]?.color || '#333'
+                  }}>
+                    {CARRIER_CONFIG[channelSwitchResult.carrierType]?.logo || '📱'} {channelSwitchResult.currentCarrier}
+                  </div>
+                </div>
+                <div style={{
+                  padding: '12px',
+                  borderRadius: 12,
+                  background: '#e6f7ff',
+                  border: '1px solid #91d5ff',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>可用通道</div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: '#1890ff' }}>
+                    {channelSwitchResult.availableChannels}/{channelSwitchResult.totalChannels}
+                  </div>
+                </div>
+                <div style={{
+                  padding: '12px',
+                  borderRadius: 12,
+                  background: CHANNEL_TYPE_CONFIG[channelSwitchResult.recommendedChannelType].bgColor,
+                  border: `1px solid ${CHANNEL_TYPE_CONFIG[channelSwitchResult.recommendedChannelType].borderColor}`,
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>推荐通道</div>
+                  <div style={{
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: CHANNEL_TYPE_CONFIG[channelSwitchResult.recommendedChannelType].color
+                  }}>
+                    {channelSwitchResult.recommendedChannelName}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                padding: '10px 12px',
+                borderRadius: 10,
+                background: '#fafafa',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 10
+              }}>
+                <span style={{ fontSize: 12, color: '#666', fontWeight: 500 }}>通道类型</span>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {Object.entries(CHANNEL_TYPE_CONFIG).map(([key, config]) => (
+                    <span key={key} style={{
+                      fontSize: 10,
+                      padding: '2px 8px',
+                      borderRadius: 8,
+                      background: config.bgColor,
+                      color: config.color,
+                      border: `1px solid ${config.borderColor}`,
+                      fontWeight: 600
+                    }}>
+                      {config.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {channelSwitchResult.switchHistory.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#333', marginBottom: 10 }}>
+                    🔄 通道切换历史
+                  </div>
+                  <div style={{ position: 'relative', paddingLeft: 4 }}>
+                    {channelSwitchResult.switchHistory.map((item, idx) => {
+                      const isLast = idx === channelSwitchResult.switchHistory.length - 1;
+                      const fromConfig = CHANNEL_TYPE_CONFIG[item.fromChannelType];
+                      const toConfig = CHANNEL_TYPE_CONFIG[item.toChannelType];
+                      return (
+                        <div key={item.id} style={{
+                          position: 'relative',
+                          paddingBottom: isLast ? 0 : 16,
+                          paddingLeft: 30
+                        }}>
+                          {!isLast && (
+                            <div style={{
+                              position: 'absolute', left: 9, top: 28,
+                              bottom: 0, width: 2, background: '#f0f0f0'
+                            }} />
+                          )}
+                          <div style={{
+                            position: 'absolute', left: 0, top: 6, width: 20, height: 20,
+                            borderRadius: '50%',
+                            background: isLast
+                              ? 'linear-gradient(135deg, #52c41a, #73d13d)'
+                              : 'linear-gradient(135deg, #f093fb, #f5576c)',
+                            display: 'flex', alignItems: 'center',
+                            justifyContent: 'center', fontSize: 10,
+                            color: 'white', zIndex: 1, fontWeight: 800,
+                            boxShadow: isLast ? '0 2px 8px rgba(82,196,26,0.4)' : '0 2px 8px rgba(240,147,251,0.4)'
+                          }}>
+                            {isLast ? '✓' : idx + 1}
+                          </div>
+                          <div style={{
+                            padding: '12px',
+                            background: '#fafafa',
+                            borderRadius: 12,
+                            border: `2px solid ${isLast ? '#b7eb8f' : '#f0f0f0'}`
+                          }}>
+                            <div style={{
+                              display: 'flex', justifyContent: 'space-between',
+                              alignItems: 'center', marginBottom: 10
+                            }}>
+                              <span style={{ fontSize: 12, fontWeight: 700, color: '#262626' }}>
+                                第 {idx + 1} 次切换
+                              </span>
+                              <span style={{ fontSize: 11, color: '#8c8c8c' }}>
+                                {formatTimeShort(item.switchTime)}
+                              </span>
+                            </div>
+                            <div style={{
+                              display: 'flex', alignItems: 'center',
+                              gap: 10, marginBottom: 10, flexWrap: 'wrap'
+                            }}>
+                              <span style={{
+                                padding: '6px 12px',
+                                background: fromConfig.bgColor,
+                                border: `2px solid ${fromConfig.borderColor}`,
+                                borderRadius: 10,
+                                fontSize: 12,
+                                color: fromConfig.color,
+                                fontWeight: 700
+                              }}>
+                                📤 {item.fromChannel}
+                              </span>
+                              <span style={{ fontSize: 18, color: '#bfbfbf', fontWeight: 700 }}>⟶</span>
+                              <span style={{
+                                padding: '6px 12px',
+                                background: toConfig.bgColor,
+                                border: `2px solid ${toConfig.borderColor}`,
+                                borderRadius: 10,
+                                fontSize: 12,
+                                color: toConfig.color,
+                                fontWeight: 700
+                              }}>
+                                📥 {item.toChannel}
+                              </span>
+                            </div>
+                            <div style={{
+                              fontSize: 12, color: '#595959',
+                              lineHeight: 1.5, padding: '8px 10px',
+                              background: '#fafafa', borderRadius: 8,
+                              border: '1px solid #f0f0f0'
+                            }}>
+                              <span style={{ color: '#8c8c8c', fontWeight: 600 }}>切换原因：</span>
+                              {item.reason}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {discountDetails.length > 0 && (
         <div className="card" style={{ marginTop: 0 }}>
@@ -1623,6 +2283,216 @@ export default function ProductDetail() {
             ✅ 所有预检项已通过，可以安全下单！
           </div>
         )}
+
+        {preCheckError && preCheckError.errorDetail && (
+          <div style={{
+            marginTop: 12,
+            borderRadius: 12,
+            border: `2px solid #ffa39e`,
+            background: '#fff1f0',
+            overflow: 'hidden'
+          }}>
+            <div
+              style={{
+                padding: '12px 14px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 10,
+                cursor: 'pointer'
+              }}
+              onClick={() => setExpandedErrorCode(expandedErrorCode === preCheckError.errorCode ? null : preCheckError.errorCode)}
+            >
+              <span style={{ fontSize: 18, flexShrink: 0 }}>🛑</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                  marginBottom: 4
+                }}>
+                  <span style={{
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    padding: '2px 8px',
+                    borderRadius: 6,
+                    background: '#ff4d4f',
+                    color: 'white'
+                  }}>
+                    {preCheckError.errorCode}
+                  </span>
+                  <span style={{
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: '#cf1322'
+                  }}>
+                    {preCheckError.errorDetail.label}
+                  </span>
+                </div>
+                <div style={{ fontSize: 12, color: '#cf1322', lineHeight: 1.5 }}>
+                  {preCheckError.errorMessage}
+                </div>
+              </div>
+              <span style={{
+                fontSize: 12,
+                color: '#999',
+                flexShrink: 0,
+                transition: 'transform 0.2s',
+                transform: expandedErrorCode === preCheckError.errorCode ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}>▼</span>
+            </div>
+            {expandedErrorCode === preCheckError.errorCode && preCheckError.errorDetail && (
+              <div style={{
+                padding: '0 14px 14px 50px',
+                borderTop: '1px dashed #ffccc7'
+              }}>
+                <div style={{ paddingTop: 10 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: '#333', marginBottom: 8 }}>
+                    📋 常见原因（{preCheckError.errorDetail.reasons.length}条）
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 12 }}>
+                    {preCheckError.errorDetail.reasons.map((reason, i) => (
+                      <div key={i} style={{ fontSize: 12, color: '#666', display: 'flex', gap: 6 }}>
+                        <span style={{ color: '#ff4d4f' }}>{i + 1}.</span>
+                        <span>{reason}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: '#333', marginBottom: 8 }}>
+                    💡 解决方案（{preCheckError.errorDetail.solutions.length}条）
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    {preCheckError.errorDetail.solutions.map((sol, i) => (
+                      <div key={i} style={{ fontSize: 12, color: '#666', display: 'flex', gap: 6 }}>
+                        <span style={{ color: '#52c41a' }}>✓</span>
+                        <span>{sol}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {!preCheck.passed && (
+          <div style={{
+            marginTop: 14,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 8
+          }}>
+            <button
+              onClick={() => setShowAppealModal(true)}
+              style={{
+                padding: '10px 4px',
+                borderRadius: 10,
+                border: '2px solid #722ed1',
+                color: '#531dab',
+                background: '#f9f0ff',
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              📝 提交申诉
+            </button>
+            <button
+              onClick={doSwitchChannelRetry}
+              disabled={switchingChannel || preCheck.channelActive === 0}
+              style={{
+                padding: '10px 4px',
+                borderRadius: 10,
+                border: '2px solid #1890ff',
+                color: '#096dd9',
+                background: switchingChannel || preCheck.channelActive === 0 ? '#f5f5f5' : '#e6f7ff',
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: switchingChannel || preCheck.channelActive === 0 ? 'not-allowed' : 'pointer',
+                opacity: switchingChannel || preCheck.channelActive === 0 ? 0.6 : 1
+              }}
+            >
+              {switchingChannel ? '⏳ 切换中...' : '🔄 切换通道重试'}
+            </button>
+            <button
+              onClick={doContact}
+              disabled={contacting}
+              style={{
+                padding: '10px 4px',
+                borderRadius: 10,
+                border: '2px solid #8c8c8c',
+                color: '#595959',
+                background: contacting ? '#f5f5f5' : '#fafafa',
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: contacting ? 'not-allowed' : 'pointer',
+                opacity: contacting ? 0.6 : 1
+              }}
+            >
+              {contacting ? '⏳ 接入中...' : '📞 联系客服'}
+            </button>
+          </div>
+        )}
+
+        {appealRecords.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div className="text-bold mb-12" style={{ fontSize: 15 }}>📝 申诉记录</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {appealRecords.map((record) => {
+                const statusStyle = getAppealStatusStyle(record.status);
+                const typeInfo = APPEAL_TYPES.find(t => t.key === record.type);
+                return (
+                  <div key={record.id} style={{
+                    padding: 12,
+                    borderRadius: 10,
+                    background: '#fafafa',
+                    border: '1px solid #f0f0f0'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: 16 }}>{typeInfo?.icon || '📝'}</span>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: '#262626' }}>
+                          {typeInfo?.label || record.type}
+                        </span>
+                      </div>
+                      <span style={{
+                        fontSize: 11,
+                        padding: '2px 8px',
+                        borderRadius: 10,
+                        background: statusStyle.bg,
+                        color: statusStyle.color,
+                        border: `1px solid ${statusStyle.border}`,
+                        fontWeight: 600
+                      }}>
+                        {statusStyle.text}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 12, color: '#595959', marginBottom: 6 }}>
+                      {record.reason}
+                    </div>
+                    {record.reply && (
+                      <div style={{
+                        fontSize: 12,
+                        color: '#1890ff',
+                        background: '#e6f7ff',
+                        padding: '8px 10px',
+                        borderRadius: 8,
+                        marginBottom: 6
+                      }}>
+                        📨 客服回复：{record.reply}
+                      </div>
+                    )}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#8c8c8c' }}>
+                      <span>提交人：{record.operator}</span>
+                      <span>{formatTime(record.created_at)}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="card" style={{ marginTop: 0 }}>
@@ -2014,6 +2884,126 @@ export default function ProductDetail() {
                   </span>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAppealModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.5)', zIndex: 1000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: 20
+        }} onClick={() => setShowAppealModal(false)}>
+          <div style={{
+            background: 'white', borderRadius: 16, width: '100%', maxWidth: 400,
+            maxHeight: '80vh', overflow: 'hidden',
+            display: 'flex', flexDirection: 'column'
+          }} onClick={e => e.stopPropagation()}>
+            <div style={{
+              padding: '16px 20px', borderBottom: '1px solid #f0f0f0',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+            }}>
+              <span style={{ fontSize: 16, fontWeight: 700, color: '#262626' }}>
+                📝 提交申诉
+              </span>
+              <button
+                onClick={() => setShowAppealModal(false)}
+                style={{
+                  background: 'none', border: 'none', fontSize: 20,
+                  color: '#bfbfbf', cursor: 'pointer', lineHeight: 1
+                }}
+              >
+                ×
+              </button>
+            </div>
+            <div style={{ padding: 20, overflowY: 'auto', flex: 1 }}>
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#262626', marginBottom: 10 }}>
+                  申诉类型
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                  {APPEAL_TYPES.map(type => (
+                    <button
+                      key={type.key}
+                      onClick={() => setAppealType(type.key)}
+                      style={{
+                        padding: '10px 4px', borderRadius: 8,
+                        border: `2px solid ${appealType === type.key ? '#722ed1' : '#f0f0f0'}`,
+                        background: appealType === type.key ? '#f9f0ff' : '#fafafa',
+                        color: appealType === type.key ? '#722ed1' : '#595959',
+                        fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4
+                      }}
+                    >
+                      <span style={{ fontSize: 18 }}>{type.icon}</span>
+                      <span>{type.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#262626', marginBottom: 10 }}>
+                  申诉原因
+                </div>
+                <textarea
+                  value={appealReason}
+                  onChange={(e) => setAppealReason(e.target.value)}
+                  placeholder="请详细描述您遇到的问题，以便我们更快为您处理..."
+                  style={{
+                    width: '100%', minHeight: 120, padding: 12,
+                    border: '1px solid #f0f0f0', borderRadius: 8,
+                    fontSize: 13, color: '#262626',
+                    resize: 'vertical', fontFamily: 'inherit',
+                    outline: 'none'
+                  }}
+                />
+                <div style={{ fontSize: 11, color: '#bfbfbf', marginTop: 6, textAlign: 'right' }}>
+                  {appealReason.length}/500
+                </div>
+              </div>
+              <div style={{
+                marginTop: 16, padding: 12, borderRadius: 8,
+                background: '#fffbe6', border: '1px solid #ffe58f'
+              }}>
+                <div style={{ fontSize: 12, color: '#d46b08', fontWeight: 600, marginBottom: 4 }}>
+                  ⏱️ 处理时效
+                </div>
+                <div style={{ fontSize: 11, color: '#ad6800' }}>
+                  客服将在24小时内处理您的申诉，处理结果将通过站内消息通知您。
+                </div>
+              </div>
+            </div>
+            <div style={{
+              padding: '12px 20px', borderTop: '1px solid #f0f0f0',
+              display: 'flex', gap: 10
+            }}>
+              <button
+                onClick={() => setShowAppealModal(false)}
+                style={{
+                  flex: 1, padding: '12px 0', borderRadius: 10,
+                  border: '1px solid #f0f0f0', background: '#fafafa',
+                  color: '#595959', fontSize: 14, fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                取消
+              </button>
+              <button
+                onClick={doAppeal}
+                disabled={appealing || !appealReason.trim()}
+                style={{
+                  flex: 2, padding: '12px 0', borderRadius: 10,
+                  background: appealing || !appealReason.trim()
+                    ? '#d9d9d9'
+                    : 'linear-gradient(135deg, #722ed1, #9254de)',
+                  color: 'white', fontSize: 14, fontWeight: 700,
+                  border: 'none', cursor: appealing || !appealReason.trim() ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {appealing ? '提交中...' : '提交申诉'}
+              </button>
             </div>
           </div>
         </div>

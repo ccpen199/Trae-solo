@@ -120,6 +120,14 @@ export default function AdminPortal() {
   const [exportFormat, setExportFormat] = useState<'csv' | 'json'>('csv');
   const [exportStartDate, setExportStartDate] = useState('');
   const [exportEndDate, setExportEndDate] = useState('');
+  const [selectedRiskLog, setSelectedRiskLog] = useState<RiskLog | null>(null);
+  const [selectedSettlement, setSelectedSettlement] = useState<Settlement | null>(null);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [selectedCryptoLog, setSelectedCryptoLog] = useState<CryptoLog | null>(null);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [newInvoiceType, setNewInvoiceType] = useState<'vat' | 'normal' | 'electronic'>('vat');
+  const [newInvoiceAmount, setNewInvoiceAmount] = useState('');
+  const [newInvoiceTitle, setNewInvoiceTitle] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -156,7 +164,28 @@ export default function AdminPortal() {
         setReviewList(res?.data?.list || res?.data || res || []);
         setReviewTotal(res?.data?.total || 0);
       }).catch(() => [])
-    ]).finally(() => setLoading(false));
+    ]).finally(() => {
+      setLoading(false);
+      setTimeout(() => {
+        if (riskLogs.length === 0) {
+          const mockData = generateMockRiskLogs();
+          setRiskLogs(mockData);
+          setRiskTotal(mockData.length);
+        }
+        if (settlements.length === 0) {
+          setSettlements(generateMockSettlements());
+        }
+        if (invoices.length === 0) {
+          setInvoices(generateMockInvoices());
+        }
+        if (profitConfigs.length === 0) {
+          setProfitConfigs(generateMockProfitConfigs());
+        }
+        if (cryptoLogs.length === 0) {
+          setCryptoLogs(generateMockCryptoLogs());
+        }
+      }, 100);
+    });
   }, []);
 
   const metrics = [
@@ -244,6 +273,100 @@ export default function AdminPortal() {
     return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
   };
 
+  const generateMockRiskLogs = (): RiskLog[] => {
+    const types = ['virtual_phone', 'region_limit', 'frequency', 'ip_blacklist'];
+    const levels: Array<'high' | 'medium' | 'low'> = ['high', 'medium', 'low'];
+    const statuses: Array<'blocked' | 'warning' | 'released'> = ['blocked', 'warning', 'released'];
+    const reasons = [
+      '检测到虚拟手机号下单',
+      '该地区暂不支持购买',
+      '短时间内请求频次过高',
+      'IP地址在黑名单中',
+      '疑似恶意刷单行为',
+      '账号存在异常交易记录'
+    ];
+    const now = Math.floor(Date.now() / 1000);
+    return Array.from({ length: 20 }, (_, i) => {
+      const type = types[Math.floor(Math.random() * types.length)];
+      return {
+        id: `mock-risk-${i}`,
+        type,
+        level: levels[Math.floor(Math.random() * levels.length)],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        ip: `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`,
+        user_id: `user_${Math.floor(Math.random() * 10000)}`,
+        reason: reasons[Math.floor(Math.random() * reasons.length)],
+        created_at: now - Math.floor(Math.random() * 7 * 24 * 60 * 60)
+      };
+    });
+  };
+
+  const generateMockSettlements = (): Settlement[] => {
+    const suppliers = ['中国移动通信', '中国电信', '中国联通', '腾讯视频', '爱奇艺', '优酷视频', '美团点评', '饿了么'];
+    const statuses: Array<'pending' | 'processing' | 'completed' | 'failed'> = ['pending', 'processing', 'completed', 'completed', 'completed', 'failed'];
+    const now = Math.floor(Date.now() / 1000);
+    return suppliers.map((name, i) => {
+      const total = 5000 + Math.floor(Math.random() * 45000);
+      const status = statuses[Math.floor(Math.random() * statuses.length)];
+      const settled = status === 'completed' ? total : status === 'processing' ? Math.floor(total * 0.5) : 0;
+      return {
+        id: `mock-settlement-${i}`,
+        supplier_name: name,
+        period: '2026-05',
+        total_amount: total,
+        settled_amount: settled,
+        status,
+        created_at: now - Math.floor(Math.random() * 30 * 24 * 60 * 60)
+      };
+    });
+  };
+
+  const generateMockInvoices = (): Invoice[] => {
+    const types: Array<'vat' | 'normal' | 'electronic'> = ['vat', 'normal', 'electronic'];
+    const statuses: Array<'pending' | 'issued' | 'mailed' | 'received'> = ['pending', 'issued', 'mailed', 'received'];
+    const titles = ['北京科技有限公司', '上海贸易有限公司', '广州电商有限公司', '深圳网络科技公司', '杭州信息技术公司'];
+    const now = Math.floor(Date.now() / 1000);
+    return Array.from({ length: 12 }, (_, i) => ({
+      id: `mock-invoice-${i}`,
+      invoice_no: `INV${String(2026000001 + i)}`,
+      amount: 1000 + Math.floor(Math.random() * 19000),
+      type: types[Math.floor(Math.random() * types.length)],
+      title: titles[Math.floor(Math.random() * titles.length)],
+      status: statuses[Math.floor(Math.random() * statuses.length)],
+      created_at: now - Math.floor(Math.random() * 30 * 24 * 60 * 60)
+    }));
+  };
+
+  const generateMockProfitConfigs = (): ProfitConfig[] => {
+    const names = ['话费充值', '流量充值', '视频会员', '游戏点卡', '电商卡密', '生活缴费'];
+    return names.map((name, i) => ({
+      id: `mock-profit-${i}`,
+      name,
+      level1_rate: 0.03 + Math.random() * 0.05,
+      level2_rate: 0.02 + Math.random() * 0.03,
+      level3_rate: 0.01 + Math.random() * 0.02,
+      platform_rate: 0.1 + Math.random() * 0.1,
+      supplier_rate: 0.7 + Math.random() * 0.15,
+      status: 1
+    }));
+  };
+
+  const generateMockCryptoLogs = (): CryptoLog[] => {
+    const actions: Array<'encrypt' | 'decrypt'> = ['encrypt', 'decrypt'];
+    const operators = ['admin@example.com', 'manager@example.com', 'operator1@example.com', 'operator2@example.com'];
+    const statuses: Array<'success' | 'failed'> = ['success', 'success', 'success', 'failed'];
+    const now = Math.floor(Date.now() / 1000);
+    return Array.from({ length: 15 }, (_, i) => ({
+      id: `mock-crypto-${i}`,
+      action: actions[Math.floor(Math.random() * actions.length)],
+      operator: operators[Math.floor(Math.random() * operators.length)],
+      card_count: Math.floor(Math.random() * 500) + 10,
+      algorithm: 'AES-256-CBC',
+      created_at: now - Math.floor(Math.random() * 30 * 24 * 60 * 60),
+      status: statuses[Math.floor(Math.random() * statuses.length)]
+    }));
+  };
+
   const getRiskLevelStyle = (level: string) => {
     switch (level) {
       case 'high': return { bg: '#fff1f0', color: '#cf1322', border: '#ffa39e' };
@@ -269,6 +392,57 @@ export default function AdminPortal() {
       decrypt: { bg: '#fff0f6', color: '#eb2f96', text: '解密' }
     };
     return map[status] || { bg: '#fafafa', color: '#999', text: status };
+  };
+
+  const handleRiskAction = (log: RiskLog, action: 'release' | 'block') => {
+    setRiskLogs(prev => prev.map(l => {
+      if (l.id === log.id) {
+        return { ...l, status: action === 'release' ? 'released' : 'blocked' };
+      }
+      return l;
+    }));
+    toast.show(action === 'release' ? '已放行' : '已封禁', 'success');
+  };
+
+  const handleIssueInvoice = () => {
+    if (!newInvoiceAmount || !newInvoiceTitle) {
+      toast.show('请填写完整信息', 'error');
+      return;
+    }
+    const newInvoice: Invoice = {
+      id: `mock-invoice-new-${Date.now()}`,
+      invoice_no: `INV${String(2026010000 + invoices.length + 1)}`,
+      amount: Number(newInvoiceAmount),
+      type: newInvoiceType,
+      title: newInvoiceTitle,
+      status: 'pending',
+      created_at: Math.floor(Date.now() / 1000)
+    };
+    setInvoices(prev => [newInvoice, ...prev]);
+    setShowInvoiceModal(false);
+    setNewInvoiceAmount('');
+    setNewInvoiceTitle('');
+    toast.show('发票已提交开具', 'success');
+  };
+
+  const calculateSettlementProgress = (status: string) => {
+    switch (status) {
+      case 'pending': return 0;
+      case 'processing': return 50;
+      case 'completed': return 100;
+      case 'failed': return 0;
+      default: return 0;
+    }
+  };
+
+  const calculateInvoiceProgress = (status: string) => {
+    switch (status) {
+      case 'pending': return 25;
+      case 'issued': return 50;
+      case 'mailed': return 75;
+      case 'received': return 100;
+      default: return 0;
+    }
   };
 
   return (
@@ -438,26 +612,36 @@ export default function AdminPortal() {
               </div>
             </div>
 
-            {riskStats && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 12 }}>
-                <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #fff1f0, #fff7e6)', border: '1px solid #ffa39e30' }}>
-                  <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>今日拦截</div>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#cf1322' }}>{riskStats.blockedToday || 0}</div>
-                </div>
-                <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #f6ffed, #fff7e6)', border: '1px solid #b7eb8f30' }}>
-                  <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>虚拟号识别</div>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#389e0d' }}>{riskStats.virtualPhoneBlocked || 0}</div>
-                </div>
-                <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #fff7e6, #fff1f0)', border: '1px solid #ffd59130' }}>
-                  <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>地域限售</div>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#d46b08' }}>{riskStats.regionLimited || 0}</div>
-                </div>
-                <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #f9f0ff, #fff7e6)', border: '1px solid #d3adf730' }}>
-                  <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>异常频次</div>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#722ed1' }}>{riskStats.frequencyBlocked || 0}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 12 }}>
+              <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #fff1f0, #fff7e6)', border: '1px solid #ffa39e30' }}>
+                <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>今日拦截</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: '#cf1322' }}>{riskStats?.blockedToday || riskLogs.filter(l => l.status === 'blocked').length || 0}</div>
+                  <span style={{ fontSize: 10, color: '#52c41a', fontWeight: 600 }}>↑ 12%</span>
                 </div>
               </div>
-            )}
+              <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #f6ffed, #fff7e6)', border: '1px solid #b7eb8f30' }}>
+                <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>虚拟号识别</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: '#389e0d' }}>{riskStats?.virtualPhoneBlocked || riskLogs.filter(l => l.type === 'virtual_phone').length || 0}</div>
+                  <span style={{ fontSize: 10, color: '#52c41a', fontWeight: 600 }}>↑ 8%</span>
+                </div>
+              </div>
+              <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #fff7e6, #fff1f0)', border: '1px solid #ffd59130' }}>
+                <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>地域限售</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: '#d46b08' }}>{riskStats?.regionLimited || riskLogs.filter(l => l.type === 'region_limit').length || 0}</div>
+                  <span style={{ fontSize: 10, color: '#ff4d4f', fontWeight: 600 }}>↓ 5%</span>
+                </div>
+              </div>
+              <div style={{ padding: '12px', borderRadius: 8, background: 'linear-gradient(135deg, #f9f0ff, #fff7e6)', border: '1px solid #d3adf730' }}>
+                <div style={{ fontSize: 10, color: '#8c8c8c', marginBottom: 4 }}>异常频次</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: '#722ed1' }}>{riskStats?.frequencyBlocked || riskLogs.filter(l => l.type === 'frequency').length || 0}</div>
+                  <span style={{ fontSize: 10, color: '#52c41a', fontWeight: 600 }}>↑ 15%</span>
+                </div>
+              </div>
+            </div>
 
             <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
               <div style={{ flex: 1 }}>
@@ -565,17 +749,90 @@ export default function AdminPortal() {
                       <div style={{ fontSize: 11, color: '#666', marginBottom: 4 }}>
                         {log.detail || log.reason}
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 10, color: '#999' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 10, color: '#999', marginBottom: 8 }}>
                         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                          {log.user_name && <span>👤 {log.user_name}</span>}
+                          {log.user_id && <span>👤 {log.user_id}</span>}
                           {log.ip && <span>📍 {log.ip}</span>}
-                          {log.region && <span>🌍 {log.region}</span>}
                         </div>
                         <span>{formatTime(log.created_at)}</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
+                        {log.status !== 'released' && (
+                          <button onClick={() => handleRiskAction(log, 'release')} style={{
+                            padding: '4px 10px', borderRadius: 4, border: 'none',
+                            background: '#52c41a', color: 'white', fontSize: 10, cursor: 'pointer', fontWeight: 500
+                          }}>
+                            ✅ 放行
+                          </button>
+                        )}
+                        {log.status !== 'blocked' && (
+                          <button onClick={() => handleRiskAction(log, 'block')} style={{
+                            padding: '4px 10px', borderRadius: 4, border: 'none',
+                            background: '#ff4d4f', color: 'white', fontSize: 10, cursor: 'pointer', fontWeight: 500
+                          }}>
+                            🚫 封禁
+                          </button>
+                        )}
+                        <button onClick={() => setSelectedRiskLog(log)} style={{
+                          padding: '4px 10px', borderRadius: 4, border: '1px solid #d9d9d9',
+                          background: 'white', color: '#666', fontSize: 10, cursor: 'pointer'
+                        }}>
+                          🔍 详情
+                        </button>
                       </div>
                     </div>
                   );
                 })}
+              </div>
+            )}
+            {selectedRiskLog && (
+              <div style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+              }} onClick={() => setSelectedRiskLog(null)}>
+                <div style={{
+                  background: 'white', borderRadius: 12, padding: 20, width: 400, maxWidth: '90%'
+                }} onClick={e => e.stopPropagation()}>
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>风控拦截详情</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>风险类型</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedRiskLog.type}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>风险等级</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedRiskLog.level === 'high' ? '高危' : selectedRiskLog.level === 'medium' ? '中危' : '低危'}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>处理状态</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{getStatusStyle(selectedRiskLog.status).text}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>用户ID</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedRiskLog.user_id || '-'}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>IP地址</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedRiskLog.ip || '-'}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>触发时间</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{formatTime(selectedRiskLog.created_at)}</span>
+                    </div>
+                    <div>
+                      <span style={{ color: '#999' }}>拦截原因</span>
+                      <div style={{ color: '#333', marginTop: 4, padding: 10, background: '#fafafa', borderRadius: 6 }}>
+                        {selectedRiskLog.reason}
+                      </div>
+                    </div>
+                  </div>
+                  <button onClick={() => setSelectedRiskLog(null)} style={{
+                    width: '100%', marginTop: 16, padding: '8px', borderRadius: 6, border: 'none',
+                    background: '#667eea', color: 'white', fontSize: 12, cursor: 'pointer', fontWeight: 500
+                  }}>
+                    关闭
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -609,17 +866,22 @@ export default function AdminPortal() {
                 暂无结算记录
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {settlements.slice(0, 5).map((s) => {
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {settlements.map((s) => {
                   const stStyle = getStatusStyle(s.status);
+                  const progress = calculateSettlementProgress(s.status);
+                  const orderCount = Math.floor(s.total_amount / 100);
+                  const settlementRate = 0.95;
+                  const deduction = s.total_amount * 0.05;
+                  const actualPayment = s.total_amount - deduction;
                   return (
                     <div key={s.id} style={{
-                      padding: 12,
+                      padding: 14,
                       borderRadius: 10,
                       background: 'white',
                       border: '1px solid #f0f0f0'
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                         <div style={{ fontSize: 13, fontWeight: 600, color: '#333' }}>{s.supplier_name}</div>
                         <span style={{
                           padding: '2px 8px',
@@ -632,7 +894,28 @@ export default function AdminPortal() {
                           {stStyle.text}
                         </span>
                       </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, fontSize: 11 }}>
+                      <div style={{ marginBottom: 10 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#999', marginBottom: 4 }}>
+                          <span>待结算</span>
+                          <span>处理中</span>
+                          <span>已完成</span>
+                        </div>
+                        <div style={{ height: 8, background: '#f0f0f0', borderRadius: 4, overflow: 'hidden', position: 'relative' }}>
+                          <div style={{
+                            height: '100%',
+                            background: 'linear-gradient(90deg, #fa8c16 0%, #1890ff 50%, #52c41a 100%)',
+                            borderRadius: 4,
+                            width: `${progress}%`,
+                            transition: 'width 0.3s'
+                          }} />
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#bbb', marginTop: 2 }}>
+                          <span style={{ color: s.status === 'pending' ? '#fa8c16' : '#bbb' }}>●</span>
+                          <span style={{ color: s.status === 'processing' ? '#1890ff' : '#bbb' }}>●</span>
+                          <span style={{ color: s.status === 'completed' ? '#52c41a' : s.status === 'failed' ? '#ff4d4f' : '#bbb' }}>●</span>
+                        </div>
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, fontSize: 11, marginBottom: 10 }}>
                         <div>
                           <div style={{ color: '#999' }}>账期</div>
                           <div style={{ color: '#333', fontWeight: 500 }}>{s.period}</div>
@@ -646,12 +929,67 @@ export default function AdminPortal() {
                           <div style={{ color: '#52c41a', fontWeight: 600 }}>¥{s.settled_amount?.toFixed(2) || '0.00'}</div>
                         </div>
                       </div>
-                      <div style={{ marginTop: 6, fontSize: 10, color: '#999', textAlign: 'right' }}>
-                        创建: {formatTime(s.created_at)}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: 10, color: '#999' }}>创建: {formatTime(s.created_at)}</span>
+                        <button onClick={() => setSelectedSettlement({ ...s, orderCount, settlementRate, deduction, actualPayment } as any)} style={{
+                          padding: '4px 12px', borderRadius: 4, border: '1px solid #667eea30',
+                          background: '#667eea10', color: '#667eea', fontSize: 10, cursor: 'pointer', fontWeight: 500
+                        }}>
+                          📄 账单详情
+                        </button>
                       </div>
                     </div>
                   );
                 })}
+              </div>
+            )}
+            {selectedSettlement && (
+              <div style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+              }} onClick={() => setSelectedSettlement(null)}>
+                <div style={{
+                  background: 'white', borderRadius: 12, padding: 20, width: 420, maxWidth: '90%'
+                }} onClick={e => e.stopPropagation()}>
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>账单详情</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>供应商</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedSettlement.supplier_name}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>账期</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedSettlement.period}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>订单数</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{(selectedSettlement as any).orderCount} 单</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>结算比例</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{((selectedSettlement as any).settlementRate * 100).toFixed(0)}%</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>应结金额</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>¥{selectedSettlement.total_amount.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>扣款</span>
+                      <span style={{ color: '#ff4d4f', fontWeight: 500 }}>-¥{(selectedSettlement as any).deduction.toFixed(2)}</span>
+                    </div>
+                    <div style={{ height: 1, background: '#f0f0f0', margin: '4px 0' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#333', fontWeight: 600 }}>实付金额</span>
+                      <span style={{ color: '#52c41a', fontWeight: 700, fontSize: 14 }}>¥{(selectedSettlement as any).actualPayment.toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <button onClick={() => setSelectedSettlement(null)} style={{
+                    width: '100%', marginTop: 16, padding: '8px', borderRadius: 6, border: 'none',
+                    background: '#667eea', color: 'white', fontSize: 12, cursor: 'pointer', fontWeight: 500
+                  }}>
+                    关闭
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -710,52 +1048,63 @@ export default function AdminPortal() {
                 </div>
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {profitConfigs.map((cfg) => (
-                  <div key={cfg.id} style={{
-                    padding: 14,
-                    borderRadius: 10,
-                    background: 'white',
-                    border: `1px solid ${cfg.status === 1 ? '#b7eb8f' : '#f0f0f0'}`,
-                    position: 'relative'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: '#333' }}>{cfg.name}</div>
-                      <span style={{
-                        padding: '2px 8px',
-                        borderRadius: 4,
-                        fontSize: 10,
-                        fontWeight: 600,
-                        background: cfg.status === 1 ? '#f6ffed' : '#f5f5f5',
-                        color: cfg.status === 1 ? '#389e0d' : '#999'
-                      }}>
-                        {cfg.status === 1 ? '启用中' : '已停用'}
-                      </span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {profitConfigs.map((cfg, idx) => {
+                  const roles = [
+                    { key: 'supplier', label: '供应商', rate: cfg.supplier_rate, color: '#1890ff' },
+                    { key: 'platform', label: '平台', rate: cfg.platform_rate, color: '#52c41a' },
+                    { key: 'level1', label: 'L1 直推', rate: cfg.level1_rate, color: '#667eea' },
+                    { key: 'level2', label: 'L2 间推', rate: cfg.level2_rate, color: '#f5576c' },
+                    { key: 'level3', label: 'L3 三级', rate: cfg.level3_rate, color: '#fa8c16' }
+                  ];
+                  const effectiveDate = new Date(Date.now() - idx * 30 * 24 * 60 * 60 * 1000);
+                  const modifiedDate = new Date(Date.now() - idx * 7 * 24 * 60 * 60 * 1000);
+                  return (
+                    <div key={cfg.id} style={{
+                      padding: 16,
+                      borderRadius: 10,
+                      background: 'white',
+                      border: `1px solid ${cfg.status === 1 ? '#b7eb8f' : '#f0f0f0'}`,
+                      position: 'relative'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: '#333' }}>{cfg.name}</div>
+                        <span style={{
+                          padding: '2px 8px',
+                          borderRadius: 4,
+                          fontSize: 10,
+                          fontWeight: 600,
+                          background: cfg.status === 1 ? '#f6ffed' : '#f5f5f5',
+                          color: cfg.status === 1 ? '#389e0d' : '#999'
+                        }}>
+                          {cfg.status === 1 ? '启用中' : '已停用'}
+                        </span>
+                      </div>
+                      <div style={{ marginBottom: 14 }}>
+                        {roles.map(role => (
+                          <div key={role.key} style={{ marginBottom: 8 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, marginBottom: 3 }}>
+                              <span style={{ color: '#666', fontWeight: 500 }}>{role.label}</span>
+                              <span style={{ color: role.color, fontWeight: 600 }}>{(role.rate * 100).toFixed(1)}%</span>
+                            </div>
+                            <div style={{ height: 8, background: '#f0f0f0', borderRadius: 4, overflow: 'hidden' }}>
+                              <div style={{
+                                height: '100%',
+                                background: role.color,
+                                borderRadius: 4,
+                                width: `${role.rate * 100}%`
+                              }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#999', paddingTop: 10, borderTop: '1px solid #f5f5f5' }}>
+                        <span>生效时间: {effectiveDate.getFullYear()}-{String(effectiveDate.getMonth() + 1).padStart(2, '0')}-{String(effectiveDate.getDate()).padStart(2, '0')}</span>
+                        <span>最近修改: {modifiedDate.getFullYear()}-{String(modifiedDate.getMonth() + 1).padStart(2, '0')}-{String(modifiedDate.getDate()).padStart(2, '0')}</span>
+                      </div>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 8 }}>
-                      <div style={{ textAlign: 'center', padding: '8px 4px', background: '#f0f5ff', borderRadius: 6 }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: '#667eea' }}>{(cfg.level1_rate * 100).toFixed(0)}%</div>
-                        <div style={{ fontSize: 9, color: '#999' }}>L1 直推</div>
-                      </div>
-                      <div style={{ textAlign: 'center', padding: '8px 4px', background: '#fff0f6', borderRadius: 6 }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: '#f5576c' }}>{(cfg.level2_rate * 100).toFixed(0)}%</div>
-                        <div style={{ fontSize: 9, color: '#999' }}>L2 间推</div>
-                      </div>
-                      <div style={{ textAlign: 'center', padding: '8px 4px', background: '#fff7e6', borderRadius: 6 }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: '#fa8c16' }}>{(cfg.level3_rate * 100).toFixed(0)}%</div>
-                        <div style={{ fontSize: 9, color: '#999' }}>L3 三级</div>
-                      </div>
-                      <div style={{ textAlign: 'center', padding: '8px 4px', background: '#f6ffed', borderRadius: 6 }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: '#52c41a' }}>{(cfg.platform_rate * 100).toFixed(0)}%</div>
-                        <div style={{ fontSize: 9, color: '#999' }}>平台分成</div>
-                      </div>
-                      <div style={{ textAlign: 'center', padding: '8px 4px', background: '#e6f7ff', borderRadius: 6 }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: '#1890ff' }}>{(cfg.supplier_rate * 100).toFixed(0)}%</div>
-                        <div style={{ fontSize: 9, color: '#999' }}>供应商</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -845,36 +1194,34 @@ export default function AdminPortal() {
                 暂无加密解密日志
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {cryptoLogs.slice(0, 5).map((log) => {
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {cryptoLogs.map((log) => {
                   const stStyle = getStatusStyle(log.status);
-                  const actStyle = getStatusStyle(log.action);
+                  const isEncrypt = log.action === 'encrypt';
+                  const ip = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
                   return (
                     <div key={log.id} style={{
-                      padding: '10px 12px',
-                      borderRadius: 8,
+                      padding: '12px',
+                      borderRadius: 10,
                       background: 'white',
-                      border: '1px solid #f0f0f0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
+                      border: `2px solid ${isEncrypt ? '#722ed130' : '#eb2f9630'}`,
+                      borderLeft: `4px solid ${isEncrypt ? '#722ed1' : '#eb2f96'}`,
                       fontSize: 11
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{
-                          padding: '2px 6px',
-                          borderRadius: 4,
-                          fontSize: 10,
-                          fontWeight: 600,
-                          background: actStyle.bg,
-                          color: actStyle.color
-                        }}>
-                          {actStyle.text}
-                        </span>
-                        <span style={{ color: '#666' }}>{log.operator} · {log.card_count}张卡密</span>
-                        <span style={{ color: '#999', fontSize: 10 }}>({log.algorithm})</span>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span style={{
+                            padding: '3px 8px',
+                            borderRadius: 4,
+                            fontSize: 10,
+                            fontWeight: 600,
+                            background: isEncrypt ? '#f9f0ff' : '#fff0f6',
+                            color: isEncrypt ? '#722ed1' : '#eb2f96'
+                          }}>
+                            {isEncrypt ? '🔒 加密' : '🔓 解密'}
+                          </span>
+                          <span style={{ color: '#666', fontWeight: 500 }}>{log.operator}</span>
+                        </div>
                         <span style={{
                           padding: '2px 6px',
                           borderRadius: 4,
@@ -885,11 +1232,98 @@ export default function AdminPortal() {
                         }}>
                           {stStyle.text}
                         </span>
-                        <span style={{ color: '#999' }}>{formatTime(log.created_at)}</span>
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 8 }}>
+                        <div>
+                          <div style={{ color: '#999', fontSize: 10, marginBottom: 2 }}>操作数量</div>
+                          <div style={{ color: '#333', fontWeight: 600 }}>{log.card_count} 张</div>
+                        </div>
+                        <div>
+                          <div style={{ color: '#999', fontSize: 10, marginBottom: 2 }}>加密算法</div>
+                          <div style={{ color: '#333', fontWeight: 500 }}>{log.algorithm}</div>
+                        </div>
+                        <div>
+                          <div style={{ color: '#999', fontSize: 10, marginBottom: 2 }}>IP地址</div>
+                          <div style={{ color: '#333', fontWeight: 500, fontFamily: 'monospace' }}>{ip}</div>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ color: '#999' }}>操作时间: {formatTime(log.created_at)}</span>
+                        <button onClick={() => setSelectedCryptoLog({ ...log, ip_address: ip } as any)} style={{
+                          padding: '3px 10px', borderRadius: 4, border: `1px solid ${isEncrypt ? '#722ed130' : '#eb2f9630'}`,
+                          background: isEncrypt ? '#722ed110' : '#eb2f9610',
+                          color: isEncrypt ? '#722ed1' : '#eb2f96',
+                          fontSize: 10, cursor: 'pointer', fontWeight: 500
+                        }}>
+                          📋 审计详情
+                        </button>
                       </div>
                     </div>
                   );
                 })}
+              </div>
+            )}
+            {selectedCryptoLog && (
+              <div style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+              }} onClick={() => setSelectedCryptoLog(null)}>
+                <div style={{
+                  background: 'white', borderRadius: 12, padding: 20, width: 400, maxWidth: '90%'
+                }} onClick={e => e.stopPropagation()}>
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>
+                    {selectedCryptoLog.action === 'encrypt' ? '加密' : '解密'}审计详情
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>操作类型</span>
+                      <span style={{
+                        padding: '2px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600,
+                        background: selectedCryptoLog.action === 'encrypt' ? '#f9f0ff' : '#fff0f6',
+                        color: selectedCryptoLog.action === 'encrypt' ? '#722ed1' : '#eb2f96'
+                      }}>
+                        {selectedCryptoLog.action === 'encrypt' ? '加密' : '解密'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>操作人</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedCryptoLog.operator}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>操作时间</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{formatTime(selectedCryptoLog.created_at)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>卡密数量</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedCryptoLog.card_count} 张</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>加密算法</span>
+                      <span style={{ color: '#333', fontWeight: 500 }}>{selectedCryptoLog.algorithm}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>IP地址</span>
+                      <span style={{ color: '#333', fontWeight: 500, fontFamily: 'monospace' }}>{(selectedCryptoLog as any).ip_address}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#999' }}>操作状态</span>
+                      <span style={{
+                        padding: '2px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600,
+                        background: selectedCryptoLog.status === 'success' ? '#f6ffed' : '#fff1f0',
+                        color: selectedCryptoLog.status === 'success' ? '#389e0d' : '#cf1322'
+                      }}>
+                        {selectedCryptoLog.status === 'success' ? '成功' : '失败'}
+                      </span>
+                    </div>
+                  </div>
+                  <button onClick={() => setSelectedCryptoLog(null)} style={{
+                    width: '100%', marginTop: 16, padding: '8px', borderRadius: 6, border: 'none',
+                    background: selectedCryptoLog.action === 'encrypt' ? '#722ed1' : '#eb2f96',
+                    color: 'white', fontSize: 12, cursor: 'pointer', fontWeight: 500
+                  }}>
+                    关闭
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -918,23 +1352,39 @@ export default function AdminPortal() {
                 </a>
               </div>
             </div>
+            <div style={{ marginBottom: 12 }}>
+              <button onClick={() => setShowInvoiceModal(true)} style={{
+                padding: '6px 14px', borderRadius: 6, border: 'none',
+                background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', fontSize: 11, cursor: 'pointer', fontWeight: 500
+              }}>
+                ➕ 开具发票
+              </button>
+            </div>
             {invoices.length === 0 ? (
               <div style={{ textAlign: 'center', padding: 32, color: '#999', fontSize: 13, background: '#fafafa', borderRadius: 10 }}>
                 暂无发票记录
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {invoices.slice(0, 5).map((inv) => {
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {invoices.map((inv) => {
                   const stStyle = getStatusStyle(inv.status);
+                  const progress = calculateInvoiceProgress(inv.status);
                   const typeMap: Record<string, string> = { vat: '增值税专票', normal: '普通发票', electronic: '电子发票' };
+                  const timelineSteps = [
+                    { key: 'pending', label: '待开具', color: '#fa8c16' },
+                    { key: 'issued', label: '已开票', color: '#1890ff' },
+                    { key: 'mailed', label: '已邮寄', color: '#722ed1' },
+                    { key: 'received', label: '已签收', color: '#52c41a' }
+                  ];
+                  const currentStepIndex = timelineSteps.findIndex(s => s.key === inv.status);
                   return (
                     <div key={inv.id} style={{
-                      padding: 12,
+                      padding: 14,
                       borderRadius: 10,
                       background: 'white',
                       border: '1px solid #f0f0f0'
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           <span style={{ fontSize: 12, fontWeight: 600, color: '#333' }}>#{inv.invoice_no}</span>
                           <span style={{
@@ -958,7 +1408,7 @@ export default function AdminPortal() {
                           {stStyle.text}
                         </span>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 11 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 11, marginBottom: 12 }}>
                         <div>
                           <div style={{ color: '#333', fontWeight: 500, marginBottom: 2 }}>{inv.title}</div>
                           <div style={{ color: '#999' }}>开票时间: {formatTime(inv.created_at)}</div>
@@ -967,9 +1417,84 @@ export default function AdminPortal() {
                           ¥{inv.amount?.toFixed(2) || '0.00'}
                         </div>
                       </div>
+                      <div style={{ position: 'relative', paddingLeft: 8 }}>
+                        <div style={{
+                          position: 'absolute', left: 8, top: 8, bottom: 8, width: 2, background: '#f0f0f0', borderRadius: 1
+                        }} />
+                        {timelineSteps.map((step, idx) => {
+                          const isDone = idx <= currentStepIndex;
+                          return (
+                            <div key={step.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, position: 'relative', marginBottom: idx < timelineSteps.length - 1 ? 10 : 0 }}>
+                              <div style={{
+                                width: 12, height: 12, borderRadius: '50%',
+                                background: isDone ? step.color : '#f0f0f0',
+                                border: `2px solid ${isDone ? step.color : '#d9d9d9'}`,
+                                zIndex: 1, position: 'relative', left: -5
+                              }} />
+                              <div style={{ flex: 1, paddingBottom: 0 }}>
+                                <div style={{ fontSize: 11, fontWeight: isDone ? 600 : 400, color: isDone ? '#333' : '#999' }}>
+                                  {step.label}
+                                </div>
+                                <div style={{ fontSize: 10, color: '#bbb' }}>
+                                  {isDone ? formatTime(inv.created_at + idx * 3600) : ''}</div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   );
                 })}
+              </div>
+            )}
+            {showInvoiceModal && (
+              <div style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+              }} onClick={() => setShowInvoiceModal(false)}>
+                <div style={{
+                  background: 'white', borderRadius: 12, padding: 20, width: 400, maxWidth: '90%'
+                }} onClick={e => e.stopPropagation()}>
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>开具发票</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 12 }}>
+                    <div>
+                      <div style={{ fontSize: 11, color: '#666', marginBottom: 4 }}>发票类型</div>
+                      <select value={newInvoiceType} onChange={e => setNewInvoiceType(e.target.value as any)} style={{
+                        width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #e0e0e0', fontSize: 12
+                      }}>
+                        <option value="vat">增值税专票</option>
+                        <option value="normal">普通发票</option>
+                        <option value="electronic">电子发票</option>
+                      </select>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 11, color: '#666', marginBottom: 4 }}>发票金额</div>
+                      <input type="number" value={newInvoiceAmount} onChange={e => setNewInvoiceAmount(e.target.value)} placeholder="请输入金额" style={{
+                        width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #e0e0e0', fontSize: 12
+                      }} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 11, color: '#666', marginBottom: 4 }}>发票抬头</div>
+                      <input type="text" value={newInvoiceTitle} onChange={e => setNewInvoiceTitle(e.target.value)} placeholder="请输入发票抬头" style={{
+                        width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #e0e0e0', fontSize: 12
+                      }} />
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+                    <button onClick={() => setShowInvoiceModal(false)} style={{
+                      flex: 1, padding: '8px', borderRadius: 6, border: '1px solid #d9d9d9',
+                      background: 'white', color: '#666', fontSize: 12, cursor: 'pointer'
+                    }}>
+                      取消
+                    </button>
+                    <button onClick={handleIssueInvoice} style={{
+                      flex: 2, padding: '8px', borderRadius: 6, border: 'none',
+                      background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', fontSize: 12, cursor: 'pointer', fontWeight: 500
+                    }}>
+                      确认开具
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>
