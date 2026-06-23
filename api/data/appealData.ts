@@ -35,10 +35,11 @@ const appealCategories = [
   '其他问题',
 ];
 
-const statuses: Appeal['status'][] = ['pending', 'processing', 'transferred', 'resolved', 'resolved', 'closed'];
+const statuses: Appeal['status'][] = ['pending', 'processing', 'transferred', 'resolved', 'resolved', 'closed', 'feedback', 'overdue'];
 
 const citizenNames = ['王先生', '李女士', '张大爷', '刘阿姨', '陈先生', '赵女士', '孙先生', '周女士'];
 const districts = ['鼓楼区', '云龙区', '泉山区', '铜山区', '贾汪区'];
+const urgencies: Appeal['urgency'][] = ['normal', 'normal', 'normal', 'urgent', 'critical'];
 
 const streetNames = [
   '彭城路123号',
@@ -112,6 +113,7 @@ export const mockAppeals: Appeal[] = appealTitles.map((title, index) => {
 诉求：希望相关部门能够重视并尽快处理。`,
     category: getRandomItem(appealCategories),
     status,
+    urgency: getRandomItem(urgencies),
     citizenName: getRandomItem(citizenNames),
     citizenPhone: `138${getRandomInt(10000000, 99999999)}`,
     address: getRandomItem(streetNames),

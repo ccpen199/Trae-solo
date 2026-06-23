@@ -1,16 +1,59 @@
-import type { MapLayerItem } from '../../shared/types';
+import type { MapLayerItem, DisposalTimelineItem } from '../../shared/types';
+import { generateId, getRandomInt } from './utils.js';
 
 const centerLng = 117.185;
 const centerLat = 34.268;
 
+const genDisposalTimeline = (startDate: string): DisposalTimelineItem[] => [
+  {
+    id: generateId('tl'),
+    time: startDate,
+    action: '事件上报',
+    operator: '市民热线',
+    remark: '接市民反映，记录相关情况',
+  },
+  {
+    id: generateId('tl'),
+    time: startDate,
+    action: '现场核查',
+    operator: '巡查人员',
+    remark: '已派工作人员赴现场核实情况',
+  },
+  {
+    id: generateId('tl'),
+    time: startDate,
+    action: '处置实施',
+    operator: '责任单位',
+    remark: '正在按预案开展处置工作',
+  },
+];
+
+const responsibleUnits: Record<string, string> = {
+  water: '徐州首创水务有限责任公司',
+  power: '国网江苏省电力有限公司徐州供电分公司',
+  gas: '徐州港华燃气有限公司',
+  construction: '徐州市城市管理局',
+};
+
+const contactPersons = ['张工', '李工', '王工', '赵工', '刘工'];
+
+const genBaseItem = (type: MapLayerItem['type'], name: string, district: string): Partial<MapLayerItem> => ({
+  affectedHouseholds: getRandomInt(500, 15000),
+  responsibleUnit: responsibleUnits[type],
+  contactPerson: contactPersons[getRandomInt(0, 4)],
+  contactPhone: `0516-8${getRandomInt(1000000, 9999999)}`,
+  disposalTimeline: genDisposalTimeline(new Date().toISOString().slice(0, 10)),
+  name,
+  type,
+  district,
+});
+
 const waterItems: MapLayerItem[] = [
   {
     id: 'water_1',
-    name: '鼓楼区供水主管维修',
-    type: 'water',
+    ...genBaseItem('water', '鼓楼区供水主管维修', '鼓楼区') as MapLayerItem,
     status: 'warning',
     address: '鼓楼区中山北路沿线',
-    district: '鼓楼区',
     startTime: '2024-06-20 09:00:00',
     endTime: '2024-06-20 17:00:00',
     description: '因供水主管道老化更换施工，中山北路沿线用户将暂停供水8小时。',
@@ -20,11 +63,9 @@ const waterItems: MapLayerItem[] = [
   },
   {
     id: 'water_2',
-    name: '泉山区小区管网改造',
-    type: 'water',
+    ...genBaseItem('water', '泉山区小区管网改造', '泉山区') as MapLayerItem,
     status: 'normal',
     address: '泉山区泰山街道某小区',
-    district: '泉山区',
     startTime: '2024-06-21 08:00:00',
     endTime: '2024-06-21 16:00:00',
     description: '小区供水管网升级改造，施工期间供水压力可能下降。',
@@ -37,11 +78,9 @@ const waterItems: MapLayerItem[] = [
 const powerItems: MapLayerItem[] = [
   {
     id: 'power_1',
-    name: '云龙区变电站检修',
-    type: 'power',
+    ...genBaseItem('power', '云龙区变电站检修', '云龙区') as MapLayerItem,
     status: 'warning',
     address: '云龙区和平大道沿线',
-    district: '云龙区',
     startTime: '2024-06-22 07:00:00',
     endTime: '2024-06-22 19:00:00',
     description: '110kV变电站年度检修，沿线商业和居民用户停电12小时。',
@@ -51,11 +90,9 @@ const powerItems: MapLayerItem[] = [
   },
   {
     id: 'power_2',
-    name: '铜山区线路整改',
-    type: 'power',
+    ...genBaseItem('power', '铜山区线路整改', '铜山区') as MapLayerItem,
     status: 'normal',
     address: '铜山区北京南路两侧',
-    district: '铜山区',
     startTime: '2024-06-23 08:30:00',
     endTime: '2024-06-23 17:30:00',
     description: '架空线路入地改造工程，部分区域停电。',
@@ -65,11 +102,9 @@ const powerItems: MapLayerItem[] = [
   },
   {
     id: 'power_3',
-    name: '贾汪区农网升级',
-    type: 'power',
+    ...genBaseItem('power', '贾汪区农网升级', '贾汪区') as MapLayerItem,
     status: 'normal',
     address: '贾汪区某乡镇',
-    district: '贾汪区',
     startTime: '2024-06-24 07:30:00',
     endTime: '2024-06-24 16:30:00',
     description: '农村电网升级改造，提升供电可靠性。',
@@ -82,11 +117,9 @@ const powerItems: MapLayerItem[] = [
 const gasItems: MapLayerItem[] = [
   {
     id: 'gas_1',
-    name: '鼓楼区燃气管道更换',
-    type: 'gas',
+    ...genBaseItem('gas', '鼓楼区燃气管道更换', '鼓楼区') as MapLayerItem,
     status: 'danger',
     address: '鼓楼区民主路附近',
-    district: '鼓楼区',
     startTime: '2024-06-20 14:00:00',
     endTime: '2024-06-20 22:00:00',
     description: '燃气管道腐蚀严重，紧急更换施工，请用户关闭阀门注意安全。',
@@ -99,11 +132,9 @@ const gasItems: MapLayerItem[] = [
 const constructionItems: MapLayerItem[] = [
   {
     id: 'construction_1',
-    name: '地铁5号线施工',
-    type: 'construction',
+    ...genBaseItem('construction', '地铁5号线施工', '泉山区') as MapLayerItem,
     status: 'normal',
     address: '泉山区三环南路沿线',
-    district: '泉山区',
     startTime: '2024-01-15 00:00:00',
     endTime: '2026-12-31 23:59:59',
     description: '地铁5号线一期工程土建施工，部分路段限行。',
@@ -113,11 +144,9 @@ const constructionItems: MapLayerItem[] = [
   },
   {
     id: 'construction_2',
-    name: '高架快速路扩建',
-    type: 'construction',
+    ...genBaseItem('construction', '高架快速路扩建', '云龙区') as MapLayerItem,
     status: 'normal',
     address: '云龙区东三环快速路',
-    district: '云龙区',
     startTime: '2024-03-01 00:00:00',
     endTime: '2025-06-30 23:59:59',
     description: '东三环快速路扩建工程，注意绕行。',

@@ -108,6 +108,7 @@ router.post('/', (req: Request, res: Response): void => {
     content,
     category,
     status: 'pending',
+    urgency: 'normal',
     citizenName,
     citizenPhone,
     address,

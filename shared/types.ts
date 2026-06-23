@@ -62,7 +62,9 @@ export interface SensitiveWord {
   createTime: string;
 }
 
-export type AppealStatus = 'pending' | 'processing' | 'transferred' | 'resolved' | 'closed';
+export type AppealStatus = 'pending' | 'processing' | 'transferred' | 'feedback' | 'resolved' | 'closed' | 'overdue';
+
+export type EmergencyUrgency = 'normal' | 'urgent' | 'critical';
 
 export interface AppealLog {
   id: string;
@@ -72,12 +74,25 @@ export interface AppealLog {
   time: string;
 }
 
+export interface TransferRecord {
+  id: string;
+  appealId: string;
+  transferTime: string;
+  platform12345Id: string;
+  status12345: 'processing' | 'resolved' | 'closed';
+  feedbackResult?: string;
+  satisfaction?: number;
+  feedbackTime?: string;
+  handler: string;
+}
+
 export interface Appeal {
   id: string;
   title: string;
   content: string;
   category: string;
   status: AppealStatus;
+  urgency: EmergencyUrgency;
   citizenName: string;
   citizenPhone: string;
   address: string;
@@ -86,6 +101,9 @@ export interface Appeal {
   transferTime?: string;
   resolveTime?: string;
   satisfaction?: number;
+  processingDurationHours?: number;
+  feedbackResult?: string;
+  handler?: string;
   createTime: string;
   logs: AppealLog[];
 }
@@ -116,6 +134,7 @@ export interface EmergencyInfo {
   creatorId: string;
   creatorName: string;
   reachCount: number;
+  feedbackCount?: number;
 }
 
 export interface EmergencyListResponse {
@@ -200,11 +219,19 @@ export interface Role {
   createTime: string;
 }
 
+export interface DisposalTimelineItem {
+  id: string;
+  time: string;
+  action: string;
+  operator: string;
+  remark: string;
+}
+
 export interface MapLayerItem {
   id: string;
   name: string;
   type: 'water' | 'power' | 'gas' | 'construction';
-  status: 'normal' | 'warning' | 'danger';
+  status: 'normal' | 'warning' | 'danger' | 'resolved';
   address: string;
   district: string;
   startTime: string;
@@ -213,6 +240,11 @@ export interface MapLayerItem {
   lng: number;
   lat: number;
   affectedArea: number;
+  affectedHouseholds: number;
+  responsibleUnit: string;
+  contactPerson: string;
+  contactPhone: string;
+  disposalTimeline: DisposalTimelineItem[];
 }
 
 export interface DashboardStats {
@@ -253,11 +285,19 @@ export const emergencyLevelLabels: Record<EmergencyLevel, string> = {
 };
 
 export const appealStatusLabels: Record<AppealStatus, string> = {
-  pending: '待处理',
+  pending: '待受理',
   processing: '处理中',
-  transferred: '已转办',
-  resolved: '已解决',
+  transferred: '已转办12345',
+  feedback: '待反馈',
+  resolved: '已办结',
   closed: '已关闭',
+  overdue: '超时预警',
+};
+
+export const urgencyLabels: Record<EmergencyUrgency, string> = {
+  normal: '普通',
+  urgent: '紧急',
+  critical: '特急',
 };
 
 export const districts = [
