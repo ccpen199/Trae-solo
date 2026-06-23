@@ -257,12 +257,25 @@ function seedInitialData() {
     insertTask.run('邀请好友', '邀请好友注册，双方各得奖励', 'invite', 500, 0, 1, 4);
   }
 
-  const adminCount = db.prepare('SELECT COUNT(*) as count FROM admin_users').get() as { count: number };
-  if (adminCount.count === 0) {
-    const bcrypt = require('bcryptjs');
-    const hash = bcrypt.hashSync('admin123', 10);
-    db.prepare('INSERT INTO admin_users (username, password, role) VALUES (?, ?, ?)')
-      .run('admin', hash, 'super');
+  const demoAdmins = [
+    { username: 'admin', password: 'admin123', role: 'super' },
+    { username: 'platform', password: '123456', role: 'admin' },
+    { username: 'ops', password: '123456', role: 'operator' },
+    { username: 'auditor', password: '123456', role: 'auditor' },
+    { username: 'viewer', password: '123456', role: 'viewer' },
+  ];
+
+  const bcrypt = require('bcryptjs');
+  const findAdmin = db.prepare('SELECT id FROM admin_users WHERE username = ?');
+  const insertAdmin = db.prepare('INSERT INTO admin_users (username, password, role) VALUES (?, ?, ?)');
+
+  for (const acc of demoAdmins) {
+    const existing = findAdmin.get(acc.username);
+    if (!existing) {
+      const hash = bcrypt.hashSync(acc.password, 10);
+      insertAdmin.run(acc.username, hash, acc.role);
+      console.log(`[DB] Created demo admin: ${acc.username} (${acc.role})`);
+    }
   }
 }
 
