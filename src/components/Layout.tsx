@@ -58,7 +58,7 @@ const roleColors: Record<UserRole, string> = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
-  const { user, driverProfile, logout, token } = useAuthStore();
+  const { user, driverProfile, logout } = useAuthStore();
   const role = user?.role || "shipper";
   const menu =
     role === "shipper"
@@ -67,15 +67,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       ? driverMenu
       : adminMenu;
 
-  if (!token || !user) {
-    navigate("/login", { replace: true });
-    return null;
-  }
-
   const handleLogout = () => {
     logout();
-    navigate("/login", { replace: true });
+    window.location.href = "/login";
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="flex h-screen bg-slate-50">

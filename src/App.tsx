@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Login from "@/pages/Login";
 import Home from "@/pages/Home";
@@ -22,154 +22,187 @@ import RiskMonitor from "@/pages/admin/RiskMonitor";
 import DriverGrowth from "@/pages/admin/DriverGrowth";
 import TrafficControl from "@/pages/admin/TrafficControl";
 
+import { useAuthStore } from "@/store";
+import { useEffect, ReactNode } from "react";
+
+function ProtectedRoute({ children, allowedRoles }: { children: ReactNode; allowedRoles: string[] }) {
+  const { user, token } = useAuthStore();
+
+  useEffect(() => {
+    if (!token || !user) {
+      window.location.href = "/login";
+    } else if (!allowedRoles.includes(user.role)) {
+      const redirectMap: Record<string, string> = {
+        shipper: "/shipper/dashboard",
+        driver: "/driver/dashboard",
+        admin: "/admin/dashboard",
+      };
+      window.location.href = redirectMap[user.role] || "/login";
+    }
+  }, [token, user, allowedRoles]);
+
+  if (!token || !user) {
+    return null;
+  }
+
+  if (!allowedRoles.includes(user.role)) {
+    return null;
+  }
+
+  return <Layout>{children}</Layout>;
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/shipper/dashboard",
+    element: (
+      <ProtectedRoute allowedRoles={["shipper"]}>
+        <ShipperDashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shipper/cargo/publish",
+    element: (
+      <ProtectedRoute allowedRoles={["shipper"]}>
+        <CargoPublish />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shipper/cargo/list",
+    element: (
+      <ProtectedRoute allowedRoles={["shipper"]}>
+        <CargoList />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shipper/cargo/:id/match",
+    element: (
+      <ProtectedRoute allowedRoles={["shipper"]}>
+        <DriverMatch />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shipper/waybill/track",
+    element: (
+      <ProtectedRoute allowedRoles={["shipper"]}>
+        <WaybillTrack />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shipper/credit",
+    element: (
+      <ProtectedRoute allowedRoles={["shipper"]}>
+        <CreditCenter />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/driver/dashboard",
+    element: (
+      <ProtectedRoute allowedRoles={["driver"]}>
+        <DriverDashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/driver/empty-report",
+    element: (
+      <ProtectedRoute allowedRoles={["driver"]}>
+        <EmptyReport />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/driver/cargo-hall",
+    element: (
+      <ProtectedRoute allowedRoles={["driver"]}>
+        <CargoHall />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/driver/negotiation",
+    element: (
+      <ProtectedRoute allowedRoles={["driver"]}>
+        <Negotiation />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/driver/negotiation/:id",
+    element: (
+      <ProtectedRoute allowedRoles={["driver"]}>
+        <Negotiation />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/driver/points-mall",
+    element: (
+      <ProtectedRoute allowedRoles={["driver"]}>
+        <PointsMall />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/dashboard",
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <AdminDashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/pricing-model",
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <PricingModel />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/risk-monitor",
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <RiskMonitor />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/driver-growth",
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <DriverGrowth />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/traffic-control",
+    element: (
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <TrafficControl />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
+  },
+]);
+
 export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-
-        <Route
-          path="/shipper/dashboard"
-          element={
-            <Layout>
-              <ShipperDashboard />
-            </Layout>
-          }
-        />
-        <Route
-          path="/shipper/cargo/publish"
-          element={
-            <Layout>
-              <CargoPublish />
-            </Layout>
-          }
-        />
-        <Route
-          path="/shipper/cargo/list"
-          element={
-            <Layout>
-              <CargoList />
-            </Layout>
-          }
-        />
-        <Route
-          path="/shipper/cargo/:id/match"
-          element={
-            <Layout>
-              <DriverMatch />
-            </Layout>
-          }
-        />
-        <Route
-          path="/shipper/waybill/track"
-          element={
-            <Layout>
-              <WaybillTrack />
-            </Layout>
-          }
-        />
-        <Route
-          path="/shipper/credit"
-          element={
-            <Layout>
-              <CreditCenter />
-            </Layout>
-          }
-        />
-
-        <Route
-          path="/driver/dashboard"
-          element={
-            <Layout>
-              <DriverDashboard />
-            </Layout>
-          }
-        />
-        <Route
-          path="/driver/empty-report"
-          element={
-            <Layout>
-              <EmptyReport />
-            </Layout>
-          }
-        />
-        <Route
-          path="/driver/cargo-hall"
-          element={
-            <Layout>
-              <CargoHall />
-            </Layout>
-          }
-        />
-        <Route
-          path="/driver/negotiation"
-          element={
-            <Layout>
-              <Negotiation />
-            </Layout>
-          }
-        />
-        <Route
-          path="/driver/negotiation/:id"
-          element={
-            <Layout>
-              <Negotiation />
-            </Layout>
-          }
-        />
-        <Route
-          path="/driver/points-mall"
-          element={
-            <Layout>
-              <PointsMall />
-            </Layout>
-          }
-        />
-
-        <Route
-          path="/admin/dashboard"
-          element={
-            <Layout>
-              <AdminDashboard />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/pricing-model"
-          element={
-            <Layout>
-              <PricingModel />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/risk-monitor"
-          element={
-            <Layout>
-              <RiskMonitor />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/driver-growth"
-          element={
-            <Layout>
-              <DriverGrowth />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/traffic-control"
-          element={
-            <Layout>
-              <TrafficControl />
-            </Layout>
-          }
-        />
-
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }

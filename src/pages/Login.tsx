@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   Truck,
   Building2,
@@ -83,14 +82,26 @@ const roles: Array<{
 ];
 
 export default function Login() {
-  const navigate = useNavigate();
   const login = useAuthStore((s) => s.login);
+  const user = useAuthStore((s) => s.user);
   const [selectedRole, setSelectedRole] = useState<UserRole>("shipper");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const currentRole = roles.find((r) => r.value === selectedRole)!;
+
+  useEffect(() => {
+    if (user) {
+      const redirectMap: Record<UserRole, string> = {
+        shipper: "/shipper/dashboard",
+        driver: "/driver/dashboard",
+        admin: "/admin/dashboard",
+      };
+      window.location.href = redirectMap[user.role];
+    }
+  }, [user]);
 
   const validatePhone = (value: string): string => {
     if (!value.trim()) return "请输入手机号";
@@ -101,16 +112,19 @@ export default function Login() {
   const handleRoleChange = (role: UserRole) => {
     setSelectedRole(role);
     setError("");
+    setSuccess(false);
   };
 
   const handleQuickLogin = (rolePhone: string) => {
     setPhone(rolePhone);
     setError("");
+    setSuccess(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess(false);
 
     const phoneError = validatePhone(phone);
     if (phoneError) {
@@ -125,7 +139,12 @@ export default function Login() {
         role: selectedRole,
       });
 
+      if (!data || !data.token || !data.user) {
+        throw new Error("登录数据异常，请重试");
+      }
+
       login(data);
+      setSuccess(true);
 
       const redirectMap: Record<UserRole, string> = {
         shipper: "/shipper/dashboard",
@@ -134,18 +153,19 @@ export default function Login() {
       };
 
       setTimeout(() => {
-        navigate(redirectMap[selectedRole], { replace: true });
-      }, 300);
+        window.location.href = redirectMap[selectedRole];
+      }, 600);
     } catch (err) {
       const message = (err as Error).message || "登录失败，请重试";
       if (message.includes("401") || message.includes("登录失败")) {
-        setError("账号或身份不匹配，请检查手机号是否正确");
-      } else if (message.includes("Failed to fetch")) {
-        setError("网络连接失败，请确保后端服务已启动");
-      } else {
+        setError(`账号与身份不匹配：该手机号不属于${currentRole.label.replace("登录", "")}身份，请检查手机号或切换角色`);
+      } else if (message.includes("Failed to fetch") || message.includes("NetworkError")) {
+        setError("网络连接失败：请确保后端服务已启动，或刷新页面重试");
+      } else if (message.includes("数据异常")) {
         setError(message);
+      } else {
+        setError(`登录失败：${message}`);
       }
-    } finally {
       setLoading(false);
     }
   };
@@ -306,39 +326,50 @@ export default function Login() {
                     type="tel"
                     value={phone}
                     onChange={(e) => {
-                      setPhone(e.target.value);
+                      setPhone(e.target.value.replace(/\D/g, "").slice(0, 11));
                       if (error) setError("");
+                      if (success) setSuccess(false);
                     }}
                     placeholder="请输入11位手机号"
                     className={`input-field pl-10 ${
-                      error ? "border-red-300 focus:border-red-400 focus:ring-red-100" : ""
+                      error
+                        ? "border-red-300 focus:border-red-400 focus:ring-red-100"
+                        : success
+                        ? "border-green-300 focus:border-green-400 focus:ring-green-100"
+                        : ""
                     }`}
                     maxLength={11}
                   />
                 </div>
+                {success && (
+                  <p className="mt-2 text-sm text-green-600 flex items-center gap-1.5 animate-fade-in">
+                    <CheckCircle2 className="w-4 h-4" />
+                    登录成功！正在跳转到{currentRole.label.replace("登录", "")}工作台...
+                  </p>
+                )}
                 {error && (
-                  <p className="mt-2 text-sm text-red-600 flex items-center gap-1.5">
-                    <AlertCircle className="w-4 h-4" />
-                    {error}
+                  <p className="mt-2 text-sm text-red-600 flex items-start gap-1.5 animate-fade-in">
+                    <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                    <span>{error}</span>
                   </p>
                 )}
               </div>
 
               <div>
-                <p className="text-xs text-slate-400 mb-2">演示账号：</p>
+                <p className="text-xs text-slate-400 mb-2">演示账号（点击快速填充）：</p>
                 <div className="flex flex-wrap gap-2">
                   {roles.map((role) => (
                     <button
                       key={role.value}
                       type="button"
                       onClick={() => handleQuickLogin(role.phone)}
-                      className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
                         phone === role.phone
-                          ? "bg-primary-50 text-primary-600 border border-primary-200"
-                          : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                          ? "bg-primary-50 text-primary-600 border border-primary-200 ring-2 ring-primary-100"
+                          : "bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700"
                       }`}
                     >
-                      {role.label.replace("登录", "")} {role.phone.slice(-4)}
+                      {role.label.replace("登录", "")} · {role.phone.slice(-4)}
                     </button>
                   ))}
                 </div>
@@ -346,9 +377,9 @@ export default function Login() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || success}
                 className={`w-full py-3 text-base rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 text-white shadow-lg ${
-                  loading
+                  loading || success
                     ? "bg-slate-400 cursor-not-allowed"
                     : `bg-gradient-to-r ${currentRole.color} hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0`
                 }`}
@@ -356,7 +387,12 @@ export default function Login() {
                 {loading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    登录中...
+                    登录验证中...
+                  </>
+                ) : success ? (
+                  <>
+                    <CheckCircle2 className="w-5 h-5" />
+                    登录成功，跳转中...
                   </>
                 ) : (
                   <>
