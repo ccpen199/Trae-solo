@@ -131,10 +131,6 @@ function handleKeywordClick(route: string, keyword: string) {
   router.push(route);
 }
 
-function openAdmin(path = '') {
-  window.open(`${adminBaseUrl}${path}`, '_blank');
-}
-
 const announcements = [
   { id: 1, text: '2026年度社保缴费基数已调整为3906元，请及时查询确认缴费明细', date: '2026-06-10' },
   { id: 2, text: '生存认证新渠道上线，人脸识别活体检测通过率达96.8%', date: '2026-06-08' },
@@ -189,7 +185,7 @@ const announcements = [
             <button
               class="inline-flex items-center gap-2 bg-amber-400/90 text-amber-900 font-semibold px-6 py-3.5 rounded-btn text-base
                 shadow-md hover:shadow-lg hover:bg-amber-400 transition-all duration-300 border border-amber-300"
-              @click="() => handleDemoLogin()"
+              @click="handleDemoLogin"
             >
               <Shield class="w-4 h-4" />
               演示模式（免登录体验）
@@ -253,7 +249,7 @@ const announcements = [
           <div class="flex gap-2 flex-shrink-0">
             <button
               class="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-white hover:bg-primary-700 transition-colors"
-              @click="() => handleDemoLogin()"
+              @click="handleDemoLogin"
             >
               立即体验演示
             </button>
@@ -351,22 +347,22 @@ const announcements = [
           </span>
         </div>
         <div class="grid grid-cols-2 gap-3 text-sm">
-          <div class="rounded-xl bg-blue-50 p-3 hover:bg-blue-100/70 transition-colors cursor-pointer" @click="openAdmin()">
+          <div class="rounded-xl bg-blue-50 p-3 hover:bg-blue-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl, '_blank')">
             <p class="font-medium text-gray-800">认证通过率趋势</p>
             <p class="text-2xl font-bold text-primary mt-2">96.8%</p>
             <p class="text-[11px] text-gray-400 mt-1">近30天趋势分析</p>
           </div>
-          <div class="rounded-xl bg-emerald-50 p-3 hover:bg-emerald-100/70 transition-colors cursor-pointer" @click="openAdmin('/query-top')">
+          <div class="rounded-xl bg-emerald-50 p-3 hover:bg-emerald-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl + '/query-top', '_blank')">
             <p class="font-medium text-gray-800">高频查询事项TOP10</p>
             <p class="text-2xl font-bold text-emerald-600 mt-2">42.6万</p>
             <p class="text-[11px] text-gray-400 mt-1">含环比变化箭头</p>
           </div>
-          <div class="rounded-xl bg-amber-50 p-3 hover:bg-amber-100/70 transition-colors cursor-pointer" @click="openAdmin('/reminder-tasks')">
+          <div class="rounded-xl bg-amber-50 p-3 hover:bg-amber-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl + '/reminder-tasks', '_blank')">
             <p class="font-medium text-gray-800">未认证人员提醒</p>
             <p class="text-2xl font-bold text-amber-600 mt-2">1,248</p>
             <p class="text-[11px] text-gray-400 mt-1">定向任务流管理</p>
           </div>
-          <div class="rounded-xl bg-purple-50 p-3 hover:bg-purple-100/70 transition-colors cursor-pointer" @click="openAdmin('/audit-logs')">
+          <div class="rounded-xl bg-purple-50 p-3 hover:bg-purple-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl + '/audit-logs', '_blank')">
             <p class="font-medium text-gray-800">操作留痕审计</p>
             <p class="text-2xl font-bold text-purple-600 mt-2">实时</p>
             <p class="text-[11px] text-gray-400 mt-1">全链路可追溯</p>
@@ -377,7 +373,7 @@ const announcements = [
             type="button"
             class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white
               hover:bg-primary-700 transition-colors"
-            @click="openAdmin()"
+            @click="window.open(adminBaseUrl, '_blank')"
           >
             进入后台管理
             <ExternalLink class="w-4 h-4" />
@@ -386,7 +382,7 @@ const announcements = [
             type="button"
             class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-sm font-semibold text-amber-700
               hover:bg-amber-100 transition-colors"
-            @click="openAdmin('/login?demo=1')"
+            @click="window.open(adminBaseUrl + '/login?demo=1', '_blank')"
           >
             演示登录
           </button>
