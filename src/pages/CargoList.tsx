@@ -185,17 +185,23 @@ export default function CargoList() {
                     </td>
 
                     <td className="px-4 py-4">
-                      <div className="font-semibold text-sm text-slate2-800">{order.cargoName}</div>
+                      <div className="font-semibold text-sm text-slate2-800">{order.cargoName || '未命名货物'}</div>
                       <div className="flex items-center gap-3 mt-1 text-[11px] text-slate2-500">
-                        <span>{order.weight.toFixed(0)} 吨</span>
-                        <span>{order.volume.toFixed(1)} m³</span>
-                        <span>{order.quantity} 件</span>
+                        <span>{(order.weight || 0).toFixed(0)} 吨</span>
+                        <span>{(order.volume || 0).toFixed(1)} m³</span>
+                        <span>{order.quantity || 0} 件</span>
                       </div>
                       <div className="flex items-center gap-1 mt-1">
                         {order.temperatureRequired && (
                           <span className="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">
                             <Thermometer className="w-3 h-3" />
                             {order.temperatureRequired.min}~{order.temperatureRequired.max}{order.temperatureRequired.unit}
+                          </span>
+                        )}
+                        {order.temperatureRange && !order.temperatureRequired && (
+                          <span className="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">
+                            <Thermometer className="w-3 h-3" />
+                            {order.temperatureRange}
                           </span>
                         )}
                         {order.declaredValue > 1000000 && (
@@ -225,11 +231,11 @@ export default function CargoList() {
                     <td className="px-4 py-4 text-[11px]">
                       <div className="flex items-center gap-1 text-slate2-500 mb-0.5">
                         <Clock className="w-3 h-3" />
-                        装货: {order.pickupTime.slice(5, 16)}
+                        装货: {order.pickupTime ? order.pickupTime.slice(5, 16) : '未设置'}
                       </div>
                       <div className="flex items-center gap-1 text-slate2-500">
                         <Clock className="w-3 h-3" />
-                        送达: {order.deliveryTime.slice(5, 16)}
+                        送达: {order.deliveryTime ? order.deliveryTime.slice(5, 16) : '未设置'}
                       </div>
                     </td>
 
