@@ -1,0 +1,140 @@
+/** @type {import('tailwindcss').Config} */
+
+export default {
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      },
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+      },
+    },
+    extend: {
+      colors: {
+        ink: {
+          50: '#f7f6f3',
+          100: '#f5f0e8',
+          200: '#e8ddc9',
+          300: '#d4c4a6',
+          400: '#b8a47e',
+          500: '#9c8860',
+          600: '#7a6a4b',
+          700: '#5c5039',
+          800: '#3d3526',
+          900: '#1f1b13',
+        },
+        jade: {
+          50: '#f0f7f7',
+          100: '#d9ebeb',
+          200: '#aed5d5',
+          300: '#7dbaab',
+          400: '#55988e',
+          500: '#3a7a71',
+          600: '#2a5d56',
+          700: '#1a3a3a',
+          800: '#0f2424',
+          900: '#071212',
+        },
+        cinnabar: {
+          50: '#fdf3f3',
+          100: '#fbe4e4',
+          200: '#f3bcbc',
+          300: '#e08989',
+          400: '#c85959',
+          500: '#af3a3a',
+          600: '#9b2d2d',
+          700: '#7a1f1f',
+          800: '#5a1717',
+          900: '#3b0e0e',
+        },
+        gold: {
+          50: '#fbf7e8',
+          100: '#f5ecc7',
+          200: '#ecd88b',
+          300: '#dcbd53',
+          400: '#cfa632',
+          500: '#b8860b',
+          600: '#946609',
+          700: '#704b07',
+          800: '#4d3305',
+          900: '#2a1c03',
+        },
+        wuxing: {
+          metal: '#e8e8e8',
+          wood: '#6fb36f',
+          water: '#5b9bd5',
+          fire: '#e06060',
+          earth: '#c9a66b',
+        },
+      },
+      fontFamily: {
+        serif: ['"Noto Serif SC"', 'SimSun', 'STSong', 'serif'],
+        sans: ['"Noto Sans SC"', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+        mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace'],
+      },
+      backgroundImage: {
+        'paper-texture': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
+        'ink-gradient': 'linear-gradient(135deg, #1a3a3a 0%, #0f2424 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #cfa632 0%, #b8860b 50%, #946609 100%)',
+      },
+      boxShadow: {
+        'seal': '0 0 0 2px #9b2d2d, 0 4px 12px rgba(155, 45, 45, 0.25)',
+        'paper': '0 2px 8px rgba(31, 27, 19, 0.08), 0 8px 24px rgba(31, 27, 19, 0.06)',
+        'gold-glow': '0 0 16px rgba(184, 134, 11, 0.35)',
+        'jade-glow': '0 0 16px rgba(26, 58, 58, 0.35)',
+      },
+      animation: {
+        'fade-in-up': 'fadeInUp 0.6s ease-out both',
+        'fade-in': 'fadeIn 0.8s ease-out both',
+        'stamp': 'stamp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both',
+        'brush': 'brush 1.2s ease-out both',
+        'shimmer': 'shimmer 2s linear infinite',
+        'ripple': 'ripple 0.6s ease-out',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        stamp: {
+          '0%': { opacity: '0', transform: 'scale(1.8) rotate(-8deg)' },
+          '60%': { opacity: '1', transform: 'scale(0.95) rotate(2deg)' },
+          '100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+        },
+        brush: {
+          '0%': { clipPath: 'inset(0 100% 0 0)' },
+          '100%': { clipPath: 'inset(0 0 0 0)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-400px 0' },
+          '100%': { backgroundPosition: '400px 0' },
+        },
+        ripple: {
+          '0%': { boxShadow: '0 0 0 0 rgba(155, 45, 45, 0.4)' },
+          '100%': { boxShadow: '0 0 0 16px rgba(155, 45, 45, 0)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+      },
+    },
+  },
+  plugins: [],
+};

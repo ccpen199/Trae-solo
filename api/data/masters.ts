@@ -1,0 +1,62 @@
+import type { Master } from '../../shared/types';
+
+export const masters: Master[] = [
+  {
+    id: 'master-001',
+    name: '李明远',
+    avatar: '',
+    title: '资深命名师',
+    specialties: ['国学经典', '诗词典故', '五行补益'],
+    experience: 15,
+    introduction: '从事传统文化研究与命名工作十五年，师从国学泰斗，擅长从诗经楚辞中撷取佳名。对汉字演变、音律美学有深入研究，已为近三千家庭提供专业命名服务。',
+    certificates: ['中国传统文化促进会高级命名师', '中华诗词学会会员', '国家二级心理咨询师'],
+    caseCount: 2860,
+    rating: 4.9,
+    reviewCount: 1280,
+    status: 'approved'
+  },
+  {
+    id: 'master-002',
+    name: '王守正',
+    avatar: '',
+    title: '首席命名顾问',
+    specialties: ['八字命理', '音律美学', '家族字辈'],
+    experience: 20,
+    introduction: '幼承庭训，博览经史，对姓名学有独到见解。深谙子平八字、紫微斗数，结合现代美学理念，命名风格典雅厚重，寓意深远。已为三千余家庭提供专业命名服务。',
+    certificates: ['国际易经联合会认证命理师', '中国姓名学研究会副会长', '高级传统文化讲师'],
+    caseCount: 3520,
+    rating: 4.95,
+    reviewCount: 1860,
+    status: 'approved'
+  },
+  {
+    id: 'master-003',
+    name: '张清雅',
+    avatar: '',
+    title: '新锐命名师',
+    specialties: ['诗意命名', '现代美学', '女宝宝起名'],
+    experience: 8,
+    introduction: '文学硕士，师从当代著名诗人，对古典诗词有深厚造诣。命名风格清新雅致，诗意盎然，尤其擅长女宝宝命名，作品多次入选年度最佳命名案例。',
+    certificates: ['中国诗歌学会会员', '国家三级心理咨询师', '高级育婴师'],
+    caseCount: 1580,
+    rating: 4.88,
+    reviewCount: 720,
+    status: 'approved'
+  },
+  {
+    id: 'master-004',
+    name: '陈怀远',
+    avatar: '',
+    title: '资深命名顾问',
+    specialties: ['男宝宝起名', '商品牌号', '英文名搭配'],
+    experience: 12,
+    introduction: '工商管理硕士，专注品牌策划十余年。将传统命名文化与现代品牌理念融合，擅长为企业及个人打造兼具文化底蕴与传播力的名字。',
+    certificates: ['中国品牌研究院高级研究员', '国际命名协会会员', '传统文化传播者'],
+    caseCount: 2150,
+    rating: 4.92,
+    reviewCount: 980,
+    status: 'approved'
+  }
+];
+
+export default masters;
