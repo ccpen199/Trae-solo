@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>may-89143 本地运营台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">may-89143</p>
+          <h1>本地运营台</h1>
+        </div>
+        <div id="health" class="status">连接中</div>
+      </section>
+
+      <section class="metrics" aria-label="核心指标">
+        <article>
+          <span>任务总数</span>
+          <strong id="totalTasks">-</strong>
+        </article>
+        <article>
+          <span>积分池</span>
+          <strong id="totalPoints">-</strong>
+        </article>
+        <article>
+          <span>进行中</span>
+          <strong id="running">-</strong>
+        </article>
+        <article>
+          <span>待处理</span>
+          <strong id="ready">-</strong>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <div class="panel">
+          <div class="panelHeader">
+            <h2>任务队列</h2>
+            <button id="refreshBtn" type="button">刷新</button>
+          </div>
+          <div id="taskList" class="taskList"></div>
+        </div>
+
+        <form id="taskForm" class="panel formPanel">
+          <h2>新增任务</h2>
+          <label>
+            <span>任务名称</span>
+            <input id="titleInput" name="title" autocomplete="off" required />
+          </label>
+          <label>
+            <span>负责人</span>
+            <input id="ownerInput" name="owner" autocomplete="off" value="运营" />
+          </label>
+          <label>
+            <span>状态</span>
+            <select id="statusInput" name="status">
+              <option value="ready">待处理</option>
+              <option value="running">进行中</option>
+              <option value="blocked">需处理</option>
+            </select>
+          </label>
+          <label>
+            <span>积分</span>
+            <input id="pointsInput" name="points" type="number" min="1" value="20" />
+          </label>
+          <button type="submit">保存任务</button>
+        </form>
+      </section>
+
+      <section class="panel activityPanel">
+        <h2>服务事件</h2>
+        <ul id="events"></ul>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
