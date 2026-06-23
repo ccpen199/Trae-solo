@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  background-color: #0A1628;
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060E1A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E8C766;
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gradient-to-r from-cinema-goldDark via-cinema-gold to-cinema-goldLight
+           text-cinema-midnight font-semibold px-6 py-3 rounded-xl
+           transition-all duration-300 hover:shadow-gold hover:-translate-y-0.5
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
+  }
+
+  .btn-outline-gold {
+    @apply border-2 border-cinema-gold text-cinema-gold font-semibold px-6 py-2.5 rounded-xl
+           transition-all duration-300 hover:bg-cinema-gold hover:text-cinema-midnight
+           hover:shadow-gold;
+  }
+
+  .card-dark {
+    @apply bg-cinema-midnightLight rounded-2xl border border-white/5
+           backdrop-blur-sm transition-all duration-300;
+  }
+
+  .card-dark-hover {
+    @apply card-dark hover:border-cinema-gold/50 hover:shadow-gold hover:-translate-y-1;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-cinema-goldDark via-cinema-gold to-cinema-goldLight
+           bg-clip-text text-transparent;
+  }
+
+  .input-dark {
+    @apply bg-cinema-midnightDark border border-white/10 rounded-lg px-4 py-2.5
+           text-white placeholder:text-cinema-muted focus:outline-none focus:border-cinema-gold
+           transition-colors duration-200;
+  }
+
+  .badge-hall {
+    @apply px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider;
+  }
+}
