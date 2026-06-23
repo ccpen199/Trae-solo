@@ -25,6 +25,7 @@ import {
   Banknote,
   Wallet,
   TrendingUp,
+  Building2,
 } from 'lucide-react';
 
 const mockAddresses = [
@@ -95,6 +96,19 @@ export default function CheckoutPage() {
   const [invoiceType, setInvoiceType] = useState('personal');
   const [invoiceTitle, setInvoiceTitle] = useState('');
   const [remark, setRemark] = useState('');
+  const [enterpriseInfo, setEnterpriseInfo] = useState({
+    companyName: '',
+    taxNumber: '',
+    bankName: '',
+    bankAccount: '',
+    invoiceTitle: '',
+  });
+
+  const isEnterprisePayment = paymentTab === 'bank' || paymentTab === 'monthly';
+
+  const handleEnterpriseInfoChange = (field: keyof typeof enterpriseInfo, value: string) => {
+    setEnterpriseInfo(prev => ({ ...prev, [field]: value }));
+  };
 
   const displayItems = items.length > 0 ? items : mockItems;
 
@@ -137,8 +151,22 @@ export default function CheckoutPage() {
       alert('请选择收货地址');
       return;
     }
-    alert('订单提交成功！');
+
+    if (isEnterprisePayment) {
+      if (!enterpriseInfo.companyName || !enterpriseInfo.taxNumber) {
+        alert('请填写完整的企业信息');
+        return;
+      }
+      const orderType = paymentTab === 'monthly' ? '企业月结订单' : '对公转账订单';
+      alert(`${orderType}提交成功！\n企业名称：${enterpriseInfo.companyName}`);
+    } else {
+      alert('普通订单提交成功！');
+    }
     navigate('/orders');
+  };
+
+  const handleViewMonthlyBill = () => {
+    alert('正在跳转到月结账单页面...');
   };
 
   return (
@@ -347,42 +375,174 @@ export default function CheckoutPage() {
                   </TabsContent>
 
                   <TabsContent value="bank" className="mt-4">
-                    <div className="p-4 bg-gold-50 rounded-lg space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                          <Banknote className="h-6 w-6 text-gold-600" />
+                    <div className="space-y-4">
+                      <div className="p-4 bg-gold-50 rounded-lg space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                            <Banknote className="h-6 w-6 text-gold-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-paper-900">对公转账</h4>
+                            <p className="text-sm text-paper-500">
+                              企业对公账户转账，需人工确认
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="font-medium text-paper-900">对公转账</h4>
-                          <p className="text-sm text-paper-500">
-                            企业对公账户转账，需人工确认
-                          </p>
+                        <div className="text-sm text-paper-600 bg-white rounded-lg p-3 space-y-1">
+                          <p><span className="text-paper-500">开户名：</span>杭州某某科技有限公司</p>
+                          <p><span className="text-paper-500">开户行：</span>工商银行杭州西湖支行</p>
+                          <p><span className="text-paper-500">账号：</span>1234 5678 9012 3456 789</p>
                         </div>
                       </div>
-                      <div className="text-sm text-paper-600 bg-white rounded-lg p-3 space-y-1">
-                        <p><span className="text-paper-500">开户名：</span>杭州某某科技有限公司</p>
-                        <p><span className="text-paper-500">开户行：</span>工商银行杭州西湖支行</p>
-                        <p><span className="text-paper-500">账号：</span>1234 5678 9012 3456 789</p>
+
+                      <div className="p-4 bg-gold-50 rounded-lg">
+                        <h4 className="font-medium text-paper-900 mb-4 flex items-center gap-2">
+                          <Building2 className="h-5 w-5 text-gold-600" />
+                          企业信息
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">企业名称 <span className="text-red-500">*</span></label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入企业名称"
+                              value={enterpriseInfo.companyName}
+                              onChange={(e) => handleEnterpriseInfoChange('companyName', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">税号 <span className="text-red-500">*</span></label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入纳税人识别号"
+                              value={enterpriseInfo.taxNumber}
+                              onChange={(e) => handleEnterpriseInfoChange('taxNumber', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">开户银行</label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入开户银行"
+                              value={enterpriseInfo.bankName}
+                              onChange={(e) => handleEnterpriseInfoChange('bankName', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">银行账号</label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入银行账号"
+                              value={enterpriseInfo.bankAccount}
+                              onChange={(e) => handleEnterpriseInfoChange('bankAccount', e.target.value)}
+                            />
+                          </div>
+                          <div className="sm:col-span-2">
+                            <label className="text-sm text-paper-500 mb-1 block">发票抬头</label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入发票抬头"
+                              value={enterpriseInfo.invoiceTitle}
+                              onChange={(e) => handleEnterpriseInfoChange('invoiceTitle', e.target.value)}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </TabsContent>
 
                   <TabsContent value="monthly" className="mt-4">
-                    <div className="p-4 bg-forest-50 rounded-lg space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                          <TrendingUp className="h-6 w-6 text-forest-600" />
+                    <div className="space-y-4">
+                      <div className="p-4 bg-forest-50 rounded-lg space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                              <TrendingUp className="h-6 w-6 text-forest-600" />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-paper-900">企业月结</h4>
+                              <p className="text-sm text-paper-500">
+                                签约企业客户可使用月结服务
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={handleViewMonthlyBill}
+                            leftIcon={<Receipt className="h-4 w-4" />}
+                          >
+                            月结账单
+                          </Button>
                         </div>
-                        <div>
-                          <h4 className="font-medium text-paper-900">企业月结</h4>
-                          <p className="text-sm text-paper-500">
-                            签约企业客户可使用月结服务
-                          </p>
+                        <div className="text-sm text-forest-700 bg-white rounded-lg p-3">
+                          <div className="flex items-center justify-between">
+                            <span>💡 企业月结额度</span>
+                            <span className="font-medium">¥10,000.00</span>
+                          </div>
+                          <div className="flex items-center justify-between mt-1">
+                            <span>本月已用</span>
+                            <span className="font-medium">¥2,580.00</span>
+                          </div>
+                          <div className="flex items-center justify-between mt-1">
+                            <span>可用额度</span>
+                            <span className="font-medium text-forest-600">¥7,420.00</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="text-sm text-forest-700 bg-white rounded-lg p-3">
-                        <p>💡 企业月结额度：¥10,000.00</p>
-                        <p className="mt-1">本月已用：¥2,580.00</p>
+
+                      <div className="p-4 bg-forest-50 rounded-lg">
+                        <h4 className="font-medium text-paper-900 mb-4 flex items-center gap-2">
+                          <Building2 className="h-5 w-5 text-forest-600" />
+                          企业信息
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">企业名称 <span className="text-red-500">*</span></label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入企业名称"
+                              value={enterpriseInfo.companyName}
+                              onChange={(e) => handleEnterpriseInfoChange('companyName', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">税号 <span className="text-red-500">*</span></label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入纳税人识别号"
+                              value={enterpriseInfo.taxNumber}
+                              onChange={(e) => handleEnterpriseInfoChange('taxNumber', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">开户银行</label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入开户银行"
+                              value={enterpriseInfo.bankName}
+                              onChange={(e) => handleEnterpriseInfoChange('bankName', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm text-paper-500 mb-1 block">银行账号</label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入银行账号"
+                              value={enterpriseInfo.bankAccount}
+                              onChange={(e) => handleEnterpriseInfoChange('bankAccount', e.target.value)}
+                            />
+                          </div>
+                          <div className="sm:col-span-2">
+                            <label className="text-sm text-paper-500 mb-1 block">发票抬头</label>
+                            <Input
+                              size="sm"
+                              placeholder="请输入发票抬头"
+                              value={enterpriseInfo.invoiceTitle}
+                              onChange={(e) => handleEnterpriseInfoChange('invoiceTitle', e.target.value)}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </TabsContent>

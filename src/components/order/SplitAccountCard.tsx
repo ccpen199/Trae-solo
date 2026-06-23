@@ -44,9 +44,9 @@ export default function SplitAccountCard({ splitDetails, totalAmount, className 
   const splitItems = useMemo(() => {
     const items = [...baseSplitItems]
     const channel = splitDetails.paymentChannel
-    if (channel && (channel === 'wechat' || channel === 'alipay')) {
+    if (channel && paymentChannelItems[channel]) {
       const channelItem = paymentChannelItems[channel]
-      if (channelItem) {
+      if (channel === 'wechat' || channel === 'alipay') {
         items.push(channelItem)
       }
     }

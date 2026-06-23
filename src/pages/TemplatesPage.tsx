@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Sparkles,
@@ -16,6 +16,7 @@ import SectionTitle from '@/components/common/SectionTitle';
 import TemplateCard from '@/components/product/TemplateCard';
 import { templates } from '@/mock/data/templates';
 import { products } from '@/mock/data/products';
+import { photos } from '@/mock/data/photos';
 import { cn } from '@/lib/utils';
 
 const sceneTags = [
@@ -43,9 +44,14 @@ const ITEMS_PER_PAGE = 12;
 export default function TemplatesPage() {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedScene, setSelectedScene] = useState('all');
   const [selectedStyle, setSelectedStyle] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
+
+  const searchParams = new URLSearchParams(location.search);
+  const photoId = searchParams.get('photoId');
+  const selectedPhoto = photoId ? photos.find((p) => p.id === photoId) : null;
 
   const product = products.find((p) => p.id === productId);
   const showAllTemplates = !productId || productId === 'all' || !product;
@@ -76,11 +82,11 @@ export default function TemplatesPage() {
   );
 
   const handleTemplateClick = (templateId: string) => {
-    navigate(`/editor/${templateId}`);
+    navigate(`/editor/${templateId}${photoId ? `?photoId=${photoId}` : ''}`);
   };
 
   const handleStartCreate = (templateId: string) => {
-    navigate(`/editor/${templateId}`);
+    navigate(`/editor/${templateId}${photoId ? `?photoId=${photoId}` : ''}`);
   };
 
   const handleSceneChange = (sceneId: string) => {
@@ -167,6 +173,39 @@ export default function TemplatesPage() {
                       ))}
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {selectedPhoto && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mb-6"
+          >
+            <div className="rounded-xl bg-white p-4 shadow-soft">
+              <div className="flex items-center gap-4">
+                <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg">
+                  <img
+                    src={selectedPhoto.thumbnailUrl}
+                    alt="已上传照片"
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute left-1 top-1 rounded-full bg-brand-500 px-1.5 py-0.5 text-[10px] font-medium text-white">
+                    AI
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-brand-500" />
+                    <span className="font-medium text-paper-900">已上传照片</span>
+                  </div>
+                  <p className="text-sm text-paper-500 mt-1">
+                    选择模板后，照片将自动添加到编辑器中
+                  </p>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Input } from '@/components/ui/Input';
@@ -97,12 +97,14 @@ const fontOptions = [
 export default function EditorPage() {
   const navigate = useNavigate();
   const { templateId } = useParams<{ templateId: string }>();
+  const location = useLocation();
   const { layers, selectedLayerId, canvasWidth, canvasHeight, selectLayer, updateLayer, addLayer, removeLayer, undo, redo, historyIndex, history, setLayers, setCanvasSize } = useEditorStore();
   const { addItem } = useCartStore();
   const [zoom, setZoom] = useState(100);
   const [leftTab, setLeftTab] = useState('materials');
   const [materialCategory, setMaterialCategory] = useState('background');
   const [rightTab, setRightTab] = useState('layers');
+  const photoAddedRef = useRef(false);
 
   useEffect(() => {
     if (templateId) {
@@ -117,6 +119,39 @@ export default function EditorPage() {
       }
     }
   }, [templateId, setCanvasSize, setLayers]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const photoId = searchParams.get('photoId');
+    
+    if (photoId && !photoAddedRef.current) {
+      const photo = photos.find((p) => p.id === photoId);
+      if (photo) {
+        const newLayer = {
+          id: `photo-${Date.now()}`,
+          type: 'image' as const,
+          name: `AI处理照片`,
+          visible: true,
+          locked: false,
+          order: 0,
+          x: 50,
+          y: 50,
+          width: Math.min(photo.width, canvasWidth - 100) || 300,
+          height: Math.min(photo.height, canvasHeight - 100) || 200,
+          rotation: 0,
+          opacity: 1,
+          imageData: {
+            src: photo.url,
+            originalWidth: photo.width,
+            originalHeight: photo.height,
+            objectFit: 'cover' as const,
+          },
+        };
+        addLayer(newLayer as any);
+        photoAddedRef.current = true;
+      }
+    }
+  }, [location.search, addLayer, canvasWidth, canvasHeight]);
 
   const currentTemplate = templates.find((t) => t.id === templateId);
   const currentProduct = currentTemplate ? products.find((p) => p.id === currentTemplate.productId) : null;

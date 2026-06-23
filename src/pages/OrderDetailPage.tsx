@@ -40,15 +40,21 @@ export default function OrderDetailPage() {
     cancelled: 'error',
   };
 
+  const nodeRemarkMap: Record<string, string> = {
+    printing: '富士胶片冲印，色彩还原度98%',
+    binding: '手工精装 / 锁线装订',
+    shipping: '顺丰速运 / 全国包邮',
+  };
+
   const mapProductionNodes = (): ProductionNode[] => {
     const nodeMap: Record<string, { nodeName: string; nodeKey: string }> = {
       order_received: { nodeName: '订单已提交', nodeKey: 'order_received' },
       payment_confirmed: { nodeName: '支付确认', nodeKey: 'payment_confirmed' },
       design_review: { nodeName: '设计稿审核', nodeKey: 'design_review' },
-      printing: { nodeName: '正在印刷', nodeKey: 'printing' },
+      printing: { nodeName: '胶片冲洗', nodeKey: 'printing' },
       binding: { nodeName: '装帧加工', nodeKey: 'binding' },
       quality_check: { nodeName: '质量检验', nodeKey: 'quality_check' },
-      shipping: { nodeName: '发货配送', nodeKey: 'shipping' },
+      shipping: { nodeName: '物流配送', nodeKey: 'shipping' },
       delivered: { nodeName: '已送达', nodeKey: 'delivered' },
     };
 
@@ -69,6 +75,9 @@ export default function OrderDetailPage() {
         nodeKey: node.status,
       };
       const isProcessing = !node.completed && index === processingIndex;
+      const lastLog = node.operationLogs && node.operationLogs.length > 0
+        ? node.operationLogs[node.operationLogs.length - 1]
+        : null;
       return {
         id: `node-${index}`,
         nodeKey: info.nodeKey,
@@ -79,8 +88,9 @@ export default function OrderDetailPage() {
             ? 'processing'
             : 'pending',
         timestamp: node.completedAt || node.estimatedAt || '',
-        operator: node.completed ? '系统自动' : '',
-        remark: '',
+        operator: lastLog?.operator || (node.completed ? '系统自动' : ''),
+        remark: node.remark || nodeRemarkMap[node.status] || '',
+        operationLogs: node.operationLogs || [],
       };
     });
   };
@@ -122,6 +132,135 @@ export default function OrderDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <ProductionTimeline nodes={productionNodes} />
+
+          {order.workOrderInfo && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Building2 className="w-5 h-5 text-brand-500" />
+                  生产工单信息
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">工单号</p>
+                    <p className="font-medium text-paper-900 font-mono">
+                      {order.workOrderInfo.workOrderNo}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">工厂ID</p>
+                    <p className="font-medium text-paper-900 font-mono">
+                      {order.workOrderInfo.factoryId}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">生产线</p>
+                    <p className="font-medium text-paper-900">
+                      {order.workOrderInfo.productionLine}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">操作员</p>
+                    <p className="font-medium text-paper-900">
+                      {order.workOrderInfo.operator}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">设备编号</p>
+                    <p className="font-medium text-paper-900 font-mono">
+                      {order.workOrderInfo.equipment}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-paper-500">质检记录</p>
+                    <p className="font-medium text-paper-900">
+                      {order.workOrderInfo.qualityRecord || '待检验'}
+                    </p>
+                  </div>
+                  {order.workOrderInfo.estimatedCompletionTime && (
+                    <div className="space-y-1">
+                      <p className="text-sm text-paper-500">预计完成时间</p>
+                      <p className="font-medium text-paper-900">
+                        {order.workOrderInfo.estimatedCompletionTime}
+                      </p>
+                    </div>
+                  )}
+                  {order.workOrderInfo.actualCompletionTime && (
+                    <div className="space-y-1">
+                      <p className="text-sm text-paper-500">实际完成时间</p>
+                      <p className="font-medium text-paper-900">
+                        {order.workOrderInfo.actualCompletionTime}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {productionNodes.some(n => n.operationLogs && n.operationLogs.length > 0) && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-brand-500" />
+                  节点操作记录
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {productionNodes.map((node, nodeIndex) => {
+                    if (!node.operationLogs || node.operationLogs.length === 0) return null;
+                    return (
+                      <div key={node.id} className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className={cn(
+                            'w-2 h-2 rounded-full',
+                            node.status === 'completed' ? 'bg-forest-500' :
+                            node.status === 'processing' ? 'bg-brand-500' : 'bg-paper-300'
+                          )} />
+                          <h4 className="font-medium text-paper-900">{node.nodeName}</h4>
+                        </div>
+                        <div className="relative pl-6">
+                          <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-paper-200" />
+                          <div className="space-y-3">
+                            {node.operationLogs.map((log, logIndex) => (
+                              <div key={logIndex} className="relative">
+                                <div className="absolute left-[-18px] top-1.5 w-3 h-3 rounded-full bg-paper-300 border-2 border-white" />
+                                <div className="bg-paper-50 rounded-lg p-3">
+                                  <div className="flex items-start justify-between gap-4">
+                                    <div className="flex-1">
+                                      <p className="text-sm text-paper-900">{log.action}</p>
+                                      <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-paper-500">
+                                        <span className="flex items-center gap-1">
+                                          <User className="w-3 h-3" />
+                                          {log.operator}
+                                        </span>
+                                        {log.equipment && (
+                                          <span className="flex items-center gap-1">
+                                            <ShieldCheck className="w-3 h-3" />
+                                            {log.equipment}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <span className="text-xs text-paper-400 whitespace-nowrap">
+                                      {log.time}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {order.logistics && (
             <Card>

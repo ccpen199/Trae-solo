@@ -25,6 +25,8 @@ import {
   Users,
   Database,
   CheckCircle2,
+  X,
+  Layers,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
@@ -158,7 +160,12 @@ const privacyGuarantees = [
 export default function ProductDetailPage() {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const addItem = useCartStore((state) => state.addItem);
+
+  const searchParams = new URLSearchParams(location.search);
+  const photoId = searchParams.get('photoId');
+  const selectedPhoto = photoId ? photos.find((p) => p.id === photoId) : null;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedMaterial, setSelectedMaterial] = useState(0);
@@ -167,6 +174,7 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [showFloatingBar, setShowFloatingBar] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const [showMaterialModal, setShowMaterialModal] = useState(false);
 
   const product = products.find((p) => p.id === productId);
   const productTemplates = templates.filter((t) => t.productId === productId);
@@ -331,6 +339,44 @@ export default function ProductDetailPage() {
         >
           <Breadcrumb items={breadcrumbItems} />
         </motion.div>
+
+        {selectedPhoto && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="mb-6"
+          >
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg">
+                    <img
+                      src={selectedPhoto.thumbnailUrl}
+                      alt="已上传照片"
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute left-1 top-1 rounded-full bg-brand-500 px-1.5 py-0.5 text-[10px] font-medium text-white">
+                      AI
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-brand-500" />
+                      <span className="font-medium text-paper-900">已上传照片</span>
+                    </div>
+                    <p className="text-sm text-paper-500 mt-1">
+                      AI处理后的照片将自动应用到您选择的模板中
+                    </p>
+                  </div>
+                  <div className="text-xs text-paper-400">
+                    {selectedPhoto.width} × {selectedPhoto.height}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <motion.div
@@ -577,7 +623,7 @@ export default function ProductDetailPage() {
                 <Button
                   size="lg"
                   className="flex-1"
-                  onClick={() => navigate(`/templates/${productId}`)}
+                  onClick={() => navigate(`/templates/${productId}${photoId ? `?photoId=${photoId}` : ''}`)}
                 >
                   <Sparkles className="h-5 w-5" />
                   立即制作
@@ -649,6 +695,14 @@ export default function ProductDetailPage() {
                     </div>
                   </CardContent>
                 </Card>
+
+                <button
+                  onClick={() => setShowMaterialModal(true)}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-4 text-white font-medium shadow-soft transition-all hover:shadow-medium hover:-translate-y-0.5"
+                >
+                  <Layers className="h-5 w-5" />
+                  查看材质规格
+                </button>
               </div>
             </div>
           </div>
@@ -749,7 +803,7 @@ export default function ProductDetailPage() {
                   >
                     <TemplateCard
                       template={template}
-                      onClick={() => navigate(`/templates/${productId}?template=${template.id}`)}
+                      onClick={() => navigate(`/templates/${productId}?template=${template.id}${photoId ? `&photoId=${photoId}` : ''}`)}
                     />
                   </motion.div>
                 ))}
@@ -758,7 +812,7 @@ export default function ProductDetailPage() {
                   <Button
                     variant="outline"
                     size="lg"
-                    onClick={() => navigate(`/templates/${productId}`)}
+                    onClick={() => navigate(`/templates/${productId}${photoId ? `?photoId=${photoId}` : ''}`)}
                   >
                     查看全部模板
                     <ChevronRight className="h-4 w-4" />
@@ -1261,6 +1315,80 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showMaterialModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+            onClick={() => setShowMaterialModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="relative w-full max-w-3xl max-h-[80vh] overflow-hidden rounded-2xl bg-white shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="sticky top-0 flex items-center justify-between border-b border-paper-200 bg-white px-6 py-4">
+                <h2 className="font-display text-xl font-semibold text-paper-900">
+                  材质规格说明
+                </h2>
+                <button
+                  onClick={() => setShowMaterialModal(false)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-paper-100 text-paper-500 transition-colors hover:bg-paper-200 hover:text-paper-700"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="overflow-y-auto p-6 max-h-[calc(80vh-80px)]">
+                <p className="text-sm text-paper-600 mb-6">
+                  以下是本产品支持的所有材质规格，您可以根据需求选择最适合的材质：
+                </p>
+                <div className="grid gap-4">
+                  {materialOptions.map((material, index) => (
+                    <motion.div
+                      key={material.name}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className={cn(
+                        "flex gap-4 rounded-xl border p-4 transition-all",
+                        selectedMaterial === index
+                          ? "border-brand-500 bg-brand-50"
+                          : "border-paper-200 hover:border-brand-300 hover:shadow-soft"
+                      )}
+                    >
+                      <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-paper-100">
+                        <img
+                          src={material.image}
+                          alt={material.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between">
+                          <h3 className="font-medium text-paper-900">{material.name}</h3>
+                          <span className="text-sm font-semibold text-brand-600">
+                            {material.price > 0
+                              ? `+¥${(material.price / 100).toFixed(0)}元/件`
+                              : '基础款'}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-sm text-paper-600">{material.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
