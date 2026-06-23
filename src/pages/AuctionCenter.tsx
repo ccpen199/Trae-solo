@@ -17,6 +17,7 @@ import {
   Bell,
   Settings,
   HelpCircle,
+  Lock,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { mockDepositRecords, mockBidder, mockProperties } from '@/mock/data';
@@ -34,6 +35,7 @@ function QualificationContent() {
   const [fundUploadStatus, setFundUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('success');
   const [creditStatus, setCreditStatus] = useState<'idle' | 'checking' | 'passed' | 'failed'>('passed');
   const [uploadProgress, setUploadProgress] = useState(65);
+  const [localFundStatus, setLocalFundStatus] = useState<'verified' | 'pending' | 'rejected'>(mockBidder.fundProofStatus);
 
   const fundAmount = 5800000;
   const fundProofDate = '2026-06-15';
@@ -42,9 +44,9 @@ function QualificationContent() {
 
   const steps = [
     { key: 'realname', label: '实名认证', status: 'completed' as const },
-    { key: 'fund', label: '资金证明', status: mockBidder.fundProofStatus === 'verified' ? 'completed' as const : mockBidder.fundProofStatus === 'pending' ? 'current' as const : 'upcoming' as const },
-    { key: 'credit', label: '征信核验', status: mockBidder.fundProofStatus === 'verified' ? 'completed' as const : 'upcoming' as const },
-    { key: 'risk', label: '风险测评', status: mockBidder.fundProofStatus === 'verified' ? 'completed' as const : 'upcoming' as const },
+    { key: 'fund', label: '资金证明', status: localFundStatus === 'verified' ? 'completed' as const : localFundStatus === 'pending' ? 'current' as const : 'upcoming' as const },
+    { key: 'credit', label: '征信核验', status: localFundStatus === 'verified' ? 'completed' as const : 'upcoming' as const },
+    { key: 'risk', label: '风险测评', status: localFundStatus === 'verified' ? 'completed' as const : 'upcoming' as const },
   ];
 
   const canSubmit = fundUploadStatus === 'success' && creditStatus === 'passed';
@@ -79,13 +81,13 @@ function QualificationContent() {
           </div>
           <div className={cn(
             'px-4 py-2 rounded-lg text-sm font-medium',
-            mockBidder.fundProofStatus === 'verified' && 'bg-success-50 text-success-700 border border-success-200',
-            mockBidder.fundProofStatus === 'pending' && 'bg-gold-50 text-gold-700 border border-gold-200',
-            mockBidder.fundProofStatus === 'rejected' && 'bg-danger-50 text-danger-700 border border-danger-200'
+            localFundStatus === 'verified' && 'bg-success-50 text-success-700 border border-success-200',
+            localFundStatus === 'pending' && 'bg-gold-50 text-gold-700 border border-gold-200',
+            localFundStatus === 'rejected' && 'bg-danger-50 text-danger-700 border border-danger-200'
           )}>
-            {mockBidder.fundProofStatus === 'verified' && '已通过'}
-            {mockBidder.fundProofStatus === 'pending' && '审核中'}
-            {mockBidder.fundProofStatus === 'rejected' && '已驳回'}
+            {localFundStatus === 'verified' && '已通过'}
+            {localFundStatus === 'pending' && '审核中'}
+            {localFundStatus === 'rejected' && '已驳回'}
           </div>
         </div>
 
@@ -125,7 +127,7 @@ function QualificationContent() {
           </div>
         </div>
 
-        {mockBidder.fundProofStatus !== 'verified' && mockBidder.fundProofStatus !== 'pending' && (
+        {localFundStatus !== 'verified' && localFundStatus !== 'pending' && (
           <button
             disabled={!canSubmit}
             className={cn(
@@ -141,7 +143,7 @@ function QualificationContent() {
       </div>
 
       {/* 驳回反馈 */}
-      {mockBidder.fundProofStatus === 'rejected' && (
+      {localFundStatus === 'rejected' && (
         <div className="bg-white rounded-xl border border-danger-200 overflow-hidden">
           <div className="bg-danger-50 px-6 py-4 border-b border-danger-200">
             <div className="flex items-center gap-3">
@@ -491,7 +493,7 @@ function QualificationContent() {
             <h3 className="font-medium text-ink-900">风险测评</h3>
             <p className="text-xs text-ink-500">投资风险承受能力评估</p>
           </div>
-          {mockBidder.fundProofStatus === 'verified' ? (
+          {localFundStatus === 'verified' ? (
             <span className="text-success-600 text-sm font-medium flex items-center gap-1">
               <CheckCircle2 className="w-4 h-4" />
               已完成
@@ -503,7 +505,7 @@ function QualificationContent() {
             </span>
           )}
         </div>
-        {mockBidder.fundProofStatus === 'verified' && (
+        {localFundStatus === 'verified' && (
           <div className="pt-4 border-t border-ink-100">
             <div className="flex items-center justify-between">
               <div>
@@ -549,6 +551,152 @@ function QualificationContent() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* 参拍资格对接 */}
+      <div className="bg-white rounded-xl border border-ink-200 p-6">
+        <h3 className="font-medium text-ink-900 mb-5 flex items-center gap-2">
+          <Gavel className="w-5 h-5 text-ink-400" />
+          参拍资格对接
+        </h3>
+
+        {localFundStatus === 'rejected' && (
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-danger-50 flex items-center justify-center">
+              <Lock className="w-8 h-8 text-danger-500" />
+            </div>
+            <p className="text-base font-medium text-ink-900 mb-6">
+              暂未通过资质审核，以下标的需完成审核后方可参拍
+            </p>
+            <div className="space-y-3 mb-6">
+              {mockProperties.slice(0, 3).map((property) => (
+                <div
+                  key={property.id}
+                  className="flex gap-4 p-4 bg-ink-50 rounded-xl opacity-70 cursor-not-allowed relative"
+                  onClick={() => alert('请先完成资质审核后方可查看标的详情')}
+                >
+                  <div className="absolute inset-0 z-10 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-ink-900/60 flex items-center justify-center">
+                      <Lock className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 relative">
+                    <img
+                      src={property.images[0]}
+                      alt={property.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-ink-900 line-clamp-1 text-sm">
+                      {property.title}
+                    </h4>
+                    <p className="text-xs text-ink-500 mt-1">
+                      {property.district} · {property.area}㎡
+                    </p>
+                    <p className="text-sm font-bold text-primary-600 mt-1 font-serif">
+                      ¥{formatPrice(property.startingPrice)}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setLocalFundStatus('pending')}
+              className="w-full py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg font-medium hover:from-primary-700 hover:to-primary-800 transition-colors"
+            >
+              立即补充资料，解锁参拍
+            </button>
+          </div>
+        )}
+
+        {localFundStatus === 'pending' && (
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-50 flex items-center justify-center">
+              <Clock className="w-8 h-8 text-gold-500" />
+            </div>
+            <p className="text-base font-medium text-ink-900 mb-6">
+              资质审核中，完成后即可参拍以下标的
+            </p>
+            <div className="space-y-3 mb-6">
+              {mockProperties.slice(0, 3).map((property) => (
+                <div
+                  key={property.id}
+                  className="flex gap-4 p-4 bg-ink-50 rounded-xl relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-white/50 z-10" />
+                  <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                    <img
+                      src={property.images[0]}
+                      alt={property.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-ink-900 line-clamp-1 text-sm">
+                      {property.title}
+                    </h4>
+                    <p className="text-xs text-ink-500 mt-1">
+                      {property.district} · {property.area}㎡
+                    </p>
+                    <p className="text-sm font-bold text-primary-600 mt-1 font-serif">
+                      ¥{formatPrice(property.startingPrice)}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button className="w-full py-3 bg-gold-500 text-white rounded-lg font-medium hover:bg-gold-600 transition-colors">
+              查看审核进度
+            </button>
+          </div>
+        )}
+
+        {localFundStatus === 'verified' && (
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-success-50 flex items-center justify-center">
+              <CheckCircle2 className="w-8 h-8 text-success-500" />
+            </div>
+            <p className="text-base font-medium text-ink-900 mb-6">
+              您已具备竞买资格，可参与以下标的
+            </p>
+            <div className="space-y-3 mb-6">
+              {mockProperties.slice(0, 3).map((property) => (
+                <Link
+                  key={property.id}
+                  to={`/detail/${property.id}`}
+                  className="flex gap-4 p-4 bg-ink-50 rounded-xl hover:bg-ink-100 transition-colors group"
+                >
+                  <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                    <img
+                      src={property.images[0]}
+                      alt={property.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-ink-900 line-clamp-1 text-sm group-hover:text-primary-600 transition-colors">
+                      {property.title}
+                    </h4>
+                    <p className="text-xs text-ink-500 mt-1">
+                      {property.district} · {property.area}㎡
+                    </p>
+                    <p className="text-sm font-bold text-primary-600 mt-1 font-serif">
+                      ¥{formatPrice(property.startingPrice)}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-ink-300 group-hover:text-primary-500 group-hover:translate-x-1 transition-all self-center" />
+                </Link>
+              ))}
+            </div>
+            <Link
+              to="/list"
+              className="block w-full py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg font-medium hover:from-primary-700 hover:to-primary-800 transition-colors"
+            >
+              前往标的列表，立即参拍
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

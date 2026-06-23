@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ChevronLeft,
@@ -37,6 +37,9 @@ import {
   Lightbulb,
   TrendingUp,
   TrendingDown,
+  Megaphone,
+  Search,
+  Wallet,
 } from 'lucide-react';
 import {
   getPropertyById,
@@ -73,6 +76,7 @@ const tabs = [
 
 export default function PropertyDetail() {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const property = getPropertyById(id || '');
   const report = getPropertyReport(id || '');
   const process = getAuctionProcess(id || '');
@@ -80,7 +84,9 @@ export default function PropertyDetail() {
   const documents = getDocuments(id);
   const { addToCompare, isInCompare } = useCompareStore();
 
-  const [activeTab, setActiveTab] = useState('info');
+  const urlTab = searchParams.get('tab');
+  const initialTab = urlTab === 'docs' ? 'report' : urlTab && tabs.some(t => t.key === urlTab) ? urlTab : 'info';
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFirstHouse, setIsFirstHouse] = useState(true);
   const [propertyAge, setPropertyAge] = useState(5);
@@ -97,6 +103,12 @@ export default function PropertyDetail() {
       setBidAmount(property.startingPrice);
     }
   }, [property]);
+
+  useEffect(() => {
+    if (urlTab === 'vr') {
+      setShowVR(true);
+    }
+  }, [urlTab]);
 
   useEffect(() => {
     if (property?.auctionStartTime) {
@@ -340,6 +352,79 @@ export default function PropertyDetail() {
                     <span className="text-ink-400">朝向</span> {property.orientation}
                   </span>
                 </div>
+              </div>
+            </div>
+
+            {/* Neighborhood Market - Highlighted */}
+            <div className="bg-white rounded-xl border-2 border-primary-200 p-6 shadow-sm shadow-primary-50/50">
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h3 className="font-serif font-bold text-xl text-ink-900">同地段近半年行情 · {property.district} {property.title.split(' ')[0]}</h3>
+                  <p className="text-sm text-ink-500 mt-1">基于同板块最近6个月成交数据</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                {[
+                  {
+                    label: '成交均价',
+                    value: '¥' + ((mockMarketData.find(d => d.district === property.district)?.avgPrice || 70000) / 10000).toFixed(1) + '万/㎡',
+                    change: (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) >= 0
+                      ? '+' + (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) + '%'
+                      : (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) + '%',
+                    trend: (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) >= 0 ? 'up' : 'down'
+                  },
+                  {
+                    label: '流拍率',
+                    value: (mockMarketData.find(d => d.district === property.district)?.unsoldRate || 20) + '%',
+                    change: '-2.1%',
+                    trend: 'down'
+                  },
+                  {
+                    label: '溢价率',
+                    value: (mockMarketData.find(d => d.district === property.district)?.premiumRate || 15) + '%',
+                    change: '+1.8%',
+                    trend: 'up'
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="bg-gradient-to-br from-ink-50 to-white rounded-xl p-4 border border-ink-100">
+                    <div className="text-xs text-ink-500 mb-2">{item.label}</div>
+                    <div className="text-xl font-bold text-ink-900 font-serif mb-1">{item.value}</div>
+                    <div className={cn(
+                      'text-xs font-medium flex items-center gap-0.5',
+                      item.trend === 'up' ? 'text-success-600' : 'text-danger-600'
+                    )}>
+                      {item.trend === 'up' ? (
+                        <TrendingUp className="w-3 h-3" />
+                      ) : (
+                        <TrendingDown className="w-3 h-3" />
+                      )}
+                      环比 {item.change}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mb-5">
+                <div className="text-xs text-ink-500 mb-3">近6个月成交量</div>
+                <div className="flex items-end justify-between gap-2 h-24 bg-ink-50/50 rounded-lg p-3">
+                  {[0.65, 0.78, 0.85, 0.92, 1.0, 1.1].map((ratio, i) => (
+                    <div key={i} className="flex-1 flex flex-col items-center justify-end h-full gap-2">
+                      <div
+                        className="w-full bg-gradient-to-t from-primary-600 via-primary-500 to-primary-400 rounded-t-sm transition-all hover:from-primary-700 hover:via-primary-600 hover:to-primary-500 shadow-sm"
+                        style={{ height: `${ratio * 100}%`, minHeight: '6px' }}
+                      ></div>
+                      <span className="text-xs text-ink-400">{['1月', '2月', '3月', '4月', '5月', '6月'][i]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="text-center">
+                <button className="btn-secondary w-full justify-center">
+                  查看完整分析
+                  <ArrowRight className="w-4 h-4 ml-1.5" />
+                </button>
               </div>
             </div>
 
@@ -1178,59 +1263,6 @@ export default function PropertyDetail() {
               </div>
             </div>
 
-            {/* Neighborhood Market */}
-            <div className="bg-white rounded-xl border border-ink-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-ink-900">同地段近半年行情分析</h3>
-                  <p className="text-sm text-ink-500">{property.district} {property.title.split(' ')[0]}板块</p>
-                </div>
-                <Link to="/#market" className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1">
-                  查看更多
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                {[
-                  { label: '成交均价', value: (mockMarketData.find(d => d.district === property.district)?.avgPrice || 70000) / 10000 + '万/㎡', change: (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) + '%', trend: (mockMarketData.find(d => d.district === property.district)?.avgPriceChange || 2) >= 0 ? 'up' : 'down' },
-                  { label: '流拍率', value: (mockMarketData.find(d => d.district === property.district)?.unsoldRate || 20) + '%', change: '-2.1%', trend: 'down' },
-                  { label: '平均溢价率', value: (mockMarketData.find(d => d.district === property.district)?.premiumRate || 15) + '%', change: '+1.8%', trend: 'up' },
-                ].map((item, i) => (
-                  <div key={i} className="text-center p-3 bg-ink-50 rounded-lg">
-                    <div className="text-xs text-ink-500 mb-1">{item.label}</div>
-                    <div className="text-lg font-bold text-ink-900 font-serif">{item.value}</div>
-                    <div className={cn(
-                      'text-xs font-medium flex items-center justify-center gap-0.5 mt-1',
-                      item.trend === 'up' ? 'text-success-600' : 'text-danger-600'
-                    )}>
-                      {item.trend === 'up' ? (
-                        <TrendingUp className="w-3 h-3" />
-                      ) : (
-                        <TrendingDown className="w-3 h-3" />
-                      )}
-                      环比{item.change}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div>
-                <div className="text-xs text-ink-500 mb-3">近6个月成交量</div>
-                <div className="flex items-end justify-between gap-2 h-20">
-                  {[0.65, 0.78, 0.85, 0.92, 1.0, 1.1].map((ratio, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center">
-                      <div
-                        className="w-full bg-gradient-to-t from-primary-500 to-primary-300 rounded-t transition-all hover:from-primary-600 hover:to-primary-400"
-                        style={{ height: `${ratio * 100}%`, minHeight: '8px' }}
-                      ></div>
-                      <span className="text-xs text-ink-400 mt-2">{['1月', '2月', '3月', '4月', '5月', '6月'][i]}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
             {/* Risk Tags Detail */}
             {property.riskTags.length > 0 && (
               <div className="bg-white rounded-xl border border-ink-200 p-6">
@@ -1290,7 +1322,7 @@ export default function PropertyDetail() {
                                     <div>
                                       <div className="text-xs text-ink-500 mb-1">最近复查</div>
                                       <span className="text-sm text-ink-700">
-                                        {report.reviewRecords[0].date}
+                                        {report.reviewRecords[0].date} · {report.reviewRecords[0].reviewer}
                                       </span>
                                     </div>
                                   )}
@@ -1469,6 +1501,97 @@ export default function PropertyDetail() {
                   })}
                 </div>
               </div>
+            </div>
+
+            {/* Auction Process Tracking */}
+            <div className="bg-white rounded-xl border border-ink-200 p-6">
+              <h3 className="font-serif font-bold text-lg text-ink-900 mb-4">交易流程追踪</h3>
+              {(() => {
+                const statusIndexMap: Record<string, number> = {
+                  'notice': 0,
+                  'due-diligence': 1,
+                  'deposit': 2,
+                  'bidding': 3,
+                  'ended': 4,
+                  'sold': 5,
+                };
+                const currentStepIndex = statusIndexMap[property.status] ?? 0;
+                const progressPercent = property.status === 'sold' ? 100 : Math.round((currentStepIndex / 5) * 100);
+                const steps = [
+                  { key: 'notice', icon: Megaphone, label: '公告期', extra: '' },
+                  { key: 'due-diligence', icon: Search, label: '尽调期', extra: '' },
+                  { key: 'deposit', icon: Wallet, label: '保证金缴纳', extra: '监管银行：中国银行' },
+                  { key: 'bidding', icon: Gavel, label: '延时竞价', extra: '自动延时机制' },
+                  { key: 'confirmation', icon: CheckCircle2, label: '成交确认', extra: '法院出具文书' },
+                  { key: 'contract', icon: FileCheck, label: '电子签约', extra: '区块链存证' },
+                ];
+                return (
+                  <>
+                    <div className="relative mb-6">
+                      <div className="absolute left-5 top-4 bottom-4 w-0.5 bg-ink-200"></div>
+                      <div className="space-y-5">
+                        {steps.map((step, index) => {
+                          const StepIcon = step.icon;
+                          const isCompleted = property.status === 'sold' || index < currentStepIndex;
+                          const isCurrent = index === currentStepIndex && property.status !== 'sold';
+                          return (
+                            <div key={step.key} className="relative pl-12 flex items-start">
+                              <div className={cn(
+                                'absolute left-2 top-0 w-7 h-7 rounded-full flex items-center justify-center border-2',
+                                isCompleted && 'bg-success-500 border-success-500',
+                                isCurrent && 'bg-gold-500 border-gold-500',
+                                !isCompleted && !isCurrent && 'bg-white border-ink-300'
+                              )}>
+                                {isCurrent && (
+                                  <div className="absolute inset-0 rounded-full bg-gold-400 animate-ping opacity-40"></div>
+                                )}
+                                {isCompleted ? (
+                                  <CheckCircle2 className="w-4 h-4 text-white relative z-10" />
+                                ) : (
+                                  <StepIcon className={cn(
+                                    'w-3.5 h-3.5 relative z-10',
+                                    isCurrent ? 'text-white' : 'text-ink-400'
+                                  )} />
+                                )}
+                              </div>
+                              <div className="flex-1 pt-0.5">
+                                <div className="flex items-center justify-between">
+                                  <span className={cn(
+                                    'text-sm font-medium',
+                                    isCompleted || isCurrent ? 'text-ink-900' : 'text-ink-400'
+                                  )}>
+                                    {step.label}
+                                  </span>
+                                  {step.extra && (
+                                    <span className={cn(
+                                      'text-xs',
+                                      isCurrent ? 'text-gold-600' : 'text-ink-400'
+                                    )}>
+                                      {step.extra}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-ink-500">当前进度</span>
+                        <span className="text-xs font-medium text-primary-600">{progressPercent}%</span>
+                      </div>
+                      <div className="h-2 bg-ink-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary-500 to-gold-500 rounded-full transition-all duration-500"
+                          style={{ width: `${progressPercent}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
 
             {/* Documents */}

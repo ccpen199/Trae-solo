@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, Users, Clock, Plus, Check, AlertTriangle, Shield, Camera, Calculator, FileSearch } from 'lucide-react';
 import type { Property } from '@/types';
 import { formatPrice, getAuctionStatusLabel, getAuctionStatusClass, getCountdown, cn, getRiskLevelLabel, getRiskLevelClass } from '@/utils';
 import { useCompareStore } from '@/store';
 import { useState, useEffect } from 'react';
-import { getPropertyReport } from '@/mock/data';
+import { getPropertyReport, getDocuments } from '@/mock/data';
 
 interface PropertyCardProps {
   property: Property;
@@ -15,6 +15,12 @@ export default function PropertyCard({ property, variant = 'default' }: Property
   const { addToCompare, removeFromCompare, isInCompare } = useCompareStore();
   const inCompare = isInCompare(property.id);
   const [countdown, setCountdown] = useState(getCountdown(property.auctionStartTime));
+  const navigate = useNavigate();
+
+  const report = getPropertyReport(property.id);
+  const documents = getDocuments(property.id);
+  const hasReport = !!report;
+  const docCount = documents.length;
 
   useEffect(() => {
     if (property.status === 'bidding' || property.status === 'deposit') {
@@ -128,26 +134,29 @@ export default function PropertyCard({ property, variant = 'default' }: Property
 
         <div className="mt-3 pt-3 border-t border-ink-100 grid grid-cols-4 gap-1">
           {[
-            { icon: Shield, label: '产权报告', color: getPropertyReport(property.id) ? 'text-primary-600 bg-primary-50' : 'text-ink-400 bg-ink-50', href: `/detail/${property.id}?tab=report` },
-            { icon: Camera, label: 'VR全景', color: 'text-gold-600 bg-gold-50', href: `/detail/${property.id}?tab=vr` },
-            { icon: Calculator, label: '税费测算', color: 'text-success-600 bg-success-50', href: `/detail/${property.id}?tab=tax` },
-            { icon: FileSearch, label: '尽调文档', color: 'text-ink-600 bg-ink-50', href: `/detail/${property.id}?tab=docs` },
+            { icon: Shield, label: hasReport ? '已出具' : '产权报告', tab: 'report', color: hasReport ? 'text-primary-600 bg-primary-50' : 'text-ink-400 bg-ink-50' },
+            { icon: Camera, label: '可看房', tab: 'vr', color: 'text-gold-600 bg-gold-50' },
+            { icon: Calculator, label: '已测算', tab: 'tax', color: 'text-success-600 bg-success-50' },
+            { icon: FileSearch, label: docCount > 0 ? `${docCount}份` : '尽调文档', tab: 'docs', color: docCount > 0 ? 'text-ink-700 bg-ink-100' : 'text-ink-400 bg-ink-50', hasBadge: docCount > 0 },
           ].map((item) => {
             const Icon = item.icon;
+            const handleClick = (e: React.MouseEvent) => {
+              e.stopPropagation();
+              navigate(`/detail/${property.id}?tab=${item.tab}`);
+            };
             return (
-              <Link
-                key={item.label}
-                to={item.href}
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              <div
+                key={item.tab}
+                onClick={handleClick}
                 className={cn(
-                  'flex flex-col items-center gap-0.5 py-1.5 rounded-md text-xs transition-colors',
+                  'flex flex-col items-center gap-0 py-1 rounded-md text-xs transition-colors cursor-pointer relative',
                   item.color,
                   'hover:opacity-80'
                 )}
               >
                 <Icon className="w-3.5 h-3.5" />
                 <span>{item.label}</span>
-              </Link>
+              </div>
             );
           })}
         </div>

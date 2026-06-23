@@ -33,8 +33,8 @@ import {
   AreaChart,
 } from 'recharts';
 import PropertyCard from '@/components/PropertyCard';
-import { mockProperties, mockMarketData, mockMarketTrend } from '@/mock/data';
-import type { MarketTrendPoint } from '@/types';
+import { mockProperties, mockMarketData, mockMarketTrend, getPropertyReport } from '@/mock/data';
+import type { MarketTrendPoint, Property, PropertyReport } from '@/types';
 import { formatPrice, cn } from '@/utils';
 
 const platformStats = (() => {
@@ -53,36 +53,29 @@ const platformStats = (() => {
   ];
 })();
 
-const riskTypes = [
-  {
-    key: 'mortgage',
-    title: '抵押异常',
-    icon: Shield,
-    description: '多轮抵押、高额抵押等风险情形',
-    color: 'danger',
-  },
-  {
-    key: 'household',
-    title: '户口未迁',
-    icon: Users,
-    description: '原房主户口未迁出，影响落户',
-    color: 'warning',
-  },
-  {
-    key: 'lease',
-    title: '租赁存续',
-    icon: FileCheck,
-    description: '长期租约，"买卖不破租赁"',
-    color: 'danger',
-  },
-  {
-    key: 'seizure',
-    title: '多轮查封',
-    icon: AlertTriangle,
-    description: '多家法院轮候查封，过户周期长',
-    color: 'danger',
-  },
-];
+const riskPropertyIds = ['p002', 'p001', 'p005'];
+
+const riskCaseData = riskPropertyIds.map((id) => {
+  const property = mockProperties.find((p) => p.id === id);
+  const report = getPropertyReport(id);
+  return { property, report };
+}).filter((item): item is { property: Property; report: PropertyReport } => 
+  item.property !== undefined && item.report !== undefined
+);
+
+const riskEngineStats = (() => {
+  const totalProperties = mockProperties.length;
+  const riskyCount = mockProperties.filter((p) => p.riskTags.length > 0).length;
+  const totalReviews = mockProperties.reduce((sum, p) => {
+    const report = getPropertyReport(p.id);
+    return sum + (report?.reviewRecords.length || 0);
+  }, 0);
+  return [
+    { label: '累计排查标的', value: totalProperties, suffix: '套' },
+    { label: '发现风险项', value: riskyCount, suffix: '项' },
+    { label: '已完成复查', value: totalReviews, suffix: '次' },
+  ];
+})();
 
 const districts = ['全部', '浦东新区', '徐汇区', '静安区', '长宁区', '杨浦区', '闵行区', '黄浦区', '虹口区'];
 
@@ -469,44 +462,127 @@ export default function Home() {
               <AlertTriangle className="w-4 h-4 inline mr-1" />
               风险提示引擎
             </span>
-            <h2 className="section-title">专业风险识别</h2>
+            <h2 className="section-title">实时监测在拍标的风险状况</h2>
             <p className="section-subtitle mb-0 max-w-2xl mx-auto">
-              智能识别各类法拍风险，专业团队深度尽调，让您全面了解标的状况
+              专业团队深度尽调，实时跟踪风险变化，保障您的交易安全
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {riskTypes.map((risk, index) => {
-              const Icon = risk.icon;
+          <div className="grid grid-cols-3 gap-4 md:gap-6 mb-10 max-w-2xl mx-auto">
+            {riskEngineStats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-white rounded-lg p-4 md:p-5 border border-ink-200 text-center"
+              >
+                <div className="text-2xl md:text-3xl font-bold font-serif text-ink-900 mb-1">
+                  {stat.value}<span className="text-sm text-ink-500 font-normal">{stat.suffix}</span>
+                </div>
+                <div className="text-xs md:text-sm text-ink-500">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {riskCaseData.map((item, index) => {
+              const { property, report } = item;
+              const latestReview = report.reviewRecords[0];
+              const riskLabel = property.riskTags[0] || '风险待评估';
+              const riskLevel = property.riskLevel;
+
+              const getRiskTypeLabel = () => {
+                if (report.leaseInfo.hasLease) return '租赁存续';
+                if (report.mortgageInfo.hasMortgage && report.householdInfo.hasHousehold) return '抵押+户口';
+                if (report.seizureRecord.hasSeizure && report.mortgageInfo.hasMortgage) return '多轮查封+抵押';
+                if (report.mortgageInfo.hasMortgage) return '抵押异常';
+                if (report.householdInfo.hasHousehold) return '户口未迁出';
+                if (report.seizureRecord.hasSeizure) return '司法查封';
+                return '其他风险';
+              };
+
+              const getRiskDetail = () => {
+                if (report.leaseInfo.hasLease) {
+                  return `承租人：${report.leaseInfo.lessee}，租期至：${report.leaseInfo.leaseTerm.split(' ').pop()}`;
+                }
+                if (report.mortgageInfo.hasMortgage) {
+                  return `抵押权人：${report.mortgageInfo.mortgagee}，抵押金额：${(report.mortgageInfo.mortgageAmount / 10000).toFixed(0)}万`;
+                }
+                if (report.seizureRecord.hasSeizure) {
+                  return `查封法院：${report.seizureRecord.seizureCourt}，查封轮次：${report.seizureRecord.seizureCount}轮`;
+                }
+                if (report.householdInfo.hasHousehold) {
+                  return `户口人数：${report.householdInfo.householdCount}人，暂无法迁出`;
+                }
+                return report.conclusion;
+              };
+
               return (
                 <motion.div
-                  key={risk.key}
+                  key={property.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={cn(
-                    'bg-white rounded-xl p-6 border-2 transition-all hover:shadow-lg',
-                    risk.color === 'danger'
-                      ? 'border-danger-100 hover:border-danger-200'
-                      : 'border-gold-100 hover:border-gold-200'
-                  )}
+                  className="bg-white rounded-xl border border-ink-200 overflow-hidden hover:shadow-lg transition-shadow"
                 >
-                  <div
-                    className={cn(
-                      'w-12 h-12 rounded-xl flex items-center justify-center mb-4',
-                      risk.color === 'danger' ? 'bg-danger-50' : 'bg-gold-50'
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        'w-6 h-6',
-                        risk.color === 'danger' ? 'text-danger-600' : 'text-gold-600'
-                      )}
-                    />
+                  <div className="flex gap-4 p-4">
+                    <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 rounded-lg overflow-hidden">
+                      <img
+                        src={property.images[0]}
+                        alt={property.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h3 className="font-medium text-ink-900 text-sm md:text-base line-clamp-2 leading-snug">
+                          {property.title}
+                        </h3>
+                        <span
+                          className={cn(
+                            'flex-shrink-0 px-2 py-0.5 text-xs font-medium rounded-full',
+                            riskLevel === 'high' && 'bg-danger-100 text-danger-700',
+                            riskLevel === 'medium' && 'bg-gold-100 text-gold-700',
+                            riskLevel === 'low' && 'bg-ink-100 text-ink-600'
+                          )}
+                        >
+                          {riskLevel === 'high' ? '高风险' : riskLevel === 'medium' ? '中风险' : '低风险'}
+                        </span>
+                      </div>
+                      <div className="text-xs text-ink-400 mb-2">{property.district} · {property.area}㎡</div>
+                      <div className="text-xs font-medium text-ink-700 mb-1">
+                        {getRiskTypeLabel()}
+                      </div>
+                      <div className="text-xs text-ink-500 line-clamp-2">
+                        {getRiskDetail()}
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="font-serif font-bold text-lg text-ink-900 mb-2">{risk.title}</h3>
-                  <p className="text-sm text-ink-500 leading-relaxed">{risk.description}</p>
+
+                  <div className="px-4 py-3 bg-ink-50 border-t border-ink-100">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5 text-ink-500">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>最近复查：{latestReview?.date || '-'} · {latestReview?.reviewer || '-'}</span>
+                      </div>
+                      <span className="text-ink-400 truncate ml-2">
+                        {latestReview?.result || ''}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="px-4 py-3 border-t border-ink-100">
+                    <Link
+                      to={`/detail/${property.id}`}
+                      className="flex items-center justify-center gap-1 text-primary-600 hover:text-primary-700 text-sm font-medium"
+                    >
+                      查看详情
+                      <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </motion.div>
               );
             })}
