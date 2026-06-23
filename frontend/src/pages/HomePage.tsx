@@ -117,52 +117,128 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 风格筛选 */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900">🎨 风格灵感</h2>
-          <Link to="/inspiration" className="text-sm text-primary-700 hover:text-primary-800">进入灵感图谱 →</Link>
-        </div>
-        <div className="flex flex-wrap gap-2 mb-5">
-          <button
-            onClick={() => setActiveStyle(null)}
-            className={`tag ${activeStyle === null ? 'tag-active' : ''}`}
-          >全部</button>
-          {DECORATION_STYLES.slice(0, 10).map(s => (
-            <button
-              key={s}
-              onClick={() => setActiveStyle(s)}
-              className={`tag ${activeStyle === s ? 'tag-active' : ''}`}
-            >{s}</button>
-          ))}
-        </div>
+      {/* AI智能识别摘要 */}
+      {graphData?.distributions && (
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gray-900">🎨 空间风格分布</h3>
+              <Link to="/inspiration" className="text-xs text-primary-700">查看详情 →</Link>
+            </div>
+            <div className="space-y-2.5">
+              {Object.entries(graphData.distributions.styles || {}).slice(0, 6).map(([name, count], idx) => {
+                const max = Math.max(...Object.values(graphData.distributions.styles || {}) as number[], 1);
+                const pct = ((count as number) / max) * 100;
+                const colors = ['bg-primary-500', 'bg-accent-500', 'bg-purple-500', 'bg-amber-500', 'bg-rose-500', 'bg-cyan-500'];
+                return (
+                  <div key={name} className="flex items-center gap-2">
+                    <span className="text-xs text-gray-600 w-20 truncate shrink-0">{name}</span>
+                    <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className={`h-full ${colors[idx % 6]} rounded-full transition-all`} style={{ width: `${pct}%` }} />
+                    </div>
+                    <span className="text-xs font-semibold text-gray-700 w-6 text-right">{count as number}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="mt-4 text-xs text-gray-400">基于 {graphData.statistics?.totalDiaries || 0} 篇社区日记 AI 识别统计</p>
+          </div>
 
-        {graphData?.distributions && (
-          <div className="card p-5 mb-6">
-            <h3 className="font-semibold text-gray-900 mb-4">📊 社区风格分布</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-              {Object.entries(graphData.distributions.styles || {}).slice(0, 6).map(([name, count]) => (
-                <div key={name} className="p-3 bg-gray-50 rounded-lg">
-                  <p className="text-xs text-gray-500">{name}</p>
-                  <p className="text-lg font-bold text-gray-900">{count as number}</p>
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gray-900">🧱 材质元素热度</h3>
+              <Link to="/inspiration" className="text-xs text-primary-700">查看详情 →</Link>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {Object.entries(graphData.distributions.materials || {}).slice(0, 14).map(([name, count]) => {
+                const max = Math.max(...Object.values(graphData.distributions.materials || {}) as number[], 1);
+                const size = 'text-xs';
+                const weights = ['font-bold', 'font-semibold', 'font-medium', 'font-normal'];
+                const wIdx = Math.min(3, Math.floor((1 - (count as number) / max) * 4));
+                return (
+                  <span key={name} className={`px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-50 to-orange-50 text-amber-800 ${size} ${weights[wIdx]} border border-amber-100`}>
+                    {name} <span className="text-amber-500/60 ml-0.5">·{count as number}</span>
+                  </span>
+                );
+              })}
+            </div>
+            <div className="mt-4 pt-3 border-t border-gray-100">
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <p className="text-lg font-bold text-amber-700">{graphData.statistics?.materialCount || 0}</p>
+                  <p className="text-[10px] text-gray-500">识别材质</p>
                 </div>
-              ))}
+                <div>
+                  <p className="text-lg font-bold text-purple-700">{graphData.statistics?.styleCount || 0}</p>
+                  <p className="text-[10px] text-gray-500">风格分类</p>
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-rose-700">{graphData.statistics?.brandCount || 0}</p>
+                  <p className="text-[10px] text-gray-500">软装品牌</p>
+                </div>
+              </div>
             </div>
           </div>
-        )}
-      </section>
+
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gray-900">🏷️ 软装品牌识别</h3>
+              <Link to="/inspiration" className="text-xs text-primary-700">查看详情 →</Link>
+            </div>
+            <div className="space-y-2">
+              {Object.entries(graphData.distributions.brands || {}).slice(0, 6).map(([name, count]) => {
+                const max = Math.max(...Object.values(graphData.distributions.brands || {}) as number[], 1);
+                const pct = ((count as number) / max) * 100;
+                return (
+                  <div key={name} className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-xs font-bold text-rose-700 shrink-0">
+                      {name.slice(0, 1)}
+                    </div>
+                    <span className="text-sm font-medium text-gray-800 truncate flex-1">{name}</span>
+                    <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                      <div className="h-full bg-gradient-to-r from-rose-400 to-purple-400 rounded-full" style={{ width: `${pct}%` }} />
+                    </div>
+                    <span className="text-xs text-gray-500 w-4 text-right">{count as number}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+              <p className="text-xs text-purple-700 font-medium">🤖 AI图像识别引擎</p>
+              <p className="text-[11px] text-gray-500 mt-0.5">上传户型图/效果图，一键识别风格、材质、品牌</p>
+              <Link to="/inspiration" className="mt-2 inline-block text-xs text-primary-700 font-medium">立即体验 →</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 精选日记 */}
       <section>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
           <h2 className="text-xl font-bold text-gray-900">🔥 最新装修日记</h2>
-          <Link to="/diaries" className="text-sm text-primary-700 hover:text-primary-800">查看全部 →</Link>
+          <div className="flex items-center gap-2">
+            <div className="flex flex-wrap gap-1">
+              <button
+                onClick={() => setActiveStyle(null)}
+                className={`px-3 py-1 text-xs rounded-full transition-colors ${activeStyle === null ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+              >全部</button>
+              {DECORATION_STYLES.slice(0, 6).map(s => (
+                <button
+                  key={s}
+                  onClick={() => setActiveStyle(s)}
+                  className={`px-3 py-1 text-xs rounded-full transition-colors ${activeStyle === s ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                >{s}</button>
+              ))}
+            </div>
+            <Link to="/diaries" className="text-sm text-primary-700 hover:text-primary-800 shrink-0">更多 →</Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {diaries.slice(0, 8).map(diary => {
             const stageInfo = CONSTRUCTION_STAGE_LABELS[diary.constructionStage];
             const author = (typeof diary.userId === 'string' ? { username: '用户', avatar: '', nickname: '' } : diary.userId) as any;
+            const currentStageIdx = STAGE_ORDER.indexOf(diary.constructionStage);
             return (
               <Link key={diary._id} to={`/diaries/${diary._id}`} className="card group hover:-translate-y-1 transition-all duration-300">
                 <div className="aspect-[4/3] bg-gray-100 overflow-hidden relative">
@@ -181,31 +257,51 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-700 transition-colors">
+                  <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-700 transition-colors text-sm">
                     {diary.title}
                   </h3>
-                  <div className="flex items-center space-x-2 mt-2 text-xs text-gray-500">
+                  <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
                     <span>🏠 {HOUSE_TYPE_LABELS[diary.houseType] || diary.houseType} · {diary.houseArea}㎡</span>
                   </div>
-                  <div className="flex items-center justify-between mt-3 text-xs">
-                    <div className="flex items-center space-x-1.5">
-                      {author.avatar ? (
-                        <img src={author.avatar} className="w-5 h-5 rounded-full" alt="" />
-                      ) : (
-                        <div className="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-semibold">
-                          {getInitials(author.nickname || author.username)}
-                        </div>
-                      )}
-                      <span className="text-gray-600">{author.nickname || author.username}</span>
+
+                  {/* 施工进度条 */}
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between text-[10px] text-gray-500 mb-1">
+                      <span>施工进度</span>
+                      <span className="font-medium text-primary-700">{currentStageIdx + 1}/7 阶段</span>
                     </div>
-                    <span className="text-gray-400">{fromNow(diary.createdAt)}</span>
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all"
+                        style={{ width: `${((currentStageIdx + 1) / 7) * 100}%` }}
+                      />
+                    </div>
                   </div>
+
+                  {/* 关键信息标签 */}
+                  <div className="mt-3 flex flex-wrap gap-1">
+                    {diary.floorPlan?.metadata && (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded">🗺️ 附户型图</span>
+                    )}
+                    {diary.floorPlan?.sketchupFile && (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-purple-50 text-purple-700 rounded">📐 SketchUp</span>
+                    )}
+                    {diary.aiAnalysis && (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-emerald-50 text-emerald-700 rounded">🤖 AI识别</span>
+                    )}
+                    {diary.budget?.items && diary.budget.items.length > 0 && (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">
+                        💰 {diary.budget.items.length}项预算
+                      </span>
+                    )}
+                  </div>
+
                   <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-primary-700 font-semibold text-sm">
+                    <span className="text-primary-700 font-bold text-sm">
                       {formatCurrency(diary.budget?.totalEstimated || 0)}
                     </span>
                     <div className="flex items-center space-x-3 text-xs text-gray-400">
-                      <span>❤ {diary.likes?.length || 0}</span>
+                      <span>❤ {diary.likes?.length || diary.likesCount || 0}</span>
                       <span>💬 {diary.commentCount || 0}</span>
                     </div>
                   </div>
@@ -227,11 +323,18 @@ export default function HomePage() {
       {/* 推荐设计师 */}
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900">⭐ 认证设计师推荐</h2>
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">⭐ 认证设计师推荐</h2>
+            <p className="text-sm text-gray-500 mt-1">AI智能匹配 · 按户型相似度、预算区间、风格偏好排序</p>
+          </div>
           <Link to="/designers" className="text-sm text-primary-700 hover:text-primary-800">查看全部 →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {designers.slice(0, 6).map(designer => (
+          {designers.slice(0, 6).map(designer => {
+            const cred = (designer as any).credentials || (designer as any).qualifications;
+            const stats = designer.statistics || {} as any;
+            const portfolio = designer.portfolio || [];
+            return (
             <Link key={designer._id} to={`/designers/${designer._id}`} className="card p-5 hover:-translate-y-1 transition-all">
               <div className="flex items-start space-x-4">
                 {designer.avatar ? (
@@ -246,25 +349,182 @@ export default function HomePage() {
                     <h3 className="font-bold text-gray-900 truncate">{designer.nickname || designer.username}</h3>
                     <span className="badge bg-accent-50 text-accent-700 text-[10px]">✓ 认证</span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-gray-500 mt-0.5 truncate">
                     {designer.serviceAreas?.slice(0, 3).join(' · ') || '全国服务'}
                   </p>
+                  {(designer as any).serviceRadius && (
+                    <p className="text-[11px] text-gray-400 mt-0.5">服务半径 {(designer as any).serviceRadius}km</p>
+                  )}
                   <div className="flex items-center mt-2 space-x-1">
                     <span className="text-amber-500">★</span>
-                    <span className="text-sm font-semibold text-gray-900">{designer.statistics?.rating || 4.8}</span>
-                    <span className="text-xs text-gray-400">({designer.statistics?.reviewCount || 12}条评价)</span>
+                    <span className="text-sm font-semibold text-gray-900">{stats.rating || 4.8}</span>
+                    <span className="text-xs text-gray-400">({stats.reviewCount || 12}评)</span>
+                    <span className="text-xs text-gray-400 ml-2">·</span>
+                    <span className="text-xs text-gray-400 ml-2">{stats.completedProjects || 28}项目</span>
                   </div>
                 </div>
               </div>
+
+              {/* 资质证明 */}
+              {cred && (cred as any).certificationType && (
+                <div className="mt-4 p-2.5 bg-blue-50/80 rounded-lg border border-blue-100">
+                  <div className="flex items-center gap-2">
+                    <span className="text-blue-600">📜</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-blue-800 truncate">{(cred as any).certificationType}</p>
+                      {(cred as any).issuingAuthority && (
+                        <p className="text-[10px] text-blue-500 truncate">颁证: {(cred as any).issuingAuthority}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <p className="mt-4 text-sm text-gray-600 line-clamp-2">{designer.bio || '专业室内设计师，擅长多种风格，注重细节与品质。'}</p>
+
+              {/* 作品集摘要 */}
+              {portfolio.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-gray-100">
+                  <p className="text-xs text-gray-500 mb-2">代表作品</p>
+                  <div className="space-y-1.5">
+                    {portfolio.slice(0, 2).map((p: any, i: number) => (
+                      <div key={i} className="flex items-center justify-between text-xs">
+                        <span className="text-gray-700 truncate flex-1">{p.title}</span>
+                        <span className="text-gray-400 ml-2 shrink-0">{p.houseArea || '-'}㎡</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {(designer.portfolio?.slice(0, 2).map(p => p.style) || ['现代简约', '北欧风格']).filter(Boolean).map(style => (
+                {Array.from(new Set(
+                  (portfolio.slice(0, 3).map((p: any) => p.style) || ['现代简约', '北欧风格']).filter(Boolean)
+                )).map((style: string) => (
                   <span key={style} className="badge bg-gray-100 text-gray-600">{style}</span>
                 ))}
-                <span className="badge bg-primary-50 text-primary-700">{designer.statistics?.completedProjects || 28}个项目</span>
+                <span className="badge bg-primary-50 text-primary-700">{stats.completedProjects || 28}个项目</span>
               </div>
             </Link>
-          ))}
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 平台保障 */}
+      <section className="mt-12">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900">🛡️ 平台全程保障</h2>
+          <p className="text-gray-500 mt-2">定金托管 · 分阶段付款 · 内容安全审核 · 专业资质认证</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="card p-6 text-center hover:-translate-y-1 transition-all">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white flex items-center justify-center text-2xl">
+              💰
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">定金第三方托管</h3>
+            <p className="text-sm text-gray-500 mb-3">定金由平台监管账户托管，项目启动后按阶段释放，资金安全有保障</p>
+            <div className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full inline-block">
+              100% 资金托管
+            </div>
+          </div>
+
+          <div className="card p-6 text-center hover:-translate-y-1 transition-all">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center text-2xl">
+              📋
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">7阶段分期付款</h3>
+            <p className="text-sm text-gray-500 mb-3">拆改→水电→泥木→油漆→安装→验收，业主确认后释放对应阶段款项</p>
+            <div className="text-xs text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full inline-block">
+              验收满意再付款
+            </div>
+          </div>
+
+          <div className="card p-6 text-center hover:-translate-y-1 transition-all">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 text-white flex items-center justify-center text-2xl">
+              ✍️
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">电子签名验收</h3>
+            <p className="text-sm text-gray-500 mb-3">验收报告支持电子签名，影像资料存档，全程留痕可追溯</p>
+            <div className="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded-full inline-block">
+              具法律效力
+            </div>
+          </div>
+
+          <div className="card p-6 text-center hover:-translate-y-1 transition-all">
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-600 text-white flex items-center justify-center text-2xl">
+              🔍
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">内容安全审核</h3>
+            <p className="text-sm text-gray-500 mb-3">装修术语过滤器屏蔽非标报价，违规举报溯源关联用户ID与时间</p>
+            <div className="text-xs text-rose-600 bg-rose-50 px-2 py-1 rounded-full inline-block">
+              社区专业可信
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+          <div className="card p-5 bg-gradient-to-br from-blue-50 to-transparent">
+            <h4 className="font-semibold text-gray-900 mb-3 text-sm">📊 交易数据</h4>
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div>
+                <p className="text-xl font-bold text-blue-700">2,847</p>
+                <p className="text-xs text-gray-500">完成交易</p>
+              </div>
+              <div>
+                <p className="text-xl font-bold text-emerald-700">98.6%</p>
+                <p className="text-xs text-gray-500">满意度</p>
+              </div>
+              <div>
+                <p className="text-xl font-bold text-purple-700">¥3.2亿</p>
+                <p className="text-xs text-gray-500">托管资金</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="card p-5 bg-gradient-to-br from-emerald-50 to-transparent">
+            <h4 className="font-semibold text-gray-900 mb-3 text-sm">🏛️ 设计师认证</h4>
+            <div className="space-y-2 text-xs text-gray-600">
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500">✓</span>
+                <span>资质证书人工审核认证</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500">✓</span>
+                <span>作品集真实案例验证</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500">✓</span>
+                <span>服务半径与服务区域公示</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-emerald-500">✓</span>
+                <span>真实业主评价系统</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="card p-5 bg-gradient-to-br from-rose-50 to-transparent">
+            <h4 className="font-semibold text-gray-900 mb-3 text-sm">🚨 举报溯源机制</h4>
+            <div className="space-y-2 text-xs text-gray-600">
+              <div className="flex items-center gap-2">
+                <span className="text-rose-500">•</span>
+                <span>违规内容一键举报，关联用户ID与发布时间</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-rose-500">•</span>
+                <span>内容快照存档，篡改可追溯</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-rose-500">•</span>
+                <span>非标报价话术自动识别拦截</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-rose-500">•</span>
+                <span>24小时人工审核处理</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

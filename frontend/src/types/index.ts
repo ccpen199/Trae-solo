@@ -127,6 +127,7 @@ export interface Diary {
   styleTags: string[];
   materialTags: string[];
   likes: string[];
+  likesCount?: number;
   commentCount: number;
   comments: Comment[];
   views: number;

@@ -103,18 +103,57 @@ export default function DiariesPage() {
             {diaries.map(diary => {
               const stageInfo = CONSTRUCTION_STAGE_LABELS[diary.constructionStage];
               const author = typeof diary.userId === 'string' ? { username: '用户', avatar: '', nickname: '' } : diary.userId;
+              const currentStageIdx = STAGE_ORDER.indexOf(diary.constructionStage);
               return (
                 <Link key={diary._id} to={`/diaries/${diary._id}`} className="card group hover:-translate-y-1 transition-all">
                   <div className="aspect-video bg-gray-100 overflow-hidden relative">
                     <img src={diary.coverImage || `https://picsum.photos/seed/${diary._id}/600/400`} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                     {stageInfo && <div className={`absolute top-3 left-3 badge ${stageInfo.bg} ${stageInfo.color}`}>{stageInfo.label}</div>}
+                    <div className="absolute top-3 right-3 flex items-center space-x-1">
+                      <span className="bg-black/50 text-white text-xs px-2 py-0.5 rounded-full backdrop-blur">
+                        👁 {diary.views || 0}
+                      </span>
+                    </div>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-700">{diary.title}</h3>
+                    <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-700 text-sm">{diary.title}</h3>
                     <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
                       <span>🏠 {HOUSE_TYPE_LABELS[diary.houseType] || diary.houseType} · {diary.houseArea}㎡</span>
                       {diary.address?.city && <span>📍 {diary.address.city}</span>}
                     </div>
+
+                    {/* 施工进度条 */}
+                    <div className="mt-3">
+                      <div className="flex items-center justify-between text-[10px] text-gray-500 mb-1">
+                        <span>施工进度</span>
+                        <span className="font-medium text-primary-700">{Math.max(0, currentStageIdx) + 1}/7 阶段</span>
+                      </div>
+                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all"
+                          style={{ width: `${(Math.max(0, currentStageIdx) + 1) / 7 * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* 关键信息标签 */}
+                    <div className="mt-3 flex flex-wrap gap-1">
+                      {diary.floorPlan?.metadata && (
+                        <span className="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded">🗺️ 附户型图</span>
+                      )}
+                      {diary.floorPlan?.sketchupFile && (
+                        <span className="text-[10px] px-1.5 py-0.5 bg-purple-50 text-purple-700 rounded">📐 SketchUp</span>
+                      )}
+                      {diary.aiAnalysis && (
+                        <span className="text-[10px] px-1.5 py-0.5 bg-emerald-50 text-emerald-700 rounded">🤖 AI识别</span>
+                      )}
+                      {diary.budget?.items && diary.budget.items.length > 0 && (
+                        <span className="text-[10px] px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded">
+                          💰 {diary.budget.items.length}项预算
+                        </span>
+                      )}
+                    </div>
+
                     <div className="flex flex-wrap gap-1 mt-2">
                       {diary.styleTags?.slice(0, 3).map(s => <span key={s} className="badge bg-primary-50 text-primary-700">{s}</span>)}
                     </div>
@@ -125,13 +164,13 @@ export default function DiariesPage() {
                         <span className="text-xs text-gray-600">{author.nickname || author.username}</span>
                       </div>
                       <div className="flex items-center space-x-3 text-xs text-gray-400">
-                        <span>👁 {diary.views}</span>
-                        <span>❤ {diary.likes?.length || 0}</span>
-                        <span>💬 {diary.commentCount}</span>
+                        <span>👁 {diary.views || 0}</span>
+                        <span>❤ {diary.likes?.length || diary.likesCount || 0}</span>
+                        <span>💬 {diary.commentCount || 0}</span>
                       </div>
                     </div>
                     <div className="mt-2 flex items-center justify-between text-sm">
-                      <span className="text-primary-700 font-semibold">{formatCurrency(diary.budget?.totalEstimated || 0)}</span>
+                      <span className="text-primary-700 font-bold">{formatCurrency(diary.budget?.totalEstimated || 0)}</span>
                       <span className="text-gray-400 text-xs">{fromNow(diary.createdAt)}</span>
                     </div>
                   </div>
