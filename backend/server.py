@@ -147,6 +147,11 @@ def init_db() -> None:
                 user_id INTEGER NOT NULL,
                 plate_no TEXT NOT NULL,
                 plate_type TEXT NOT NULL,
+                owner_name TEXT NOT NULL DEFAULT '',
+                owner_id_card TEXT NOT NULL DEFAULT '',
+                engine_no TEXT NOT NULL DEFAULT '',
+                frame_no TEXT NOT NULL DEFAULT '',
+                owner_verified INTEGER DEFAULT 0,
                 violation_time TEXT NOT NULL,
                 violation_location TEXT NOT NULL,
                 violation_code TEXT NOT NULL,
@@ -154,7 +159,14 @@ def init_db() -> None:
                 fine_amount REAL NOT NULL,
                 deduct_points INTEGER NOT NULL,
                 city TEXT NOT NULL,
+                data_source TEXT NOT NULL DEFAULT '',
+                data_source_city TEXT NOT NULL DEFAULT '',
+                processing_status TEXT NOT NULL DEFAULT 'normal',
                 paid INTEGER DEFAULT 0,
+                paid_at TEXT,
+                pay_method TEXT,
+                escrow_account TEXT,
+                pay_no TEXT,
                 created_at TEXT NOT NULL
             );
 
