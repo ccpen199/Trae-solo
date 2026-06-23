@@ -1,9 +1,0 @@
-node_modules
-dist
-build
-*.log
-.env.local
-data/*.sqlite
-data/*.db
-.DS_Store
-*.swp
