@@ -1,0 +1,368 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1E5AA8 0%, #2E7BC8 40%, #E8F0FB 100%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.decoration {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -80px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+  }
+}
+
+.logoSection {
+  padding: 80px $spacing-xl $spacing-xxl;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  background: $color-white;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  margin: 0 auto $spacing-lg;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.appName {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-white;
+  margin-bottom: $spacing-xs;
+  letter-spacing: 2px;
+}
+
+.appSubtitle {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.loginCard {
+  flex: 1;
+  background: $color-white;
+  border-radius: $radius-xl $radius-xl 0 0;
+  padding: $spacing-xl;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.cardTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text;
+  margin-bottom: $spacing-xl;
+  text-align: center;
+}
+
+.formGroup {
+  margin-bottom: $spacing-lg;
+}
+
+.formLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  background: $color-bg;
+  border-radius: $radius-md;
+  padding: 0 $spacing-md;
+  height: 52px;
+  border: 1.5px solid transparent;
+  transition: border-color 0.3s ease, background 0.3s ease;
+
+  &.focused {
+    border-color: $color-primary;
+    background: $color-white;
+  }
+
+  &.error {
+    border-color: $color-error;
+    background: $color-error-bg;
+  }
+}
+
+.inputIcon {
+  font-size: 20px;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  height: 100%;
+  font-size: $font-size-base;
+  color: $color-text;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.inputClear {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: $color-text-tertiary;
+  color: $color-white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.passwordToggle {
+  font-size: 18px;
+  margin-left: $spacing-sm;
+  flex-shrink: 0;
+  padding: $spacing-xs;
+}
+
+.errorText {
+  font-size: $font-size-xs;
+  color: $color-error;
+  margin-top: $spacing-xs;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.loginOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+}
+
+.rememberMe {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: $radius-sm;
+  border: 2px solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &.checked {
+    background: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.checkboxIcon {
+  font-size: 12px;
+  color: $color-white;
+}
+
+.rememberLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.forgotPassword {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.loginBtn {
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(135deg, $color-primary, $color-primary-light);
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  margin-bottom: $spacing-lg;
+  box-shadow: 0 4px 12px rgba(30, 90, 168, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(30, 90, 168, 0.25);
+  }
+
+  &.disabled {
+    background: $color-border;
+    box-shadow: none;
+    opacity: 0.6;
+  }
+}
+
+.loginBtnIcon {
+  margin-right: $spacing-sm;
+}
+
+.otherLoginTitle {
+  display: flex;
+  align-items: center;
+  margin: $spacing-xl 0 $spacing-lg;
+  gap: $spacing-md;
+}
+
+.otherLoginLine {
+  flex: 1;
+  height: 1px;
+  background: $color-border-light;
+}
+
+.otherLoginText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.otherLoginOptions {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xxl;
+  margin-bottom: $spacing-xl;
+}
+
+.otherLoginItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.otherLoginIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: $color-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.bio {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    color: $color-white;
+  }
+  
+  &.sso {
+    background: linear-gradient(135deg, #06B6D4, #22D3EE);
+    color: $color-white;
+  }
+  
+  &.qrcode {
+    background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+    color: $color-white;
+  }
+}
+
+.otherLoginLabel {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.privacySection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  margin-top: auto;
+  padding-top: $spacing-lg;
+}
+
+.privacyCheckbox {
+  width: 16px;
+  height: 16px;
+  border-radius: $radius-sm;
+  border: 1.5px solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.checked {
+    background: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.privacyCheckboxIcon {
+  font-size: 10px;
+  color: $color-white;
+}
+
+.privacyText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.privacyLink {
+  color: $color-primary;
+}
+
+.footer {
+  text-align: center;
+  padding: $spacing-lg 0 $spacing-xl;
+  font-size: $font-size-xxs;
+  color: $color-text-tertiary;
+}
+
+.securityBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: $radius-md;
+  margin-bottom: $spacing-lg;
+}
+
+.securityBannerIcon {
+  font-size: 14px;
+}
+
+.securityBannerText {
+  font-size: $font-size-xs;
+  color: $color-success;
+}

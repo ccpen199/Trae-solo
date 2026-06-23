@@ -1,0 +1,121 @@
+@use '@/styles/variables.scss' as *;
+
+.treeContainer {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.treeNode {
+  border-bottom: 1rpx solid $color-divider;
+  transition: all $transition-base;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background: $color-bg-hover;
+  }
+
+  &.rootNode {
+    background: $color-primary-bg;
+  }
+}
+
+.nodeContent {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg $spacing-lg $spacing-lg 0;
+}
+
+.expandIcon {
+  width: 32rpx;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  transition: transform $transition-base;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+
+  &.expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.placeholder {
+  width: 32rpx;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.nodeIcon {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-md;
+  background: $color-primary-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.levelIcon {
+  font-size: $font-size-lg;
+}
+
+.nodeInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.nodeHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.nodeName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  margin-right: $spacing-sm;
+}
+
+.syncStatus {
+  padding: 2rpx $spacing-sm;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  flex-shrink: 0;
+}
+
+.nodeMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.nodeCode {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  background: $color-bg-hover;
+  padding: 2rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.nodeCount {
+  font-size: $font-size-xs;
+  color: $color-primary;
+}
+
+.nodeLeader {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  @include text-ellipsis;
+}
+
+.childrenContainer {
+  background: $color-bg-page;
+}

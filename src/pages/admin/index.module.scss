@@ -1,0 +1,446 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+}
+
+.permissionBanner {
+  margin: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  background: linear-gradient(90deg, rgba(30, 90, 168, 0.1), rgba(30, 90, 168, 0.05));
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  border: 1px solid rgba(30, 90, 168, 0.2);
+}
+
+.permissionIcon {
+  font-size: 24px;
+}
+
+.permissionInfo {
+  flex: 1;
+}
+
+.permissionTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.permissionDesc {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.permissionScope {
+  padding: 2px 8px;
+  background: $color-primary;
+  color: $color-white;
+  font-size: $font-size-xs;
+  border-radius: $radius-round;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin: 0 $spacing-md $spacing-md;
+}
+
+.statCard {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $card-shadow;
+}
+
+.statCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.statIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+
+  &.blue {
+    background: rgba(30, 90, 168, 0.1);
+  }
+  
+  &.green {
+    background: rgba(16, 185, 129, 0.1);
+  }
+  
+  &.orange {
+    background: rgba(245, 158, 11, 0.1);
+  }
+  
+  &.purple {
+    background: rgba(139, 92, 246, 0.1);
+  }
+}
+
+.statTrend {
+  font-size: $font-size-xs;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  &.up {
+    color: $color-success;
+  }
+  
+  &.down {
+    color: $color-error;
+  }
+}
+
+.statValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.section {
+  margin: 0 $spacing-md $spacing-md;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.sectionTitleIcon {
+  font-size: 18px;
+}
+
+.sectionMore {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.tabs {
+  display: flex;
+  padding: 0 $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+  gap: $spacing-lg;
+}
+
+.tab {
+  padding: $spacing-md 0;
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+  position: relative;
+
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: $color-primary;
+      border-radius: 2px;
+    }
+  }
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: $spacing-md;
+  gap: $spacing-md;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-md 0;
+}
+
+.menuIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: $spacing-xs;
+
+  &.user {
+    background: linear-gradient(135deg, #3B82F6, #60A5FA);
+  }
+  
+  &.role {
+    background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+  }
+  
+  &.org {
+    background: linear-gradient(135deg, #10B981, #34D399);
+  }
+  
+  &.plugin {
+    background: linear-gradient(135deg, #F59E0B, #FBBF24);
+  }
+  
+  &.audit {
+    background: linear-gradient(135deg, #EF4444, #F87171);
+  }
+  
+  &.report {
+    background: linear-gradient(135deg, #06B6D4, #22D3EE);
+  }
+  
+  &.system {
+    background: linear-gradient(135deg, #6B7280, #9CA3AF);
+  }
+  
+  &.data {
+    background: linear-gradient(135deg, #EC4899, #F472B6);
+  }
+}
+
+.menuName {
+  font-size: $font-size-xs;
+  color: $color-text;
+  text-align: center;
+}
+
+.dataScopeList {
+  padding: $spacing-sm $spacing-lg;
+}
+
+.dataScopeItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.dataScopeInfo {
+  flex: 1;
+}
+
+.dataScopeName {
+  font-size: $font-size-base;
+  color: $color-text;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.dataScopeLevel {
+  padding: 1px 6px;
+  font-size: $font-size-xxs;
+  border-radius: $radius-sm;
+
+  &.province {
+    background: rgba(30, 90, 168, 0.1);
+    color: $color-primary;
+  }
+  
+  &.city {
+    background: rgba(15, 118, 110, 0.1);
+    color: #0F766E;
+  }
+  
+  &.team {
+    background: rgba(180, 83, 9, 0.1);
+    color: #B45309;
+  }
+}
+
+.dataScopeStats {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.dataScopeAction {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.logList {
+  padding: 0 $spacing-lg;
+}
+
+.logItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.logAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $color-primary, $color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: $color-white;
+  font-weight: $font-weight-medium;
+  flex-shrink: 0;
+}
+
+.logContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.logTitle {
+  font-size: $font-size-base;
+  color: $color-text;
+  margin-bottom: $spacing-xs;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.logType {
+  padding: 1px 6px;
+  font-size: $font-size-xxs;
+  border-radius: $radius-sm;
+
+  &.login {
+    background: rgba(16, 185, 129, 0.1);
+    color: $color-success;
+  }
+  
+  &.permission {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8B5CF6;
+  }
+  
+  &.data {
+    background: rgba(245, 158, 11, 0.1);
+    color: $color-warning;
+  }
+  
+  &.system {
+    background: rgba(107, 114, 128, 0.1);
+    color: $color-text-secondary;
+  }
+}
+
+.logDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.logMeta {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.logStatus {
+  font-size: $font-size-xs;
+
+  &.success {
+    color: $color-success;
+  }
+  
+  &.failed {
+    color: $color-error;
+  }
+}
+
+.emptyState {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.scopeSelector {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  gap: $spacing-md;
+  background: $color-bg;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.scopeLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.scopeTabs {
+  flex: 1;
+  display: flex;
+  gap: $spacing-sm;
+  overflow-x: auto;
+}
+
+.scopeTab {
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  background: $color-white;
+  border-radius: $radius-round;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &.active {
+    background: $color-primary;
+    color: $color-white;
+  }
+}

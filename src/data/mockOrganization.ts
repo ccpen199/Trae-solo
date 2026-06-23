@@ -1,0 +1,381 @@
+import { Organization, Employee, OrgSyncRecord } from '@/types/organization';
+
+export const mockOrgTree: Organization[] = [
+  {
+    id: 'org001',
+    name: 'XX省电力有限公司',
+    code: 'GD-PROV',
+    level: 'province',
+    parentId: null,
+    leaderId: 'u002',
+    leaderName: '李建国',
+    memberCount: 5680,
+    sort: 1,
+    status: 'active',
+    syncStatus: 'synced',
+    lastSyncTime: '2026-06-21 02:00:00',
+    children: [
+      {
+        id: 'org002',
+        name: '信息中心',
+        code: 'GD-IT',
+        level: 'province',
+        parentId: 'org001',
+        leaderId: 'u001',
+        leaderName: '张明',
+        memberCount: 86,
+        sort: 1,
+        status: 'active',
+        syncStatus: 'synced',
+        lastSyncTime: '2026-06-21 02:00:00'
+      },
+      {
+        id: 'org003',
+        name: '人力资源部',
+        code: 'GD-HR',
+        level: 'province',
+        parentId: 'org001',
+        leaderId: 'u003',
+        leaderName: '王芳',
+        memberCount: 42,
+        sort: 2,
+        status: 'active',
+        syncStatus: 'synced',
+        lastSyncTime: '2026-06-21 02:00:00'
+      },
+      {
+        id: 'org004',
+        name: '广州市供电局',
+        code: 'GZ-POWER',
+        level: 'city',
+        parentId: 'org001',
+        leaderId: 'u004',
+        leaderName: '陈志强',
+        memberCount: 1860,
+        sort: 3,
+        status: 'active',
+        syncStatus: 'synced',
+        lastSyncTime: '2026-06-21 02:00:00',
+        children: [
+          {
+            id: 'org005',
+            name: '天河运维一班',
+            code: 'GZ-TH-01',
+            level: 'team',
+            parentId: 'org004',
+            leaderId: 'u005',
+            leaderName: '刘伟',
+            memberCount: 12,
+            sort: 1,
+            status: 'active',
+            syncStatus: 'synced',
+            lastSyncTime: '2026-06-21 02:00:00'
+          },
+          {
+            id: 'org006',
+            name: '越秀运维二班',
+            code: 'GZ-YX-02',
+            level: 'team',
+            parentId: 'org004',
+            leaderId: 'u006',
+            leaderName: '赵刚',
+            memberCount: 15,
+            sort: 2,
+            status: 'active',
+            syncStatus: 'synced',
+            lastSyncTime: '2026-06-21 02:00:00'
+          }
+        ]
+      },
+      {
+        id: 'org007',
+        name: '深圳市供电局',
+        code: 'SZ-POWER',
+        level: 'city',
+        parentId: 'org001',
+        leaderId: 'u007',
+        leaderName: '孙明',
+        memberCount: 2150,
+        sort: 4,
+        status: 'active',
+        syncStatus: 'synced',
+        lastSyncTime: '2026-06-21 02:00:00',
+        children: [
+          {
+            id: 'org008',
+            name: '南山运维一班',
+            code: 'SZ-NS-01',
+            level: 'team',
+            parentId: 'org007',
+            leaderId: 'u008',
+            leaderName: '周杰',
+            memberCount: 18,
+            sort: 1,
+            status: 'active',
+            syncStatus: 'synced',
+            lastSyncTime: '2026-06-21 02:00:00'
+          }
+        ]
+      },
+      {
+        id: 'org009',
+        name: '佛山市供电局',
+        code: 'FS-POWER',
+        level: 'city',
+        parentId: 'org001',
+        leaderId: 'u009',
+        leaderName: '吴华',
+        memberCount: 1430,
+        sort: 5,
+        status: 'active',
+        syncStatus: 'syncing',
+        lastSyncTime: '2026-06-21 02:00:00'
+      },
+      {
+        id: 'org010',
+        name: '东莞市供电局',
+        code: 'DG-POWER',
+        level: 'city',
+        parentId: 'org001',
+        leaderId: 'u010',
+        leaderName: '郑涛',
+        memberCount: 1120,
+        sort: 6,
+        status: 'active',
+        syncStatus: 'failed',
+        lastSyncTime: '2026-06-20 02:00:00'
+      }
+    ]
+  }
+];
+
+const avatarIds = [64, 91, 177, 338, 1027, 1025, 659, 718, 783, 237];
+
+export const mockEmployees: Employee[] = [
+  {
+    id: 'u001',
+    name: '张明',
+    avatar: `https://picsum.photos/id/${avatarIds[0]}/200/200`,
+    position: '信息中心主任',
+    phone: '13800138001',
+    email: 'zhangming@company.com',
+    departmentId: 'org002',
+    departmentName: '信息中心',
+    orgLevel: 'province',
+    isLeader: true,
+    status: 'on',
+    workNo: 'EMP00001'
+  },
+  {
+    id: 'u002',
+    name: '李建国',
+    avatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    position: '总经理',
+    phone: '13800138002',
+    email: 'ljguo@company.com',
+    departmentId: 'org001',
+    departmentName: '省公司',
+    orgLevel: 'province',
+    isLeader: true,
+    status: 'busy',
+    workNo: 'EMP00002'
+  },
+  {
+    id: 'u003',
+    name: '王芳',
+    avatar: `https://picsum.photos/id/${avatarIds[2]}/200/200`,
+    position: '人力资源部经理',
+    phone: '13800138003',
+    email: 'wf@company.com',
+    departmentId: 'org003',
+    departmentName: '人力资源部',
+    orgLevel: 'province',
+    isLeader: true,
+    status: 'on',
+    workNo: 'EMP00003'
+  },
+  {
+    id: 'u004',
+    name: '陈志强',
+    avatar: `https://picsum.photos/id/${avatarIds[3]}/200/200`,
+    position: '广州局局长',
+    phone: '13800138004',
+    email: 'czq@company.com',
+    departmentId: 'org004',
+    departmentName: '广州市供电局',
+    orgLevel: 'city',
+    isLeader: true,
+    status: 'on',
+    workNo: 'EMP00004'
+  },
+  {
+    id: 'u005',
+    name: '刘伟',
+    avatar: `https://picsum.photos/id/${avatarIds[4]}/200/200`,
+    position: '运维班长',
+    phone: '13800138005',
+    email: 'lw@company.com',
+    departmentId: 'org005',
+    departmentName: '天河运维一班',
+    orgLevel: 'team',
+    isLeader: true,
+    status: 'on',
+    workNo: 'EMP00005'
+  },
+  {
+    id: 'u006',
+    name: '赵刚',
+    avatar: `https://picsum.photos/id/${avatarIds[5]}/200/200`,
+    position: '运维工程师',
+    phone: '13800138006',
+    email: 'zg@company.com',
+    departmentId: 'org006',
+    departmentName: '越秀运维二班',
+    orgLevel: 'team',
+    isLeader: false,
+    status: 'off',
+    workNo: 'EMP00006'
+  },
+  {
+    id: 'u007',
+    name: '孙明',
+    avatar: `https://picsum.photos/id/${avatarIds[6]}/200/200`,
+    position: '深圳局局长',
+    phone: '13800138007',
+    email: 'sm@company.com',
+    departmentId: 'org007',
+    departmentName: '深圳市供电局',
+    orgLevel: 'city',
+    isLeader: true,
+    status: 'on',
+    workNo: 'EMP00007'
+  },
+  {
+    id: 'u008',
+    name: '周杰',
+    avatar: `https://picsum.photos/id/${avatarIds[7]}/200/200`,
+    position: '运维工程师',
+    phone: '13800138008',
+    email: 'zj@company.com',
+    departmentId: 'org008',
+    departmentName: '南山运维一班',
+    orgLevel: 'team',
+    isLeader: false,
+    status: 'on',
+    workNo: 'EMP00008'
+  },
+  {
+    id: 'u009',
+    name: '吴华',
+    avatar: `https://picsum.photos/id/${avatarIds[8]}/200/200`,
+    position: '佛山局局长',
+    phone: '13800138009',
+    email: 'wh@company.com',
+    departmentId: 'org009',
+    departmentName: '佛山市供电局',
+    orgLevel: 'city',
+    isLeader: true,
+    status: 'busy',
+    workNo: 'EMP00009'
+  },
+  {
+    id: 'u010',
+    name: '郑涛',
+    avatar: `https://picsum.photos/id/${avatarIds[9]}/200/200`,
+    position: '东莞局局长',
+    phone: '13800138010',
+    email: 'zt@company.com',
+    departmentId: 'org010',
+    departmentName: '东莞市供电局',
+    orgLevel: 'city',
+    isLeader: true,
+    status: 'on',
+    workNo: 'EMP00010'
+  },
+  {
+    id: 'u011',
+    name: '黄丽',
+    avatar: `https://picsum.photos/id/${avatarIds[0]}/200/200`,
+    position: '运维工程师',
+    phone: '13800138011',
+    email: 'hl@company.com',
+    departmentId: 'org005',
+    departmentName: '天河运维一班',
+    orgLevel: 'team',
+    isLeader: false,
+    status: 'on',
+    workNo: 'EMP00011'
+  },
+  {
+    id: 'u012',
+    name: '林峰',
+    avatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    position: '运维工程师',
+    phone: '13800138012',
+    email: 'lf@company.com',
+    departmentId: 'org005',
+    departmentName: '天河运维一班',
+    orgLevel: 'team',
+    isLeader: false,
+    status: 'off',
+    workNo: 'EMP00012'
+  }
+];
+
+export const mockSyncRecords: OrgSyncRecord[] = [
+  {
+    id: 'sync001',
+    syncTime: '2026-06-21 02:00:00',
+    syncType: 'full',
+    status: 'success',
+    addCount: 15,
+    updateCount: 86,
+    deleteCount: 3,
+    operator: '系统自动同步',
+    remark: '与HR系统全量同步完成'
+  },
+  {
+    id: 'sync002',
+    syncTime: '2026-06-20 02:00:00',
+    syncType: 'full',
+    status: 'success',
+    addCount: 8,
+    updateCount: 72,
+    deleteCount: 5,
+    operator: '系统自动同步',
+    remark: '与HR系统全量同步完成'
+  },
+  {
+    id: 'sync003',
+    syncTime: '2026-06-19 14:30:00',
+    syncType: 'incremental',
+    status: 'success',
+    addCount: 3,
+    updateCount: 12,
+    deleteCount: 0,
+    operator: '张明',
+    remark: '手动触发增量同步'
+  },
+  {
+    id: 'sync004',
+    syncTime: '2026-06-19 02:00:00',
+    syncType: 'full',
+    status: 'failed',
+    addCount: 0,
+    updateCount: 0,
+    deleteCount: 0,
+    operator: '系统自动同步',
+    remark: 'HR系统连接超时，请检查网络配置'
+  },
+  {
+    id: 'sync005',
+    syncTime: '2026-06-18 02:00:00',
+    syncType: 'full',
+    status: 'success',
+    addCount: 22,
+    updateCount: 95,
+    deleteCount: 8,
+    operator: '系统自动同步',
+    remark: '与HR系统全量同步完成'
+  }
+];

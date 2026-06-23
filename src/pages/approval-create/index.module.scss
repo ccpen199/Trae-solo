@@ -1,0 +1,418 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+  background: $color-bg-page;
+}
+
+.templateList {
+  padding: $spacing-lg;
+}
+
+.templateGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-md;
+}
+
+.templateItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.templateIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: $spacing-sm;
+
+  &.leave { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  &.expense { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  &.purchase { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  &.overtime { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+  &.business { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+  &.contract { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+  &.seal { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+  &.more { background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%); }
+}
+
+.templateName {
+  font-size: $font-size-xs;
+  color: $color-text-primary;
+  text-align: center;
+}
+
+.formSection {
+  background: $color-bg-card;
+  margin: $spacing-lg;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.formItem {
+  margin-bottom: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.formLabel {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+
+  .required {
+    color: $color-error;
+    margin-right: $spacing-xs;
+  }
+}
+
+.formInput {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  border: 1rpx solid $color-divider;
+  transition: all $transition-base;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.formTextarea {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  border: 1rpx solid $color-divider;
+  min-height: 200rpx;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all $transition-base;
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.pickerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  border: 1rpx solid $color-divider;
+
+  .placeholder {
+    color: $color-text-tertiary;
+  }
+
+  .value {
+    color: $color-text-primary;
+  }
+
+  .arrow {
+    color: $color-text-tertiary;
+    margin-left: $spacing-sm;
+  }
+}
+
+.uploadSection {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  border: 1rpx dashed $color-divider;
+  text-align: center;
+
+  .icon {
+    font-size: 48rpx;
+    margin-bottom: $spacing-sm;
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+
+  .hint {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: $spacing-xs;
+  }
+}
+
+.uploadList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+}
+
+.uploadItem {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .remove {
+    position: absolute;
+    top: 4rpx;
+    right: 4rpx;
+    width: 32rpx;
+    height: 32rpx;
+    border-radius: $radius-round;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.approvalFlow {
+  background: $color-bg-card;
+  margin: $spacing-lg;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.flowPreview {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.flowNode {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: $color-primary-bg;
+  color: $color-primary;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+
+  .icon {
+    margin-right: $spacing-xs;
+  }
+}
+
+.flowArrow {
+  color: $color-text-tertiary;
+  font-size: $font-size-lg;
+}
+
+.ccSection {
+  background: $color-bg-card;
+  margin: $spacing-lg;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  background: $color-bg-card;
+  border-top: 1rpx solid $color-divider;
+  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-md);
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.actionBtn {
+  flex: 1;
+  padding: $spacing-md;
+  border-radius: $radius-lg;
+  text-align: center;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+
+  &.primary {
+    background: $color-primary;
+    color: #fff;
+  }
+
+  &.default {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
+}
+
+.securityNote {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: $color-primary-bg;
+  border-radius: $radius-md;
+  margin: 0 $spacing-lg $spacing-lg;
+  font-size: $font-size-xs;
+  color: $color-primary;
+
+  .icon {
+    margin-right: $spacing-sm;
+  }
+}
+
+.switchItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch {
+  width: 88rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background: $color-text-tertiary;
+  position: relative;
+  transition: all $transition-base;
+
+  &.active {
+    background: $color-primary;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4rpx;
+    left: 4rpx;
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: $radius-round;
+    background: #fff;
+    transition: all $transition-base;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+  }
+
+  &.active::after {
+    left: 44rpx;
+  }
+}
+
+.categoryTitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  padding: 0 $spacing-sm;
+}
+
+.recentSection {
+  background: $color-bg-card;
+  margin: 0 $spacing-lg $spacing-lg;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.recentList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.recentItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.recentInfo {
+  flex: 1;
+}
+
+.recentTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.recentTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.recentStatus {
+  font-size: $font-size-xs;
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+
+  &.approved {
+    background: #F0FFF4;
+    color: $color-success;
+  }
+
+  &.pending {
+    background: #FFF7E6;
+    color: $color-warning;
+  }
+
+  &.rejected {
+    background: #FEECEB;
+    color: $color-error;
+  }
+}

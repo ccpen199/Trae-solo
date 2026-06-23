@@ -1,0 +1,320 @@
+import { Message, ChatSession, ChatMessage } from '@/types/message';
+
+const avatarIds = [64, 91, 177, 338, 1027, 1025, 659, 718, 783, 237];
+
+export const mockMessages: Message[] = [
+  {
+    id: 'msg001',
+    type: 'announcement',
+    title: '关于开展2026年度安全生产月活动的通知',
+    content: '各单位要高度重视，认真组织开展安全生产月活动，切实提高全员安全意识。活动期间将组织安全知识竞赛、应急演练等系列活动，请各单位积极配合，确保活动取得实效。',
+    senderId: 'sys',
+    senderName: '系统通知',
+    senderAvatar: 'https://picsum.photos/id/1/200/200',
+    receiverId: 'all',
+    status: 'unread',
+    priority: 'high',
+    createTime: '2026-06-21 09:00:00',
+    bizType: 'announcement',
+    bizId: 'ann001'
+  },
+  {
+    id: 'msg002',
+    type: 'announcement',
+    title: '省公司信息中心关于系统升级维护的通知',
+    content: '为提升系统性能，将于2026年6月22日22:00-次日02:00进行系统升级维护，届时相关系统将暂停服务，请提前做好工作安排。',
+    senderId: 'sys',
+    senderName: '系统通知',
+    senderAvatar: 'https://picsum.photos/id/1/200/200',
+    receiverId: 'all',
+    status: 'read',
+    priority: 'medium',
+    createTime: '2026-06-20 16:30:00',
+    readTime: '2026-06-20 17:00:00'
+  },
+  {
+    id: 'msg003',
+    type: 'task',
+    title: '【待办】天河区变电站巡检任务',
+    content: '您有一项待办任务：天河区110kV变电站日常巡检，截止时间：2026-06-22 18:00，请及时处理。',
+    senderId: 'u005',
+    senderName: '刘伟',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[4]}/200/200`,
+    receiverId: 'u001',
+    status: 'unread',
+    priority: 'high',
+    createTime: '2026-06-21 08:15:00',
+    bizType: 'task',
+    bizId: 'task001'
+  },
+  {
+    id: 'msg004',
+    type: 'task',
+    title: '【审批】月度绩效考核表待审批',
+    content: '您有1条待审批事项：信息中心2026年5月绩效考核表，请在3个工作日内完成审批。',
+    senderId: 'u003',
+    senderName: '王芳',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[2]}/200/200`,
+    receiverId: 'u001',
+    status: 'read',
+    priority: 'medium',
+    createTime: '2026-06-20 14:20:00',
+    readTime: '2026-06-20 15:00:00',
+    bizType: 'approval',
+    bizId: 'app001'
+  },
+  {
+    id: 'msg005',
+    type: 'chat',
+    title: '李建国',
+    content: '张明，下午3点请到我办公室开会，讨论信息化建设规划事宜。',
+    senderId: 'u002',
+    senderName: '李建国',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    receiverId: 'u001',
+    status: 'unread',
+    priority: 'high',
+    createTime: '2026-06-21 10:30:00',
+    bizType: 'chat',
+    bizId: 'chat001'
+  },
+  {
+    id: 'msg006',
+    type: 'chat',
+    title: '王芳',
+    content: '张主任，2026年度培训计划已经发到您邮箱了，请抽空审阅。',
+    senderId: 'u003',
+    senderName: '王芳',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[2]}/200/200`,
+    receiverId: 'u001',
+    status: 'read',
+    priority: 'low',
+    createTime: '2026-06-20 11:20:00',
+    readTime: '2026-06-20 11:45:00'
+  },
+  {
+    id: 'msg007',
+    type: 'task',
+    title: '【完成】信息系统安全检查',
+    content: '您发起的信息系统安全检查任务已完成，共发现风险点5个，已全部整改完毕。',
+    senderId: 'u006',
+    senderName: '赵刚',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[5]}/200/200`,
+    receiverId: 'u001',
+    status: 'read',
+    priority: 'low',
+    createTime: '2026-06-19 16:00:00',
+    readTime: '2026-06-19 16:30:00'
+  },
+  {
+    id: 'msg008',
+    type: 'announcement',
+    title: '关于启用新版移动办公APP的通知',
+    content: '新版移动办公APP已于6月18日正式上线，新增了审批流、文档协作等功能，请各单位组织员工下载使用。',
+    senderId: 'sys',
+    senderName: '系统通知',
+    senderAvatar: 'https://picsum.photos/id/1/200/200',
+    receiverId: 'all',
+    status: 'read',
+    priority: 'medium',
+    createTime: '2026-06-18 09:00:00',
+    readTime: '2026-06-18 10:00:00'
+  },
+  {
+    id: 'msg009',
+    type: 'chat',
+    title: '陈志强',
+    content: '张主任，广州局的信息化改造方案我们已经初步完成，下周想约个时间向您汇报。',
+    senderId: 'u004',
+    senderName: '陈志强',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[3]}/200/200`,
+    receiverId: 'u001',
+    status: 'read',
+    priority: 'medium',
+    createTime: '2026-06-19 09:30:00',
+    readTime: '2026-06-19 10:15:00'
+  },
+  {
+    id: 'msg010',
+    type: 'task',
+    title: '【协作】《2026信息化建设白皮书》文档协作邀请',
+    content: '李建国邀请您参与《2026信息化建设白皮书》的编写工作，您的角色是：技术审核。',
+    senderId: 'u002',
+    senderName: '李建国',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    receiverId: 'u001',
+    status: 'read',
+    priority: 'medium',
+    createTime: '2026-06-17 14:00:00',
+    readTime: '2026-06-17 14:30:00',
+    bizType: 'document',
+    bizId: 'doc001'
+  }
+];
+
+export const mockChatSessions: ChatSession[] = [
+  {
+    id: 'chat001',
+    type: 'single',
+    name: '李建国',
+    avatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    lastMessage: '张明，下午3点请到我办公室开会，讨论信息化建设规划事宜。',
+    lastMessageTime: '2026-06-21 10:30:00',
+    unreadCount: 1,
+    isTop: true,
+    isMute: false,
+    memberIds: ['u001', 'u002']
+  },
+  {
+    id: 'chat002',
+    type: 'single',
+    name: '王芳',
+    avatar: `https://picsum.photos/id/${avatarIds[2]}/200/200`,
+    lastMessage: '好的，我马上安排。',
+    lastMessageTime: '2026-06-20 14:30:00',
+    unreadCount: 0,
+    isTop: false,
+    isMute: false,
+    memberIds: ['u001', 'u003']
+  },
+  {
+    id: 'chat003',
+    type: 'single',
+    name: '陈志强',
+    avatar: `https://picsum.photos/id/${avatarIds[3]}/200/200`,
+    lastMessage: '张主任，广州局的信息化改造方案我们已经初步完成...',
+    lastMessageTime: '2026-06-19 09:30:00',
+    unreadCount: 0,
+    isTop: false,
+    isMute: false,
+    memberIds: ['u001', 'u004']
+  },
+  {
+    id: 'chat004',
+    type: 'single',
+    name: '孙明',
+    avatar: `https://picsum.photos/id/${avatarIds[6]}/200/200`,
+    lastMessage: '深圳局的系统升级已经完成，运行稳定。',
+    lastMessageTime: '2026-06-18 16:00:00',
+    unreadCount: 0,
+    isTop: false,
+    isMute: false,
+    memberIds: ['u001', 'u007']
+  },
+  {
+    id: 'chat005',
+    type: 'group',
+    name: '信息中心工作群',
+    avatar: `https://picsum.photos/id/${avatarIds[0]}/200/200`,
+    lastMessage: '周杰：本周巡检报告已上传，请各位查阅。',
+    lastMessageTime: '2026-06-21 08:00:00',
+    unreadCount: 5,
+    isTop: true,
+    isMute: false,
+    memberIds: ['u001', 'u006', 'u008', 'u011', 'u012']
+  },
+  {
+    id: 'chat006',
+    type: 'group',
+    name: '信息化建设项目组',
+    avatar: `https://picsum.photos/id/${avatarIds[2]}/200/200`,
+    lastMessage: '王芳：项目推进会改在明天下午2点，请各位准时参加。',
+    lastMessageTime: '2026-06-20 17:30:00',
+    unreadCount: 2,
+    isTop: false,
+    isMute: true,
+    memberIds: ['u001', 'u002', 'u003', 'u004', 'u007']
+  },
+  {
+    id: 'chat007',
+    type: 'single',
+    name: '刘伟',
+    avatar: `https://picsum.photos/id/${avatarIds[4]}/200/200`,
+    lastMessage: '天河运维一班的月度总结已发送至您邮箱。',
+    lastMessageTime: '2026-06-17 10:00:00',
+    unreadCount: 0,
+    isTop: false,
+    isMute: false,
+    memberIds: ['u001', 'u005']
+  }
+];
+
+export const mockChatMessages: ChatMessage[] = [
+  {
+    id: 'cm001',
+    sessionId: 'chat001',
+    senderId: 'u002',
+    senderName: '李建国',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    content: '张明，下午3点请到我办公室开会，讨论信息化建设规划事宜。',
+    type: 'text',
+    sendTime: '2026-06-21 10:30:00',
+    createTime: '2026-06-21 10:30:00',
+    isRead: false,
+    isSelf: false,
+    status: 'sent'
+  },
+  {
+    id: 'cm002',
+    sessionId: 'chat001',
+    senderId: 'u001',
+    senderName: '张明',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[0]}/200/200`,
+    content: '好的，李总，我准时到。需要我准备什么材料吗？',
+    type: 'text',
+    sendTime: '2026-06-21 10:32:00',
+    createTime: '2026-06-21 10:32:00',
+    isRead: true,
+    isSelf: true,
+    status: 'sent'
+  },
+  {
+    id: 'cm003',
+    sessionId: 'chat001',
+    senderId: 'u002',
+    senderName: '李建国',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    content: '带上你上周提交的那份《2026-2028信息化建设三年规划》初稿就行。另外，广州局和深圳局的负责人也会参加。',
+    type: 'text',
+    sendTime: '2026-06-21 10:35:00',
+    createTime: '2026-06-21 10:35:00',
+    isRead: true,
+    isSelf: false,
+    status: 'sent'
+  },
+  {
+    id: 'cm004',
+    sessionId: 'chat001',
+    senderId: 'u001',
+    senderName: '张明',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[0]}/200/200`,
+    content: '明白，我会提前准备好。正好有几个关于预算的问题想向您汇报。',
+    type: 'text',
+    sendTime: '2026-06-21 10:37:00',
+    createTime: '2026-06-21 10:37:00',
+    isRead: true,
+    isSelf: true,
+    status: 'sent'
+  },
+  {
+    id: 'cm005',
+    sessionId: 'chat001',
+    senderId: 'u002',
+    senderName: '李建国',
+    senderAvatar: `https://picsum.photos/id/${avatarIds[1]}/200/200`,
+    content: '好的，会议上一起讨论。',
+    type: 'text',
+    sendTime: '2026-06-21 10:38:00',
+    createTime: '2026-06-21 10:38:00',
+    isRead: true,
+    isSelf: false,
+    status: 'sent'
+  }
+];
+
+export const mockUnreadStats = {
+  total: 4,
+  announcement: 1,
+  task: 1,
+  chat: 2
+};

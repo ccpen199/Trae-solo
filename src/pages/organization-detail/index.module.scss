@@ -1,0 +1,585 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+}
+
+.headerCard {
+  margin: $spacing-md;
+  padding: $spacing-lg;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+}
+
+.orgInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.orgIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+
+  &.province {
+    background: linear-gradient(135deg, #1E5AA8, #2E7BC8);
+  }
+  
+  &.city {
+    background: linear-gradient(135deg, #0F766E, #14B8A6);
+  }
+  
+  &.team {
+    background: linear-gradient(135deg, #B45309, #F59E0B);
+  }
+}
+
+.orgBasic {
+  flex: 1;
+}
+
+.orgName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text;
+  margin-bottom: $spacing-xs;
+}
+
+.orgMeta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.orgLevelTag {
+  padding: 2px 10px;
+  border-radius: $radius-round;
+  font-size: $font-size-xs;
+
+  &.province {
+    background: rgba(30, 90, 168, 0.1);
+    color: $color-primary;
+  }
+  
+  &.city {
+    background: rgba(15, 118, 110, 0.1);
+    color: #0F766E;
+  }
+  
+  &.team {
+    background: rgba(180, 83, 9, 0.1);
+    color: #B45309;
+  }
+}
+
+.orgCode {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.syncStatus {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: $font-size-sm;
+
+  &.synced {
+    color: $color-success;
+  }
+  
+  &.syncing {
+    color: $color-warning;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  &.failed {
+    color: $color-error;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border-light;
+}
+
+.statItem {
+  flex: 1;
+  text-align: center;
+}
+
+.statValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  margin-bottom: 2px;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.leaderSection {
+  margin: 0 $spacing-md $spacing-md;
+  padding: $spacing-lg;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+}
+
+.sectionMore {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.leaderCard {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.leaderAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $color-primary, $color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: $color-white;
+  font-weight: $font-weight-bold;
+  position: relative;
+}
+
+.leaderStatus {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid $color-white;
+
+  &.on {
+    background: $color-success;
+  }
+  
+  &.off {
+    background: $color-text-tertiary;
+  }
+  
+  &.busy {
+    background: $color-warning;
+  }
+}
+
+.leaderInfo {
+  flex: 1;
+}
+
+.leaderName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.leaderPosition {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.leaderContact {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.contactTag {
+  padding: 2px 8px;
+  background: $color-bg;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.leaderActions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.actionBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $color-primary-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+
+  &.call {
+    background: rgba(16, 185, 129, 0.1);
+  }
+  
+  &.chat {
+    background: rgba(30, 90, 168, 0.1);
+  }
+}
+
+.subOrgSection {
+  margin: 0 $spacing-md $spacing-md;
+  padding: $spacing-lg;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+}
+
+.subOrgList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.subOrgItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg;
+  border-radius: $radius-md;
+}
+
+.subOrgIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-right: $spacing-md;
+
+  &.city {
+    background: linear-gradient(135deg, #0F766E, #14B8A6);
+  }
+  
+  &.team {
+    background: linear-gradient(135deg, #B45309, #F59E0B);
+  }
+}
+
+.subOrgInfo {
+  flex: 1;
+}
+
+.subOrgName {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.subOrgMeta {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.subOrgArrow {
+  font-size: 16px;
+  color: $color-text-tertiary;
+}
+
+.membersSection {
+  margin: 0 $spacing-md $spacing-md;
+  padding: $spacing-lg;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+}
+
+.membersFilter {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.filterTag {
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  background: $color-bg;
+  color: $color-text-secondary;
+
+  &.active {
+    background: $color-primary;
+    color: $color-white;
+  }
+}
+
+.membersList {
+  display: flex;
+  flex-direction: column;
+}
+
+.memberItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.memberAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: $color-white;
+  font-weight: $font-weight-medium;
+  margin-right: $spacing-md;
+  position: relative;
+}
+
+.memberStatus {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid $color-white;
+
+  &.on {
+    background: $color-success;
+  }
+  
+  &.off {
+    background: $color-text-tertiary;
+  }
+  
+  &.busy {
+    background: $color-warning;
+  }
+}
+
+.memberInfo {
+  flex: 1;
+}
+
+.memberName {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.leaderBadge {
+  padding: 1px 6px;
+  background: $color-warning-bg;
+  color: $color-warning;
+  font-size: $font-size-xxs;
+  border-radius: $radius-sm;
+}
+
+.memberPosition {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.memberActions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.memberActionBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: $color-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.syncSection {
+  margin: 0 $spacing-md $spacing-xl;
+  padding: $spacing-lg;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+}
+
+.syncInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md;
+  background: $color-bg;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-md;
+}
+
+.syncInfoLeft {
+  flex: 1;
+}
+
+.syncTime {
+  font-size: $font-size-sm;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.syncCount {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.syncBtn {
+  padding: $spacing-sm $spacing-md;
+  background: $color-primary;
+  color: $color-white;
+  font-size: $font-size-sm;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.syncRecords {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.syncRecordItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg;
+  border-radius: $radius-md;
+}
+
+.syncRecordIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-right: $spacing-md;
+
+  &.success {
+    background: $color-success-bg;
+  }
+  
+  &.failed {
+    background: $color-error-bg;
+  }
+}
+
+.syncRecordInfo {
+  flex: 1;
+}
+
+.syncRecordTitle {
+  font-size: $font-size-sm;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.syncRecordMeta {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.syncRecordStatus {
+  font-size: $font-size-xs;
+  padding: 2px 8px;
+  border-radius: $radius-sm;
+
+  &.success {
+    background: $color-success-bg;
+    color: $color-success;
+  }
+  
+  &.failed {
+    background: $color-error-bg;
+    color: $color-error;
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  flex-wrap: wrap;
+}
+
+.breadcrumbItem {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  &.current {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.breadcrumbSeparator {
+  color: $color-text-tertiary;
+  font-size: 12px;
+}
+
+.emptyState {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}

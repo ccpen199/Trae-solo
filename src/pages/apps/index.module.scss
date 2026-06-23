@@ -1,0 +1,320 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+}
+
+.header {
+  padding: $spacing-lg;
+}
+
+.searchBar {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+  box-shadow: $shadow-card;
+
+  .icon {
+    margin-right: $spacing-sm;
+    color: $color-text-tertiary;
+  }
+
+  .placeholder {
+    color: $color-text-tertiary;
+  }
+}
+
+.content {
+  padding: 0 $spacing-lg;
+}
+
+.section {
+  margin-bottom: $spacing-xl;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionMore {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.myApps {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.myAppsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-md;
+}
+
+.appItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md 0;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.appIcon {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  margin-bottom: $spacing-sm;
+  position: relative;
+
+  &.oa { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  &.erp { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  &.finance { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  &.hr { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+  &.safety { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+  &.production { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+  &.admin { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+  &.default { background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%); }
+
+  .badge {
+    position: absolute;
+    top: -8rpx;
+    right: -8rpx;
+    min-width: 32rpx;
+    height: 32rpx;
+    line-height: 32rpx;
+    background: $color-announcement;
+    color: #fff;
+    font-size: $font-size-xs;
+    border-radius: $radius-round;
+    text-align: center;
+    padding: 0 $spacing-xs;
+  }
+
+  .newTag {
+    position: absolute;
+    top: -8rpx;
+    right: -8rpx;
+    padding: 0 $spacing-xs;
+    height: 32rpx;
+    line-height: 32rpx;
+    background: $color-success;
+    color: #fff;
+    font-size: $font-size-xs;
+    border-radius: $radius-round;
+  }
+
+  .offlineTag {
+    position: absolute;
+    bottom: -4rpx;
+    right: -4rpx;
+    padding: 0 $spacing-xs;
+    height: 28rpx;
+    line-height: 28rpx;
+    background: $color-primary;
+    color: #fff;
+    font-size: 18rpx;
+    border-radius: $radius-xs;
+  }
+}
+
+.appName {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  text-align: center;
+  @include text-ellipsis;
+  width: 100%;
+}
+
+.categoryTabs {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  overflow-x: auto;
+  padding-bottom: $spacing-sm;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.categoryTab {
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  white-space: nowrap;
+  background: $color-bg-card;
+  color: $color-text-secondary;
+  border: 1rpx solid $color-divider;
+  transition: all $transition-base;
+
+  &.active {
+    background: $color-primary;
+    color: #fff;
+    border-color: $color-primary;
+  }
+}
+
+.pluginList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+}
+
+.pluginCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.pluginHeader {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+}
+
+.pluginIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+
+  &.oa { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  &.erp { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  &.finance { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  &.hr { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+  &.safety { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+  &.production { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+  &.admin { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+  &.default { background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%); }
+}
+
+.pluginInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.pluginName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.pluginCategory {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  background: $color-primary-bg;
+  padding: 2rpx $spacing-sm;
+  border-radius: $radius-xs;
+  display: inline-block;
+}
+
+.pluginDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.5;
+  margin-bottom: $spacing-md;
+  @include text-ellipsis-multi(2);
+}
+
+.pluginMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pluginStats {
+  display: flex;
+  gap: $spacing-md;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.installBtn {
+  padding: $spacing-xs $spacing-lg;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  background: $color-primary;
+  color: #fff;
+  transition: all $transition-base;
+
+  &.installed {
+    background: $color-success;
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xxl $spacing-lg;
+  color: $color-text-tertiary;
+  font-size: $font-size-md;
+}
+
+.loading {
+  text-align: center;
+  padding: $spacing-xxl;
+  color: $color-text-tertiary;
+}
+
+.offlineInfo {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: $color-success-bg;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-lg;
+
+  .icon {
+    margin-right: $spacing-sm;
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    color: $color-success;
+    flex: 1;
+  }
+
+  .manageBtn {
+    font-size: $font-size-sm;
+    color: $color-primary;
+  }
+}

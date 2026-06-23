@@ -1,0 +1,284 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+}
+
+.searchBar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: $color-bg-page;
+  padding: $spacing-md $spacing-lg;
+}
+
+.searchInput {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    margin-right: $spacing-sm;
+    color: $color-text-tertiary;
+  }
+
+  .placeholder {
+    color: $color-text-tertiary;
+  }
+}
+
+.quickActions {
+  display: flex;
+  justify-content: space-around;
+  padding: $spacing-md $spacing-lg $spacing-lg;
+  background: $color-bg-page;
+}
+
+.quickAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md;
+  border-radius: $radius-lg;
+  background: $color-bg-card;
+  min-width: 120rpx;
+  box-shadow: $shadow-card;
+
+  .icon {
+    font-size: 40rpx;
+    margin-bottom: $spacing-xs;
+  }
+
+  .text {
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+  }
+}
+
+.content {
+  padding: 0 $spacing-lg;
+}
+
+.section {
+  margin-bottom: $spacing-xl;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionCount {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.syncInfo {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-lg;
+
+  .status {
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: $radius-round;
+    margin-right: $spacing-sm;
+
+    &.synced { background: $color-success; }
+    &.syncing { background: $color-warning; }
+    &.failed { background: $color-error; }
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    flex: 1;
+  }
+
+  .syncBtn {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    padding: $spacing-xs $spacing-md;
+    background: $color-primary-bg;
+    border-radius: $radius-md;
+  }
+}
+
+.employeeList {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+}
+
+.employeeItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  border-bottom: 1rpx solid $color-divider;
+  transition: all $transition-base;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.employeeAvatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-round;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: #fff;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+}
+
+.employeeInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.employeeName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  display: flex;
+  align-items: center;
+
+  .online {
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: $radius-round;
+    background: $color-success;
+    margin-left: $spacing-sm;
+  }
+
+  .offline {
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: $radius-round;
+    background: $color-text-tertiary;
+    margin-left: $spacing-sm;
+  }
+}
+
+.employeeMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.employeeDept {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.employeePosition {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  background: $color-primary-bg;
+  padding: 2rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.employeePhone {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.actionBtns {
+  display: flex;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+
+  &.call {
+    background: #F0FFF4;
+    color: $color-success;
+  }
+
+  &.msg {
+    background: $color-primary-bg;
+    color: $color-primary;
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xxl $spacing-lg;
+  color: $color-text-tertiary;
+  font-size: $font-size-md;
+}
+
+.loading {
+  text-align: center;
+  padding: $spacing-xxl;
+  color: $color-text-tertiary;
+}
+
+.treeSection {
+  margin-top: $spacing-lg;
+}
+
+.letterIndex {
+  position: fixed;
+  right: $spacing-sm;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  z-index: 100;
+
+  .letter {
+    width: 32rpx;
+    height: 32rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    border-radius: $radius-round;
+
+    &.active {
+      background: $color-primary;
+      color: #fff;
+    }
+  }
+}

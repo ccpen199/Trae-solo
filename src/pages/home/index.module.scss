@@ -1,0 +1,184 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg $spacing-md calc(env(safe-area-inset-bottom) + 120rpx);
+}
+
+.header {
+  margin-bottom: $spacing-xl;
+}
+
+.greeting {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.subGreeting {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.weatherCard {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  color: #fff;
+  box-shadow: 0 8rpx 32rpx rgba(30, 90, 168, 0.3);
+}
+
+.weatherHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-lg;
+}
+
+.weatherInfo {
+  flex: 1;
+}
+
+.location {
+  font-size: $font-size-md;
+  opacity: 0.9;
+  margin-bottom: $spacing-sm;
+}
+
+.temp {
+  font-size: 72rpx;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+}
+
+.weatherDesc {
+  font-size: $font-size-md;
+  opacity: 0.85;
+  margin-top: $spacing-xs;
+}
+
+.weatherIcon {
+  font-size: 80rpx;
+}
+
+.workTips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  padding-top: $spacing-lg;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.tipItem {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-lg;
+  font-size: $font-size-sm;
+
+  .emoji {
+    margin-right: $spacing-xs;
+  }
+}
+
+.sectionTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.titleLeft {
+  display: flex;
+  align-items: center;
+}
+
+.titleText {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.titleBadge {
+  background: $color-announcement;
+  color: #fff;
+  font-size: $font-size-xs;
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-round;
+  margin-left: $spacing-sm;
+}
+
+.seeMore {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+}
+
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.actionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md 0;
+}
+
+.actionIcon {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  margin-bottom: $spacing-sm;
+  background: $color-primary-bg;
+
+  &.orange { background: #FFF7E6; }
+  &.green { background: #F0FFF4; }
+  &.red { background: #FEECEB; }
+  &.purple { background: #F9F0FF; }
+  &.cyan { background: #E6FFFB; }
+}
+
+.actionText {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+}
+
+.section {
+  margin-bottom: $spacing-xl;
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xxl $spacing-lg;
+  color: $color-text-tertiary;
+  font-size: $font-size-md;
+}
+
+.loading {
+  text-align: center;
+  padding: $spacing-xxl;
+  color: $color-text-tertiary;
+}

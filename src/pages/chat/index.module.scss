@@ -1,0 +1,262 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-page;
+}
+
+.messageList {
+  flex: 1;
+  padding: $spacing-lg;
+  overflow-y: auto;
+}
+
+.messageItem {
+  display: flex;
+  margin-bottom: $spacing-lg;
+  max-width: 80%;
+
+  &.self {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+  }
+}
+
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: $radius-round;
+  flex-shrink: 0;
+  margin: 0 $spacing-md;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+}
+
+.messageContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.messageBubble {
+  display: inline-block;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $radius-lg;
+  font-size: $font-size-md;
+  line-height: 1.6;
+  word-break: break-all;
+  background: $color-bg-card;
+  color: $color-text-primary;
+  box-shadow: $shadow-card;
+
+  .self & {
+    background: $color-primary;
+    color: #fff;
+  }
+}
+
+.messageTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+
+  .self & {
+    text-align: right;
+  }
+}
+
+.messageStatus {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  .self & {
+    justify-content: flex-end;
+  }
+
+  .sending { color: $color-warning; }
+  .sent { color: $color-text-tertiary; }
+  .delivered { color: $color-primary; }
+  .read { color: $color-success; }
+}
+
+.timeDivider {
+  text-align: center;
+  margin: $spacing-xl 0;
+  position: relative;
+
+  .text {
+    background: $color-bg-page;
+    padding: 0 $spacing-md;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    position: relative;
+    z-index: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1rpx;
+    background: $color-divider;
+  }
+}
+
+.inputBar {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: $color-bg-card;
+  border-top: 1rpx solid $color-divider;
+  padding-bottom: calc(env(safe-area-inset-bottom) + $spacing-md);
+}
+
+.inputActions {
+  display: flex;
+  gap: $spacing-md;
+  margin-right: $spacing-md;
+}
+
+.actionBtn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+.inputWrapper {
+  flex: 1;
+  background: $color-bg-hover;
+  border-radius: $radius-lg;
+  padding: $spacing-md $spacing-lg;
+  margin-right: $spacing-md;
+}
+
+.input {
+  width: 100%;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.sendBtn {
+  padding: $spacing-sm $spacing-xl;
+  background: $color-primary;
+  color: #fff;
+  border-radius: $radius-lg;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  background: $color-bg-card;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.headerAvatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  margin-right: $spacing-md;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: $font-size-md;
+}
+
+.headerInfo {
+  flex: 1;
+}
+
+.headerName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 2rpx;
+}
+
+.headerStatus {
+  font-size: $font-size-xs;
+  color: $color-success;
+  display: flex;
+  align-items: center;
+
+  .dot {
+    width: 12rpx;
+    height: 12rpx;
+    border-radius: $radius-round;
+    background: $color-success;
+    margin-right: $spacing-xs;
+  }
+}
+
+.headerActions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.headerAction {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+.typingIndicator {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  padding: $spacing-xs $spacing-lg;
+  font-style: italic;
+}
+
+.encryptedBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  background: $color-bg-card;
+  border-top: 1rpx solid $color-divider;
+
+  .icon {
+    margin-right: $spacing-xs;
+  }
+}

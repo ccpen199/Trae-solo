@@ -1,0 +1,509 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+}
+
+.overviewCard {
+  margin: $spacing-md;
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, #F59E0B, #FBBF24);
+  border-radius: $radius-xl;
+  color: $color-white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+  }
+}
+
+.overviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-lg;
+  position: relative;
+  z-index: 1;
+}
+
+.overviewTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.overviewIcon {
+  font-size: 24px;
+}
+
+.overviewAction {
+  padding: $spacing-xs $spacing-md;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.overviewStats {
+  display: flex;
+  gap: $spacing-md;
+  position: relative;
+  z-index: 1;
+}
+
+.overviewStat {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: $radius-md;
+}
+
+.overviewStatValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  margin-bottom: 2px;
+}
+
+.overviewStatLabel {
+  font-size: $font-size-xs;
+  opacity: 0.9;
+}
+
+.section {
+  margin: 0 $spacing-md $spacing-md;
+  background: $color-white;
+  border-radius: $radius-lg;
+  box-shadow: $card-shadow;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.sectionTitleIcon {
+  font-size: 18px;
+}
+
+.sectionMore {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.tabs {
+  display: flex;
+  padding: 0 $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+  gap: $spacing-lg;
+}
+
+.tab {
+  padding: $spacing-md 0;
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+  position: relative;
+
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: $color-primary;
+      border-radius: 2px;
+    }
+  }
+}
+
+.packageList {
+  padding: 0 $spacing-lg;
+}
+
+.packageItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.packageIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-right: $spacing-md;
+
+  &.oa {
+    background: linear-gradient(135deg, #3B82F6, #60A5FA);
+  }
+  
+  &.erp {
+    background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+  }
+  
+  &.finance {
+    background: linear-gradient(135deg, #10B981, #34D399);
+  }
+  
+  &.hr {
+    background: linear-gradient(135deg, #EC4899, #F472B6);
+  }
+  
+  &.safety {
+    background: linear-gradient(135deg, #EF4444, #F87171);
+  }
+  
+  &.production {
+    background: linear-gradient(135deg, #06B6D4, #22D3EE);
+  }
+}
+
+.packageInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.packageName {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  margin-bottom: $spacing-xs;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.packageTag {
+  padding: 1px 6px;
+  font-size: $font-size-xxs;
+  border-radius: $radius-sm;
+
+  &.installed {
+    background: $color-success-bg;
+    color: $color-success;
+  }
+  
+  &.update {
+    background: $color-warning-bg;
+    color: $color-warning;
+  }
+  
+  &.mandatory {
+    background: $color-error-bg;
+    color: $color-error;
+  }
+  
+  &.downloading {
+    background: $color-primary-bg;
+    color: $color-primary;
+  }
+}
+
+.packageMeta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.packageVersion {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.packageSize {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.packageTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.packageAction {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.actionBtn {
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  &.primary {
+    background: $color-primary;
+    color: $color-white;
+  }
+  
+  &.secondary {
+    background: $color-bg;
+    color: $color-text-secondary;
+  }
+  
+  &.warning {
+    background: $color-warning;
+    color: $color-white;
+  }
+  
+  &.success {
+    background: $color-success-bg;
+    color: $color-success;
+  }
+}
+
+.progressContainer {
+  width: 80px;
+  margin-left: $spacing-md;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background: $color-border;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-bottom: $spacing-xs;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, $color-primary, $color-primary-light);
+  border-radius: $radius-round;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-size: $font-size-xxs;
+  color: $color-text-tertiary;
+  text-align: center;
+}
+
+.settingsSection {
+  padding: $spacing-lg;
+}
+
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.settingInfo {
+  flex: 1;
+}
+
+.settingName {
+  font-size: $font-size-base;
+  color: $color-text;
+  margin-bottom: 2px;
+}
+
+.settingDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.switch {
+  width: 48px;
+  height: 28px;
+  border-radius: $radius-round;
+  background: $color-border;
+  position: relative;
+  transition: background 0.3s ease;
+
+  &.active {
+    background: $color-primary;
+
+    .switchHandle {
+      transform: translateX(20px);
+    }
+  }
+}
+
+.switchHandle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: $color-white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.storageInfo {
+  margin: $spacing-md $spacing-lg;
+  padding: $spacing-md;
+  background: $color-bg;
+  border-radius: $radius-md;
+}
+
+.storageBar {
+  display: flex;
+  height: 8px;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-bottom: $spacing-sm;
+}
+
+.storageUsed {
+  background: $color-primary;
+  transition: width 0.3s ease;
+}
+
+.storageFree {
+  background: $color-border;
+  flex: 1;
+}
+
+.storageText {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.updateBanner {
+  margin: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.updateBannerIcon {
+  font-size: 28px;
+}
+
+.updateBannerInfo {
+  flex: 1;
+}
+
+.updateBannerTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-error;
+  margin-bottom: 2px;
+}
+
+.updateBannerDesc {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.updateBannerBtn {
+  padding: $spacing-sm $spacing-md;
+  background: $color-error;
+  color: $color-white;
+  font-size: $font-size-sm;
+  border-radius: $radius-md;
+}
+
+.emptyState {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.updateLogSection {
+  padding: $spacing-md $spacing-lg;
+}
+
+.updateLogItem {
+  padding: $spacing-md 0;
+  border-bottom: 1px dashed $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.updateLogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+}
+
+.updateLogVersion {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.updateLogTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.updateLogContent {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+}
+
+.updateLogTag {
+  padding: 1px 6px;
+  font-size: $font-size-xxs;
+  border-radius: $radius-sm;
+  background: $color-primary-bg;
+  color: $color-primary;
+}
