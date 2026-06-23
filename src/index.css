@@ -1,133 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-  color: #1D2129;
-  background-color: #F7F8FA;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply min-h-screen bg-zinc-50 text-zinc-900;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-zinc-900;
-  }
-
-  h1 {
-    @apply text-3xl lg:text-4xl;
-  }
-
-  h2 {
-    @apply text-2xl lg:text-3xl;
-  }
-
-  h3 {
-    @apply text-xl lg:text-2xl;
-  }
-
-  h4 {
-    @apply text-lg lg:text-xl;
-  }
-
-  p {
-    @apply text-zinc-700;
+    @apply font-sans bg-gray-50 text-gray-800 antialiased;
   }
 }
 
 @layer components {
-  .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  .gov-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200;
   }
-
-  .btn-primary {
-    @apply btn bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 hover:shadow-lg active:scale-[0.98] focus:ring-primary-500;
+  .gov-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-gov-600 text-white font-medium hover:bg-gov-700 active:bg-gov-800 transition-colors duration-200;
   }
-
-  .btn-secondary {
-    @apply btn bg-white text-primary-600 border-2 border-primary-500 hover:bg-primary-50 active:scale-[0.98] focus:ring-primary-500;
+  .gov-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 active:bg-gray-100 transition-colors duration-200;
   }
-
-  .btn-accent {
-    @apply btn bg-gradient-to-r from-accent-500 to-accent-600 text-white hover:from-accent-600 hover:to-accent-700 hover:shadow-lg active:scale-[0.98] focus:ring-accent-500;
+  .gov-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-
-  .btn-ghost {
-    @apply btn bg-transparent text-zinc-700 hover:bg-zinc-100 active:scale-[0.98] focus:ring-zinc-300;
+  .gov-chip {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-gov-50 text-gov-700 border border-gov-100 hover:bg-gov-100 cursor-pointer transition-colors;
   }
-
-  .card {
-    @apply bg-white rounded-xl shadow-card transition-all duration-300 hover:shadow-card-hover;
+  .section-title {
+    @apply text-xl font-semibold text-gray-900 flex items-center gap-2 mb-4;
   }
-
-  .card-hover {
-    @apply hover:-translate-y-1 hover:scale-[1.02];
-  }
-
-  .input {
-    @apply w-full px-4 py-3 rounded-lg border border-zinc-300 bg-white text-zinc-900 placeholder-zinc-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
-  }
-
-  .label {
-    @apply block text-sm font-medium text-zinc-700 mb-1.5;
-  }
-
-  .status-badge {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
-  }
-
-  .status-success {
-    @apply status-badge bg-green-100 text-green-700;
-  }
-
-  .status-warning {
-    @apply status-badge bg-amber-100 text-amber-700;
-  }
-
-  .status-danger {
-    @apply status-badge bg-red-100 text-red-700;
-  }
-
-  .status-info {
-    @apply status-badge bg-blue-100 text-blue-700;
-  }
-
-  .status-pending {
-    @apply status-badge bg-zinc-100 text-zinc-600;
+  .stat-card {
+    @apply flex flex-col p-5 bg-white rounded-xl border border-gray-100;
   }
 }
 
 @layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  .text-gradient-gov {
+    @apply bg-gradient-to-r from-gov-700 to-gov-500 bg-clip-text text-transparent;
   }
-
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-primary-700;
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
   }
-
-  .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-
-  .number-font {
-    font-family: 'JetBrains Mono', monospace;
+  .animate-pulse-slow {
+    animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
   }
 }
