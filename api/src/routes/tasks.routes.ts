@@ -122,6 +122,27 @@ router.get('/:id', authMiddleware, (req: Request, res: Response, next) => {
   }
 });
 
+router.get('/:id/logs', authMiddleware, (req: Request, res: Response, next) => {
+  try {
+    const { id } = req.params;
+
+    const task = taskService.get(id);
+    if (!task) {
+      throw new AppError('任务不存在', 404);
+    }
+
+    const logs = taskService.getOperationLogs(id);
+
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: logs,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put('/:id', authMiddleware, (req: Request, res: Response, next) => {
   try {
     const { id } = req.params;
@@ -163,17 +184,70 @@ router.post('/:id/verify', authMiddleware, requireRole('courier'), (req: Request
 router.post('/:id/weigh', authMiddleware, requireRole('courier'), (req: Request, res: Response, next) => {
   try {
     const { id } = req.params;
-    const { actualWeight } = req.body;
+    const w = parseFloat(req.body.weight ?? req.body.actualWeight);
+    const photos = req.body.photos;
 
-    if (actualWeight === undefined || actualWeight === null) {
+    if (isNaN(w) || w <= 0) {
       throw new AppError('重量不能为空', 400);
     }
 
-    const task = taskService.weigh(id, parseFloat(actualWeight));
+    const task = taskService.weigh(id, w, photos);
 
     res.json({
       code: 200,
       message: '称重成功',
+      data: task,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/:id/pay', authMiddleware, requireRole('courier'), (req: Request, res: Response, next) => {
+  try {
+    const { id } = req.params;
+    const { method, amount } = req.body;
+
+    if (!method) {
+      throw new AppError('支付方式不能为空', 400);
+    }
+    if (amount === undefined || amount === null) {
+      throw new AppError('金额不能为空', 400);
+    }
+
+    const task = taskService.pay(id, method, parseFloat(amount));
+
+    res.json({
+      code: 200,
+      message: '支付成功',
+      data: task,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/scan', authMiddleware, requireRole('courier'), (req: Request, res: Response, next) => {
+  try {
+    if (!req.user) {
+      throw new AppError('未登录', 401);
+    }
+
+    const { pickupCode } = req.body;
+
+    if (!pickupCode) {
+      throw new AppError('取件码不能为空', 400);
+    }
+
+    const task = taskService.scanPickupCode(
+      pickupCode,
+      req.user.userId,
+      req.user.username
+    );
+
+    res.json({
+      code: 200,
+      message: '扫码成功',
       data: task,
     });
   } catch (error) {
@@ -194,6 +268,29 @@ router.post('/calculate', authMiddleware, (req: Request, res: Response, next) =>
       itemType as string,
       hasInsurance as boolean,
       declaredValue ? parseFloat(declaredValue) : undefined
+    );
+
+    res.json({
+      code: 200,
+      message: '计算成功',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/calculate-freight', authMiddleware, (req: Request, res: Response, next) => {
+  try {
+    const { weight, itemType } = req.body;
+
+    if (!weight) {
+      throw new AppError('重量不能为空', 400);
+    }
+
+    const result = taskService.calculateFreight(
+      parseFloat(weight),
+      itemType as string
     );
 
     res.json({

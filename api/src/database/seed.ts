@@ -83,10 +83,12 @@ export function seedDatabase(db: Database) {
       const pickupCode = String(Math.floor(100000 + Math.random() * 900000));
       const outletIndex = i % 3;
       const courier = courierUsers[i % courierUsers.length];
-      const daysAgo = Math.floor(Math.random() * 7);
+      const isToday = i < 12;
+      const daysAgo = isToday ? 0 : Math.floor(Math.random() * 6) + 1;
       const orderDate = addDays(now, -daysAgo);
-      const appointmentTime = addHours(orderDate, 2 + Math.floor(Math.random() * 6));
-      const statusIndex = i < 5 ? 5 : i < 10 ? 2 : i < 15 ? 1 : 0;
+      const baseHour = isToday ? (8 + (i % 10)) : (2 + Math.floor(Math.random() * 6));
+      const appointmentTime = addHours(orderDate, baseHour);
+      const statusIndex = i < 5 ? 0 : i < 10 ? 1 : i < 15 ? 2 : 3;
 
       const order = {
         id: orderId,
@@ -120,8 +122,8 @@ export function seedDatabase(db: Database) {
         taskNo,
         orderId,
         orderNo,
-        courierId: statusIndex >= 1 ? courier.id : null,
-        courierName: statusIndex >= 1 ? courier.name : null,
+        courierId: courier.id,
+        courierName: courier.name,
         outletId: outlets[outletIndex].id,
         pickupCode,
         senderAddress: `${order.senderProvince}${order.senderCity}${order.senderDistrict}${order.senderAddress}`,

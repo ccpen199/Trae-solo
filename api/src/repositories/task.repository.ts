@@ -71,13 +71,15 @@ interface TaskFilters {
   status?: TaskStatus;
   startDate?: string;
   endDate?: string;
+  appointmentStartDate?: string;
+  appointmentEndDate?: string;
   page?: number;
   pageSize?: number;
 }
 
 export const taskRepository = {
   findAll(filters: TaskFilters = {}): { list: PickupTask[]; total: number } {
-    const { courierId, outletId, status, startDate, endDate, page = 1, pageSize = 10 } = filters;
+    const { courierId, outletId, status, startDate, endDate, appointmentStartDate, appointmentEndDate, page = 1, pageSize = 10 } = filters;
     
     let whereSql = 'WHERE 1=1';
     const params: any[] = [];
@@ -101,6 +103,14 @@ export const taskRepository = {
     if (endDate) {
       whereSql += ' AND date(pt.created_at) <= date(?)';
       params.push(endDate);
+    }
+    if (appointmentStartDate) {
+      whereSql += ' AND date(pt.appointment_time) >= date(?)';
+      params.push(appointmentStartDate);
+    }
+    if (appointmentEndDate) {
+      whereSql += ' AND date(pt.appointment_time) <= date(?)';
+      params.push(appointmentEndDate);
     }
 
     const countRow = db.prepare(`

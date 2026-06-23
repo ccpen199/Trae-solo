@@ -56,43 +56,13 @@ const getStepIndex = (status: string): number => {
   return statusMap[status] ?? 0;
 };
 
-const mockOrder: Order = {
-  id: 'order-001',
-  orderNo: 'ORD20240115001',
-  sender: {
-    name: '张三',
-    phone: '13800138001',
-    province: '北京市',
-    city: '北京市',
-    district: '朝阳区',
-    address: '建国路88号SOHO现代城A座1001室',
-    fullAddress: '北京市北京市朝阳区建国路88号SOHO现代城A座1001室',
-  },
-  receiver: {
-    name: '李四',
-    phone: '13900139002',
-    province: '上海市',
-    city: '上海市',
-    district: '浦东新区',
-    address: '陆家嘴环路1000号恒生银行大厦2001室',
-    fullAddress: '上海市上海市浦东新区陆家嘴环路1000号恒生银行大厦2001室',
-  },
-  itemType: '电子产品',
-  estimatedWeight: 2.5,
-  actualWeight: 2.8,
-  appointmentTime: new Date().toISOString(),
-  pickupCode: 'PK882345',
-  status: 'assigned',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-};
-
-const mockOperationLogs = [
-  { id: '1', action: '任务创建', operator: '系统', time: new Date(Date.now() - 3600000 * 5).toISOString(), remark: '用户下单成功' },
-  { id: '2', action: '任务指派', operator: '李管理', time: new Date(Date.now() - 3600000 * 4).toISOString(), remark: '指派给快递员张快递' },
-  { id: '3', action: '快递员接单', operator: '张快递', time: new Date(Date.now() - 3600000 * 3).toISOString(), remark: '确认接单' },
-  { id: '4', action: '开始揽收', operator: '张快递', time: new Date(Date.now() - 3600000 * 2).toISOString(), remark: '已到达寄件地址' },
-];
+interface OperationLog {
+  id: string;
+  action: string;
+  operator: string;
+  time: string;
+  remark?: string;
+}
 
 const paymentMethods: { key: PaymentMethod; label: string; icon: React.ReactNode; color: string }[] = [
   { key: 'wechat', label: '微信支付', icon: <Smartphone className="w-6 h-6" />, color: 'bg-green-500' },
@@ -119,8 +89,9 @@ const TaskDetail: React.FC = () => {
   const { addNotification } = useAppStore();
   const { user } = useAuthStore();
 
-  const [order, setOrder] = useState<Order | null>(mockOrder);
-  const [operationLogs, setOperationLogs] = useState(mockOperationLogs);
+  const [order, setOrder] = useState<Order | null>(null);
+  const [operationLogs, setOperationLogs] = useState<OperationLog[]>([]);
+  const [orderError, setOrderError] = useState<string | null>(null);
   const [showScanModal, setShowScanModal] = useState(false);
   const [showWeighModal, setShowWeighModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -137,6 +108,7 @@ const TaskDetail: React.FC = () => {
     if (id) {
       getTaskById(id);
       loadOrderDetails();
+      loadOperationLogs();
     }
     return () => {
       setCurrentTask(null);
@@ -148,9 +120,22 @@ const TaskDetail: React.FC = () => {
       if (id) {
         const orderData = await get<Order>(`/orders/by-task/${id}`);
         setOrder(orderData);
+        setOrderError(null);
+      }
+    } catch (err: any) {
+      setOrderError(err.message || '加载订单信息失败');
+      setOrder(null);
+    }
+  };
+
+  const loadOperationLogs = async () => {
+    try {
+      if (id) {
+        const logsData = await get<OperationLog[]>(`/tasks/${id}/logs`);
+        setOperationLogs(logsData);
       }
     } catch {
-      setOrder(mockOrder);
+      setOperationLogs([]);
     }
   };
 
@@ -222,7 +207,7 @@ const TaskDetail: React.FC = () => {
     if (isNaN(w) || w <= 0) return;
 
     try {
-      const detail = await calculateFreight(w, order?.itemType || '普通物品');
+      const detail = await calculateFreight(w, order?.itemType || currentTask?.itemType || '普通物品');
       setFreightDetail(detail);
     } catch (err: any) {
       addNotification({
@@ -466,7 +451,15 @@ const TaskDetail: React.FC = () => {
 
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-auto pb-6">
         <div className="lg:col-span-2 space-y-6">
-          {order && (
+          {orderError && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <div className="flex items-center gap-2 text-red-600">
+                <AlertCircle className="w-5 h-5" />
+                <span className="font-medium">{orderError}</span>
+              </div>
+            </div>
+          )}
+          {order && !orderError && (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 animate-slide-up">
               <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" />
@@ -588,7 +581,13 @@ const TaskDetail: React.FC = () => {
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 animate-slide-up">
             <h3 className="font-semibold text-gray-900 mb-4">操作日志</h3>
-            <div className="space-y-4">
+            {operationLogs.length === 0 ? (
+              <div className="py-8 text-center text-gray-400">
+                <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                <p>暂无操作日志</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
               {operationLogs.map((log, index) => (
                 <div key={log.id} className="relative pl-8">
                   {index < operationLogs.length - 1 && (
@@ -615,6 +614,7 @@ const TaskDetail: React.FC = () => {
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
 
@@ -954,11 +954,11 @@ const TaskDetail: React.FC = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">寄件人</span>
-                <span className="font-medium">{order?.sender.name}</span>
+                <span className="font-medium">{order?.sender.name || '-'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">收件人</span>
-                <span className="font-medium">{order?.receiver.name}</span>
+                <span className="font-medium">{order?.receiver.name || '-'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">重量</span>

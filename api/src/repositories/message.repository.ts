@@ -37,6 +37,7 @@ function rowToMessage(row: MessageRow): Message {
 interface MessageFilters {
   courierId?: string;
   outletId?: string;
+  role?: string;
   type?: MessageType;
   isRead?: boolean;
   page?: number;
@@ -45,18 +46,20 @@ interface MessageFilters {
 
 export const messageRepository = {
   findAll(filters: MessageFilters = {}): { list: Message[]; total: number } {
-    const { courierId, outletId, type, isRead, page = 1, pageSize = 10 } = filters;
+    const { courierId, outletId, role, type, isRead, page = 1, pageSize = 10 } = filters;
     
     let whereSql = 'WHERE 1=1';
     const params: any[] = [];
 
     if (courierId) {
-      whereSql += ' AND (target_courier_id = ? OR target_courier_id IS NULL)';
+      whereSql += ' AND target_courier_id = ?';
       params.push(courierId);
-    }
-    if (outletId) {
-      whereSql += ' AND (target_outlet_id = ? OR target_outlet_id IS NULL)';
+    } else if (outletId) {
+      whereSql += ' AND target_outlet_id = ?';
       params.push(outletId);
+    } else if (role === 'operator') {
+      whereSql += ' AND (target_role = ? OR target_role IS NULL)';
+      params.push('operator');
     }
     if (type) {
       whereSql += ' AND type = ?';
@@ -65,10 +68,6 @@ export const messageRepository = {
     if (isRead !== undefined) {
       whereSql += ' AND is_read = ?';
       params.push(isRead ? 1 : 0);
-    }
-
-    if (courierId || outletId) {
-      whereSql += ' AND (target_courier_id IS NOT NULL OR target_outlet_id IS NOT NULL OR (target_courier_id IS NULL AND target_outlet_id IS NULL))';
     }
 
     const countRow = db.prepare(`
@@ -99,35 +98,39 @@ export const messageRepository = {
     return messageRepository.findById(id);
   },
 
-  markAllAsRead(courierId?: string, outletId?: string): number {
+  markAllAsRead(courierId?: string, outletId?: string, role?: string): number {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     let sql = 'UPDATE messages SET is_read = 1, read_at = ? WHERE is_read = 0';
     const params: any[] = [now];
 
     if (courierId) {
-      sql += ' AND (target_courier_id = ? OR target_courier_id IS NULL)';
+      sql += ' AND target_courier_id = ?';
       params.push(courierId);
-    }
-    if (outletId) {
-      sql += ' AND (target_outlet_id = ? OR target_outlet_id IS NULL)';
+    } else if (outletId) {
+      sql += ' AND target_outlet_id = ?';
       params.push(outletId);
+    } else if (role === 'operator') {
+      sql += ' AND (target_role = ? OR target_role IS NULL)';
+      params.push('operator');
     }
 
     const result = db.prepare(sql).run(...params);
     return result.changes;
   },
 
-  getUnreadCount(courierId?: string, outletId?: string): number {
+  getUnreadCount(courierId?: string, outletId?: string, role?: string): number {
     let sql = 'SELECT COUNT(*) as count FROM messages WHERE is_read = 0';
     const params: any[] = [];
 
     if (courierId) {
-      sql += ' AND (target_courier_id = ? OR target_courier_id IS NULL)';
+      sql += ' AND target_courier_id = ?';
       params.push(courierId);
-    }
-    if (outletId) {
-      sql += ' AND (target_outlet_id = ? OR target_outlet_id IS NULL)';
+    } else if (outletId) {
+      sql += ' AND target_outlet_id = ?';
       params.push(outletId);
+    } else if (role === 'operator') {
+      sql += ' AND (target_role = ? OR target_role IS NULL)';
+      params.push('operator');
     }
 
     const row = db.prepare(sql).get(...params) as { count: number };
@@ -157,10 +160,11 @@ export const messageRepository = {
     return messageRepository.findById(id)!;
   },
 
-  findForUser(courierId?: string, outletId?: string, filters?: Partial<MessageFilters>): { list: Message[]; total: number } {
+  findForUser(courierId?: string, outletId?: string, role?: string, filters?: Partial<MessageFilters>): { list: Message[]; total: number } {
     return messageRepository.findAll({
       courierId,
       outletId,
+      role,
       ...filters,
     });
   },

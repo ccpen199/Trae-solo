@@ -37,7 +37,7 @@ export const dashboardService = {
   getOverview(userId: string, role: string, outletId?: string): OverviewData {
     const today = new Date().toISOString().slice(0, 10);
 
-    let taskFilters: any = { startDate: today, endDate: today, pageSize: 1000 };
+    let taskFilters: any = { appointmentStartDate: today, appointmentEndDate: today, pageSize: 1000 };
     let allFilters: any = { pageSize: 1000 };
 
     if (role === 'courier') {
@@ -56,13 +56,21 @@ export const dashboardService = {
       .filter(t => t.freight)
       .reduce((sum, t) => sum + (t.freight || 0), 0);
 
-    const pendingCount = allTasks.filter(t => ['pending', 'assigned'].includes(t.status)).length;
-    const completedCount = allTasks.filter(t => ['completed', 'printed', 'in_transit'].includes(t.status)).length;
-    const exceptionCount = allTasks.filter(t => t.status === 'exception').length;
+    let exceptionCount: number;
+    if (role === 'operator') {
+      const { list: allOperatorTasks } = taskRepository.findAll({ pageSize: 1000 });
+      exceptionCount = allOperatorTasks.filter(t => t.status === 'exception').length;
+    } else {
+      exceptionCount = allTasks.filter(t => t.status === 'exception').length;
+    }
+
+    const pendingCount = todayTasks.filter(t => ['pending', 'assigned'].includes(t.status)).length;
+    const completedCount = todayTasks.filter(t => ['completed', 'printed', 'in_transit'].includes(t.status)).length;
 
     const unreadCount = messageRepository.getUnreadCount(
       role === 'courier' ? userId : undefined,
-      role === 'admin' ? outletId : undefined
+      role === 'admin' ? outletId : undefined,
+      role === 'operator' ? role : undefined
     );
 
     const hourlyData: Record<string, number> = {};
@@ -71,8 +79,8 @@ export const dashboardService = {
     }
 
     todayTasks.forEach(task => {
-      if (task.createdAt) {
-        const hour = task.createdAt.slice(11, 13) + ':00';
+      if (task.appointmentTime) {
+        const hour = task.appointmentTime.slice(11, 13) + ':00';
         if (hourlyData.hasOwnProperty(hour)) {
           hourlyData[hour] = (hourlyData[hour] || 0) + 1;
         }
@@ -84,6 +92,7 @@ export const dashboardService = {
     const messages: Message[] = messageRepository.findForUser(
       role === 'courier' ? userId : undefined,
       role === 'admin' ? outletId : undefined,
+      role === 'operator' ? role : undefined,
       { pageSize: 5 }
     ).list;
 
@@ -91,7 +100,7 @@ export const dashboardService = {
 
     const alerts: AlertBanner[] = [];
 
-    if (role === 'admin' && outletId) {
+    if ((role === 'admin' || role === 'operator') && outletId) {
       const waybill = waybillRepository.findByOutletId(outletId);
       if (waybill) {
         if (waybill.balance <= waybill.lowBalanceThreshold) {
@@ -106,7 +115,9 @@ export const dashboardService = {
           });
         }
       }
+    }
 
+    if (role === 'admin' && outletId) {
       const cards = financeRepository.listBankCards(outletId);
       if (cards.length === 0) {
         alerts.push({
@@ -134,22 +145,25 @@ export const dashboardService = {
       }
     }
 
-    const overduePendingTasks = allTasks.filter(t => {
-      if (!['pending', 'assigned'].includes(t.status)) return false;
-      const apt = new Date(t.appointmentTime).getTime();
-      const now = Date.now();
-      return apt < now - 30 * 60 * 1000;
-    });
-    if (overduePendingTasks.length > 0) {
-      alerts.push({
-        id: 'overdue-pickup',
-        type: 'pickup_reminder',
-        level: 'danger',
-        title: '催揽提醒',
-        content: `有 ${overduePendingTasks.length} 个揽收任务已超过预约时间 30 分钟未处理，请优先上门揽收`,
-        actionLabel: '查看任务',
-        actionPath: '/tasks?status=pending',
+    if (role === 'courier') {
+      const overduePendingTasks = allTasks.filter(t => {
+        if (!['pending', 'assigned'].includes(t.status)) return false;
+        if (t.courierId !== userId) return false;
+        const apt = new Date(t.appointmentTime).getTime();
+        const now = Date.now();
+        return apt < now - 30 * 60 * 1000;
       });
+      if (overduePendingTasks.length > 0) {
+        alerts.push({
+          id: 'overdue-pickup',
+          type: 'pickup_reminder',
+          level: 'danger',
+          title: '催揽提醒',
+          content: `有 ${overduePendingTasks.length} 个揽收任务已超过预约时间 30 分钟未处理，请优先上门揽收`,
+          actionLabel: '查看任务',
+          actionPath: '/tasks?status=pending',
+        });
+      }
     }
 
     const suspensionMessages = messages.filter(m => m.type === 'suspension_notice' && !m.isRead);
@@ -183,7 +197,7 @@ export const dashboardService = {
     });
 
     let waybill: WaybillAccount | undefined;
-    if ((role === 'admin' || role === 'operator') && outletId) {
+    if (role === 'admin' && outletId) {
       waybill = waybillRepository.findByOutletId(outletId) || undefined;
     }
 

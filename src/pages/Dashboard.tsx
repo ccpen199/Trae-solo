@@ -5,7 +5,7 @@ import {
   Play, QrCode, Printer, MessageSquare, Wallet, Users,
   ChevronRight, Bell, Loader2, Clock,
   AlertOctagon, CreditCard, DollarSign, Ban,
-  ArrowRight, RefreshCw, X,
+  ArrowRight, RefreshCw, X, FileText,
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import dayjs from 'dayjs';
@@ -17,10 +17,13 @@ const quickActionsForRole = (role?: string) => {
   const all = [
     { id: 'pickup', label: '开始揽收', icon: Play, color: 'from-blue-500 to-blue-600', path: '/tasks', roles: ['courier', 'admin', 'operator'] },
     { id: 'scan', label: '扫码核销', icon: QrCode, color: 'from-green-500 to-green-600', path: '/offline-pickup', roles: ['courier', 'admin'] },
-    { id: 'print', label: '面单打印', icon: Printer, color: 'from-purple-500 to-purple-600', path: '/waybill-template', roles: ['courier', 'admin', 'operator'] },
+    { id: 'print', label: '面单打印', icon: Printer, color: 'from-purple-500 to-purple-600', path: '/waybill-template', roles: ['admin'] },
     { id: 'message', label: '消息中心', icon: MessageSquare, color: 'from-orange-500 to-orange-600', path: '/messages', roles: ['courier', 'admin', 'operator'] },
     { id: 'finance', label: '财务对账', icon: Wallet, color: 'from-pink-500 to-pink-600', path: '/finance', roles: ['admin', 'operator'] },
-    { id: 'courier', label: '快递员管理', icon: Users, color: 'from-cyan-500 to-cyan-600', path: '/couriers', roles: ['admin', 'operator'] },
+    { id: 'courier', label: '快递员管理', icon: Users, color: 'from-cyan-500 to-cyan-600', path: '/couriers', roles: ['admin'] },
+    { id: 'waybill-account', label: '面单账户', icon: CreditCard, color: 'from-indigo-500 to-indigo-600', path: '/waybill-account', roles: ['admin'] },
+    { id: 'waybill-template', label: '面单模板', icon: FileText, color: 'from-teal-500 to-teal-600', path: '/waybill-template', roles: ['admin'] },
+    { id: 'global-dashboard', label: '全局看板', icon: TrendingUp, color: 'from-amber-500 to-amber-600', path: '/global-dashboard', roles: ['operator'] },
   ];
   return all.filter(a => role && a.roles.includes(role));
 };
@@ -227,7 +230,7 @@ export default function Dashboard() {
                   </p>
                 </div>
               </div>
-              {(user?.role === 'admin' || user?.role === 'operator') && (
+              {user?.role === 'admin' && (
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => navigate('/waybill-account')}

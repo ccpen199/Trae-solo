@@ -1,6 +1,6 @@
 export type UserRole = 'courier' | 'admin' | 'operator';
 
-export type TaskStatus = 'pending' | 'assigned' | 'picked' | 'printed' | 'in_transit' | 'completed' | 'exception' | 'cancelled';
+export type TaskStatus = 'pending' | 'assigned' | 'picked' | 'weighed' | 'paid' | 'printed' | 'in_transit' | 'completed' | 'exception' | 'cancelled';
 
 export type OrderStatus = 'created' | 'assigned' | 'picked' | 'printed' | 'shipped' | 'completed' | 'cancelled';
 

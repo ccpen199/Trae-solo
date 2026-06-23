@@ -354,7 +354,8 @@ export const useTaskStore = create<TaskState & TaskActions>((set, get) => {
     printWaybill: async (taskId) => {
       set({ loading: true, error: null });
       try {
-        const response = await apiPost(`/tasks/${taskId}/print`) as { waybillNo: string; printedAt: string };
+        const waybillNo = 'SF' + Date.now().toString().slice(-10);
+        const response = await apiPost(`/tasks/${taskId}/print`, { waybillNo }) as { waybillNo: string; printedAt: string };
         set(state => ({
           tasks: state.tasks.map(t => 
             t.id === taskId ? { ...t, waybillNo: response.waybillNo, printedAt: response.printedAt, status: 'in_transit' as TaskStatus, synced: true } : t
@@ -366,19 +367,19 @@ export const useTaskStore = create<TaskState & TaskActions>((set, get) => {
         }));
       } catch (error) {
         set({ error: error.message || '打印失败', loading: false });
-        const mockWaybillNo = 'SF' + Date.now().toString().slice(-10);
+        const waybillNo = 'SF' + Date.now().toString().slice(-10);
         set(state => ({
           tasks: state.tasks.map(t => 
-            t.id === taskId ? { ...t, waybillNo: mockWaybillNo, printedAt: new Date().toISOString(), status: 'in_transit' as TaskStatus, synced: false } : t
+            t.id === taskId ? { ...t, waybillNo, printedAt: new Date().toISOString(), status: 'in_transit' as TaskStatus, synced: false } : t
           ),
           currentTask: state.currentTask?.id === taskId 
-            ? { ...state.currentTask, waybillNo: mockWaybillNo, printedAt: new Date().toISOString(), status: 'in_transit' as TaskStatus, synced: false }
+            ? { ...state.currentTask, waybillNo, printedAt: new Date().toISOString(), status: 'in_transit' as TaskStatus, synced: false }
             : state.currentTask,
         }));
         get().addOfflineOperation({
           taskId,
           type: 'print',
-          data: { waybillNo: mockWaybillNo, status: 'in_transit' },
+          data: { waybillNo, status: 'in_transit' },
         });
       }
     },

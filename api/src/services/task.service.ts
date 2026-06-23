@@ -71,7 +71,36 @@ export const taskService = {
     return true;
   },
 
-  weigh(taskId: string, actualWeight: number): PickupTask | null {
+  scanPickupCode(pickupCode: string, courierId: string, courierName: string): PickupTask | null {
+    const task = db.prepare(`
+      SELECT * FROM pickup_tasks WHERE pickup_code = ?
+    `).get(pickupCode) as any;
+
+    if (!task) {
+      throw new AppError('任务不存在', 404);
+    }
+
+    if (task.status !== 'pending' && task.status !== 'assigned') {
+      throw new AppError('任务状态不正确，无法扫码', 400);
+    }
+
+    if (task.courier_id && task.courier_id !== courierId) {
+      const user = userRepository.findById(courierId);
+      if (!user || (user.role !== 'admin' && user.role !== 'operator')) {
+        throw new AppError('该任务已分配给其他快递员', 403);
+      }
+    }
+
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    return taskRepository.update(task.id, {
+      status: 'picked',
+      pickedAt: now,
+      courierId,
+      courierName,
+    });
+  },
+
+  weigh(taskId: string, actualWeight: number, photos?: string[]): PickupTask | null {
     const task = taskRepository.findById(taskId);
     if (!task) {
       throw new AppError('任务不存在', 404);
@@ -94,14 +123,45 @@ export const taskService = {
 
     return taskRepository.update(taskId, {
       actualWeight,
+      photos,
       freight,
-      status: 'picked',
-      pickedAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      status: 'weighed',
+    });
+  },
+
+  pay(taskId: string, method: PaymentMethod, amount: number): PickupTask | null {
+    const task = taskRepository.findById(taskId);
+    if (!task) {
+      throw new AppError('任务不存在', 404);
+    }
+
+    if (amount <= 0) {
+      throw new AppError('金额必须大于0', 400);
+    }
+
+    return taskRepository.update(taskId, {
+      paymentMethod: method,
+      freight: amount,
+      status: 'paid',
     });
   },
 
   calculateFreight(weight: number, itemType?: string, hasInsurance?: boolean, declaredValue?: number) {
     return freightCalculator.calculate({ weight, itemType, hasInsurance, declaredValue });
+  },
+
+  getOperationLogs(taskId: string): any[] {
+    const logs = db.prepare(`
+      SELECT * FROM operation_logs WHERE task_id = ? ORDER BY created_at DESC
+    `).all(taskId) as any[];
+
+    return logs.map((log: any) => ({
+      id: log.id,
+      action: log.action,
+      operator: log.operator,
+      time: log.created_at,
+      remark: log.remark,
+    }));
   },
 
   recordPrint(taskId: string, waybillNo: string, printerName: string, paperSize: string, printedBy: string): { waybillNo: string; printedAt: string; balance: number } {
