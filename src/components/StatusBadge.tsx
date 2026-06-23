@@ -1,11 +1,13 @@
+import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 type StatusType = 'active' | 'success' | 'pending' | 'warning' | 'rejected' | 'danger' | 'info'
 
 interface StatusBadgeProps {
   status: StatusType | string
-  label?: string
+  label?: ReactNode
   size?: 'sm' | 'md'
+  className?: string
 }
 
 const statusStyles: Record<string, string> = {
@@ -23,7 +25,7 @@ const sizeStyles = {
   md: 'text-sm px-2.5 py-1',
 }
 
-export default function StatusBadge({ status, label, size = 'sm' }: StatusBadgeProps) {
+export default function StatusBadge({ status, label, size = 'sm', className }: StatusBadgeProps) {
   const style = statusStyles[status] || statusStyles.info
 
   return (
@@ -31,7 +33,8 @@ export default function StatusBadge({ status, label, size = 'sm' }: StatusBadgeP
       className={cn(
         'inline-flex items-center font-medium rounded-full',
         style,
-        sizeStyles[size]
+        sizeStyles[size],
+        className
       )}
     >
       {label || status}

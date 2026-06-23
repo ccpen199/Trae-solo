@@ -4,54 +4,56 @@ import { apiFetch } from '@/lib/api'
 interface AdminState {
   reviewQueue: any[]
   supervisionData: any
-  filingRecords: any[]
+  filings: any[]
   users: any[]
   fetchReviewQueue: () => Promise<void>
   reviewContent: (id: number, result: string, reason: string) => Promise<void>
   fetchSupervision: () => Promise<void>
   fetchFilings: () => Promise<void>
-  syncFiling: (id: number) => Promise<void>
+  syncFiling: () => Promise<void>
   fetchUsers: () => Promise<void>
   updateUser: (id: number, data: any) => Promise<void>
 }
 
-export const useAdminStore = create<AdminState>((set) => ({
+export const useAdminStore = create<AdminState>((set, get) => ({
   reviewQueue: [],
   supervisionData: null,
-  filingRecords: [],
+  filings: [],
   users: [],
 
   fetchReviewQueue: async () => {
-    const data = await apiFetch('/admin/reviews')
-    set({ reviewQueue: data.reviews || data })
+    const data = await apiFetch('/admin/review-queue')
+    set({ reviewQueue: data.data || data })
   },
 
   reviewContent: async (id: number, result: string, reason: string) => {
-    await apiFetch(`/admin/reviews/${id}`, {
-      method: 'POST',
+    await apiFetch(`/admin/review/${id}`, {
+      method: 'PUT',
       body: JSON.stringify({ result, reason }),
     })
+    await get().fetchReviewQueue()
   },
 
   fetchSupervision: async () => {
     const data = await apiFetch('/admin/supervision')
-    set({ supervisionData: data })
+    set({ supervisionData: data.data || data })
   },
 
   fetchFilings: async () => {
-    const data = await apiFetch('/admin/filings')
-    set({ filingRecords: data.filings || data })
+    const data = await apiFetch('/admin/filing')
+    set({ filings: data.data || data })
   },
 
-  syncFiling: async (id: number) => {
-    await apiFetch(`/admin/filings/${id}/sync`, {
+  syncFiling: async () => {
+    await apiFetch('/admin/filing/sync', {
       method: 'POST',
     })
+    await get().fetchFilings()
   },
 
   fetchUsers: async () => {
     const data = await apiFetch('/admin/users')
-    set({ users: data.users || data })
+    set({ users: data.data || data })
   },
 
   updateUser: async (id: number, data: any) => {
@@ -59,5 +61,6 @@ export const useAdminStore = create<AdminState>((set) => ({
       method: 'PUT',
       body: JSON.stringify(data),
     })
+    await get().fetchUsers()
   },
 }))

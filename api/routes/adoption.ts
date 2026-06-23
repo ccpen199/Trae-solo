@@ -4,8 +4,9 @@ import db from '../db.js'
 const router = Router()
 
 router.get('/', (req: Request, res: Response): void => {
-  const { status, species } = req.query
-  let sql = `SELECT a.*, p.name as pet_name, p.breed, p.species, p.gender, p.avatar_url as pet_avatar, u.name as owner_name
+  const { status, species, age, region, search, sort } = req.query
+  let sql = `SELECT a.*, p.name as pet_name, p.breed, p.species, p.gender, p.birth_date, p.avatar_url as pet_avatar, 
+    u.name as owner_name, u.verify_status as owner_verified
     FROM adoptions a
     JOIN pets p ON a.pet_id = p.id
     JOIN users u ON a.owner_id = u.id
@@ -16,14 +17,31 @@ router.get('/', (req: Request, res: Response): void => {
     sql += ' AND a.status = ?'
     params.push(status)
   }
-  if (species) {
+  if (species && species !== 'all') {
     sql += ' AND p.species = ?'
     params.push(species)
   }
-  sql += ' ORDER BY a.created_at DESC'
+  if (search) {
+    sql += ' AND (p.name LIKE ? OR p.breed LIKE ?)'
+    params.push(`%${search}%`, `%${search}%`)
+  }
+  if (sort === 'updated') {
+    sql += ' ORDER BY a.updated_at DESC'
+  } else {
+    sql += ' ORDER BY a.created_at DESC'
+  }
 
   const adoptions = db.prepare(sql).all(...params)
-  res.json({ success: true, data: adoptions })
+
+  const stats = db.prepare(`
+    SELECT 
+      COUNT(*) as total,
+      SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) as available,
+      SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed
+    FROM adoptions
+  `).get() as any
+
+  res.json({ success: true, data: { list: adoptions, stats } })
 })
 
 router.post('/', (req: Request, res: Response): void => {

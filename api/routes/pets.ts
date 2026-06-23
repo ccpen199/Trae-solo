@@ -50,10 +50,40 @@ router.get('/:id', (req: Request, res: Response): void => {
     return
   }
 
+  const owner = db.prepare('SELECT id, name, phone, avatar_url FROM users WHERE id = ?').get(pet.owner_id)
   const vaccineRecords = db.prepare('SELECT * FROM vaccine_records WHERE pet_id = ? ORDER BY vaccine_date DESC').all(pet.id)
   const reminders = db.prepare('SELECT * FROM health_reminders WHERE pet_id = ? ORDER BY reminder_date ASC').all(pet.id)
 
-  res.json({ success: true, data: { ...pet, vaccine_records: vaccineRecords, health_reminders: reminders } })
+  const adoptionRecords = db.prepare(`
+    SELECT a.*, u.name as applicant_name 
+    FROM adoptions a 
+    LEFT JOIN adoption_applications aa ON a.id = aa.adoption_id 
+    LEFT JOIN users u ON aa.applicant_id = u.id
+    WHERE a.pet_id = ?
+    ORDER BY a.created_at DESC
+  `).all(pet.id)
+
+  const breedingRecords = db.prepare(`
+    SELECT b.*, u.name as matched_owner_name
+    FROM breedings b
+    LEFT JOIN breeding_matches bm ON b.id = bm.breeding_id
+    LEFT JOIN pets p ON bm.matched_pet_id = p.id
+    LEFT JOIN users u ON p.owner_id = u.id
+    WHERE b.pet_id = ?
+    ORDER BY b.created_at DESC
+  `).all(pet.id)
+
+  res.json({
+    success: true,
+    data: {
+      ...pet,
+      owner,
+      vaccine_records: vaccineRecords,
+      health_reminders: reminders,
+      adoption_records: adoptionRecords,
+      breeding_records: breedingRecords,
+    }
+  })
 })
 
 router.put('/:id', (req: Request, res: Response): void => {
