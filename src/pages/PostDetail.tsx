@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { ArrowLeft, Eye, MessageCircle, MapPin, Clock, Phone, ShieldCheck, Star, Flag, FileQuestion } from 'lucide-react'
+import { ArrowLeft, Eye, MessageCircle, MapPin, Clock, Phone, ShieldCheck, Star, Flag, FileQuestion, Wallet, BadgeCheck, FileKey, AlertTriangle } from 'lucide-react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import PostCard from '@/components/PostCard'
 import { ErrorState, EmptyState, SkeletonCard } from '@/components/StateFeedback'
@@ -133,15 +133,90 @@ export default function PostDetail() {
             </div>
           )}
 
-          {post.authorType === 'merchant' && merchant && (
-            <div className="flex items-center gap-2 bg-emerald-50 rounded-lg px-4 py-3 mb-4">
-              <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              <span className="text-sm font-medium text-emerald-700">{merchant.name}</span>
-              <div className="flex items-center gap-0.5 ml-2">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star key={i} className={`w-3.5 h-3.5 ${i < Math.round(merchant.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
-                ))}
-                <span className="text-xs text-slate-500 ml-1">{merchant.rating.toFixed(1)}</span>
+          {post.authorType === 'merchant' && (
+            <div className="border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white rounded-xl overflow-hidden mb-4">
+              <div className="px-4 py-3 bg-emerald-600/5 flex items-center gap-2 border-b border-emerald-100">
+                <BadgeCheck className="w-4 h-4 text-emerald-600" />
+                <span className="text-sm font-semibold text-emerald-800">
+                  {post.merchantName || merchant?.name || '认证商家'}
+                </span>
+                <div className="flex items-center gap-0.5 ml-auto">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-3.5 h-3.5 ${i < Math.round(post.merchantRating || merchant?.rating || 0) ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`}
+                    />
+                  ))}
+                  <span className="text-xs text-slate-500 ml-1">
+                    {(post.merchantRating || merchant?.rating || 0).toFixed(1)}
+                    <span className="text-slate-400 ml-0.5">
+                      ({post.merchantReviewCount || merchant?.reviewCount || 0}条评价)
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3 p-4 text-xs">
+                <div className="flex items-start gap-2">
+                  {post.merchantVerified || merchant?.licenseVerified ? (
+                    <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  ) : (
+                    <div className="w-4 h-4 rounded-full border-2 border-slate-300 shrink-0 mt-0.5" />
+                  )}
+                  <div className="min-w-0">
+                    <div className="text-slate-500 mb-0.5">营业执照</div>
+                    <div className={`font-medium ${post.merchantVerified || merchant?.licenseVerified ? 'text-emerald-700' : 'text-slate-400'}`}>
+                      {post.merchantLicenseNo || merchant?.licenseNo ? (
+                        <span className="font-mono">{post.merchantLicenseNo || merchant?.licenseNo}</span>
+                      ) : (
+                        '未提交'
+                      )}
+                      {(post.merchantVerified || merchant?.licenseVerified) && (
+                        <span className="ml-1 text-emerald-600">已核验</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  {post.merchantDepositStatus === 'paid' || merchant?.depositStatus === 'paid' ? (
+                    <Wallet className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  ) : (
+                    <div className="w-4 h-4 rounded-full border-2 border-slate-300 shrink-0 mt-0.5" />
+                  )}
+                  <div className="min-w-0">
+                    <div className="text-slate-500 mb-0.5">保证金</div>
+                    <div className={`font-medium ${post.merchantDepositStatus === 'paid' || merchant?.depositStatus === 'paid' ? 'text-amber-700' : 'text-slate-400'}`}>
+                      {post.merchantDepositAmount || merchant?.depositAmount ? (
+                        <>¥{(post.merchantDepositAmount || merchant?.depositAmount || 0).toLocaleString()} 托管</>
+                      ) : (
+                        '未缴纳'
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 shrink-0 mt-0.5" />
+                  <div className="min-w-0">
+                    <div className="text-slate-500 mb-0.5">服务评分</div>
+                    <div className="font-medium text-slate-700">
+                      {(post.merchantRating || merchant?.rating || 0).toFixed(1)}分 ·
+                      <span className="text-slate-500 ml-0.5">
+                        超过{Math.round(((post.merchantRating || merchant?.rating || 0) / 5) * 100)}%同行
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <FileKey className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />
+                  <div className="min-w-0">
+                    <div className="text-slate-500 mb-0.5">服务期限</div>
+                    <div className="font-medium text-slate-700">
+                      入驻 {(post.merchantReviewCount || merchant?.reviewCount || 0) > 10 ? '2年以上' : '6个月'}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -149,18 +224,41 @@ export default function PostDetail() {
       </div>
 
       <div className="card mt-4 p-5">
-        <div className="flex items-center gap-3">
-          <Phone className="w-5 h-5 text-navy-800" />
-          <span className="text-lg font-mono">{phoneRevealed ? fullPhone : maskedPhone}</span>
+        <div className="flex items-center gap-3 flex-wrap">
+          <Phone className="w-5 h-5 text-navy-800 shrink-0" />
+          <span className="text-lg font-mono">
+            {phoneRevealed
+              ? (post.authorPhone || fullPhone)
+              : (post.authorPhone ? `${post.authorPhone.slice(0, 3)}****${post.authorPhone.slice(-4)}` : maskedPhone)}
+          </span>
           {!phoneRevealed && (
-            <button onClick={() => setPhoneRevealed(true)} className="text-sm text-accent-600 hover:underline">查看完整号码</button>
+            <button onClick={() => setPhoneRevealed(true)} className="text-sm text-accent-600 hover:underline">
+              查看完整号码
+            </button>
           )}
           {phoneRevealed && (
-            <button onClick={() => navigator.clipboard.writeText(fullPhone)} className="text-xs bg-slate-100 px-3 py-1 rounded-lg hover:bg-slate-200">复制</button>
+            <button
+              onClick={() => navigator.clipboard.writeText(post.authorPhone || fullPhone)}
+              className="text-xs bg-slate-100 px-3 py-1 rounded-lg hover:bg-slate-200"
+            >
+              复制
+            </button>
           )}
-          <button className="ml-auto flex items-center gap-1 text-xs text-slate-400 hover:text-red-500">
-            <Flag className="w-3.5 h-3.5" />举报
-          </button>
+          <div className="flex items-center gap-2 ml-auto">
+            {post.status !== 'approved' && (
+              <span className={`badge ${post.status === 'pending' ? 'badge-warning' : post.status === 'reviewing' ? 'badge-info' : 'badge-danger'}`}>
+                {post.status === 'pending' ? '待初审' : post.status === 'reviewing' ? '复审中' : post.status === 'rejected' ? '已驳回' : '已标记'}
+              </span>
+            )}
+            {post.riskScore >= 40 && (
+              <span className="badge badge-warning flex items-center gap-1">
+                <AlertTriangle className="w-3 h-3" />风险提示
+              </span>
+            )}
+            <button className="flex items-center gap-1 text-xs text-slate-400 hover:text-red-500">
+              <Flag className="w-3.5 h-3.5" />举报
+            </button>
+          </div>
         </div>
       </div>
 

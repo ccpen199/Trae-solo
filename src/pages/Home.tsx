@@ -7,6 +7,7 @@ import { api } from '@/utils/api'
 import { CATEGORIES } from '@/types'
 import type { Post } from '@/types'
 import { SkeletonCard, SkeletonList, EmptyState, ErrorState } from '@/components/StateFeedback'
+import { useAppStore } from '@/stores/appStore'
 
 export default function Home() {
   const [hotPosts, setHotPosts] = useState<Post[]>([])
@@ -16,24 +17,36 @@ export default function Home() {
   const [hotError, setHotError] = useState<string | null>(null)
   const [recentError, setRecentError] = useState<string | null>(null)
   const [retryKey, setRetryKey] = useState(0)
+  const location = useAppStore((s) => s.location)
 
   const fetchHot = useCallback(() => {
     setLoadingHot(true)
     setHotError(null)
-    api.posts.list({ status: 'approved', limit: 8 })
+    api.posts.list({
+      status: 'approved',
+      limit: 8,
+      province: location.province || undefined,
+      city: location.city || undefined,
+    })
       .then((res) => setHotPosts(res.posts || []))
       .catch((err) => setHotError(err.message || '加载热门推荐失败'))
       .finally(() => setLoadingHot(false))
-  }, [])
+  }, [location.province, location.city])
 
   const fetchRecent = useCallback(() => {
     setLoadingRecent(true)
     setRecentError(null)
-    api.posts.list({ status: 'approved', limit: 6, page: 1 })
+    api.posts.list({
+      status: 'approved',
+      limit: 6,
+      page: 1,
+      province: location.province || undefined,
+      city: location.city || undefined,
+    })
       .then((res) => setRecentPosts(res.posts || []))
       .catch((err) => setRecentError(err.message || '加载最新发布失败'))
       .finally(() => setLoadingRecent(false))
-  }, [])
+  }, [location.province, location.city])
 
   useEffect(() => {
     fetchHot()

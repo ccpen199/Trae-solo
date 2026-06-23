@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Filter, Grid3X3, List, Map, X, MapPin, Clock, Tag, SearchX, Plus } from 'lucide-react'
 import { useSearchParams, Link } from 'react-router-dom'
 import PostCard from '@/components/PostCard'
@@ -6,6 +6,7 @@ import { EmptyState, ErrorState, SkeletonCard } from '@/components/StateFeedback
 import { api } from '@/utils/api'
 import { CATEGORIES } from '@/types'
 import type { Post, GeoRegion } from '@/types'
+import { useAppStore } from '@/stores/appStore'
 
 const TIME_OPTIONS = [
   { value: '', label: '全部' },
@@ -52,6 +53,49 @@ export default function PostList() {
   const timeRange = searchParams.get('timeRange') || ''
   const merchantOnly = searchParams.get('merchantOnly') === '1'
   const currentCategory = CATEGORIES.find((c) => c.key === category) || null
+  const globalLocation = useAppStore((s) => s.location)
+  const syncedRef = useRef(false)
+
+  useEffect(() => {
+    if (syncedRef.current) return
+    const hasGeo = province || city || district
+    const storeHasGeo = globalLocation.province || globalLocation.city || globalLocation.district
+    if (!hasGeo && storeHasGeo) {
+      const next = new URLSearchParams(searchParams)
+      if (globalLocation.province) next.set('province', globalLocation.province)
+      if (globalLocation.city) next.set('city', globalLocation.city)
+      if (globalLocation.district) next.set('district', globalLocation.district)
+      setSearchParams(next, { replace: true })
+    }
+    syncedRef.current = true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (!syncedRef.current) return
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
+      let changed = false
+      const curProv = next.get('province') || ''
+      const curCity = next.get('city') || ''
+      const curDist = next.get('district') || ''
+      if (globalLocation.province !== curProv) {
+        changed = true
+        if (globalLocation.province) next.set('province', globalLocation.province); else next.delete('province')
+      }
+      if (globalLocation.city !== curCity) {
+        changed = true
+        if (globalLocation.city) next.set('city', globalLocation.city); else next.delete('city')
+      }
+      if (globalLocation.district !== curDist) {
+        changed = true
+        if (globalLocation.district) next.set('district', globalLocation.district); else next.delete('district')
+      }
+      return changed ? next : prev
+    })
+    setPage(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalLocation.province, globalLocation.city, globalLocation.district])
 
   const setParam = useCallback((key: string, value: string) => {
     setSearchParams((prev) => {

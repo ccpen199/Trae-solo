@@ -50,10 +50,15 @@ export interface Post {
   district: string
   authorId: string
   authorName?: string
+  authorPhone?: string
   authorType: 'user' | 'merchant'
   merchantVerified?: boolean
   merchantRating?: number
   merchantReviewCount?: number
+  merchantLicenseNo?: string
+  merchantDepositAmount?: number
+  merchantDepositStatus?: 'paid' | 'pending' | 'refunded' | 'none'
+  merchantName?: string
   status: 'pending' | 'reviewing' | 'approved' | 'rejected' | 'flagged'
   riskScore: number
   isTop: boolean
@@ -81,9 +86,11 @@ export interface Merchant {
   licenseNo: string
   licenseVerified: boolean
   depositAmount: number
-  depositStatus: 'paid' | 'pending' | 'refunded'
+  depositStatus: 'paid' | 'pending' | 'refunded' | 'none'
   rating: number
   reviewCount: number
+  phone?: string
+  userName?: string
 }
 
 export interface Review {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { ShieldCheck, MapPin, Clock, Star, AlertTriangle, Eye } from 'lucide-react'
+import { ShieldCheck, MapPin, Clock, Star, AlertTriangle, Eye, Wallet, BadgeCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CATEGORIES } from '@/types'
 import type { Post } from '@/types'
@@ -68,9 +68,24 @@ export default function PostCard({ post }: { post: Post }) {
       </div>
 
       <div className="p-3">
-        <h3 className="text-sm font-medium text-slate-800 line-clamp-2 mb-2 min-h-[2.5rem]">
+        <h3 className="text-sm font-medium text-slate-800 line-clamp-2 mb-1.5 min-h-[2.5rem]">
           {post.title}
         </h3>
+
+        {post.authorType === 'merchant' && post.merchantName && (
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <BadgeCheck className="w-3 h-3 text-navy-500 shrink-0" />
+            <span className="text-[11px] text-slate-500 truncate max-w-[150px]">{post.merchantName}</span>
+            {post.merchantDepositStatus === 'paid' && post.merchantDepositAmount !== undefined && post.merchantDepositAmount > 0 && (
+              <span className="flex items-center gap-0.5 text-[10px] text-emerald-600 bg-emerald-50 rounded-full px-1.5 py-0.5">
+                <Wallet className="w-2.5 h-2.5" />
+                {post.merchantDepositAmount >= 10000
+                  ? `${(post.merchantDepositAmount / 10000).toFixed(0)}万托管`
+                  : `${post.merchantDepositAmount.toLocaleString()}托管`}
+              </span>
+            )}
+          </div>
+        )}
 
         {post.attributes && post.attributes.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-2">
@@ -102,7 +117,7 @@ export default function PostCard({ post }: { post: Post }) {
               <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
             )}
             {post.riskScore >= 40 && (
-              <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" title="内容存在风险提示" />
+              <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
             )}
             {post.status === 'pending' && (
               <span className="badge badge-warning text-[10px] py-0 px-1.5">待审核</span>

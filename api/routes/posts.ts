@@ -54,8 +54,10 @@ router.get('/', (req: Request, res: Response): void => {
 
   const countRow = db.prepare(`SELECT COUNT(*) as total FROM posts p ${where}`).get(...params) as { total: number }
   const rows = db.prepare(
-    `SELECT p.*, u.name as author_name, u.role as author_type,
-            m.license_verified as merchant_verified, m.rating as merchant_rating, m.review_count as merchant_review_count
+    `SELECT p.*, u.name as author_name, u.role as author_type, u.phone as author_phone,
+            m.name as merchant_name, m.license_no as merchant_license_no,
+            m.license_verified as merchant_verified, m.rating as merchant_rating, m.review_count as merchant_review_count,
+            m.deposit_amount as merchant_deposit_amount, m.deposit_status as merchant_deposit_status
      FROM posts p
      LEFT JOIN users u ON p.author_id = u.id
      LEFT JOIN merchants m ON u.id = m.user_id
@@ -97,9 +99,14 @@ router.get('/', (req: Request, res: Response): void => {
       authorId: String(r.author_id),
       authorName: r.author_name,
       authorType: r.author_type === 'merchant' ? 'merchant' : 'user',
+      authorPhone: r.author_phone,
+      merchantName: r.merchant_name,
+      merchantLicenseNo: r.merchant_license_no,
       merchantVerified: Number(r.merchant_verified) === 1,
       merchantRating: r.merchant_rating ? Number(r.merchant_rating) : undefined,
       merchantReviewCount: r.merchant_review_count ? Number(r.merchant_review_count) : undefined,
+      merchantDepositAmount: r.merchant_deposit_amount ? Number(r.merchant_deposit_amount) : undefined,
+      merchantDepositStatus: r.merchant_deposit_status as ('paid' | 'pending' | 'refunded' | 'none') | undefined,
       status: r.status,
       riskScore: Number(r.risk_score),
       isTop: Number(r.is_top) === 1,
@@ -138,8 +145,10 @@ router.get('/', (req: Request, res: Response): void => {
 router.get('/:id', (req: Request, res: Response): void => {
   const db = getDb()
   const post = db.prepare(
-    `SELECT p.*, u.name as author_name, u.role as author_type,
-            m.license_verified as merchant_verified, m.rating as merchant_rating, m.review_count as merchant_review_count
+    `SELECT p.*, u.name as author_name, u.role as author_type, u.phone as author_phone,
+            m.name as merchant_name, m.license_no as merchant_license_no,
+            m.license_verified as merchant_verified, m.rating as merchant_rating, m.review_count as merchant_review_count,
+            m.deposit_amount as merchant_deposit_amount, m.deposit_status as merchant_deposit_status
      FROM posts p
      LEFT JOIN users u ON p.author_id = u.id
      LEFT JOIN merchants m ON u.id = m.user_id
@@ -168,9 +177,14 @@ router.get('/:id', (req: Request, res: Response): void => {
       authorId: String(post.author_id),
       authorName: post.author_name,
       authorType: post.author_type === 'merchant' ? 'merchant' : 'user',
+      authorPhone: post.author_phone,
+      merchantName: post.merchant_name,
+      merchantLicenseNo: post.merchant_license_no,
       merchantVerified: Number(post.merchant_verified) === 1,
       merchantRating: post.merchant_rating ? Number(post.merchant_rating) : undefined,
       merchantReviewCount: post.merchant_review_count ? Number(post.merchant_review_count) : undefined,
+      merchantDepositAmount: post.merchant_deposit_amount ? Number(post.merchant_deposit_amount) : undefined,
+      merchantDepositStatus: post.merchant_deposit_status as ('paid' | 'pending' | 'refunded' | 'none') | undefined,
       status: post.status,
       riskScore: Number(post.risk_score),
       isTop: Number(post.is_top) === 1,
