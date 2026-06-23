@@ -10,6 +10,50 @@ export type DisputeStage = 'evaluation' | 'appeal' | 'arbitration' | 'resolved';
 
 export type UrgencyLevel = 'low' | 'medium' | 'high';
 
+export interface MatchedLawyer {
+  lawyerId: string;
+  name: string;
+  firmName: string;
+  specialty: CaseCategory[];
+  specialtyLabels: string[];
+  matchScore: number;
+  practiceYears: number;
+  averageRating: number;
+  consultationCount: number;
+  region?: string;
+  avatar?: string;
+}
+
+export interface DispatchBasis {
+  caseCategoryMatch: boolean;
+  caseCategoryLabel: string;
+  regionMatch: boolean;
+  regionLabel?: string;
+  specialtyMatches: {
+    category: CaseCategory;
+    label: string;
+    score: number;
+  }[];
+  overallScore: number;
+  recommendedLawyers: MatchedLawyer[];
+}
+
+export interface ConsultationDraft {
+  id: string;
+  userId: string;
+  draftNumber: string;
+  category?: CaseCategory;
+  title?: string;
+  description?: string;
+  region?: string;
+  province?: string;
+  city?: string;
+  urgency?: UrgencyLevel;
+  evidenceFiles: EvidenceFile[];
+  updatedAt: string;
+  createdAt: string;
+}
+
 export interface User {
   id: string;
   role: UserRole;
@@ -63,6 +107,11 @@ export interface Consultation {
   title: string;
   description: string;
   region?: string;
+  province?: string;
+  city?: string;
+  isDraft?: boolean;
+  draftNo?: string;
+  dispatchBasis?: DispatchBasis;
   urgency: UrgencyLevel;
   status: ConsultationStatus;
   evidenceFiles: EvidenceFile[];
@@ -71,6 +120,12 @@ export interface Consultation {
   reviewedAt?: string;
   createdAt: string;
   updatedAt: string;
+  lastMessage?: string;
+  lastMessageTime?: string;
+  hasUnread?: boolean;
+  unreadCount?: number;
+  evaluation?: ServiceEvaluation;
+  legalOpinion?: LegalOpinion;
 }
 
 export interface ChatMessage {
@@ -125,6 +180,7 @@ export interface MonitorStats {
   averageRating: number;
   zeroResponseLawyers: number;
   consultationsPerLawyer: number;
+  serviceSaturation: number;
   periodStart: string;
   periodEnd: string;
 }

@@ -38,7 +38,7 @@ type TabType = 'pending' | 'ongoing' | 'closed';
 interface CaseWithDetails extends Consultation {
   userNickname?: string;
   userAvatar?: string;
-  lastMessage?: ChatMessage;
+  lastMessageObj?: ChatMessage;
   evaluation?: ServiceEvaluation;
   remainingTime?: number;
 }
@@ -88,7 +88,7 @@ export default function CaseManagePage() {
         ...c,
         userNickname: user?.nickname || user?.realName || '匿名用户',
         userAvatar: user?.avatar,
-        lastMessage,
+        lastMessageObj: lastMessage,
         evaluation,
         remainingTime,
       };
@@ -312,17 +312,17 @@ export default function CaseManagePage() {
               <MessageCircle className="h-4 w-4 text-primary-400 mt-0.5 shrink-0" />
               <div className="min-w-0 flex-1">
                 <p className="text-xs text-primary-400 mb-0.5">
-                  {caseItem.lastMessage
-                    ? caseItem.lastMessage.senderRole === 'lawyer'
+                  {caseItem.lastMessageObj
+                    ? caseItem.lastMessageObj.senderRole === 'lawyer'
                       ? '我'
                       : caseItem.userNickname
                     : '暂无消息'}
-                  {caseItem.lastMessage && (
-                    <span className="ml-1">· {formatDate(caseItem.lastMessage.createdAt, 'HH:mm')}</span>
+                  {caseItem.lastMessageObj && (
+                    <span className="ml-1">· {formatDate(caseItem.lastMessageObj.createdAt, 'HH:mm')}</span>
                   )}
                 </p>
                 <p className="text-sm text-primary-600 line-clamp-1">
-                  {caseItem.lastMessage?.content || '开始咨询，与用户沟通了解案件详情'}
+                  {caseItem.lastMessageObj?.content || '开始咨询，与用户沟通了解案件详情'}
                 </p>
               </div>
             </div>

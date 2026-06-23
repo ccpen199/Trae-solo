@@ -16,8 +16,14 @@ import {
   Shield,
   Archive,
   Sparkles,
+  BarChart3,
+  Activity,
+  AlertTriangle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAdminStore } from "@/stores/admin.store";
+import { cn } from "@/lib/utils";
 
 const categories = [
   {
@@ -87,28 +93,7 @@ const processSteps = [
   },
 ];
 
-const stats = [
-  {
-    icon: MessageSquare,
-    value: "12,847+",
-    label: "累计咨询",
-  },
-  {
-    icon: Users,
-    value: "326+",
-    label: "服务律师",
-  },
-  {
-    icon: Star,
-    value: "98.6%",
-    label: "满意度",
-  },
-  {
-    icon: Clock,
-    value: "15分钟",
-    label: "平均响应",
-  },
-];
+
 
 const lawyers = [
   {
@@ -159,8 +144,65 @@ const stagger = {
   },
 };
 
+function getSaturationColor(saturation: number) {
+  if (saturation >= 85) return { bg: "bg-red-500/20", text: "text-red-400", icon: AlertTriangle };
+  if (saturation >= 60) return { bg: "bg-accent-gold/20", text: "text-accent-gold", icon: Activity };
+  return { bg: "bg-emerald-500/20", text: "text-emerald-400", icon: Activity };
+}
+
+function getSaturationStatus(saturation: number) {
+  if (saturation >= 85) return "过载";
+  if (saturation >= 60) return "饱和";
+  return "正常";
+}
+
 export default function HomePage() {
   const navigate = useNavigate();
+  const { monitorStats, fetchMonitorStats } = useAdminStore();
+
+  useEffect(() => {
+    fetchMonitorStats();
+  }, [fetchMonitorStats]);
+
+  const baseStats = [
+    {
+      icon: MessageSquare,
+      value: "12,847+",
+      label: "累计咨询",
+      isRegulatory: false,
+    },
+    {
+      icon: Users,
+      value: "326+",
+      label: "服务律师",
+      isRegulatory: false,
+    },
+    {
+      icon: Star,
+      value: "98.6%",
+      label: "满意度",
+      isRegulatory: false,
+    },
+    {
+      icon: Clock,
+      value: "15分钟",
+      label: "平均响应",
+      isRegulatory: false,
+    },
+    {
+      icon: BarChart3,
+      value: `${monitorStats?.consultationsPerLawyer ?? 8.2} 条/律师`,
+      label: "人均咨询量",
+      isRegulatory: true,
+    },
+    {
+      icon: Activity,
+      value: `${monitorStats?.serviceSaturation ?? 72}%`,
+      label: "服务饱和度",
+      isRegulatory: true,
+      saturation: monitorStats?.serviceSaturation ?? 72,
+    },
+  ];
 
   return (
     <div className="min-h-screen">
@@ -410,25 +452,45 @@ export default function HomePage() {
         <div className="absolute inset-0 pattern-grid opacity-30" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            className="text-center mb-12"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white mb-2">公益数据</h2>
-            <p className="text-sm md:text-base text-white/60">用数据证明我们的专业与温度</p>
+            <div className="text-center sm:text-left">
+              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white mb-2">公益数据</h2>
+              <p className="text-sm md:text-base text-white/60">用数据证明我们的专业与温度</p>
+            </div>
+            <motion.button
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/30 bg-white/10 text-sm font-medium text-white transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5 backdrop-blur-sm mx-auto sm:mx-0"
+              onClick={() => navigate("/admin/monitor")}
+            >
+              <BarChart3 className="w-4 h-4" />
+              查看监管看板
+              <ArrowRight className="w-3.5 h-3.5" />
+            </motion.button>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6"
             variants={stagger}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
           >
-            {stats.map((stat) => {
-              const Icon = stat.icon;
+            {baseStats.map((stat) => {
+              const isSaturation = stat.label === "服务饱和度";
+              const saturationValue = (stat as { saturation?: number }).saturation ?? 72;
+              const saturationStyle = isSaturation ? getSaturationColor(saturationValue) : null;
+              const Icon = isSaturation && saturationStyle ? saturationStyle.icon : stat.icon;
+              const iconBgClass = isSaturation && saturationStyle ? saturationStyle.bg : "bg-accent-gold/20";
+              const iconTextClass = isSaturation && saturationStyle ? saturationStyle.text : "text-accent-gold";
+
               return (
                 <motion.div
                   key={stat.label}
@@ -437,11 +499,22 @@ export default function HomePage() {
                   whileHover={{ y: -4, scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="w-12 h-12 mx-auto rounded-full bg-accent-gold/20 flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-accent-gold" />
+                  <div className={cn("w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4", iconBgClass)}>
+                    <Icon className={cn("w-6 h-6", iconTextClass)} />
                   </div>
                   <p className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">{stat.value}</p>
                   <p className="text-sm text-white/60">{stat.label}</p>
+                  {stat.isRegulatory && (
+                    <div className="mt-3 pt-3 border-t border-white/10">
+                      {isSaturation ? (
+                        <p className={cn("text-xs font-medium", saturationStyle?.text ?? "text-white/50")}>
+                          监管指标 · {getSaturationStatus(saturationValue)}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-white/50">监管指标</p>
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               );
             })}

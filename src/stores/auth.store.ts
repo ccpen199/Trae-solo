@@ -8,11 +8,12 @@ interface AuthState {
   login: (role: UserRole, userId: string) => void;
   logout: () => void;
   switchRole: (role: UserRole) => void;
+  getCurrentUserId: () => string;
 }
 
 const defaultUser = mockUsers[0];
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   currentUser: defaultUser,
   role: 'user',
   login: (role: UserRole, userId: string) => {
@@ -35,5 +36,13 @@ export const useAuthStore = create<AuthState>((set) => ({
       user = mockUsers.find((u) => u.role === 'admin') || null;
     }
     set({ currentUser: user, role });
+  },
+  getCurrentUserId: () => {
+    const { currentUser, role } = get();
+    if (!currentUser) return '';
+    if (role === 'lawyer' && 'userId' in currentUser) {
+      return (currentUser as Lawyer).userId;
+    }
+    return currentUser.id;
   },
 }));

@@ -6,7 +6,13 @@ import type {
   ServiceEvaluation,
   MonitorStats,
   EvidenceFile,
+  ConsultationDraft,
+  DispatchBasis,
+  MatchedLawyer,
+  LegalOpinion,
+  CaseCategory,
 } from '../../types';
+import { getCategoryLabel } from '../../utils/format';
 
 const now = new Date().toISOString();
 const daysAgo = (days: number) => new Date(Date.now() - days * 86400000).toISOString();
@@ -332,6 +338,181 @@ export const mockMonitorStats: MonitorStats = {
   averageRating: 4.7,
   zeroResponseLawyers: 2,
   consultationsPerLawyer: 54.6,
+  serviceSaturation: 72,
   periodStart: daysAgo(7),
   periodEnd: now,
 };
+
+export const mockLegalOpinions: LegalOpinion[] = [
+  {
+    id: 'opinion-1',
+    consultationId: 'consultation-3',
+    lawyerId: 'lawyer-2',
+    title: '交通事故责任认定复核法律意见',
+    caseSummary:
+      '咨询人于上周发生一起交通事故，对交警部门出具的责任认定书存在异议，希望了解申请复核的程序和注意事项。',
+    legalAnalysis:
+      '根据《道路交通事故处理程序规定》第七十一条，当事人对道路交通事故认定或者出具道路交通事故证明有异议的，可以自道路交通事故认定书或者道路交通事故证明送达之日起三日内提出书面复核申请。复核申请应当载明复核请求及其理由和主要证据。同一事故的复核以一次为限。',
+    suggestions:
+      '1. 在收到认定书之日起3日内向上一级公安机关交通管理部门提出书面复核申请；2. 准备能够支持您主张的证据材料，如现场照片、行车记录仪视频、证人证言等；3. 复核申请书中需明确指出原认定书中存在的事实认定错误或法律适用错误；4. 如复核结果仍不满意，可在后续诉讼中请求法院不予采信该事故认定书。',
+    relatedLaws: [
+      '《道路交通事故处理程序规定》第七十一条、第七十二条、第七十三条',
+      '《中华人民共和国道路交通安全法》第七十三条',
+      '《最高人民法院关于审理道路交通事故损害赔偿案件适用法律若干问题的解释》第二十四条',
+    ],
+    riskAssessment:
+      '如果没有充分的相反证据，复核成功的概率相对较低。建议同时准备好相关证据，以便在后续可能的民事诉讼中维护自身权益。',
+    createdAt: daysAgo(3),
+  },
+];
+
+export const mockDrafts: ConsultationDraft[] = [
+  {
+    id: 'draft-1',
+    userId: 'user-1',
+    draftNumber: 'DR202606150001',
+    category: 'contract',
+    title: '房屋租赁合同纠纷',
+    description: '房东提前收回房屋，拒绝退还押金和剩余租金...',
+    province: '北京市',
+    city: '朝阳区',
+    region: '北京市朝阳区',
+    urgency: 'medium',
+    evidenceFiles: [
+      {
+        id: 'draft-evidence-1',
+        consultationId: 'draft-1',
+        uploaderId: 'user-1',
+        fileName: 'contract-abc.pdf',
+        originalName: '房屋租赁合同.pdf',
+        fileType: 'document',
+        fileSize: 524288,
+        fileUrl: '/mock/evidence/draft-contract.pdf',
+        watermarkEnabled: true,
+        uploadedAt: daysAgo(4),
+      },
+    ],
+    createdAt: daysAgo(4),
+    updatedAt: daysAgo(2),
+  },
+  {
+    id: 'draft-2',
+    userId: 'user-1',
+    draftNumber: 'DR202606180002',
+    category: 'labor',
+    title: '',
+    description: '公司要裁员，N+1赔偿方案是否合理？',
+    province: '北京市',
+    city: '海淀区',
+    urgency: 'high',
+    evidenceFiles: [],
+    createdAt: daysAgo(1),
+    updatedAt: hoursAgo(5),
+  },
+  {
+    id: 'draft-3',
+    userId: 'user-2',
+    draftNumber: 'DR202606170003',
+    category: 'debt',
+    title: '信用卡逾期协商',
+    description: '',
+    province: '上海市',
+    city: '浦东新区',
+    evidenceFiles: [],
+    createdAt: daysAgo(2),
+    updatedAt: daysAgo(2),
+  },
+];
+
+function generateMatchedLawyers(category: CaseCategory, region?: string): MatchedLawyer[] {
+  const approved = mockLawyers.filter((l) => l.verifyStatus === 'approved');
+  return approved
+    .map((lawyer) => {
+      const hasSpecialty = lawyer.specialties.includes(category);
+      let score = hasSpecialty ? 60 + Math.floor(Math.random() * 30) : 30 + Math.floor(Math.random() * 30);
+      if (region && lawyer.firmName.includes(region.slice(0, 2))) {
+        score += 10;
+      }
+      return {
+        lawyerId: lawyer.id,
+        name: lawyer.firmName.startsWith('北京') ? '李淑芬' : lawyer.firmName.startsWith('上海') ? '王建国' : '陈雨晴',
+        firmName: lawyer.firmName,
+        specialty: lawyer.specialties,
+        specialtyLabels: lawyer.specialties.map((s) => getCategoryLabel(s)),
+        matchScore: Math.min(score, 98),
+        practiceYears: lawyer.practiceYears,
+        averageRating: lawyer.averageRating,
+        consultationCount: lawyer.consultationCount,
+        region: lawyer.firmName.slice(0, 2) + '市',
+      };
+    })
+    .sort((a, b) => b.matchScore - a.matchScore)
+    .slice(0, 3);
+}
+
+export function generateDispatchBasis(consultation: Consultation): DispatchBasis {
+  const specialtyMatches = [
+    {
+      category: consultation.category,
+      label: getCategoryLabel(consultation.category),
+      score: 85 + Math.floor(Math.random() * 15),
+    },
+  ];
+
+  const recommendedLawyers = generateMatchedLawyers(consultation.category, consultation.region);
+  const regionMatch = consultation.region
+    ? recommendedLawyers.some((l) => l.region?.includes(consultation.region.slice(0, 2)))
+    : false;
+
+  const overallScore = Math.round(
+    (specialtyMatches.reduce((sum, s) => sum + s.score, 0) / specialtyMatches.length) * 0.6 +
+      (regionMatch ? 90 : 50) * 0.2 +
+      (recommendedLawyers[0]?.matchScore || 60) * 0.2
+  );
+
+  return {
+    caseCategoryMatch: true,
+    caseCategoryLabel: getCategoryLabel(consultation.category),
+    regionMatch,
+    regionLabel: consultation.region,
+    specialtyMatches,
+    overallScore,
+    recommendedLawyers,
+  };
+}
+
+export const mockConsultationsWithExtra: Consultation[] = mockConsultations.map((c) => {
+  const extra: Partial<Consultation> = {};
+
+  if (c.id === 'consultation-2') {
+    extra.dispatchBasis = generateDispatchBasis(c);
+    extra.lastMessage = '正在为您匹配最合适的婚姻家庭律师...';
+    extra.lastMessageTime = hoursAgo(5);
+  }
+  if (c.id === 'consultation-4') {
+    extra.dispatchBasis = generateDispatchBasis(c);
+    extra.lastMessage = '系统已找到3位匹配律师，请查看详情';
+    extra.lastMessageTime = hoursAgo(2);
+    extra.hasUnread = true;
+    extra.unreadCount = 1;
+  }
+  if (c.id === 'consultation-1') {
+    extra.lastMessage = '李律师：建议您先收集劳动合同、考勤记录、工资条等证据材料...';
+    extra.lastMessageTime = hoursAgo(12);
+    extra.hasUnread = true;
+    extra.unreadCount = 2;
+  }
+  if (c.id === 'consultation-5') {
+    extra.dispatchBasis = generateDispatchBasis(c);
+    extra.lastMessage = '已为您匹配李淑芬律师，可开始咨询';
+    extra.lastMessageTime = hoursAgo(8);
+  }
+  if (c.id === 'consultation-3') {
+    extra.lastMessage = '王律师：如果后续还有问题，随时可以咨询。祝您顺利！';
+    extra.lastMessageTime = daysAgo(3);
+    extra.evaluation = mockEvaluations.find((e) => e.consultationId === 'consultation-3');
+    extra.legalOpinion = mockLegalOpinions.find((o) => o.consultationId === 'consultation-3');
+  }
+
+  return { ...c, ...extra };
+});

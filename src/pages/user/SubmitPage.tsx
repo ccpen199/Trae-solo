@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Mic,
@@ -15,8 +15,13 @@ import {
   Send,
   MapPin,
   Tag,
+  FileEdit,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useConsultationStore } from "../../stores/consultation.store";
+import { useAuthStore } from "../../stores/auth.store";
+import { toast } from "../../components/ui/Toast";
+import type { CaseCategory, UrgencyLevel, EvidenceFile, ConsultationDraft } from "../../types";
 
 const categoryOptions = [
   { value: "marriage", label: "婚姻家庭" },
@@ -100,11 +105,34 @@ interface UploadedFile {
 interface FormErrors {
   content?: string;
   category?: string;
+  province?: string;
+  city?: string;
 }
+
+const urgencyToLevel = (val: number): UrgencyLevel => {
+  if (val === 1) return 'low';
+  if (val === 3) return 'high';
+  return 'medium';
+};
+
+const urgencyFromLevel = (level: UrgencyLevel | undefined): number => {
+  if (level === 'low') return 1;
+  if (level === 'high') return 3;
+  return 2;
+};
+
+const urgencyReverseMap: Record<UrgencyLevel, number> = {
+  low: 1,
+  medium: 2,
+  high: 3,
+};
 
 export default function SubmitPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { createDraft, updateDraft, getDraftById, createConsultation } = useConsultationStore();
+  const { getCurrentUserId } = useAuthStore();
 
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
@@ -120,8 +148,48 @@ export default function SubmitPage() {
   const [isDragging, setIsDragging] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [currentDraftId, setCurrentDraftId] = useState<string | null>(null);
+  const [currentDraftNo, setCurrentDraftNo] = useState<string | null>(null);
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
 
   const maxLength = 2000;
+
+  useEffect(() => {
+    const draftId = searchParams.get("draftId");
+    if (draftId && !isDraftLoaded) {
+      const draft = getDraftById(draftId);
+      if (draft) {
+        setContent(draft.description);
+        setCategory(draft.category);
+        if (draft.region) {
+          const parts = draft.region.split("-");
+          setProvince(parts[0]);
+          if (parts[1]) setCity(parts[1]);
+        }
+        setUrgency(urgencyReverseMap[draft.urgency] || 1);
+        const files: UploadedFile[] = draft.evidenceFiles.map((f) => ({
+          id: f.id,
+          name: f.originalName,
+          type: f.fileType === "image" ? "image" : "document",
+          size: f.fileSize.toString(),
+          preview: f.fileUrl || undefined,
+        }));
+        setUploadedFiles(files);
+        setCurrentDraftId(draftId);
+        setCurrentDraftNo(draft.draftNumber);
+        toast.success(`已恢复草稿：${draft.draftNumber}`);
+      }
+      setIsDraftLoaded(true);
+    }
+  }, [searchParams, getDraftById, isDraftLoaded]);
+
+  const validateDraftSave = (): boolean => {
+    const hasEnoughContent = content.trim().length >= 10;
+    const hasCategory = !!category;
+    const hasProvince = !!province;
+    const hasFiles = uploadedFiles.length > 0;
+    return hasEnoughContent || hasCategory || hasProvince || hasFiles;
+  };
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -200,20 +268,107 @@ export default function SubmitPage() {
     if (!category) {
       newErrors.category = "请选择案由分类";
     }
+    if (!province) {
+      newErrors.province = "请选择所在省份";
+    }
+    if (!city) {
+      newErrors.city = "请选择所在城市";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = () => {
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      toast.error("请完整填写必填项后提交");
+      return;
+    }
+    const userId = getCurrentUserId();
+    const evidenceFiles: EvidenceFile[] = uploadedFiles.map((f, i) => ({
+      id: `evidence-${Date.now()}-${i}`,
+      consultationId: '',
+      uploaderId: userId,
+      fileName: f.name,
+      originalName: f.name,
+      fileType: f.type === 'image' ? 'image' : 'document',
+      fileSize: parseInt(f.size) || 0,
+      fileUrl: f.preview || '',
+      watermarkEnabled: true,
+      uploadedAt: new Date().toISOString(),
+    }));
+
+    createConsultation({
+      userId,
+      title: content.slice(0, 30),
+      description: content,
+      category: category as CaseCategory,
+      province,
+      city,
+      region: province && city ? `${province}-${city}` : undefined,
+      urgency: urgencyToLevel(urgency),
+      evidenceFiles,
+    });
+
+    if (currentDraftId) {
+      const { deleteDraft } = useConsultationStore.getState();
+      deleteDraft(currentDraftId);
+    }
+
     setShowSuccess(true);
+    toast.success("提交成功！正在为您匹配律师...");
     setTimeout(() => {
       navigate("/consultations");
     }, 1500);
   };
 
   const handleSaveDraft = () => {
-    alert("草稿已保存！");
+    if (!validateDraftSave()) {
+      toast.warning("请至少填写一项内容后再保存草稿");
+      return;
+    }
+    const userId = getCurrentUserId();
+    const evidenceFiles: EvidenceFile[] = uploadedFiles.map((f, i) => ({
+      id: `evidence-${Date.now()}-${i}`,
+      consultationId: '',
+      uploaderId: userId,
+      fileName: f.name,
+      originalName: f.name,
+      fileType: f.type === 'image' ? 'image' : 'document',
+      fileSize: parseInt(f.size) || 0,
+      fileUrl: f.preview || '',
+      watermarkEnabled: true,
+      uploadedAt: new Date().toISOString(),
+    }));
+
+    let saved: ConsultationDraft;
+    if (currentDraftId) {
+      updateDraft(currentDraftId, {
+        description: content,
+        category: (category as CaseCategory) || undefined,
+        province,
+        city,
+        region: province && city ? `${province}-${city}` : undefined,
+        urgency: urgencyToLevel(urgency),
+        evidenceFiles,
+      });
+      const updated = getDraftById(currentDraftId);
+      saved = updated!;
+    } else {
+      saved = createDraft({
+        userId,
+        title: content.slice(0, 30) || undefined,
+        description: content,
+        category: (category as CaseCategory) || undefined,
+        province,
+        city,
+        region: province && city ? `${province}-${city}` : undefined,
+        urgency: urgencyToLevel(urgency),
+        evidenceFiles,
+      });
+    }
+    setCurrentDraftId(saved.id);
+    setCurrentDraftNo(saved.draftNumber);
+    toast.success(`草稿已保存，编号：${saved.draftNumber}`);
   };
 
   return (
@@ -225,9 +380,21 @@ export default function SubmitPage() {
           transition={{ duration: 0.5 }}
         >
           <div className="text-center mb-8">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-primary-800 mb-2">
-              提交法律咨询
-            </h1>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-primary-800">
+                提交法律咨询
+              </h1>
+              {currentDraftNo && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-white text-sm font-medium shadow-md"
+                >
+                  <FileEdit className="w-3.5 h-3.5" />
+                  {currentDraftNo}
+                </motion.div>
+              )}
+            </div>
             <p className="text-primary-500">
               请详细描述您遇到的法律问题，我们将为您匹配最合适的公益律师
             </p>
@@ -403,7 +570,7 @@ export default function SubmitPage() {
 
                 <div className="relative">
                   <label className="block text-sm font-medium text-primary-700 mb-2">
-                    所在省份
+                    所在省份 <span className="text-red-500">*</span>
                   </label>
                   <button
                     type="button"
@@ -412,7 +579,9 @@ export default function SubmitPage() {
                       setCategoryOpen(false);
                       setCityOpen(false);
                     }}
-                    className="input-base text-left flex items-center justify-between"
+                    className={`input-base text-left flex items-center justify-between ${
+                      errors.province ? "border-red-400" : ""
+                    }`}
                   >
                     <span className={province ? "text-primary-900" : "text-primary-400"}>
                       {province ? provinceOptions.find((p) => p.value === province)?.label : "请选择省份"}
@@ -435,6 +604,7 @@ export default function SubmitPage() {
                               setProvince(opt.value);
                               setCity("");
                               setProvinceOpen(false);
+                              if (errors.province) setErrors({ ...errors, province: undefined });
                             }}
                             className={`w-full px-4 py-2.5 text-left text-sm hover:bg-primary-50 transition-colors flex items-center justify-between ${
                               province === opt.value ? "bg-primary-50 text-accent-gold-dark font-medium" : "text-primary-700"
@@ -447,11 +617,17 @@ export default function SubmitPage() {
                       </motion.div>
                     )}
                   </AnimatePresence>
+                  {errors.province && (
+                    <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.province}
+                    </p>
+                  )}
                 </div>
 
                 <div className="relative">
                   <label className="block text-sm font-medium text-primary-700 mb-2">
-                    所在城市
+                    所在城市 <span className="text-red-500">*</span>
                   </label>
                   <button
                     type="button"
@@ -464,7 +640,7 @@ export default function SubmitPage() {
                     }}
                     className={`input-base text-left flex items-center justify-between ${
                       !province ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    } ${errors.city ? "border-red-400" : ""}`}
                     disabled={!province}
                   >
                     <span className={city ? "text-primary-900" : "text-primary-400"}>
@@ -491,6 +667,7 @@ export default function SubmitPage() {
                             onClick={() => {
                               setCity(opt.value);
                               setCityOpen(false);
+                              if (errors.city) setErrors({ ...errors, city: undefined });
                             }}
                             className={`w-full px-4 py-2.5 text-left text-sm hover:bg-primary-50 transition-colors flex items-center justify-between ${
                               city === opt.value ? "bg-primary-50 text-accent-gold-dark font-medium" : "text-primary-700"
@@ -503,6 +680,12 @@ export default function SubmitPage() {
                       </motion.div>
                     )}
                   </AnimatePresence>
+                  {errors.city && (
+                    <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.city}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -666,10 +849,17 @@ export default function SubmitPage() {
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="btn-outline px-6 py-3"
+                className="btn-outline px-6 py-3 relative overflow-hidden"
               >
-                <Save className="w-4 h-4 mr-2" />
-                保存草稿
+                <div className="flex items-center gap-2">
+                  <Save className="w-4 h-4" />
+                  {currentDraftId ? "更新草稿" : "保存草稿"}
+                  {currentDraftId && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gradient-to-r from-amber-400 to-amber-500 text-white">
+                      {currentDraftId}
+                    </span>
+                  )}
+                </div>
               </button>
               <button
                 type="button"
