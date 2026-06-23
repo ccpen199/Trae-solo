@@ -1,0 +1,27 @@
+{
+  "name": "mortgage-finance-platform-backend",
+  "version": "1.0.0",
+  "description": "购房者金融决策支持平台 - 后端服务",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "node --watch dist/index.js"
+  },
+  "keywords": [
+    "mortgage",
+    "tax",
+    "finance",
+    "calculator"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "pdfmake": "^0.2.10",
+    "zod": "^3.23.8"
+  }
+}
