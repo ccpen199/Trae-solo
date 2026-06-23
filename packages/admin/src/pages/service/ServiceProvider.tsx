@@ -399,24 +399,30 @@ export default function ServiceProvider() {
         open={trailOpen}
         onClose={() => setTrailOpen(false)}
       >
-        <Timeline
-          items={(mockAuditTrail[trailItem?.id] || [
+        {(() => {
+          const baseTrail = mockAuditTrail[trailItem?.id as string];
+          const trail = baseTrail || [
             { time: trailItem?.applyTime, operator: '系统', fromStatus: '-', toStatus: 'PENDING', remark: '服务商提交入驻申请' },
-            ...(trailItem?.auditTime ? [{ time: trailItem.auditTime, operator: '李物业', fromStatus: 'PENDING', toStatus: trailItem.auditStatus, remark: trailItem.auditRemark || '审核完成' }] : []),
-          ]).map((t: any, i: number) => ({
-            color: ['blue', ...(t.toStatus === 'APPROVED' ? ['success'] : t.toStatus === 'REJECTED' ? ['red'] : t.toStatus === 'SUSPENDED' ? ['gray'] : ['cyan'])][i] || 'blue',
-            children: (
-              <div>
-                <Space wrap>
-                  <Text strong>{t.operator}</Text>
-                  <Tag color="default" style={{ fontSize: 11 }}>{t.fromStatus || '-'} → {t.toStatus}</Tag>
-                </Space>
-                <div style={{ marginTop: 4, fontSize: 13, color: '#475569' }}>{t.remark}</div>
-                <Text type="secondary" style={{ fontSize: 11, display: 'block', marginTop: 4 }}>{t.time}</Text>
-              </div>
-            ),
-          })))}
-        />
+            ...(trailItem?.auditTime ? [{ time: trailItem.auditTime, operator: '李物业', fromStatus: 'PENDING', toStatus: trailItem.auditStatus as string, remark: (trailItem.auditRemark as string) || '审核完成' }] : []),
+          ];
+          const items = trail.map((t: any, i: number) => {
+            const nextColor = t.toStatus === 'APPROVED' ? 'success' : t.toStatus === 'REJECTED' ? 'red' : t.toStatus === 'SUSPENDED' ? 'gray' : 'cyan';
+            return {
+              color: i === 0 ? 'blue' : nextColor,
+              children: (
+                <div>
+                  <Space wrap>
+                    <Text strong>{t.operator}</Text>
+                    <Tag color="default" style={{ fontSize: 11 }}>{t.fromStatus || '-'} → {t.toStatus}</Tag>
+                  </Space>
+                  <div style={{ marginTop: 4, fontSize: 13, color: '#475569' }}>{t.remark}</div>
+                  <Text type="secondary" style={{ fontSize: 11, display: 'block', marginTop: 4 }}>{t.time}</Text>
+                </div>
+              ),
+            };
+          });
+          return <Timeline items={items} />;
+        })()}
       </Drawer>
 
       <ModalForm
