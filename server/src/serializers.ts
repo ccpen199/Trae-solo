@@ -1,75 +1,39 @@
 import { Request } from 'express';
 
 export function toClientDeviceType(type: string): string {
-  const map: Record<string, string> = {
-    washer: 'washing_machine',
-    water_dispenser: 'water_purifier',
-    shower: 'shower',
-  };
-  return map[type] || type;
+  return type;
 }
 
 export function toDbDeviceType(type: unknown): string | undefined {
   if (!type || typeof type !== 'string' || type === 'all') return undefined;
-  const map: Record<string, string> = {
-    washing_machine: 'washer',
-    water_purifier: 'water_dispenser',
-    shower: 'shower',
-    washer: 'washer',
-    water_dispenser: 'water_dispenser',
-  };
-  return map[type] || type;
+  return type;
 }
 
 export function toClientDeviceStatus(status: string): string {
-  const map: Record<string, string> = {
-    running: 'in_use',
-    fault: 'maintenance',
-  };
-  return map[status] || status;
+  return status;
 }
 
 export function toDbDeviceStatus(status: unknown): string | undefined {
   if (!status || typeof status !== 'string' || status === 'all') return undefined;
-  const map: Record<string, string> = {
-    in_use: 'running',
-    maintenance: 'fault',
-  };
-  return map[status] || status;
+  return status;
 }
 
 export function toClientOrderStatus(status: string): string {
-  const map: Record<string, string> = {
-    active: 'in_progress',
-  };
-  return map[status] || status;
+  return status;
 }
 
 export function toDbOrderStatus(status: unknown): string | undefined {
   if (!status || typeof status !== 'string' || status === 'all') return undefined;
-  const map: Record<string, string> = {
-    in_progress: 'active',
-    paid: 'pending',
-  };
-  return map[status] || status;
+  return status;
 }
 
 export function toClientWorkOrderStatus(status: string): string {
-  const map: Record<string, string> = {
-    pending: 'open',
-    assigned: 'open',
-    processing: 'in_progress',
-  };
-  return map[status] || status;
+  return status;
 }
 
 export function toDbWorkOrderStatus(status: unknown): string | undefined {
   if (!status || typeof status !== 'string' || status === 'all') return undefined;
-  const map: Record<string, string> = {
-    open: 'pending',
-    in_progress: 'processing',
-  };
-  return map[status] || status;
+  return status;
 }
 
 export function parsePage(req: Request): { page: number; pageSize: number } {
@@ -90,8 +54,8 @@ export function serializeDevice(device: any) {
     status,
     isOnline: Boolean(device.isOnline),
     qrCode: `device://${device.id}`,
-    currentUser: status === 'in_use' ? '使用中用户' : undefined,
-    estimatedEndTime: status === 'in_use' ? new Date(Date.now() + 20 * 60 * 1000).toISOString() : undefined,
+    currentUser: status === 'running' ? '使用中用户' : undefined,
+    estimatedEndTime: status === 'running' ? new Date(Date.now() + 20 * 60 * 1000).toISOString() : undefined,
     createdAt: device.createdAt || device.lastHeartbeat || new Date().toISOString(),
   };
 }
@@ -101,8 +65,8 @@ export function serializeDeviceStatus(device: any) {
   return {
     deviceId: device.id,
     status,
-    remainingMinutes: status === 'in_use' ? 20 : undefined,
-    currentUser: status === 'in_use' ? '使用中用户' : undefined,
+    remainingMinutes: status === 'running' ? 20 : undefined,
+    currentUser: status === 'running' ? '使用中用户' : undefined,
     lastHeartbeat: device.lastHeartbeat || new Date().toISOString(),
   };
 }

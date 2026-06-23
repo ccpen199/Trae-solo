@@ -205,6 +205,33 @@ export interface WorkOrderSummary {
   byPriority: Record<string, number>;
 }
 
+export interface DeviceCommand {
+  deviceId: string;
+  command: string;
+  params?: Record<string, any>;
+}
+
+export interface Reward {
+  id: string;
+  name: string;
+  description: string;
+  points: number;
+  imageUrl?: string;
+  stock: number;
+}
+
+export interface Coupon {
+  id: string;
+  userId: string;
+  name: string;
+  type: CouponType;
+  value: number;
+  minAmount: number;
+  expireAt: string;
+  isUsed: boolean;
+  discount?: number;
+}
+
 export interface ApiResponse<T = any> {
   code: number;
   message: string;

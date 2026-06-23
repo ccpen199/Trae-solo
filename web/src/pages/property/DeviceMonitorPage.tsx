@@ -1,54 +1,91 @@
 import { useState, useEffect } from 'react';
-import { deviceApi } from '../../api';
+import { deviceApi, workorderApi } from '../../api';
 import type { Device } from '../../types';
 
 const statusMap: Record<string, { label: string; color: string; bg: string; dot: string }> = {
   idle: { label: '空闲', color: 'text-green-600', bg: 'bg-green-50', dot: 'bg-green-500' },
-  in_use: { label: '使用中', color: 'text-blue-600', bg: 'bg-blue-50', dot: 'bg-blue-500' },
+  running: { label: '使用中', color: 'text-blue-600', bg: 'bg-blue-50', dot: 'bg-blue-500' },
   reserved: { label: '已预约', color: 'text-orange-600', bg: 'bg-orange-50', dot: 'bg-orange-500' },
-  maintenance: { label: '维护中', color: 'text-yellow-600', bg: 'bg-yellow-50', dot: 'bg-yellow-500' },
+  fault: { label: '故障', color: 'text-red-600', bg: 'bg-red-50', dot: 'bg-red-500' },
   offline: { label: '离线', color: 'text-gray-500', bg: 'bg-gray-100', dot: 'bg-gray-400' }
 };
 
 const typeIconMap: Record<string, string> = {
-  washing_machine: '🧺',
-  water_purifier: '💧',
+  washer: '🧺',
+  water_dispenser: '💧',
   shower: '🚿'
+};
+
+const typeLabelMap: Record<string, string> = {
+  washer: '洗衣机',
+  water_dispenser: '饮水机',
+  shower: '淋浴'
 };
 
 const DeviceMonitorPage = () => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterType, setFilterType] = useState<string>('all');
   const [search, setSearch] = useState('');
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   useEffect(() => {
     loadDevices();
-  }, [filterStatus]);
+  }, [filterStatus, filterType]);
 
   const loadDevices = async () => {
     setLoading(true);
     try {
       const res = await deviceApi.getList({
         status: filterStatus !== 'all' ? filterStatus : undefined,
-        pageSize: 100
+        type: filterType !== 'all' ? filterType : undefined,
+        pageSize: 200
       });
-      setDevices(res.items);
+      setDevices(res.items || []);
     } catch (error) {
       console.error('加载设备列表失败', error);
+      alert('加载设备列表失败');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSendCommand = async (deviceId: string, command: string) => {
-    if (!confirm(`确认向设备发送 ${command} 命令？`)) return;
+  const handleSendCommand = async (deviceId: string, command: 'start' | 'stop' | 'restart') => {
+    const commandLabel = command === 'start' ? '启动' : command === 'stop' ? '停止' : '重启';
+    if (!confirm(`确认向设备发送【${commandLabel}】命令？`)) return;
+    setActionLoading(`${deviceId}-${command}`);
     try {
-      await deviceApi.sendCommand({ deviceId, command: command as any });
-      alert('命令发送成功');
+      await deviceApi.sendCommand(deviceId, command);
+      alert(`【${commandLabel}】命令发送成功`);
+      loadDevices();
     } catch (error) {
-      alert('命令发送失败');
+      alert(`【${commandLabel}】命令发送失败`);
+    } finally {
+      setActionLoading(null);
     }
+  };
+
+  const handleMarkFault = async (device: Device) => {
+    if (!confirm(`确认将设备【${device.name}】标记为故障并创建报修工单？`)) return;
+    setActionLoading(`${device.id}-fault`);
+    try {
+      await workorderApi.create({
+        description: `${device.name} 故障报修\n设备【${device.name}】（${device.location}）被物业标记为故障，需要维修。`,
+        deviceId: device.id,
+        priority: 'high'
+      });
+      alert('故障标记成功，已创建报修工单');
+      loadDevices();
+    } catch (error) {
+      alert('故障标记失败');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleViewDetail = (device: Device) => {
+    alert(`设备详情：\n名称：${device.name}\n类型：${typeLabelMap[device.type] || device.type}\n位置：${device.location}\n状态：${statusMap[device.status]?.label || device.status}\n最后心跳：${device.lastHeartbeat ? new Date(device.lastHeartbeat).toLocaleString('zh-CN') : '无记录'}`);
   };
 
   const filteredDevices = devices.filter(
@@ -79,19 +116,43 @@ const DeviceMonitorPage = () => {
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6 flex-wrap">
+      <div className="flex gap-2 mb-4 flex-wrap">
+        <span className="text-sm text-gray-500 self-center mr-2">状态：</span>
         {[
           { value: 'all', label: '全部' },
           { value: 'idle', label: '空闲' },
-          { value: 'in_use', label: '使用中' },
-          { value: 'maintenance', label: '维护中' },
+          { value: 'running', label: '使用中' },
+          { value: 'reserved', label: '已预约' },
+          { value: 'fault', label: '故障' },
           { value: 'offline', label: '离线' }
         ].map((item) => (
           <button
             key={item.value}
             onClick={() => setFilterStatus(item.value)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               filterStatus === item.value
+                ? 'bg-primary-500 text-white'
+                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex gap-2 mb-6 flex-wrap">
+        <span className="text-sm text-gray-500 self-center mr-2">类型：</span>
+        {[
+          { value: 'all', label: '全部' },
+          { value: 'washer', label: '洗衣机' },
+          { value: 'water_dispenser', label: '饮水机' },
+          { value: 'shower', label: '淋浴' }
+        ].map((item) => (
+          <button
+            key={item.value}
+            onClick={() => setFilterType(item.value)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              filterType === item.value
                 ? 'bg-primary-500 text-white'
                 : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
             }`}
@@ -103,6 +164,11 @@ const DeviceMonitorPage = () => {
 
       {loading ? (
         <div className="text-center py-12 text-gray-400">加载中...</div>
+      ) : filteredDevices.length === 0 ? (
+        <div className="bg-white rounded-xl p-12 text-center shadow-sm">
+          <div className="text-5xl mb-3">📱</div>
+          <p className="text-gray-400">暂无设备数据</p>
+        </div>
       ) : (
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
@@ -110,15 +176,17 @@ const DeviceMonitorPage = () => {
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
                   <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">设备</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">类型</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">在线状态</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">运行状态</th>
                   <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">位置</th>
-                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">状态</th>
-                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">当前用户</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">最后心跳</th>
                   <th className="text-left px-6 py-4 text-sm font-medium text-gray-500">操作</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredDevices.map((device) => {
-                  const status = statusMap[device.status];
+                  const status = statusMap[device.status] || statusMap.offline;
                   return (
                     <tr key={device.id} className="border-b border-gray-50 hover:bg-gray-50">
                       <td className="px-6 py-4">
@@ -132,29 +200,60 @@ const DeviceMonitorPage = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{device.location}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">
+                        {typeLabelMap[device.type] || device.type}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center text-sm ${device.isOnline ? 'text-green-600' : 'text-gray-400'}`}>
+                          <span className={`w-2 h-2 rounded-full mr-2 ${device.isOnline ? 'bg-green-500 animate-pulse' : 'bg-gray-300'}`} />
+                          {device.isOnline ? '在线' : '离线'}
+                        </span>
+                      </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${status.bg} ${status.color}`}>
                           <span className={`w-1.5 h-1.5 ${status.dot} rounded-full mr-1.5`} />
                           {status.label}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
-                        {device.currentUser || '-' }
+                      <td className="px-6 py-4 text-sm text-gray-600">{device.location}</td>
+                      <td className="px-6 py-4 text-xs text-gray-400">
+                        {device.lastHeartbeat ? new Date(device.lastHeartbeat).toLocaleString('zh-CN') : '-'}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-wrap">
                           <button
-                            onClick={() => handleSendCommand(device.id, 'restart')}
-                            className="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition-colors"
+                            onClick={() => handleSendCommand(device.id, 'start')}
+                            disabled={actionLoading !== null}
+                            className="px-3 py-1 text-xs bg-green-50 text-green-600 rounded hover:bg-green-100 transition-colors disabled:opacity-50"
                           >
-                            重启
+                            {actionLoading === `${device.id}-start` ? '发送中...' : '启动'}
                           </button>
                           <button
-                            onClick={() => handleSendCommand(device.id, device.status === 'maintenance' ? 'unlock' : 'lock')}
-                            className="px-3 py-1 text-xs bg-yellow-50 text-yellow-600 rounded hover:bg-yellow-100 transition-colors"
+                            onClick={() => handleSendCommand(device.id, 'stop')}
+                            disabled={actionLoading !== null}
+                            className="px-3 py-1 text-xs bg-yellow-50 text-yellow-600 rounded hover:bg-yellow-100 transition-colors disabled:opacity-50"
                           >
-                            {device.status === 'maintenance' ? '解锁' : '维护'}
+                            {actionLoading === `${device.id}-stop` ? '发送中...' : '停止'}
+                          </button>
+                          <button
+                            onClick={() => handleSendCommand(device.id, 'restart')}
+                            disabled={actionLoading !== null}
+                            className="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition-colors disabled:opacity-50"
+                          >
+                            {actionLoading === `${device.id}-restart` ? '发送中...' : '重启'}
+                          </button>
+                          <button
+                            onClick={() => handleMarkFault(device)}
+                            disabled={actionLoading !== null || device.status === 'fault'}
+                            className="px-3 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors disabled:opacity-50"
+                          >
+                            {actionLoading === `${device.id}-fault` ? '处理中...' : '标记故障'}
+                          </button>
+                          <button
+                            onClick={() => handleViewDetail(device)}
+                            className="px-3 py-1 text-xs bg-gray-50 text-gray-600 rounded hover:bg-gray-100 transition-colors"
+                          >
+                            详情
                           </button>
                         </div>
                       </td>
@@ -164,9 +263,6 @@ const DeviceMonitorPage = () => {
               </tbody>
             </table>
           </div>
-          {filteredDevices.length === 0 && (
-            <div className="text-center py-12 text-gray-400">暂无设备数据</div>
-          )}
         </div>
       )}
     </div>

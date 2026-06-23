@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth';
 import { authApi } from '../api';
 
+const PHONE_REGEX = /^1\d{10}$/;
+const CODE_REGEX = /^\d{6}$/;
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -11,10 +14,28 @@ const LoginPage = () => {
   const [countdown, setCountdown] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const validatePhone = (phoneNum: string): string | null => {
+    if (!phoneNum.trim()) return '请输入手机号';
+    if (!PHONE_REGEX.test(phoneNum)) return '手机号格式错误，需为11位数字';
+    return null;
+  };
+
+  const validateCode = (codeStr: string): string | null => {
+    if (!codeStr.trim()) return '请输入验证码';
+    if (!CODE_REGEX.test(codeStr)) return '验证码格式错误，需为6位数字';
+    return null;
+  };
+
   const handleSendCode = async () => {
-    if (!phone || countdown > 0) return;
+    if (countdown > 0) return;
+    const phoneError = validatePhone(phone);
+    if (phoneError) {
+      alert(phoneError);
+      return;
+    }
     try {
       await authApi.sendCode(phone);
+      alert('验证码已发送');
       setCountdown(60);
       const timer = setInterval(() => {
         setCountdown((prev) => {
@@ -25,14 +46,21 @@ const LoginPage = () => {
           return prev - 1;
         });
       }, 1000);
-    } catch (error) {
-      alert('发送验证码失败');
+    } catch (error: any) {
+      const msg = error.response?.data?.message || '发送验证码失败';
+      alert(msg);
     }
   };
 
   const handleLogin = async () => {
-    if (!phone || !code) {
-      alert('请输入手机号和验证码');
+    const phoneError = validatePhone(phone);
+    if (phoneError) {
+      alert(phoneError);
+      return;
+    }
+    const codeError = validateCode(code);
+    if (codeError) {
+      alert(codeError);
       return;
     }
     setLoading(true);
@@ -40,14 +68,15 @@ const LoginPage = () => {
       const res = await authApi.login({ phone, code });
       login(res.token, res.user);
       if (res.user.role === 'property') {
-        navigate('/property/dashboard');
+        navigate('/property/dashboard', { replace: true });
       } else if (res.user.role === 'operator') {
-        navigate('/operator/dashboard');
+        navigate('/operator/dashboard', { replace: true });
       } else {
-        navigate('/home');
+        navigate('/home', { replace: true });
       }
-    } catch (error) {
-      alert('登录失败');
+    } catch (error: any) {
+      const msg = error.response?.data?.message || '登录失败，请稍后重试';
+      alert(msg);
     } finally {
       setLoading(false);
     }
@@ -72,9 +101,9 @@ const LoginPage = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">手机号</label>
               <input
                 type="tel"
-                placeholder="请输入手机号"
+                placeholder="请输入11位手机号"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                 maxLength={11}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
               />
@@ -85,9 +114,9 @@ const LoginPage = () => {
               <div className="flex gap-3">
                 <input
                   type="text"
-                  placeholder="请输入验证码"
+                  placeholder="请输入6位验证码"
                   value={code}
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
                   maxLength={6}
                   className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
                 />
@@ -114,8 +143,9 @@ const LoginPage = () => {
             </button>
           </div>
 
-          <div className="mt-6 text-center text-xs text-gray-400">
-            <p>测试账号：13800138002居民 / 13800138001物业 / 13800138000运营，验证码任意6位</p>
+          <div className="mt-6 text-center text-xs text-gray-500 space-y-1">
+            <p>测试账号：13800138002 居民 / 13800138001 物业 / 13800138000 运营</p>
+            <p>验证码：123456</p>
           </div>
         </div>
       </div>

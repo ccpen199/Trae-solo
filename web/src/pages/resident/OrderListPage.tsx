@@ -1,66 +1,128 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { orderApi } from '../../api';
 import type { Order } from '../../types';
 
-const statusMap: Record<string, { label: string; color: string }> = {
-  pending: { label: '待支付', color: 'text-yellow-600' },
-  paid: { label: '已支付', color: 'text-blue-600' },
-  in_progress: { label: '使用中', color: 'text-green-600' },
-  completed: { label: '已完成', color: 'text-gray-600' },
-  refunded: { label: '已退款', color: 'text-orange-600' },
-  cancelled: { label: '已取消', color: 'text-gray-400' }
+const statusMeta: Record<string, { label: string; color: string; bg: string }> = {
+  pending: { label: '待支付', color: 'text-yellow-600', bg: 'bg-yellow-50' },
+  active: { label: '使用中', color: 'text-green-600', bg: 'bg-green-50' },
+  completed: { label: '已完成', color: 'text-gray-600', bg: 'bg-gray-50' },
+  refunded: { label: '已退款', color: 'text-orange-600', bg: 'bg-orange-50' },
+  cancelled: { label: '已取消', color: 'text-gray-400', bg: 'bg-gray-50' }
+};
+
+const deviceIconMap: Record<string, string> = {
+  washer: '🧺',
+  water_dispenser: '💧',
+  shower: '🚿'
+};
+
+const deviceNameMap: Record<string, string> = {
+  washer: '洗衣机',
+  water_dispenser: '饮水机',
+  shower: '淋浴终端'
 };
 
 const tabs = [
   { value: 'all', label: '全部' },
-  { value: 'in_progress', label: '使用中' },
+  { value: 'active', label: '使用中' },
+  { value: 'pending', label: '待支付' },
   { value: 'completed', label: '已完成' },
-  { value: 'pending', label: '待支付' }
+  { value: 'refunded', label: '已退款' }
 ];
 
 const OrderListPage = () => {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadOrders();
-  }, [activeTab]);
-
-  const loadOrders = async () => {
+  const loadOrders = useCallback(async () => {
     setLoading(true);
     try {
       const res = await orderApi.getMyOrders({
         status: activeTab !== 'all' ? activeTab : undefined,
-        pageSize: 50
+        pageSize: 100
       });
-      setOrders(res.items);
-    } catch (error) {
-      console.error('加载订单列表失败', error);
+      setOrders(res.items || []);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
 
-  const handlePay = async (orderId: string) => {
+  useEffect(() => { loadOrders(); }, [loadOrders]);
+
+  const finishOrder = async (orderId: string) => {
+    if (!confirm('确认结束使用？设备将停止运行。')) return;
+    setActionLoading(orderId);
     try {
-      await orderApi.payOrder(orderId, { paymentMethod: 'balance' });
-      alert('支付成功');
+      await orderApi.finishOrder(orderId);
+      alert('已结束使用');
       loadOrders();
-    } catch (error) {
-      alert('支付失败');
+    } catch (e: any) {
+      console.error(e);
+      const msg = e?.response?.data?.message || e?.message || '操作失败';
+      alert(msg);
+    } finally {
+      setActionLoading(null);
     }
   };
 
-  const handleRefund = async (orderId: string) => {
-    if (!confirm('确认申请退款？')) return;
+  const payOrder = async (orderId: string) => {
+    setActionLoading(orderId);
     try {
-      await orderApi.refundOrder(orderId);
-      alert('退款申请已提交');
+      await orderApi.payOrder(orderId, { payMethod: 'balance' });
+      alert('支付成功！');
       loadOrders();
-    } catch (error) {
-      alert('申请失败');
+    } catch (e: any) {
+      console.error(e);
+      const msg = e?.response?.data?.message || e?.message || '支付失败';
+      alert(msg);
+    } finally {
+      setActionLoading(null);
     }
+  };
+
+  const cancelOrder = async (orderId: string) => {
+    if (!confirm('确认取消该订单？')) return;
+    setActionLoading(orderId);
+    try {
+      await orderApi.refundOrder(orderId, '用户取消');
+      alert('订单已取消');
+      loadOrders();
+    } catch (e: any) {
+      console.error(e);
+      const msg = e?.response?.data?.message || e?.message || '操作失败';
+      alert(msg);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const requestRefund = async (orderId: string) => {
+    const reason = prompt('请填写退款原因（选填）') || '';
+    setActionLoading(orderId);
+    try {
+      await orderApi.refundOrder(orderId, reason);
+      alert('退款申请已提交，处理结果将通过消息通知您');
+      loadOrders();
+    } catch (e: any) {
+      console.error(e);
+      const msg = e?.response?.data?.message || e?.message || '申请失败';
+      alert(msg);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const formatTime = (t: string | null) => {
+    if (!t) return '-';
+    try {
+      return new Date(t).toLocaleString('zh-CN');
+    } catch { return t; }
   };
 
   return (
@@ -88,59 +150,106 @@ const OrderListPage = () => {
       ) : orders.length === 0 ? (
         <div className="text-center py-16">
           <div className="text-6xl mb-4">📭</div>
-          <p className="text-gray-400">暂无订单</p>
+          <p className="text-gray-400 mb-4">暂无订单</p>
+          <button
+            onClick={() => navigate('/devices')}
+            className="px-6 py-2 bg-primary-500 text-white rounded-xl"
+          >
+            去使用设备
+          </button>
         </div>
       ) : (
         <div className="space-y-3">
           {orders.map((order) => {
-            const status = statusMap[order.status];
+            const meta = statusMeta[order.status] || statusMeta.completed;
+            const icon = deviceIconMap[order.type] || '📱';
+            const name = order.deviceName || deviceNameMap[order.type] || '共享设备';
+            const isActing = actionLoading === order.id;
+
             return (
               <div key={order.id} className="bg-white rounded-xl p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-gray-400">订单号: {order.id.slice(0, 12)}...</span>
-                  <span className={`text-sm font-medium ${status.color}`}>{status.label}</span>
+                  <span className="text-xs text-gray-400">
+                    订单号: {order.id.slice(0, 12)}...
+                  </span>
+                  <span className={`text-sm font-medium px-2 py-0.5 rounded-full ${meta.bg} ${meta.color}`}>
+                    {meta.label}
+                  </span>
                 </div>
 
-                <div className="flex items-center py-2 border-y border-gray-50">
+                <div
+                  className="flex items-center py-3 border-y border-gray-50 cursor-pointer hover:bg-gray-50/50 -mx-4 px-4"
+                  onClick={() => order.deviceId && navigate(`/devices/${order.deviceId}`)}
+                >
                   <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mr-3">
-                    <span className="text-2xl">🧺</span>
+                    <span className="text-2xl">{icon}</span>
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-800">共享设备使用</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-800 truncate">{name}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
-                      {new Date(order.createdAt).toLocaleString('zh-CN')}
+                      开始：{formatTime(order.startTime)}
                     </p>
+                    {order.endTime && (
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        结束：{formatTime(order.endTime)}
+                      </p>
+                    )}
+                    {order.duration > 0 && (
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        时长：{order.duration} 分钟
+                      </p>
+                    )}
                   </div>
-                  <p className="text-lg font-bold text-gray-800">¥{order.amount.toFixed(2)}</p>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-gray-800">¥{order.amount.toFixed(2)}</p>
+                    {order.payMethod && (
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {{ wechat: '微信', alipay: '支付宝', balance: '余额' }[order.payMethod] || order.payMethod}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
-                {order.status === 'pending' && (
-                  <div className="flex justify-end gap-2 mt-3">
-                    <button
-                      onClick={() => handleRefund(order.id)}
-                      className="px-4 py-1.5 text-sm text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50"
-                    >
-                      取消订单
-                    </button>
-                    <button
-                      onClick={() => handlePay(order.id)}
-                      className="px-4 py-1.5 text-sm bg-primary-500 text-white rounded-lg hover:bg-primary-600"
-                    >
-                      立即支付
-                    </button>
-                  </div>
-                )}
+                <div className="flex justify-end gap-2 mt-3">
+                  {order.status === 'pending' && (
+                    <>
+                      <button
+                        onClick={() => !isActing && cancelOrder(order.id)}
+                        disabled={isActing}
+                        className="px-4 py-1.5 text-sm text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50"
+                      >
+                        {isActing ? '处理中...' : '取消订单'}
+                      </button>
+                      <button
+                        onClick={() => !isActing && payOrder(order.id)}
+                        disabled={isActing}
+                        className="px-4 py-1.5 text-sm bg-primary-500 text-white rounded-lg hover:bg-primary-600 disabled:opacity-50"
+                      >
+                        {isActing ? '处理中...' : '立即支付'}
+                      </button>
+                    </>
+                  )}
 
-                {(order.status === 'paid' || order.status === 'in_progress') && (
-                  <div className="flex justify-end gap-2 mt-3">
+                  {order.status === 'active' && (
                     <button
-                      onClick={() => handleRefund(order.id)}
-                      className="px-4 py-1.5 text-sm text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50"
+                      onClick={() => !isActing && finishOrder(order.id)}
+                      disabled={isActing}
+                      className="px-4 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50"
                     >
-                      申请退款
+                      {isActing ? '处理中...' : '结束使用'}
                     </button>
-                  </div>
-                )}
+                  )}
+
+                  {order.status === 'completed' && (
+                    <button
+                      onClick={() => !isActing && requestRefund(order.id)}
+                      disabled={isActing}
+                      className="px-4 py-1.5 text-sm text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50"
+                    >
+                      {isActing ? '处理中...' : '申请退款'}
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}

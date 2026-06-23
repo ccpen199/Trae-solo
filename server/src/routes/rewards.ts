@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db';
 import { authMiddleware } from '../middleware/auth';
 import { RewardCoupon } from '../types';
-import { serializeCoupon } from '../serializers';
+import { pageResult, parsePage, serializeCoupon } from '../serializers';
 
 const router = Router();
 
@@ -33,6 +33,26 @@ router.get('/', authMiddleware, (req: Request, res: Response): void => {
     { id: 'low-carbon', name: '低碳洗衣奖励', description: '连续使用节能模式可兑换社区水电券', points: 70, imageUrl: '🌱' },
     { id: 'maintenance', name: '报修贡献奖励', description: '提交有效设备异常线索获得积分', points: 30, imageUrl: '🔧' },
   ]);
+});
+
+router.get('/records', authMiddleware, (req: Request, res: Response): void => {
+  if (!req.user) {
+    res.status(401).json({ error: '未认证' });
+    return;
+  }
+
+  const db = getDb();
+  const userId = req.user.userId;
+  const { page, pageSize } = parsePage(req);
+
+  const records = db.prepare(`
+    SELECT * FROM rewardRecords
+    WHERE userId = ?
+    ORDER BY createdAt DESC
+    LIMIT 100
+  `).all(userId) as RewardRecord[];
+
+  res.json(pageResult(records, page, pageSize, records.length));
 });
 
 router.get('/coupons', authMiddleware, (req: Request, res: Response): void => {
@@ -140,11 +160,19 @@ router.get('/streak', authMiddleware, (req: Request, res: Response): void => {
   const todayCheckedIn = checkInRecords.length > 0 &&
     new Date(checkInRecords[0].checkDate).toDateString() === today.toDateString();
 
+  const totalPointsResult = db.prepare(`
+    SELECT COALESCE(SUM(points), 0) as totalPoints
+    FROM rewardRecords
+    WHERE userId = ?
+  `).get(userId) as { totalPoints: number };
+
   res.json({
     currentStreak: streak,
     longestStreak: Math.max(streak, checkInRecords.length),
     checkInDates: checkInRecords.map((record) => record.checkDate),
     todayCheckedIn,
+    canCheckIn: !todayCheckedIn,
+    totalPoints: Number(totalPointsResult.totalPoints || 0),
   });
 });
 
