@@ -1,7 +1,0 @@
-node_modules/
-data/*.sqlite-shm
-data/*.sqlite-wal
-frontend.log
-backend.log
-frontend.pid
-backend.pid
