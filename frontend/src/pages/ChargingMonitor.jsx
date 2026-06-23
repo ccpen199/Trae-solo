@@ -40,7 +40,7 @@ function ChargingMonitor() {
     try {
       setLoading(true);
       const ordersRes = await API.orders.list({ status: 'charging' });
-      const ordersList = Array.isArray(ordersRes) ? ordersRes : (ordersRes.data || []);
+      const ordersList = ordersRes.data || [];
 
       const ordersWithChargerData = await Promise.all(
         ordersList.map(async (order) => {

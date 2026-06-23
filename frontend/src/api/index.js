@@ -9,9 +9,29 @@ const request = axios.create({
 });
 
 request.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    console.log('[API]', response.config.method?.toUpperCase(), response.config.url, '→', response.status);
+    console.log('[API] Response data:', response.data);
+    
+    const data = response.data;
+    
+    if (data && data.success === true && data.data !== undefined) {
+      return data;
+    }
+    
+    if (Array.isArray(data)) {
+      return { success: true, data: data };
+    }
+    
+    if (data && typeof data === 'object' && !data.success) {
+      return { success: false, data: null, message: data.message || '请求失败' };
+    }
+    
+    return { success: true, data: data };
+  },
   (error) => {
-    console.error('API Error:', error);
+    console.error('[API Error]', error.config?.method?.toUpperCase(), error.config?.url, '→', error.message);
+    console.error('[API Error] Response:', error.response?.data);
     return Promise.reject(error);
   }
 );

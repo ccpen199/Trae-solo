@@ -22,23 +22,48 @@ function Dashboard() {
       setLoading(true);
       setError(null);
       
-      const [summaryRes, stationsRes, ordersRes, dailyRes] = await Promise.all([
+      const errors = [];
+      
+      const [summaryRes, stationsRes, ordersRes, dailyRes] = await Promise.allSettled([
         API.revenue.summary(),
         API.stations.list(),
         API.orders.list({ limit: 10 }),
         API.revenue.daily({ days: 7 })
       ]);
 
-      const summaryData = summaryRes.data || {};
-      const stationsList = stationsRes.data || [];
-      const ordersList = ordersRes.data || [];
-      const trendData = dailyRes.data?.chart_data || [];
+      if (summaryRes.status === 'fulfilled') {
+        setSummary(summaryRes.value.data || {});
+      } else {
+        errors.push('统计数据');
+        console.error('加载统计数据失败:', summaryRes.reason);
+      }
 
-      setSummary(summaryData);
-      setAllStations(stationsList);
-      setStations(stationsList.slice(0, 6));
-      setRecentOrders(ordersList.slice(0, 5));
-      setDailyData(trendData);
+      if (stationsRes.status === 'fulfilled') {
+        const list = stationsRes.value.data || [];
+        setAllStations(list);
+        setStations(list.slice(0, 6));
+      } else {
+        errors.push('充电站列表');
+        console.error('加载充电站列表失败:', stationsRes.reason);
+      }
+
+      if (ordersRes.status === 'fulfilled') {
+        setRecentOrders((ordersRes.value.data || []).slice(0, 5));
+      } else {
+        errors.push('充电记录');
+        console.error('加载充电记录失败:', ordersRes.reason);
+      }
+
+      if (dailyRes.status === 'fulfilled') {
+        setDailyData(dailyRes.value.data?.chart_data || []);
+      } else {
+        errors.push('趋势数据');
+        console.error('加载趋势数据失败:', dailyRes.reason);
+      }
+
+      if (errors.length > 0) {
+        setError(`部分数据加载失败: ${errors.join('、')}`);
+      }
     } catch (err) {
       console.error('加载数据失败:', err);
       setError(err.message || '加载数据失败，请稍后重试');

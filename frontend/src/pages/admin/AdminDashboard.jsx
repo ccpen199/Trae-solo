@@ -17,15 +17,22 @@ function AdminDashboard() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [summaryRes, dailyRes, alarmsRes] = await Promise.all([
+      const [summaryRes, dailyRes, alarmsRes] = await Promise.allSettled([
         API.revenue.summary(),
         API.revenue.daily({ days: 30 }),
         API.alarms.list({ limit: 5 })
       ]);
-      setSummary(summaryRes.data);
-      setDailyData(dailyRes.data?.chart_data || []);
-      setStationData(dailyRes.data?.by_station || []);
-      setAlarms(alarmsRes.data || []);
+      
+      if (summaryRes.status === 'fulfilled') {
+        setSummary(summaryRes.value.data);
+      }
+      if (dailyRes.status === 'fulfilled') {
+        setDailyData(dailyRes.value.data?.chart_data || []);
+        setStationData(dailyRes.value.data?.by_station || []);
+      }
+      if (alarmsRes.status === 'fulfilled') {
+        setAlarms(alarmsRes.value.data || []);
+      }
     } catch (err) {
       console.error('加载数据失败:', err);
     } finally {
