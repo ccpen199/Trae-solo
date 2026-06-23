@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
@@ -14,11 +14,19 @@ import {
   ArrowRight,
   Eye,
   Phone,
+  Upload,
+  Download,
+  Clock,
+  User,
+  FileText,
+  AlertCircle,
+  CheckCircle2,
+  History,
 } from "lucide-react";
 import { mockProjects } from "@/data/mock";
 import { useAppStore } from "@/store";
 import { cn } from "@/lib/utils";
-import type { Project, ProjectCategory, ProjectStage, ProjectPartner } from "@/types";
+import type { Project, ProjectCategory, ProjectStage, ProjectPartner, ProjectAttachment } from "@/types";
 
 const categoryLabels: Record<ProjectCategory, { zh: string; it: string }> = {
   economic: { zh: "经贸", it: "Economico" },
@@ -43,10 +51,10 @@ const sortOptions = [
 ];
 
 const partnerTypeFilters = [
-  { zh: "政府机构", it: "Istituzioni", keywords: ["Confindustria", "Trade", "Board", "促进会", "政府"] },
-  { zh: "高等院校", it: "Università", keywords: ["Politecnico", "Università", "Accademia"] },
-  { zh: "商业企业", it: "Imprese", keywords: ["Ospedale", "San Raffaele", "Istituto", "Cucina"] },
-  { zh: "文化机构", it: "Cultura", keywords: ["Tourism", "Arti", "Belle Arti"] },
+  { zh: "政府机构", it: "Istituzioni", keywords: ["Confindustria", "Trade", "Board", "促进会", "政府", "商务部", "Ministry", "经济发展部", "市政府"] },
+  { zh: "高等院校", it: "Università", keywords: ["Politecnico", "Università", "Accademia", "大学", "学院", "复旦", "清华"] },
+  { zh: "商业企业", it: "Imprese", keywords: ["Ospedale", "San Raffaele", "Istituto", "Cucina", "医院", "携程", "集团", "科技", "Tecnologia"] },
+  { zh: "文化机构", it: "Cultura", keywords: ["Tourism", "Arti", "Belle Arti", "旅游局", "美术馆", "博物馆"] },
 ];
 
 function calculateProgress(project: Project): number {
@@ -78,6 +86,22 @@ function formatDate(dateStr: string): string {
   });
 }
 
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+}
+
+function formatTimestamp(ts: string): string {
+  return ts;
+}
+
+function extractAttachmentsFromRemark(remark: string): string[] {
+  const matches = remark.match(/附件[：:]\s*(.+?)(?:\。|$)/);
+  if (!matches) return [];
+  return matches[1].split(/[、,，]/).map((s) => s.trim()).filter(Boolean);
+}
+
 interface NewProjectForm {
   titleZh: string;
   titleIt: string;
@@ -102,9 +126,19 @@ const initialForm: NewProjectForm = {
   partnerEmail: "",
 };
 
+interface ToastState {
+  visible: boolean;
+  message: string;
+  type: "success" | "error" | "info";
+}
+
 export default function Projects() {
   const navigate = useNavigate();
   const lang = useAppStore((s) => s.lang);
+  const user = useAppStore((s) => s.user);
+  const setLoginModalOpen = useAppStore((s) => s.setLoginModalOpen);
+  const stageHistoryFromStore = useAppStore((s) => s.stageHistory);
+  const addStageHistory = useAppStore((s) => s.addStageHistory);
 
   const [selectedCategories, setSelectedCategories] = useState<ProjectCategory[]>([]);
   const [selectedStage, setSelectedStage] = useState<ProjectStage | null>(null);
@@ -118,9 +152,29 @@ export default function Projects() {
   const [newForm, setNewForm] = useState<NewProjectForm>(initialForm);
 
   const [confirmStageProjectId, setConfirmStageProjectId] = useState<string | null>(null);
+  const [stageRemark, setStageRemark] = useState("");
   const [contactProject, setContactProject] = useState<Project | null>(null);
 
+  const [historyProject, setHistoryProject] = useState<Project | null>(null);
+  const [attachmentsProject, setAttachmentsProject] = useState<Project | null>(null);
+  const [toast, setToast] = useState<ToastState>({ visible: false, message: "", type: "info" });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const t = (zh: string, it: string) => (lang === "zh" ? zh : it);
+
+  const showToast = (message: string, type: ToastState["type"] = "info") => {
+    setToast({ visible: true, message, type });
+    setTimeout(() => setToast({ visible: false, message: "", type: "info" }), 2500);
+  };
+
+  const requireLogin = (): boolean => {
+    if (!user) {
+      setLoginModalOpen(true);
+      return false;
+    }
+    return true;
+  };
 
   const filteredProjects = useMemo(() => {
     let result = [...projects];
@@ -167,25 +221,55 @@ export default function Projects() {
     return result;
   }, [selectedCategories, selectedStage, selectedPartnerType, searchQuery, sortBy, lang, projects]);
 
+  const projectStageHistory = useMemo(() => {
+    if (!historyProject) return [];
+    return stageHistoryFromStore.filter((r) => r.projectId === historyProject.id);
+  }, [historyProject, stageHistoryFromStore]);
+
   const toggleCategory = (cat: ProjectCategory) => {
     setSelectedCategories((prev) =>
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
     );
   };
 
+  const removeCategory = (cat: ProjectCategory) => {
+    setSelectedCategories((prev) => prev.filter((c) => c !== cat));
+  };
+
   const advanceStage = (projectId: string) => {
+    const project = projects.find((p) => p.id === projectId);
+    if (!project) return;
+
+    const idx = stageOrder.indexOf(project.stage);
+    if (idx >= stageOrder.length - 1) return;
+
+    const fromStage = project.stage;
+    const toStage = stageOrder[idx + 1];
+    const operator = user ? (lang === "zh" ? user.nameZh : user.nameIt) : t("匿名用户", "Utente Anonimo");
+
+    addStageHistory({
+      projectId: projectId,
+      fromStage: fromStage,
+      toStage: toStage,
+      operator: operator,
+      remark: stageRemark.trim() || t("阶段正常流转", "Avanzamento fase regolare"),
+    });
+
     setProjects((prev) =>
       prev.map((p) => {
         if (p.id !== projectId) return p;
-        const idx = stageOrder.indexOf(p.stage);
-        if (idx >= stageOrder.length - 1) return p;
-        return { ...p, stage: stageOrder[idx + 1], updatedAt: new Date().toISOString() };
+        return { ...p, stage: toStage, updatedAt: new Date().toISOString() };
       })
     );
+
     setConfirmStageProjectId(null);
+    setStageRemark("");
+    showToast(t("项目已推进至下一阶段", "Progetto avanzato alla fase successiva"), "success");
   };
 
   const handleNewProject = () => {
+    if (!requireLogin()) return;
+
     const newPartner: ProjectPartner = {
       id: `pt_new_${Date.now()}`,
       nameZh: newForm.partnerNameZh,
@@ -212,18 +296,89 @@ export default function Projects() {
       attachments: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      authorId: "current",
+      authorId: user?.id || "current",
     };
+
+    addStageHistory({
+      projectId: newProject.id,
+      fromStage: null,
+      toStage: "planning",
+      operator: user ? (lang === "zh" ? user.nameZh : user.nameIt) : t("匿名用户", "Utente Anonimo"),
+      remark: t("新项目创建完成", "Nuovo progetto creato"),
+    });
 
     setProjects((prev) => [newProject, ...prev]);
     setShowNewProject(false);
     setNewForm(initialForm);
+    showToast(t("新项目创建成功", "Nuovo progetto creato con successo"), "success");
+  };
+
+  const handleDownloadAttachment = (att: ProjectAttachment) => {
+    showToast(t(`正在下载: ${att.name}`, `Scaricando: ${att.name}`), "info");
+  };
+
+  const handleUploadClick = () => {
+    if (!requireLogin()) return;
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || !files.length || !attachmentsProject) return;
+
+    const file = files[0];
+    const fakeExts = ["pdf", "docx", "xlsx", "png", "jpg"];
+    const fakeExt = fakeExts[Math.floor(Math.random() * fakeExts.length)];
+    const newAtt: ProjectAttachment = {
+      id: `att_${Date.now()}`,
+      name: file.name || `${t("上传文件", "File caricato")}_${Date.now()}.${fakeExt}`,
+      url: `/mock-attachments/${Date.now()}.${fakeExt}`,
+      type: file.type || "application/octet-stream",
+      size: file.size || Math.floor(Math.random() * 5 * 1024 * 1024),
+      uploadedAt: new Date().toISOString(),
+    };
+
+    setProjects((prev) =>
+      prev.map((p) => {
+        if (p.id !== attachmentsProject.id) return p;
+        return { ...p, attachments: [...p.attachments, newAtt], updatedAt: new Date().toISOString() };
+      })
+    );
+
+    setAttachmentsProject((prev) =>
+      prev ? { ...prev, attachments: [...prev.attachments, newAtt] } : null
+    );
+
+    showToast(t(`上传成功: ${newAtt.name}`, `Caricamento completato: ${newAtt.name}`), "success");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleMailTo = (email: string, subject?: string) => {
+    const mailtoUrl = `mailto:${email}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;
+    window.location.href = mailtoUrl;
+  };
+
+  const openStageConfirm = (projectId: string) => {
+    if (!requireLogin()) return;
+    setConfirmStageProjectId(projectId);
+    setStageRemark("");
+  };
+
+  const openHistory = (project: Project) => {
+    setHistoryProject(project);
+  };
+
+  const openAttachments = (project: Project) => {
+    setAttachmentsProject(project);
   };
 
   const hasFilters = selectedCategories.length > 0 || selectedStage || selectedPartnerType !== null || searchQuery;
 
+  const currentProjectForStage = confirmStageProjectId ? projects.find((p) => p.id === confirmStageProjectId) : null;
+  const nextStage = currentProjectForStage ? stageOrder[stageOrder.indexOf(currentProjectForStage.stage) + 1] : null;
+
   return (
-    <div className="min-h-screen bg-ivory-50">
+    <div className="min-h-screen bg-ivory-50 relative">
       <div className="container mx-auto px-4 py-8 lg:py-12">
         <div className="mb-8 flex items-start justify-between">
           <div>
@@ -235,13 +390,85 @@ export default function Projects() {
             </p>
           </div>
           <button
-            onClick={() => setShowNewProject(true)}
+            onClick={() => {
+              if (!requireLogin()) return;
+              setShowNewProject(true);
+            }}
             className="flex items-center gap-2 px-5 py-2.5 bg-gradient-cnit text-white rounded-xl shadow-hover hover:shadow-elegant transition-all text-sm font-medium"
           >
             <Plus className="w-4 h-4" />
             {t("提交新项目", "Nuovo Progetto")}
           </button>
         </div>
+
+        {hasFilters && (
+          <div className="mb-6 flex flex-wrap items-center gap-2">
+            <span className="text-sm text-charcoal-400 mr-1">{t("当前筛选：", "Filtri attivi:")}</span>
+
+            {selectedCategories.map((cat) => (
+              <span
+                key={`cat-chip-${cat}`}
+                className="inline-flex items-center gap-1.5 px-3 py-1 text-xs rounded-full bg-cn-red-50 text-cn-red-600 border border-cn-red-200"
+              >
+                {t(categoryLabels[cat].zh, categoryLabels[cat].it)}
+                <button
+                  onClick={() => removeCategory(cat)}
+                  className="hover:bg-cn-red-100 rounded-full p-0.5 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            ))}
+
+            {selectedStage && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs rounded-full bg-it-green-50 text-it-green-600 border border-it-green-200">
+                {t("阶段：", "Fase: ")}{t(stageLabels[selectedStage].zh, stageLabels[selectedStage].it)}
+                <button
+                  onClick={() => setSelectedStage(null)}
+                  className="hover:bg-it-green-100 rounded-full p-0.5 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+
+            {selectedPartnerType !== null && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs rounded-full bg-warm-gold-50 text-warm-gold-600 border border-warm-gold-200">
+                {t("合作方：", "Partner: ")}{t(partnerTypeFilters[selectedPartnerType].zh, partnerTypeFilters[selectedPartnerType].it)}
+                <button
+                  onClick={() => setSelectedPartnerType(null)}
+                  className="hover:bg-warm-gold-100 rounded-full p-0.5 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+
+            {searchQuery && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs rounded-full bg-charcoal-50 text-charcoal-600 border border-charcoal-200">
+                {t("关键词：", "Keyword: ")}{searchQuery}
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="hover:bg-charcoal-100 rounded-full p-0.5 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+
+            <button
+              onClick={() => {
+                setSelectedCategories([]);
+                setSelectedStage(null);
+                setSelectedPartnerType(null);
+                setSearchQuery("");
+              }}
+              className="ml-2 text-xs text-charcoal-400 hover:text-cn-red-500 underline underline-offset-2 transition-colors"
+            >
+              {t("清除全部", "Cancella tutti")}
+            </button>
+          </div>
+        )}
 
         <div className="flex flex-col lg:flex-row gap-6">
           <aside className="w-full lg:w-72 lg:flex-shrink-0">
@@ -251,6 +478,11 @@ export default function Projects() {
                 <h2 className="text-lg font-semibold text-charcoal-600">
                   {t("筛选条件", "Filtri")}
                 </h2>
+                {!user && (
+                  <span className="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-charcoal-100 text-charcoal-400">
+                    {t("未登录", "Accesso richiesto")}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -277,11 +509,10 @@ export default function Projects() {
                   {(Object.keys(categoryLabels) as ProjectCategory[]).map((cat) => {
                     const active = selectedCategories.includes(cat);
                     return (
-                      <button
+                      <label
                         key={cat}
-                        onClick={() => toggleCategory(cat)}
                         className={cn(
-                          "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all",
+                          "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all cursor-pointer select-none",
                           active
                             ? "bg-gradient-cnit text-white shadow-gold"
                             : "bg-ivory-50 text-charcoal-500 hover:bg-ivory-100"
@@ -289,14 +520,22 @@ export default function Projects() {
                       >
                         <span
                           className={cn(
-                            "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
-                            active ? "border-white" : "border-charcoal-200"
+                            "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all",
+                            active
+                              ? "border-white bg-white"
+                              : "border-charcoal-300 bg-white"
                           )}
                         >
-                          {active && <span className="w-2 h-2 rounded-full bg-white" />}
+                          {active && <CheckCircle2 className="w-3 h-3 text-cn-red-500" />}
                         </span>
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={active}
+                          onChange={() => toggleCategory(cat)}
+                        />
                         <span>{t(categoryLabels[cat].zh, categoryLabels[cat].it)}</span>
-                      </button>
+                      </label>
                     );
                   })}
                 </div>
@@ -323,10 +562,10 @@ export default function Projects() {
                         <span
                           className={cn(
                             "w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0",
-                            active ? "border-it-green-500" : "border-charcoal-200"
+                            active ? "border-it-green-500 bg-it-green-500" : "border-charcoal-200"
                           )}
                         >
-                          {active && <span className="w-2 h-2 rounded-full bg-it-green-500" />}
+                          {active && <span className="w-2 h-2 rounded-full bg-white" />}
                         </span>
                         <span>{t(stageLabels[stage].zh, stageLabels[stage].it)}</span>
                       </button>
@@ -349,7 +588,7 @@ export default function Projects() {
                         className={cn(
                           "px-3 py-1.5 text-xs rounded-full transition-all",
                           active
-                            ? "bg-warm-gold-500 text-white border border-warm-gold-500"
+                            ? "bg-warm-gold-500 text-white border border-warm-gold-500 shadow-gold"
                             : "bg-warm-gold-50 text-warm-gold-600 border border-warm-gold-200 hover:bg-warm-gold-100"
                         )}
                       >
@@ -439,6 +678,7 @@ export default function Projects() {
                   const attachmentCount = project.attachments.length;
                   const currentStageIdx = stageOrder.indexOf(project.stage);
                   const canAdvance = currentStageIdx < stageOrder.length - 1;
+                  const historyCount = stageHistoryFromStore.filter((r) => r.projectId === project.id).length;
 
                   return (
                     <div
@@ -463,12 +703,27 @@ export default function Projects() {
                         >
                           {t(stageLabels[project.stage].zh, stageLabels[project.stage].it)}
                         </span>
-                        {attachmentCount > 0 && (
-                          <span className="ml-auto flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-cn-red-50 text-cn-red-500 font-medium">
-                            <Paperclip className="w-3 h-3" />
-                            {attachmentCount} {t("份附件", "allegati")}
-                          </span>
-                        )}
+                        <button
+                          onClick={() => openAttachments(project)}
+                          className={cn(
+                            "ml-auto flex items-center gap-1 px-2 py-0.5 text-xs rounded-full font-medium transition-all",
+                            attachmentCount > 0
+                              ? "bg-cn-red-50 text-cn-red-500 hover:bg-cn-red-100"
+                              : "bg-charcoal-50 text-charcoal-400 hover:bg-charcoal-100"
+                          )}
+                          title={t("查看附件", "Visualizza allegati")}
+                        >
+                          <Paperclip className="w-3 h-3" />
+                          {attachmentCount}
+                        </button>
+                        <button
+                          onClick={() => openHistory(project)}
+                          className="flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-500 hover:bg-blue-100 font-medium transition-all"
+                          title={t("流转记录", "Cronologia fasi")}
+                        >
+                          <History className="w-3 h-3" />
+                          {historyCount}
+                        </button>
                       </div>
 
                       <h3 className="text-xl font-semibold text-charcoal-600 mb-2 group-hover:text-cn-red-500 transition-colors line-clamp-2">
@@ -476,6 +731,10 @@ export default function Projects() {
                       </h3>
                       <p className="text-sm text-charcoal-300 font-sans-it line-clamp-2 mb-4">
                         {lang === "zh" ? project.titleIt : project.titleZh}
+                      </p>
+
+                      <p className="text-sm text-charcoal-400 line-clamp-2 mb-4">
+                        {lang === "zh" ? project.descriptionZh : project.descriptionIt}
                       </p>
 
                       <div className="mb-5">
@@ -494,45 +753,71 @@ export default function Projects() {
                         </div>
                       </div>
 
-                      {firstPartner && (
-                        <div className="flex items-center gap-2 mb-3 p-2.5 rounded-xl bg-ivory-50">
-                          <div className="w-8 h-8 rounded-full bg-gradient-cnit flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
-                            {(lang === "zh" ? firstPartner.nameZh : firstPartner.nameIt).charAt(0)}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="text-sm font-medium text-charcoal-600 truncate">
-                              {lang === "zh" ? firstPartner.nameZh : firstPartner.nameIt}
-                            </div>
-                            <div className="text-xs text-charcoal-400 truncate flex items-center gap-1">
-                              <Mail className="w-3 h-3 flex-shrink-0" />
-                              {firstPartner.email}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {project.partners.length > 1 && (
-                        <div className="flex items-center gap-2 mb-3">
-                          <Users className="w-4 h-4 text-charcoal-300" />
-                          <div className="flex -space-x-2">
-                            {project.partners.slice(1, 4).map((p) => (
-                              <div
-                                key={p.id}
-                                className="w-6 h-6 rounded-full bg-ivory-100 flex items-center justify-center text-charcoal-500 text-xs font-medium border-2 border-white"
-                                title={p.organization}
-                              >
-                                {(lang === "zh" ? p.nameZh : p.nameIt).charAt(0)}
+                      {project.partners.length > 0 ? (
+                        <div className="mb-4">
+                          <div className="space-y-2 max-h-32 overflow-y-auto">
+                            {project.partners.slice(0, 3).map((p) => (
+                              <div key={p.id} className="flex items-center gap-2 p-2 rounded-xl bg-ivory-50">
+                                <div className="w-8 h-8 rounded-full bg-gradient-cnit flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                                  {(lang === "zh" ? p.nameZh : p.nameIt).charAt(0)}
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-medium text-charcoal-600 truncate">
+                                    {lang === "zh" ? p.nameZh : p.nameIt}
+                                  </div>
+                                  <div className="text-[11px] text-charcoal-400 truncate">
+                                    {p.organization}
+                                  </div>
+                                  <div className="text-[11px] text-charcoal-400 truncate flex items-center gap-1">
+                                    <Mail className="w-2.5 h-2.5 flex-shrink-0" />
+                                    {p.email}
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={() => handleMailTo(p.email, t(`关于项目：${project.titleZh}`, `Riguardo il progetto: ${project.titleIt}`))}
+                                  className="flex-shrink-0 p-1.5 rounded-lg bg-it-green-50 text-it-green-600 hover:bg-it-green-100 transition-colors"
+                                  title={t("发邮件", "Invia email")}
+                                >
+                                  <Mail className="w-3.5 h-3.5" />
+                                </button>
                               </div>
                             ))}
-                            {project.partners.length > 4 && (
-                              <div className="w-6 h-6 rounded-full bg-charcoal-100 flex items-center justify-center text-charcoal-500 text-xs font-medium border-2 border-white">
-                                +{project.partners.length - 4}
-                              </div>
-                            )}
                           </div>
-                          <span className="text-xs text-charcoal-400">
-                            {project.partners.length - 1} {t("位其他合作方", "altri partner")}
-                          </span>
+                          {project.partners.length > 3 && (
+                            <div className="flex items-center gap-2 mt-2">
+                              <Users className="w-4 h-4 text-charcoal-300" />
+                              <div className="flex -space-x-2">
+                                {project.partners.slice(3, 6).map((p) => (
+                                  <div
+                                    key={p.id}
+                                    className="w-6 h-6 rounded-full bg-ivory-100 flex items-center justify-center text-charcoal-500 text-xs font-medium border-2 border-white"
+                                    title={p.organization}
+                                  >
+                                    {(lang === "zh" ? p.nameZh : p.nameIt).charAt(0)}
+                                  </div>
+                                ))}
+                                {project.partners.length > 6 && (
+                                  <div className="w-6 h-6 rounded-full bg-charcoal-100 flex items-center justify-center text-charcoal-500 text-xs font-medium border-2 border-white">
+                                    +{project.partners.length - 6}
+                                  </div>
+                                )}
+                              </div>
+                              <span className="text-xs text-charcoal-400">
+                                {project.partners.length - 3} {t("位其他合作方", "altri partner")}
+                              </span>
+                              <button
+                                onClick={() => setContactProject(project)}
+                                className="ml-auto text-xs text-cn-red-500 hover:underline"
+                              >
+                                {t("查看全部", "Vedi tutti")}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="mb-4 p-3 rounded-xl bg-charcoal-50 text-xs text-charcoal-400 flex items-center gap-2">
+                          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                          {t("暂无合作方信息", "Nessuna informazione partner disponibile")}
                         </div>
                       )}
 
@@ -554,12 +839,16 @@ export default function Projects() {
                           <Eye className="w-3.5 h-3.5" />
                           {t("查看详情", "Dettagli")}
                         </button>
-                        {firstPartner && (
+                        <button
+                          onClick={() => openHistory(project)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                        >
+                          <History className="w-3.5 h-3.5" />
+                          {t("流转记录", "Cronologia")}
+                        </button>
+                        {project.partners.length > 0 && firstPartner && (
                           <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setContactProject(project);
-                            }}
+                            onClick={() => setContactProject(project)}
                             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-it-green-50 text-it-green-600 hover:bg-it-green-100 transition-colors"
                           >
                             <Phone className="w-3.5 h-3.5" />
@@ -568,10 +857,7 @@ export default function Projects() {
                         )}
                         {canAdvance && (
                           <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setConfirmStageProjectId(project.id);
-                            }}
+                            onClick={() => openStageConfirm(project.id)}
                             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-warm-gold-50 text-warm-gold-600 hover:bg-warm-gold-100 transition-colors ml-auto"
                           >
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -588,21 +874,71 @@ export default function Projects() {
         </div>
       </div>
 
-      {confirmStageProjectId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-md w-full mx-4">
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
+      {toast.visible && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] animate-[fadeInDown_0.3s_ease-out]">
+          <div className={cn(
+            "flex items-center gap-2 px-5 py-3 rounded-xl shadow-hover text-sm font-medium backdrop-blur-sm",
+            toast.type === "success" && "bg-it-green-500/95 text-white",
+            toast.type === "error" && "bg-cn-red-500/95 text-white",
+            toast.type === "info" && "bg-charcoal-600/95 text-white"
+          )}>
+            {toast.type === "success" && <CheckCircle2 className="w-4 h-4" />}
+            {toast.type === "error" && <AlertCircle className="w-4 h-4" />}
+            {toast.type === "info" && <FileText className="w-4 h-4" />}
+            {toast.message}
+          </div>
+        </div>
+      )}
+
+      {confirmStageProjectId && currentProjectForStage && nextStage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-md w-full animate-[fadeInDown_0.25s_ease-out]">
             <h3 className="text-lg font-semibold text-charcoal-600 mb-2">
               {t("确认推进阶段", "Conferma avanzamento fase")}
             </h3>
-            <p className="text-sm text-charcoal-400 mb-6">
+            <div className="mb-4 p-3 rounded-xl bg-warm-gold-50 border border-warm-gold-100">
+              <div className="flex items-center gap-3 text-sm">
+                <div className="flex-1 text-center">
+                  <div className="text-xs text-charcoal-400 mb-1">{t("当前阶段", "Fase attuale")}</div>
+                  <div className="font-medium text-charcoal-600">
+                    {t(stageLabels[currentProjectForStage.stage].zh, stageLabels[currentProjectForStage.stage].it)}
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-warm-gold-500" />
+                <div className="flex-1 text-center">
+                  <div className="text-xs text-charcoal-400 mb-1">{t("下一阶段", "Prossima fase")}</div>
+                  <div className="font-medium text-it-green-600">
+                    {t(stageLabels[nextStage].zh, stageLabels[nextStage].it)}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-charcoal-400 mb-4">
               {t(
-                "确定要将该项目推进至下一阶段吗？此操作将更新项目阶段标签。",
-                "Confermi di voler avanzare il progetto alla fase successiva? Questa azione aggiornerà l'etichetta della fase del progetto."
+                "请输入阶段变更备注（可选），此操作将记录在流转历史中。",
+                "Inserisci una nota per il cambio di fase (opzionale). Questa azione verrà registrata nella cronologia."
               )}
             </p>
+            <textarea
+              value={stageRemark}
+              onChange={(e) => setStageRemark(e.target.value)}
+              placeholder={t("请输入变更备注...", "Inserisci una nota per il cambiamento...")}
+              rows={3}
+              className="w-full px-4 py-3 rounded-xl border border-charcoal-100 bg-ivory-50 focus:outline-none focus:ring-2 focus:ring-warm-gold-200 focus:border-warm-gold-300 text-sm resize-none mb-6"
+            />
             <div className="flex gap-3 justify-end">
               <button
-                onClick={() => setConfirmStageProjectId(null)}
+                onClick={() => {
+                  setConfirmStageProjectId(null);
+                  setStageRemark("");
+                }}
                 className="px-5 py-2 text-sm rounded-xl bg-ivory-50 text-charcoal-500 hover:bg-ivory-100 transition-colors"
               >
                 {t("取消", "Annulla")}
@@ -619,43 +955,65 @@ export default function Projects() {
       )}
 
       {contactProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-md w-full mx-4">
-            <div className="flex items-center justify-between mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-md w-full mx-4 max-h-[85vh] overflow-y-auto animate-[fadeInDown_0.25s_ease-out]">
+            <div className="flex items-center justify-between mb-4 sticky top-0 bg-white pb-2">
               <h3 className="text-lg font-semibold text-charcoal-600">
-                {t("联系项目方", "Contatta il partner")}
+                {t("项目合作方", "Partner del progetto")}
               </h3>
               <button onClick={() => setContactProject(null)} className="text-charcoal-300 hover:text-charcoal-500">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            {contactProject.partners.map((p) => (
-              <div key={p.id} className="p-4 rounded-xl bg-ivory-50 mb-3 last:mb-0">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-cnit flex items-center justify-center text-white text-sm font-medium">
-                    {(lang === "zh" ? p.nameZh : p.nameIt).charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-medium text-charcoal-600">
-                      {lang === "zh" ? p.nameZh : p.nameIt}
-                    </div>
-                    <div className="text-xs text-charcoal-400">{p.organization}</div>
-                  </div>
-                </div>
-                <div className="space-y-1 text-sm text-charcoal-500">
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-charcoal-300" />
-                    {p.email}
-                  </div>
-                  {p.phone && (
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-charcoal-300" />
-                      {p.phone}
-                    </div>
-                  )}
-                </div>
+            {contactProject.partners.length === 0 ? (
+              <div className="py-12 text-center text-charcoal-400">
+                <Users className="w-12 h-12 mx-auto mb-3 opacity-40" />
+                {t("暂无合作方信息", "Nessuna informazione partner disponibile")}
               </div>
-            ))}
+            ) : (
+              contactProject.partners.map((p) => (
+                <div key={p.id} className="p-4 rounded-xl bg-ivory-50 mb-3 last:mb-0">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-cnit flex items-center justify-center text-white text-base font-medium flex-shrink-0">
+                      {(lang === "zh" ? p.nameZh : p.nameIt).charAt(0)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-charcoal-600">
+                        {lang === "zh" ? p.nameZh : p.nameIt}
+                      </div>
+                      {p.role && (
+                        <div className="text-xs text-cn-red-500">{p.role}</div>
+                      )}
+                      <div className="text-xs text-charcoal-400 truncate mt-0.5">{p.organization}</div>
+                    </div>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2 p-2 rounded-lg bg-white">
+                      <Mail className="w-4 h-4 text-charcoal-300 flex-shrink-0" />
+                      <span className="text-charcoal-500 flex-1 truncate">{p.email}</span>
+                      <button
+                        onClick={() => handleMailTo(p.email, t(`关于项目：${contactProject.titleZh}`, `Riguardo il progetto: ${contactProject.titleIt}`))}
+                        className="px-3 py-1 text-xs rounded-lg bg-it-green-50 text-it-green-600 hover:bg-it-green-100 transition-colors font-medium flex-shrink-0"
+                      >
+                        {t("发邮件", "Email")}
+                      </button>
+                    </div>
+                    {p.phone && (
+                      <div className="flex items-center gap-2 p-2 rounded-lg bg-white">
+                        <Phone className="w-4 h-4 text-charcoal-300 flex-shrink-0" />
+                        <span className="text-charcoal-500 flex-1 truncate">{p.phone}</span>
+                        <a
+                          href={`tel:${p.phone}`}
+                          className="px-3 py-1 text-xs rounded-lg bg-cn-red-50 text-cn-red-600 hover:bg-cn-red-100 transition-colors font-medium flex-shrink-0"
+                        >
+                          {t("拨打", "Chiama")}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
             <button
               onClick={() => setContactProject(null)}
               className="w-full mt-4 px-5 py-2.5 text-sm rounded-xl bg-ivory-50 text-charcoal-500 hover:bg-ivory-100 transition-colors"
@@ -666,9 +1024,218 @@ export default function Projects() {
         </div>
       )}
 
+      {historyProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-lg w-full mx-4 max-h-[85vh] overflow-y-auto animate-[fadeInDown_0.25s_ease-out]">
+            <div className="flex items-center justify-between mb-6 sticky top-0 bg-white pb-2">
+              <div>
+                <h3 className="text-lg font-semibold text-charcoal-600">
+                  {t("阶段流转记录", "Cronologia delle fasi")}
+                </h3>
+                <p className="text-xs text-charcoal-400 mt-1 max-w-xs truncate">
+                  {lang === "zh" ? historyProject.titleZh : historyProject.titleIt}
+                </p>
+              </div>
+              <button onClick={() => setHistoryProject(null)} className="text-charcoal-300 hover:text-charcoal-500">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {projectStageHistory.length === 0 ? (
+              <div className="py-16 text-center">
+                <History className="w-12 h-12 mx-auto mb-3 text-charcoal-200" />
+                <p className="text-charcoal-400">{t("暂无流转记录", "Nessuna cronologia disponibile")}</p>
+              </div>
+            ) : (
+              <div className="relative pl-2">
+                <div className="absolute left-[17px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-cn-red-300 via-warm-gold-300 to-it-green-300 rounded-full" />
+
+                {projectStageHistory
+                  .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+                  .map((record, idx) => {
+                    const attachments = extractAttachmentsFromRemark(record.remark);
+                    return (
+                      <div key={record.id} className="relative pb-8 last:pb-0">
+                        <div className={cn(
+                          "absolute left-[5px] w-6 h-6 rounded-full border-4 border-white shadow-elegant flex items-center justify-center z-10",
+                          record.toStage === "completed"
+                            ? "bg-it-green-500"
+                            : record.toStage === "implementation"
+                            ? "bg-warm-gold-500"
+                            : record.toStage === "negotiation"
+                            ? "bg-cn-red-500"
+                            : "bg-charcoal-400"
+                        )}>
+                          <div className="w-2 h-2 rounded-full bg-white" />
+                        </div>
+
+                        <div className="ml-10 bg-ivory-50 rounded-xl p-4 border border-charcoal-100">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              {record.fromStage && (
+                                <>
+                                  <span className="px-2 py-0.5 text-[10px] rounded-full bg-white border border-charcoal-200 text-charcoal-500">
+                                    {t(stageLabels[record.fromStage].zh, stageLabels[record.fromStage].it)}
+                                  </span>
+                                  <ChevronRight className="w-3.5 h-3.5 text-charcoal-300" />
+                                </>
+                              )}
+                              <span className={cn(
+                                "px-2.5 py-0.5 text-[10px] rounded-full font-medium",
+                                record.toStage === "completed"
+                                  ? "bg-it-green-100 text-it-green-700"
+                                  : record.toStage === "implementation"
+                                  ? "bg-warm-gold-100 text-warm-gold-700"
+                                  : record.toStage === "negotiation"
+                                  ? "bg-cn-red-100 text-cn-red-700"
+                                  : "bg-charcoal-100 text-charcoal-600"
+                              )}>
+                                {record.fromStage === null ? t("创建项目", "Creazione") : t(stageLabels[record.toStage].zh, stageLabels[record.toStage].it)}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1 text-[10px] text-charcoal-400 flex-shrink-0 ml-2">
+                              <Clock className="w-3 h-3" />
+                              {formatTimestamp(record.timestamp)}
+                            </div>
+                          </div>
+
+                          {record.remark && (
+                            <p className="text-sm text-charcoal-500 mb-3 leading-relaxed">{record.remark}</p>
+                          )}
+
+                          <div className="flex items-center justify-between pt-2 border-t border-charcoal-100">
+                            <div className="flex items-center gap-1.5 text-xs text-charcoal-400">
+                              <User className="w-3.5 h-3.5" />
+                              {record.operator}
+                            </div>
+                            {attachments.length > 0 && (
+                              <div className="flex items-center gap-1.5 text-xs">
+                                <Paperclip className="w-3.5 h-3.5 text-charcoal-300" />
+                                <span className="text-charcoal-400">
+                                  {attachments.length} {t("份附件", "allegati")}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {attachments.length > 0 && (
+                            <div className="mt-3 space-y-1">
+                              {attachments.map((attName, i) => (
+                                <button
+                                  key={`${record.id}-att-${i}`}
+                                  onClick={() => showToast(t(`正在下载: ${attName}`, `Scaricando: ${attName}`), "info")}
+                                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-white/80 border border-charcoal-100 transition-colors text-left group"
+                                >
+                                  <FileText className="w-3.5 h-3.5 text-cn-red-400 flex-shrink-0" />
+                                  <span className="text-xs text-charcoal-500 flex-1 truncate">{attName}</span>
+                                  <Download className="w-3.5 h-3.5 text-charcoal-300 group-hover:text-it-green-500 transition-colors" />
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
+            <button
+              onClick={() => setHistoryProject(null)}
+              className="w-full mt-6 px-5 py-2.5 text-sm rounded-xl bg-ivory-50 text-charcoal-500 hover:bg-ivory-100 transition-colors"
+            >
+              {t("关闭", "Chiudi")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {attachmentsProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-lg w-full mx-4 max-h-[85vh] overflow-y-auto animate-[fadeInDown_0.25s_ease-out]">
+            <div className="flex items-center justify-between mb-6 sticky top-0 bg-white pb-2">
+              <div>
+                <h3 className="text-lg font-semibold text-charcoal-600 flex items-center gap-2">
+                  <Paperclip className="w-5 h-5 text-cn-red-500" />
+                  {t("项目附件", "Allegati del progetto")}
+                </h3>
+                <p className="text-xs text-charcoal-400 mt-1">
+                  {lang === "zh" ? attachmentsProject.titleZh : attachmentsProject.titleIt}
+                </p>
+              </div>
+              <button onClick={() => setAttachmentsProject(null)} className="text-charcoal-300 hover:text-charcoal-500">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <button
+                onClick={handleUploadClick}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-dashed border-warm-gold-300 bg-warm-gold-50 text-warm-gold-600 hover:bg-warm-gold-100 hover:border-warm-gold-400 transition-all text-sm font-medium"
+              >
+                <Upload className="w-4 h-4" />
+                {t("上传新附件", "Carica nuovo allegato")}
+              </button>
+            </div>
+
+            {attachmentsProject.attachments.length === 0 ? (
+              <div className="py-16 text-center">
+                <Paperclip className="w-12 h-12 mx-auto mb-3 text-charcoal-200" />
+                <p className="text-charcoal-400 mb-2">{t("暂无附件", "Nessun allegato disponibile")}</p>
+                <p className="text-xs text-charcoal-300">{t("点击上方按钮上传第一个附件", "Clicca il pulsante sopra per caricare il primo allegato")}</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {attachmentsProject.attachments.map((att) => (
+                  <div
+                    key={att.id}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-ivory-50 hover:bg-white border border-transparent hover:border-charcoal-100 transition-all group"
+                  >
+                    <div className={cn(
+                      "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
+                      att.type.includes("pdf")
+                        ? "bg-cn-red-50 text-cn-red-500"
+                        : att.type.includes("image")
+                        ? "bg-it-green-50 text-it-green-500"
+                        : att.type.includes("sheet") || att.type.includes("excel")
+                        ? "bg-green-50 text-green-600"
+                        : "bg-warm-gold-50 text-warm-gold-600"
+                    )}>
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-medium text-charcoal-600 truncate">{att.name}</div>
+                      <div className="text-xs text-charcoal-400 flex items-center gap-2 mt-0.5">
+                        <span>{formatFileSize(att.size)}</span>
+                        <span>·</span>
+                        <span>{formatDate(att.uploadedAt)}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleDownloadAttachment(att)}
+                      className="flex-shrink-0 p-2 rounded-lg bg-white text-charcoal-400 hover:text-it-green-600 hover:bg-it-green-50 transition-colors"
+                      title={t("下载", "Scarica")}
+                    >
+                      <Download className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <button
+              onClick={() => setAttachmentsProject(null)}
+              className="w-full mt-6 px-5 py-2.5 text-sm rounded-xl bg-ivory-50 text-charcoal-500 hover:bg-ivory-100 transition-colors"
+            >
+              {t("关闭", "Chiudi")}
+            </button>
+          </div>
+        </div>
+      )}
+
       {showNewProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-hover p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto animate-[fadeInDown_0.25s_ease-out]">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-charcoal-600">
                 {t("提交新项目", "Nuovo Progetto")}
@@ -708,7 +1275,7 @@ export default function Projects() {
                 <label className="block text-xs font-medium text-charcoal-500 mb-1">
                   {t("分类", "Categoria")}
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   {(Object.keys(categoryLabels) as ProjectCategory[]).map((cat) => (
                     <button
                       key={cat}

@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowLeftRight,
   FileUp,
@@ -22,9 +23,21 @@ import {
   ShieldCheck,
   Zap,
   MessageSquare,
+  Search,
+  Briefcase,
+  Stethoscope,
+  Scale,
+  Globe2,
+  GraduationCap,
+  LogIn,
+  LayoutDashboard,
+  History,
+  ChevronRight,
+  X,
+  Info,
 } from "lucide-react";
 import { useAppStore } from "@/store";
-import type { TermItem } from "@/types";
+import type { TermItem, TranslationHistoryItem, PolishWorkflowRecord } from "@/types";
 import { mockTerms } from "@/data/mock";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +46,15 @@ type Domain = "general" | "diplomatic" | "economic" | "education" | "medical" | 
 type DocTemplate = "policy" | "press" | "event";
 type PolishStep = 1 | 2 | 3;
 type Urgency = "normal" | "urgent";
+type SceneLabel = "visa" | "medical" | "legal" | "general" | "education";
+
+const sceneLabels: Record<SceneLabel, { zh: string; it: string; icon: typeof Globe2; color: string }> = {
+  visa: { zh: "签证", it: "Visti", icon: Briefcase, color: "bg-blue-100 text-blue-700 border-blue-200" },
+  medical: { zh: "医疗", it: "Medico", icon: Stethoscope, color: "bg-rose-100 text-rose-700 border-rose-200" },
+  legal: { zh: "法律", it: "Legale", icon: Scale, color: "bg-amber-100 text-amber-700 border-amber-200" },
+  general: { zh: "通用", it: "Generale", icon: Globe2, color: "bg-slate-100 text-slate-700 border-slate-200" },
+  education: { zh: "教育", it: "Educazione", icon: GraduationCap, color: "bg-purple-100 text-purple-700 border-purple-200" },
+};
 
 const domainLabels: Record<Domain, { zh: string; it: string }> = {
   general: { zh: "通用", it: "Generale" },
@@ -54,6 +76,7 @@ const categoryColors: Record<string, string> = {
   medical: "bg-rose-100 text-rose-700 border-rose-200",
   legal: "bg-amber-100 text-amber-700 border-amber-200",
   general: "bg-slate-100 text-slate-700 border-slate-200",
+  diplomatic: "bg-indigo-100 text-indigo-700 border-indigo-200",
 };
 
 const docTemplates: Record<DocTemplate, { zh: string; it: string; label: { zh: string; it: string }; icon: typeof FileText }> = {
@@ -76,15 +99,6 @@ const docTemplates: Record<DocTemplate, { zh: string; it: string; label: { zh: s
     it: "La cerimonia di apertura dell'Anno degli Scambi Culturali Cina-Italia 2026 si terrà solennemente il 15 settembre al Grande Teatro Nazionale di Pechino. In occasione dell'evento, i leader dei due paesi interverranno con discorsi e artisti cinesi e italiani presenteranno congiuntamente uno spettacolo che fonde l'essenza culturale d'Oriente e d'Occidente. Durante l'evento si terranno anche una mostra fotografica sul patrimonio culturale Cina-Italia e un forum culturale bilaterale. Si invitano tutte le persone interessate a iscriversi per partecipare.",
   },
 };
-
-interface HistoryRecord {
-  id: string;
-  sourceText: string;
-  targetText: string;
-  source: Lang;
-  target: Lang;
-  timestamp: string;
-}
 
 function detectTerms(text: string, lang: Lang): TermItem[] {
   const detected: TermItem[] = [];
@@ -170,10 +184,62 @@ function formatTime(date: Date): string {
   });
 }
 
+function domainToScene(domain: Domain): SceneLabel {
+  switch (domain) {
+    case "medical": return "medical";
+    case "legal": return "legal";
+    case "education": return "education";
+    case "economic":
+    case "diplomatic": return "general";
+    default: return "general";
+  }
+}
+
+function applyTermSuggestions(text: string, terms: TermItem[], inconsistent: TermItem[], source: Lang, target: Lang): string {
+  let result = text;
+  for (const term of inconsistent) {
+    const from = target === "zh" ? term.zh : term.it;
+    const to = source === "zh" ? term.zh : term.it;
+    result = result.replace(new RegExp(from, "g"), to);
+  }
+  return result;
+}
+
+function computeDiff(a: string, b: string): { original: React.ReactNode; modified: React.ReactNode } {
+  const aChars = a.split("");
+  const bChars = b.split("");
+  return {
+    original: aChars.map((ch, i) => (
+      <span
+        key={i}
+        className={bChars[i] !== ch ? "bg-rose-200 line-through decoration-rose-400" : ""}
+      >
+        {ch}
+      </span>
+    )),
+    modified: bChars.map((ch, i) => (
+      <span
+        key={i}
+        className={aChars[i] !== ch ? "bg-emerald-200 font-medium text-emerald-900" : ""}
+      >
+        {ch}
+      </span>
+    )),
+  };
+}
+
 export default function Translate() {
+  const navigate = useNavigate();
   const appLang = useAppStore((s) => s.lang);
   const favorites = useAppStore((s) => s.favorites);
   const toggleFavorite = useAppStore((s) => s.toggleFavorite);
+  const translateHistory = useAppStore((s) => s.translateHistory);
+  const addTranslateHistory = useAppStore((s) => s.addTranslateHistory);
+  const polishRecords = useAppStore((s) => s.polishRecords);
+  const addPolishRecord = useAppStore((s) => s.addPolishRecord);
+  const updatePolishRecord = useAppStore((s) => s.updatePolishRecord);
+  const user = useAppStore((s) => s.user);
+  const setLoginModalOpen = useAppStore((s) => s.setLoginModalOpen);
 
   const [sourceLang, setSourceLang] = useState<Lang>("zh");
   const [targetLang, setTargetLang] = useState<Lang>("it");
@@ -188,7 +254,7 @@ export default function Translate() {
   const [copied, setCopied] = useState(false);
   const [versionTab, setVersionTab] = useState<"machine" | "polished">("machine");
   const [polishedText, setPolishedText] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
+  const [showHistory, setShowHistory] = useState(true);
 
   const [termScore, setTermScore] = useState<number | null>(null);
   const [inconsistentTerms, setInconsistentTerms] = useState<TermItem[]>([]);
@@ -201,8 +267,12 @@ export default function Translate() {
   const [polishSubmitTime, setPolishSubmitTime] = useState("");
   const [polishReviewComment, setPolishReviewComment] = useState("");
   const [polishAdopted, setPolishAdopted] = useState(false);
+  const [activePolishRecordId, setActivePolishRecordId] = useState<string | null>(null);
 
-  const [history, setHistory] = useState<HistoryRecord[]>([]);
+  const [copiedTermId, setCopiedTermId] = useState<string | null>(null);
+  const [expandedPolishId, setExpandedPolishId] = useState<string | null>(null);
+  const [showPolishRecords, setShowPolishRecords] = useState(true);
+  const [showLoginHint, setShowLoginHint] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -240,21 +310,26 @@ export default function Translate() {
     setPolishStep(1);
     setPolishAdopted(false);
     setPolishedText("");
+    setActivePolishRecordId(null);
     try {
       const res = await mockTranslate(sourceText, sourceLang, targetLang, domain);
       setTargetText(res.text);
       setConfidence(res.confidence);
       setTerminology(res.terms);
       runTermConsistencyCheck(res.terms);
-      const record: HistoryRecord = {
-        id: `h-${Date.now()}`,
-        sourceText: sourceText.slice(0, 80),
-        targetText: res.text.slice(0, 80),
-        source: sourceLang,
-        target: targetLang,
-        timestamp: new Date().toISOString(),
-      };
-      setHistory((prev) => [record, ...prev].slice(0, 5));
+
+      if (user) {
+        addTranslateHistory({
+          sourceText,
+          targetText: res.text,
+          source: sourceLang,
+          target: targetLang,
+          scene: domainToScene(domain),
+          userId: user.id,
+        });
+      } else {
+        setShowLoginHint(true);
+      }
     } finally {
       setIsTranslating(false);
     }
@@ -274,6 +349,8 @@ export default function Translate() {
     setPolishRequirement("");
     setPolishUrgency("normal");
     setPolishReviewComment("");
+    setActivePolishRecordId(null);
+    setShowLoginHint(false);
   };
 
   const handleCopy = async () => {
@@ -281,6 +358,21 @@ export default function Translate() {
     await navigator.clipboard.writeText(targetText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyTerm = async (term: TermItem) => {
+    const text = `${term.zh} ↔ ${term.it}`;
+    await navigator.clipboard.writeText(text);
+    setCopiedTermId(term.id);
+    setTimeout(() => setCopiedTermId(null), 1500);
+  };
+
+  const handleApplyTermSuggestions = () => {
+    if (inconsistentTerms.length === 0) return;
+    const applied = applyTermSuggestions(targetText, terminology, inconsistentTerms, sourceLang, targetLang);
+    setTargetText(applied);
+    setInconsistentTerms([]);
+    setTermScore((prev) => (prev !== null ? Math.min(prev + 5, 99) : null));
   };
 
   const handleFavorite = () => {
@@ -318,11 +410,29 @@ export default function Translate() {
   };
 
   const handlePolishSubmit = () => {
+    if (!targetText || !polishDocType) return;
     const ticketId = generateTicketId();
     const now = new Date();
     setPolishTicketId(ticketId);
     setPolishSubmitTime(formatTime(now));
     setPolishStep(2);
+
+    const recordId = `pw-local-${Date.now()}`;
+    setActivePolishRecordId(recordId);
+
+    if (user) {
+      addPolishRecord({
+        ticketId,
+        sourceText,
+        translatedText: targetText,
+        docType: polishDocType,
+        urgency: polishUrgency,
+        requirement: polishRequirement,
+        submitter: user.nameZh || user.email,
+        termScore: termScore ?? undefined,
+        inconsistentTerms: inconsistentTerms.map((t) => t.zh),
+      });
+    }
   };
 
   useEffect(() => {
@@ -340,12 +450,39 @@ export default function Translate() {
           : "La traduzione è generalmente accurata, ma alcuni termini devono essere unificati. Ho corretto 3 incongruenze terminologiche e migliorato 2 espressioni. Si consiglia di utilizzare la terminologia standardizzata per traduzioni future."
       );
       setPolishStep(3);
-    }, 30000);
+
+      if (user && activePolishRecordId) {
+        const matchingRecord = polishRecords.find(
+          (r) => r.ticketId === polishTicketId
+        );
+        if (matchingRecord) {
+          updatePolishRecord(matchingRecord.id, {
+            status: "completed",
+            polishedText: improved,
+            reviewer: "李雯（高级译员）",
+            reviewTime: formatTime(new Date()),
+            reviewComment: appLang === "zh"
+              ? "译文整体准确，但部分术语需要统一，已修正3处术语不一致，优化了2处句式表达。建议后续翻译统一使用标准术语库。"
+              : "La traduzione è generalmente accurata, ma alcuni termini devono essere unificati.",
+          });
+        }
+      }
+    }, 15000);
     return () => clearTimeout(timer);
-  }, [polishStep, targetText, appLang]);
+  }, [polishStep, targetText, appLang, user, activePolishRecordId, polishTicketId, polishRecords, updatePolishRecord]);
 
   const handleAdoptPolish = () => {
     setPolishAdopted(true);
+    if (user && activePolishRecordId) {
+      const matchingRecord = polishRecords.find(
+        (r) => r.ticketId === polishTicketId
+      );
+      if (matchingRecord) {
+        updatePolishRecord(matchingRecord.id, {
+          status: "completed",
+        });
+      }
+    }
   };
 
   const handleDownloadReport = () => {
@@ -379,7 +516,7 @@ export default function Translate() {
     URL.revokeObjectURL(url);
   };
 
-  const handleReTranslate = (record: HistoryRecord) => {
+  const handleReTranslate = (record: TranslationHistoryItem) => {
     setSourceLang(record.source);
     setTargetLang(record.target);
     setSourceText(record.sourceText);
@@ -391,46 +528,39 @@ export default function Translate() {
     setPolishStep(1);
     setPolishAdopted(false);
     setPolishedText("");
+    setShowLoginHint(false);
   };
 
-  const renderDiff = () => {
+  const renderTripleDiff = () => {
     if (!polishedText) return null;
-    const original = targetText.split("");
-    const polished = polishedText.split("");
+    const { original: diffOrig, modified: diffPolished } = computeDiff(targetText, polishedText);
     return (
-      <div className="space-y-4">
+      <div className="space-y-3">
         <div>
-          <div className="text-xs font-medium text-charcoal-500 mb-1.5">
-            {appLang === "zh" ? "机器翻译" : "Traduzione automatica"}
+          <div className="text-xs font-medium text-charcoal-500 mb-1.5 flex items-center gap-1.5">
+            <FileText className="w-3.5 h-3.5" />
+            {appLang === "zh" ? "原文" : "Testo originale"}
           </div>
-          <div className="p-3 bg-rose-50/50 border border-rose-200/50 rounded-lg">
-            <p className="text-sm text-charcoal-700 leading-relaxed">
-              {original.map((ch, i) => (
-                <span
-                  key={i}
-                  className={polished[i] !== ch ? "bg-rose-200 line-through" : ""}
-                >
-                  {ch}
-                </span>
-              ))}
-            </p>
+          <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+            <p className="text-sm text-charcoal-700 leading-relaxed whitespace-pre-wrap">{sourceText}</p>
           </div>
         </div>
         <div>
-          <div className="text-xs font-medium text-charcoal-500 mb-1.5">
-            {appLang === "zh" ? "人工润色" : "Revisione umana"}
+          <div className="text-xs font-medium text-charcoal-500 mb-1.5 flex items-center gap-1.5">
+            <Languages className="w-3.5 h-3.5" />
+            {appLang === "zh" ? "机器翻译" : "Traduzione automatica"}
+          </div>
+          <div className="p-3 bg-rose-50/50 border border-rose-200/50 rounded-lg">
+            <p className="text-sm text-charcoal-700 leading-relaxed whitespace-pre-wrap">{diffOrig}</p>
+          </div>
+        </div>
+        <div>
+          <div className="text-xs font-medium text-charcoal-500 mb-1.5 flex items-center gap-1.5">
+            <UserCheck className="w-3.5 h-3.5" />
+            {appLang === "zh" ? "润色后版本" : "Versione revisionata"}
           </div>
           <div className="p-3 bg-emerald-50/50 border border-emerald-200/50 rounded-lg">
-            <p className="text-sm text-charcoal-700 leading-relaxed">
-              {polished.map((ch, i) => (
-                <span
-                  key={i}
-                  className={original[i] !== ch ? "bg-emerald-200 font-medium" : ""}
-                >
-                  {ch}
-                </span>
-              ))}
-            </p>
+            <p className="text-sm text-charcoal-700 leading-relaxed whitespace-pre-wrap">{diffPolished}</p>
           </div>
         </div>
       </div>
@@ -482,10 +612,7 @@ export default function Translate() {
 
   const renderPolishPanel = () => (
     <div className="bg-white rounded-2xl shadow-elegant border border-charcoal-100 overflow-hidden mb-6">
-      <button
-        onClick={() => {}}
-        className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-it-green-50/60 to-white"
-      >
+      <div className="w-full flex items-center justify-between px-5 py-4 bg-gradient-to-r from-it-green-50/60 to-white">
         <div className="flex items-center gap-3">
           <UserCheck className="w-5 h-5 text-it-green-600" />
           <div className="text-left">
@@ -504,7 +631,7 @@ export default function Translate() {
             )}
           </div>
         </div>
-      </button>
+      </div>
 
       <div className="px-5 pb-5 pt-3">
         {renderStepIndicator()}
@@ -515,7 +642,7 @@ export default function Translate() {
               <label className="block text-sm font-medium text-charcoal-700 mb-2">
                 {appLang === "zh" ? "文档类型" : "Tipo di documento"}
               </label>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {(["policy", "press", "event"] as DocTemplate[]).map((tpl) => {
                   const t = docTemplates[tpl];
                   const Icon = t.icon;
@@ -587,10 +714,28 @@ export default function Translate() {
               </div>
             </div>
 
+            {!user && (
+              <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 flex items-start gap-2">
+                <Info className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                <div className="flex-1 text-sm">
+                  <p className="text-blue-800 font-medium mb-1">
+                    {appLang === "zh" ? "需要登录后才能提交润色申请" : "È necessario effettuare l'accesso per inviare una richiesta"}
+                  </p>
+                  <button
+                    onClick={() => setLoginModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  >
+                    <LogIn className="w-3.5 h-3.5" />
+                    {appLang === "zh" ? "立即登录" : "Accedi ora"}
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="flex justify-end pt-2">
               <button
                 onClick={handlePolishSubmit}
-                disabled={!targetText || !polishDocType}
+                disabled={!targetText || !polishDocType || !user}
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-it-green-600 to-it-green-700 text-white shadow-elegant hover:from-it-green-700 hover:to-it-green-800 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Upload className="w-4 h-4" />
@@ -623,7 +768,7 @@ export default function Translate() {
                   <div className="flex items-center gap-2 mt-0.5">
                     <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
                     <p className="text-sm text-amber-700 font-medium">
-                      {appLang === "zh" ? "等待译员接单" : "In attesa di traduttore"}
+                      {appLang === "zh" ? "译员审核中" : "Revisione in corso"}
                     </p>
                   </div>
                 </div>
@@ -643,6 +788,41 @@ export default function Translate() {
                 </div>
               </div>
             </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-charcoal-500">{appLang === "zh" ? "处理进度" : "Progresso"}</span>
+                <span className="font-medium text-warm-gold-700">60%</span>
+              </div>
+              <div className="w-full h-2 bg-charcoal-100 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-warm-gold-400 to-warm-gold-600 rounded-full transition-all" style={{ width: "60%" }} />
+              </div>
+              <div className="flex items-center justify-between text-xs text-charcoal-400">
+                <span>{appLang === "zh" ? "已接收" : "Ricevuto"}</span>
+                <span className="text-warm-gold-600 font-medium">{appLang === "zh" ? "译员处理中" : "In lavorazione"}</span>
+                <span>{appLang === "zh" ? "待完成" : "Da completare"}</span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Search className="w-4 h-4 text-charcoal-500" />
+                <span className="text-xs font-medium text-charcoal-600">
+                  {appLang === "zh" ? "查询工单状态" : "Verifica stato ticket"}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  defaultValue={polishTicketId}
+                  readOnly
+                  className="flex-1 px-3 py-1.5 text-xs rounded-md border border-slate-200 bg-white font-mono text-charcoal-600"
+                />
+                <button className="px-3 py-1.5 text-xs rounded-md border border-slate-200 bg-white text-charcoal-600 hover:border-warm-gold-400 hover:text-warm-gold-700 transition-colors">
+                  {appLang === "zh" ? "查询" : "Cerca"}
+                </button>
+              </div>
+            </div>
+
             <div className="flex items-center justify-center py-3">
               <div className="flex items-center gap-2 text-charcoal-400">
                 <div className="w-4 h-4 border-2 border-warm-gold-500/30 border-t-warm-gold-500 rounded-full animate-spin" />
@@ -684,7 +864,7 @@ export default function Translate() {
               </div>
             </div>
 
-            {renderDiff()}
+            {renderTripleDiff()}
 
             {polishReviewComment && (
               <div className="p-4 rounded-lg bg-blue-50/50 border border-blue-200/50">
@@ -698,7 +878,7 @@ export default function Translate() {
               </div>
             )}
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end pt-2 gap-2">
               {polishAdopted ? (
                 <div className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700">
                   <Check className="w-4 h-4" />
@@ -710,7 +890,7 @@ export default function Translate() {
                   className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-warm-gold-500 to-warm-gold-600 text-white shadow-elegant hover:from-warm-gold-600 hover:to-warm-gold-700"
                 >
                   <Check className="w-4 h-4" />
-                  {appLang === "zh" ? "确认采纳" : "Conferma adozione"}
+                  {appLang === "zh" ? "确认采纳润色结果" : "Conferma adozione"}
                 </button>
               )}
             </div>
@@ -731,29 +911,47 @@ export default function Translate() {
               {appLang === "zh" ? "术语一致性校验报告" : "Rapporto di Verifica Coerenza Terminologica"}
             </h3>
           </div>
-          <button
-            onClick={handleDownloadReport}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-blue-400 hover:text-blue-700 transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            <span className="hidden sm:inline">
-              {appLang === "zh" ? "下载术语校验报告" : "Scarica rapporto"}
-            </span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleApplyTermSuggestions}
+              disabled={inconsistentTerms.length === 0}
+              className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border transition-colors",
+                inconsistentTerms.length > 0
+                  ? "border-amber-400 bg-amber-50 text-amber-700 hover:bg-amber-100 shadow-sm"
+                  : "border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed"
+              )}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">
+                {appLang === "zh" ? "一键应用术语建议" : "Applica suggerimenti"}
+              </span>
+            </button>
+            <button
+              onClick={handleDownloadReport}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-blue-400 hover:text-blue-700 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">
+                {appLang === "zh" ? "下载报告" : "Scarica"}
+              </span>
+            </button>
+          </div>
         </div>
 
         <div className="px-5 py-4 space-y-4">
           <div>
             <div className="flex items-center justify-between text-sm mb-1.5">
-              <span className="text-charcoal-600 font-medium">
+              <span className="text-charcoal-600 font-medium flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4" />
                 {appLang === "zh" ? "术语一致性评分" : "Punteggio coerenza terminologica"}
               </span>
               <span
                 className={cn(
                   "font-bold text-lg",
-                  termScore >= 90
+                  termScore >= 93
                     ? "text-emerald-600"
-                    : termScore >= 85
+                    : termScore >= 88
                     ? "text-amber-600"
                     : "text-cn-red-600"
                 )}
@@ -761,43 +959,75 @@ export default function Translate() {
                 {termScore}%
               </span>
             </div>
-            <div className="w-full h-2.5 bg-charcoal-100 rounded-full overflow-hidden">
+            <div className="w-full h-3 bg-charcoal-100 rounded-full overflow-hidden relative">
+              <div className="absolute inset-y-0 left-0 w-[85%] border-r border-dashed border-slate-300" />
+              <div className="absolute inset-y-0 left-0 w-[93%] border-r border-dashed border-slate-300" />
               <div
                 className={cn(
-                  "h-full rounded-full transition-all duration-700",
-                  termScore >= 90
-                    ? "bg-emerald-500"
-                    : termScore >= 85
-                    ? "bg-amber-500"
-                    : "bg-cn-red-500"
+                  "h-full rounded-full transition-all duration-700 relative z-10",
+                  termScore >= 93
+                    ? "bg-gradient-to-r from-emerald-400 to-emerald-600"
+                    : termScore >= 88
+                    ? "bg-gradient-to-r from-amber-400 to-amber-600"
+                    : "bg-gradient-to-r from-cn-red-400 to-cn-red-600"
                 )}
                 style={{ width: `${termScore}%` }}
               />
             </div>
+            <div className="flex justify-between mt-1 text-[10px] text-charcoal-400">
+              <span>0%</span>
+              <span className="text-cn-red-500">{appLang === "zh" ? "需改进 85%" : "Migliora 85%"}</span>
+              <span className="text-amber-500">{appLang === "zh" ? "良好 93%" : "Buono 93%"}</span>
+              <span className="text-emerald-500">{appLang === "zh" ? "优秀 100%" : "Eccellente 100%"}</span>
+            </div>
           </div>
 
           {inconsistentTerms.length > 0 && (
-            <div className="p-3 rounded-lg bg-red-50 border border-red-200">
-              <div className="flex items-center gap-2 mb-2">
-                <AlertCircle className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-medium text-red-800">
-                  {appLang === "zh"
-                    ? `不一致警告（${inconsistentTerms.length} 处）`
-                    : `Avvisi di incongruenza (${inconsistentTerms.length})`}
-                </span>
+            <div className="p-4 rounded-lg bg-amber-50 border border-amber-200">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center">
+                  <AlertCircle className="w-4 h-4 text-amber-600" />
+                </div>
+                <div>
+                  <span className="text-sm font-medium text-amber-800">
+                    {appLang === "zh"
+                      ? `检测到 ${inconsistentTerms.length} 处术语不一致，建议修正`
+                      : `Rilevate ${inconsistentTerms.length} incongruenze terminologiche`}
+                  </span>
+                  <p className="text-xs text-amber-600">
+                    {appLang === "zh"
+                      ? "点击上方「一键应用术语建议」可自动修正"
+                      : "Fai clic su \"Applica suggerimenti\" per correggere automaticamente"}
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {inconsistentTerms.map((t) => (
                   <div
                     key={t.id}
-                    className="flex items-center gap-2 text-sm text-red-700"
+                    className="flex items-start gap-3 p-2.5 rounded-md bg-white border border-amber-100"
                   >
-                    <span className="font-medium">{t.zh}</span>
-                    <span className="opacity-50">↔</span>
-                    <span>{t.it}</span>
-                    <span className="text-xs text-red-500 ml-auto">
-                      {appLang === "zh" ? "存在不一致翻译" : "Traduzione incoerente"}
-                    </span>
+                    <AlertCircle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-medium text-sm text-amber-900 bg-amber-100 px-1.5 py-0.5 rounded">{t.zh}</span>
+                        <span className="text-amber-400">↔</span>
+                        <span className="font-medium text-sm text-amber-900 bg-amber-100 px-1.5 py-0.5 rounded">{t.it}</span>
+                        <span
+                          className={cn(
+                            "inline-flex items-center px-1.5 py-0.5 text-[10px] rounded border",
+                            categoryColors[t.category] || categoryColors.general
+                          )}
+                        >
+                          {domainLabels[t.category as Domain]?.[appLang] || t.category}
+                        </span>
+                      </div>
+                      <p className="text-xs text-amber-700 mt-1.5">
+                        {appLang === "zh"
+                          ? "💡 建议：译文中该术语的翻译与标准术语库存在差异，请统一使用标准译法"
+                          : "💡 Suggerimento: la traduzione differisce dalla terminologia standard"}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -806,16 +1036,23 @@ export default function Translate() {
 
           {terminology.length > 0 && (
             <div>
-              <div className="text-sm font-medium text-charcoal-700 mb-2">
-                {appLang === "zh" ? `检测到的术语（${terminology.length} 个）` : `Termini rilevati (${terminology.length})`}
+              <div className="text-sm font-medium text-charcoal-700 mb-2 flex items-center gap-1.5">
+                <Search className="w-4 h-4" />
+                {appLang === "zh" ? `检测到的术语对（${terminology.length} 个）· 点击可复制` : `Termini rilevati (${terminology.length}) · Clicca per copiare`}
               </div>
               <div className="space-y-2">
                 {terminology.map((t) => (
-                  <div
+                  <button
                     key={t.id}
-                    className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 rounded-lg bg-warm-ivory-50/50 border border-charcoal-100"
+                    onClick={() => handleCopyTerm(t)}
+                    className={cn(
+                      "w-full flex flex-col sm:flex-row sm:items-start gap-2 p-3 rounded-lg text-left transition-all group",
+                      copiedTermId === t.id
+                        ? "bg-emerald-50 border-2 border-emerald-300"
+                        : "bg-warm-ivory-50/50 border border-charcoal-100 hover:border-warm-gold-300 hover:bg-warm-gold-50/50"
+                    )}
                   >
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-2 shrink-0 flex-1">
                       <span className="font-medium text-charcoal-800 text-sm">{t.zh}</span>
                       <span className="opacity-40">↔</span>
                       <span className="text-charcoal-700 text-sm">{t.it}</span>
@@ -825,11 +1062,24 @@ export default function Translate() {
                           categoryColors[t.category] || categoryColors.general
                         )}
                       >
-                        {domainLabels[t.category]?.[appLang] || t.category}
+                        {domainLabels[t.category as Domain]?.[appLang] || t.category}
                       </span>
                     </div>
+                    <div className="flex items-center gap-3 sm:pl-4 sm:border-l sm:border-charcoal-100">
+                      {copiedTermId === t.id ? (
+                        <span className="inline-flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                          <Check className="w-3.5 h-3.5" />
+                          {appLang === "zh" ? "已复制" : "Copiato"}
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-xs text-charcoal-400 group-hover:text-warm-gold-600">
+                          <Copy className="w-3.5 h-3.5" />
+                          {appLang === "zh" ? "复制" : "Copia"}
+                        </span>
+                      )}
+                    </div>
                     {(t.exampleZh || t.exampleIt) && (
-                      <div className="text-xs text-charcoal-500 pl-0 sm:pl-4 border-t sm:border-t-0 sm:border-l border-charcoal-100 pt-2 sm:pt-0 sm:pl-3 sm:mt-0">
+                      <div className="text-xs text-charcoal-500 w-full pt-2 border-t border-charcoal-100 sm:border-t-0 sm:pt-0 sm:border-l sm:pl-3 sm:mt-0 col-span-full">
                         {t.exampleZh && (
                           <p className="mb-0.5">
                             <span className="text-charcoal-400">ZH:</span> {t.exampleZh}
@@ -842,7 +1092,7 @@ export default function Translate() {
                         )}
                       </div>
                     )}
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -869,9 +1119,9 @@ export default function Translate() {
           <h3 className="font-semibold text-charcoal-800">
             {appLang === "zh" ? "翻译历史" : "Cronologia traduzioni"}
           </h3>
-          {history.length > 0 && (
+          {translateHistory.length > 0 && (
             <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal-100 text-charcoal-500">
-              {history.length}
+              {translateHistory.length}
             </span>
           )}
         </div>
@@ -884,50 +1134,403 @@ export default function Translate() {
 
       {showHistory && (
         <div className="px-5 pb-5">
-          {history.length === 0 ? (
+          {!user ? (
+            <div className="text-center py-8 px-4">
+              <History className="w-10 h-10 mx-auto mb-3 text-charcoal-300" />
+              <p className="text-sm text-charcoal-500 mb-3">
+                {appLang === "zh" ? "登录后可查看和保存翻译历史记录" : "Accedi per visualizzare e salvare la cronologia"}
+              </p>
+              <button
+                onClick={() => setLoginModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-warm-gold-500 to-warm-gold-600 text-white shadow-elegant hover:from-warm-gold-600 hover:to-warm-gold-700 transition-all"
+              >
+                <LogIn className="w-4 h-4" />
+                {appLang === "zh" ? "登录查看历史" : "Accedi per vedere"}
+              </button>
+            </div>
+          ) : translateHistory.length === 0 ? (
             <div className="text-center py-6 text-charcoal-400 text-sm">
               {appLang === "zh" ? "暂无翻译记录" : "Nessuna traduzione registrata"}
             </div>
           ) : (
-            <div className="space-y-2">
-              {history.map((record) => (
-                <div
-                  key={record.id}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-warm-ivory-50/50 border border-charcoal-100 hover:border-warm-gold-200 transition-colors"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-charcoal-700 truncate">
-                      {record.sourceText}
-                      {record.sourceText.length >= 80 && "..."}
-                    </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-charcoal-400">
-                        {langLabels[record.source][appLang]} → {langLabels[record.target][appLang]}
-                      </span>
-                      <span className="text-xs text-charcoal-300">|</span>
-                      <span className="text-xs text-charcoal-400">
-                        {new Date(record.timestamp).toLocaleTimeString("zh-CN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
+            <div className="space-y-3">
+              {translateHistory.map((record) => {
+                const scene = (record.scene as SceneLabel) || "general";
+                const sceneInfo = sceneLabels[scene] || sceneLabels.general;
+                const SceneIcon = sceneInfo.icon;
+                return (
+                  <div
+                    key={record.id}
+                    className="rounded-xl border border-charcoal-100 bg-warm-ivory-50/30 overflow-hidden hover:border-warm-gold-200 transition-colors"
+                  >
+                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-charcoal-100/50 bg-white/50">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200">
+                          <Languages className="w-3 h-3 text-slate-500" />
+                          <span className="text-[11px] font-medium text-slate-700">
+                            {langLabels[record.source][appLang]} → {langLabels[record.target][appLang]}
+                          </span>
+                        </div>
+                        <div className={cn(
+                          "flex items-center gap-1 px-2 py-0.5 rounded-md border",
+                          sceneInfo.color
+                        )}>
+                          <SceneIcon className="w-3 h-3" />
+                          <span className="text-[11px] font-medium">
+                            {sceneInfo[appLang]}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 text-[11px] text-charcoal-400">
+                          <Clock className="w-3 h-3" />
+                          <span>{record.timestamp}</span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleReTranslate(record)}
+                        className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-warm-gold-400 hover:text-warm-gold-700 hover:bg-warm-gold-50 transition-colors"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                        {appLang === "zh" ? "再次翻译" : "Ripeti"}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:divide-x divide-charcoal-100">
+                      <div className="p-4">
+                        <div className="text-[10px] font-medium text-charcoal-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                          <span className={cn(
+                            "w-1.5 h-1.5 rounded-full",
+                            record.source === "zh" ? "bg-cn-red-500" : "bg-it-green-500"
+                          )} />
+                          {appLang === "zh" ? "原文" : "Originale"} · {langLabels[record.source][appLang]}
+                        </div>
+                        <p className="text-sm text-charcoal-700 leading-relaxed line-clamp-3">
+                          {record.sourceText}
+                        </p>
+                      </div>
+                      <div className="p-4 bg-warm-ivory-50/30">
+                        <div className="text-[10px] font-medium text-charcoal-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                          <span className={cn(
+                            "w-1.5 h-1.5 rounded-full",
+                            record.target === "zh" ? "bg-cn-red-500" : "bg-it-green-500"
+                          )} />
+                          {appLang === "zh" ? "译文" : "Traduzione"} · {langLabels[record.target][appLang]}
+                        </div>
+                        <p className="text-sm text-charcoal-700 leading-relaxed line-clamp-3">
+                          {record.targetText}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <button
-                    onClick={() => handleReTranslate(record)}
-                    className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-warm-gold-400 hover:text-warm-gold-700 transition-colors"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    {appLang === "zh" ? "再次翻译" : "Ripeti"}
-                  </button>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
       )}
     </div>
   );
+
+  const renderPolishRecordsPanel = () => {
+    const visibleRecords = user ? polishRecords : [];
+    return (
+      <div className="bg-white rounded-2xl shadow-elegant border border-charcoal-100 overflow-hidden mb-6">
+        <button
+          onClick={() => setShowPolishRecords((v) => !v)}
+          className="w-full flex items-center justify-between px-5 py-4 hover:bg-warm-ivory-50/50 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <History className="w-5 h-5 text-charcoal-500" />
+            <h3 className="font-semibold text-charcoal-800">
+              {appLang === "zh" ? "历史留痕复查 · 润色工单记录" : "Cronologia Richieste di Revisione"}
+            </h3>
+            {visibleRecords.length > 0 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal-100 text-charcoal-500">
+                {visibleRecords.length}
+              </span>
+            )}
+          </div>
+          {showPolishRecords ? (
+            <ChevronUp className="w-5 h-5 text-charcoal-400" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-charcoal-400" />
+          )}
+        </button>
+
+        {showPolishRecords && (
+          <div className="px-5 pb-5">
+            {!user ? (
+              <div className="text-center py-8 px-4">
+                <History className="w-10 h-10 mx-auto mb-3 text-charcoal-300" />
+                <p className="text-sm text-charcoal-500 mb-3">
+                  {appLang === "zh" ? "登录后可查看历史润色工单记录" : "Accedi per visualizzare le richieste di revisione"}
+                </p>
+                <button
+                  onClick={() => setLoginModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-warm-gold-500 to-warm-gold-600 text-white shadow-elegant hover:from-warm-gold-600 hover:to-warm-gold-700 transition-all"
+                >
+                  <LogIn className="w-4 h-4" />
+                  {appLang === "zh" ? "登录查看工单" : "Accedi per vedere"}
+                </button>
+              </div>
+            ) : visibleRecords.length === 0 ? (
+              <div className="text-center py-6 text-charcoal-400 text-sm">
+                {appLang === "zh" ? "暂无润色工单记录" : "Nessuna richiesta di revisione"}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {visibleRecords.map((record) => {
+                  const isExpanded = expandedPolishId === record.id;
+                  const statusConfig = {
+                    submitted: { zh: "已提交", it: "Inviato", color: "bg-slate-100 text-slate-700 border-slate-200", dot: "bg-slate-500" },
+                    reviewing: { zh: "审核中", it: "In revisione", color: "bg-amber-100 text-amber-700 border-amber-200", dot: "bg-amber-500 animate-pulse" },
+                    completed: { zh: "已完成", it: "Completato", color: "bg-emerald-100 text-emerald-700 border-emerald-200", dot: "bg-emerald-500" },
+                    rejected: { zh: "已拒绝", it: "Rifiutato", color: "bg-red-100 text-red-700 border-red-200", dot: "bg-red-500" },
+                  }[record.status] || { zh: record.status, it: record.status, color: "bg-slate-100", dot: "bg-slate-500" };
+
+                  const docTypeLabels: Record<string, { zh: string; it: string }> = {
+                    policy: { zh: "政策文件", it: "Documento politico" },
+                    press: { zh: "新闻稿", it: "Comunicato stampa" },
+                    event: { zh: "活动通告", it: "Avviso di evento" },
+                  };
+                  const docTypeLabel = docTypeLabels[record.docType]?.[appLang] || record.docType;
+
+                  return (
+                    <div
+                      key={record.id}
+                      className="rounded-xl border border-charcoal-100 overflow-hidden bg-white"
+                    >
+                      <button
+                        onClick={() => setExpandedPolishId(isExpanded ? null : record.id)}
+                        className="w-full flex items-start gap-3 p-4 hover:bg-warm-ivory-50/50 transition-colors text-left"
+                      >
+                        <div className="shrink-0 mt-0.5">
+                          <div className={cn(
+                            "flex items-center gap-1.5 px-2 py-0.5 rounded-md border",
+                            statusConfig.color
+                          )}>
+                            <span className={cn("w-1.5 h-1.5 rounded-full", statusConfig.dot)} />
+                            <span className="text-[11px] font-medium">{statusConfig[appLang]}</span>
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <span className="text-xs font-mono text-charcoal-500 bg-charcoal-100 px-1.5 py-0.5 rounded">
+                              {record.ticketId}
+                            </span>
+                            <span className="text-xs text-charcoal-400">·</span>
+                            <span className="text-xs text-charcoal-600">{docTypeLabel}</span>
+                            {record.urgency === "urgent" && (
+                              <>
+                                <span className="text-xs text-charcoal-400">·</span>
+                                <span className="text-xs text-cn-red-600 font-medium flex items-center gap-0.5">
+                                  <Zap className="w-3 h-3" />
+                                  {appLang === "zh" ? "加急" : "Urgente"}
+                                </span>
+                              </>
+                            )}
+                            {record.termScore !== undefined && (
+                              <>
+                                <span className="text-xs text-charcoal-400">·</span>
+                                <span className={cn(
+                                  "text-xs font-medium",
+                                  record.termScore >= 93 ? "text-emerald-600" :
+                                  record.termScore >= 88 ? "text-amber-600" : "text-cn-red-600"
+                                )}>
+                                  {appLang === "zh" ? `术语 ${record.termScore}%` : `Termini ${record.termScore}%`}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                          <p className="text-sm text-charcoal-700 line-clamp-2 mb-1">
+                            {record.sourceText}
+                          </p>
+                          <div className="flex items-center gap-3 text-[11px] text-charcoal-400">
+                            <span className="flex items-center gap-1">
+                              <UserCheck className="w-3 h-3" />
+                              {record.submitter}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {record.submitTime}
+                            </span>
+                            {record.reviewer && (
+                              <span className="flex items-center gap-1">
+                                <ShieldCheck className="w-3 h-3" />
+                                {record.reviewer}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <ChevronRight className={cn(
+                          "w-5 h-5 text-charcoal-400 shrink-0 mt-1 transition-transform",
+                          isExpanded && "rotate-90"
+                        )} />
+                      </button>
+
+                      {isExpanded && (
+                        <div className="border-t border-charcoal-100 p-4 bg-warm-ivory-50/30 space-y-4">
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div className="p-2.5 rounded-lg bg-white border border-charcoal-100">
+                              <span className="text-[10px] text-charcoal-400 uppercase tracking-wider block mb-1">
+                                {appLang === "zh" ? "提交人" : "Richiedente"}
+                              </span>
+                              <p className="text-xs font-medium text-charcoal-700 truncate">{record.submitter}</p>
+                            </div>
+                            <div className="p-2.5 rounded-lg bg-white border border-charcoal-100">
+                              <span className="text-[10px] text-charcoal-400 uppercase tracking-wider block mb-1">
+                                {appLang === "zh" ? "提交时间" : "Inviato il"}
+                              </span>
+                              <p className="text-xs font-medium text-charcoal-700">{record.submitTime}</p>
+                            </div>
+                            {record.reviewer && (
+                              <div className="p-2.5 rounded-lg bg-white border border-charcoal-100">
+                                <span className="text-[10px] text-charcoal-400 uppercase tracking-wider block mb-1">
+                                  {appLang === "zh" ? "审核译员" : "Revisore"}
+                                </span>
+                                <p className="text-xs font-medium text-charcoal-700 truncate">{record.reviewer}</p>
+                              </div>
+                            )}
+                            {record.reviewTime && (
+                              <div className="p-2.5 rounded-lg bg-white border border-charcoal-100">
+                                <span className="text-[10px] text-charcoal-400 uppercase tracking-wider block mb-1">
+                                  {appLang === "zh" ? "完成时间" : "Completato il"}
+                                </span>
+                                <p className="text-xs font-medium text-charcoal-700">{record.reviewTime}</p>
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <FileText className="w-3.5 h-3.5 text-slate-500" />
+                              <span className="text-xs font-medium text-slate-700">
+                                {appLang === "zh" ? "润色要求" : "Requisiti"}
+                              </span>
+                            </div>
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                              {record.requirement || "-"}
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="p-3 rounded-lg border border-charcoal-100 bg-white">
+                              <span className="text-[10px] font-medium text-charcoal-400 uppercase tracking-wider block mb-1">
+                                {appLang === "zh" ? "原文" : "Originale"}
+                              </span>
+                              <p className="text-xs text-charcoal-700 leading-relaxed whitespace-pre-wrap">
+                                {record.sourceText}
+                              </p>
+                            </div>
+                            <div className="p-3 rounded-lg border border-charcoal-100 bg-white">
+                              <span className="text-[10px] font-medium text-charcoal-400 uppercase tracking-wider block mb-1">
+                                {appLang === "zh" ? "机器翻译" : "Traduzione automatica"}
+                              </span>
+                              <p className="text-xs text-charcoal-700 leading-relaxed whitespace-pre-wrap">
+                                {record.translatedText}
+                              </p>
+                            </div>
+                            {record.polishedText && (
+                              <div className="p-3 rounded-lg border border-emerald-200 bg-emerald-50/30">
+                                <span className="text-[10px] font-medium text-emerald-600 uppercase tracking-wider block mb-1">
+                                  {appLang === "zh" ? "润色后版本" : "Versione revisionata"}
+                                </span>
+                                <p className="text-xs text-charcoal-700 leading-relaxed whitespace-pre-wrap">
+                                  {record.polishedText}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+
+                          {record.reviewComment && (
+                            <div className="p-3 rounded-lg bg-blue-50/50 border border-blue-200/50">
+                              <div className="flex items-center gap-1.5 mb-1.5">
+                                <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
+                                <span className="text-xs font-medium text-blue-800">
+                                  {appLang === "zh" ? "译员审核意见" : "Parere del revisore"}
+                                </span>
+                              </div>
+                              <p className="text-xs text-blue-700 leading-relaxed">{record.reviewComment}</p>
+                            </div>
+                          )}
+
+                          {record.inconsistentTerms && record.inconsistentTerms.length > 0 && (
+                            <div className="p-3 rounded-lg bg-amber-50 border border-amber-200">
+                              <div className="flex items-center gap-1.5 mb-1.5">
+                                <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                                <span className="text-xs font-medium text-amber-800">
+                                  {appLang === "zh" ? "不一致术语（修正前）" : "Termini incoerenti (prima)"}
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {record.inconsistentTerms.map((t, i) => (
+                                  <span key={i} className="text-[11px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">
+                                    {t}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="pt-2 border-t border-charcoal-100">
+                            <div className="flex items-center gap-2 text-[11px] text-charcoal-500">
+                              <div className="flex-1 h-px bg-charcoal-100" />
+                              <span>{appLang === "zh" ? "工单流转记录" : "Tracciamento ticket"}</span>
+                              <div className="flex-1 h-px bg-charcoal-100" />
+                            </div>
+                            <div className="mt-3 space-y-2 pl-2 border-l-2 border-charcoal-100">
+                              <div className="relative pl-4">
+                                <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
+                                <p className="text-xs text-charcoal-700 font-medium">
+                                  {appLang === "zh" ? "工单创建" : "Ticket creato"}
+                                </p>
+                                <p className="text-[11px] text-charcoal-400 mt-0.5">
+                                  {record.submitter} · {record.submitTime}
+                                </p>
+                              </div>
+                              {record.status !== "submitted" && (
+                                <div className="relative pl-4">
+                                  <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-amber-500 border-2 border-white" />
+                                  <p className="text-xs text-charcoal-700 font-medium">
+                                    {appLang === "zh" ? "译员接单审核" : "Revisore assegnato"}
+                                  </p>
+                                  <p className="text-[11px] text-charcoal-400 mt-0.5">
+                                    {record.reviewer || (appLang === "zh" ? "系统自动分配" : "Assegnazione automatica")}
+                                    {record.reviewTime ? ` · ${record.reviewTime}` : ""}
+                                  </p>
+                                </div>
+                              )}
+                              {record.status === "completed" && (
+                                <div className="relative pl-4">
+                                  <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-emerald-600 border-2 border-white" />
+                                  <p className="text-xs text-charcoal-700 font-medium">
+                                    {appLang === "zh" ? "润色完成" : "Revisione completata"}
+                                  </p>
+                                  <p className="text-[11px] text-charcoal-400 mt-0.5">
+                                    {record.reviewer || "-"} · {record.reviewTime || "-"}
+                                  </p>
+                                </div>
+                              )}
+                              {record.status === "rejected" && (
+                                <div className="relative pl-4">
+                                  <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-red-500 border-2 border-white" />
+                                  <p className="text-xs text-red-700 font-medium">
+                                    {appLang === "zh" ? "工单已拒绝" : "Richiesta rifiutata"}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-warm-ivory-50 to-white py-8">
@@ -942,6 +1545,69 @@ export default function Translate() {
               : "Motore di traduzione professionale bilingue cinese-italiano, con verifica terminologica, flusso di revisione umana e tracciabilità"}
           </p>
         </div>
+
+        {user?.role === "translator" && (
+          <div className="mb-4 p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center">
+                <LayoutDashboard className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-emerald-800 text-sm">
+                  {appLang === "zh" ? "欢迎回来，专业译员" : "Bentornato, traduttore professionista"}
+                </h4>
+                <p className="text-xs text-emerald-600">
+                  {appLang === "zh"
+                    ? `登录账号：${user.nameZh || user.email}`
+                    : `Account: ${user.nameIt || user.email}`}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => navigate("/profile?tab=dashboard-translator")}
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-elegant hover:from-emerald-700 hover:to-teal-700"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              {appLang === "zh" ? "前往译员工作台" : "Vai alla dashboard"}
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {showLoginHint && !user && targetText && (
+          <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-start gap-3 flex-1">
+              <div className="w-10 h-10 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center shrink-0 mt-0.5">
+                <LogIn className="w-5 h-5 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-blue-800 text-sm mb-0.5">
+                  {appLang === "zh" ? "登录后可保存翻译历史和申请人工润色" : "Accedi per salvare la cronologia e richiedere la revisione umana"}
+                </h4>
+                <p className="text-xs text-blue-600">
+                  {appLang === "zh"
+                    ? "登录账号即可享受云端历史同步、专业译员润色、工单追踪等完整服务"
+                    : "Sincronizzazione cloud, revisione di traduttori professionisti, tracciamento richieste"}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setShowLoginHint(false)}
+                className="p-2 rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-100/50 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setLoginModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-lg transition-all bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-elegant hover:from-blue-700 hover:to-indigo-700"
+              >
+                <LogIn className="w-4 h-4" />
+                {appLang === "zh" ? "立即登录" : "Accedi ora"}
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="flex flex-wrap gap-2 mb-4">
           {(["policy", "press", "event"] as DocTemplate[]).map((tpl) => {
@@ -1018,7 +1684,6 @@ export default function Translate() {
                 <button
                   onClick={handleFileUpload}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-warm-gold-500/50 hover:text-warm-gold-700 transition-colors"
-                  title={appLang === "zh" ? "上传文档" : "Carica documento"}
                 >
                   <FileUp className="w-4 h-4" />
                   <span className="hidden sm:inline">
@@ -1028,7 +1693,6 @@ export default function Translate() {
                 <button
                   onClick={handleClear}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-cn-red-500/50 hover:text-cn-red-600 transition-colors"
-                  title={appLang === "zh" ? "清空" : "Svuota"}
                 >
                   <Trash2 className="w-4 h-4" />
                   <span className="hidden sm:inline">
@@ -1047,12 +1711,8 @@ export default function Translate() {
                 >
                   <Sparkles className="w-4 h-4" />
                   {isTranslating
-                    ? appLang === "zh"
-                      ? "翻译中..."
-                      : "Traduzione..."
-                    : appLang === "zh"
-                    ? "翻译"
-                    : "Traduci"}
+                    ? appLang === "zh" ? "翻译中..." : "Traduzione..."
+                    : appLang === "zh" ? "翻译" : "Traduci"}
                 </button>
               </div>
             </div>
@@ -1074,7 +1734,6 @@ export default function Translate() {
               <button
                 onClick={swapLanguages}
                 className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-warm-gold-500/50 hover:text-warm-gold-700 hover:bg-warm-gold-50 transition-all"
-                title={appLang === "zh" ? "交换语言" : "Scambia lingue"}
               >
                 <ArrowLeftRight className="w-4 h-4" />
               </button>
@@ -1144,7 +1803,6 @@ export default function Translate() {
                     onClick={handleCopy}
                     disabled={!targetText}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-charcoal-200 bg-white text-charcoal-600 hover:border-warm-gold-500/50 hover:text-warm-gold-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    title={appLang === "zh" ? "复制结果" : "Copia risultato"}
                   >
                     {copied ? (
                       <Check className="w-4 h-4 text-emerald-600" />
@@ -1153,12 +1811,8 @@ export default function Translate() {
                     )}
                     <span className="hidden sm:inline">
                       {copied
-                        ? appLang === "zh"
-                          ? "已复制"
-                          : "Copiato"
-                        : appLang === "zh"
-                        ? "复制"
-                        : "Copia"}
+                        ? appLang === "zh" ? "已复制" : "Copiato"
+                        : appLang === "zh" ? "复制" : "Copia"}
                     </span>
                   </button>
                   <button
@@ -1169,7 +1823,6 @@ export default function Translate() {
                         ? "border-warm-gold-300 bg-warm-gold-50 text-warm-gold-700"
                         : "border-charcoal-200 bg-white text-charcoal-600 hover:border-warm-gold-500/50 hover:text-warm-gold-700"
                     )}
-                    title={appLang === "zh" ? "收藏" : "Preferiti"}
                   >
                     <Star
                       className={cn(
@@ -1253,7 +1906,7 @@ export default function Translate() {
               ) : (
                 <div>
                   {polishedText ? (
-                    renderDiff()
+                    renderTripleDiff()
                   ) : (
                     <div className="text-center py-12 text-charcoal-400">
                       <UserCheck className="w-10 h-10 mx-auto mb-3 opacity-50" />
@@ -1269,6 +1922,8 @@ export default function Translate() {
             </div>
           </div>
         )}
+
+        {renderPolishRecordsPanel()}
 
         {renderHistoryPanel()}
       </div>

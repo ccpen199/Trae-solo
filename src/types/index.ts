@@ -6,13 +6,63 @@ export type ProjectStage = 'planning' | 'negotiation' | 'implementation' | 'comp
 
 export type ReviewStatus = 'pending' | 'approved' | 'rejected'
 
+export type UserRole = 'government' | 'culture' | 'public' | 'translator' | 'reviewer' | 'admin'
+
 export interface User {
   id: string
   email: string
   nameZh: string
   nameIt: string
-  role: string
+  role: UserRole
+  organizationZh?: string
+  organizationIt?: string
   avatar?: string
+  phone?: string
+  verifiedAt?: string
+}
+
+export interface LoginCredentials {
+  email: string
+  password: string
+  role: UserRole
+}
+
+export interface StageHistoryRecord {
+  id: string
+  projectId: string
+  fromStage: ProjectStage | null
+  toStage: ProjectStage
+  operator: string
+  remark: string
+  timestamp: string
+}
+
+export interface AttachmentUploadResult {
+  id: string
+  name: string
+  url: string
+  type: string
+  size: number
+  uploadedAt: string
+}
+
+export interface PolishWorkflowRecord {
+  id: string
+  ticketId: string
+  sourceText: string
+  translatedText: string
+  polishedText?: string
+  docType: string
+  urgency: 'normal' | 'urgent'
+  requirement: string
+  submitter: string
+  submitTime: string
+  reviewer?: string
+  reviewTime?: string
+  reviewComment?: string
+  status: 'submitted' | 'reviewing' | 'completed' | 'rejected'
+  termScore?: number
+  inconsistentTerms?: string[]
 }
 
 export interface ProjectPartner {
