@@ -117,13 +117,13 @@ function ParamsForm({
     >
       {!compact && (
         <Alert
-        type="info"
-        showIcon
-        icon={<InfoCircleOutlined />}
-        message="参数下发说明"
-        description="参数将立即下发到设备，设备收到后立即生效。建议确认参数无误后提交。"
-        style={{ marginBottom: 16 }}
-      />
+          type="info"
+          showIcon
+          icon={<InfoCircleOutlined />}
+          message="参数下发说明"
+          description="参数将立即下发到设备，设备收到后立即生效。建议确认参数无误后提交。"
+          style={{ marginBottom: 16 }}
+        />
       )}
 
       <Row gutter={compact ? 8 : 16}>
@@ -131,7 +131,7 @@ function ParamsForm({
           <Card
             size="small"
             bordered={false}
-            style={{ borderRadius: 10, background: '#1890ff08, border: `1px solid #1890ff15` }}
+            style={{ borderRadius: 10, background: "#1890ff08", border: "1px solid #1890ff15" }}
             bodyStyle={{ padding: compact ? 12 : 16 }}
           >
             <Space align="center" style={{ marginBottom: compact ? 6 : 10 }}>
@@ -146,15 +146,15 @@ function ParamsForm({
               <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
                 <div style={{ fontSize: 22, fontWeight: 600, color: '#1890ff' }}>
                   <Form.Item name="targetTemperature" noStyle>
-                  <InputNumber
-                    min={5}
-                    max={80}
-                    style={{ width: 80, textAlign: 'right' }}
-                    controls={false}
-                    style={{ width: 80, border: 'none', background: 'transparent', boxShadow: 'none', fontSize: 22, fontWeight: 600, color: '#1890ff', padding: 0, textAlign: 'right' }}
-                  />
-                </Form.Item>
-                <span style={{ fontSize: 14 }}>°C</span>
+                    <InputNumber
+                      min={5}
+                      max={80}
+                      controls={false}
+                      style={{ width: 80, border: 'none', background: 'transparent', boxShadow: 'none', fontSize: 22, fontWeight: 600, color: '#1890ff', padding: 0, textAlign: 'right' }}
+                    />
+                  </Form.Item>
+                  <span style={{ fontSize: 14 }}>°C</span>
+                </div>
               </div>
             </Space>
             <Form.Item name="targetTemperature" noStyle rules={[{ required: true, message: '请设置温度' }]}>

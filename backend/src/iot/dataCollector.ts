@@ -80,11 +80,11 @@ export interface DataProcessResult {
 
 class DataCollectorService {
   private dataProcessors: Map<DataType, (deviceId: string, data: any, timestamp: number, transactionNo: string, nonce: string) => Promise<DataProcessResult>>;
+  private subscriptionsSetup: boolean = false;
 
   constructor() {
     this.dataProcessors = new Map();
     this.initializeProcessors();
-    this.setupSubscriptions();
   }
 
   private initializeProcessors(): void {
@@ -94,7 +94,20 @@ class DataCollectorService {
     this.dataProcessors.set(DataType.ALERT, this.processAlert.bind(this));
   }
 
-  private setupSubscriptions(): void {
+  public async init(): Promise<void> {
+    if (this.subscriptionsSetup) {
+      return;
+    }
+    await this.setupSubscriptions();
+    this.subscriptionsSetup = true;
+  }
+
+  private async setupSubscriptions(): Promise<void> {
+    if (!mqttClient.getConnectionStatus()) {
+      logger.warn('[DataCollector] MQTT 未连接，跳过订阅设置');
+      return;
+    }
+
     const topics = [
       'device/+/heartbeat',
       'device/+/telemetry',
@@ -103,7 +116,11 @@ class DataCollectorService {
     ];
 
     for (const topic of topics) {
-      mqttClient.subscribe(topic, this.handleDataMessage.bind(this));
+      try {
+        await mqttClient.subscribe(topic, this.handleDataMessage.bind(this));
+      } catch (error) {
+        logger.error(`[DataCollector] 订阅失败 - Topic: ${topic}`, (error as Error).message);
+      }
     }
   }
 

@@ -106,7 +106,7 @@ function FirmwareUpload({ modelOptions, onSuccess, onCancel }: FirmwareUploadPro
       const totalSteps = 20
       for (let i = 1; i <= totalSteps; i++) {
         await new Promise(resolve => setTimeout(resolve, 60 + Math.random() * 80))
-        setUploadProgress(Math.round((i / totalSteps) * 100)
+        setUploadProgress(Math.round((i / totalSteps) * 100))
       }
 
       const md5 = await mockMD5(file.originFileObj)
@@ -284,7 +284,7 @@ function FirmwareUpload({ modelOptions, onSuccess, onCancel }: FirmwareUploadPro
               ]}
             >
               <Input
-                prefix={<FileZipOutlined style={{ color: token.colorTextSecondary }} />
+                prefix={<FileZipOutlined style={{ color: token.colorTextSecondary }} />}
                 placeholder="例如：v2.3.5"
               />
             </Form.Item>

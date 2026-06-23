@@ -9,6 +9,7 @@ import { logger } from '@utils/logger';
 import { errorHandler, notFoundHandler } from '@middleware/errorHandler';
 import { AntiReplayProtection } from '@security/antiReplay';
 import mqttClient from '@iot/mqttClient';
+import { dataCollectorService } from '@iot/dataCollector';
 import apiRoutes from './routes';
 import databaseManager from './database';
 
@@ -19,6 +20,11 @@ class AppServer {
   private redisClient: Redis | null = null;
   private server: any = null;
   private isShuttingDown: boolean = false;
+  private serviceStatus = {
+    database: false,
+    redis: false,
+    mqtt: false,
+  };
 
   constructor() {
     this.app = express();
@@ -123,58 +129,89 @@ class AppServer {
     this.app.use('/api/v1/iot/device-auth', authLimiter);
   }
 
-  private async connectRedis(): Promise<void> {
-    const { host, port, password, db } = config.redis;
+  private async connectRedis(): Promise<boolean> {
+    try {
+      const { host, port, password, db } = config.redis;
 
-    this.redisClient = new Redis({
-      host,
-      port,
-      password: password || undefined,
-      db,
-      maxRetriesPerRequest: 3,
-      enableReadyCheck: true,
-      lazyConnect: true,
-      retryStrategy: (times) => {
-        if (times > 10) {
-          logger.error('[Redis] 已达到最大重连次数，停止重连');
-          return null;
+      this.redisClient = new Redis({
+        host,
+        port,
+        password: password || undefined,
+        db,
+        maxRetriesPerRequest: 3,
+        enableReadyCheck: true,
+        lazyConnect: true,
+        connectTimeout: 5000,
+        retryStrategy: (times) => {
+          if (times > 3) {
+            logger.error('[Redis] 已达到最大重连次数，停止重连');
+            this.serviceStatus.redis = false;
+            return null;
+          }
+          const delay = Math.min(times * 1000, 5000);
+          logger.warn(`[Redis] 重连中... 第 ${times} 次，延迟 ${delay}ms`);
+          return delay;
+        },
+      });
+
+      this.redisClient.on('connect', () => {
+        this.serviceStatus.redis = true;
+        logger.info(`[Redis] 连接成功: ${host}:${port}, db=${db}`);
+      });
+
+      this.redisClient.on('error', (error) => {
+        logger.error('[Redis] 连接错误:', (error as Error).message);
+      });
+
+      this.redisClient.on('ready', () => {
+        this.serviceStatus.redis = true;
+        logger.info('[Redis] 连接就绪');
+      });
+
+      this.redisClient.on('close', () => {
+        this.serviceStatus.redis = false;
+        if (!this.isShuttingDown) {
+          logger.warn('[Redis] 连接已关闭');
         }
-        const delay = Math.min(times * 1000, 10000);
-        logger.warn(`[Redis] 重连中... 第 ${times} 次，延迟 ${delay}ms`);
-        return delay;
-      },
-    });
+      });
 
-    this.redisClient.on('connect', () => {
-      logger.info(`[Redis] 连接成功: ${host}:${port}, db=${db}`);
-    });
+      this.redisClient.on('reconnecting', () => {
+        logger.warn('[Redis] 正在重连...');
+      });
 
-    this.redisClient.on('error', (error) => {
-      logger.error('[Redis] 连接错误:', error);
-    });
-
-    this.redisClient.on('ready', () => {
-      logger.info('[Redis] 连接就绪');
-    });
-
-    this.redisClient.on('close', () => {
-      if (!this.isShuttingDown) {
-        logger.warn('[Redis] 连接已关闭');
-      }
-    });
-
-    this.redisClient.on('reconnecting', () => {
-      logger.warn('[Redis] 正在重连...');
-    });
-
-    await this.redisClient.connect();
+      await this.redisClient.connect();
+      return true;
+    } catch (error) {
+      logger.error('[Redis] 初始连接失败，将在后台重试:', (error as Error).message);
+      this.serviceStatus.redis = false;
+      return false;
+    }
   }
 
   private async initializeComponents(): Promise<void> {
-    AntiReplayProtection.init(this.redisClient!);
-    logger.info('[Security] AntiReplayProtection 初始化完成');
+    if (this.redisClient) {
+      AntiReplayProtection.init(this.redisClient);
+      logger.info('[Security] AntiReplayProtection 初始化完成');
+    } else {
+      logger.warn('[Security] Redis 未连接，AntiReplayProtection 将使用内存模式');
+      AntiReplayProtection.init(null);
+    }
 
     logger.info('[MQTT] MqttClientManager 正在初始化...');
+    try {
+      const mqttOk = await mqttClient.connect();
+      this.serviceStatus.mqtt = mqttOk;
+      if (mqttOk) {
+        logger.info('[MQTT] MqttClientManager 连接成功');
+        await dataCollectorService.init();
+        logger.info('[DataCollector] MQTT 订阅设置完成');
+      } else {
+        logger.warn('[MQTT] 连接失败，将在后台重试');
+      }
+    } catch (error) {
+      logger.error('[MQTT] 连接异常，降级运行:', (error as Error).message);
+      this.serviceStatus.mqtt = false;
+    }
   }
 
   private configureRoutes(): void {
@@ -185,6 +222,21 @@ class AppServer {
         version: '1.0.0',
         docs: '/api/v1',
         env: config.server.env,
+        services: {
+          ...this.getServiceStatus(),
+        },
+      });
+    });
+
+    this.app.get('/health', (_req: Request, res: Response) => {
+      const status = this.getServiceStatus();
+      const allOk = status.database && status.redis;
+      res.status(allOk ? 200 : 206).json({
+        success: true,
+        message: allOk ? 'All services are healthy' : 'Some services are degraded',
+        timestamp: new Date().toISOString(),
+        version: '1.0.0',
+        services: status,
       });
     });
 
@@ -192,6 +244,15 @@ class AppServer {
 
     this.app.use(notFoundHandler);
     this.app.use(errorHandler);
+  }
+
+  private getServiceStatus() {
+    return {
+      database: this.serviceStatus.database || databaseManager.getConnectionStatus(),
+      redis: this.serviceStatus.redis,
+      mqtt: this.serviceStatus.mqtt,
+      api: true,
+    };
   }
 
   private setupGracefulShutdown(): void {
@@ -265,12 +326,29 @@ class AppServer {
       this.configureMiddleware();
       logger.info('[Server] 中间件配置完成');
 
-      await this.connectRedis();
+      try {
+        const redisOk = await this.connectRedis();
+        this.serviceStatus.redis = redisOk;
+        logger.info(`[Server] Redis 连接状态: ${redisOk ? '成功' : '失败，降级运行'}`);
+      } catch (e) {
+        logger.warn('[Server] Redis 连接异常，降级运行');
+        this.serviceStatus.redis = false;
+      }
 
-      await databaseManager.connect();
-      logger.info('[Server] 数据库连接管理初始化完成');
+      try {
+        const dbOk = await databaseManager.connect();
+        this.serviceStatus.database = dbOk;
+        logger.info(`[Server] 数据库连接状态: ${dbOk ? '成功' : '失败，后台重试中'}`);
+      } catch (e) {
+        logger.warn('[Server] 数据库连接异常，后台重试中');
+        this.serviceStatus.database = false;
+      }
 
-      await this.initializeComponents();
+      try {
+        await this.initializeComponents();
+      } catch (e) {
+        logger.warn('[Server] 组件初始化异常，部分功能降级');
+      }
 
       this.configureRoutes();
       logger.info('[Server] 路由配置完成');
@@ -282,7 +360,8 @@ class AppServer {
       this.server = this.app.listen(port, () => {
         logger.info(`[Server] API Server 已启动，监听端口: ${port}`);
         logger.info(`[Server] API 基础路径: http://localhost:${port}/api/v1`);
-        logger.info(`[Server] 健康检查: http://localhost:${port}/api/v1/health`);
+        logger.info(`[Server] 健康检查: http://localhost:${port}/health`);
+        logger.info(`[Server] 服务状态: DB=${this.serviceStatus.database ? 'OK' : 'DEGRADED'}, Redis=${this.serviceStatus.redis ? 'OK' : 'DEGRADED'}, MQTT=${this.serviceStatus.mqtt ? 'OK' : 'DEGRADED'}`);
       });
 
       this.server.on('error', (error: any) => {

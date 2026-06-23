@@ -21,17 +21,20 @@ class MQTTClientManager {
   private reconnectAttempts: number = 0;
   private maxReconnectAttempts: number = 10;
   private isConnected: boolean = false;
+  private isInitialized: boolean = false;
 
-  constructor() {
-    this.initializeClient();
-  }
+  constructor() {}
 
   private initializeClient(): void {
+    if (this.isInitialized && this.client) {
+      return;
+    }
+
     const options: IClientOptions = {
       clientId: `server_${Date.now()}`,
       clean: true,
-      connectTimeout: 4000,
-      reconnectPeriod: 1000,
+      connectTimeout: 5000,
+      reconnectPeriod: 2000,
       username: config.mqtt.username,
       password: config.mqtt.password,
       keepalive: 60,
@@ -46,6 +49,7 @@ class MQTTClientManager {
     logger.info(`[MQTT] 正在连接到 EMQX Broker: ${brokerUrl}`);
 
     this.client = mqtt.connect(brokerUrl, options);
+    this.isInitialized = true;
 
     this.client.on('connect', () => {
       this.isConnected = true;
@@ -248,6 +252,38 @@ class MQTTClientManager {
       this.isConnected = false;
       logger.info('[MQTT] 已断开连接');
     }
+  }
+
+  public async connect(): Promise<boolean> {
+    return new Promise((resolve) => {
+      try {
+        this.initializeClient();
+
+        if (!this.client) {
+          resolve(false);
+          return;
+        }
+
+        const timeout = setTimeout(() => {
+          logger.warn('[MQTT] 连接超时，降级运行');
+          resolve(false);
+        }, 5000);
+
+        this.client.once('connect', () => {
+          clearTimeout(timeout);
+          resolve(true);
+        });
+
+        this.client.once('error', (error) => {
+          clearTimeout(timeout);
+          logger.warn('[MQTT] 连接失败，降级运行:', (error as Error).message);
+          resolve(false);
+        });
+      } catch (error) {
+        logger.warn('[MQTT] 连接异常，降级运行:', (error as Error).message);
+        resolve(false);
+      }
+    });
   }
 
   public on(event: string, callback: (...args: any[]) => void): void {

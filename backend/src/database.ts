@@ -18,15 +18,15 @@ class DatabaseManager {
     return DatabaseManager.instance;
   }
 
-  public async connect(): Promise<void> {
+  public async connect(): Promise<boolean> {
     try {
       const { uri, options } = config.database;
 
       const mongooseOptions: mongoose.ConnectOptions = {
         maxPoolSize: options.maxPoolSize,
-        serverSelectionTimeoutMS: options.serverSelectionTimeoutMS,
-        socketTimeoutMS: options.socketTimeoutMS,
-        connectTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 10000,
+        connectTimeoutMS: 5000,
         heartbeatFrequencyMS: 10000,
         autoIndex: config.server.env !== 'production',
       };
@@ -38,10 +38,11 @@ class DatabaseManager {
       logger.info(`[Database] 正在连接 MongoDB: ${uri.replace(/\/\/[^@]+@/, '//***:***@')}`);
 
       await mongoose.connect(uri, mongooseOptions);
+      return true;
     } catch (error) {
-      logger.error('[Database] 初始连接失败:', error);
+      logger.error('[Database] 初始连接失败，将在后台重试:', (error as Error).message);
       this.scheduleReconnect();
-      throw error;
+      return false;
     }
   }
 
