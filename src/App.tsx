@@ -12,6 +12,7 @@ import ServiceMap from "@/pages/ServiceMap";
 import Services from "@/pages/Services";
 import AdminContent from "@/pages/AdminContent";
 import AdminAnalytics from "@/pages/AdminAnalytics";
+import AdminReview from "@/pages/AdminReview";
 import ElderlySettings from "@/pages/ElderlySettings";
 import ServiceDetail from "@/pages/ServiceDetail";
 import { initAccessibility } from "@/store";
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/admin/content" element={<AdminContent />} />
           <Route path="/admin/analytics" element={<AdminAnalytics />} />
+          <Route path="/admin/review" element={<AdminReview />} />
           <Route path="/elderly-settings" element={<ElderlySettings />} />
           <Route path="*" element={
             <div className="min-h-[60vh] flex items-center justify-center">

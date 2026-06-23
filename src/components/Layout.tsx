@@ -17,6 +17,11 @@ import {
   Sparkles,
   Eye,
   ShieldCheck,
+  ChevronDown,
+  Tag,
+  Flame,
+  ShieldAlert,
+  FileCheck,
 } from 'lucide-react';
 import { useAppStore } from '@/store';
 import { cn } from '@/lib/utils';
@@ -28,12 +33,20 @@ const navItems = [
   { path: '/workorders', label: '工单中心', icon: ClipboardList },
   { path: '/map', label: '服务地图', icon: Map },
   { path: '/emergency', label: '应急预警', icon: Phone },
-  { path: '/admin/analytics', label: '内容中台', icon: BarChart3 },
+];
+
+const adminSubNav = [
+  { path: '/admin/content', label: '稿件打标工作台', icon: Tag, desc: 'AI自动打标+人工调整' },
+  { path: '/admin/analytics', label: '热点事件聚类', icon: Flame, desc: '话题聚类与传播分析' },
+  { path: '/admin/analytics', label: '舆情风险分级', icon: ShieldAlert, desc: '情感分析+四级风险', hash: '#sentiment' },
+  { path: '/admin/review', label: '内容复查记录', icon: FileCheck, desc: '人工审核台账' },
 ];
 
 const adminItems = [
-  { path: '/admin/content', label: '稿件管理与打标', icon: Newspaper },
-  { path: '/admin/analytics', label: '舆情与热点聚类', icon: BarChart3 },
+  { path: '/admin/content', label: '稿件打标工作台', icon: Tag },
+  { path: '/admin/analytics', label: '热点事件聚类', icon: Flame },
+  { path: '/admin/analytics', label: '舆情风险分级', icon: ShieldAlert, hash: '#sentiment' },
+  { path: '/admin/review', label: '内容复查记录', icon: FileCheck },
   { path: '/elderly-settings', label: '适老设置', icon: Sparkles },
 ];
 
@@ -73,6 +86,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { user, setUser, toggleElderlyMode, toggleHighContrast, elderlyMode, highContrast } = useAppStore();
   const [userMenu, setUserMenu] = useState(false);
+  const [adminMenuOpen, setAdminMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -83,6 +97,7 @@ export function Header() {
   useEffect(() => {
     setMobileOpen(false);
     setUserMenu(false);
+    setAdminMenuOpen(false);
   }, [location.pathname]);
 
   const isActive = (path: string) =>
@@ -134,6 +149,49 @@ export function Header() {
                 </Link>
               );
             })}
+            <div className="relative">
+              <button
+                onClick={() => setAdminMenuOpen(!adminMenuOpen)}
+                className={cn(
+                  'px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-all duration-200',
+                  location.pathname.startsWith('/admin')
+                    ? 'bg-gov-50 text-gov-600'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gov-600',
+                )}
+              >
+                <BarChart3 className="w-4 h-4" />
+                内容中台
+                <ChevronDown className={cn('w-3.5 h-3.5 transition-transform', adminMenuOpen && 'rotate-180')} />
+              </button>
+              {adminMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-[290px] bg-white rounded-xl shadow-card-hover border border-gray-100 py-2 animate-fade-in-up z-50">
+                  <div className="px-4 py-2 border-b border-gray-50 mb-1">
+                    <p className="text-xs text-gray-500">内容治理工作台</p>
+                  </div>
+                  {adminSubNav.map((sub) => {
+                    const SubIcon = sub.icon;
+                    const to = sub.hash ? `${sub.path}${sub.hash}` : sub.path;
+                    return (
+                      <Link
+                        key={sub.label}
+                        to={to}
+                        onClick={() => setAdminMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-gov-50 hover:text-gov-600 transition-colors"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-gov-50 flex items-center justify-center text-gov-600 flex-shrink-0">
+                          <SubIcon className="w-4 h-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-800">{sub.label}</p>
+                          <p className="text-xs text-gray-400 truncate">{sub.desc}</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </nav>
 
           <div className="flex items-center gap-2">

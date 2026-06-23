@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ChevronRight,
@@ -10,6 +10,9 @@ import {
   FileCheck,
   MapPin,
   Play,
+  Pause,
+  Volume2,
+  VolumeX,
   Mic,
   MicOff,
   ShieldAlert,
@@ -19,11 +22,16 @@ import {
   Droplets,
   Search,
   Video,
-  Volume2,
   Grid3x3,
   Map as MapIcon,
+  CheckCircle2,
+  ArrowRight,
+  Maximize2,
+  X,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAppStore, speak } from '@/store';
 
 const mockNews = [
   {
@@ -91,9 +99,51 @@ const quickServices = [
 ];
 
 const videoGuides = [
-  { id: 'v1', title: '社保查询操作指南', duration: '2:30', cover: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Chinese%20elderly%20person%20using%20smartphone%20for%20social%20security%20query%2C%20warm%20lighting&image_size=landscape_4_3' },
-  { id: 'v2', title: '公积金提取视频讲解', duration: '3:15', cover: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Housing%20fund%20extraction%20tutorial%20on%20phone%20screen%2C%20clean%20UI&image_size=landscape_4_3' },
-  { id: 'v3', title: '交通违章处理流程', duration: '1:50', cover: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Traffic%20violation%20processing%20app%20interface%2C%20modern%20design&image_size=landscape_4_3' },
+  {
+    id: 'v1',
+    title: '社保查询操作指南',
+    duration: '2:30',
+    cover: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Chinese%20elderly%20person%20using%20smartphone%20for%20social%20security%20query%2C%20warm%20lighting&image_size=landscape_4_3',
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    route: '/services/socialsec',
+    cta: '立即查询社保',
+    steps: [
+      { n: 1, text: '点击"社保查询"按钮进入服务页' },
+      { n: 2, text: '输入本人18位身份证号码' },
+      { n: 3, text: '输入社保卡号后点击查询' },
+      { n: 4, text: '查看缴费明细、账户余额等信息' },
+    ],
+  },
+  {
+    id: 'v2',
+    title: '公积金提取视频讲解',
+    duration: '3:15',
+    cover: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Housing%20fund%20extraction%20tutorial%20on%20phone%20screen%2C%20clean%20UI&image_size=landscape_4_3',
+    src: 'https://www.w3schools.com/html/movie.mp4',
+    route: '/services/housingfund',
+    cta: '办理公积金提取',
+    steps: [
+      { n: 1, text: '进入公积金服务页面' },
+      { n: 2, text: '选择提取原因（购房/租房/退休等）' },
+      { n: 3, text: '上传相关证明材料照片' },
+      { n: 4, text: '提交申请，等待3-5个工作日审核' },
+    ],
+  },
+  {
+    id: 'v3',
+    title: '交通违章处理流程',
+    duration: '1:50',
+    cover: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Traffic%20violation%20processing%20app%20interface%2C%20modern%20design&image_size=landscape_4_3',
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    route: '/services/trafficfine',
+    cta: '查询并处理违章',
+    steps: [
+      { n: 1, text: '输入车牌号和车架号后6位' },
+      { n: 2, text: '查看违法记录详情' },
+      { n: 3, text: '在线确认并缴纳罚款' },
+      { n: 4, text: '获取电子处理凭证' },
+    ],
+  },
 ];
 
 const alertItems = [
@@ -117,21 +167,41 @@ const levelConfig = {
 
 export default function Home() {
   const navigate = useNavigate();
+  const { elderlyMode, highContrast, _forceRender } = useAppStore();
   const [isListening, setIsListening] = useState(false);
   const [voiceText, setVoiceText] = useState('');
+  const [voiceState, setVoiceState] = useState<'idle' | 'listening' | 'success' | 'not_supported' | 'denied' | 'fallback'>('idle');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchPanel, setShowSearchPanel] = useState(false);
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+  const [videoMuted, setVideoMuted] = useState(true);
   const [showSosModal, setShowSosModal] = useState(false);
   const [sosCalled, setSosCalled] = useState(false);
   const recognitionRef = useRef<any>(null);
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 
   const featuredNews = mockNews[0];
   const otherNews = mockNews.slice(1, 5);
 
   const quickSearchTerms = ['社保查询', '公积金提取', '违章处理', '暴雨预警', '医保缴费', '证件办理', '预约挂号', '公交线路'];
 
+  useEffect(() => {
+    if (_forceRender > 0) {
+      /* 触发重渲染 */
+    }
+  }, [_forceRender]);
+
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch { /* noop */ }
+      }
+    };
+  }, []);
+
   const handleSearch = (query: string) => {
     if (query.trim()) {
+      speak(`正在搜索${query}`);
       navigate(`/news?search=${encodeURIComponent(query.trim())}`);
     }
   };
@@ -139,7 +209,8 @@ export default function Home() {
   const startVoiceSearch = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      setVoiceText('voice_not_supported');
+      setVoiceState('not_supported');
+      speak('您的浏览器暂不支持语音搜索，请使用文字搜索');
       return;
     }
     try {
@@ -147,37 +218,62 @@ export default function Home() {
       recognition.lang = 'zh-CN';
       recognition.continuous = false;
       recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
+
       recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
         setVoiceText(transcript);
         if (event.results[0].isFinal) {
           setIsListening(false);
+          setVoiceState('success');
           setSearchQuery(transcript);
+          speak(`已识别：${transcript}，点击搜索按钮进行搜索`);
         }
       };
       recognition.onerror = (event: any) => {
         setIsListening(false);
-        if (event.error === 'not-allowed') {
-          setVoiceText('voice_denied');
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          setVoiceState('denied');
+          speak('麦克风权限未开启，请使用文字搜索或点击下方热门搜索词');
         } else {
-          setVoiceText('voice_fallback');
+          setVoiceState('fallback');
+          speak('语音识别暂不可用，请使用文字搜索');
         }
       };
       recognition.onend = () => setIsListening(false);
       recognitionRef.current = recognition;
       recognition.start();
       setIsListening(true);
+      setVoiceState('listening');
       setVoiceText('');
+      speak('请说话');
     } catch {
-      setVoiceText('voice_fallback');
+      setVoiceState('fallback');
     }
   };
 
   const stopVoiceSearch = () => {
     if (recognitionRef.current) {
-      recognitionRef.current.stop();
+      try { recognitionRef.current.stop(); } catch { /* noop */ }
     }
     setIsListening(false);
+  };
+
+  const toggleVideo = (videoId: string) => {
+    const newActive = activeVideoId === videoId ? null : videoId;
+    setActiveVideoId(newActive);
+    Object.keys(videoRefs.current).forEach((id) => {
+      const v = videoRefs.current[id];
+      if (!v) return;
+      if (id === newActive) {
+        v.currentTime = 0;
+        const p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(() => { /* noop */ });
+      } else {
+        v.pause();
+        v.currentTime = 0;
+      }
+    });
   };
 
   const handleSosCall = () => {
@@ -226,7 +322,10 @@ export default function Home() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="搜索新闻、服务、政策..."
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white/95 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-warm-400 shadow-lg text-base"
+                  className={cn(
+                    'w-full pl-12 pr-24 py-3.5 md:py-4 rounded-2xl bg-white/95 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-warm-400 shadow-lg',
+                    elderlyMode ? 'text-lg' : 'text-base',
+                  )}
                   onFocus={() => setShowSearchPanel(true)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && searchQuery.trim()) {
@@ -234,52 +333,69 @@ export default function Home() {
                     }
                   }}
                 />
+                {searchQuery.trim() && (
+                  <button
+                    onClick={() => handleSearch(searchQuery)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-2 rounded-xl bg-gradient-to-r from-warm-400 to-warm-500 text-white text-sm font-semibold hover:from-warm-500 hover:to-warm-600 transition-all shadow-md min-h-10"
+                  >
+                    搜索
+                  </button>
+                )}
               </div>
               <button
                 onClick={isListening ? stopVoiceSearch : startVoiceSearch}
                 className={cn(
-                  'w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all shadow-lg flex-shrink-0',
+                  'flex-shrink-0 rounded-2xl flex items-center justify-center transition-all shadow-lg',
+                  elderlyMode ? 'w-16 h-16 md:w-20 md:h-20' : 'w-12 h-12 md:w-14 md:h-14',
                   isListening
                     ? 'bg-red-500 text-white animate-pulse'
-                    : 'bg-white/20 backdrop-blur text-white hover:bg-white/30',
+                    : 'bg-white/20 backdrop-blur text-white hover:bg-white/30 border-2 border-white/30',
                 )}
                 title="语音搜索"
               >
-                {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
+                {isListening ? <MicOff className={cn(elderlyMode ? 'w-8 h-8' : 'w-6 h-6')} /> : <Mic className={cn(elderlyMode ? 'w-8 h-8' : 'w-6 h-6')} />}
               </button>
             </div>
-            {isListening && (
-              <div className="mb-4 p-4 rounded-xl bg-white/10 backdrop-blur animate-fade-in-up text-center">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <div className="w-3 h-3 rounded-full bg-red-400 animate-pulse" />
-                  <span className="text-white text-sm font-medium">正在聆听，请说话...</span>
+
+            {voiceState === 'listening' && (
+              <div className="mb-4 p-4 md:p-6 rounded-2xl bg-white/10 backdrop-blur animate-fade-in-up text-center border-2 border-red-400/50">
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-red-400 animate-pulse" />
+                  <span className={cn('text-white font-semibold', elderlyMode ? 'text-xl' : 'text-base')}>正在聆听，请说话...</span>
                 </div>
-                {voiceText && voiceText !== 'voice_not_supported' && voiceText !== 'voice_denied' && voiceText !== 'voice_fallback' && (
-                  <p className="text-white/80 text-lg mt-2">"{voiceText}"</p>
+                {voiceText && (
+                  <p className={cn('text-warm-300 font-bold mt-2', elderlyMode ? 'text-2xl' : 'text-lg')}>"{voiceText}"</p>
                 )}
+                <div className="flex justify-center gap-3 mt-4">
+                  <button
+                    onClick={stopVoiceSearch}
+                    className="px-5 py-2.5 rounded-xl bg-white/20 text-white text-sm font-medium hover:bg-white/30 transition-colors min-h-11"
+                  >
+                    停止录音
+                  </button>
+                  <button
+                    onClick={() => { setVoiceState('idle'); setIsListening(false); }}
+                    className="px-5 py-2.5 rounded-xl bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition-colors min-h-11"
+                  >
+                    取消
+                  </button>
+                </div>
               </div>
             )}
-            {voiceText === 'voice_not_supported' && (
-              <div className="mb-4 p-4 rounded-xl bg-warm-500/20 backdrop-blur text-white animate-fade-in-up">
-                <p className="font-medium mb-2">您的浏览器暂不支持语音搜索</p>
-                <p className="text-sm text-white/80">请使用上方搜索框输入关键词，或点击下方热门搜索词快速查找</p>
-              </div>
-            )}
-            {voiceText === 'voice_denied' && (
-              <div className="mb-4 p-4 rounded-xl bg-warm-500/20 backdrop-blur text-white animate-fade-in-up">
-                <p className="font-medium mb-2">麦克风权限未开启</p>
-                <p className="text-sm text-white/80">请在浏览器设置中允许麦克风访问，或使用搜索框输入文字</p>
-              </div>
-            )}
-            {voiceText === 'voice_fallback' && (
-              <div className="mb-4 p-4 rounded-xl bg-warm-500/20 backdrop-blur text-white animate-fade-in-up">
-                <p className="font-medium mb-2">语音识别暂不可用，请用文字搜索</p>
-                <div className="flex flex-wrap gap-2 mt-2">
+
+            {voiceState === 'not_supported' && (
+              <div className="mb-4 p-4 md:p-5 rounded-2xl bg-warm-500/20 backdrop-blur text-white animate-fade-in-up border-2 border-warm-400/50">
+                <p className={cn('font-bold mb-2', elderlyMode && 'text-xl')}>您的浏览器暂不支持语音搜索</p>
+                <p className="text-sm md:text-base text-white/90 mb-4">请使用上方搜索框输入关键词，或点击下方热门搜索词快速查找</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   {quickSearchTerms.map((term) => (
                     <button
                       key={term}
-                      onClick={() => { setSearchQuery(term); handleSearch(term); }}
-                      className="px-3 py-1.5 rounded-lg bg-white/20 text-sm hover:bg-white/30 transition-colors"
+                      onClick={() => { setSearchQuery(term); handleSearch(term); setVoiceState('idle'); }}
+                      className={cn(
+                        'px-3 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 transition-colors font-medium text-left',
+                        elderlyMode && 'text-lg min-h-14',
+                      )}
                     >
                       {term}
                     </button>
@@ -287,34 +403,105 @@ export default function Home() {
                 </div>
               </div>
             )}
-            {!isListening && voiceText && voiceText !== 'voice_not_supported' && voiceText !== 'voice_denied' && voiceText !== 'voice_fallback' && (
-              <div className="mb-4 p-3 rounded-xl bg-white/10 backdrop-blur text-sm flex items-center gap-2 animate-fade-in-up">
-                <Volume2 className="w-4 h-4 text-warm-300" />
-                <span>识别结果：</span>
-                <span className="font-semibold text-warm-300">"{voiceText}"</span>
-                <button
-                  onClick={() => handleSearch(voiceText)}
-                  className="ml-auto px-3 py-1 rounded-lg bg-warm-400 text-white text-xs font-medium hover:bg-warm-500 transition-colors"
-                >
-                  搜索
-                </button>
-                <button
-                  onClick={() => { setVoiceText(''); setSearchQuery(''); }}
-                  className="px-2 py-1 rounded-lg bg-white/10 text-white/80 text-xs hover:bg-white/20 transition-colors"
-                >
-                  清除
-                </button>
+
+            {voiceState === 'denied' && (
+              <div className="mb-4 p-4 md:p-5 rounded-2xl bg-warm-500/20 backdrop-blur text-white animate-fade-in-up border-2 border-warm-400/50">
+                <p className={cn('font-bold mb-2', elderlyMode && 'text-xl')}>🔒 麦克风权限未开启</p>
+                <p className="text-sm md:text-base text-white/90 mb-4">请在浏览器地址栏右侧开启麦克风访问，或使用下方大字按钮搜索</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {quickSearchTerms.slice(0, 4).map((term) => (
+                    <button
+                      key={term}
+                      onClick={() => { setSearchQuery(term); handleSearch(term); setVoiceState('idle'); }}
+                      className={cn(
+                        'px-3 py-3 rounded-xl bg-gradient-to-r from-warm-400 to-warm-500 hover:from-warm-500 hover:to-warm-600 transition-all font-bold text-white shadow-md',
+                        elderlyMode && 'text-xl min-h-14',
+                      )}
+                    >
+                      {term}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
-            {showSearchPanel && !isListening && !voiceText && (
-              <div className="mb-4 p-4 rounded-xl bg-white/10 backdrop-blur animate-fade-in-up">
-                <p className="text-white/70 text-sm mb-3">热门搜索</p>
-                <div className="flex flex-wrap gap-2">
+
+            {voiceState === 'fallback' && (
+              <div className="mb-4 p-4 md:p-5 rounded-2xl bg-warm-500/20 backdrop-blur text-white animate-fade-in-up border-2 border-warm-400/50">
+                <p className={cn('font-bold mb-2', elderlyMode && 'text-xl')}>语音识别暂不可用，请用文字或按钮搜索</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
+                  {quickSearchTerms.map((term) => (
+                    <button
+                      key={term}
+                      onClick={() => { setSearchQuery(term); handleSearch(term); setVoiceState('idle'); }}
+                      className={cn(
+                        'px-3 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 transition-colors font-medium text-left',
+                        elderlyMode && 'text-lg min-h-14',
+                      )}
+                    >
+                      {term}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {voiceState === 'success' && voiceText && (
+              <div className="mb-4 p-4 md:p-5 rounded-2xl bg-green-500/20 backdrop-blur text-white animate-fade-in-up border-2 border-green-400/50">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className={cn(elderlyMode ? 'w-7 h-7' : 'w-5 h-5')} />
+                  <span className={cn('font-bold', elderlyMode && 'text-xl')}>语音识别成功</span>
+                </div>
+                <div className="flex items-center flex-wrap gap-3 mb-4">
+                  <span className="text-white/80">您说的是：</span>
+                  <span className={cn('text-warm-300 font-bold', elderlyMode ? 'text-2xl' : 'text-xl')}>"{voiceText}"</span>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() => handleSearch(voiceText)}
+                    className={cn(
+                      'px-6 py-3 rounded-xl bg-gradient-to-r from-warm-400 to-warm-500 hover:from-warm-500 hover:to-warm-600 text-white font-bold shadow-lg transition-all',
+                      elderlyMode && 'text-xl min-h-14',
+                    )}
+                  >
+                    🔍 确认搜索
+                  </button>
+                  <button
+                    onClick={startVoiceSearch}
+                    className={cn(
+                      'px-6 py-3 rounded-xl bg-white/20 hover:bg-white/30 text-white font-semibold transition-colors',
+                      elderlyMode && 'text-lg min-h-14',
+                    )}
+                  >
+                    🎤 重新识别
+                  </button>
+                  <button
+                    onClick={() => { setVoiceState('idle'); setVoiceText(''); setSearchQuery(''); }}
+                    className={cn(
+                      'px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white/80 transition-colors',
+                      elderlyMode && 'text-lg min-h-14',
+                    )}
+                  >
+                    清除
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {showSearchPanel && voiceState === 'idle' && (
+              <div className="mb-4 p-4 rounded-2xl bg-white/10 backdrop-blur animate-fade-in-up border border-white/10">
+                <p className="text-white/70 text-sm md:text-base mb-3 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  热门搜索（点击快速查找）
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   {quickSearchTerms.map((term) => (
                     <button
                       key={term}
                       onClick={() => { setSearchQuery(term); handleSearch(term); setShowSearchPanel(false); }}
-                      className="px-3 py-1.5 rounded-lg bg-white/20 text-white text-sm hover:bg-white/30 transition-colors"
+                      className={cn(
+                        'px-3 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 transition-colors font-medium text-left',
+                        elderlyMode && 'text-lg min-h-14',
+                      )}
                     >
                       {term}
                     </button>
@@ -628,42 +815,131 @@ export default function Home() {
               <Video className="w-7 h-7 text-gov-600" />
               服务视频讲解
             </h2>
-            <p className="text-sm md:text-base text-gray-500">手把手教您办理各项业务</p>
+            <p className="text-sm md:text-base text-gray-500">手把手教您办理各项业务 · 边看边办</p>
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {videoGuides.map((video, idx) => (
-            <div
-              key={video.id}
-              className="bg-white rounded-2xl shadow-card overflow-hidden group cursor-pointer animate-fade-in-up hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1"
-              style={{ animationDelay: `${idx * 100}ms` }}
-              onClick={() => navigate('/services')}
-            >
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={video.cover}
-                  alt={video.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                    <Play className="w-6 h-6 text-gov-600 ml-0.5" fill="currentColor" />
+        <div className="space-y-6">
+          {videoGuides.map((video, idx) => {
+            const isActive = activeVideoId === video.id;
+            return (
+              <div
+                key={video.id}
+                className={cn(
+                  'bg-white rounded-2xl shadow-card overflow-hidden animate-fade-in-up transition-all duration-300',
+                  isActive ? 'ring-2 ring-gov-400 shadow-card-hover' : 'hover:shadow-card-hover',
+                )}
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                <div className="grid md:grid-cols-2 gap-0">
+                  <div className="relative bg-black">
+                    {isActive ? (
+                      <div className="relative">
+                        <video
+                          ref={(el) => (videoRefs.current[video.id] = el)}
+                          src={video.src}
+                          poster={video.cover}
+                          className="w-full aspect-video bg-black"
+                          controls
+                          controlsList="nodownload"
+                          playsInline
+                          preload="metadata"
+                          muted={videoMuted}
+                        />
+                        <div className="absolute top-3 left-3 flex items-center gap-2">
+                          <span className="chip bg-gov-600 text-white">正在播放</span>
+                          <button
+                            onClick={() => setVideoMuted(!videoMuted)}
+                            className="w-9 h-9 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+                            title={videoMuted ? '开启声音' : '静音'}
+                          >
+                            {videoMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                          </button>
+                        </div>
+                        <button
+                          onClick={() => toggleVideo(video.id)}
+                          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+                          title="关闭视频"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        className="relative aspect-video cursor-pointer group"
+                        onClick={() => toggleVideo(video.id)}
+                      >
+                        <img
+                          src={video.cover}
+                          alt={video.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/95 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                            <Play className="w-7 h-7 md:w-8 md:h-8 text-gov-600 ml-1" fill="currentColor" />
+                          </div>
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                          <span className="text-white font-semibold text-sm md:text-base drop-shadow-lg">{video.title}</span>
+                          <span className="bg-black/70 text-white text-xs px-2 py-0.5 rounded">{video.duration}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-5 md:p-6 flex flex-col">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="font-serif text-xl font-bold text-gray-900 mb-1">{video.title}</h3>
+                        <p className="text-sm text-gray-500">视频时长 {video.duration} · 适老化讲解</p>
+                      </div>
+                      {!isActive && (
+                        <button
+                          onClick={() => toggleVideo(video.id)}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gov-50 text-gov-700 text-sm font-semibold hover:bg-gov-100 transition-colors min-h-10"
+                        >
+                          <Play className="w-4 h-4" fill="currentColor" />
+                          播放
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-green-600" />
+                        办理步骤（{video.steps.length}步）
+                      </p>
+                      <ol className="space-y-2.5">
+                        {video.steps.map((step) => (
+                          <li key={step.n} className="flex items-start gap-3">
+                            <span className="w-7 h-7 flex-shrink-0 rounded-full bg-gov-100 text-gov-700 font-bold text-sm flex items-center justify-center">
+                              {step.n}
+                            </span>
+                            <span className="text-sm text-gray-700 leading-relaxed pt-0.5">{step.text}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                    <div className="mt-5 flex flex-wrap gap-2.5 pt-4 border-t border-gray-100">
+                      <Link
+                        to={video.route}
+                        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-warm-400 to-warm-500 text-white font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all min-h-10"
+                        onClick={() => speak(`正在进入${video.title}`)}
+                      >
+                        {video.cta}
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      <button
+                        onClick={() => speak(video.steps.map((s) => `第${s.n}步，${s.text}`).join('。'))}
+                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors min-h-10"
+                      >
+                        <Volume2 className="w-4 h-4" />
+                        语音播报步骤
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <span className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded">
-                  {video.duration}
-                </span>
               </div>
-              <div className="p-4">
-                <h4 className="font-semibold text-gray-800 group-hover:text-gov-600 transition-colors">{video.title}</h4>
-                <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-                  <Volume2 className="w-3 h-3" />
-                  点击播放视频讲解
-                </p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
