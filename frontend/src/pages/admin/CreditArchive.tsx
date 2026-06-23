@@ -71,8 +71,8 @@ const CreditArchive = () => {
 
   const fetchEnterprises = async () => {
     try {
-      const response: any = await admin.enterprises({ pageSize: 100, status: 'approved' });
-      const list = response?.data?.list || response?.data?.data || [];
+      const response = await admin.enterprises({ pageSize: 100, status: 'approved' });
+      const list = response.data.list || [];
       setEnterprises(list);
       if (!selectedCompanyId && list.length > 0) {
         setSelectedCompanyId(list[0].id);
@@ -89,11 +89,8 @@ const CreditArchive = () => {
         admin.enterpriseCredit(id),
         admin.enterprises({ pageSize: 100 }),
       ]);
-      const credit: any = creditRes;
-      const enterprisesList =
-        (enterprisesRes as any)?.data?.list ||
-        (enterprisesRes as any)?.data?.data || [];
-      setCreditData(credit.data as CreditData);
+      const enterprisesList = enterprisesRes.data.list || [];
+      setCreditData(creditRes.data as CreditData);
       const foundCompany = enterprisesList.find((c: Company) => c.id === id);
       if (foundCompany) {
         setCompany(foundCompany);

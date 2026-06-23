@@ -58,7 +58,8 @@ const MyInterviews = () => {
     setLoading(true);
     try {
       const response = await interviews.list();
-      setData(response.data);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      setData(list);
     } catch (error) {
       console.error('Failed to fetch interviews:', error);
     } finally {

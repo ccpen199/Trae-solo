@@ -118,8 +118,10 @@ const InterviewManage = () => {
       }
 
       const response = await interviews.list(params);
-      setData(response.data.length > 0 ? response.data : mockInterviews);
-      setTotal(response.total > 0 ? response.total : mockInterviews.length);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      const total = response.data?.total ?? 0;
+      setData(list.length > 0 ? list : mockInterviews);
+      setTotal(total > 0 ? total : mockInterviews.length);
     } catch (error) {
       console.error('Failed to fetch interviews:', error);
       setData(mockInterviews);
@@ -132,7 +134,8 @@ const InterviewManage = () => {
   const fetchJobList = async () => {
     try {
       const response = await jobs.list({ pageSize: 100, status: 'active' });
-      setJobList(response.data.data);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      setJobList(list);
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
     }
@@ -141,7 +144,8 @@ const InterviewManage = () => {
   const fetchResumeList = async () => {
     try {
       const response = await resumes.list({ pageSize: 100 });
-      setResumeList(response.data.list);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      setResumeList(list);
     } catch (error) {
       console.error('Failed to fetch resumes:', error);
     }

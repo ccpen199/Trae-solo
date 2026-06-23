@@ -85,8 +85,10 @@ const Community = () => {
         tag: selectedTag,
       };
       const response = await community.posts(params);
-      setData(response.data);
-      setTotal(response.total);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      const total = response.data?.total ?? 0;
+      setData(list);
+      setTotal(total);
     } catch (error) {
       console.error('Failed to fetch posts:', error);
     } finally {
@@ -154,8 +156,9 @@ const Community = () => {
     if (!expandedComments[postId]) {
       try {
         const detail = await community.postDetail(postId);
+        const detailData = detail.data?.data || detail.data;
         setData(prev => prev.map(post =>
-          post.id === postId ? { ...post, comments: detail.comments } : post
+          post.id === postId ? { ...post, comments: detailData.comments } : post
         ));
       } catch (error) {
         console.error('Failed to fetch comments:', error);
@@ -175,9 +178,10 @@ const Community = () => {
       message.success('评论成功');
       setCommentText(prev => ({ ...prev, [postId]: '' }));
       const detail = await community.postDetail(postId);
+      const detailData = detail.data?.data || detail.data;
       setData(prev => prev.map(post =>
         post.id === postId
-          ? { ...post, comments: detail.comments, commentsCount: (post.commentsCount || 0) + 1 }
+          ? { ...post, comments: detailData.comments, commentsCount: (post.commentsCount || 0) + 1 }
           : post
       ));
     } catch (error) {

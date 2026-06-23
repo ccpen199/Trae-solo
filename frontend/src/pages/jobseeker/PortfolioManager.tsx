@@ -61,7 +61,8 @@ const PortfolioManager = () => {
     setLoading(true);
     try {
       const response = await jobseeker.portfolio();
-      setPortfolios(response.data || []);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      setPortfolios(list);
     } catch (error) {
       console.error('Failed to fetch portfolio:', error);
     } finally {

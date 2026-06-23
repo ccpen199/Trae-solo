@@ -81,7 +81,7 @@ const ResumeEditor = () => {
     setLoading(true);
     try {
       const response = await jobseeker.resume();
-      const data = response.data;
+      const data = response.data?.data || response.data;
       if (data) {
         form.setFieldsValue({
           name: data.name,

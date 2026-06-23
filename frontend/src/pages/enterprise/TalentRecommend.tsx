@@ -63,7 +63,8 @@ const TalentRecommend = () => {
   const fetchJobList = async () => {
     try {
       const response = await jobs.list({ pageSize: 100, status: 'active' });
-      setJobList(response.data.data);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      setJobList(list);
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
     }
@@ -78,15 +79,16 @@ const TalentRecommend = () => {
     setRecommending(true);
     try {
       const response = await jobs.recommend(selectedJob, 10);
-      const mapped = response.data.map((item: any) => ({
+      const recList = response.data?.recommendations || response.data?.list || response.data?.data || response.data || [];
+      const mapped = recList.map((item: any) => ({
         id: item.resumeId,
-        jobId: item.jobId,
+        jobId: response.data.jobId,
         resumeId: item.resumeId,
-        similarityScore: item.overallScore,
+        similarityScore: item.similarityScore,
         skillMatchScore: item.skillMatch,
         experienceMatchScore: item.experienceMatch,
         recommendedAt: new Date(),
-        status: item.status,
+        status: 'pending',
         resume: item.resume,
       }));
       setRecommendations(mapped);

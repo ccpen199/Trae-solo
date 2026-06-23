@@ -9,6 +9,8 @@ import type {
   CompanyCredit,
   SensitiveWord,
   Portfolio,
+  PaginatedResponse,
+  RecommendationResponse,
 } from '../types';
 
 export const auth = {
@@ -20,16 +22,16 @@ export const auth = {
 };
 
 export const jobs = {
-  list: (params?: Record<string, any>) => get<{ success: boolean; data: { data: Job[]; total: number } }>('/jobs', { params }),
+  list: (params?: Record<string, any>) => get<PaginatedResponse<Job>>('/jobs', { params }),
   create: (data: any) => post<Job>('/jobs', data),
   getDetail: (id: number) => get<Job>(`/jobs/${id}`),
   update: (id: number, data: Partial<Job>) => put<Job>(`/jobs/${id}`, data),
   delete: (id: number) => del<void>(`/jobs/${id}`),
-  recommend: (jobId: number, topN?: number) => post<{ success: boolean; data: any[] }>(`/jobs/${jobId}/recommend`, { topN }),
+  recommend: (jobId: number, topN?: number) => post<RecommendationResponse>(`/jobs/${jobId}/recommend`, { topN }),
 };
 
 export const resumes = {
-  list: (params?: Record<string, any>) => get<{ success: boolean; data: { list: Resume[]; total: number; page: number; pageSize: number } }>('/resume', { params }),
+  list: (params?: Record<string, any>) => get<PaginatedResponse<Resume>>('/resume', { params }),
   getDetail: (id: number) => get<Resume>(`/resume/${id}`),
   parse: (resumeId: number) => post<{ success: boolean; message: string; data: any }>(`/resume/${resumeId}/parse`),
   getParseResult: (resumeId: number) => get<{ success: boolean; data: { resumeId: number; parseScore: number; parsedData: any; updatedAt: string } }>(`/resume/${resumeId}/parse-result`),
@@ -61,7 +63,7 @@ export const community = {
 
 export const interviews = {
   list: (params?: Record<string, any>) =>
-    get<{ data: InterviewSchedule[]; total: number }>('/interviews', { params }),
+    get<PaginatedResponse<InterviewSchedule>>('/interviews', { params }),
   create: (data: any) => post<InterviewSchedule>('/interviews', data),
   update: (id: number, data: Partial<InterviewSchedule>) =>
     put<InterviewSchedule>(`/interviews/${id}`, data),
@@ -72,12 +74,12 @@ export const interviews = {
 
 export const admin = {
   enterprises: (params?: Record<string, any>) =>
-    get<{ success: boolean; data: { list: Company[]; total: number; page: number; pageSize: number } }>('/admin/enterprises', { params }),
+    get<PaginatedResponse<Company>>('/admin/enterprises', { params }),
   enterpriseCredit: (companyId: number) => get<{ success: boolean; data: CompanyCredit }>(`/admin/enterprises/${companyId}/credit`),
   auditCompany: (companyId: number, status: string, reason?: string) =>
     post<{ success: boolean }>(`/admin/enterprises/${companyId}/audit`, { status, reason }),
   sensitiveWords: (params?: Record<string, any>) =>
-    get<{ success: boolean; data: { list: SensitiveWord[]; total: number; page: number; pageSize: number } }>('/admin/sensitive-words', { params }),
+    get<PaginatedResponse<SensitiveWord>>('/admin/sensitive-words', { params }),
   addSensitiveWord: (data: any) => post<{ success: boolean }>('/admin/sensitive-words', data),
   updateSensitiveWord: (id: number, data: any) => put<{ success: boolean }>(`/admin/sensitive-words/${id}`, data),
   deleteSensitiveWord: (id: number) => del<{ success: boolean }>(`/admin/sensitive-words/${id}`),
@@ -106,9 +108,9 @@ export const admin = {
       };
     }>('/admin/statistics'),
   warnings: (params?: Record<string, any>) =>
-    get<{ success: boolean; data: { list: any[]; total: number; page: number; pageSize: number } }>('/admin/warnings', { params }),
+    get<PaginatedResponse<any>>('/admin/warnings', { params }),
   handleWarning: (warningId: number, action: 'ignore' | 'delete' | 'warn') =>
     post<{ success: boolean }>(`/admin/warnings/${warningId}/handle`, { action }),
   jobseekers: (params?: Record<string, any>) =>
-    get<{ success: boolean; data: any }>('/admin/jobseekers', { params }),
+    get<PaginatedResponse<any>>('/admin/jobseekers', { params }),
 };

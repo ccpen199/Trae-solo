@@ -233,8 +233,22 @@ export interface ApiResponse<T = any> {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[];
+  list: T[];
   total: number;
   page: number;
   pageSize: number;
+}
+
+export interface RecommendationResponse {
+  jobId: number;
+  jobTitle: string;
+  totalCandidates: number;
+  recommendations: Array<{
+    resumeId: number;
+    resume: Resume;
+    similarityScore: number;
+    skillMatch: number;
+    experienceMatch: number;
+    matchedSkills: string[];
+  }>;
 }

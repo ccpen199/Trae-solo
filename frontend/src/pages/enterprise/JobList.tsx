@@ -49,8 +49,10 @@ const JobList = () => {
       if (status) params.status = status;
 
       const response = await jobs.list(params);
-      setData(response.data.data);
-      setTotal(response.data.total);
+      const list = response.data?.list || response.data?.data || response.data || [];
+      const total = response.data?.total ?? 0;
+      setData(list);
+      setTotal(total);
     } catch (error) {
       console.error('Failed to fetch jobs:', error);
     } finally {
