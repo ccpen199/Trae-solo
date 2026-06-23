@@ -1,3 +1,14 @@
+export interface VerificationRecord {
+  verifyNo: string;
+  type: "housing_fund" | "pension" | "medical";
+  month: string;
+  dataMatchRate: number;
+  status: "passed" | "mismatch";
+  operator: string;
+  verifiedAt: string;
+  verifySource: string;
+}
+
 export interface SocialSecurityAccount {
   id: string;
   name: string;
@@ -22,11 +33,16 @@ export interface SocialSecurityAccount {
     pension: number;
     medical: number;
     unemployment: number;
+    verified: boolean;
+    verifyNo: string;
+    verifiedAt: string;
+    verifySource: string;
   }>;
 }
 
 export type TrafficEventType = "accident" | "metro_delay" | "bus_abnormal" | "road_condition";
 export type Severity = "info" | "warning" | "danger";
+export type TrafficDisposalStatus = "arrived" | "processing" | "cleared" | "recovered" | "delayed" | "pending";
 export type AccidentStatus = "dispatched" | "on_site" | "processing" | "cleared";
 export type AccidentSource = "police_patrol" | "citizen_report" | "monitor_auto";
 export type MetroStatus = "delayed" | "recovered" | "normal";
@@ -35,6 +51,14 @@ export type MetroMeasure = "bus_shuttle" | "extra_trains" | "staff_guidance";
 export type BusStatus = "normal" | "rerouted" | "delayed" | "suspended";
 export type BusCrowdLevel = "empty" | "moderate" | "crowded";
 export type MapLayer = "events" | "congestion" | "bus_live";
+
+export interface NotificationSubscription {
+  id: string;
+  eventId: string;
+  userId: string;
+  pushChannels: string[];
+  createdAt: string;
+}
 
 export interface TrafficEvent {
   id: string;
@@ -46,6 +70,10 @@ export interface TrafficEvent {
   severity: Severity;
   timestamp: string;
   expiresAt?: string;
+  disposalStatus: TrafficDisposalStatus;
+  affectedRange: string;
+  read: boolean;
+  subscribed: boolean;
 }
 
 export interface AccidentEvent extends TrafficEvent {
@@ -58,6 +86,10 @@ export interface AccidentEvent extends TrafficEvent {
   tracked?: boolean;
   casualties?: number;
   vehiclesInvolved?: number;
+  affectedRoads: string[];
+  affectedDistricts: string[];
+  disposalUnit: string;
+  disposalPersonnel: string;
 }
 
 export interface MetroDelayEvent extends TrafficEvent {
@@ -73,6 +105,9 @@ export interface MetroDelayEvent extends TrafficEvent {
   measures: MetroMeasure[];
   recoveredAt?: string;
   totalDelayMinutes?: number;
+  affectedPassengers: number;
+  disposalUnit: string;
+  disposalPersonnel: string;
 }
 
 export interface BusAbnormalEvent extends TrafficEvent {
@@ -82,6 +117,10 @@ export interface BusAbnormalEvent extends TrafficEvent {
   affectedStops: string[];
   detourRoute?: string;
   expectedRecovery?: string;
+  affectedRoads: string[];
+  affectedDistricts: string[];
+  disposalUnit: string;
+  disposalPersonnel: string;
 }
 
 export interface TrafficOverview {
@@ -93,6 +132,8 @@ export interface TrafficOverview {
   abnormalBusRoutes: number;
   busStatus: "normal" | "partial_abnormal";
   lastUpdated: string;
+  unreadCount: number;
+  subscribedCount: number;
 }
 
 export interface BusPrediction {
@@ -127,6 +168,11 @@ export interface PaymentAccount {
   amountDue: number;
   dueDate: string;
   status: PaymentStatus;
+  systemStatus: "online" | "offline" | "maintenance";
+  systemSource: string;
+  householdNo: string;
+  address: string;
+  ownerPhone: string;
 }
 
 export interface PaymentRecord {
@@ -137,9 +183,21 @@ export interface PaymentRecord {
   orderNo: string;
   paidAt?: string;
   createdAt: string;
+  failReason?: string;
+  district?: string;
+  receiptNo?: string;
+  electronicReceipt?: string;
 }
 
 export type Sentiment = "positive" | "neutral" | "negative";
+
+export interface CertificateVerifyRecord {
+  verifyNo: string;
+  operator: string;
+  verifiedAt: string;
+  verifyOrg: string;
+  dataMatchRate: number;
+}
 
 export interface CertificateResponse {
   base64: string;
@@ -147,7 +205,10 @@ export interface CertificateResponse {
   certNo: string;
   verifyCode: string;
   issueDate: string;
+  validUntil: string;
   qrData: string;
+  verifyCount: number;
+  verifyRecords: CertificateVerifyRecord[];
   pdfData: string;
 }
 
@@ -184,6 +245,11 @@ export interface CommunityPost {
   nlpAnalysis?: NlpAnalysis;
   disposalStatus?: DisposalStatus;
   transferredTo?: string;
+  reviewStatus: "auto_analyzed" | "pending_review" | "reviewed" | "escalated";
+  reviewedBy?: string;
+  reviewedAt?: string;
+  reviewComment?: string;
+  opinionLevelSource: string;
 }
 
 export interface PaymentAccountWithMatch extends PaymentAccount {

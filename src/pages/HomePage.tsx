@@ -74,6 +74,8 @@ import type {
   UserProfile,
   PoiType,
   OpinionDashboard,
+  TrafficOverview,
+  TrafficDisposalStatus,
 } from "../../shared/types";
 
 interface RankedService extends ServiceEntry {
@@ -192,14 +194,33 @@ function getOpinionLevelLabel(level: number): string {
   return "很低";
 }
 
+function HighlightText({ text, keyword }: { text: string; keyword: string }) {
+  if (!keyword.trim()) return <>{text}</>;
+  const parts = text.split(new RegExp(`(${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"));
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === keyword.toLowerCase() ? (
+          <span key={i} className="font-bold text-blue-600">
+            {part}
+          </span>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+}
+
 export default function HomePage() {
   const navigate = useNavigate();
   const { location } = useLocation();
-  const { isCached, addPolicy } = useOfflineCache();
+  const { isCached, addPolicy, removePolicy, cacheSizeKB, cachedPolicies } = useOfflineCache();
   const { user, setUser, showToast } = useAppStore();
 
   const [weather, setWeather] = useState<WeatherInfo | null>(null);
   const [trafficEvents, setTrafficEvents] = useState<TrafficEvent[]>([]);
+  const [trafficOverview, setTrafficOverview] = useState<TrafficOverview | null>(null);
   const [busPredictions, setBusPredictions] = useState<BusPrediction[]>([]);
   const [rankedServices, setRankedServices] = useState<RankedService[]>([]);
   const [socialSecurity, setSocialSecurity] = useState<SocialSecurityAccount | null>(null);
@@ -219,6 +240,7 @@ export default function HomePage() {
   const [searchSuggestions, setSearchSuggestions] = useState<PaymentAccount[]>([]);
   const [activePaymentTab, setActivePaymentTab] = useState<PaymentAccount["category"] | null>(null);
   const [paymentInputValues, setPaymentInputValues] = useState<Record<string, string>>({});
+  const [paymentSearchResults, setPaymentSearchResults] = useState<PaymentAccount[]>([]);
 
   const [offlineMode, setOfflineMode] = useState(false);
   const [activePoiTab, setActivePoiTab] = useState<PoiType>("scenic");
@@ -231,6 +253,7 @@ export default function HomePage() {
         const [
           weatherRes,
           eventsRes,
+          overviewRes,
           busRes,
           servicesRes,
           ssRes,
@@ -245,6 +268,7 @@ export default function HomePage() {
         ] = await Promise.all([
           weatherApi.getCurrent({ lat: location.lat, lng: location.lng }),
           trafficApi.getEvents(),
+          trafficApi.getOverview(),
           trafficApi.getBusPredictions(),
           servicesApi.rank({ lat: location.lat, lng: location.lng, district: location.district }),
           socialSecurityApi.getAccount(),
@@ -257,6 +281,7 @@ export default function HomePage() {
           policiesApi.getList({ pageSize: 5 }),
           userApi.getProfile().catch(() => null),
         ]);
+        setTrafficOverview(overviewRes);
 
         setWeather(weatherRes);
         setTrafficEvents(eventsRes);
@@ -294,6 +319,44 @@ export default function HomePage() {
     const metroDelays = trafficEvents.filter((e) => e.type === "metro_delay");
     return { accidents, metroDelays };
   }, [trafficEvents]);
+
+  const unreadTrafficCount = useMemo(() => {
+    return trafficEvents.filter((e) => !e.read).length;
+  }, [trafficEvents]);
+
+  const getDisposalStatusInfo = (status?: TrafficDisposalStatus) => {
+    const map: Record<TrafficDisposalStatus, { label: string; color: string; bg: string }> = {
+      arrived: { label: "已到场", color: "text-blue-700", bg: "bg-blue-100 border-blue-200" },
+      processing: { label: "处理中", color: "text-amber-700", bg: "bg-amber-100 border-amber-200" },
+      cleared: { label: "已疏通", color: "text-emerald-700", bg: "bg-emerald-100 border-emerald-200" },
+      recovered: { label: "已恢复", color: "text-teal-700", bg: "bg-teal-100 border-teal-200" },
+      delayed: { label: "延误中", color: "text-orange-700", bg: "bg-orange-100 border-orange-200" },
+      pending: { label: "待处置", color: "text-slate-700", bg: "bg-slate-100 border-slate-200" },
+    };
+    return map[status || "pending"];
+  };
+
+  const handleMarkRead = useCallback(async (eventId: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    try {
+      await trafficApi.markAsRead(eventId);
+      setTrafficEvents((prev) => prev.map((ev) => (ev.id === eventId ? { ...ev, read: true } : ev)));
+      showToast("已标记为已读", "success");
+    } catch (err) {
+      console.error(err);
+    }
+  }, [showToast]);
+
+  const handleSubscribe = useCallback(async (eventId: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    try {
+      const res = await trafficApi.subscribeEvent(eventId);
+      setTrafficEvents((prev) => prev.map((ev) => (ev.id === eventId ? { ...ev, subscribed: true } : ev)));
+      showToast(res.message || "订阅成功", "success");
+    } catch (err) {
+      console.error(err);
+    }
+  }, [showToast]);
 
   const mostSevereAccident = useMemo(() => {
     const sorted = [...groupedEvents.accidents].sort((a, b) => {
@@ -432,6 +495,19 @@ export default function HomePage() {
       }
     },
     [isCached, addPolicy, showToast, cachingIds]
+  );
+
+  const handleRemovePolicyCache = useCallback(
+    (policy: PolicyDocument) => {
+      removePolicy(policy.id);
+      setPolicies((prev) =>
+        prev.map((p) =>
+          p.id === policy.id ? { ...p, cached: false, isCaching: false } : p
+        )
+      );
+      showToast(`已清除「${policy.title}」缓存`, "success");
+    },
+    [removePolicy, showToast]
   );
 
   const handlePaymentTabClick = (category: PaymentAccount["category"]) => {
@@ -578,6 +654,11 @@ export default function HomePage() {
             <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
               <Radio className="w-5 h-5 text-blue-600" />
               交通态势感知
+              {unreadTrafficCount > 0 && (
+                <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full shadow-sm">
+                  {unreadTrafficCount > 99 ? "99+" : unreadTrafficCount}
+                </span>
+              )}
             </h2>
             <button
               onClick={() => navigate("/traffic")}
@@ -591,8 +672,11 @@ export default function HomePage() {
             {/* 事故快报卡 */}
             <div
               onClick={() => navigate("/traffic?tab=accidents")}
-              className="flex-shrink-0 w-[220px] group cursor-pointer rounded-xl bg-white border border-red-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+              className="relative flex-shrink-0 w-[240px] group cursor-pointer rounded-xl bg-white border border-red-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
             >
+              {mostSevereAccident && !mostSevereAccident.read && (
+                <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full shadow-sm animate-pulse z-10" />
+              )}
               <div className="bg-gradient-to-r from-red-50 to-rose-50 px-4 py-3 border-b border-red-100">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -611,14 +695,51 @@ export default function HomePage() {
               </div>
               <div className="p-3">
                 {mostSevereAccident ? (
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className={cn(
+                        "inline-flex items-center gap-0.5 text-[10px] px-2 py-0.5 rounded-full border font-medium",
+                        getDisposalStatusInfo(mostSevereAccident.disposalStatus).bg,
+                        getDisposalStatusInfo(mostSevereAccident.disposalStatus).color
+                      )}>
+                        <Activity className="w-2.5 h-2.5" />
+                        {getDisposalStatusInfo(mostSevereAccident.disposalStatus).label}
+                      </span>
+                      {mostSevereAccident.affectedRange && (
+                        <span className="inline-flex items-center gap-0.5 text-[10px] text-slate-500">
+                          <MapPin className="w-2.5 h-2.5 text-red-500" />
+                          {mostSevereAccident.affectedRange}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-slate-700 font-medium line-clamp-2 group-hover:text-red-600 transition-colors">
                       {mostSevereAccident.title}
                     </p>
                     <p className="text-[11px] text-slate-400">{getTimeAgo(mostSevereAccident.timestamp)}</p>
-                    <div className="flex items-center gap-1 pt-1">
+                    <div className="flex items-center gap-1">
                       <span className="text-[11px] text-slate-500">来源：</span>
                       <span className="text-[11px] text-slate-600">{mostSevereAccident.source}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1.5 border-t border-slate-100">
+                      {!mostSevereAccident.read && (
+                        <button
+                          onClick={(e) => handleMarkRead(mostSevereAccident.id, e)}
+                          className="flex-1 text-[11px] py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors font-medium border border-blue-100"
+                        >
+                          标记已读
+                        </button>
+                      )}
+                      <button
+                        onClick={(e) => handleSubscribe(mostSevereAccident.id, e)}
+                        className={cn(
+                          "flex-1 text-[11px] py-1.5 rounded-lg font-medium border transition-colors",
+                          mostSevereAccident.subscribed
+                            ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                            : "bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200"
+                        )}
+                      >
+                        {mostSevereAccident.subscribed ? "✓ 已订阅" : "订阅提醒"}
+                      </button>
                     </div>
                   </div>
                 ) : (
@@ -631,50 +752,97 @@ export default function HomePage() {
             </div>
 
             {/* 地铁延误卡 */}
-            <div
-              onClick={() => navigate("/traffic?tab=metro")}
-              className="flex-shrink-0 w-[220px] group cursor-pointer rounded-xl bg-white border border-orange-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
-            >
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 px-4 py-3 border-b border-orange-100">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center shadow-sm">
-                      <Train className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-800 text-sm">地铁延误</h3>
-                      <p className="text-[11px] text-slate-500">
-                        {groupedEvents.metroDelays.length > 0 ? `${groupedEvents.metroDelays.length} 条线路` : "运行正常"}
-                      </p>
-                    </div>
-                  </div>
-                  <span className={`inline-flex items-center justify-center min-w-[28px] h-7 px-2 text-white text-xs font-bold rounded-full shadow-sm ${groupedEvents.metroDelays.length > 0 ? "bg-orange-500" : "bg-emerald-500"}`}>
-                    {groupedEvents.metroDelays.length}
-                  </span>
-                </div>
-              </div>
-              <div className="p-3">
-                {groupedEvents.metroDelays.length > 0 ? (
-                  <div className="space-y-2">
-                    {metroDelayLines.slice(0, 2).map((line, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-orange-100 text-orange-700">
-                          {line}
-                        </span>
+            {(() => {
+              const topDelay = groupedEvents.metroDelays[0];
+              return (
+                <div
+                  onClick={() => navigate("/traffic?tab=metro")}
+                  className="relative flex-shrink-0 w-[240px] group cursor-pointer rounded-xl bg-white border border-orange-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+                >
+                  {topDelay && !topDelay.read && (
+                    <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full shadow-sm animate-pulse z-10" />
+                  )}
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 px-4 py-3 border-b border-orange-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center shadow-sm">
+                          <Train className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-800 text-sm">地铁延误</h3>
+                          <p className="text-[11px] text-slate-500">
+                            {groupedEvents.metroDelays.length > 0 ? `${groupedEvents.metroDelays.length} 条线路` : "运行正常"}
+                          </p>
+                        </div>
                       </div>
-                    ))}
-                    <p className="text-[11px] text-slate-400 pt-1">
-                      {getTimeAgo(groupedEvents.metroDelays[0]?.timestamp || "")}发生
-                    </p>
+                      <span className={`inline-flex items-center justify-center min-w-[28px] h-7 px-2 text-white text-xs font-bold rounded-full shadow-sm ${groupedEvents.metroDelays.length > 0 ? "bg-orange-500" : "bg-emerald-500"}`}>
+                        {groupedEvents.metroDelays.length}
+                      </span>
+                    </div>
                   </div>
-                ) : (
-                  <div className="text-center py-3">
-                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-1" />
-                    <p className="text-xs text-slate-400">全线正常运行</p>
+                  <div className="p-3">
+                    {groupedEvents.metroDelays.length > 0 && topDelay ? (
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className={cn(
+                            "inline-flex items-center gap-0.5 text-[10px] px-2 py-0.5 rounded-full border font-medium",
+                            getDisposalStatusInfo(topDelay.disposalStatus).bg,
+                            getDisposalStatusInfo(topDelay.disposalStatus).color
+                          )}>
+                            <Activity className="w-2.5 h-2.5" />
+                            {getDisposalStatusInfo(topDelay.disposalStatus).label}
+                          </span>
+                          {topDelay.affectedRange && (
+                            <span className="inline-flex items-center gap-0.5 text-[10px] text-slate-500">
+                              <Users className="w-2.5 h-2.5 text-orange-500" />
+                              {topDelay.affectedRange}
+                            </span>
+                          )}
+                        </div>
+                        <div className="space-y-1.5">
+                          {metroDelayLines.slice(0, 2).map((line, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-orange-100 text-orange-700">
+                                {line}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <p className="text-[11px] text-slate-400 pt-0.5">
+                          {getTimeAgo(topDelay.timestamp)}发生
+                        </p>
+                        <div className="flex items-center gap-1.5 pt-1.5 border-t border-slate-100">
+                          {!topDelay.read && (
+                            <button
+                              onClick={(e) => handleMarkRead(topDelay.id, e)}
+                              className="flex-1 text-[11px] py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors font-medium border border-blue-100"
+                            >
+                              标记已读
+                            </button>
+                          )}
+                          <button
+                            onClick={(e) => handleSubscribe(topDelay.id, e)}
+                            className={cn(
+                              "flex-1 text-[11px] py-1.5 rounded-lg font-medium border transition-colors",
+                              topDelay.subscribed
+                                ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                                : "bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200"
+                            )}
+                          >
+                            {topDelay.subscribed ? "✓ 已订阅" : "订阅提醒"}
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-3">
+                        <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-1" />
+                        <p className="text-xs text-slate-400">全线正常运行</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
+              );
+            })()}
 
             {/* 公交预测卡 */}
             <div
@@ -926,7 +1094,7 @@ export default function HomePage() {
                 value={searchKeyword}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 onFocus={() => searchKeyword && setShowSearchHint(true)}
-                placeholder="搜索户号、姓名或缴费项目..."
+                placeholder="输入户号/分户号/姓名/地址"
                 className="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
               {searchKeyword && (
@@ -943,21 +1111,59 @@ export default function HomePage() {
 
               {showSearchHint && searchSuggestions.length > 0 && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-10 overflow-hidden">
-                  {searchSuggestions.map((account) => (
-                    <div
-                      key={account.id}
-                      onClick={() => handleQuickFill(account)}
-                      className="px-3 py-2 hover:bg-blue-50 cursor-pointer flex items-center justify-between border-b border-slate-50 last:border-b-0"
-                    >
-                      <div>
-                        <p className="text-sm text-slate-800 font-medium">{account.accountName}</p>
-                        <p className="text-xs text-slate-500">{account.categoryName} · {account.accountNumber}</p>
+                  {searchSuggestions.map((account) => {
+                    const accountAny = account as any;
+                    const matchDegree = accountAny.matchDegree || "";
+                    const district = account.district;
+                    const systemStatus = account.systemStatus;
+                    return (
+                      <div
+                        key={account.id}
+                        onClick={() => handleQuickFill(account)}
+                        className="px-3 py-2.5 hover:bg-blue-50 cursor-pointer flex items-center justify-between border-b border-slate-50 last:border-b-0"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-sm text-slate-800 font-medium line-clamp-1">
+                              <HighlightText text={account.accountName} keyword={searchKeyword} />
+                            </p>
+                            {matchDegree && (
+                              <span className="text-[10px] px-1 py-0.5 rounded bg-blue-50 text-blue-600 flex-shrink-0">
+                                {matchDegree}
+                              </span>
+                            )}
+                            {district && (
+                              <span className="text-[10px] px-1 py-0.5 rounded bg-slate-100 text-slate-600 flex-shrink-0">
+                                {district}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <p className="text-xs text-slate-500">
+                              {account.categoryName} · <HighlightText text={account.accountNumber} keyword={searchKeyword} />
+                            </p>
+                            {systemStatus && (
+                              <span className={cn(
+                                "text-[10px] flex items-center gap-0.5",
+                                systemStatus === "online" ? "text-emerald-600" :
+                                systemStatus === "maintenance" ? "text-amber-600" : "text-slate-400"
+                              )}>
+                                <span className={cn(
+                                  "w-1.5 h-1.5 rounded-full",
+                                  systemStatus === "online" ? "bg-emerald-500" :
+                                  systemStatus === "maintenance" ? "bg-amber-500" : "bg-slate-400"
+                                )} />
+                                {systemStatus === "online" ? "在线" : systemStatus === "maintenance" ? "维护中" : "离线"}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <span className="text-xs text-amber-600 font-medium flex-shrink-0 ml-2">
+                          {formatMoney(account.amountDue)}
+                        </span>
                       </div>
-                      <span className="text-xs text-amber-600 font-medium">
-                        {formatMoney(account.amountDue)}
-                      </span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -1021,10 +1227,7 @@ export default function HomePage() {
 
         {/* 区块6：社区舆情概览卡片 */}
         <div style={staggerStyle(5)}>
-          <div
-            onClick={() => navigate("/community")}
-            className="bg-white rounded-xl border border-slate-100 p-4 cursor-pointer hover:shadow-md transition-shadow"
-          >
+          <div className="bg-white rounded-xl border border-slate-100 p-4">
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
                 <Users className="w-5 h-5 text-purple-600" />
@@ -1037,7 +1240,12 @@ export default function HomePage() {
                 )}>
                   舆情等级 {overallOpinionLevel}级 · {getOpinionLevelLabel(overallOpinionLevel)}
                 </span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <button
+                  onClick={() => navigate("/community")}
+                  className="flex items-center gap-0.5 text-xs text-slate-500 hover:text-blue-600 transition-colors"
+                >
+                  详情 <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
 
@@ -1078,29 +1286,124 @@ export default function HomePage() {
               </div>
 
               {/* 右侧：今日热帖Top3 */}
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-3">
                 <p className="text-xs text-slate-500 mb-1">今日热帖 Top3</p>
-                {communityPosts.slice(0, 3).map((post) => (
-                  <div key={post.id} className="flex items-start gap-2 group">
-                    <span className={cn(
-                      "flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5",
-                      getSentimentColor(post.sentiment)
-                    )} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-700 truncate group-hover:text-blue-600 transition-colors font-medium">
-                        {post.title}
-                      </p>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[10px] text-slate-400">
-                          {post.board}
-                        </span>
-                        <span className="text-[10px] text-slate-400">
-                          {post.viewCount} 阅读
-                        </span>
+                {communityPosts.slice(0, 3).map((post) => {
+                  const postAny = post as any;
+                  const nlp = postAny.nlpAnalysis;
+                  const reviewStatus = postAny.reviewStatus as string || "auto_analyzed";
+                  const opinionLevelSource = postAny.opinionLevelSource as string || "";
+                  return (
+                    <div
+                      key={post.id}
+                      className="p-2.5 bg-slate-50 rounded-lg hover:bg-slate-100 cursor-pointer group transition-colors"
+                      onClick={() => navigate(`/community/${post.id}`)}
+                    >
+                      <div className="flex items-start gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <p className="text-xs text-slate-700 truncate group-hover:text-blue-600 transition-colors font-medium">
+                              {post.title}
+                            </p>
+                            <span className={cn(
+                              "inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium border flex-shrink-0",
+                              getOpinionLevelColor(post.opinionLevel)
+                            )}>
+                              L{post.opinionLevel}
+                            </span>
+                            {opinionLevelSource && opinionLevelSource.includes("NLP") && (
+                              <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-medium bg-indigo-50 text-indigo-600 border border-indigo-100 flex-shrink-0">
+                                AI
+                              </span>
+                            )}
+                            {opinionLevelSource && opinionLevelSource.includes("人工") && (
+                              <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-medium bg-emerald-50 text-emerald-600 border border-emerald-100 flex-shrink-0">
+                                人工
+                              </span>
+                            )}
+                            {reviewStatus === "auto_analyzed" && (
+                              <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-medium bg-slate-100 text-slate-500 border border-slate-200 flex-shrink-0">
+                                自动分析
+                              </span>
+                            )}
+                            {reviewStatus === "pending_review" && (
+                              <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-medium bg-amber-50 text-amber-600 border border-amber-200 flex-shrink-0">
+                                待复核
+                              </span>
+                            )}
+                            {reviewStatus === "reviewed" && (
+                              <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-medium bg-emerald-50 text-emerald-600 border border-emerald-200 flex-shrink-0">
+                                已复核
+                              </span>
+                            )}
+                            {reviewStatus === "escalated" && (
+                              <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-medium bg-red-50 text-red-600 border border-red-200 flex-shrink-0">
+                                已升级
+                              </span>
+                            )}
+                          </div>
+                          {nlp && (
+                            <div className="mt-1.5">
+                              {nlp.sentimentConfidence !== undefined && (
+                                <div className="flex items-center gap-1.5 mb-1">
+                                  <span className="text-[9px] text-slate-500 flex-shrink-0 w-10">情感置信</span>
+                                  <div className="flex-1 h-1 bg-slate-200 rounded-full overflow-hidden">
+                                    <div
+                                      className="h-full bg-indigo-500 rounded-full transition-all"
+                                      style={{ width: `${Math.round(nlp.sentimentConfidence)}%` }}
+                                    />
+                                  </div>
+                                  <span className="text-[9px] text-slate-600 font-medium flex-shrink-0 w-8 text-right">
+                                    {Math.round(nlp.sentimentConfidence)}%
+                                  </span>
+                                </div>
+                              )}
+                              {nlp.keywords && nlp.keywords.length > 0 && (
+                                <div className="flex items-center gap-1 flex-wrap">
+                                  {nlp.keywords.slice(0, 3).map((kw: any, idx: number) => (
+                                    <span
+                                      key={idx}
+                                      className="text-[9px] px-1 py-0.5 rounded bg-purple-50 text-purple-600"
+                                    >
+                                      #{typeof kw === "string" ? kw : kw.word}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                              {nlp.opinionBasis && (
+                                <p className="text-[9px] text-slate-400 mt-1 line-clamp-1">
+                                  判定依据：{nlp.opinionBasis}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                          {reviewStatus === "reviewed" && postAny.reviewedBy && (
+                            <div className="mt-1.5 p-1.5 bg-emerald-50/50 rounded border border-emerald-100">
+                              <p className="text-[9px] text-emerald-600">
+                                <span className="font-medium">{postAny.reviewedBy}</span>
+                                <span className="text-slate-400"> · </span>
+                                <span className="text-slate-500">{postAny.reviewedAt ? new Date(postAny.reviewedAt).toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : ""}</span>
+                              </p>
+                              {postAny.reviewComment && (
+                                <p className="text-[9px] text-slate-500 mt-0.5 line-clamp-1">
+                                  复核意见：{postAny.reviewComment}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[10px] text-slate-400">
+                              {post.board}
+                            </span>
+                            <span className="text-[10px] text-slate-400">
+                              {post.viewCount} 阅读
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -1214,10 +1517,6 @@ export default function HomePage() {
                 <FileText className="w-5 h-5 text-blue-600" />
                 政策公告
               </h2>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-blue-50 text-blue-600 border border-blue-100">
-                <HardDrive className="w-3 h-3" />
-                {cachedCount} 篇已缓存
-              </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[11px] text-slate-500">离线模式</span>
@@ -1238,16 +1537,42 @@ export default function HomePage() {
             </div>
           </div>
 
+          <div className="bg-gradient-to-r from-blue-50 to-slate-50 rounded-xl border border-blue-100 px-3 py-2 mb-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-slate-600 flex items-center gap-1.5">
+                <HardDrive className="w-3 h-3 text-blue-600" />
+                已缓存 <span className="font-semibold text-blue-700">{cachedCount}</span>/<span className="font-semibold">{policies.length}</span> 篇
+              </span>
+              <span className="text-[11px] text-slate-500">
+                约占用 {cacheSizeKB} KB
+              </span>
+            </div>
+          </div>
+
           <div className="bg-white rounded-xl border border-slate-100 divide-y divide-slate-50">
             {offlineMode && cachedCount === 0 ? (
-              <div className="p-6 text-center">
-                <HardDrive className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500 mb-1">暂无已缓存的政策</p>
-                <p className="text-xs text-slate-400">
-                  请先关闭离线模式，点击政策右侧的下载按钮进行缓存
+              <div className="p-8 text-center">
+                <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <HardDrive className="w-8 h-8 text-slate-400" />
+                </div>
+                <p className="text-sm font-medium text-slate-700 mb-1">暂无离线缓存政策</p>
+                <p className="text-xs text-slate-400 mb-4">
+                  关闭离线模式后可下载缓存政策
                 </p>
+                <button
+                  onClick={() => setOfflineMode(false)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  去下载
+                </button>
               </div>
-            ) : filteredPolicies.length > 0 ? (
+            ) : filteredPolicies.length === 0 && !(offlineMode && cachedCount === 0) ? (
+              <div className="p-6 text-center">
+                <Filter className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm text-slate-400">暂无政策公告</p>
+              </div>
+            ) : (
               filteredPolicies.slice(0, 4).map((policy) => {
                 const cached = isCached(policy.id);
                 const isCaching = policy.isCaching;
@@ -1269,48 +1594,47 @@ export default function HomePage() {
                           <span className="text-[11px] text-slate-400">
                             {formatDate(policy.publishedAt)}
                           </span>
-                          {isCaching && (
-                            <span className="text-[11px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded flex items-center gap-1">
-                              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-                              缓存中
-                            </span>
-                          )}
                         </div>
                       </div>
-                      <button
+                      <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleDownloadPolicy(policy);
                         }}
-                        disabled={isCaching}
-                        className={cn(
-                          "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-                          isCaching
-                            ? "text-blue-500 bg-blue-50"
-                            : cached
-                            ? "text-emerald-500 bg-emerald-50"
-                            : "text-slate-400 hover:text-blue-500 hover:bg-blue-50"
-                        )}
                       >
                         {isCaching ? (
-                          <RefreshCw className="w-4 h-4 animate-spin" />
+                          <div className="flex-shrink-0 h-8 px-2 rounded-lg flex items-center justify-center bg-blue-50 text-blue-500">
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin mr-1" />
+                            <span className="text-[11px]">缓存中...</span>
+                          </div>
                         ) : cached ? (
-                          <HardDrive className="w-4 h-4" />
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemovePolicyCache(policy);
+                            }}
+                            className="flex-shrink-0 h-8 px-2 rounded-lg flex items-center justify-center bg-emerald-50 text-emerald-600 gap-1 hover:bg-emerald-100 transition-colors"
+                          >
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            <span className="text-[11px]">已缓存</span>
+                            <span className="text-[10px] text-emerald-500 ml-0.5 hover:text-emerald-700">清除</span>
+                          </button>
                         ) : (
-                          <Download className="w-4 h-4" />
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDownloadPolicy(policy);
+                            }}
+                            className="flex-shrink-0 h-8 px-2 rounded-lg flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition-colors gap-1"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span className="text-[11px]">下载缓存</span>
+                          </button>
                         )}
-                      </button>
+                      </div>
                     </div>
                   </div>
                 );
               })
-            ) : (
-              <div className="p-6 text-center">
-                <Filter className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-400">
-                  暂无政策公告
-                </p>
-              </div>
             )}
           </div>
 

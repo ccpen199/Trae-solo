@@ -8,14 +8,74 @@ import {
   mockAllBusRoutes,
   mockTrafficOverview,
 } from '../data/mock.js'
-import type { TrafficEvent, BusPrediction, AccidentEvent, MetroDelayEvent, TrafficOverview } from '../../shared/types.js'
+import type {
+  TrafficEvent,
+  BusPrediction,
+  AccidentEvent,
+  MetroDelayEvent,
+  TrafficOverview,
+  NotificationSubscription,
+} from '../../shared/types.js'
 
 const router = Router()
+
+const eventStore = new Map<string, TrafficEvent & { read: boolean; subscribed: boolean }>()
+const subscriptions: NotificationSubscription[] = []
+
+const initEventStore = () => {
+  ;[...mockTrafficEvents, ...mockAccidentEvents, ...mockMetroDelayEvents, ...mockBusAbnormalEvents].forEach((e) => {
+    if (!eventStore.has(e.id)) {
+      eventStore.set(e.id, {
+        ...e,
+        read: e.read ?? false,
+        subscribed: e.subscribed ?? false,
+      })
+    }
+  })
+}
+
+initEventStore()
+
+const getEnrichedEvent = (event: any): any => {
+  const stored = eventStore.get(event.id)
+  return {
+    ...event,
+    read: stored?.read ?? event.read ?? false,
+    subscribed: stored?.subscribed ?? event.subscribed ?? false,
+  }
+}
+
+router.get('/overview', (req: Request, res: Response): void => {
+  try {
+    initEventStore()
+    const allEvents = Array.from(eventStore.values())
+    const unreadCount = allEvents.filter((e) => !e.read).length
+    const subscribedCount = allEvents.filter((e) => e.subscribed).length
+
+    const overview: TrafficOverview = {
+      ...mockTrafficOverview,
+      unreadCount,
+      subscribedCount,
+    }
+
+    res.json({
+      success: true,
+      data: overview,
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '获取交通态势总览失败',
+    })
+  }
+})
 
 router.get('/events', (req: Request, res: Response): void => {
   try {
     const { type, severity } = req.query
-    let events: TrafficEvent[] = [...mockTrafficEvents]
+    initEventStore()
+
+    let events: TrafficEvent[] = Array.from(eventStore.values())
 
     if (type) {
       events = events.filter((e) => e.type === type)
@@ -38,16 +98,102 @@ router.get('/events', (req: Request, res: Response): void => {
   }
 })
 
-router.get('/overview', (req: Request, res: Response): void => {
+router.post('/events/:id/read', (req: Request, res: Response): void => {
   try {
+    const { id } = req.params
+    initEventStore()
+
+    const event = eventStore.get(id)
+    if (!event) {
+      res.status(404).json({
+        success: false,
+        error: '事件不存在',
+      })
+      return
+    }
+
+    eventStore.set(id, { ...event, read: true })
+
     res.json({
       success: true,
-      data: mockTrafficOverview as TrafficOverview,
+      data: { id, read: true },
     })
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: '获取交通态势总览失败',
+      error: '标记已读失败',
+    })
+  }
+})
+
+router.post('/events/:id/subscribe', (req: Request, res: Response): void => {
+  try {
+    const { id } = req.params
+    initEventStore()
+
+    const event = eventStore.get(id)
+    if (!event) {
+      res.status(404).json({
+        success: false,
+        error: '事件不存在',
+      })
+      return
+    }
+
+    eventStore.set(id, { ...event, subscribed: true })
+
+    const newSubscription: NotificationSubscription = {
+      id: `sub-${Date.now()}`,
+      eventId: id,
+      userId: 'user-001',
+      pushChannels: ['app', 'sms'],
+      createdAt: new Date().toISOString(),
+    }
+    subscriptions.push(newSubscription)
+
+    res.json({
+      success: true,
+      data: { id, subscribed: true, subscription: newSubscription },
+      message: '订阅成功，事件更新将通过推送和短信通知您',
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '订阅失败',
+    })
+  }
+})
+
+router.post('/events/:id/unsubscribe', (req: Request, res: Response): void => {
+  try {
+    const { id } = req.params
+    initEventStore()
+
+    const event = eventStore.get(id)
+    if (!event) {
+      res.status(404).json({
+        success: false,
+        error: '事件不存在',
+      })
+      return
+    }
+
+    eventStore.set(id, { ...event, subscribed: false })
+
+    const subIdx = subscriptions.findIndex((s) => s.eventId === id && s.userId === 'user-001')
+    if (subIdx >= 0) {
+      subscriptions.splice(subIdx, 1)
+    }
+
+    res.json({
+      success: true,
+      data: { id, subscribed: false },
+      message: '已取消订阅',
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '取消订阅失败',
     })
   }
 })
@@ -55,7 +201,7 @@ router.get('/overview', (req: Request, res: Response): void => {
 router.get('/accidents', (req: Request, res: Response): void => {
   try {
     const { severity, district, status } = req.query
-    let accidents = [...mockAccidentEvents]
+    let accidents = [...mockAccidentEvents].map(getEnrichedEvent)
 
     if (severity) {
       accidents = accidents.filter((a) => a.severity === severity)
@@ -84,7 +230,7 @@ router.get('/accidents', (req: Request, res: Response): void => {
 router.get('/metro/delays', (req: Request, res: Response): void => {
   try {
     const { status } = req.query
-    let delays = [...mockMetroDelayEvents]
+    let delays = [...mockMetroDelayEvents].map(getEnrichedEvent)
 
     if (status) {
       delays = delays.filter((d) => d.status === status)
@@ -106,9 +252,10 @@ router.get('/metro/delays', (req: Request, res: Response): void => {
 
 router.get('/bus/abnormal', (req: Request, res: Response): void => {
   try {
+    const events = mockBusAbnormalEvents.map(getEnrichedEvent)
     res.json({
       success: true,
-      data: mockBusAbnormalEvents,
+      data: events,
     })
   } catch (error) {
     res.status(500).json({

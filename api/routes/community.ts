@@ -4,35 +4,35 @@ import type { CommunityPost, OpinionDashboard, NlpAnalysis, DisposalStatus } fro
 
 const router = Router()
 
+let postsStore: CommunityPost[] = JSON.parse(JSON.stringify(mockCommunityPosts))
+
 function generateNlpAnalysis(post: CommunityPost): NlpAnalysis {
   const sentimentLabels: Record<string, string> = {
     positive: '正面',
     neutral: '中性',
     negative: '负面',
   }
-  
+
   const confidence = 0.75 + Math.random() * 0.2
   const sentimentLabel = sentimentLabels[post.sentiment] || '中性'
-  
-  const keywordsWithWeight = post.keywords.map((word, idx) => ({
+
+  const keywordsWithWeight = post.keywords.slice(0, 5).map((word, idx) => ({
     word,
     weight: Math.round((0.95 - idx * 0.15) * 100) / 100,
   }))
-  
+
   const sensitiveWords = ['投诉', '不作为', '垃圾', '坑', '难', '乱', '差']
-  const foundSensitive = sensitiveWords.filter(w => 
-    post.content.includes(w) || post.title.includes(w)
-  )
-  
+  const foundSensitive = sensitiveWords.filter((w) => post.content.includes(w) || post.title.includes(w))
+
   let opinionBasis = ''
   if (post.sentiment === 'negative') {
-    opinionBasis = `含${foundSensitive.slice(0, 3).map(w => `'${w}'`).join('')}等敏感词×${foundSensitive.length || Math.ceil(Math.random() * 3) + 1}，情绪得分${(post.sentimentScore > 0 ? -post.sentimentScore : -post.sentimentScore).toFixed(2)}`
+    opinionBasis = `含${foundSensitive.slice(0, 3).map((w) => `'${w}'`).join('')}等敏感词×${foundSensitive.length || Math.ceil(Math.random() * 3) + 1}，情绪得分${(post.sentimentScore > 0 ? -post.sentimentScore : -post.sentimentScore).toFixed(2)}`
   } else if (post.sentiment === 'positive') {
     opinionBasis = `含赞美类词汇×${Math.ceil(Math.random() * 3) + 1}，情绪得分${post.sentimentScore.toFixed(2)}`
   } else {
     opinionBasis = `情感倾向不明显，情绪得分${post.sentimentScore.toFixed(2)}`
   }
-  
+
   return {
     sentimentConfidence: Math.round(confidence * 1000) / 10,
     sentimentLabel,
@@ -67,18 +67,25 @@ function enrichPost(post: CommunityPost): CommunityPost {
   const disposal = generateDisposalStatus(post.opinionLevel)
   return {
     ...post,
-    nlpAnalysis: generateNlpAnalysis(post),
+    nlpAnalysis: post.nlpAnalysis || generateNlpAnalysis(post),
     disposalStatus: disposal.status,
     transferredTo: disposal.transferredTo,
+    reviewStatus: post.reviewStatus || 'auto_analyzed',
+    opinionLevelSource: post.opinionLevelSource || 'NLP自动判定',
   }
 }
 
 router.get('/posts', (req: Request, res: Response): void => {
   try {
-    const { sort } = req.query
+    const { sort, reviewStatus } = req.query
     const sortType = sort === 'hot' || sort === 'time' ? sort : 'time'
+    const reviewStatusFilter = reviewStatus ? String(reviewStatus) : undefined
 
-    let posts = [...mockCommunityPosts].map(enrichPost) as CommunityPost[]
+    let posts = [...postsStore].map(enrichPost) as CommunityPost[]
+
+    if (reviewStatusFilter) {
+      posts = posts.filter((p) => p.reviewStatus === reviewStatusFilter)
+    }
 
     if (sortType === 'hot') {
       posts.sort((a, b) => {
@@ -98,6 +105,50 @@ router.get('/posts', (req: Request, res: Response): void => {
     res.status(500).json({
       success: false,
       error: '获取社区帖子列表失败',
+    })
+  }
+})
+
+router.post('/posts/:id/review', (req: Request, res: Response): void => {
+  try {
+    const { id } = req.params
+    const { opinionLevel, reviewComment, reviewedBy } = req.body as {
+      opinionLevel?: 1 | 2 | 3 | 4 | 5
+      reviewComment?: string
+      reviewedBy?: string
+    }
+
+    const postIndex = postsStore.findIndex((p) => p.id === id)
+    if (postIndex === -1) {
+      res.status(404).json({
+        success: false,
+        error: '帖子不存在',
+      })
+      return
+    }
+
+    const originalPost = postsStore[postIndex]
+    const updatedPost: CommunityPost = {
+      ...originalPost,
+      opinionLevel: opinionLevel ?? originalPost.opinionLevel,
+      reviewStatus: 'reviewed',
+      reviewedBy: reviewedBy || '舆情审核员',
+      reviewedAt: new Date().toISOString(),
+      reviewComment: reviewComment || originalPost.reviewComment,
+      opinionLevelSource: 'NLP自动判定+人工复核确认',
+    }
+
+    postsStore[postIndex] = updatedPost
+    const enriched = enrichPost(updatedPost)
+
+    res.json({
+      success: true,
+      data: enriched,
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '人工复核失败',
     })
   }
 })

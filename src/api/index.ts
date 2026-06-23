@@ -18,6 +18,11 @@ import type {
   Favorite,
   CertificateResponse,
   PaymentAccountWithMatch,
+  VerificationRecord,
+  TrafficOverview,
+  AccidentEvent,
+  MetroDelayEvent,
+  NotificationSubscription,
 } from "../../shared/types";
 
 export const socialSecurityApi = {
@@ -27,21 +32,39 @@ export const socialSecurityApi = {
     client.get<SocialSecurityAccount["contributionHistory"]>(
       "/social-security/370202199001011234/history"
     ),
+  getVerifications: (): Promise<VerificationRecord[]> =>
+    client.get<VerificationRecord[]>(
+      "/social-security/370202199001011234/verifications"
+    ),
   generateCertificate: (): Promise<CertificateResponse> =>
     client.post<CertificateResponse>(
       "/social-security/370202199001011234/certificate"
     ),
 };
 
+interface PaymentSystemStatus {
+  district: string;
+  category: string;
+  categoryLabel: string;
+  systemSource: string;
+  systemStatus: "online" | "offline" | "maintenance";
+}
+
+interface PaymentPayResult extends PaymentRecord {
+  retryable?: boolean;
+}
+
 export const paymentApi = {
-  searchAccounts: (keyword?: string): Promise<PaymentAccountWithMatch[]> =>
-    client.get<PaymentAccountWithMatch[]>("/payment/accounts", { keyword }),
+  searchAccounts: (keyword?: string, district?: string): Promise<PaymentAccountWithMatch[]> =>
+    client.get<PaymentAccountWithMatch[]>("/payment/accounts", { keyword, district }),
   getAccounts: (category?: PaymentCategory): Promise<PaymentAccount[]> =>
     client.get<PaymentAccount[]>("/payment/accounts", { category }),
   getRecords: (accountId?: string): Promise<PaymentRecord[]> =>
     client.get<PaymentRecord[]>("/payment/records", { accountId }),
-  pay: (accountId: string, amount: number): Promise<PaymentRecord> =>
-    client.post<PaymentRecord>("/payment/pay", { accountId, amount }),
+  pay: (accountId: string, amount: number): Promise<PaymentPayResult> =>
+    client.post<PaymentPayResult>("/payment/pay", { accountId, amount }),
+  getSystemsStatus: (): Promise<PaymentSystemStatus[]> =>
+    client.get<PaymentSystemStatus[]>("/payment/systems-status"),
 };
 
 export const trafficApi = {
@@ -50,24 +73,48 @@ export const trafficApi = {
     severity?: string;
   }): Promise<TrafficEvent[]> =>
     client.get<TrafficEvent[]>("/traffic/events", params),
-  getOverview: (): Promise<any> =>
-    client.get<any>("/traffic/overview"),
+  getOverview: (): Promise<TrafficOverview> =>
+    client.get<TrafficOverview>("/traffic/overview"),
   getAccidents: (params?: {
     severity?: string;
     district?: string;
     status?: string;
-  }): Promise<any[]> =>
-    client.get<any[]>("/traffic/accidents", params),
-  getMetroDelays: (params?: { status?: string }): Promise<any[]> =>
-    client.get<any[]>("/traffic/metro/delays", params),
-  getBusAbnormal: (): Promise<any[]> =>
-    client.get<any[]>("/traffic/bus/abnormal"),
+  }): Promise<AccidentEvent[]> =>
+    client.get<AccidentEvent[]>("/traffic/accidents", params),
+  getMetroDelays: (params?: { status?: string }): Promise<MetroDelayEvent[]> =>
+    client.get<MetroDelayEvent[]>("/traffic/metro/delays", params),
+  getBusAbnormal: (): Promise<TrafficEvent[]> =>
+    client.get<TrafficEvent[]>("/traffic/bus/abnormal"),
   getBusPredictions: (params?: { favorite?: boolean }): Promise<BusPrediction[]> =>
     client.get<BusPrediction[]>("/traffic/bus/predictions", params),
   searchBusRoutes: (keyword?: string): Promise<any[]> =>
     client.get<any[]>("/traffic/bus/routes", { keyword }),
   reportEvent: (data: Partial<TrafficEvent>): Promise<TrafficEvent> =>
     client.post<TrafficEvent>("/traffic/events", data),
+  markAsRead: (id: string): Promise<{ id: string; read: boolean }> =>
+    client.post<{ id: string; read: boolean }>(`/traffic/events/${id}/read`),
+  subscribeEvent: (id: string): Promise<{
+    id: string;
+    subscribed: boolean;
+    subscription: NotificationSubscription;
+    message: string;
+  }> =>
+    client.post<{
+      id: string;
+      subscribed: boolean;
+      subscription: NotificationSubscription;
+      message: string;
+    }>(`/traffic/events/${id}/subscribe`),
+  unsubscribeEvent: (id: string): Promise<{
+    id: string;
+    subscribed: boolean;
+    message: string;
+  }> =>
+    client.post<{
+      id: string;
+      subscribed: boolean;
+      message: string;
+    }>(`/traffic/events/${id}/unsubscribe`),
 };
 
 export const communityApi = {
@@ -75,6 +122,7 @@ export const communityApi = {
     board?: string;
     page?: number;
     pageSize?: number;
+    reviewStatus?: string;
   }): Promise<CommunityPost[]> =>
     client.get<CommunityPost[]>("/community/posts", params),
   getPost: (id: string): Promise<CommunityPost> =>
@@ -85,6 +133,15 @@ export const communityApi = {
     client.post<CommunityPost>("/community/posts", data),
   likePost: (id: string): Promise<void> =>
     client.post<void>(`/community/posts/${id}/like`),
+  reviewPost: (
+    id: string,
+    data: {
+      opinionLevel?: 1 | 2 | 3 | 4 | 5;
+      reviewComment?: string;
+      reviewedBy?: string;
+    }
+  ): Promise<CommunityPost> =>
+    client.post<CommunityPost>(`/community/posts/${id}/review`, data),
 };
 
 export const poiApi = {

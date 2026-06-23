@@ -51,7 +51,7 @@ import SkeletonCard from "@/components/ui/SkeletonCard";
 import TabBar from "@/components/ui/TabBar";
 import { socialSecurityApi } from "@/api";
 import { useAppStore } from "@/store/useAppStore";
-import type { SocialSecurityAccount, CertificateResponse } from "../../shared/types";
+import type { SocialSecurityAccount, CertificateResponse, VerificationRecord } from "../../shared/types";
 import { formatMoney, formatDate } from "@/utils/format";
 import { cn } from "@/lib/utils";
 
@@ -76,6 +76,7 @@ const INSURANCE_LIST: InsuranceItem[] = [
 type ChartType = "area" | "bar";
 type CertificateType = "housing-fund" | "social-security" | "five-insurance";
 type CertificateStep = 0 | 1 | 2 | 3 | 4;
+type SecurityTabKey = "history" | "verifications" | "certificate";
 
 const CERTIFICATE_TYPES: { key: CertificateType; label: string; desc: string; icon: typeof FileText }[] = [
   { key: "housing-fund", label: "公积金缴存证明", desc: "住房公积金缴存明细凭证", icon: Home },
@@ -101,6 +102,9 @@ export default function SocialSecurityPage() {
   const [certReady, setCertReady] = useState(false);
   const [certResponse, setCertResponse] = useState<CertificateResponse | null>(null);
   const [copiedCertNo, setCopiedCertNo] = useState(false);
+  const [activeTab, setActiveTab] = useState<SecurityTabKey>("history");
+  const [verificationRecords, setVerificationRecords] = useState<VerificationRecord[]>([]);
+  const [loadingVerifications, setLoadingVerifications] = useState(false);
 
   const verifyReportData = useMemo(() => ({
     source: "山东省人力资源和社会保障厅核心业务库",
@@ -118,20 +122,26 @@ export default function SocialSecurityPage() {
         certNo: certResponse.certNo,
         verifyCode: certResponse.verifyCode,
         issueDate: certResponse.issueDate,
+        validUntil: certResponse.validUntil,
         qrData: certResponse.qrData,
         pdfData: certResponse.pdfData,
         base64: certResponse.base64,
         filename: certResponse.filename,
+        verifyCount: certResponse.verifyCount,
+        verifyRecords: certResponse.verifyRecords || [],
       };
     }
     return {
       certNo: "",
       verifyCode: "",
       issueDate: "",
+      validUntil: "",
       qrData: "",
       pdfData: "",
       base64: "",
       filename: "",
+      verifyCount: 0,
+      verifyRecords: [] as CertificateResponse["verifyRecords"],
     };
   }, [certResponse]);
 
@@ -149,14 +159,20 @@ export default function SocialSecurityPage() {
   const fetchData = async () => {
     try {
       setLoadingState(true);
-      const data = await socialSecurityApi.getAccount();
+      setLoadingVerifications(true);
+      const [data, verifications] = await Promise.all([
+        socialSecurityApi.getAccount(),
+        socialSecurityApi.getVerifications(),
+      ]);
       setAccount(data);
+      setVerificationRecords(verifications);
       setLastUpdateTime(new Date());
     } catch (e) {
       console.error(e);
       showToast("获取社保公积金信息失败", "error");
     } finally {
       setLoadingState(false);
+      setLoadingVerifications(false);
     }
   };
 
@@ -570,7 +586,7 @@ export default function SocialSecurityPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="section-title" style={{ fontFamily: "'Noto Serif SC', serif" }}>
-                    缴费明细核验
+                    缴费明细与核验
                   </h3>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-slate-500">
@@ -586,111 +602,235 @@ export default function SocialSecurityPage() {
                   </div>
                 </div>
 
-                <div className="mb-3 flex items-center gap-2 overflow-x-auto pb-1">
-                  <button
-                    onClick={() => setSelectedYear("all")}
-                    className={cn(
-                      "text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-all",
-                      selectedYear === "all"
-                        ? "bg-blue-600 text-white shadow-md shadow-blue-200"
-                        : "bg-slate-100 text-slate-600"
-                    )}
-                  >
-                    全部
-                  </button>
-                  {availableYears.map((year) => (
-                    <button
-                      key={year}
-                      onClick={() => setSelectedYear(year)}
-                      className={cn(
-                        "text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-all",
-                        selectedYear === year
-                          ? "bg-blue-600 text-white shadow-md shadow-blue-200"
-                          : "bg-slate-100 text-slate-600"
-                      )}
-                    >
-                      {year}年
-                    </button>
-                  ))}
+                <div className="mb-3">
+                  <TabBar
+                    tabs={[
+                      { key: "history", label: "缴费明细", icon: Calendar },
+                      { key: "verifications", label: "核验历史", icon: ShieldCheck },
+                    ]}
+                    activeKey={activeTab}
+                    onChange={(k) => setActiveTab(k as SecurityTabKey)}
+                    variant="default"
+                    className="!gap-0"
+                  />
                 </div>
 
-                <div className="space-y-2.5">
-                  {filteredHistory.map((record) => {
-                    const isExpanded = expandedMonth === record.month;
-                    const total =
-                      record.housingFund +
-                      record.pension +
-                      record.medical +
-                      record.unemployment;
-                    return (
-                      <div key={record.month} className="card overflow-hidden">
+                {activeTab === "history" && (
+                  <>
+                    <div className="mb-3 flex items-center gap-2 overflow-x-auto pb-1">
+                      <button
+                        onClick={() => setSelectedYear("all")}
+                        className={cn(
+                          "text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-all",
+                          selectedYear === "all"
+                            ? "bg-blue-600 text-white shadow-md shadow-blue-200"
+                            : "bg-slate-100 text-slate-600"
+                        )}
+                      >
+                        全部
+                      </button>
+                      {availableYears.map((year) => (
                         <button
-                          onClick={() => setExpandedMonth(isExpanded ? null : record.month)}
-                          className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                          key={year}
+                          onClick={() => setSelectedYear(year)}
+                          className={cn(
+                            "text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-all",
+                            selectedYear === year
+                              ? "bg-blue-600 text-white shadow-md shadow-blue-200"
+                              : "bg-slate-100 text-slate-600"
+                          )}
                         >
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-blue-600 relative">
-                              <Calendar className="w-5 h-5" />
-                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center shadow-sm">
-                                <CheckCircle2 className="w-3 h-3 text-white" />
+                          {year}年
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {filteredHistory.map((record) => {
+                        const isExpanded = expandedMonth === record.month;
+                        const total =
+                          record.housingFund +
+                          record.pension +
+                          record.medical +
+                          record.unemployment;
+                        const relatedVerification = verificationRecords.find((v) => v.month === record.month);
+                        return (
+                          <div key={record.month} className="card overflow-hidden">
+                            <button
+                              onClick={() => setExpandedMonth(isExpanded ? null : record.month)}
+                              className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-blue-600 relative">
+                                  <Calendar className="w-5 h-5" />
+                                  {record.verified && (
+                                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-sm">
+                                      <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="text-left">
+                                  <div className="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                                    {record.month.replace("-", "年")}月
+                                    {record.verified && (
+                                      <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                        <Stamp className="w-2.5 h-2.5" />
+                                        已核验
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="text-xs text-slate-500 mt-0.5">
+                                    共 4 项缴费
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                            <div className="text-left">
-                              <div className="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
-                                {record.month.replace("-", "年")}月
-                                <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
-                                  <Stamp className="w-2.5 h-2.5" />
-                                  已核验
-                                </span>
+                              <div className="flex items-center gap-3">
+                                <div className="text-right">
+                                  <div className="text-sm font-bold text-slate-800">
+                                    {formatMoney(total)}
+                                  </div>
+                                  <div className="text-xs text-slate-500 mt-0.5">
+                                    合计
+                                  </div>
+                                </div>
+                                {isExpanded ? (
+                                  <ChevronUp className="w-5 h-5 text-slate-400" />
+                                ) : (
+                                  <ChevronDown className="w-5 h-5 text-slate-400" />
+                                )}
                               </div>
-                              <div className="text-xs text-slate-500 mt-0.5">
-                                共 4 项缴费
+                            </button>
+                            {isExpanded && (
+                              <div className="border-t border-slate-100 px-4 py-3 space-y-3 bg-slate-50/50 animate-slide-down">
+                                <div className="space-y-2">
+                                  {[
+                                    { label: "住房公积金", value: record.housingFund, color: "text-emerald-600", bg: "bg-emerald-50" },
+                                    { label: "养老保险", value: record.pension, color: "text-indigo-600", bg: "bg-indigo-50" },
+                                    { label: "医疗保险", value: record.medical, color: "text-amber-600", bg: "bg-amber-50" },
+                                    { label: "失业保险", value: record.unemployment, color: "text-pink-600", bg: "bg-pink-50" },
+                                  ].map((item) => (
+                                    <div
+                                      key={item.label}
+                                      className="flex items-center justify-between py-1.5"
+                                    >
+                                      <div className="flex items-center gap-2">
+                                        <span className={cn("w-2 h-2 rounded-full", item.bg.replace("bg-", "bg-").replace("-50", "-400"))} />
+                                        <span className="text-sm text-slate-600">{item.label}</span>
+                                      </div>
+                                      <span className={cn("text-sm font-semibold", item.color)}>
+                                        {formatMoney(item.value)}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                {record.verified && (
+                                  <div className="pt-3 mt-1 border-t border-slate-200 rounded-xl bg-gradient-to-r from-emerald-50 via-white to-blue-50 p-3 border border-emerald-100">
+                                    <div className="flex items-center gap-1.5 mb-2.5">
+                                      <BadgeCheck className="w-4 h-4 text-emerald-600" />
+                                      <span className="text-xs font-semibold text-emerald-700">核验详情</span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2.5 text-xs">
+                                      <div>
+                                        <span className="text-slate-500">核验编号</span>
+                                        <div className="font-mono font-semibold text-slate-800 mt-0.5">
+                                          {record.verifyNo || relatedVerification?.verifyNo || "-"}
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <span className="text-slate-500">核验机构</span>
+                                        <div className="font-semibold text-slate-800 mt-0.5">
+                                          {record.verifySource || relatedVerification?.verifySource || "青岛市社保中心"}
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <span className="text-slate-500">核验时间</span>
+                                        <div className="font-semibold text-slate-800 mt-0.5">
+                                          {record.verifiedAt || relatedVerification?.verifiedAt
+                                            ? formatDate(record.verifiedAt || relatedVerification?.verifiedAt || "", "YYYY-MM-DD HH:mm")
+                                            : "-"}
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <span className="text-slate-500">数据匹配率</span>
+                                        <div className="font-semibold text-emerald-600 mt-0.5">
+                                          {relatedVerification ? `${relatedVerification.dataMatchRate}%` : "100%"}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <div className="text-right">
-                              <div className="text-sm font-bold text-slate-800">
-                                {formatMoney(total)}
-                              </div>
-                              <div className="text-xs text-slate-500 mt-0.5">
-                                合计
-                              </div>
-                            </div>
-                            {isExpanded ? (
-                              <ChevronUp className="w-5 h-5 text-slate-400" />
-                            ) : (
-                              <ChevronDown className="w-5 h-5 text-slate-400" />
                             )}
                           </div>
-                        </button>
-                        {isExpanded && (
-                          <div className="border-t border-slate-100 px-4 py-3 space-y-2.5 bg-slate-50/50 animate-slide-down">
-                            {[
-                              { label: "住房公积金", value: record.housingFund, color: "text-emerald-600", bg: "bg-emerald-50" },
-                              { label: "养老保险", value: record.pension, color: "text-indigo-600", bg: "bg-indigo-50" },
-                              { label: "医疗保险", value: record.medical, color: "text-amber-600", bg: "bg-amber-50" },
-                              { label: "失业保险", value: record.unemployment, color: "text-pink-600", bg: "bg-pink-50" },
-                            ].map((item) => (
-                              <div
-                                key={item.label}
-                                className="flex items-center justify-between py-1.5"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <span className={cn("w-2 h-2 rounded-full", item.bg.replace("bg-", "bg-").replace("-50", "-400"))} />
-                                  <span className="text-sm text-slate-600">{item.label}</span>
-                                </div>
-                                <span className={cn("text-sm font-semibold", item.color)}>
-                                  {formatMoney(item.value)}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+
+                {activeTab === "verifications" && (
+                  <div className="card p-0 overflow-hidden">
+                    {loadingVerifications ? (
+                      <div className="py-12 flex items-center justify-center">
+                        <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
                       </div>
-                    );
-                  })}
-                </div>
+                    ) : verificationRecords.length === 0 ? (
+                      <div className="py-12 text-center text-sm text-slate-500">
+                        暂无核验记录
+                      </div>
+                    ) : (
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="bg-slate-50 text-slate-600 text-xs">
+                              <th className="text-left font-medium px-4 py-3">核验编号</th>
+                              <th className="text-left font-medium px-4 py-3">类型</th>
+                              <th className="text-left font-medium px-4 py-3">月份</th>
+                              <th className="text-left font-medium px-4 py-3">匹配率</th>
+                              <th className="text-left font-medium px-4 py-3">状态</th>
+                              <th className="text-left font-medium px-4 py-3">核验人</th>
+                              <th className="text-left font-medium px-4 py-3">时间</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {verificationRecords.map((v) => (
+                              <tr key={v.verifyNo} className="border-t border-slate-100 hover:bg-slate-50/50">
+                                <td className="px-4 py-3 font-mono text-xs text-slate-700">{v.verifyNo}</td>
+                                <td className="px-4 py-3">
+                                  <span className="inline-block text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                                    {v.type === "housing_fund" ? "公积金" : v.type === "pension" ? "养老" : "医疗"}
+                                  </span>
+                                </td>
+                                <td className="px-4 py-3 text-slate-700">{v.month}</td>
+                                <td className="px-4 py-3">
+                                  <span className="font-semibold text-emerald-600">{v.dataMatchRate}%</span>
+                                </td>
+                                <td className="px-4 py-3">
+                                  <span
+                                    className={cn(
+                                      "inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full",
+                                      v.status === "passed"
+                                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                        : "bg-amber-50 text-amber-700 border border-amber-200"
+                                    )}
+                                  >
+                                    {v.status === "passed" ? <CheckCircle2 className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
+                                    {v.status === "passed" ? "通过" : "不一致"}
+                                  </span>
+                                </td>
+                                <td className="px-4 py-3 text-slate-700">{v.operator}</td>
+                                <td className="px-4 py-3 text-xs text-slate-500">
+                                  {formatDate(v.verifiedAt, "YYYY-MM-DD HH:mm")}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="pt-2">
@@ -1116,7 +1256,46 @@ export default function SocialSecurityPage() {
                           <span className="text-slate-500">签发日期</span>
                           <span className="font-medium text-slate-800">{certData.issueDate}</span>
                         </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">有效期至</span>
+                          <span className="font-medium text-slate-800 flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5 text-amber-500" />
+                            {certData.validUntil}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">已核验次数</span>
+                          <span className="font-semibold text-blue-600 flex items-center gap-1">
+                            <BadgeCheck className="w-3.5 h-3.5" />
+                            {certData.verifyCount} 次
+                          </span>
+                        </div>
                       </div>
+
+                      {certData.verifyRecords && certData.verifyRecords.length > 0 && (
+                        <div className="mt-4 pt-4 border-t border-dashed border-slate-300">
+                          <div className="text-xs text-slate-500 font-medium mb-2.5 flex items-center gap-1">
+                            <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
+                            最近核验记录（{certData.verifyRecords.length}条）
+                          </div>
+                          <div className="space-y-2">
+                            {certData.verifyRecords.map((r) => (
+                              <div key={r.verifyNo} className="bg-slate-50 rounded-lg p-2.5 border border-slate-200">
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="font-mono text-[11px] text-blue-600">{r.verifyNo}</span>
+                                  <span className="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                    匹配率 {r.dataMatchRate}%
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between text-[11px] text-slate-500">
+                                  <span>{r.verifyOrg} · {r.operator}</span>
+                                  <span>{formatDate(r.verifiedAt, "YYYY-MM-DD HH:mm")}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
                       {certData.pdfData && (
                         <div className="mt-4 pt-4 border-t border-dashed border-slate-300">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import type { PolicyDocument } from "../../shared/types";
 
 const STORAGE_KEY = "qingdao_cached_policies";
@@ -38,6 +38,7 @@ export interface UseOfflineCacheResult {
   clearCache: () => void;
   getPolicy: (id: string) => PolicyDocument | undefined;
   cacheSize: number;
+  cacheSizeKB: number;
 }
 
 export function useOfflineCache(): UseOfflineCacheResult {
@@ -94,6 +95,16 @@ export function useOfflineCache(): UseOfflineCacheResult {
     [cachedPolicies]
   );
 
+  const cacheSizeKB = useMemo(() => {
+    try {
+      const serialized = JSON.stringify(cachedPolicies);
+      const bytes = new Blob([serialized]).size;
+      return Math.round(bytes / 1024);
+    } catch {
+      return 0;
+    }
+  }, [cachedPolicies]);
+
   return {
     cachedPolicies,
     isCached,
@@ -102,5 +113,6 @@ export function useOfflineCache(): UseOfflineCacheResult {
     clearCache,
     getPolicy,
     cacheSize: cachedPolicies.length,
+    cacheSizeKB,
   };
 }

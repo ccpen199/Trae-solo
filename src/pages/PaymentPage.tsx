@@ -31,6 +31,7 @@ import {
   UserPlus,
   Download,
   Eye,
+  AlertCircle,
 } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 import { paymentApi } from "@/api";
@@ -50,11 +51,16 @@ interface ToastState {
   message: string;
 }
 
-interface ExtendedPaymentAccount extends PaymentAccount {
+interface ExtendedPaymentAccount extends Omit<PaymentAccount, "systemStatus" | "systemSource" | "householdNo" | "address" | "ownerPhone"> {
   sourceSystem: string;
   fullAddress: string;
   isDefault?: boolean;
   lastPaidAt?: string;
+  systemStatus?: "online" | "offline" | "maintenance";
+  systemSource?: string;
+  householdNo?: string;
+  address?: string;
+  ownerPhone?: string;
 }
 
 interface SearchHistoryItem {
@@ -96,7 +102,7 @@ interface SavedAccount {
   lastAmount?: number;
 }
 
-type PaymentStep = "search" | "confirm" | "paying" | "success";
+type PaymentStep = "search" | "confirm" | "paying" | "success" | "failed";
 type PageTab = "pay" | "my-accounts";
 
 const categoryConfig: Record<
@@ -487,7 +493,7 @@ function CategorySearchCard({
             <Search size={16} className="text-slate-400 flex-shrink-0" />
             <input
               type="text"
-              placeholder={`输入${config.label}户号/户名`}
+              placeholder="输入户号/分户号/姓名/地址"
               value={searchValue}
               onChange={(e) => onSearchChange(e.target.value)}
               onFocus={onSearchFocus}
@@ -505,7 +511,9 @@ function CategorySearchCard({
             <div className="absolute z-20 left-0 right-0 top-full mt-1 bg-white border border-slate-100 rounded-xl shadow-lg overflow-hidden animate-slide-down">
               {searchResults.slice(0, 4).map((account) => {
                 const accWithMatch = account as unknown as PaymentAccountWithMatch;
-                const matchDegree = getMatchDegree(accWithMatch.matchDegree || 85);
+                const matchDegree = accWithMatch.matchDegree ? getMatchDegree(accWithMatch.matchDegree) : "匹配";
+                const accountAny = account as any;
+                const systemStatus = accountAny.systemStatus as string || "online";
                 return (
                   <button
                     key={account.id}
@@ -521,12 +529,32 @@ function CategorySearchCard({
                       <Icon size={16} className={config.textColor} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-slate-800 flex items-center gap-2">
+                      <div className="text-sm font-medium text-slate-800 flex items-center gap-1.5 flex-wrap">
                         <span className="truncate font-mono">
                           {highlightMatch(maskAccountNumber(account.accountNumber), searchValue)}
                         </span>
-                        <span className="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full flex-shrink-0">
-                          匹配度：{matchDegree}%
+                        <span className="text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full flex-shrink-0">
+                          {matchDegree}
+                        </span>
+                        <span
+                          className={cn(
+                            "text-[10px] px-1 py-0.5 rounded flex-shrink-0",
+                            districtColors[account.district] || "bg-slate-100 text-slate-600"
+                          )}
+                        >
+                          {account.district}
+                        </span>
+                        <span className={cn(
+                          "text-[10px] flex items-center gap-0.5 flex-shrink-0",
+                          systemStatus === "online" ? "text-emerald-600" :
+                          systemStatus === "maintenance" ? "text-amber-600" : "text-slate-400"
+                        )}>
+                          <span className={cn(
+                            "w-1.5 h-1.5 rounded-full",
+                            systemStatus === "online" ? "bg-emerald-500" :
+                            systemStatus === "maintenance" ? "bg-amber-500" : "bg-slate-400"
+                          )} />
+                          {systemStatus === "online" ? "在线" : systemStatus === "maintenance" ? "维护中" : "离线"}
                         </span>
                         {account.status === "unpaid" && account.amountDue > 0 && (
                           <span className="text-xs text-red-500 flex-shrink-0">
@@ -537,16 +565,7 @@ function CategorySearchCard({
                       <div className="text-xs text-slate-500 truncate mt-0.5 flex items-center gap-1.5">
                         <span>{highlightMatch(account.accountName, searchValue)}</span>
                         <span>·</span>
-                        <span className="inline-flex items-center gap-1">
-                          <span
-                            className={cn(
-                              "text-[10px] px-1 py-0.5 rounded",
-                              districtColors[account.district] || "bg-slate-100 text-slate-600"
-                            )}
-                          >
-                            {account.district}
-                          </span>
-                        </span>
+                        <span>{highlightMatch(accountAny.address || "", searchValue)}</span>
                       </div>
                     </div>
                     <ChevronRight
@@ -690,6 +709,7 @@ export default function PaymentPage() {
   const [isOtherPay, setIsOtherPay] = useState(false);
   const [payerName, setPayerName] = useState("");
   const [successRecord, setSuccessRecord] = useState<PaymentRecord | null>(null);
+  const [failInfo, setFailInfo] = useState<{ reason: string; retryable: boolean } | null>(null);
   const [toast, setToast] = useState<ToastState>({
     show: false,
     type: "success",
@@ -910,30 +930,41 @@ export default function PaymentPage() {
     if (!selectedAccount) return;
     setPayLoading(true);
     try {
-      const record = await paymentApi.pay(selectedAccount.id, selectedAccount.amountDue);
-      setSuccessRecord(record);
-      setSelectedAccount({
-        ...selectedAccount,
-        status: "paid",
-      });
-      const serialNo = `PAY-SD-${Date.now()}${Math.floor(Math.random() * 10000).toString().padStart(4, "0")}`;
-      setPaymentSuccessData({
-        showReceipt: true,
-        receiptData: {
-          orderNo: record.orderNo,
-          amount: selectedAccount.amountDue,
-          paidAt: record.paidAt || new Date().toISOString(),
-          accountName: selectedAccount.accountName,
-          accountNumber: selectedAccount.accountNumber,
-          category: selectedAccount.categoryName,
-          serialNo,
-        },
-      });
-      setPaymentStep("success");
-      fetchRecords(selectedAccount.id);
+      const result = await paymentApi.pay(selectedAccount.id, selectedAccount.amountDue);
+      if (result.status === "failed" && result.failReason) {
+        setFailInfo({
+          reason: result.failReason,
+          retryable: result.retryable ?? true,
+        });
+        setPaymentStep("failed");
+      } else {
+        setSuccessRecord(result);
+        setSelectedAccount({
+          ...selectedAccount,
+          status: "paid",
+        });
+        const serialNo = result.receiptNo || `PAY-SD-${Date.now()}${Math.floor(Math.random() * 10000).toString().padStart(4, "0")}`;
+        setPaymentSuccessData({
+          showReceipt: true,
+          receiptData: {
+            orderNo: result.orderNo,
+            amount: selectedAccount.amountDue,
+            paidAt: result.paidAt || new Date().toISOString(),
+            accountName: selectedAccount.accountName,
+            accountNumber: selectedAccount.accountNumber,
+            category: selectedAccount.categoryName,
+            serialNo,
+          },
+        });
+        setPaymentStep("success");
+        fetchRecords(selectedAccount.id);
+      }
     } catch (error) {
-      setPaymentStep("confirm");
-      showToast("error", "缴费失败，请稍后重试");
+      setFailInfo({
+        reason: "网络连接异常，请稍后重试",
+        retryable: true,
+      });
+      setPaymentStep("failed");
     } finally {
       setPayLoading(false);
     }
@@ -1234,13 +1265,13 @@ export default function PaymentPage() {
 
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">缴费系统</span>
+                      <span className="text-sm text-slate-500">缴费系统来源</span>
                       <span className="text-sm text-slate-700">
-                        {selectedAccount.sourceSystem}
+                        {(selectedAccount as any).systemSource || selectedAccount.sourceSystem}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">户名</span>
+                      <span className="text-sm text-slate-500">户主姓名</span>
                       <span className="text-sm font-medium text-slate-800">
                         {selectedAccount.accountName}
                       </span>
@@ -1252,9 +1283,15 @@ export default function PaymentPage() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">缴费地址</span>
-                      <span className="text-sm text-slate-700 text-right max-w-[200px]">
-                        {selectedAccount.fullAddress}
+                      <span className="text-sm text-slate-500">分户号</span>
+                      <span className="text-sm font-medium text-slate-800 tabular-nums">
+                        {(selectedAccount as any).householdNo || selectedAccount.accountNumber}
+                      </span>
+                    </div>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="text-sm text-slate-500 flex-shrink-0">完整地址</span>
+                      <span className="text-sm text-slate-700 text-right max-w-[220px]">
+                        {(selectedAccount as any).address || selectedAccount.fullAddress}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -1535,6 +1572,99 @@ export default function PaymentPage() {
                 >
                   继续缴费
                 </button>
+              </div>
+            )}
+
+            {paymentStep === "failed" && selectedAccount && failInfo && (
+              <div className="animate-fade-in-up pt-4">
+                <div className="text-center mb-6">
+                  <div className="relative w-20 h-20 mx-auto mb-4">
+                    <div className="absolute inset-0 rounded-full bg-red-100 animate-ping opacity-30" />
+                    <div className="relative w-20 h-20 rounded-full bg-red-50 flex items-center justify-center">
+                      <XCircle size={48} className="text-red-500" />
+                    </div>
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-800 mb-1">
+                    缴费失败
+                  </h2>
+                  <p className="text-sm text-slate-500 mb-2">
+                    {selectedAccount.categoryName}支付未成功
+                  </p>
+                  <div className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 text-xs px-2.5 py-1 rounded-full">
+                    <AlertCircle size={12} />
+                    {failInfo.reason}
+                  </div>
+                </div>
+
+                <div className="card p-5 mb-5">
+                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100">
+                    <div>
+                      <div className="text-sm text-slate-500 mb-1">应缴金额</div>
+                      <div className="text-3xl font-bold text-slate-700 tabular-nums">
+                        {formatMoney(selectedAccount.amountDue)}
+                      </div>
+                    </div>
+                    <div
+                      className={cn(
+                        "w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br text-white",
+                        categoryConfig[selectedAccount.category].gradient
+                      )}
+                    >
+                      {(() => {
+                        const Icon = categoryConfig[selectedAccount.category].icon;
+                        return <Icon size={24} />;
+                      })()}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-500">缴费项目</span>
+                      <span className="text-sm text-slate-700">
+                        {selectedAccount.categoryName}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-500">户名</span>
+                      <span className="text-sm text-slate-700">
+                        {selectedAccount.accountName}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-500">户号</span>
+                      <span className="text-sm text-slate-700 tabular-nums">
+                        {maskAccountNumber(selectedAccount.accountNumber)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-500">失败原因</span>
+                      <span className="text-sm text-red-600 font-medium">
+                        {failInfo.reason}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 mb-5">
+                  {failInfo.retryable && (
+                    <button
+                      onClick={() => {
+                        setPaymentStep("confirm");
+                      }}
+                      className="btn-primary w-full py-3.5 flex items-center justify-center gap-2"
+                    >
+                      <RefreshCw size={18} />
+                      重试缴费
+                    </button>
+                  )}
+                  <button
+                    onClick={handleBackToSearch}
+                    className="btn-secondary w-full py-3.5 flex items-center justify-center gap-2"
+                  >
+                    <CreditCard size={18} />
+                    切换缴费方式
+                  </button>
+                </div>
               </div>
             )}
           </>

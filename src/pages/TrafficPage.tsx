@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -32,10 +32,18 @@ import {
   Info,
   RefreshCw,
   Map as MapIcon,
+  Activity,
+  Bell,
+  BellOff,
+  Check,
+  Building2,
 } from "lucide-react";
-import AppLayout from "@/components/AppLayout";
-import TabBar from "@/components/TabBar";
+import AppLayout from "@/components/layout/AppLayout";
+import TabBar from "@/components/ui/TabBar";
 import { trafficApi } from "@/api";
+import { useAppStore } from "@/store/useAppStore";
+import { cn } from "@/lib/utils";
+import { formatDateTime } from "@/utils/format";
 import type {
   TrafficEvent,
   BusPrediction,
@@ -50,9 +58,10 @@ import type {
   BusCrowdLevel,
   MapLayer,
   TrafficOverview,
+  TrafficDisposalStatus,
+  AccidentEvent,
+  MetroDelayEvent,
 } from "../../shared/types";
-import { cn } from "@/lib/utils";
-import { formatDateTime } from "@/utils/format";
 
 const eventTypeConfig: Record<TrafficEventType, { label: string; color: string; bg: string; border: string; icon: typeof AlertTriangle }> = {
   accident: {
@@ -164,11 +173,20 @@ const crowdLevelConfig: Record<BusCrowdLevel, { label: string; color: string; bg
   crowded: { label: "拥挤", color: "text-red-600", bg: "bg-red-100" },
 };
 
+const disposalStatusConfig: Record<TrafficDisposalStatus, { label: string; color: string; bg: string; progress: number }> = {
+  arrived: { label: "已到场", color: "text-blue-700", bg: "bg-blue-100 border-blue-200", progress: 40 },
+  processing: { label: "处理中", color: "text-amber-700", bg: "bg-amber-100 border-amber-200", progress: 65 },
+  cleared: { label: "已疏通", color: "text-emerald-700", bg: "bg-emerald-100 border-emerald-200", progress: 90 },
+  recovered: { label: "已恢复", color: "text-teal-700", bg: "bg-teal-100 border-teal-200", progress: 100 },
+  delayed: { label: "延误中", color: "text-orange-700", bg: "bg-orange-100 border-orange-200", progress: 50 },
+  pending: { label: "待处置", color: "text-slate-700", bg: "bg-slate-100 border-slate-200", progress: 10 },
+};
+
 const TABS = [
-  { key: "accident", label: "事故快报", icon: <AlertTriangle size={16} /> },
-  { key: "metro", label: "地铁延误", icon: <TrainFront size={16} /> },
-  { key: "bus", label: "公交预测", icon: <Bus size={16} /> },
-  { key: "map", label: "路况地图", icon: <MapPin size={16} /> },
+  { key: "accident", label: "事故快报", icon: AlertTriangle },
+  { key: "metro", label: "地铁延误", icon: TrainFront },
+  { key: "bus", label: "公交预测", icon: Bus },
+  { key: "map", label: "路况地图", icon: MapPin },
 ];
 
 const DISTRICTS = ["全部区域", "市南区", "市北区", "李沧区", "崂山区", "黄岛区"];
@@ -255,10 +273,23 @@ function TrafficOverviewCard({
   return (
     <div className="card p-4 mb-4">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="font-semibold text-slate-800 text-base">交通态势总览</h2>
-        <span className="text-xs text-slate-400">
-          更新于 {formatDateTime(overview.lastUpdated, "HH:mm")}
-        </span>
+        <h2 className="font-semibold text-slate-800 text-base flex items-center gap-2">
+          交通态势总览
+          {(overview.unreadCount ?? 0) > 0 && (
+            <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full shadow-sm">
+              {overview.unreadCount}
+            </span>
+          )}
+        </h2>
+        <div className="flex items-center gap-3 text-xs text-slate-400">
+          {(overview.subscribedCount ?? 0) > 0 && (
+            <span className="inline-flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <Bell size={10} />
+              {overview.subscribedCount} 项订阅
+            </span>
+          )}
+          <span>更新于 {formatDateTime(overview.lastUpdated, "HH:mm")}</span>
+        </div>
       </div>
       <div className="grid grid-cols-3 gap-2">
         {statItems.map((item) => {
@@ -356,26 +387,42 @@ function ProgressSteps({ progress }: { progress: { received: boolean; dispatched
 function AccidentCard({
   accident,
   onTrack,
+  onMarkRead,
+  onSubscribe,
 }: {
-  accident: Record<string, any>;
+  accident: AccidentEvent & { tracked?: boolean };
   onTrack: (id: string) => void;
+  onMarkRead: (id: string) => void;
+  onSubscribe: (id: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
   const statusConfig = accidentStatusConfig[accident.status as AccidentStatus];
   const sourceConfig = accidentSourceConfig[accident.sourceType as AccidentSource];
   const sevConfig = severityConfig[accident.severity as Severity];
+  const dispConfig = disposalStatusConfig[accident.disposalStatus || "pending"];
   const SourceIcon = sourceConfig.icon;
   const StatusIcon = statusConfig.icon;
 
   return (
-    <div className="card overflow-hidden border-l-4 border-l-red-500">
+    <div className="card overflow-hidden border-l-4 border-l-red-500 relative">
+      {!accident.read && (
+        <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full shadow-sm animate-pulse z-10" />
+      )}
       <div className="p-4">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <div className="flex items-center gap-2">
+        <div className="flex items-start justify-between gap-2 mb-2 pr-6">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs font-mono text-slate-400">{accident.accidentNo}</span>
             <span className={cn("chip", statusConfig.className)}>
               <StatusIcon size={12} />
               {statusConfig.label}
+            </span>
+            <span className={cn(
+              "chip inline-flex items-center gap-0.5 text-[10px] px-2 py-0.5 rounded-full border font-medium",
+              dispConfig.bg,
+              dispConfig.color
+            )}>
+              <Activity size={10} />
+              {dispConfig.label}
             </span>
           </div>
           <span className={cn("chip flex-shrink-0", sevConfig.className)}>
@@ -387,13 +434,19 @@ function AccidentCard({
           {accident.title}
         </h3>
 
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-3">
-          <MapPin size={14} className="flex-shrink-0" />
+        <div className="flex items-center gap-2 text-sm text-slate-500 mb-2 flex-wrap">
+          <MapPin size={14} className="flex-shrink-0 text-red-500" />
           <span className="truncate">{accident.location.address}</span>
+          {accident.affectedRange && (
+            <span className="inline-flex items-center gap-1 text-[11px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">
+              <MapPin size={10} />
+              {accident.affectedRange}
+            </span>
+          )}
         </div>
 
         <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <span className="flex items-center gap-1">
               <Clock size={12} />
               {formatDateTime(accident.timestamp, "HH:mm")}
@@ -410,13 +463,34 @@ function AccidentCard({
           <ProgressSteps progress={accident.progress} />
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+          {!accident.read && (
+            <button
+              onClick={() => onMarkRead(accident.id)}
+              className="flex-1 min-w-[80px] text-[11px] py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors font-medium border border-blue-100 flex items-center justify-center gap-1"
+            >
+              <Check size={12} />
+              标记已读
+            </button>
+          )}
+          <button
+            onClick={() => onSubscribe(accident.id)}
+            className={cn(
+              "flex-1 min-w-[80px] text-[11px] py-1.5 rounded-lg font-medium border transition-colors flex items-center justify-center gap-1",
+              accident.subscribed
+                ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                : "bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200"
+            )}
+          >
+            {accident.subscribed ? <BellOff size={12} /> : <Bell size={12} />}
+            {accident.subscribed ? "已订阅" : "订阅提醒"}
+          </button>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-sm text-brand-600 flex items-center gap-1"
+            className="flex-1 min-w-[80px] text-[11px] py-1.5 rounded-lg bg-slate-50 text-slate-600 hover:bg-slate-100 transition-colors font-medium border border-slate-200 flex items-center justify-center gap-1"
           >
-            {expanded ? "收起详情" : "查看详情"}
-            {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            {expanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+            {expanded ? "收起" : "详情"}
           </button>
           <button
             onClick={() => onTrack(accident.id)}
@@ -428,25 +502,92 @@ function AccidentCard({
             )}
           >
             {accident.tracked ? (
-              <>
-                <Star size={12} className="fill-amber-500 text-amber-500" />
-                已追踪
-              </>
+              <Star size={12} className="fill-amber-500 text-amber-500" />
             ) : (
-              <>
-                <StarOff size={12} />
-                追踪
-              </>
+              <StarOff size={12} />
             )}
           </button>
         </div>
 
         {expanded && (
-          <div className="mt-3 pt-3 border-t border-slate-100 animate-slide-down">
-            <p className="text-sm text-slate-600 leading-relaxed mb-3">
+          <div className="mt-3 pt-3 border-t border-slate-100 animate-slide-down space-y-3">
+            <p className="text-sm text-slate-600 leading-relaxed">
               {accident.description}
             </p>
-            <div className="grid grid-cols-2 gap-3 text-xs">
+
+            <div className="bg-slate-50 rounded-xl p-3 space-y-2.5">
+              <div className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+                <Activity size={12} className="text-blue-500" />
+                处置进度
+              </div>
+              <div className="relative h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                <div
+                  className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full transition-all duration-500"
+                  style={{ width: `${dispConfig.progress}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-[10px] text-slate-500">
+                <span>接警</span>
+                <span>出警</span>
+                <span>到场</span>
+                <span>处置中</span>
+                <span>已恢复</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="bg-blue-50 rounded-lg p-2.5 border border-blue-100">
+                <div className="text-slate-500 flex items-center gap-1 mb-1">
+                  <Building2 size={10} />
+                  处置单位
+                </div>
+                <p className="font-semibold text-slate-800">{accident.disposalUnit || "青岛市交警支队"}</p>
+              </div>
+              <div className="bg-emerald-50 rounded-lg p-2.5 border border-emerald-100">
+                <div className="text-slate-500 flex items-center gap-1 mb-1">
+                  <User size={10} />
+                  处置人员
+                </div>
+                <p className="font-semibold text-slate-800">{accident.disposalPersonnel || "李警官、王警官"}</p>
+              </div>
+            </div>
+
+            {(accident.affectedRoads && accident.affectedRoads.length > 0) || (accident.affectedDistricts && accident.affectedDistricts.length > 0) ? (
+              <div className="bg-amber-50 rounded-lg p-2.5 border border-amber-100">
+                <div className="text-xs text-slate-500 flex items-center gap-1 mb-1.5">
+                  <AlertTriangle size={10} className="text-amber-500" />
+                  影响范围
+                </div>
+                <div className="space-y-1.5">
+                  {accident.affectedRoads && accident.affectedRoads.length > 0 && (
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-[11px] text-slate-500 flex-shrink-0 mt-0.5">受影响道路：</span>
+                      <div className="flex flex-wrap gap-1">
+                        {accident.affectedRoads.map((r) => (
+                          <span key={r} className="inline-block text-[10px] px-1.5 py-0.5 rounded bg-white text-slate-700 border border-amber-200">
+                            {r}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {accident.affectedDistricts && accident.affectedDistricts.length > 0 && (
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-[11px] text-slate-500 flex-shrink-0 mt-0.5">影响区县：</span>
+                      <div className="flex flex-wrap gap-1">
+                        {accident.affectedDistricts.map((d) => (
+                          <span key={d} className="inline-block text-[10px] px-1.5 py-0.5 rounded bg-white text-slate-700 border border-amber-200">
+                            {d}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : null}
+
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
               <div className="bg-slate-50 rounded-lg p-2">
                 <span className="text-slate-400">涉事车辆</span>
                 <p className="font-medium text-slate-700 mt-0.5">
@@ -468,7 +609,8 @@ function AccidentCard({
 }
 
 function AccidentListView() {
-  const [accidents, setAccidents] = useState<Record<string, any>[]>([]);
+  const { showToast } = useAppStore();
+  const [accidents, setAccidents] = useState<(AccidentEvent & { tracked?: boolean })[]>([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [severity, setSeverity] = useState<Severity | "all">("all");
@@ -506,6 +648,40 @@ function AccidentListView() {
     );
   };
 
+  const handleMarkRead = useCallback(async (id: string) => {
+    try {
+      await trafficApi.markAsRead(id);
+      setAccidents((prev) =>
+        prev.map((a) => (a.id === id ? { ...a, read: true } : a))
+      );
+      showToast("已标记为已读", "success");
+    } catch (e) {
+      console.error(e);
+    }
+  }, [showToast]);
+
+  const handleSubscribe = useCallback(async (id: string) => {
+    try {
+      const accident = accidents.find((a) => a.id === id);
+      if (accident?.subscribed) {
+        await trafficApi.unsubscribeEvent(id);
+        setAccidents((prev) =>
+          prev.map((a) => (a.id === id ? { ...a, subscribed: false } : a))
+        );
+        showToast("已取消订阅", "success");
+      } else {
+        const res = await trafficApi.subscribeEvent(id);
+        setAccidents((prev) =>
+          prev.map((a) => (a.id === id ? { ...a, subscribed: true } : a))
+        );
+        showToast(res.message || "订阅成功", "success");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [accidents, showToast]);
+
+  const subscribedAccidents = accidents.filter((a) => a.subscribed);
   const trackedAccidents = accidents.filter((a) => a.tracked);
   const otherAccidents = accidents.filter((a) => !a.tracked);
 
@@ -582,6 +758,27 @@ function AccidentListView() {
         </div>
       )}
 
+      {subscribedAccidents.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <Bell size={16} className="text-emerald-500 fill-emerald-100" />
+            <span className="font-medium text-slate-700 text-sm">我的订阅</span>
+            <span className="text-xs text-slate-400">({subscribedAccidents.length})</span>
+          </div>
+          <div className="space-y-3">
+            {subscribedAccidents.map((accident) => (
+              <AccidentCard
+                key={accident.id}
+                accident={accident}
+                onTrack={handleTrack}
+                onMarkRead={handleMarkRead}
+                onSubscribe={handleSubscribe}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {trackedAccidents.length > 0 && (
         <div>
           <div className="flex items-center gap-2 mb-3">
@@ -591,7 +788,13 @@ function AccidentListView() {
           </div>
           <div className="space-y-3">
             {trackedAccidents.map((accident) => (
-              <AccidentCard key={accident.id} accident={accident} onTrack={handleTrack} />
+              <AccidentCard
+                key={accident.id}
+                accident={accident}
+                onTrack={handleTrack}
+                onMarkRead={handleMarkRead}
+                onSubscribe={handleSubscribe}
+              />
             ))}
           </div>
         </div>
@@ -603,7 +806,7 @@ function AccidentListView() {
           <span className="font-medium text-slate-700 text-sm">全部事故</span>
           <span className="text-xs text-slate-400">({accidents.length})</span>
         </div>
-        {otherAccidents.length === 0 && trackedAccidents.length === 0 ? (
+        {otherAccidents.length === 0 && trackedAccidents.length === 0 && subscribedAccidents.length === 0 ? (
           <div className="card p-12 text-center text-slate-500">
             <AlertTriangle size={48} className="mx-auto mb-3 text-slate-300" />
             <p>暂无事故记录</p>
@@ -611,7 +814,13 @@ function AccidentListView() {
         ) : (
           <div className="space-y-3">
             {otherAccidents.map((accident) => (
-              <AccidentCard key={accident.id} accident={accident} onTrack={handleTrack} />
+              <AccidentCard
+                key={accident.id}
+                accident={accident}
+                onTrack={handleTrack}
+                onMarkRead={handleMarkRead}
+                onSubscribe={handleSubscribe}
+              />
             ))}
           </div>
         )}
@@ -620,10 +829,19 @@ function AccidentListView() {
   );
 }
 
-function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
-
+function MetroDelayCard({
+  delay,
+  onMarkRead,
+  onSubscribe,
+}: {
+  delay: MetroDelayEvent;
+  onMarkRead: (id: string) => void;
+  onSubscribe: (id: string) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
   const reasonConfig = metroDelayReasonConfig[delay.reason as MetroDelayReason];
   const isRecovered = delay.status === "recovered";
+  const disposalCfg = disposalStatusConfig[delay.disposalStatus] || disposalStatusConfig.processing;
 
   const formatDuration = (minutes: number) => {
     if (minutes < 60) return `${minutes}分钟`;
@@ -635,17 +853,20 @@ function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
   return (
     <div
       className={cn(
-        "card overflow-hidden",
+        "card overflow-hidden relative",
         isRecovered && "opacity-70"
       )}
     >
+      {!delay.read && (
+        <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse z-10 shadow-lg shadow-red-500/50" />
+      )}
       <div className="flex">
         <div
           className="w-1.5 flex-shrink-0"
           style={{ backgroundColor: delay.lineColor }}
         />
         <div className="flex-1 p-4">
-          <div className="flex items-start justify-between mb-2">
+          <div className="flex items-start justify-between mb-2 pr-6">
             <div className="flex items-center gap-2">
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
@@ -658,17 +879,23 @@ function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
                 <p className="text-xs text-slate-500">{delay.delayDirection}</p>
               </div>
             </div>
-            {isRecovered ? (
-              <span className="chip bg-green-100 text-green-700">
-                <CheckCircle size={12} />
-                已恢复
+            <div className="flex gap-1.5 flex-wrap">
+              <span className={`chip ${disposalCfg.bg} ${disposalCfg.color}`}>
+                <Activity size={12} />
+                {disposalCfg.label}
               </span>
-            ) : (
-              <span className="chip bg-red-100 text-red-700">
-                <AlertTriangle size={12} />
-                延误中
-              </span>
-            )}
+              {isRecovered ? (
+                <span className="chip bg-green-100 text-green-700">
+                  <CheckCircle size={12} />
+                  已恢复
+                </span>
+              ) : (
+                <span className="chip bg-red-100 text-red-700">
+                  <AlertTriangle size={12} />
+                  延误中
+                </span>
+              )}
+            </div>
           </div>
 
           {!isRecovered ? (
@@ -712,7 +939,7 @@ function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
             </div>
           )}
 
-          <div className="space-y-2 text-sm">
+          <div className="space-y-2 text-sm mb-3">
             <div className="flex items-start gap-2">
               <Info size={14} className="text-slate-400 mt-0.5 flex-shrink-0" />
               <div>
@@ -729,6 +956,16 @@ function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
                   {delay.affectedStations?.length > 3 && `等${delay.affectedStations.length}站`}
                 </span>
               </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-xs">
+                <Users size={11} />
+                预计影响 {delay.affectedPassengers?.toLocaleString() || 0} 人
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 text-xs">
+                <MapPin size={11} />
+                {delay.affectedRange}
+              </span>
             </div>
             {delay.measures && delay.measures.length > 0 && (
               <div className="flex items-start gap-2">
@@ -751,6 +988,91 @@ function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
               </div>
             )}
           </div>
+
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+            {!delay.read && (
+              <button
+                onClick={() => onMarkRead(delay.id)}
+                className="px-3 py-1.5 rounded-lg text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors flex items-center gap-1"
+              >
+                <Check size={12} />
+                标记已读
+              </button>
+            )}
+            <button
+              onClick={() => onSubscribe(delay.id)}
+              className={cn(
+                "px-3 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1",
+                delay.subscribed
+                  ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              )}
+            >
+              {delay.subscribed ? <BellOff size={12} /> : <Bell size={12} />}
+              {delay.subscribed ? "取消订阅" : "订阅提醒"}
+            </button>
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="px-3 py-1.5 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors flex items-center gap-1"
+            >
+              <ChevronDown size={12} className={cn("transition-transform", expanded && "rotate-180")} />
+              {expanded ? "收起详情" : "查看详情"}
+            </button>
+          </div>
+
+          {expanded && (
+            <div className="mt-4 p-4 rounded-xl bg-slate-50 space-y-4 animate-in fade-in">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Activity size={14} className="text-blue-600" />
+                  <span className="font-medium text-sm text-slate-700">处置进度</span>
+                </div>
+                <div className="h-2.5 bg-white rounded-full overflow-hidden mb-2">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 transition-all duration-500"
+                    style={{ width: `${disposalCfg.progress}%` }}
+                  />
+                </div>
+                <div className="grid grid-cols-5 gap-1 text-[10px] text-center">
+                  {["接警", "出警", "到场", "处置中", "已恢复"].map((label, i) => (
+                    <div key={label} className={cn(
+                      i * 25 <= disposalCfg.progress ? "text-blue-600 font-medium" : "text-slate-400"
+                    )}>
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-start gap-2">
+                  <Building2 size={14} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-[11px] text-slate-500">处置单位</div>
+                    <div className="text-sm font-medium text-slate-700">{delay.disposalUnit || "青岛地铁运营中心"}</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <User size={14} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-[11px] text-slate-500">处置人员</div>
+                    <div className="text-sm font-medium text-slate-700">{delay.disposalPersonnel || "张工程师、李值班长"}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-[11px] text-slate-500 mb-1.5">受影响站点</div>
+                <div className="flex flex-wrap gap-1">
+                  {delay.affectedStations?.map((s: string) => (
+                    <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-md bg-orange-50 text-orange-600 text-xs">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -758,7 +1080,8 @@ function MetroDelayCard({ delay }: { delay: Record<string, any> }) {
 }
 
 function MetroDelayView() {
-  const [delays, setDelays] = useState<Record<string, any>[]>([]);
+  const { showToast } = useAppStore();
+  const [delays, setDelays] = useState<MetroDelayEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | MetroStatus>("all");
 
@@ -778,6 +1101,40 @@ function MetroDelayView() {
     fetchData();
   }, [filter]);
 
+  const handleMarkRead = useCallback(async (id: string) => {
+    try {
+      await trafficApi.markAsRead(id);
+      setDelays((prev) =>
+        prev.map((d) => (d.id === id ? { ...d, read: true } : d))
+      );
+      showToast("已标记为已读", "success");
+    } catch (e) {
+      console.error(e);
+    }
+  }, [showToast]);
+
+  const handleSubscribe = useCallback(async (id: string) => {
+    try {
+      const d = delays.find((x) => x.id === id);
+      if (d?.subscribed) {
+        await trafficApi.unsubscribeEvent(id);
+        setDelays((prev) =>
+          prev.map((x) => (x.id === id ? { ...x, subscribed: false } : x))
+        );
+        showToast("已取消订阅", "success");
+      } else {
+        const res = await trafficApi.subscribeEvent(id);
+        setDelays((prev) =>
+          prev.map((x) => (x.id === id ? { ...x, subscribed: true } : x))
+        );
+        showToast(res.message || "订阅成功", "success");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [delays, showToast]);
+
+  const subscribedDelays = delays.filter((d) => d.subscribed);
   const activeDelays = delays.filter((d) => d.status === "delayed");
   const recoveredDelays = delays.filter((d) => d.status === "recovered");
   const networkStatus = activeDelays.length === 0 ? "正常运行" : "部分延误";
@@ -854,10 +1211,44 @@ function MetroDelayView() {
           <p className="text-sm text-slate-400 mt-1">暂无延误信息</p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {delays.map((delay) => (
-            <MetroDelayCard key={delay.id} delay={delay} />
-          ))}
+        <div className="space-y-4">
+          {subscribedDelays.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Bell size={16} className="text-emerald-500 fill-emerald-100" />
+                <span className="font-medium text-slate-700 text-sm">我的订阅</span>
+                <span className="text-xs text-slate-400">({subscribedDelays.length})</span>
+              </div>
+              <div className="space-y-3">
+                {subscribedDelays.map((delay) => (
+                  <MetroDelayCard
+                    key={delay.id}
+                    delay={delay}
+                    onMarkRead={handleMarkRead}
+                    onSubscribe={handleSubscribe}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <AlertCircle size={16} className="text-slate-500" />
+              <span className="font-medium text-slate-700 text-sm">全部延误</span>
+              <span className="text-xs text-slate-400">({delays.length})</span>
+            </div>
+            <div className="space-y-3">
+              {delays.map((delay) => (
+                <MetroDelayCard
+                  key={delay.id}
+                  delay={delay}
+                  onMarkRead={handleMarkRead}
+                  onSubscribe={handleSubscribe}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -1460,9 +1851,12 @@ export default function TrafficPage() {
   };
 
   return (
-    <AppLayout title="交通出行">
+    <AppLayout>
       <div className="p-4 pb-6">
-        <TrafficOverviewCard overview={overview} onTabChange={handleTabChange} />
+        <div className="mb-4">
+          <h1 className="text-lg font-bold text-slate-800 mb-3">交通出行</h1>
+          <TrafficOverviewCard overview={overview} onTabChange={handleTabChange} />
+        </div>
 
         <div className="mb-4">
           <TabBar tabs={TABS} activeKey={activeTab} onChange={setActiveTab} />

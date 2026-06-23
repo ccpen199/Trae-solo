@@ -30,9 +30,17 @@ const __dirname = path.dirname(__filename)
 // load env
 dotenv.config()
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://127.0.0.1:49200'
+const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:59200'
+
 const app: express.Application = express()
 
-app.use(cors())
+app.use(cors({
+  origin: [FRONTEND_URL, BACKEND_URL],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 

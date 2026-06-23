@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -58,9 +58,9 @@ const disposalStatusConfig: Record<DisposalStatus, { label: string; className: s
   closed: { label: "已闭环", className: "bg-slate-100 text-slate-600 border-slate-200", icon: CheckCircle2 },
 };
 
-function PostCard({ post }: { post: CommunityPost }) {
+function PostCard({ post, onReview }: { post: CommunityPost; onReview?: (post: CommunityPost) => void }) {
   const [expanded, setExpanded] = useState(false);
-  const [showNlp, setShowNlp] = useState(false);
+  const [showNlp, setShowNlp] = useState(true);
   const sentimentConfig = getSentimentConfig(post.sentiment);
   const levelConfig = getOpinionLevelConfig(post.opinionLevel);
   const barWidth = getSentimentBarWidth(post.sentimentScore);
@@ -68,6 +68,26 @@ function PostCard({ post }: { post: CommunityPost }) {
   const disposalConfig = disposalStatusConfig[disposalStatus];
   const DisposalIcon = disposalConfig.icon;
   const isHighRisk = post.opinionLevel >= 4;
+  const postAny = post as any;
+  const reviewStatus = (postAny.reviewStatus as string) || "auto_analyzed";
+  const opinionLevelSource = (postAny.opinionLevelSource as string) || "";
+
+  const getReviewStatusConfig = (status: string) => {
+    switch (status) {
+      case "auto_analyzed":
+        return { label: "自动分析", className: "bg-slate-100 text-slate-600 border-slate-200" };
+      case "pending_review":
+        return { label: "待复核", className: "bg-amber-100 text-amber-700 border-amber-200" };
+      case "reviewed":
+        return { label: "已复核", className: "bg-emerald-100 text-emerald-700 border-emerald-200" };
+      case "escalated":
+        return { label: "已升级", className: "bg-red-100 text-red-700 border-red-200" };
+      default:
+        return { label: "自动分析", className: "bg-slate-100 text-slate-600 border-slate-200" };
+    }
+  };
+
+  const reviewConfig = getReviewStatusConfig(reviewStatus);
 
   return (
     <div
@@ -103,6 +123,19 @@ function PostCard({ post }: { post: CommunityPost }) {
                   <DisposalIcon size={10} />
                   {disposalConfig.label}
                 </span>
+                <span className={`text-xs px-2 py-0.5 rounded-full border flex items-center gap-1 ${reviewConfig.className}`}>
+                  {reviewConfig.label}
+                </span>
+                {opinionLevelSource && opinionLevelSource.includes("NLP") && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100 font-medium">
+                    AI
+                  </span>
+                )}
+                {opinionLevelSource && opinionLevelSource.includes("人工") && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 font-medium">
+                    人工
+                  </span>
+                )}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -146,6 +179,17 @@ function PostCard({ post }: { post: CommunityPost }) {
               >
                 {post.opinionLevel}
               </div>
+              {reviewStatus === "pending_review" && onReview && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onReview(post);
+                  }}
+                  className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500 text-white hover:bg-amber-600 transition-colors font-medium"
+                >
+                  复核
+                </button>
+              )}
             </div>
           </div>
 
@@ -244,6 +288,33 @@ function PostCard({ post }: { post: CommunityPost }) {
               </p>
             </div>
           )}
+
+          {reviewStatus === "reviewed" && postAny.reviewedBy && (
+            <div className="mt-4 p-3 bg-emerald-50/60 rounded-xl border border-emerald-200">
+              <div className="text-xs font-medium text-emerald-700 mb-2 flex items-center gap-1.5">
+                <CheckCircle2 size={12} />
+                人工复核信息
+              </div>
+              <div className="space-y-1.5 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-500">复核人</span>
+                  <span className="text-slate-700 font-medium">{postAny.reviewedBy}</span>
+                </div>
+                {postAny.reviewedAt && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-500">复核时间</span>
+                    <span className="text-slate-700">{formatDateTime(postAny.reviewedAt)}</span>
+                  </div>
+                )}
+                {postAny.reviewComment && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-slate-500 flex-shrink-0">复核意见</span>
+                    <span className="text-slate-700">{postAny.reviewComment}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -253,20 +324,60 @@ function PostCard({ post }: { post: CommunityPost }) {
 function PostsView() {
   const [posts, setPosts] = useState<CommunityPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<"all" | "pending_review">("all");
+  const [reviewModal, setReviewModal] = useState<{
+    open: boolean;
+    post: CommunityPost | null;
+    opinionLevel: 1 | 2 | 3 | 4 | 5;
+    comment: string;
+  }>({
+    open: false,
+    post: null,
+    opinionLevel: 3,
+    comment: "",
+  });
+
+  const fetchPosts = useCallback(async (reviewStatus?: string) => {
+    setLoading(true);
+    try {
+      const data = await communityApi.getPosts({ pageSize: 20, reviewStatus });
+      setPosts(data);
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const data = await communityApi.getPosts({ pageSize: 20 });
-        setPosts(data);
-      } catch (error) {
-        console.error("Failed to fetch posts:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPosts();
-  }, []);
+    fetchPosts(activeFilter === "pending_review" ? "pending_review" : undefined);
+  }, [activeFilter, fetchPosts]);
+
+  const handleOpenReview = (post: CommunityPost) => {
+    setReviewModal({
+      open: true,
+      post,
+      opinionLevel: post.opinionLevel as 1 | 2 | 3 | 4 | 5,
+      comment: "",
+    });
+  };
+
+  const handleSubmitReview = async () => {
+    if (!reviewModal.post) return;
+    try {
+      const updated = await communityApi.reviewPost(reviewModal.post.id, {
+        opinionLevel: reviewModal.opinionLevel,
+        reviewComment: reviewModal.comment,
+        reviewedBy: "管理员",
+      });
+      setPosts((prev) =>
+        prev.map((p) => (p.id === updated.id ? updated : p))
+      );
+      setReviewModal({ open: false, post: null, opinionLevel: 3, comment: "" });
+    } catch (error) {
+      console.error("Failed to review post:", error);
+    }
+  };
 
   if (loading) {
     return (
@@ -281,15 +392,118 @@ function PostsView() {
     );
   }
 
-  if (posts.length === 0) {
-    return <Empty />;
-  }
-
   return (
-    <div className="space-y-3">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        <button
+          onClick={() => setActiveFilter("all")}
+          className={cn(
+            "px-4 py-2 rounded-xl text-sm font-medium transition-all",
+            activeFilter === "all"
+              ? "bg-blue-600 text-white shadow-md"
+              : "bg-white text-slate-600 border border-slate-200 hover:border-blue-300"
+          )}
+        >
+          全部帖子
+        </button>
+        <button
+          onClick={() => setActiveFilter("pending_review")}
+          className={cn(
+            "px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-1.5",
+            activeFilter === "pending_review"
+              ? "bg-amber-500 text-white shadow-md"
+              : "bg-white text-slate-600 border border-slate-200 hover:border-amber-300"
+          )}
+        >
+          <AlertTriangle className="w-4 h-4" />
+          待复核
+        </button>
+      </div>
+
+      {posts.length === 0 ? (
+        <Empty
+          title={activeFilter === "pending_review" ? "暂无待复核帖子" : "暂无帖子"}
+          description={activeFilter === "pending_review" ? "所有帖子都已完成复核" : ""}
+        />
+      ) : (
+        <div className="space-y-3">
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} onReview={handleOpenReview} />
+          ))}
+        </div>
+      )}
+
+      {reviewModal.open && reviewModal.post && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setReviewModal({ ...reviewModal, open: false })}>
+          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl animate-fade-in-up" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-slate-800">人工复核</h3>
+              <button onClick={() => setReviewModal({ ...reviewModal, open: false })} className="text-slate-400 hover:text-slate-600">
+                <XCircle size={20} />
+              </button>
+            </div>
+
+            <div className="mb-4 p-3 bg-slate-50 rounded-xl">
+              <p className="text-sm font-medium text-slate-800 line-clamp-2">{reviewModal.post.title}</p>
+              <p className="text-xs text-slate-500 mt-1">当前舆情等级：L{reviewModal.post.opinionLevel}</p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm text-slate-600 mb-2 block">舆情等级判定</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => setReviewModal({ ...reviewModal, opinionLevel: level as 1 | 2 | 3 | 4 | 5 })}
+                      className={cn(
+                        "flex-1 h-10 rounded-lg text-sm font-bold transition-all",
+                        reviewModal.opinionLevel === level
+                          ? getOpinionLevelConfig(level).color
+                            ? "text-white"
+                            : "bg-blue-600 text-white"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      )}
+                      style={
+                        reviewModal.opinionLevel === level
+                          ? { backgroundColor: getOpinionLevelConfig(level).color || "#2563eb" }
+                          : {}
+                      }
+                    >
+                      L{level}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm text-slate-600 mb-2 block">复核意见</label>
+                <textarea
+                  value={reviewModal.comment}
+                  onChange={(e) => setReviewModal({ ...reviewModal, comment: e.target.value })}
+                  placeholder="请输入复核意见..."
+                  className="w-full h-24 px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setReviewModal({ ...reviewModal, open: false })}
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors"
+              >
+                取消
+              </button>
+              <button
+                onClick={handleSubmitReview}
+                className="flex-1 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+              >
+                确认复核
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

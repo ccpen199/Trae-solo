@@ -143,6 +143,11 @@ export function listPaymentAccounts(): PaymentAccount[] {
     amountDue: row.amount_due,
     dueDate: row.due_date,
     status: row.status as any,
+    systemStatus: (row.system_status || 'online') as any,
+    systemSource: row.system_source || `${row.district || '青岛市'}缴费系统`,
+    householdNo: row.household_no || row.account_number,
+    address: row.address || `${row.district || ''}`,
+    ownerPhone: row.owner_phone || '',
   }))
 }
 
