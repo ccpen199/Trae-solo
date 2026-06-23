@@ -69,6 +69,27 @@ function Profile() {
       </div>
 
       <Space direction="vertical" block className="menu-section">
+        <Card title="业务功能入口">
+          <List>
+            {businessItems.map((item, index) => (
+              <List.Item
+                key={index}
+                prefix={item.icon}
+                extra={<Tag color="primary" fill="outline" style={{ fontSize: 11 }}>{item.desc}</Tag>}
+                onClick={() => {
+                  if (item.path.startsWith('http')) {
+                    window.open(item.path, '_blank')
+                  } else {
+                    navigate(item.path)
+                  }
+                }}
+              >
+                {item.label}
+              </List.Item>
+            ))}
+          </List>
+        </Card>
+
         <Card>
           <List>
             {menuItems.map((item, index) => (
