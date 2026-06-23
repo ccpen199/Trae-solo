@@ -1,0 +1,259 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-20T10:22:14.434Z",
+  "order": "may-89269",
+  "roundIndex": 4,
+  "captureId": "may-89269-fixed",
+  "url": "http://127.0.0.1:49269/",
+  "initialUrl": "http://127.0.0.1:49269/",
+  "finalUrl": "http://127.0.0.1:49269/",
+  "status": 200,
+  "title": "TalentHub - 演艺行业人才数字身份基础设施",
+  "initialTitle": "TalentHub - 演艺行业人才数字身份基础设施",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "个人中心/我的相关问题；登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/个人中心/).first()\u001b[22m\n"
+    },
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49269/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49269/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49269/",
+        "title": "TalentHub - 演艺行业人才数字身份基础设施",
+        "headings": [
+          "连接 talent 与 无限可能",
+          "专业人才库",
+          "智能匹配",
+          "数字身份认证",
+          "无需卡在登录页",
+          "个人中心与档期",
+          "搜索筛选与详情",
+          "通告详情与内容页",
+          "后台管理与日志",
+          "首屏可验证业务内容"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "一键进入",
+          "登录页",
+          "注册页"
+        ],
+        "links": [
+          "登录页"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "TalentHub连接 talent 与无限可能演艺行业人才数字身份基础设施，为艺人、经纪公司、品牌方提供安全、高效、透明的人才服务平台。专业人才库汇聚行业顶尖艺人、模特、演员资源智能匹配AI 驱动的精准匹配，快速找到最合适的人才数字身份认证区块链存证，确保人才信息真实可信林周苏陈10,000+ 专业艺人已加入 TalentHub 平台TalentHub本地可用体验入口无需卡在登录页首页现在可以直接进入个人中心、搜索筛选、后台管理和详情内容页。个人中心与档期artist直接进入艺人档案、我的资料与日程模块。一键进入搜索筛选与详情agency_admin以经纪公司身份体验人才搜索、筛选和艺人详情。一键进入通告详情与内容页company_hr进入通告中心并查看完整内容详情页。一键进入后台管理与日志admin进入后台视角，查看安全日志和管理相关页面。一键进入09艺人档案04机构账号07通告内容首屏可验证业务内容覆盖搜索、分类、详情和我的相关模块，不再只有登录壳页面。推荐艺人Yuting上海市T台走秀 / 平面拍摄 / 影视表演Ryan北京市T台走秀 / 平面拍摄 / 健身热门通告2024春夏上海时装周走秀模特招募时装周上海市 · 8000 - 20000国际奢侈品牌珠宝平面广告拍摄平面广告北京市 · 15000 - 50000登录页注册页也可以直接去 登录页 使用测试账号。© 2024 TalentHub. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1752,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89269-fixed-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49269/",
+          "title": "TalentHub - 演艺行业人才数字身份基础设施",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.png",
+          "elementCount": 218,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "一键进入",
+            "登录页",
+            "注册页"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89269-fixed-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49269/",
+        "title": "TalentHub - 演艺行业人才数字身份基础设施",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.png",
+        "elementCount": 218,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "一键进入",
+          "登录页",
+          "注册页"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49269/",
+    "representativeScreenshotLabel": "连接 talent 与 无限可能"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89269-fixed-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49269/",
+        "title": "TalentHub - 演艺行业人才数字身份基础设施",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89269/browser-check/may-89269-fixed-structure-01-首屏.png",
+        "elementCount": 218,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "一键进入",
+          "登录页",
+          "注册页"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 1752
+  },
+  "initialBodyTextPreview": "TalentHub\n连接 talent 与\n无限可能\n\n演艺行业人才数字身份基础设施，为艺人、经纪公司、品牌方提供安全、高效、透明的人才服务平台。\n\n专业人才库\n\n汇聚行业顶尖艺人、模特、演员资源\n\n智能匹配\n\nAI 驱动的精准匹配，快速找到最合适的人才\n\n数字身份认证\n\n区块链存证，确保人才信息真实可信\n\n林\n周\n苏\n陈\n\n10,000+ 专业艺人\n\n已加入 TalentHub 平台\n\n本地可用体验入口\n无需卡在登录页\n\n首页现在可以直接进入个人中心、搜索筛选、后台管理和详情内容页。\n\n个人中心与档期\nartist\n\n直接进入艺人档案、我的资料与日程模块。\n\n一键进入\n搜索筛选与详情\nagency_admin\n\n以经纪公司身份体验人才搜索、筛选和艺人详情。\n\n一键进入\n通告详情与内容页\ncompany_hr\n\n进入通告中心并查看完整内容详情页。\n\n一键进入\n后台管理与日志\nadmin\n\n进入后台视角，查看安全日志和管理相关页面。\n\n一键进入\n09\n艺人档案\n04\n机构账号\n07\n通告内容\n首屏可验证业务内容\n\n覆盖搜索、分类、详情和我的相关模块，不再只有登录壳页面。\n\n推荐艺人\nYuting\n上海市\n\nT台走秀 / 平面拍摄 / 影视表演\n\nRyan\n北京市\n\nT台走秀 / 平面拍摄 / 健身\n\n热门通告\n2024春夏上海时装周走秀模特招募\n时装周\n\n上海市 · 8000 - 20000\n\n国际奢侈品牌珠宝平面广告拍摄\n平面广告\n\n北京市 · 15000 - 50000\n\n登录页\n注册页\n\n也可以直接去 登录页 使用测试账号。\n\n© 2024 TalentHub. All rights reserved.",
+  "bodyTextPreview": "TalentHub\n连接 talent 与\n无限可能\n\n演艺行业人才数字身份基础设施，为艺人、经纪公司、品牌方提供安全、高效、透明的人才服务平台。\n\n专业人才库\n\n汇聚行业顶尖艺人、模特、演员资源\n\n智能匹配\n\nAI 驱动的精准匹配，快速找到最合适的人才\n\n数字身份认证\n\n区块链存证，确保人才信息真实可信\n\n林\n周\n苏\n陈\n\n10,000+ 专业艺人\n\n已加入 TalentHub 平台\n\n本地可用体验入口\n无需卡在登录页\n\n首页现在可以直接进入个人中心、搜索筛选、后台管理和详情内容页。\n\n个人中心与档期\nartist\n\n直接进入艺人档案、我的资料与日程模块。\n\n一键进入\n搜索筛选与详情\nagency_admin\n\n以经纪公司身份体验人才搜索、筛选和艺人详情。\n\n一键进入\n通告详情与内容页\ncompany_hr\n\n进入通告中心并查看完整内容详情页。\n\n一键进入\n后台管理与日志\nadmin\n\n进入后台视角，查看安全日志和管理相关页面。\n\n一键进入\n09\n艺人档案\n04\n机构账号\n07\n通告内容\n首屏可验证业务内容\n\n覆盖搜索、分类、详情和我的相关模块，不再只有登录壳页面。\n\n推荐艺人\nYuting\n上海市\n\nT台走秀 / 平面拍摄 / 影视表演\n\nRyan\n北京市\n\nT台走秀 / 平面拍摄 / 健身\n\n热门通告\n2024春夏上海时装周走秀模特招募\n时装周\n\n上海市 · 8000 - 20000\n\n国际奢侈品牌珠宝平面广告拍摄\n平面广告\n\n北京市 · 15000 - 50000\n\n登录页\n注册页\n\n也可以直接去 登录页 使用测试账号。\n\n© 2024 TalentHub. All rights reserved.",
+  "apiBase": "http://127.0.0.1:59269",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"status\":\"ok\",\"timestamp\":\"2026-06-20T10:22:01.510Z\",\"uptime\":86.181632667,\"version\":\"1.0.0\",\"environment\":\"development\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"资源不存在\",\"code\":\"NOT_FOUND\",\"path\":\"/api/auth/me\",\"method\":\"GET\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"资源不存在\",\"code\":\"NOT_FOUND\",\"path\":\"/api/users/profile\",\"method\":\"GET\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"资源不存在\",\"code\":\"NOT_FOUND\",\"path\":\"/api/user/profile\",\"method\":\"GET\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"资源不存在\",\"code\":\"NOT_FOUND\",\"path\":\"/api/search\",\"method\":\"GET\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"资源不存在\",\"code\":\"NOT_FOUND\",\"path\":\"/api/admin/stats\",\"method\":\"GET\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59269/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"资源不存在\",\"code\":\"NOT_FOUND\",\"path\":\"/api/admin/dashboard\",\"method\":\"GET\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49269/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49269/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49269/node_modules/.vite/deps/chunk-KDCVS43I.js?v=01fcb6cf",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

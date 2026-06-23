@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastProvider } from '@/components/ui/Toast';
-import { AppLayout } from '@/components/layout';
+import { AppLayout, AuthLayout } from '@/components/layout';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 
-import Home from '@/pages/Home';
 import Login from '@/pages/auth/Login';
 import Register from '@/pages/auth/Register';
 import Dashboard from '@/pages/dashboard/Dashboard';
@@ -33,9 +32,10 @@ export default function App() {
     <ToastProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
 
           <Route
             element={
@@ -44,7 +44,7 @@ export default function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
 
             <Route path="/artists" element={<ArtistList />} />
             <Route path="/artists/:id" element={<ArtistDetail />} />
