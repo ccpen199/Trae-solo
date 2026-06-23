@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import {
   CheckCircle2,
-  Circle,
   Clock,
   Truck,
   CreditCard,
   UserCheck,
   Info,
   RefreshCw,
+  MapPin,
+  Building2,
 } from 'lucide-react';
-import { mockCardProgress, mockSocialCard, mockUser } from '@/data/mock';
+import { useAuth } from '@/contexts/AuthContext';
+import { mockCardProgress, mockUser } from '@/data/mock';
+import { getStatusText, getStatusColor, formatIdNumber } from '@/utils/format';
 import type { CardProgressNode } from '@/types';
 
 const stageIcons: Record<string, React.ElementType> = {
@@ -19,10 +22,17 @@ const stageIcons: Record<string, React.ElementType> = {
   delivered: CheckCircle2,
 };
 
+const stageNumbers: Record<string, string> = {
+  collected: '①',
+  manufactured: '②',
+  shipped: '③',
+  delivered: '④',
+};
+
 export default function CardProgress() {
+  const { card } = useAuth();
   const progress = mockCardProgress as CardProgressNode[];
-  const currentStageIdx = progress.findIndex((p) => !p.completed);
-  const activeIdx = currentStageIdx === -1 ? progress.length - 1 : currentStageIdx - 1;
+  const allCompleted = progress.every((p) => p.completed);
 
   return (
     <div className="space-y-6">
@@ -41,7 +51,7 @@ export default function CardProgress() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div className="gov-card p-6">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-2">
               <div>
                 <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                   <Clock className="w-5 h-5 text-gov-red" />
@@ -57,64 +67,128 @@ export default function CardProgress() {
               </button>
             </div>
 
-            <div className="relative pl-4">
-              {progress.map((node, idx) => {
-                const Icon = stageIcons[node.stage];
-                const isActive = idx === activeIdx;
-                const isDone = node.completed;
-                return (
-                  <div key={node.stage} className="relative pb-8 last:pb-0">
-                    {idx < progress.length - 1 && (
+            {allCompleted && (
+              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <div>
+                  <span className="text-sm font-medium text-green-800">制卡流程已全部完成</span>
+                  <span className="text-xs text-green-600 ml-2">
+                    社保卡已签收激活，当前状态：
+                    <span className={`gov-badge ${getStatusColor(card.status)} ml-1`}>
+                      {getStatusText(card.status)}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className="mt-6">
+              <div className="grid grid-cols-4 gap-2 mb-8">
+                {progress.map((node, idx) => {
+                  const Icon = stageIcons[node.stage];
+                  return (
+                    <div
+                      key={node.stage}
+                      className={`text-center p-3 rounded-xl border-2 transition ${
+                        node.completed
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-gray-200 bg-gray-50'
+                      }`}
+                    >
                       <div
-                        className={`absolute left-[15px] top-10 w-0.5 h-full ${
-                          isDone ? 'bg-green-500' : 'bg-gray-200'
-                        }`}
-                      ></div>
-                    )}
-                    <div className="flex gap-4 relative">
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 z-10 ${
-                          isDone
+                        className={`w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 ${
+                          node.completed
                             ? 'bg-green-500 text-white'
-                            : isActive
-                            ? 'bg-gov-red text-white ring-4 ring-gov-red/20'
-                            : 'bg-gray-200 text-gray-400'
+                            : 'bg-gray-300 text-gray-500'
                         }`}
                       >
-                        {isDone ? (
+                        {node.completed ? (
                           <CheckCircle2 className="w-5 h-5" />
                         ) : (
                           <Icon className="w-4 h-4" />
                         )}
                       </div>
+                      <p
+                        className={`text-xs font-semibold ${
+                          node.completed ? 'text-green-700' : 'text-gray-400'
+                        }`}
+                      >
+                        {node.label}
+                      </p>
+                      <p className="text-[10px] text-gray-400 mt-0.5">
+                        {stageNumbers[node.stage]}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="relative pl-4">
+              {progress.map((node, idx) => {
+                const Icon = stageIcons[node.stage];
+                return (
+                  <div key={node.stage} className="relative pb-10 last:pb-0">
+                    {idx < progress.length - 1 && (
+                      <div
+                        className={`absolute left-[19px] top-12 w-0.5 h-[calc(100%-24px)] ${
+                          node.completed && progress[idx + 1]?.completed
+                            ? 'bg-green-500'
+                            : 'bg-gray-200'
+                        }`}
+                      ></div>
+                    )}
+                    <div className="flex gap-5 relative">
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 z-10 ${
+                          node.completed
+                            ? 'bg-green-500 text-white shadow-md shadow-green-200'
+                            : 'bg-gray-200 text-gray-400'
+                        }`}
+                      >
+                        {node.completed ? (
+                          <CheckCircle2 className="w-5 h-5" />
+                        ) : (
+                          <Icon className="w-5 h-5" />
+                        )}
+                      </div>
                       <div className="flex-1 pb-2">
                         <div className="flex items-center justify-between flex-wrap gap-2">
                           <h4
-                            className={`font-medium ${
-                              isDone || isActive ? 'text-gray-800' : 'text-gray-400'
+                            className={`text-base font-semibold flex items-center gap-2 ${
+                              node.completed ? 'text-gray-800' : 'text-gray-400'
                             }`}
                           >
+                            <span className="text-xs text-gov-red font-mono">
+                              {stageNumbers[node.stage]}
+                            </span>
                             {node.label}
-                            {isActive && (
-                              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gov-red/10 text-gov-red">
-                                进行中
+                            {node.completed && (
+                              <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">
+                                已完成
                               </span>
                             )}
                           </h4>
-                          {(isDone || isActive) && (
-                            <span className="text-xs text-gray-500 font-mono">
-                              {node.timestamp}
-                            </span>
-                          )}
+                        </div>
+                        <div className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span className="font-medium text-gray-600">节点时间戳</span>
+                          </div>
+                          <p className={`text-sm font-mono font-semibold ${
+                            node.completed ? 'text-gray-800' : 'text-gray-300'
+                          }`}>
+                            {node.completed ? node.timestamp : '待更新'}
+                          </p>
                         </div>
                         <p
-                          className={`text-sm mt-1 ${
-                            isDone || isActive ? 'text-gray-600' : 'text-gray-300'
+                          className={`text-sm mt-2 ${
+                            node.completed ? 'text-gray-600' : 'text-gray-300'
                           }`}
                         >
                           {node.description}
                         </p>
-                        {node.stage === 'shipped' && isDone && (
+                        {node.stage === 'shipped' && node.completed && (
                           <div className="mt-3 p-3 bg-blue-50 rounded-lg text-sm">
                             <p className="text-blue-800 flex items-center gap-2">
                               <Truck className="w-4 h-4" />
@@ -142,32 +216,39 @@ export default function CardProgress() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               {[
                 {
-                  title: '已采集信息',
+                  title: '① 已采集信息',
                   desc: '网点或线上提交制卡申请，信息采集完成，进入省制卡中心待办队列。',
                   time: 'T+0 日',
+                  timestamp: '2024-03-15 09:30:00',
                 },
                 {
-                  title: '已制卡',
+                  title: '② 已制卡',
                   desc: '制卡中心完成芯片写入、卡面印刷、金融账户绑定，质量检验通过。',
                   time: 'T+2~3 日',
+                  timestamp: '2024-03-18 14:20:00',
                 },
                 {
-                  title: '已邮寄',
+                  title: '③ 已邮寄',
                   desc: '通过 EMS 寄往持卡人预留地址，可通过快递单号实时追踪物流。',
                   time: 'T+3~5 日',
+                  timestamp: '2024-03-20 10:15:00',
                 },
                 {
-                  title: '签收',
+                  title: '④ 签收',
                   desc: '持卡人本人签收，社保卡正式生效，需到网点或线上激活金融功能。',
                   time: 'T+5~7 日',
+                  timestamp: '2024-03-22 16:45:00',
                 },
               ].map((s) => (
-                <div key={s.title} className="p-4 bg-gray-50 rounded-lg">
+                <div key={s.title} className="p-4 bg-gray-50 rounded-lg border border-gray-100">
                   <div className="flex items-center justify-between">
                     <p className="font-medium text-gray-800">{s.title}</p>
                     <span className="text-xs text-gov-red font-mono">{s.time}</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">{s.desc}</p>
+                  <div className="mt-2 pt-2 border-t border-gray-200">
+                    <p className="text-xs text-gray-400 font-mono">时间戳：{s.timestamp}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -180,15 +261,19 @@ export default function CardProgress() {
             <dl className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <dt className="text-gray-500">申请单号</dt>
-                <dd className="text-gray-800 font-mono text-xs">{mockSocialCard.id}</dd>
+                <dd className="text-gray-800 font-mono text-xs">{card.id}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-gray-500">申请人</dt>
-                <dd className="text-gray-800">{mockUser.name}</dd>
+                <dd className="text-gray-800">{card.holderName}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-gray-500">社保卡号</dt>
-                <dd className="text-gray-800 font-mono">{mockSocialCard.cardNumber}</dd>
+                <dd className="text-gray-800 font-mono">{card.cardNumber}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-500">身份证号</dt>
+                <dd className="text-gray-800 font-mono">{formatIdNumber(card.idNumber)}</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-gray-500">发卡地区</dt>
@@ -196,7 +281,15 @@ export default function CardProgress() {
               </div>
               <div className="flex justify-between">
                 <dt className="text-gray-500">合作银行</dt>
-                <dd className="text-gray-800">{mockSocialCard.bankName}</dd>
+                <dd className="text-gray-800">{card.bankName}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-gray-500">卡片状态</dt>
+                <dd>
+                  <span className={`gov-badge ${getStatusColor(card.status)}`}>
+                    {getStatusText(card.status)}
+                  </span>
+                </dd>
               </div>
               <div className="flex justify-between">
                 <dt className="text-gray-500">收卡地址</dt>

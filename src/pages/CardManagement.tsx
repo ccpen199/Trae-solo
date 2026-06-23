@@ -13,19 +13,29 @@ import {
   EyeOff,
   Building2,
   RefreshCw,
+  History,
 } from 'lucide-react';
 import Modal from '@/components/Modal';
-import { mockSocialCard, mockUser } from '@/data/mock';
+import { useAuth } from '@/contexts/AuthContext';
+import { mockUser } from '@/data/mock';
 import { getStatusText, getStatusColor, formatIdNumber, delay, generateRandomCode } from '@/utils/format';
 import type { CardStatus } from '@/types';
 
 type Step = 'face' | 'sms' | 'confirm' | 'done';
 
+interface StatusLog {
+  from: CardStatus;
+  to: CardStatus;
+  action: string;
+  time: string;
+}
+
 export default function CardManagement() {
-  const [cardStatus, setCardStatus] = useState<CardStatus>(mockSocialCard.status);
+  const { card, updateCardStatus } = useAuth();
   const [lostModalOpen, setLostModalOpen] = useState(false);
   const [unlostModalOpen, setUnlostModalOpen] = useState(false);
   const [actionMode, setActionMode] = useState<'lost' | 'unlost'>('lost');
+  const [statusLogs, setStatusLogs] = useState<StatusLog[]>([]);
 
   const [step, setStep] = useState<Step>('face');
   const [faceVerified, setFaceVerified] = useState(false);
@@ -38,14 +48,14 @@ export default function CardManagement() {
   const [correctCode] = useState(() => generateRandomCode());
 
   const startLostProcess = () => {
-    if (cardStatus === 'lost') return;
+    if (card.status === 'lost') return;
     setActionMode('lost');
     resetProcess();
     setLostModalOpen(true);
   };
 
   const startUnlostProcess = () => {
-    if (cardStatus !== 'lost') return;
+    if (card.status !== 'lost') return;
     setActionMode('unlost');
     resetProcess();
     setUnlostModalOpen(true);
@@ -100,7 +110,19 @@ export default function CardManagement() {
   const doAction = async () => {
     setProcessing(true);
     await delay(1500);
-    setCardStatus(actionMode === 'lost' ? 'lost' : 'normal');
+    const newStatus: CardStatus = actionMode === 'lost' ? 'lost' : 'normal';
+    const prevStatus = card.status;
+    updateCardStatus(newStatus);
+    const now = new Date().toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '-');
+    setStatusLogs((prev) => [
+      {
+        from: prevStatus,
+        to: newStatus,
+        action: actionMode === 'lost' ? '挂失' : '解挂',
+        time: now,
+      },
+      ...prev,
+    ]);
     setProcessing(false);
     setStep('done');
   };
@@ -279,21 +301,33 @@ export default function CardManagement() {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">持卡人</span>
-              <span className="font-medium text-gray-800">{mockSocialCard.holderName}</span>
+              <span className="font-medium text-gray-800">{card.holderName}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">身份证号</span>
               <span className="font-medium text-gray-800">
-                {formatIdNumber(mockSocialCard.idNumber)}
+                {formatIdNumber(card.idNumber)}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">社保卡号</span>
-              <span className="font-medium text-gray-800">{mockSocialCard.cardNumber}</span>
+              <span className="font-medium text-gray-800">{card.cardNumber}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-500">当前状态</span>
+              <span className={`gov-badge ${getStatusColor(card.status)}`}>
+                {getStatusText(card.status)}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-500">操作后状态</span>
+              <span className={`gov-badge ${getStatusColor(actionMode === 'lost' ? 'lost' : 'normal')}`}>
+                {getStatusText(actionMode === 'lost' ? 'lost' : 'normal')}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">验证方式</span>
-              <span className="font-medium text-green-600">人脸识别 + 短信验证</span>
+              <span className="font-medium text-green-600">人脸识别 + 短信验证 ✓</span>
             </div>
           </div>
           <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
@@ -333,6 +367,14 @@ export default function CardManagement() {
           <p className="text-sm text-gray-500 mt-2">
             操作已完成，实时同步至省社保卡中心系统
           </p>
+          <div className="mt-4 p-3 bg-gray-50 rounded-lg text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-500">当前卡片状态</span>
+              <span className={`gov-badge ${getStatusColor(card.status)}`}>
+                {getStatusText(card.status)}
+              </span>
+            </div>
+          </div>
           <div className="mt-5 flex justify-center gap-3">
             <button onClick={handleClose} className="gov-btn-secondary">
               关闭
@@ -368,33 +410,45 @@ export default function CardManagement() {
                 <h2 className="text-lg font-semibold text-gray-800">社保卡信息</h2>
                 <p className="text-sm text-gray-500 mt-0.5">对接省社保卡中心，数据实时同步</p>
               </div>
-              <span className={`gov-badge ${getStatusColor(cardStatus)}`}>
-                {getStatusText(cardStatus)}
+              <span className={`gov-badge ${getStatusColor(card.status)}`}>
+                {getStatusText(card.status)}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="bg-gradient-to-br from-blue-500 via-blue-700 to-blue-900 rounded-xl p-5 text-white relative overflow-hidden shadow-md">
+              <div className={`rounded-xl p-5 text-white relative overflow-hidden shadow-md ${
+                card.status === 'lost'
+                  ? 'bg-gradient-to-br from-red-500 via-red-700 to-red-900'
+                  : card.status === 'frozen'
+                  ? 'bg-gradient-to-br from-gray-500 via-gray-700 to-gray-900'
+                  : 'bg-gradient-to-br from-blue-500 via-blue-700 to-blue-900'
+              }`}>
                 <div className="absolute top-3 right-3">
-                  <Building2 className="w-8 h-8 text-blue-200" />
+                  <Building2 className="w-8 h-8 text-white/20" />
                 </div>
-                <div className="text-xs text-blue-200">中华人民共和国社会保障卡</div>
+                <div className="text-xs text-white/60">中华人民共和国社会保障卡</div>
                 <div className="text-base font-mono tracking-wider mt-2">
-                  {mockSocialCard.cardNumber}
+                  {card.cardNumber}
                 </div>
                 <div className="mt-8">
-                  <div className="text-xs text-blue-200">持卡人姓名</div>
-                  <div className="text-lg font-medium">{mockSocialCard.holderName}</div>
+                  <div className="text-xs text-white/60">持卡人姓名</div>
+                  <div className="text-lg font-medium">{card.holderName}</div>
                 </div>
                 <div className="mt-3 flex justify-between">
                   <div>
-                    <div className="text-xs text-blue-200">发卡日期</div>
-                    <div className="text-sm">{mockSocialCard.issuedDate}</div>
+                    <div className="text-xs text-white/60">发卡日期</div>
+                    <div className="text-sm">{card.issuedDate}</div>
                   </div>
                   <div>
-                    <div className="text-xs text-blue-200">有效期至</div>
-                    <div className="text-sm">{mockSocialCard.validUntil}</div>
+                    <div className="text-xs text-white/60">有效期至</div>
+                    <div className="text-sm">{card.validUntil}</div>
                   </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-white/20 flex items-center justify-between">
+                  <span className="text-xs text-white/60">卡片状态</span>
+                  <span className="gov-badge bg-white/20 text-white">
+                    {getStatusText(card.status)}
+                  </span>
                 </div>
               </div>
 
@@ -402,16 +456,16 @@ export default function CardManagement() {
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">身份证号</span>
                   <span className="text-gray-800 font-mono">
-                    {formatIdNumber(mockSocialCard.idNumber)}
+                    {formatIdNumber(card.idNumber)}
                   </span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">合作银行</span>
-                  <span className="text-gray-800">{mockSocialCard.bankName}</span>
+                  <span className="text-gray-800">{card.bankName}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">金融账号</span>
-                  <span className="text-gray-800 font-mono">{mockSocialCard.bankAccount}</span>
+                  <span className="text-gray-800 font-mono">{card.bankAccount}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">发卡地区</span>
@@ -419,18 +473,32 @@ export default function CardManagement() {
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="text-gray-500">卡片状态</span>
-                  <span className={`gov-badge ${getStatusColor(cardStatus)}`}>
-                    {getStatusText(cardStatus)}
+                  <span className={`gov-badge ${getStatusColor(card.status)}`}>
+                    {getStatusText(card.status)}
                   </span>
                 </div>
               </div>
             </div>
           </div>
 
+          {card.status === 'lost' && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <ShieldAlert className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-red-800">社保卡已挂失</h4>
+                  <p className="text-sm text-red-700 mt-1">
+                    您的社保卡已挂失，金融功能与社保功能已冻结。如已找回卡片，请点击下方「社保卡解挂」恢复使用。
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={startLostProcess}
-              disabled={cardStatus === 'lost'}
+              disabled={card.status === 'lost'}
               className="gov-card p-5 text-left hover:shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               <div className="w-11 h-11 bg-red-100 text-red-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition">
@@ -440,12 +508,18 @@ export default function CardManagement() {
               <p className="text-xs text-gray-500 mt-1">
                 丢失后立即挂失，冻结社保和金融功能
               </p>
-              <p className="text-xs text-gov-red mt-2">需人脸识别 + 短信验证 →</p>
+              <div className="mt-2 flex items-center gap-1 text-xs text-gov-red">
+                <Camera className="w-3 h-3" />
+                人脸识别
+                <span className="text-gray-300 mx-1">+</span>
+                <MessageSquare className="w-3 h-3" />
+                短信二次验证 →
+              </div>
             </button>
 
             <button
               onClick={startUnlostProcess}
-              disabled={cardStatus !== 'lost'}
+              disabled={card.status !== 'lost'}
               className="gov-card p-5 text-left hover:shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               <div className="w-11 h-11 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition">
@@ -453,7 +527,13 @@ export default function CardManagement() {
               </div>
               <h4 className="font-medium text-gray-800">社保卡解挂</h4>
               <p className="text-xs text-gray-500 mt-1">找回卡片后恢复正常使用</p>
-              <p className="text-xs text-gov-red mt-2">需人脸识别 + 短信验证 →</p>
+              <div className="mt-2 flex items-center gap-1 text-xs text-gov-red">
+                <Camera className="w-3 h-3" />
+                人脸识别
+                <span className="text-gray-300 mx-1">+</span>
+                <MessageSquare className="w-3 h-3" />
+                短信二次验证 →
+              </div>
             </button>
 
             <Link
@@ -465,11 +545,35 @@ export default function CardManagement() {
               </div>
               <h4 className="font-medium text-gray-800">制卡进度追踪</h4>
               <p className="text-xs text-gray-500 mt-1">
-                对接省制卡中心API，显示各节点时间戳
+                已采集信息→已制卡→已邮寄→签收
               </p>
-              <p className="text-xs text-gov-red mt-2">查看详情 →</p>
+              <p className="text-xs text-gov-red mt-2">查看各节点时间戳 →</p>
             </Link>
           </div>
+
+          {statusLogs.length > 0 && (
+            <div className="gov-card p-6">
+              <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <History className="w-4 h-4 text-gov-red" />
+                状态变更记录
+              </h3>
+              <div className="space-y-3">
+                {statusLogs.map((log, idx) => (
+                  <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg text-sm">
+                    <span className={`gov-badge ${getStatusColor(log.from)}`}>
+                      {getStatusText(log.from)}
+                    </span>
+                    <span className="text-gray-400">→</span>
+                    <span className={`gov-badge ${getStatusColor(log.to)}`}>
+                      {getStatusText(log.to)}
+                    </span>
+                    <span className="text-gray-600 flex-1">{log.action}操作</span>
+                    <span className="text-xs text-gray-400 font-mono">{log.time}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="space-y-6">
@@ -497,7 +601,7 @@ export default function CardManagement() {
                 <div>
                   <p className="font-medium text-gray-800">实时同步生效</p>
                   <p className="text-xs text-gray-500 mt-0.5">
-                    操作完成后即时同步至省社保卡中心和合作银行
+                    操作完成后即时同步至省社保卡中心和合作银行，卡片状态实时更新
                   </p>
                 </div>
               </li>
@@ -506,9 +610,9 @@ export default function CardManagement() {
                   3
                 </span>
                 <div>
-                  <p className="font-medium text-gray-800">线下辅助渠道</p>
+                  <p className="font-medium text-gray-800">状态闭环流转</p>
                   <p className="text-xs text-gray-500 mt-0.5">
-                    也可拨打12333热线或至社保卡服务网点办理
+                    挂失后卡片冻结（已挂失），解挂后恢复（正常），全链路状态同步
                   </p>
                 </div>
               </li>

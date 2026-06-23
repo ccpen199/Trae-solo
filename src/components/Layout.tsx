@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   CreditCard,
   FileText,
@@ -11,7 +11,7 @@ import {
   ChevronDown,
   Building2,
 } from 'lucide-react';
-import { mockUser } from '@/data/mock';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
   { path: '/', label: '首页', icon: HomeIcon },
@@ -22,7 +22,35 @@ const navItems = [
 
 export default function MainLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isLoggedIn, user, logout } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-20 h-20 bg-gov-red/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Building2 className="w-10 h-10 text-gov-red" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">您已退出登录</h2>
+          <p className="text-sm text-gray-500 mb-6">个人信息与业务数据已安全清除</p>
+          <button
+            onClick={() => navigate('/login', { replace: true })}
+            className="gov-btn-primary"
+          >
+            重新登录
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const handleLogout = () => {
+    setShowUserMenu(false);
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -50,15 +78,15 @@ export default function MainLayout() {
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                   <User className="w-4 h-4" />
                 </div>
-                <span className="text-sm font-medium">{mockUser.name}</span>
+                <span className="text-sm font-medium">{user.name}</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
               {showUserMenu && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
                   <div className="px-4 py-3 border-b border-gray-100">
-                    <p className="text-sm font-medium text-gray-900">{mockUser.name}</p>
-                    <p className="text-xs text-gray-500">{mockUser.phone}</p>
-                    <p className="text-xs text-gray-400 mt-1">{mockUser.cityName}</p>
+                    <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                    <p className="text-xs text-gray-500">{user.phone}</p>
+                    <p className="text-xs text-gray-400 mt-1">{user.cityName}</p>
                   </div>
                   <Link
                     to="/admin"
@@ -68,7 +96,10 @@ export default function MainLayout() {
                     <Building2 className="w-4 h-4" />
                     后台管理
                   </Link>
-                  <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                  >
                     <LogOut className="w-4 h-4" />
                     退出登录
                   </button>

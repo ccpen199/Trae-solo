@@ -11,10 +11,12 @@ import {
   Bot,
   QrCode,
 } from 'lucide-react';
-import { mockSocialCard, mockUser, mockCityConfigs, mockKnowledgeEntries } from '@/data/mock';
+import { useAuth } from '@/contexts/AuthContext';
+import { mockCityConfigs, mockKnowledgeEntries } from '@/data/mock';
 import { getStatusText, getStatusColor } from '@/utils/format';
 
 export default function Home() {
+  const { user, card } = useAuth();
   const sjzConfig = mockCityConfigs.find((c) => c.cityCode === '130100');
   const hotQuestions = mockKnowledgeEntries.slice(0, 3);
 
@@ -25,10 +27,10 @@ export default function Home() {
           <div className="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
           <div className="absolute right-10 bottom-0 w-40 h-40 bg-white/5 rounded-full -mb-20"></div>
           <div className="relative">
-            <p className="text-red-100 text-sm">欢迎回来，{mockUser.name}</p>
+            <p className="text-red-100 text-sm">欢迎回来，{user?.name}</p>
             <h2 className="text-2xl font-bold mt-1">您好，让我们为您服务</h2>
             <p className="text-red-100 mt-2 text-sm">
-              当前参保地：{mockUser.cityName} · 参保状态：正常参保
+              当前参保地：{user?.cityName} · 参保状态：正常参保
             </p>
             <div className="mt-6 flex gap-3">
               <Link
@@ -59,23 +61,32 @@ export default function Home() {
               查看详情 <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
-          <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 rounded-xl p-5 text-white relative overflow-hidden">
+          <div className={`rounded-xl p-5 text-white relative overflow-hidden ${
+            card.status === 'lost'
+              ? 'bg-gradient-to-br from-red-500 via-red-700 to-red-900'
+              : 'bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900'
+          }`}>
             <div className="absolute right-3 top-3">
               <span className={`gov-badge bg-white/20 text-white`}>
-                {getStatusText(mockSocialCard.status)}
+                {getStatusText(card.status)}
               </span>
             </div>
-            <div className="text-xs text-blue-200">社会保障卡号</div>
+            <div className="text-xs text-white/60">社会保障卡号</div>
             <div className="text-lg font-mono tracking-wider mt-1">
-              {mockSocialCard.cardNumber}
+              {card.cardNumber}
             </div>
             <div className="mt-5 flex items-end justify-between">
               <div>
-                <div className="text-xs text-blue-200">持卡人</div>
-                <div className="text-sm font-medium">{mockSocialCard.holderName}</div>
+                <div className="text-xs text-white/60">持卡人</div>
+                <div className="text-sm font-medium">{card.holderName}</div>
               </div>
-              <Building2 className="w-8 h-8 text-blue-300" />
+              <Building2 className="w-8 h-8 text-white/20" />
             </div>
+            {card.status === 'lost' && (
+              <div className="mt-3 pt-3 border-t border-white/20">
+                <p className="text-xs text-red-200">⚠ 卡片已挂失，功能已冻结</p>
+              </div>
+            )}
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
             <Link
@@ -162,7 +173,7 @@ export default function Home() {
         <section>
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-800 text-lg">
-              <span className="text-gov-red">{mockUser.cityName}</span>本地化服务
+              <span className="text-gov-red">{user?.cityName}</span>本地化服务
             </h3>
             <span className="text-xs text-gray-400">由地市管理员配置</span>
           </div>
