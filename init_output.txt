@@ -1,4 +1,0 @@
-  File "/Users/chen/Documents/trae_projects/local_projects/may-89071/init_db.py", line 548
-    (enterprise_ids[0], 1, json.dumps({'六维资料': ['工商', '司法', '招投标', '资质', '人员', '信用'}, ensure_ascii=False), 'QRCODE001', now),
-                                                                                   ^
-SyntaxError: closing parenthesis '}' does not match opening parenthesis '['
